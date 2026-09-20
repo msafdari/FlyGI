@@ -127,13 +127,59 @@ be described as publisher-preverified.
 The small acquisition manifest under `data/manifests/` is tracked because it
 contains provenance rather than the downloaded tables themselves.
 
+## 2026-09-19 — Private Kaggle notebook smoke
+
+### Completed
+
+- After explicit user authorization to export and execute the repository code,
+  ran `UV_CACHE_DIR=/tmp/flygi-uv-cache make submit`. Kaggle created private
+  kernel version 1 at
+  <https://www.kaggle.com/code/megusalexandrus/flygi-arc-agi-3> and reported
+  `KernelWorkerStatus.COMPLETE`.
+- Downloaded the completed run's output and log to a temporary directory for
+  inspection. Neither file was added to the repository.
+- Removed the optional `arc-agi-3` and `connectome` notebook keywords from the
+  tracked metadata after Kaggle reported that they were not valid tags. Their
+  rejection did not prevent the kernel from running.
+
+### Verification results
+
+- The uploaded generated notebook was 58,530 bytes with SHA-256
+  `0464b7792238f4d4bc95e0b9fad8af09c44d3cbb70460fd86bb16a337c12453c`.
+  It embedded the adapter and 40 Python source files, contained no credentials
+  or local home paths, and declared `contains_connectome_assets: false`.
+- The ordinary private run produced the expected 2,648-byte dummy
+  `submission.parquet` with SHA-256
+  `71bfd543030e339d87bd9ff744d466218398a1259650b2c255626d27049c88bb`.
+  It contained one row with columns `row_id`, `game_id`, `end_of_game`, and
+  `score`; this validates artifact production, not agent performance.
+- The 9,805-byte run log had SHA-256
+  `8955a9f589a42590b34c0f9f081b5c34575cc50918201d499514c3633cf9d03f`.
+  It contained no Python traceback. Kaggle installed `arc-agi==0.9.8`,
+  `arcengine==0.9.3`, and `pillow==12.2.0` from the competition wheels.
+
+### Findings and limitations
+
+- A normal Kaggle kernel execution does not set
+  `KAGGLE_IS_COMPETITION_RERUN`, so it exercises notebook setup and writes the
+  declared dummy artifact without contacting the hidden game gateway. An
+  official competition submission is still required for a hidden evaluation
+  and needs separate explicit authorization because it spends submission quota.
+- The run log reported pre-existing Kaggle image dependency conflicts:
+  `dopamine-rl` expects `gym<=0.25.2`, and `gradio` expects `pillow<12.0`.
+  Neither package is used by FlyGI's submission path, and the kernel completed,
+  but these warnings should be rechecked after future competition-wheel updates.
+- This kernel contains the deterministic random-legal baseline and no compiled
+  graph assets. Even an official rerun of this version would be a pipeline and
+  random-baseline measurement, not a connectome-driven FlyGI evaluation.
+
 ## Next steps
 
-1. **Complete the Kaggle pipeline check.** Username, local API token, and
-   competition access are now confirmed. With explicit authorization to export
-   the code, upload and run the private random-agent notebook, inspect its
-   generated artifact, and stop for separate approval before spending a
-   leaderboard submission. Only later run the packaged connectome submission.
+1. **Choose whether to run the official random-baseline evaluation.** The
+   private notebook pipeline is verified. With separate explicit authorization,
+   submit kernel version 1 to the competition to trigger the hidden gateway,
+   then record its result. This spends submission quota and is not a connectome
+   evaluation.
 2. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
    backend, deterministic initialization, finite-activity tests, CPU graph-step
    benchmark, and runtime/memory measurements for internal-step counts
