@@ -26,6 +26,10 @@ and are not stored in normal Git history.
   `superclass` node filter.
 - Refreshed the locked ARC dependencies and cached all 25 currently public game
   packages for strict-offline use.
+- Configured the Kaggle notebook owner as `megusalexandrus`, created a dedicated
+  `FlyGI local CLI` API token, and stored it only in the ignored local
+  `.kaggle/access_token` file with mode `600`. The secret value is not recorded
+  in this worklog or Git history.
 - Published the repository privately at <https://github.com/msafdari/FlyGI>.
 
 ### Verification results
@@ -99,8 +103,11 @@ be described as publisher-preverified.
 - The generated Milestone 0 notebook embeds FlyGI Python code but explicitly
   reports `contains_connectome_assets: false`. A hidden Kaggle evaluation is
   therefore not yet a connectome evaluation.
-- No Kaggle access token is present, the notebook metadata still contains the
-  username placeholder, and competition-rule acceptance has not been verified.
+- Kaggle API authentication works: an authenticated read-only CLI request listed
+  the ARC-AGI-3 competition files. The submissions endpoint returns HTTP 403,
+  and the signed-in competition page still shows `Join Competition` plus an
+  identity-verification requirement. Competition enrollment, rule acceptance,
+  and identity verification therefore remain incomplete.
 
 ### Local artifacts intentionally excluded from Git
 
@@ -135,10 +142,11 @@ contains provenance rather than the downloaded tables themselves.
    `groups.npz`, the config, and reviewed manifests as a versioned private
    Kaggle Dataset. Update the notebook to load and verify these assets exactly
    once, without downloading MaleCNS or rebuilding the graph during evaluation.
-5. **Kaggle identity and pipeline check.** Add the user's Kaggle token locally,
-   replace the notebook username placeholder, confirm competition-rule
-   acceptance, run the official random submission first, and only then run the
-   connectome submission.
+5. **Complete Kaggle enrollment and pipeline check.** The username and local API
+   token are configured. The user must now join the competition, accept its
+   rules, and complete Kaggle's required third-party identity verification.
+   Then recheck submissions access, run the official random submission first,
+   and only later run the packaged connectome submission.
 6. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
    add seeded directed degree-preserving rewires, weight shuffles, a matched
    sparse reservoir, the no-reservoir baseline, paired evaluation, and the
