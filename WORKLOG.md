@@ -30,9 +30,9 @@ and are not stored in normal Git history.
   `FlyGI local CLI` API token, and stored it only in the ignored local
   `.kaggle/access_token` file with mode `600`. The secret value is not recorded
   in this worklog or Git history.
-- Confirmed that competition enrollment and identity verification are active:
-  the authenticated submissions endpoint now succeeds and reports `No
-  submissions found` instead of HTTP 403.
+- The user reported completing competition enrollment and identity
+  verification. Independently, the authenticated submissions endpoint now
+  succeeds and reports `No submissions found` instead of HTTP 403.
 - Published the repository privately at <https://github.com/msafdari/FlyGI>.
 
 ### Verification results
@@ -106,11 +106,12 @@ be described as publisher-preverified.
 - The generated Milestone 0 notebook embeds FlyGI Python code but explicitly
   reports `contains_connectome_assets: false`. A hidden Kaggle evaluation is
   therefore not yet a connectome evaluation.
-- Kaggle API authentication, competition enrollment, rule acceptance, and
-  identity verification are active. Read-only CLI requests can list both the
-  competition files and the account's submissions. Uploading/executing the
-  private random-agent notebook and making any leaderboard submission remain
-  separate external actions.
+- The user reports that competition enrollment and identity verification are
+  complete. Independently observed read-only CLI requests can list both the
+  competition files and the account's submissions, confirming that the prior
+  access blocker is cleared. Uploading/executing the private random-agent
+  notebook and making any leaderboard submission remain separate external
+  actions.
 
 ### Local artifacts intentionally excluded from Git
 
@@ -128,29 +129,28 @@ contains provenance rather than the downloaded tables themselves.
 
 ## Next steps
 
-1. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
+1. **Complete the Kaggle pipeline check.** Username, local API token, and
+   competition access are now confirmed. With explicit authorization to export
+   the code, upload and run the private random-agent notebook, inspect its
+   generated artifact, and stop for separate approval before spending a
+   leaderboard submission. Only later run the packaged connectome submission.
+2. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
    backend, deterministic initialization, finite-activity tests, CPU graph-step
    benchmark, and runtime/memory measurements for internal-step counts
    `K = 1, 2, 4, 8`.
-2. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
+3. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
    encoder, persistent connectome state, descending-neuron trace, literal
    readout, legal-action masking, coordinate head, and declared reset policy.
    Add causal-path tests proving that changing the frame can change sensory
    input, graph activity, logits, and the selected action.
-3. **Public evaluation plumbing.** Replace the placeholder evaluation modules
+4. **Public evaluation plumbing.** Replace the placeholder evaluation modules
    with immutable result manifests, explicit seeds, action traces, failures,
    timing, and per-game summaries. Keep the random baseline separate from the
    connectome-driven agent.
-4. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
+5. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
    `groups.npz`, the config, and reviewed manifests as a versioned private
    Kaggle Dataset. Update the notebook to load and verify these assets exactly
    once, without downloading MaleCNS or rebuilding the graph during evaluation.
-5. **Complete the Kaggle pipeline check.** Username, local API token,
-   competition enrollment, rule acceptance, and identity verification are now
-   confirmed. With explicit authorization to export the code, upload and run
-   the private random-agent notebook, inspect its generated artifact, and stop
-   for separate approval before spending a leaderboard submission. Only later
-   run the packaged connectome submission.
 6. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
    add seeded directed degree-preserving rewires, weight shuffles, a matched
    sparse reservoir, the no-reservoir baseline, paired evaluation, and the
