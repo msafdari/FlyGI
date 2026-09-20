@@ -1,0 +1,68 @@
+# Track B declaration for later milestones. Milestones 0-1 only consume the
+# data and graph sections; no learning is implemented by this configuration.
+schema_version: 1
+seed: 20260919
+
+experiment:
+  name: frozen-reservoir-rate
+  track: frozen_reservoir
+
+data:
+  release: male-cns:v1.0
+  weights_path: data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  annotations_path: data/raw/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  neurotransmitters_path: data/raw/body-neurotransmitters-male-cns-v1.0.feather
+  output_dir: data/processed/male-cns-v1.0/reservoir-rate
+  sources:
+    weights:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    annotations:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    neurotransmitters:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+      sha256: null
+
+graph:
+  matrix_convention: "W[post_index, pre_index]"
+  output_dir: data/processed/male-cns-v1.0/reservoir-rate
+  weight_transform: log1p
+  sign_mode: heuristic
+  modulator_treatment: zero
+  normalization: spectral_radius
+  spectral_radius: 0.9
+  epsilon: 1.0e-8
+  allow_self_edges: false
+  node_filter_column: superclass
+  node_filter_values: null
+  body_id_dtype: uint64
+  weight_dtype: float32
+
+groups:
+  descending_neurons:
+    superclass: descending_neuron
+
+dynamics:
+  backend: rate
+  internal_steps: 2
+  leak: 0.3
+  recurrent_gain: 0.9
+  frozen_graph: true
+
+encoder:
+  kind: neutral_sparse_projection
+  seed: 20260919
+  trainable: false
+  include_game_id: false
+  include_hidden_score: false
+
+decoder:
+  kind: linear_policy
+  readout: descending_neurons
+  coordinate_head: factorized_64x64
+  legal_action_mask: true
+
+training:
+  enabled: false
+  note: Milestones 0-1 do not implement or run Track B training.

@@ -1,0 +1,61 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Virtual environments and packaging output
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example
+.kaggle/
+
+# MaleCNS source tables and generated runtime assets are too large for Git.
+data/raw/
+data/downloads/
+data/processed/
+data/runtime/
+data/assets/
+*.feather
+*.arrow
+data/**/*.parquet
+data/**/*.npz
+data/**/*.npy
+
+# Keep provenance manifests, but not transient partial downloads.
+*.part
+*.partial
+
+# Generated experiment and Kaggle outputs. Their READMEs stay tracked.
+results/*
+!results/README.md
+kaggle/output/
+kaggle/generated/
+kaggle/dist/
+notebooks/submission.ipynb
+submission.parquet
+
+# Vendored ARC runner and local gameplay output are reproducible/generated.
+vendor/
+environment_files/
+recordings/
+logs.log

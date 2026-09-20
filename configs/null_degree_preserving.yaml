@@ -1,0 +1,29 @@
+# Confirmatory-control declaration for Milestone 4. Null generation is not part
+# of Milestones 0-1; this file preregisters invariants without claiming output.
+schema_version: 1
+
+experiment:
+  name: directed-degree-preserving-null
+  track: control
+
+input:
+  graph_dir: data/processed/male-cns-v1.0/literal-rate
+
+"null":
+  kind: directed_degree_preserving
+  count: 10
+  base_seed: 20260919
+  directed_double_edge_swaps: true
+  preserve_in_degree_per_node: true
+  preserve_out_degree_per_node: true
+  preserve_weight_multiset: true
+  preserve_sensory_node_ids: true
+  preserve_readout_node_ids: true
+  allow_self_edges: false
+  allow_duplicate_edges: false
+  output_dir: data/processed/male-cns-v1.0/nulls/degree-preserving
+
+validation:
+  require_exact_degree_sequences: true
+  require_exact_weight_multiset: true
+  write_seed_and_hash: true

@@ -1,0 +1,23 @@
+# Offline packaging declaration. Milestone 0 validates the starter/random-agent
+# path; packaging a full FlyGI graph is a later milestone.
+schema_version: 1
+
+package:
+  name: flygi-literal-male-cns-v1
+  python: "3.12"
+  offline: true
+  agent_module: kaggle.agent.my_agent
+  output_dir: kaggle/generated
+  refuse_missing_assets: true
+
+assets:
+  graph_dir: data/processed/male-cns-v1.0/literal-rate
+  config: configs/literal_rate.yaml
+  manifest: data/processed/male-cns-v1.0/literal-rate/manifest.json
+  include_source_feather_files: false
+
+runtime:
+  download_during_evaluation: false
+  neuprint_calls_during_evaluation: false
+  build_graph_during_evaluation: false
+  load_assets_once: true

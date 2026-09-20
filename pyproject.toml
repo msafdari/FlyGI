@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "flygi"
+version = "0.1.0"
+description = "Reproducible MaleCNS-to-ARC-AGI-3 connectome experiment"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { file = "LICENSE" }
+authors = [{ name = "FlyGI contributors" }]
+keywords = ["connectome", "ARC-AGI-3", "reservoir-computing", "drosophila"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy>=2.2,<3",
+  "pandas>=2.2,<3",
+  "pyarrow>=19,<24",
+  "PyYAML>=6.0,<7",
+  "scipy>=1.15,<2",
+]
+
+[project.optional-dependencies]
+arc = [
+  "arc-agi>=0.9.6,<1",
+  "kaggle>=2.2,<3",
+  "python-dotenv>=1.1,<2",
+]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.11,<1",
+]
+
+[project.scripts]
+flygi = "flygi.cli:entrypoint"
+
+[project.urls]
+Dataset = "https://male-cns.janelia.org/download/"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flygi"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]

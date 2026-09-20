@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: >-
+  If you use FlyGI, cite this software and the MaleCNS dataset and paper
+  identified in the repository's data provenance documentation.
+title: FlyGI
+type: software
+version: 0.1.0
+authors:
+  - name: FlyGI contributors
+abstract: >-
+  FlyGI is an experimental framework for testing whether the topology of the
+  MaleCNS v1.0 fruit-fly connectome offers measurable advantages on interactive
+  ARC-AGI-3 tasks relative to matched graph controls.
+license: MIT
+keywords:
+  - ARC-AGI-3
+  - connectome
+  - Drosophila
+  - reservoir computing
+  - reproducible research
