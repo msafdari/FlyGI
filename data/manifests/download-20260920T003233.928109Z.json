@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-09-20T00:32:33.928189Z",
+  "files": [
+    {
+      "bytes": 1051241946,
+      "downloaded_at": "2026-09-20T00:32:17.411461Z",
+      "expected_sha256": null,
+      "hash_verified": false,
+      "name": "connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+      "path": "data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+      "reused_existing": false,
+      "sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+      "timestamp_source": "download",
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+    },
+    {
+      "bytes": 14483314,
+      "downloaded_at": "2026-09-20T00:32:32.758541Z",
+      "expected_sha256": null,
+      "hash_verified": false,
+      "name": "body-annotations-male-cns-v1.0-minconf-0.5.feather",
+      "path": "data/raw/body-annotations-male-cns-v1.0-minconf-0.5.feather",
+      "reused_existing": false,
+      "sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+      "timestamp_source": "download",
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather"
+    },
+    {
+      "bytes": 43282834,
+      "downloaded_at": "2026-09-20T00:32:33.182753Z",
+      "expected_sha256": null,
+      "hash_verified": false,
+      "name": "body-neurotransmitters-male-cns-v1.0.feather",
+      "path": "data/raw/body-neurotransmitters-male-cns-v1.0.feather",
+      "reused_existing": false,
+      "sha256": "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621",
+      "timestamp_source": "download",
+      "url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather"
+    }
+  ],
+  "format": "flygi.download-manifest/v1"
+}

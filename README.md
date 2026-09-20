@@ -11,6 +11,9 @@ plumbing, MaleCNS source acquisition and verification, sparse graph compilation,
 provenance manifests, and synthetic acceptance tests. Neural dynamics, trained
 interfaces, plasticity, and biological-performance claims are not included yet.
 
+See [WORKLOG.md](WORKLOG.md) for the latest reproducible checkpoint, measured
+full-data results, current limitations, and ordered next steps.
+
 ## Quick start
 
 Python 3.12 and [`uv`](https://docs.astral.sh/uv/) are required.
