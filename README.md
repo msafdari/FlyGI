@@ -53,8 +53,22 @@ revision `eeb1535404f321d280a8f9194bbc1d7aca5f05fc`:
 make setup
 make play-local GAME=ls20
 make verify-local
+make baseline-local
 make notebook
 ```
+
+Do not treat the random-agent notebook as a FlyGI baseline. Before spending a
+competition submission, follow the staged
+[local acceptance gates](docs/local_acceptance_gates.md): first validate the
+multi-seed chance-control evaluator, then the full-graph dynamics, and finally a
+causally live connectome agent on all public games.
+
+`make baseline-local` runs the chance control strictly offline on all 25 cached
+public games with seeds `0..4` and an exact 80-action ceiling. It writes an
+immutable, Git-ignored JSON result under `results/random_baseline/`, including
+full action traces, official local scorecards, timing, failures, hashes, and a
+deterministic replay check. A nonzero exit status means an engineering gate
+failed; a zero or positive ARC score is not itself a pass/fail criterion.
 
 Kaggle submission requires accepting the competition rules and adding a local
 token; no credentials belong in Git. See [kaggle/README.md](kaggle/README.md).

@@ -18,3 +18,12 @@ store:
 Do not commit large traces or binaries to normal Git history. Publish them as a
 versioned release asset or dataset and commit only a small index with immutable
 URLs and hashes.
+
+The minimum pre-submission checks are specified in
+[`docs/local_acceptance_gates.md`](../docs/local_acceptance_gates.md). Random
+control results validate the evaluator and establish a chance floor; they are
+not connectome-performance results.
+
+The current strict-offline chance-control runner is invoked with
+`make baseline-local`. Its JSON bundles are generated beneath
+`results/random_baseline/` and are intentionally ignored by Git.

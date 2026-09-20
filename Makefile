@@ -8,9 +8,13 @@ FRAMEWORK_DIR    := vendor/ARC-AGI-3-Agents
 COMP_SLUG        := arc-prize-2026-arc-agi-3
 GAME             ?=
 STEPS            ?= 200
+BASELINE_SEEDS   ?= 0 1 2 3 4
+BASELINE_ACTIONS ?= 80
+BASELINE_GAMES   ?= all
+BASELINE_OUTPUT  ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke play-local verify-local baseline-local list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -40,6 +44,11 @@ play-local: ## Play all public games, or one with GAME=ls20
 
 verify-local: ## Official-style two-game random-agent smoke run
 	$(UV_RUN) python scripts/play_local.py --game ls20,vc33 --max-steps 50
+
+baseline-local: ## Run the strict-offline five-seed public random baseline
+	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/evaluate_random_baseline.py \
+		--seeds $(BASELINE_SEEDS) --games $(BASELINE_GAMES) \
+		--action-budget $(BASELINE_ACTIONS) $(if $(BASELINE_OUTPUT),--output $(BASELINE_OUTPUT))
 
 list-games: ## List public ARC-AGI-3 games
 	$(UV_RUN) python scripts/play_local.py --list

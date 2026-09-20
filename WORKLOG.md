@@ -47,9 +47,11 @@ and are not stored in normal Git history.
   one legal action in strict-offline mode.
 - A public-set random-baseline run completed in all 25 games without an
   exception. The requested 200-action ceiling was reduced by the adapter's
-  existing `MAX_ACTIONS=80` safety cap, for 2,000 total actions. It completed
-  one level in `sp80`; this is a smoke result, not evidence about connectome
-  performance.
+  existing `MAX_ACTIONS=80` setting, and it completed one level in `sp80`.
+  A later scorecard probe found that the pinned upstream loop uses `<=` and
+  therefore permits 81 actions at that setting; the earlier 2,000-action total
+  was an invalid estimate and no exact per-game artifact was preserved. This is
+  a smoke result, not evidence about connectome performance.
 
 ### Measured MaleCNS build
 
@@ -172,14 +174,73 @@ contains provenance rather than the downloaded tables themselves.
 - This kernel contains the deterministic random-legal baseline and no compiled
   graph assets. Even an official rerun of this version would be a pipeline and
   random-baseline measurement, not a connectome-driven FlyGI evaluation.
+- The user decided to defer any official competition submission until local
+  baseline and engineering gates pass. No leaderboard submission has been made.
+- The Kaggle image installed `arc-agi==0.9.8`, while the current local lock
+  resolves `arc-agi==0.9.9`. Local results must record this parity difference,
+  and the submission package must be rechecked against the competition wheel.
+
+## 2026-09-20 — Local pre-submission gates and evaluator
+
+### Completed
+
+- Adopted an explicit no-submission policy until the local engineering gates in
+  `docs/local_acceptance_gates.md` pass. The random notebook remains a packaging
+  smoke and will not be submitted as though it were a FlyGI baseline.
+- Added `scripts/evaluate_random_baseline.py` and `make baseline-local`. The
+  evaluator runs only cached, exact-version public games in strict-offline mode,
+  uses five explicit evaluation seeds by default, and enforces an exact
+  80-environment-action ceiling independently of the upstream off-by-one loop.
+- The evaluator writes a new immutable JSON artifact under the ignored
+  `results/random_baseline/` tree and refuses to overwrite an existing result.
+  It preserves full action/payload traces, frame hashes, official local
+  scorecards, seeds, failures, dependency and Git provenance, source hashes,
+  timing, memory, legal-action checks, coordinate checks, and summaries.
+- Added an automatic deterministic replay of cached game `lf52` (or the first
+  selected game if `lf52` is absent). Replay comparison excludes timing noise
+  but includes action payloads, states, levels, legal masks, and observation
+  hashes.
+
+### Verification results
+
+- `uv run pytest`: 29 tests passed, including four new evaluator tests.
+- Ruff lint and formatting checks passed for all 78 checked files.
+- A real strict-offline 2-game by 2-seed smoke matrix (`lf52`, `sp80`; 12
+  actions each) produced 4/4 successful rows, 48/48 completed actions, zero
+  illegal actions, zero invalid `ACTION6` coordinates, zero budget violations,
+  and a matching `lf52` deterministic replay. This temporary smoke artifact is
+  not a public-set baseline result.
+
+### Provisional full-graph feasibility measurement
+
+On the development Apple M4 machine with 16 GB memory, loading the compiled
+166,700-node, 25,582,837-edge graph took 0.736 seconds. The uncompressed SciPy
+CSR arrays occupied 205,329,500 bytes, and the process peak RSS reported during
+the probe was 345,423,872 bytes.
+
+After one warmup update, eight exploratory timings of the simple float32 update
+`h <- tanh(0.7 h + 0.3 W h)` produced:
+
+| Internal steps per action | Median ms | p95 ms | Derived actions/s |
+| ---: | ---: | ---: | ---: |
+| 1 | 35.34 | 37.13 | 28.30 |
+| 2 | 70.79 | 71.43 | 14.13 |
+| 4 | 141.50 | 142.18 | 7.07 |
+| 8 | 282.84 | 303.58 | 3.54 |
+
+These are back-of-the-envelope sparse-update timings, not a Milestone 2
+benchmark: the dynamics backend, sensory input, state contract, 10,000-step
+finite-activity test, and controlled benchmark protocol do not exist yet. At
+the observed medians, graph updates alone would take approximately 71, 142,
+283, or 566 seconds for one 25-game seed at 80 actions for `K=1,2,4,8`.
 
 ## Next steps
 
-1. **Choose whether to run the official random-baseline evaluation.** The
-   private notebook pipeline is verified. With separate explicit authorization,
-   submit kernel version 1 to the competition to trigger the hidden gateway,
-   then record its result. This spends submission quota and is not a connectome
-   evaluation.
+1. **Complete local Gate 0 from a clean checkpoint.** Run the strict-offline
+   random control on all 25 cached public games with seeds `0..4` and an exact
+   80-action ceiling. Require 125/125 rows, zero failures, illegal actions,
+   invalid coordinates, or budget violations, plus a matching deterministic
+   replay. Record the ignored artifact's hash and summary here.
 2. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
    backend, deterministic initialization, finite-activity tests, CPU graph-step
    benchmark, and runtime/memory measurements for internal-step counts
@@ -189,10 +250,10 @@ contains provenance rather than the downloaded tables themselves.
    readout, legal-action masking, coordinate head, and declared reset policy.
    Add causal-path tests proving that changing the frame can change sensory
    input, graph activity, logits, and the selected action.
-4. **Public evaluation plumbing.** Replace the placeholder evaluation modules
-   with immutable result manifests, explicit seeds, action traces, failures,
-   timing, and per-game summaries. Keep the random baseline separate from the
-   connectome-driven agent.
+4. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
+   seeds, and action budget as the random control. Preserve immutable results
+   and compare matched `(game, seed)` rows without requiring a positive score or
+   claiming a biological advantage.
 5. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
    `groups.npz`, the config, and reviewed manifests as a versioned private
    Kaggle Dataset. Update the notebook to load and verify these assets exactly
