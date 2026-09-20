@@ -48,6 +48,8 @@ data/**/*.npy
 # Generated experiment and Kaggle outputs. Their READMEs stay tracked.
 results/*
 !results/README.md
+!results/manifests/
+!results/manifests/*.json
 kaggle/output/
 kaggle/generated/
 kaggle/dist/

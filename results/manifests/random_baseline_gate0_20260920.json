@@ -1,0 +1,78 @@
+{
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "result_id": "random-baseline-gate0-20260920T223612Z",
+  "scope": "strict-offline public-game random-legal chance control",
+  "status": "passed",
+  "source_artifact": {
+    "relative_path": "results/random_baseline/20260920T223612.620834Z-8ebd0f45f4.json",
+    "tracked_in_git": false,
+    "bytes": 8029063,
+    "sha256": "05af1d81f7132d268cf50e075c15981459cf8e4c9eb5c65a86c5d6461b57dba2"
+  },
+  "provenance": {
+    "git_commit": "0c619e81d919600193f3ac15715fa01bc6f3aae5",
+    "git_dirty": false,
+    "created_at_utc": "2026-09-20T22:36:21.122822+00:00",
+    "arc_agi": "0.9.9",
+    "arcengine": "0.9.3",
+    "numpy": "2.5.3",
+    "peak_rss_bytes": 173522944
+  },
+  "parameters": {
+    "games": 25,
+    "public_levels_per_seed": 183,
+    "seeds": [0, 1, 2, 3, 4],
+    "action_budget_per_game_seed": 80,
+    "strict_offline": true,
+    "policy": "uniform-random-legal"
+  },
+  "gate": {
+    "rows_expected": 125,
+    "rows_successful": 125,
+    "rows_failed": 0,
+    "actions_completed": 10000,
+    "illegal_actions": 0,
+    "invalid_action6_coordinates": 0,
+    "budget_violations": 0,
+    "deterministic_replay_game": "lf52-271a04aa",
+    "deterministic_replay_seed": 0,
+    "deterministic_replay_matched": true,
+    "passed": true
+  },
+  "outcomes": {
+    "mean_score": 0.0506261328060636,
+    "max_score": 4.761904761904762,
+    "median_score": 0.0,
+    "total_levels_completed": 2,
+    "rows_with_progress": 2,
+    "completed_games": 0,
+    "official_resets": 54,
+    "observation_repeats": 2102,
+    "unique_observations": 8023,
+    "action_entropy_bits": 2.6006485106936625,
+    "policy_median_ns": 15375.0,
+    "policy_p95_ns": 24252.04999999997,
+    "environment_step_median_ns": 359959.0,
+    "environment_step_p95_ns": 1570354.799999998
+  },
+  "progress_rows": [
+    {
+      "game_id": "sp80-589a99af",
+      "seed": 1,
+      "levels_completed": 1,
+      "score": 1.5663618388531881,
+      "actions": 80,
+      "resets": 2
+    },
+    {
+      "game_id": "sp80-589a99af",
+      "seed": 2,
+      "levels_completed": 1,
+      "score": 4.761904761904762,
+      "actions": 80,
+      "resets": 2
+    }
+  ],
+  "interpretation": "This is a chance-control and evaluator result. It does not use the compiled connectome and is not a FlyGI performance result."
+}

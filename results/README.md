@@ -27,3 +27,7 @@ not connectome-performance results.
 The current strict-offline chance-control runner is invoked with
 `make baseline-local`. Its JSON bundles are generated beneath
 `results/random_baseline/` and are intentionally ignored by Git.
+
+Small reviewed result indexes under `results/manifests/` are tracked. They
+record the local artifact path, digest, clean code revision, gate outcome, and
+summary without committing multi-megabyte action traces.

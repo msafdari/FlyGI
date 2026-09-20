@@ -211,6 +211,44 @@ contains provenance rather than the downloaded tables themselves.
   and a matching `lf52` deterministic replay. This temporary smoke artifact is
   not a public-set baseline result.
 
+### Gate 0 full public result
+
+- Ran `make baseline-local` from clean commit
+  `0c619e81d919600193f3ac15715fa01bc6f3aae5`. The exact-version matrix covered
+  all 25 cached public games, seeds `0..4`, and an exact 80-action ceiling: 125
+  rows and 10,000 actions.
+- Gate 0 passed: 125/125 rows succeeded with zero exceptions, illegal actions,
+  invalid `ACTION6` coordinates, or budget violations. The seeded `lf52` replay
+  matched exactly with trace SHA-256
+  `10dd5c7c10005434e59a5cd03e5523e2509f970ec8dd54608c94b403ac20392e`.
+- The ignored full artifact is
+  `results/random_baseline/20260920T223612.620834Z-8ebd0f45f4.json`: 8,029,063
+  bytes, SHA-256
+  `05af1d81f7132d268cf50e075c15981459cf8e4c9eb5c65a86c5d6461b57dba2`.
+  A small reviewed summary is tracked at
+  `results/manifests/random_baseline_gate0_20260920.json`.
+
+| Chance-control measurement | Observed value |
+| --- | ---: |
+| Mean official-style public score over 125 rows | 0.0506261 |
+| Median score | 0 |
+| Maximum row score | 4.7619048 |
+| Rows with any level progress | 2 / 125 (1.6%) |
+| Levels completed | 2 / 915 available game-seed levels (0.219%) |
+| Fully completed games | 0 |
+| Resets | 54 |
+| Median policy time | 0.0154 ms/action |
+| p95 policy time | 0.0243 ms/action |
+| Median environment-step time | 0.360 ms/action |
+| p95 environment-step time | 1.570 ms/action |
+| Peak process RSS | 173,522,944 bytes |
+
+Both nonzero rows were `sp80`: seed 1 completed one level with score 1.56636,
+and seed 2 completed one level with score 4.76190. The other 123 rows scored
+zero. These descriptive chance numbers are not independent Bernoulli trials and
+must not be interpreted as a general game-solving probability or a connectome
+result.
+
 ### Provisional full-graph feasibility measurement
 
 On the development Apple M4 machine with 16 GB memory, loading the compiled
@@ -236,29 +274,24 @@ the observed medians, graph updates alone would take approximately 71, 142,
 
 ## Next steps
 
-1. **Complete local Gate 0 from a clean checkpoint.** Run the strict-offline
-   random control on all 25 cached public games with seeds `0..4` and an exact
-   80-action ceiling. Require 125/125 rows, zero failures, illegal actions,
-   invalid coordinates, or budget violations, plus a matching deterministic
-   replay. Record the ignored artifact's hash and summary here.
-2. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
+1. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
    backend, deterministic initialization, finite-activity tests, CPU graph-step
    benchmark, and runtime/memory measurements for internal-step counts
    `K = 1, 2, 4, 8`.
-3. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
+2. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
    encoder, persistent connectome state, descending-neuron trace, literal
    readout, legal-action masking, coordinate head, and declared reset policy.
    Add causal-path tests proving that changing the frame can change sensory
    input, graph activity, logits, and the selected action.
-4. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
+3. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
    seeds, and action budget as the random control. Preserve immutable results
    and compare matched `(game, seed)` rows without requiring a positive score or
    claiming a biological advantage.
-5. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
+4. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
    `groups.npz`, the config, and reviewed manifests as a versioned private
    Kaggle Dataset. Update the notebook to load and verify these assets exactly
    once, without downloading MaleCNS or rebuilding the graph during evaluation.
-6. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
+5. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
    add seeded directed degree-preserving rewires, weight shuffles, a matched
    sparse reservoir, the no-reservoir baseline, paired evaluation, and the
    preregistered statistical analysis. Do not claim a biological advantage
