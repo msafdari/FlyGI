@@ -87,6 +87,11 @@ class ConnectomePolicy:
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
     ) -> None:
+        if bool(ablate_graph) and float(network.parameters.recurrent_gain) != 0.0:
+            raise PolicyError(
+                "an ablated policy must have zero recurrent gain; otherwise the "
+                "graph is still contributing"
+            )
         if projection.sensory_indices.max() >= network.node_count:
             raise PolicyError("sensory population does not fit the graph")
         if readout.size != action_map.readout_size:
@@ -188,14 +193,10 @@ class ConnectomePolicy:
             available_action_ids=turn.available_action_ids,
         )
         drive = self._projection.drive(features.vector)
-        if self._ablate_graph:
-            # The preregistered ablation: the interface is untouched and only
-            # the graph's contribution to the readout is removed.
-            self._state = self._network.initial_state()
-        else:
-            self._state = self._network.advance(
-                self._state, drive, internal_steps=self._internal_steps
-            )
+        # The ablation is a property of the network and the projection, not a
+        # branch here: a bypass condition runs the identical update with zero
+        # recurrent gain and a readout-targeted projection of matched budget.
+        self._state = self._network.advance(self._state, drive, internal_steps=self._internal_steps)
         self._previous_grid = features.grid
         return self._state, features.changed_cells
 

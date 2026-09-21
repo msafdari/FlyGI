@@ -79,7 +79,7 @@ def _frame(seed: int, **kwargs: object) -> FakeFrame:
     return FakeFrame(frame=[_grid(seed)], **kwargs)  # type: ignore[arg-type]
 
 
-def _network(seed: int = 0) -> ScipyRateNetwork:
+def _network(gain: float = 0.9, seed: int = 0) -> ScipyRateNetwork:
     generator = np.random.default_rng(seed)
     dense = (generator.random((NODES, NODES)) < 0.05) * generator.random((NODES, NODES))
     np.fill_diagonal(dense, 0.0)
@@ -93,19 +93,29 @@ def _network(seed: int = 0) -> ScipyRateNetwork:
     matrix.eliminate_zeros()
     return ScipyRateNetwork(
         matrix.astype(np.float32),
-        RateParameters(internal_steps=4, leak=0.3, recurrent_gain=0.9),
+        RateParameters(internal_steps=4, leak=0.3, recurrent_gain=gain),
     )
 
 
 def _policy(*, ablate_graph: bool = False, seed: int = 0) -> ConnectomePolicy:
-    network = _network()
+    """Mirror the factory, including the matched bypass for the ablation."""
+
+    readout_indices = np.arange(NODES - READOUT, NODES, dtype=np.int64)
+    if ablate_graph:
+        # Same interface budget, readout-targeted, zero recurrence.
+        target = readout_indices
+        per_neuron = max(1, round(SENSORY * 32 / READOUT))
+        network = _network(gain=0.0)
+    else:
+        target = np.arange(SENSORY, dtype=np.int64)
+        per_neuron = 32
+        network = _network()
     projection = build_sensory_projection(
-        np.arange(SENSORY, dtype=np.int64),
+        target,
         NODES,
         seed=seed,
-        options=ProjectionOptions(connections_per_neuron=32, input_scale=1.0),
+        options=ProjectionOptions(connections_per_neuron=per_neuron, input_scale=1.0),
     )
-    readout_indices = np.arange(NODES - READOUT, NODES, dtype=np.int64)
     readout = DescendingTrace(readout_indices, NODES)
     return ConnectomePolicy(
         FakeGameAction,
@@ -180,14 +190,40 @@ def test_sensory_drive_changes_graph_state_and_readout_and_logits() -> None:
 
 
 def test_ablating_the_graph_changes_the_action_sequence() -> None:
-    """The preregistered ablation. If this passes with no change, the graph is decorative."""
+    """The preregistered bypass. No change here would mean the graph is decorative."""
 
-    live = _policy(ablate_graph=False)
-    ablated = _policy(ablate_graph=True)
+    live = _adaptive_policy(ablate_graph=False)
+    ablated = _adaptive_policy(ablate_graph=True)
     live_actions = [live.choose_action(_frame(step)).value for step in range(12)]
     ablated_actions = [ablated.choose_action(_frame(step)).value for step in range(12)]
 
     assert live_actions != ablated_actions
+
+
+def test_the_bypass_still_drives_its_readout() -> None:
+    """A bypass whose readout is always silent measures nothing."""
+
+    ablated = _policy(ablate_graph=True)
+    for step in range(6):
+        ablated.choose_action(_frame(step))
+    assert not all(record.readout_silent for record in ablated.records)
+    assert float(np.abs(ablated.state).max()) > 0.0
+
+
+def test_the_bypass_has_zero_recurrent_gain() -> None:
+    with pytest.raises(PolicyError):
+        ConnectomePolicy(
+            FakeGameAction,
+            network=_network(gain=0.9),
+            projection=build_sensory_projection(
+                np.arange(NODES - READOUT, NODES, dtype=np.int64), NODES, seed=0
+            ),
+            readout=DescendingTrace(np.arange(NODES - READOUT, NODES, dtype=np.int64), NODES),
+            action_map=LiteralActionMap(READOUT),
+            coordinate_head=CoordinateHead(READOUT),
+            internal_steps=4,
+            ablate_graph=True,
+        )
 
 
 def test_state_persists_across_actions_and_carries_history() -> None:

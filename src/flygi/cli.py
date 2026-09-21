@@ -317,8 +317,10 @@ def _write_null_runtime(
         dataframe_schemas=source_manifest.get("dataframe_schemas", {}),
         counts=counts,
         preprocessing=preprocessing,
+        # ``path`` must be the bare filename, matching the real build, because
+        # runtime loading resolves output hashes relative to the bundle root.
         outputs=[
-            file_record(destination / name, name=name)
+            {**file_record(destination / name, name=name), "path": name}
             for name in ("graph.npz", "node_metadata.npz", "groups.npz")
         ],
     )

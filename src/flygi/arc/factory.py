@@ -104,19 +104,32 @@ def build_connectome_policy(
     readout_indices = np.asarray(loaded.groups[readout_group], dtype=np.int64)
     sensory = sensory_indices_for_superclass(directory, config.encoder.sensory_superclass)
 
+    # The preregistered no-recurrent-graph control keeps the interface budget
+    # and removes only the graph. Its projection targets the readout population
+    # directly, with connections_per_neuron rescaled so the total number of
+    # interface nonzeros matches the real condition's, and the recurrent gain
+    # is zero. Without the retargeting the readout would never be driven at all
+    # and the control would measure nothing.
+    target = readout_indices if ablate_graph else sensory
+    if ablate_graph:
+        matched_total = int(sensory.size) * int(config.encoder.connections_per_neuron)
+        per_neuron = max(1, round(matched_total / int(readout_indices.size)))
+    else:
+        per_neuron = int(config.encoder.connections_per_neuron)
+
     if projection is None:
         projection = build_sensory_projection(
-            sensory,
+            target,
             loaded.node_count,
             seed=derive_seed(config.seed, "encoder"),
             options=ProjectionOptions(
-                connections_per_neuron=config.encoder.connections_per_neuron,
+                connections_per_neuron=per_neuron,
                 input_scale=config.encoder.input_scale,
             ),
         )
-    elif not np.array_equal(projection.sensory_indices, sensory):
+    elif not np.array_equal(projection.sensory_indices, target):
         raise RuntimeAssemblyError(
-            "a reused projection must target the same sensory population; "
+            "a reused projection must target the same population; "
             "the interface must not vary across graph conditions"
         )
 
@@ -127,7 +140,7 @@ def build_connectome_policy(
                 config.dynamics.internal_steps if internal_steps is None else internal_steps
             ),
             leak=config.dynamics.leak,
-            recurrent_gain=config.dynamics.recurrent_gain,
+            recurrent_gain=0.0 if ablate_graph else config.dynamics.recurrent_gain,
             bias=config.dynamics.bias,
         ),
         copy_connectivity=False,

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
 import pytest
 from scipy import sparse
@@ -212,3 +214,116 @@ def test_self_edges_are_permitted_only_when_declared() -> None:
     )
     assert stats["allow_self_edges"] is True
     assert stats["rejected"]["self_edge"] == 0
+
+
+def _write_runtime_bundle(directory: Path, matrix: sparse.csr_matrix) -> None:
+    """Write a minimal but fully valid runtime bundle, as `graph build` would."""
+
+    import json
+
+    from flygi.connectome.groups import save_groups
+    from flygi.connectome.manifest import create_connectome_manifest, write_manifest
+
+    directory.mkdir(parents=True, exist_ok=True)
+    node_count = matrix.shape[0]
+    body_ids = np.arange(1, node_count + 1, dtype=np.uint64)
+    np.savez_compressed(
+        directory / "graph.npz",
+        format_version=np.asarray([1], dtype=np.int16),
+        indptr=matrix.indptr.astype(np.int64),
+        indices=matrix.indices.astype(np.int32),
+        weights=matrix.data.astype(np.float32),
+        node_ids=body_ids,
+        body_to_index_ids=body_ids,
+        body_to_index_values=np.arange(node_count, dtype=np.int32),
+    )
+    labels = np.array(["central"] * node_count, dtype="<U21")
+    labels[:4] = "descending_neuron"
+    np.savez_compressed(
+        directory / "node_metadata.npz",
+        format_version=np.asarray([1], dtype=np.int16),
+        body_ids=body_ids,
+        dense_indices=np.arange(node_count, dtype=np.int32),
+        superclass=labels,
+    )
+    save_groups(directory / "groups.npz", {"descending_neurons": np.arange(4, dtype=np.int32)})
+
+    def record(name: str) -> dict:
+        import hashlib
+
+        payload = (directory / name).read_bytes()
+        return {
+            "name": name,
+            "path": name,
+            "bytes": len(payload),
+            "sha256": hashlib.sha256(payload).hexdigest(),
+        }
+
+    manifest = create_connectome_manifest(
+        release="test:v0",
+        sources=[],
+        dataframe_schemas={},
+        counts={
+            "annotated_neurons": node_count,
+            "retained_neurons": node_count,
+            "aggregated_directed_edges": int(matrix.nnz),
+            "runtime_nonzero_edges": int(matrix.nnz),
+            "synaptic_contact_weight_sum": int(matrix.nnz),
+            "self_edges": 0,
+            "disconnected_nodes": 0,
+            "unknown_transmitters": 0,
+            "missing_annotations": 0,
+        },
+        preprocessing={"normalization": "incoming_l1", "epsilon": 1e-8},
+        outputs=[record(name) for name in ("graph.npz", "node_metadata.npz", "groups.npz")],
+    )
+    write_manifest(directory / "manifest.json", manifest)
+    json.loads((directory / "manifest.json").read_text())
+
+
+def test_a_generated_null_loads_through_the_ordinary_runtime_loader(tmp_path: Path) -> None:
+    """Regression guard: every generated null was once rejected at load time.
+
+    Runtime loading resolves output hashes relative to the bundle root, so an
+    output record carrying an absolute filesystem path made the whole null
+    unloadable with "manifest is missing runtime outputs". A null that cannot
+    be loaded cannot be a control.
+    """
+
+    import argparse
+
+    from flygi.cli import _build_nulls
+    from flygi.config import load_config
+    from flygi.dynamics.runtime import load_runtime_connectome
+
+    source = tmp_path / "runtime"
+    matrix = _random_graph(node_count=80, density=0.1, seed=21)
+    rows = np.asarray(abs(matrix).sum(axis=1)).ravel()
+    matrix = sparse.diags((1.0 / (1e-8 + rows)).astype(np.float32)) @ matrix
+    matrix = matrix.tocsr()
+    matrix.sort_indices()
+    matrix.eliminate_zeros()
+    _write_runtime_bundle(source, matrix.astype(np.float32))
+
+    config = load_config("configs/literal_rate_signed.yaml")
+    object.__setattr__(config.graph, "output_dir", source)
+    object.__setattr__(config.data, "output_dir", source)
+
+    assert (
+        _build_nulls(
+            config,
+            argparse.Namespace(k=1, seed=5, swaps_per_edge=2.0, batch_pairs=100),
+        )
+        == 0
+    )
+
+    null_dir = source / "nulls" / "degree_preserving" / "seed-5"
+    bundle = load_runtime_connectome(null_dir, required_groups=("descending_neurons",))
+
+    assert bundle.node_count == matrix.shape[0]
+    assert bundle.edge_count == matrix.nnz
+    assert len(bundle.groups["descending_neurons"]) == 4
+    verified = set(bundle.verified_hashes)
+    assert any(key.endswith("graph.npz") for key in verified)
+    assert any(key.endswith("groups.npz") for key in verified)
+    assert bundle.manifest["preprocessing"]["null"]["invariants"]["valid"]
