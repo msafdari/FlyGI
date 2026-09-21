@@ -59,6 +59,10 @@ does not satisfy this gate.
 
 ## Gate 2 — closed-loop literal FlyGI
 
+Run with `scripts/evaluate_connectome.py`, which reuses the Gate 0 harness
+unchanged and swaps only the policy, so matched `(game, seed)` rows compare
+directly with the chance control.
+
 Before packaging a connectome submission:
 
 - prove the live causal path `frame -> encoder -> graph state ->
@@ -76,3 +80,26 @@ Compare the full agent with the random control on identical `(game, seed)`
 pairs. Report scores and level completions descriptively. Beating random is not
 required for the first honest Track A submission, and doing so would not by
 itself establish a biological-topology advantage.
+
+## Gate 3 — offline Kaggle packaging
+
+`scripts/package_kaggle_dataset.py` stages the compiled connectome, its config,
+and an independent digest record, then verifies the staged copy loads and
+hash-checks through the ordinary runtime loader with no network and no source
+tables present. It uploads nothing.
+
+Before spending a competition submission:
+
+- the notebook must run with internet disabled and must not download MaleCNS,
+  call neuPrint, or rebuild the graph during evaluation;
+- assets must be loaded and hash-verified once per process, not once per game;
+- the adapter must report which mode it is in, and must never silently fall
+  back to the random policy while appearing to be a connectome run;
+- `K` and every other deployment setting must be declared in the packaged
+  config rather than inherited from a default; and
+- timing and memory must be remeasured on the actual Kaggle runtime, because
+  the local `K=4` cost of about 140 ms per action is machine-specific.
+
+A competition submission spends quota and is an outward-facing action. It
+requires explicit authorization each time; passing these gates does not confer
+standing permission.

@@ -1,9 +1,56 @@
 # Experimental controls
 
-Controls are the core scientific test, but their generation and full evaluation
-belong to Milestone 4. Milestones 0-1 establish the graph representation and
-manifest fields needed to make later comparisons auditable. No null graph or
-biological advantage is claimed here.
+Controls are the core scientific test. The directed degree-preserving null and
+the no-recurrent-graph bypass are implemented and have been run; the remaining
+conditions are not. No biological advantage on ARC is claimed anywhere in this
+repository.
+
+## Implementation status
+
+| Condition | Status |
+| --- | --- |
+| MaleCNS, unsigned and heuristic-signed | Compiled, hash-verified, evaluated |
+| Directed degree-preserving rewires | Implemented in `flygi/connectome/nulls.py`; three seeds built and evaluated |
+| No recurrent graph (bypass) | Implemented; interface-matched and evaluated |
+| Random legal agent | Implemented; Gate 0 chance floor recorded |
+| Weight shuffle | Not implemented |
+| Sign shuffle within transmitter strata | Not implemented |
+| Generic matched sparse reservoir | Not implemented |
+
+## The implemented degree-preserving null
+
+Batched directed double-edge swaps: `a -> b` and `c -> d` become `a -> d` and
+`c -> b`, which leaves `out_degree(a)`, `out_degree(c)`, `in_degree(b)` and
+`in_degree(d)` unchanged. Proposals that are degenerate, that would create a
+self-edge under a config forbidding them, that would duplicate an existing
+aggregated edge, or that collide with another accepted swap in the same batch
+are rejected.
+
+The declared weight rule is that each weight travels with its presynaptic slot,
+so the global weight multiset and every node's outgoing weight multiset are
+preserved exactly by the rewiring. The real condition's normalization is then
+re-applied, because moving edges between postsynaptic rows changes those rows'
+incoming sums.
+
+Each null is written as a self-contained, hash-verified runtime bundle whose
+`node_metadata.npz` and `groups.npz` are copied from the source runtime, so
+declared sensory and readout node identities are shared with the real graph by
+construction rather than by convention.
+
+At ten swaps per edge, the measured nulls retain 0.51% of the real edge set.
+
+## The implemented bypass
+
+The no-recurrent-graph control keeps the entire interface and removes only the
+graph. Its projection targets the descending population directly, with
+`connections_per_neuron` rescaled so total interface nonzeros match the real
+condition, and the recurrent gain is zero. A policy refuses to be constructed
+as ablated with nonzero gain, and a test asserts its readout is not silent: a
+bypass whose readout is always zero measures nothing. An earlier version of
+this control simply zeroed the persistent state, which made it a do-nothing
+agent rather than a matched comparison.
+
+## The full declared control set
 
 | Condition | Must preserve or match | Question |
 | --- | --- | --- |

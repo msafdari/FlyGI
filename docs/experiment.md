@@ -2,19 +2,33 @@
 
 ## Current scope
 
-This repository has completed Milestones 0 through 2:
+This repository has completed Milestones 0 through 3, and part of Milestone 4:
 
-1. exercise the official ARC-AGI-3-compatible random-agent path locally; and
-2. reproducibly fetch, inspect, and convert MaleCNS v1.0 into a sparse runtime
-   graph with a provenance manifest; and
+1. exercise the official ARC-AGI-3-compatible random-agent path locally;
+2. reproducibly fetch, inspect, and convert MaleCNS v1.0 into sparse runtime
+   graphs, unsigned and heuristic-signed, with provenance manifests;
 3. run the frozen full-graph leaky-rate equation through a deterministic SciPy
-   CPU backend with a separate correctness, stability, and timing gate.
+   CPU backend with a separate correctness, stability, and timing gate;
+4. run a live closed loop from ARC frame to legal ARC action through the full
+   166,700-neuron graph, with a nonlearned encoder and decoder; and
+5. generate seeded directed degree-preserving nulls and an interface-matched
+   no-recurrent-graph bypass, and evaluate them on the public set.
+
+Not done: weight and sign shuffles, a matched generic reservoir, ten or more
+nulls for confirmatory analysis, any trained interface (Track B), plasticity
+(Track C), and any competition submission.
 
 The existence of configuration sections for encoders, decoders, controls, or
-Kaggle packaging does not mean those later milestones have been executed. Run
-the repository's verification commands and inspect an actual result manifest
-before making a completion claim. No connectome-driven ARC, leaderboard, or
-biological-performance result is reported at this stage.
+Kaggle packaging does not mean those milestones have been executed. Run the
+repository's verification commands and inspect an actual result manifest before
+making a completion claim.
+
+Connectome-driven ARC results now exist for the public set and are recorded in
+`WORKLOG.md` with their immutable artifacts. No leaderboard result exists, and
+no biological advantage on ARC is claimed. A measured structural difference
+between the real graph and its degree-preserving nulls is recorded in
+`results/manifests/degree_preserving_comparison_20260921.json`; that is a
+property of the graph's dynamics, not evidence that the property helps on ARC.
 
 ## Scientific question
 
