@@ -38,6 +38,10 @@ Run the manual full-data gate with:
 make benchmark-full-graph
 ```
 
+The reviewed 2026-09-21 local run passed; its small tracked index is
+`results/manifests/dynamics_gate1_20260921.json`. Re-run the gate after any
+change to dynamics, graph assets, or the benchmark protocol.
+
 Before the graph is connected to ARC decisions:
 
 - execute one CPU update on the full 166,700-neuron graph with the declared

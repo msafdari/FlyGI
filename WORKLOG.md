@@ -315,26 +315,64 @@ Verification before the source checkpoint:
   development tree was dirty, stability was shortened to 10 steps, and only
   `K=1,2` were timed. That smoke is not a Gate 1 result.
 
+### Gate 1 full-graph dynamics result
+
+- Ran `make benchmark-full-graph` from clean commit
+  `9ec7930ab66bf14a55b449cdda70192810b98da1`. The runner verified the
+  exact literal-runtime release, node/edge counts, preprocessing contract, and
+  all three pinned runtime hashes before exercising the graph.
+- Gate 1 passed with no issues. One full rate update returned a finite float32
+  state of shape `(166700,)`. Repeating the configured `K=2` update from the
+  same state and drive matched bit-for-bit at SHA-256
+  `7f32ec1beb739556605fea18b42e8a0072a1d1a00a1af2cbd98180a2a260e8d4`.
+- The deterministic graph-mediated probe injected body 70869, which is not a
+  descending neuron, through a real edge of weight `0.06378546` into descending
+  body 55579. Opposite inputs produced opposite nonzero selected-target
+  activity (`+/-0.00126539`), different full states, and different DN vectors.
+- All 10,000 full-graph internal steps were finite and within the declared
+  float32 bound. The maximum observed absolute activity was `0.24695361`; the
+  final saturation fraction at `|h| >= 0.99` was zero. The stability phase took
+  353.585 seconds.
+- Verified process-cold loading took 0.886 seconds. Peak process RSS was
+  348,536,832 bytes (332.4 MiB); the process-wide high-water RSS sampled after
+  every `K` remained the same.
+- The ignored full artifact is
+  `results/dynamics/20260921T040425.078313Z-gate1.json`: 11,772 bytes,
+  SHA-256
+  `048e277cd8b71d623fab7f35333d5239f6e8eec98df8f95a1b2a054740b5d161`.
+  Its reviewed summary is tracked at
+  `results/manifests/dynamics_gate1_20260921.json`.
+
+| Internal steps per action | Median ms | p95 ms | Actions/s | Projected 125-row graph time |
+| ---: | ---: | ---: | ---: | ---: |
+| 1 | 35.080 | 35.329 | 28.51 | 350.8 s |
+| 2 | 70.171 | 71.145 | 14.25 | 701.7 s |
+| 4 | 140.302 | 141.185 | 7.13 | 1,403.0 s |
+| 8 | 285.704 | 322.078 | 3.50 | 2,857.0 s |
+
+`K=2` remains the declared local-development default. Its graph-only projection
+for the future 125-row public agent gate is about 11.7 minutes on this Apple M4.
+This is not a final deployment choice: timing and memory must be remeasured on
+the actual Kaggle runtime before submission.
+
 ## Next steps
 
-1. **Complete Gate 1 from a clean checkpoint.** Run `make benchmark-full-graph`
-   for 10,000 real-connectome internal steps and the full `K=1,2,4,8` timing
-   sweep. Record the ignored artifact's hash and reviewed summary here before
-   declaring Milestone 2 complete.
-2. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
+1. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
    encoder, persistent connectome state, descending-neuron trace, literal
    readout, legal-action masking, coordinate head, and declared reset policy.
    Add causal-path tests proving that changing the frame can change sensory
    input, graph activity, logits, and the selected action.
-3. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
+2. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
    seeds, and action budget as the random control. Preserve immutable results
    and compare matched `(game, seed)` rows without requiring a positive score or
    claiming a biological advantage.
-4. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
+3. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
    `groups.npz`, the config, and reviewed manifests as a versioned private
    Kaggle Dataset. Update the notebook to load and verify these assets exactly
    once, without downloading MaleCNS or rebuilding the graph during evaluation.
-5. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
+   Remeasure candidate `K` values on the actual Kaggle runtime before freezing
+   the deployment setting.
+4. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
    add seeded directed degree-preserving rewires, weight shuffles, a matched
    sparse reservoir, the no-reservoir baseline, paired evaluation, and the
    preregistered statistical analysis. Do not claim a biological advantage

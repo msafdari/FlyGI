@@ -31,3 +31,8 @@ The current strict-offline chance-control runner is invoked with
 Small reviewed result indexes under `results/manifests/` are tracked. They
 record the local artifact path, digest, clean code revision, gate outcome, and
 summary without committing multi-megabyte action traces.
+
+Full-graph dynamics gate bundles are generated beneath `results/dynamics/` and
+are also ignored. Their tracked indexes preserve the verified runtime identity,
+correctness and stability outcomes, timing summaries, resource high-water mark,
+and exact source-artifact digest.

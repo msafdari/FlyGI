@@ -2,8 +2,7 @@
 
 ## Current scope
 
-This repository has completed Milestones 0 and 1 and implemented the Milestone
-2 backend:
+This repository has completed Milestones 0 through 2:
 
 1. exercise the official ARC-AGI-3-compatible random-agent path locally; and
 2. reproducibly fetch, inspect, and convert MaleCNS v1.0 into a sparse runtime

@@ -6,11 +6,11 @@ The scientific question is deliberately narrower than the joke: when the
 interface and compute budget are matched, does the biological wiring make useful
 closed-loop computations more accessible than rigorous null graphs?
 
-This checkout implements **Milestones 0–1 and the Milestone 2 backend**:
-repository and ARC submission plumbing, MaleCNS source acquisition and
-verification, sparse graph compilation, the frozen SciPy/CPU leaky-rate
-backend, provenance manifests, and acceptance tests. Check `WORKLOG.md` for the
-full-data Gate 1 status. The ARC encoder/decoder loop, learning, plasticity, and
+This checkout implements **Milestones 0–2**: repository and ARC submission
+plumbing, MaleCNS source acquisition and verification, sparse graph compilation,
+the frozen SciPy/CPU leaky-rate backend, provenance manifests, and acceptance
+tests. The full-data dynamics gate passes; see `WORKLOG.md` for its artifact and
+measurements. The ARC encoder/decoder loop, learning, plasticity, and
 biological-performance claims are not included yet.
 
 See [WORKLOG.md](WORKLOG.md) for the latest reproducible checkpoint, measured

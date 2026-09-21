@@ -1,0 +1,124 @@
+{
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "result_id": "dynamics-gate1-20260921T040425Z",
+  "scope": "full literal MaleCNS leaky-rate dynamics acceptance gate",
+  "status": "passed",
+  "source_artifact": {
+    "relative_path": "results/dynamics/20260921T040425.078313Z-gate1.json",
+    "tracked_in_git": false,
+    "bytes": 11772,
+    "sha256": "048e277cd8b71d623fab7f35333d5239f6e8eec98df8f95a1b2a054740b5d161"
+  },
+  "provenance": {
+    "git_commit": "9ec7930ab66bf14a55b449cdda70192810b98da1",
+    "git_dirty": false,
+    "created_at_utc": "2026-09-21T04:10:35.094394+00:00",
+    "flygi": "0.1.0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pyyaml": "6.0.3",
+    "hardware": {
+      "model": "MacBook Air",
+      "chip": "Apple M4",
+      "cores": "10 (4 Performance and 6 Efficiency)",
+      "memory": "16 GB",
+      "machine": "arm64"
+    },
+    "config_sha256": "6126e1678a8f7c7f5ee7f3a16afa0b6df04a2deffd6330572129fbb44d9c1b46",
+    "uv_lock_sha256": "f388bfa4457476e6687ee0faab9cc4f9929c7e61083f0d3cae0e1af6220d8397",
+    "benchmark_script_sha256": "cb5f80175f93ea6dc8549090d37f1e0782026c8337473a9c2cedd0f07eab3b99",
+    "connectome_manifest_sha256": "b72040d069c6d5b7901b89079e6199d1e95046f3d782d83c146644b418224223"
+  },
+  "graph": {
+    "release": "male-cns:v1.0",
+    "nodes": 166700,
+    "edges": 25582837,
+    "descending_neurons": 1314,
+    "csr_bytes": 205329500,
+    "graph_sha256": "99c9441be6e6ac89eb20c3c17162308240f2e4326003d97a4e5034e998be8acc",
+    "node_metadata_sha256": "2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c",
+    "groups_sha256": "09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d"
+  },
+  "parameters": {
+    "model": "rate",
+    "execution_backend": "scipy-csr-cpu",
+    "activation": "tanh",
+    "configured_internal_steps": 2,
+    "leak": 0.3,
+    "recurrent_gain": 0.9,
+    "bias": 0.0,
+    "declared_agent_initial_state": "zeros",
+    "diagnostic_initial_state": "seeded uniform [-0.01, 0.01]",
+    "state_dtype": "float32",
+    "graph_frozen": true,
+    "seed": 20260919,
+    "warmup_actions_per_k": 3,
+    "measured_actions_per_k": 25
+  },
+  "gate": {
+    "passed": true,
+    "issues": [],
+    "runtime_identity_passed": true,
+    "one_full_step_finite": true,
+    "same_backend_exact_repeat": true,
+    "input_states_differ": true,
+    "descending_traces_differ": true,
+    "selected_target_responded": true,
+    "stability_steps_completed": 10000,
+    "stability_finite": true,
+    "stability_within_bound": true
+  },
+  "correctness": {
+    "repeat_state_sha256": "7f32ec1beb739556605fea18b42e8a0072a1d1a00a1af2cbd98180a2a260e8d4",
+    "probe_presynaptic_body_id": 70869,
+    "probe_presynaptic_is_descending": false,
+    "probe_descending_body_id": 55579,
+    "probe_weight": 0.06378545612096786,
+    "probe_positive_target_activity": 0.0012653947342187166,
+    "probe_negative_target_activity": -0.0012653947342187166,
+    "maximum_absolute_dn_difference": 0.0025307894684374332
+  },
+  "stability": {
+    "wall_ns": 353585024167,
+    "maximum_absolute_observed": 0.24695360660552979,
+    "declared_bound": 1.0000009536743164,
+    "final_saturation_fraction_abs_ge_0_99": 0.0,
+    "final_state_sha256": "083590bb2a5eb2a7acb0d7ecf7dc92a6195915cead67e8e4943089d581400294"
+  },
+  "resources": {
+    "verified_load_wall_ns": 885540917,
+    "peak_rss_bytes": 348536832
+  },
+  "timing": {
+    "1": {
+      "median_ns": 35079583.0,
+      "p95_ns": 35328750.0,
+      "actions_per_second_from_median": 28.506610241062443,
+      "projected_125_row_gate_seconds_from_median": 350.79583,
+      "peak_rss_bytes_after": 348536832
+    },
+    "2": {
+      "median_ns": 70170875.0,
+      "p95_ns": 71144658.2,
+      "actions_per_second_from_median": 14.250926755580574,
+      "projected_125_row_gate_seconds_from_median": 701.70875,
+      "peak_rss_bytes_after": 348536832
+    },
+    "4": {
+      "median_ns": 140302292.0,
+      "p95_ns": 141184924.8,
+      "actions_per_second_from_median": 7.1274673117955905,
+      "projected_125_row_gate_seconds_from_median": 1403.02292,
+      "peak_rss_bytes_after": 348536832
+    },
+    "8": {
+      "median_ns": 285703917.0,
+      "p95_ns": 322078225.1999999,
+      "actions_per_second_from_median": 3.5001270213596687,
+      "projected_125_row_gate_seconds_from_median": 2857.03917,
+      "peak_rss_bytes_after": 348536832
+    }
+  },
+  "interpretation": "Gate 1 establishes local full-graph correctness, determinism, finite activity, causal input-to-DN propagation, and timing. It is not an ARC performance result or evidence of a biological-topology advantage. K=2 remains the declared development default; deployment timing must be rechecked on Kaggle hardware."
+}
