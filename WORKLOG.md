@@ -355,25 +355,195 @@ for the future 125-row public agent gate is about 11.7 minutes on this Apple M4.
 This is not a final deployment choice: timing and memory must be remeasured on
 the actual Kaggle runtime before submission.
 
+## 2026-09-21 — Dynamical-regime diagnostic of the declared operating point
+
+### Why this was run
+
+Gate 1 established that the full graph runs, is deterministic, stays finite,
+and that a single injected edge can move a descending neuron. It did not
+establish that the *declared operating point* can carry ARC frame information
+from a sensory population to the readout population within a decision, nor that
+the real graph is dynamically distinguishable from a null. Those are
+preconditions for Milestone 3 being worth building, because Milestone 3 freezes
+`K`, `leak`, `gain`, `sign_mode`, and the readout population into the agent.
+
+### Completed
+
+- Added `scripts/probe_dynamics_regime.py` and `make probe-regime`. It is a
+  measurement, not an acceptance gate, and records `is_acceptance_gate: false`.
+- Added eight fast offline tests, including one that asserts the probe's
+  optional null does **not** preserve out-degree, so it cannot be mistaken for
+  the preregistered control.
+- Ran the probe from clean commit `a68205923eb2d269ac48f1316cc89ac999c33042`
+  against the pinned literal runtime at the declared `K=2`, `leak=0.3`,
+  `gain=0.9` operating point, injecting the 6,098-neuron `ol_sensory`
+  superclass and reading the 1,314-neuron descending-neuron group.
+
+### Verification results
+
+- `uv run pytest`: 101 tests passed (93 before, plus eight new probe tests).
+- Ruff lint and formatting checks passed for all 84 checked files.
+- The probe verified all three pinned runtime output hashes before measuring.
+
+### Measured results
+
+The ignored full artifact is
+`results/diagnostics/20260921T065851.628556Z-regime.json`: 17,790 bytes,
+SHA-256 `dede33ca6da0ced54b6b17b55dd506bfbfebcfd9003ae5d46ff63742bbd89e94`.
+Its reviewed index is tracked at
+`results/manifests/dynamics_regime_20260921.json`. Cold load took 0.848 s; the
+probe's peak process RSS was 1,060,765,696 bytes, which is higher than Gate 1's
+348 MB because the probe additionally materializes a transpose and a null copy.
+That figure describes the probe, not the deployment path.
+
+**Finding 1 — the declared `K=2` is smaller than the anatomy requires.**
+Breadth-first search along directed edges from `ol_sensory` reaches 3 of 1,314
+descending neurons at one hop, 688 at two hops, and all 1,314 at three hops.
+Driving all photoreceptors with a constant unit input moves zero descending
+neurons after one internal step, 3 after two, 688 after three, and all 1,314
+after four. With `internal_steps: 2` the descending readout is therefore
+effectively blind on the first decision of an episode and reads a roughly
+two-turn-stale frame thereafter. 2,879 retained nodes are not reachable from
+the visual sensory population at all.
+
+**Finding 2 — cross-action memory is set by the leak term, not by the graph.**
+After driving two distinct input patterns for 8 actions and then removing all
+drive, the normalized state difference decays as follows, per external action:
+
+| Silent actions | Real graph | Weak null |
+| ---: | ---: | ---: |
+| 1 | 0.5386 | 0.5026 |
+| 2 | 0.3101 | 0.2568 |
+| 4 | 0.1227 | 0.0705 |
+| 8 | 0.0312 | 0.0105 |
+| 12 | 0.0115 | 0.0068 |
+
+The half-life is 2 actions in both conditions. The observed `rho(W) = 1.000254`
+implies a 33-step time constant, but that applies only to the uniform Perron
+mode; the informative modes decay far faster. Under `sign_mode: unsigned` with
+`normalization: incoming_l1` every row sums to 1 by construction, so the matrix
+is exactly row-stochastic and its spectral radius is pinned near 1 for any
+topology — the weak null observes `rho = 0.997754`. A dynamical property that
+is identical by construction across conditions cannot discriminate them.
+
+**Finding 3 — the real graph and the null differ sharply, but not in memory.**
+
+| Measurement | Real | Weak null |
+| --- | ---: | ---: |
+| Hops to reach all 1,314 DNs | 3 | 2 |
+| DNs reached at hop 1 | 3 | 1,305 |
+| Nodes unreachable from sensory | 2,879 | 302 |
+| Mean absolute DN activity (settled) | 5.83e-06 | 3.70e-03 |
+| Readout participation ratio (32 inputs) | 5.53 | 28.95 |
+| Top-1 variance fraction of DN code | 0.3048 | 0.0506 |
+| Cross-action memory half-life | 2 actions | 2 actions |
+
+The rewiring short-circuits the fly's layered visual pathway: 1,305 of 1,314
+descending neurons become directly postsynaptic to photoreceptors. The real
+graph's descending code is about 630 times weaker in absolute magnitude and
+about five times lower-dimensional. These are large, reproducible structural
+differences. They are *not* evidence of a biological advantage, because the
+weak null is not the preregistered control and because no ARC outcome has been
+measured.
+
+### Findings and decisions
+
+- A decoder reading raw descending activity must standardize it. Settled mean
+  absolute DN activity is 5.83e-06 against a network-wide mean of order 1e-2.
+  The values are comfortably representable in float32, but an unnormalized
+  linear readout would be dominated by its bias.
+- The effective descending-neuron code is roughly 5.5-dimensional under real
+  anatomy. That is a real constraint on the Milestone 3 decoder, which must
+  drive up to eight discrete actions plus two coordinate heads.
+- `K` must be at least 4 on anatomical grounds. The Gate 1 timing table puts
+  `K=4` at 140.3 ms per action on this machine, against 70.2 ms at `K=2`. The
+  compute cost is real but is not obviously prohibitive; Kaggle-runtime timing
+  is still required before any deployment choice.
+- The unsigned/incoming-L1 combination should not remain the only compiled
+  condition. Building the `sign_mode: heuristic` runtime is the next step.
+- Correction to an earlier informal estimate made during review: a first pass
+  that injected 2,000 *randomly chosen* nodes rather than the annotated visual
+  population found the real and null graphs to be nearly indistinguishable.
+  With the anatomically declared `ol_sensory` injection they are strongly
+  distinguishable on pathway depth, readout magnitude, and dimensionality. The
+  claim that survives both passes is the narrower one: *cross-action memory* is
+  leak-dominated and near-identical across conditions.
+
+### Limitations
+
+- The probe's null is a within-row presynaptic shuffle. It preserves each
+  postsynaptic node's in-degree and its exact per-row weight multiset, and
+  destroys out-degree and all higher-order structure. It is strictly weaker
+  than the preregistered directed degree-preserving rewire, and no real-versus-
+  null conclusion in this entry may be carried into a confirmatory claim.
+- One null seed was measured. The preregistered analysis requires at least ten
+  independently seeded nulls.
+- Sensory injection used i.i.d. random patterns over photoreceptors, not ARC
+  frames. No encoder exists yet, so these numbers bound the interface rather
+  than describe it.
+- No ARC game was played and no score was produced.
+
 ## Next steps
 
-1. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
-   encoder, persistent connectome state, descending-neuron trace, literal
-   readout, legal-action masking, coordinate head, and declared reset policy.
-   Add causal-path tests proving that changing the frame can change sensory
-   input, graph activity, logits, and the selected action.
-2. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
+The ordering below changed on 2026-09-21. Milestone 3 freezes `K`, `leak`,
+`gain`, `sign_mode`, and the readout population into the agent, and the
+dynamical-regime diagnostic showed that the currently declared values are not
+the right ones to freeze. The short diagnostic detour therefore runs first.
+
+1. **Signed runtime condition.** Compile `sign_mode: heuristic` as a second
+   immutable runtime beside the unsigned one, with its own manifest and hashes.
+   Record its observed edge count: `modulator_treatment: zero` and
+   `unknown_treatment: zero` delete every outgoing edge of the affected
+   presynaptic neurons, so the signed graph is **not** edge-count-matched to the
+   unsigned graph and needs its own nulls rather than the unsigned graph's.
+2. **Preregistered directed degree-preserving null.** Implement
+   `src/flygi/connectome/nulls.py`, which is still a stub, using batched
+   vectorized directed double-edge swaps that preserve both in- and out-degree,
+   reject self-loops and duplicate aggregated edges, preserve sensory and
+   readout node identities, and serialize every seed and graph hash. Validate
+   the degree sequences and weight multisets programmatically. This is the gate
+   on every real-versus-null claim in the project; the probe's within-row
+   shuffle does not substitute for it.
+3. **Operating-point sweep.** Run `make probe-regime` across
+   {unsigned, signed} x {real, degree-preserving null} x candidate `(K, leak,
+   gain)` points, with `K >= 4` on the anatomical grounds recorded above. Select
+   the point by cross-action memory and real-versus-null separation, not by ARC
+   score, and apply the identical selected point to every graph condition.
+4. **Milestone 3 — closed-loop FlyGI**, built against the point selected in
+   step 3. Implement the fixed neutral visual encoder, persistent connectome
+   state, descending-neuron trace, literal readout, legal-action masking,
+   coordinate head, and declared reset policy. Add causal-path tests proving
+   that changing the frame can change sensory input, graph activity, logits, and
+   the selected action. The decoder must standardize the descending trace;
+   settled mean absolute DN activity is of order 1e-6.
+5. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
    seeds, and action budget as the random control. Preserve immutable results
    and compare matched `(game, seed)` rows without requiring a positive score or
    claiming a biological advantage.
-3. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
+6. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
    `groups.npz`, the config, and reviewed manifests as a versioned private
    Kaggle Dataset. Update the notebook to load and verify these assets exactly
    once, without downloading MaleCNS or rebuilding the graph during evaluation.
    Remeasure candidate `K` values on the actual Kaggle runtime before freezing
    the deployment setting.
-4. **Milestone 4 — scientific controls.** After the closed-loop agent is live,
-   add seeded directed degree-preserving rewires, weight shuffles, a matched
-   sparse reservoir, the no-reservoir baseline, paired evaluation, and the
-   preregistered statistical analysis. Do not claim a biological advantage
-   without the degree-preserving comparison.
+7. **Milestone 4 — scientific controls.** Add weight shuffles, sign shuffles
+   within transmitter strata, a matched generic sparse reservoir, the
+   no-reservoir baseline, at least ten independently seeded degree-preserving
+   nulls, paired evaluation, and the preregistered statistical analysis. Do not
+   claim a biological advantage without the degree-preserving comparison.
+
+### Open design questions raised by the 2026-09-21 diagnostic
+
+- **The primary endpoint is near-degenerate.** Gate 0 measured 2 of 125
+  chance-control rows with any level progress, both in `sp80`, and those two
+  rows account for the entire 0.0506 mean. A paired test on public-set RHAE at
+  that base rate has very little power. Consider promoting the predeclared
+  behavioral diagnostics in the specification's section 13.3 to co-primary
+  status. Any such change must be made and recorded *before* confirmatory
+  results are inspected, or it is not a preregistration.
+- **There is no positive control.** Every null in the specification's section 12
+  is designed to be no better than the real graph. If all conditions score zero,
+  the design cannot separate "the biological graph confers no advantage" from
+  "this interface and operating point cannot express an advantage that any graph
+  could confer." A deliberately well-tuned reservoir at matched node and edge
+  count would make that distinction.

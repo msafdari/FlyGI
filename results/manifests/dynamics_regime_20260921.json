@@ -1,0 +1,202 @@
+{
+  "conditions": {
+    "real": {
+      "anatomical_hops": {
+        "all_targets_hop": 3,
+        "first_target_hop": 1,
+        "nodes_unreachable_from_sensory": 2879,
+        "per_hop_targets_reached": [
+          3,
+          688,
+          1314
+        ]
+      },
+      "cross_action_memory": {
+        "driven_readout_cosine": 0.03331216052174568,
+        "half_life_actions": 2,
+        "state_difference_fraction_by_silent_action": [
+          0.5386127829551697,
+          0.3100941479206085,
+          0.1898934245109558,
+          0.12270856648683548,
+          0.08294011652469635,
+          0.05817245692014694,
+          0.0420682467520237,
+          0.031216055154800415,
+          0.02368312142789364,
+          0.018322812393307686,
+          0.014427206479012966,
+          0.011544105596840382
+        ]
+      },
+      "edges": 25582837,
+      "linearized_leading_eigenvalue": 0.9700684542415887,
+      "negative_weight_fraction": 0.0,
+      "readout_arrival": {
+        "all_1314_nonzero_internal_step": 4,
+        "first_nonzero_internal_step": 2,
+        "readout_max_abs_at_step_4": 0.000839482992887497,
+        "readout_nonzero_at_step_2": 3
+      },
+      "readout_code": {
+        "inputs": 32,
+        "mean_pairwise_cosine": 0.016013026752027086,
+        "participation_ratio": 5.533737441840781,
+        "readout_mean_abs": 5.831500402564416e-06,
+        "top1_variance_fraction": 0.30477476386678554,
+        "top5_variance_fraction": 0.8376372597336051
+      },
+      "spectral_radius": 1.0002535342281067
+    },
+    "weak_null": {
+      "anatomical_hops": {
+        "all_targets_hop": 2,
+        "first_target_hop": 1,
+        "nodes_unreachable_from_sensory": 302,
+        "per_hop_targets_reached": [
+          1305,
+          1314
+        ]
+      },
+      "cross_action_memory": {
+        "driven_readout_cosine": -0.056505635380744934,
+        "half_life_actions": 2,
+        "state_difference_fraction_by_silent_action": [
+          0.5026116371154785,
+          0.25681835412979126,
+          0.13336782157421112,
+          0.07054286450147629,
+          0.038376543670892715,
+          0.022069526836276054,
+          0.01411787886172533,
+          0.010464463382959366,
+          0.008791723288595676,
+          0.007907960563898087,
+          0.007315986789762974,
+          0.006837903521955013
+        ]
+      },
+      "edges": 25582837,
+      "linearized_leading_eigenvalue": 0.9693937021916998,
+      "negative_weight_fraction": 0.0,
+      "readout_arrival": {
+        "all_1314_nonzero_internal_step": 3,
+        "first_nonzero_internal_step": 2,
+        "readout_max_abs_at_step_4": 0.02871529385447502,
+        "readout_nonzero_at_step_2": 1305
+      },
+      "readout_code": {
+        "inputs": 32,
+        "mean_pairwise_cosine": -0.005601919984259908,
+        "participation_ratio": 28.951339011944373,
+        "readout_mean_abs": 0.0036982386372983456,
+        "top1_variance_fraction": 0.05059215353999564,
+        "top5_variance_fraction": 0.2346593102999422
+      },
+      "spectral_radius": 0.9977544525618517
+    }
+  },
+  "graph": {
+    "nodes": 166700,
+    "preprocessing": {
+      "allow_self_edges": false,
+      "compress_output": true,
+      "epsilon": 1e-08,
+      "group_definitions": {
+        "descending_neurons": 1314
+      },
+      "matrix_convention": "W[post_index, pre_index]",
+      "modulator_treatment": "zero",
+      "node_filter_column": "superclass",
+      "node_filter_semantics": "non-null/non-empty",
+      "node_filter_values": null,
+      "node_order": "ascending uint64 bodyId",
+      "normalization": "incoming_l1",
+      "overwrite": false,
+      "sign_mode": "unsigned",
+      "spectral_radius": 0.9,
+      "strict_source_schema": true,
+      "transmitter_counts": {
+        "excitatory": 103720,
+        "inhibitory": 59262,
+        "modulator_treatment": "zero",
+        "modulatory": 541,
+        "unknown": 3177,
+        "unknown_treatment": "zero"
+      },
+      "unknown_transmitter_treatment": "zero",
+      "weight_transform": "log1p"
+    },
+    "release": "male-cns:v1.0",
+    "runtime_dir": "data/processed/male-cns-v1.0/literal-rate",
+    "verified_output_hashes": {
+      "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate/graph.npz": "99c9441be6e6ac89eb20c3c17162308240f2e4326003d97a4e5034e998be8acc",
+      "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate/groups.npz": "09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d",
+      "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate/node_metadata.npz": "2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c"
+    }
+  },
+  "interpretation": "Diagnostic measurement, not a gate and not an ARC or biological-advantage result. Two findings bear on the declared configuration. First, sensory drive needs three anatomical hops and four internal steps to move all 1,314 descending neurons, so the declared K=2 leaves the readout blind on the first decision and lagged thereafter. Second, cross-action memory has a half-life of two actions in both conditions, which is set by the leak term rather than by recurrence through the graph. The real and weak-null graphs differ sharply in pathway depth, readout magnitude, and readout dimensionality, but barely in cross-action memory. The weak null preserves in-degree and per-row weight multisets only; it is not the preregistered directed degree-preserving null and no real-versus-null claim may rest on it.",
+  "is_acceptance_gate": false,
+  "operating_point": {
+    "activation": "tanh",
+    "bias": 0.0,
+    "internal_steps": 2,
+    "leak": 0.3,
+    "recurrent_gain": 0.9
+  },
+  "populations": {
+    "node_count": 166700,
+    "readout_group": "descending_neurons",
+    "readout_size": 1314,
+    "sensory_size": 6098,
+    "sensory_superclass": "ol_sensory"
+  },
+  "probe_protocol": {
+    "amplitude": 0.5,
+    "code_inputs": 32,
+    "drive_actions": 8,
+    "power_iterations": 300,
+    "seed": 0,
+    "settle_actions": 6,
+    "silent_actions": 12
+  },
+  "provenance": {
+    "config_sha256": "6126e1678a8f7c7f5ee7f3a16afa0b6df04a2deffd6330572129fbb44d9c1b46",
+    "created_at_utc": "2026-09-21T06:59:38.095444+00:00",
+    "git_commit": "a68205923eb2d269ac48f1316cc89ac999c33042",
+    "git_dirty": false,
+    "numpy": "2.5.3",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "probe_script_sha256": "df06cca8995b7fd3960c4ac96cf5d53b4c9a04c9fbf38befbd9550dcdc955dab",
+    "python": "3.12.12",
+    "scipy": "1.18.1"
+  },
+  "resources": {
+    "load_seconds": 0.8484402920585126,
+    "peak_rss_bytes": 1060765696
+  },
+  "result_id": "dynamics-regime-20260921T065851Z",
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "scope": "dynamical-regime diagnostic of the literal MaleCNS runtime at the declared operating point",
+  "source_artifact": {
+    "bytes": 17790,
+    "relative_path": "results/diagnostics/20260921T065851.628556Z-regime.json",
+    "sha256": "dede33ca6da0ced54b6b17b55dd506bfbfebcfd9003ae5d46ff63742bbd89e94",
+    "tracked_in_git": false
+  },
+  "status": "measured",
+  "weak_null": {
+    "destroys": [
+      "presynaptic out-degree",
+      "all higher-order topology"
+    ],
+    "is_preregistered_degree_preserving_null": false,
+    "kind": "within_row_presynaptic_shuffle",
+    "preserves": [
+      "postsynaptic in-degree",
+      "per-row weight multiset"
+    ],
+    "seed": 20260921
+  }
+}
