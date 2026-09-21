@@ -1101,3 +1101,41 @@ Next:
 4. inspect the ordinary notebook log for the exact verified
    `FLYGI_PREFLIGHT=` identity before making the one authorized official
    submission; then record its version and status here.
+
+## 2026-09-21 — Final Kaggle bundle staged and locally preflighted
+
+After the post-freeze gate checkpoint was pushed as `6ac1d49`, the Kaggle
+dataset was rebuilt from `configs/literal_rate_signed.yaml` and the generated
+notebook was rebuilt from tracked source. Both outputs remain ignored by Git.
+
+The staged dataset contains 94,508,993 bytes of runtime/config inputs:
+
+| File | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `runtime/graph.npz` | 92,033,305 | `45e332d90ea4e881ece5d4d72216955bd53eec922aa60955a69db510272eff61` |
+| `runtime/node_metadata.npz` | 2,464,976 | `2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c` |
+| `runtime/groups.npz` | 3,189 | `09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d` |
+| `runtime/manifest.json` | 7,523 | `6223e065029b2699d2e21e079ca7a6a8349672785230a0ba3f4ecf83eacd27f4` |
+| `config.yaml` | 4,650 | `98f6d7b10acd6336af73daa2bae47933b721988758858a3cedd021991a803262` |
+
+The stage loader independently loaded and verified 166,700 nodes, 24,559,055
+edges, 1,314 descending neurons, release `male-cns:v1.0`, and heuristic signs.
+A local import of the exact adapter against the staged directory completed and
+emitted:
+
+```text
+FLYGI_PREFLIGHT={"edges":24559055,"internal_steps":4,"mode":"connectome","nodes":166700,"release":"male-cns:v1.0","sign_mode":"heuristic","verified":true,...}
+```
+
+The generated notebook is 110,068 bytes with SHA-256
+`4eac1595996d22919e76bceb620c2b7f8a9b88c2e5769329ae03650c50543118`.
+Its tracked metadata hash is
+`d729819b3e4dc494c4a2bec179a50768887461ac4aa12ba1672372a19f9221e5`
+and declares the private notebook `megusalexandrus/flygi-arc-agi-3`, private
+dataset source `megusalexandrus/flygi-malecns-runtime`, CPU execution, and no
+internet.
+
+Current action: publish the staged dataset privately. Next: confirm the dataset
+exists and is private, push the private notebook, wait for its ordinary run,
+inspect the log for the exact preflight identity above, and only then make the
+one authorized official submission.
