@@ -1,0 +1,104 @@
+{
+  "artifact": {
+    "bytes": 1815901,
+    "relative_path": "results/sampler_calibration/20260921T211921.876683Z-5a1228c249.json",
+    "sha256": "0146857a58f6830841688a28e6a3f04ea6eab4adaf45f39bd6dc18419c63af58",
+    "tracked_in_git": false
+  },
+  "candidates": {
+    "balanced": {
+      "action_temperature": 0.35,
+      "coordinate_temperature": 0.5,
+      "eligible": true,
+      "metrics": {
+        "action_entropy_fraction_of_legal_max": 0.2560232078257174,
+        "causal_turn_disagreement_rate": 0.41875,
+        "mean_consecutive_repeats": 12.25,
+        "mean_unique_observations": 26.75,
+        "median_policy_ns": 134709271.0
+      },
+      "rank": 2,
+      "rank_sum": 9
+    },
+    "exploratory": {
+      "action_temperature": 0.7,
+      "coordinate_temperature": 1.0,
+      "eligible": true,
+      "metrics": {
+        "action_entropy_fraction_of_legal_max": 0.6012412951416507,
+        "causal_turn_disagreement_rate": 0.3875,
+        "mean_consecutive_repeats": 12.25,
+        "mean_unique_observations": 27.375,
+        "median_policy_ns": 136812750.0
+      },
+      "rank": 3,
+      "rank_sum": 10
+    },
+    "focused": {
+      "action_temperature": 0.15,
+      "coordinate_temperature": 0.2,
+      "eligible": true,
+      "metrics": {
+        "action_entropy_fraction_of_legal_max": 0.1134518305682234,
+        "causal_turn_disagreement_rate": 0.43125,
+        "mean_consecutive_repeats": 12.25,
+        "mean_unique_observations": 28.125,
+        "median_policy_ns": 134903771.0
+      },
+      "rank": 1,
+      "rank_sum": 8
+    }
+  },
+  "checks": {
+    "all_candidates_eligible": true,
+    "bypass_engineering_passed": true,
+    "causal_real_bypass_disagreement_present": true,
+    "forbidden_score_or_level_key_paths_in_artifact": 0,
+    "real_engineering_passed": true,
+    "same_seed_replay_passed": true,
+    "seed_diversity_categories": [
+      "click_only",
+      "mixed"
+    ]
+  },
+  "interpretation": "The predeclared, score-blind ordinal ranking selected the focused scale-aware sampler. All candidates satisfied the engineering, replay, seed-diversity, entropy, and graph-causal eligibility guards. Focused ranked first on unique observations and real-versus-bypass turn disagreement, tied on consecutive repeats, ranked second on runtime, and ranked third on legal-normalized action entropy. Public ARC score and level progress were excluded from ranking and from the immutable artifact, so the selected temperatures were frozen before the subsequent full performance gate.",
+  "is_arc_performance_result": false,
+  "is_biological_advantage_claim": false,
+  "protocol": {
+    "action_budget": 40,
+    "conditions": [
+      "real-signed",
+      "no-recurrent-graph-bypass"
+    ],
+    "games": [
+      "ft09-0d8bbf25",
+      "lp85-305b61c3",
+      "ls20-9607627b",
+      "sp80-589a99af"
+    ],
+    "ranking_method": "equal-weight ordinal rank sum",
+    "score_blind": true,
+    "seeds": [
+      0,
+      1
+    ]
+  },
+  "provenance": {
+    "calibration_config_sha256": "6ceeec750b2b2e0a2fad294266e37108bdb40d38f9f84244fbc6b6e123d26b40",
+    "calibration_runner_sha256": "9b675272347a445c94b69dcf95fbe9b328c403e1d8caee9ec287696d2f05a7ec",
+    "created_at_utc": "2026-09-21T21:24:05.398032+00:00",
+    "evaluation_harness_sha256": "648af6412da18ee638aac7232fcf4f788a548dcc4be2f867afec2c9f1da4b2f4",
+    "git_commit": "58f1f09997966ba6c8489ff3b03e42d321b20a66",
+    "git_dirty": false,
+    "peak_rss_bytes": 427753472
+  },
+  "result_id": "sampler-calibration-20260921",
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "selected": {
+    "action_temperature": 0.15,
+    "coordinate_temperature": 0.2,
+    "name": "focused"
+  },
+  "status": "selected-and-frozen"
+}

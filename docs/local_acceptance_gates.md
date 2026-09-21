@@ -63,11 +63,22 @@ Run with `scripts/evaluate_connectome.py`, which reuses the Gate 0 harness
 unchanged and swaps only the policy, so matched `(game, seed)` rows compare
 directly with the chance control.
 
+The deployment policy is first frozen with `make calibrate-sampler`. That gate
+uses a predeclared three-point grid and excludes official score and level
+progress from ranking. The selected `focused` sampler uses action temperature
+0.15 and coordinate temperature 0.20. Run the post-freeze full gate with:
+
+```bash
+make connectome-local
+```
+
 Before packaging a connectome submission:
 
 - prove the live causal path `frame -> encoder -> graph state ->
   descending-neuron trace -> logits -> legal action`;
 - verify the declared persistence and reset policy;
+- verify same-seed action/payload replay and across-seed diversity, including on
+  click-only games;
 - load and hash-check graph assets once, then propagate the graph on every
   active non-reset decision;
 - show that a preregistered graph-output ablation changes at least one action in
@@ -101,5 +112,5 @@ Before spending a competition submission:
   the local `K=4` cost of about 140 ms per action is machine-specific.
 
 A competition submission spends quota and is an outward-facing action. It
-requires explicit authorization each time; passing these gates does not confer
-standing permission.
+requires explicit authorization for the specific submission; passing these
+gates does not confer standing permission for later submissions.

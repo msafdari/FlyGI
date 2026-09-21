@@ -78,7 +78,7 @@ def novelty_centroid(
 class CoordinateHead:
     """Map a standardized readout trace to a legal ``(x, y)`` ARC coordinate."""
 
-    def __init__(self, readout_size: int, *, temperature: float = 0.5) -> None:
+    def __init__(self, readout_size: int, *, temperature: float = 0.2) -> None:
         if readout_size < 2 * GRID_BINS:
             raise ReadoutError(
                 f"coordinate head needs at least {2 * GRID_BINS} readout neurons, "

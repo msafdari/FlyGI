@@ -92,7 +92,7 @@ class LiteralActionMap:
         readout_size: int,
         *,
         action_slots: int = ACTION_SLOTS,
-        temperature: float = 0.35,
+        temperature: float = 0.15,
     ) -> None:
         if action_slots <= 0:
             raise ReadoutError("action_slots must be positive")

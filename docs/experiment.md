@@ -10,7 +10,8 @@ This repository has completed Milestones 0 through 3, and part of Milestone 4:
 3. run the frozen full-graph leaky-rate equation through a deterministic SciPy
    CPU backend with a separate correctness, stability, and timing gate;
 4. run a live closed loop from ARC frame to legal ARC action through the full
-   166,700-neuron graph, with a nonlearned encoder and decoder; and
+   166,700-neuron graph, with a nonlearned encoder and seeded stochastic
+   decoder calibrated without score; and
 5. generate seeded directed degree-preserving nulls and an interface-matched
    no-recurrent-graph bypass, and evaluate them on the public set.
 

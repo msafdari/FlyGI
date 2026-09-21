@@ -36,8 +36,8 @@ def test_checked_in_configs_parse() -> None:
     assert literal.dynamics.initial_state == "zeros"
     assert literal.dynamics.state_dtype == "float32"
     assert literal.decoder.sampling_method == "zscore_softmax_categorical"
-    assert literal.decoder.action_temperature == 0.35
-    assert literal.decoder.coordinate_temperature == 0.5
+    assert literal.decoder.action_temperature == 0.15
+    assert literal.decoder.coordinate_temperature == 0.2
     assert literal.decoder.decision_seed_policy == "explicit_per_policy_or_config_derived"
     assert literal.decoder.coordinate_fallback == "novelty_centroid"
     assert literal.decoder.unchanged_click_exploration == "seeded_untried_uniform"

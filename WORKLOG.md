@@ -898,13 +898,13 @@ scientific-control backlog.
 3. **Completed: ground click exploration.** The policy uses the changed-cell
    novelty centroid when available, then seeded untried-grid exploration after
    a click causes no observation change.
-4. **In progress: calibrate without score tuning.** Evaluate the preregistered
-   three-point sampler grid
+4. **Completed: calibrate without score tuning.** The preregistered three-point
+   sampler grid was ranked
    using only action entropy, unique observations, consecutive repeats, graph
-   sensitivity, and runtime. Freeze the choice before looking at scores, then run
-   one full 25-game by five-seed real-agent gate. The deployment candidate must
-   keep zero illegal actions, valid coordinates, replay stability, and a live
-   graph-to-action causal path.
+   sensitivity, and runtime. The focused choice was frozen before looking at
+   scores. The next gate is one full 25-game by five-seed real-agent run; the
+   deployment candidate must keep zero illegal actions, valid coordinates,
+   replay stability, and a live graph-to-action causal path.
 5. **Stage and inspect the final bundle.** Rebuild the deterministic source zip
    and 95 MB dataset, verify every digest from the staged directory, and run the
    private notebook. Its ordinary log must explicitly report the signed
@@ -991,12 +991,49 @@ declared size.
 
 ### Immediate ordered next steps
 
-1. Commit and push this source-only checkpoint.
-2. Run the full declared score-blind calibration and freeze its eligible winner
-   into every deployment config without inspecting public score.
-3. Run one 25-game by five-seed signed-real gate at 80 actions, verify engineering
-   validity, replay, seed diversity, and graph-causal diagnostics, then record an
+1. Run one 25-game by five-seed signed-real gate at 80 actions, verify engineering
+   validity, replay, seed diversity, and live graph-use diagnostics, then record an
    immutable reviewed manifest.
-4. Rebuild and verify the staged dataset and deterministic notebook source.
-5. Publish the private dataset, run the private notebook, verify its preflight
+2. Rebuild and verify the staged dataset and deterministic notebook source.
+3. Publish the private dataset, run the private notebook, verify its preflight
    log, and make exactly one official competition submission.
+
+## 2026-09-21 — Score-blind sampler calibration passed
+
+The full preregistered calibration completed successfully on four games
+(`ft09`, `lp85`, `ls20`, `sp80`), seeds 0 and 1, 40 actions, and matched
+real-signed and no-recurrent-graph-bypass conditions. All three candidates were
+eligible: both conditions had zero failed rows, illegal actions, invalid
+coordinates, and budget violations; same-seed replay matched; both click-only
+and mixed games produced across-seed trace diversity; and every candidate had a
+nonzero real-versus-bypass action/payload disagreement.
+
+The equal-weight ordinal result, computed without public score or level
+progress, was:
+
+| Candidate | Action T | Coordinate T | Rank sum | Rank |
+| --- | ---: | ---: | ---: | ---: |
+| **focused** | **0.15** | **0.20** | **8** | **1** |
+| balanced | 0.35 | 0.50 | 9 | 2 |
+| exploratory | 0.70 | 1.00 | 10 | 3 |
+
+Focused recorded 28.125 mean unique observations, 12.25 mean consecutive
+repeats, 0.11345 legal-normalized action entropy, 0.43125 real/bypass causal
+turn disagreement, and 134.90 ms median policy time. It won on unique
+observations and causal disagreement, tied on repeats, ranked second on runtime,
+and traded away entropy. This is a small calibration and the one-point rank-sum
+margin should not be overinterpreted; the point of the procedure is to freeze a
+reasonable operating point without score selection.
+
+The immutable ignored artifact is
+`results/sampler_calibration/20260921T211921.876683Z-5a1228c249.json`
+(1,815,901 bytes, SHA-256
+`0146857a58f6830841688a28e6a3f04ea6eab4adaf45f39bd6dc18419c63af58`).
+A recursive audit found zero keys named `official`, `score`,
+`levels_completed`, or `final_levels_completed`. The reviewed, tracked summary
+is `results/manifests/sampler_calibration_20260921.json`.
+
+The focused temperatures are now frozen in all three checked-in decoder
+configs and in the source defaults. The next action is the full 25-game by
+five-seed signed-real gate; only that post-freeze run may be inspected for ARC
+performance before deployment.

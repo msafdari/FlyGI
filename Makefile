@@ -12,6 +12,12 @@ BASELINE_SEEDS   ?= 0 1 2 3 4
 BASELINE_ACTIONS ?= 80
 BASELINE_GAMES   ?= all
 BASELINE_OUTPUT  ?=
+CONNECTOME_CONFIG ?= configs/literal_rate_signed.yaml
+CONNECTOME_SEEDS ?= 0 1 2 3 4
+CONNECTOME_GAMES ?= all
+CONNECTOME_ACTIONS ?= 80
+CONNECTOME_CONDITION ?= real-signed-focused
+CONNECTOME_OUTPUT ?=
 DYNAMICS_STEPS   ?= 1 2 4 8
 DYNAMICS_WARMUPS ?= 3
 DYNAMICS_SAMPLES ?= 25
@@ -27,7 +33,7 @@ CALIBRATION_CANDIDATES ?= focused balanced exploratory
 CALIBRATION_OUTPUT ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local baseline-local benchmark-full-graph probe-regime calibrate-sampler list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke play-local verify-local baseline-local connectome-local benchmark-full-graph probe-regime calibrate-sampler list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -62,6 +68,13 @@ baseline-local: ## Run the strict-offline five-seed public random baseline
 	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/evaluate_random_baseline.py \
 		--seeds $(BASELINE_SEEDS) --games $(BASELINE_GAMES) \
 		--action-budget $(BASELINE_ACTIONS) $(if $(BASELINE_OUTPUT),--output $(BASELINE_OUTPUT))
+
+connectome-local: ## Run the frozen signed FlyGI gate on all cached public games
+	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/evaluate_connectome.py \
+		--config $(CONNECTOME_CONFIG) --condition $(CONNECTOME_CONDITION) \
+		--seeds $(CONNECTOME_SEEDS) --games $(CONNECTOME_GAMES) \
+		--action-budget $(CONNECTOME_ACTIONS) \
+		$(if $(CONNECTOME_OUTPUT),--output $(CONNECTOME_OUTPUT))
 
 benchmark-full-graph: ## Run the manual Milestone 2 full-connectome dynamics gate
 	$(UV_RUN) python scripts/benchmark_runtime.py \

@@ -86,8 +86,9 @@ decoder:
   action_slots: 8
   coordinate_head: literal_factorized_bins
   sampling_method: zscore_softmax_categorical
-  action_temperature: 0.35
-  coordinate_temperature: 0.5
+  # Frozen by the score-blind 2026-09-21 sampler calibration.
+  action_temperature: 0.15
+  coordinate_temperature: 0.2
   decision_seed_policy: explicit_per_policy_or_config_derived
   coordinate_fallback: novelty_centroid
   unchanged_click_exploration: seeded_untried_uniform

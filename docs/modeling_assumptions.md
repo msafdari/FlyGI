@@ -33,9 +33,11 @@ h_next = (1 - leak) * h + leak * tanh(gain * (W @ h) + drive + bias)
 ```
 
 where `drive` is already projected into graph space. It is held fixed for the
-configured number of internal steps. The literal baseline declares `K=2`,
+configured number of internal steps. The literal baseline declares `K=4`,
 `leak=0.3`, `gain=0.9`, scalar `bias=0`, zero initialization, and a frozen
-graph. State transitions return a new vector and never mutate the caller's
+graph. `K=4` was selected after the full-graph diagnostic found that all 1,314
+descending neurons first receive sensory influence at four internal steps; leak
+and gain have not been searched. State transitions return a new vector and never mutate the caller's
 state, input, or graph. A deterministic nonzero initialization exists only as
 an explicit seeded diagnostic; it is not the literal-agent initialization.
 
@@ -60,19 +62,28 @@ manifest records the transmitter counts, both treatments, and
 `edges_zeroed_by_sign_or_normalization` so the difference is measured rather
 than assumed.
 
-## Declared later-model choices
+## Implemented interface choices
 
-The neutral encoder will use a fixed seeded sparse projection shared across the
-real graph and all nulls. The bio-oriented encoder necessarily imposes a mapping
-from a rectangular 16-value ARC grid to fly visual populations. Neither is a
-unique biological interpretation.
+The neutral encoder uses a fixed seeded sparse projection shared across the real
+graph and its controls. It maps the declared ARC feature vector into the chosen
+sensory population; this is an experimental interface, not a unique biological
+interpretation.
 
 Descending-neuron readout is the primary interpretable condition. Whole-state
 readout is an access-rich ablation and must be reported separately. Legal-action
 masking is part of the ARC interface, not evidence of graph intelligence.
 
-Persistent recurrent state is planned across ordinary actions and levels, with
-reset on a new environment. The alternative reset schedules are ablations.
+The literal decoder has no trainable parameters. It z-scores legal action
+logits before categorical sampling and uses the same policy-owned, recorded
+NumPy RNG for actions and factorized `ACTION6` coordinates. A score-blind
+three-point calibration froze action temperature 0.15 and coordinate
+temperature 0.20. Changed cells supply a novelty-centroid click; after an
+unchanged click, the policy samples a not-yet-clicked grid cell. These rules are
+fixed across the real graph, nulls, and the matched bypass.
+
+Persistent recurrent state is preserved across ordinary actions, levels, and a
+protocol-required game-over reset, with reset on a new environment. Alternative
+reset schedules remain ablations.
 
 ## Explicit nonclaims
 

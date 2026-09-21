@@ -3,7 +3,7 @@
 This document describes the deployment contract. It is not evidence that this
 checkout has produced or submitted `submission.parquet`.
 
-## Milestone 0
+## Local preparation
 
 First validate the official ARC-AGI-3-compatible random agent and local plumbing:
 
@@ -12,10 +12,11 @@ make verify-local
 python scripts/smoke_test.py
 ```
 
-Where the starter workflow is available, its intended progression is:
+The complete current progression is:
 
 ```text
-edit agent -> play locally -> verify locally -> build notebook -> submit
+verify evaluator -> calibrate without score -> run frozen full gate ->
+stage dataset -> run private notebook -> submit one notebook version
 ```
 
 Inspect the generated artifact rather than treating a successful process exit
@@ -26,25 +27,31 @@ and Kaggle competition immediately before packaging.
 ## FlyGI adapter contract
 
 The competition adapter owns the framework-specific `MyAgent` class. In
-Milestone 0 it delegates deterministic random-legal action selection to the core
-package. The eventual FlyGI adapter will load the packaged graph and config once,
-then delegate frame encoding, sparse propagation, readout, legal-action masking,
-and coordinate generation. Core `flygi` modules do not import Kaggle-specific
-code.
+the current implementation it loads and hash-verifies the packaged graph and
+config once per process, then delegates frame encoding, sparse propagation,
+readout, legal-action masking, seeded action sampling, and coordinate generation
+to the core package. Core `flygi` modules do not import Kaggle-specific code.
+
+Missing or invalid connectome assets fail closed. The random-legal fallback is
+available only through an explicit local smoke-test opt-in, and competition
+reruns ignore that opt-in. An ordinary private notebook run performs a no-game
+preflight and prints a machine-readable `FLYGI_PREFLIGHT=` JSON line containing
+the verified runtime identity.
 
 ## Offline package requirements
 
-The evaluation notebook runs without internet. A later full-agent package must
-therefore include the compiled graph, group indices and compact metadata,
-configuration, complete manifests and hashes, optional trained readout weights,
-and any dependency wheels unavailable in the image.
+The evaluation notebook runs without internet. The staged private dataset
+therefore includes the compiled graph, group indices, compact node metadata,
+configuration, and complete manifest hashes. Repository-owned Python is embedded
+in the generated notebook as a deterministic source zip; dependency wheels come
+from the competition input.
 
 It must not include or download the 1.1 GB source Feather table at evaluation
 time, call neuPrint, or rebuild the graph in the notebook. Assets are loaded
 once, not per action. Missing files or hash mismatches must fail clearly before
 gameplay.
 
-The expected eventual adapter exposes:
+The adapter exposes:
 
 ```python
 class MyAgent(Agent):
@@ -52,6 +59,15 @@ class MyAgent(Agent):
     def choose_action(self, frames, latest_frame) -> GameAction: ...
 ```
 
-Milestones 0-1 validate only the random-agent path and connectome ingestion.
-Packaging the complete FlyGI policy, control graphs, and trained heads is later
-work.
+Build the offline artifacts with:
+
+```bash
+uv run python scripts/package_kaggle_dataset.py
+make notebook
+```
+
+The staged dataset and generated notebook are ignored by Git. Publishing the
+private dataset, pushing the private notebook, and spending a competition
+submission are separate outward-facing actions. The ordinary notebook log must
+show the signed 166,700-node, 24,559,055-edge, `K=4` runtime before the selected
+notebook version is submitted.

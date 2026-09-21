@@ -85,8 +85,8 @@ class DecoderConfig:
     action_slots: int = 8
     coordinate_head: str = "literal_factorized_bins"
     sampling_method: str = "zscore_softmax_categorical"
-    action_temperature: float = 0.35
-    coordinate_temperature: float = 0.5
+    action_temperature: float = 0.15
+    coordinate_temperature: float = 0.2
     decision_seed_policy: str = "explicit_per_policy_or_config_derived"
     coordinate_fallback: str = "novelty_centroid"
     unchanged_click_exploration: str = "seeded_untried_uniform"
@@ -278,8 +278,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
             trainable=bool(encoder_raw.pop("trainable", False)),
             per_game_rules=bool(encoder_raw.pop("per_game_rules", False)),
         )
-        action_temperature_raw = decoder_raw.pop("action_temperature", 0.35)
-        coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.5)
+        action_temperature_raw = decoder_raw.pop("action_temperature", 0.15)
+        coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.2)
         if isinstance(action_temperature_raw, bool) or not isinstance(
             action_temperature_raw, (int, float)
         ):
