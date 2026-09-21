@@ -1183,3 +1183,27 @@ Current action: make the one authorized official submission for competition
 `megusalexandrus/flygi-arc-agi-3`, version 2, file `submission.parquet`. Record
 the returned submission reference/status and monitor it to completion. Do not
 submit another version.
+
+## 2026-09-21 — First official FlyGI submission accepted and pending
+
+The one authorized daily competition submission was made from private notebook
+`megusalexandrus/flygi-arc-agi-3`, **version 2**, output
+`submission.parquet`, with description `FlyGI signed MaleCNS seeded literal
+policy`. Kaggle returned zero submissions remaining today, confirming that the
+single daily slot was consumed; no retry or second submission is authorized.
+
+The authenticated competition record is:
+
+- competition: `arc-prize-2026-arc-agi-3`;
+- submission ref: **56444435**;
+- submitted at: `2026-09-21T22:14:13.373000` UTC;
+- status: `SubmissionStatus.PENDING`;
+- public score: not yet available;
+- private score: not yet available.
+
+Current action: monitor submission ref 56444435 until Kaggle reports completion
+or an actionable failure. In parallel, prepare honest LinkedIn and X copy around
+“I made a fly take ARC-AGI-3,” clearly separating the engineering milestone from
+the negative/uncertain scientific result. Do not publish social content or make
+another competition submission; save drafts in the repository and update them
+with the actual leaderboard status when known.
