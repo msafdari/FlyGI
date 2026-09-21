@@ -39,6 +39,7 @@ class GraphConfig:
     weight_transform: str = "log1p"
     sign_mode: str = "unsigned"
     modulator_treatment: str = "zero"
+    unknown_transmitter_treatment: str = "zero"
     normalization: str = "incoming_l1"
     spectral_radius: float | None = None
     epsilon: float = 1e-8
@@ -175,6 +176,9 @@ def load_config(path: str | Path) -> FlyGIConfig:
             weight_transform=str(graph_raw.pop("weight_transform", "log1p")),
             sign_mode=str(graph_raw.pop("sign_mode", "unsigned")),
             modulator_treatment=str(graph_raw.pop("modulator_treatment", "zero")),
+            unknown_transmitter_treatment=str(
+                graph_raw.pop("unknown_transmitter_treatment", "zero")
+            ),
             normalization=str(graph_raw.pop("normalization", "incoming_l1")),
             spectral_radius=(
                 None
@@ -230,6 +234,10 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unsupported weight_transform: {graph.weight_transform}")
     if graph.sign_mode not in {"unsigned", "heuristic"}:
         raise ConfigError(f"unsupported sign_mode: {graph.sign_mode}")
+    for field_name in ("modulator_treatment", "unknown_transmitter_treatment"):
+        treatment = getattr(graph, field_name)
+        if treatment not in {"zero", "positive", "negative", "error"}:
+            raise ConfigError(f"unsupported {field_name}: {treatment}")
     if graph.normalization not in {"none", "incoming_l1", "spectral_radius"}:
         raise ConfigError(f"unsupported normalization: {graph.normalization}")
     if graph.epsilon <= 0:

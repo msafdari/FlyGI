@@ -201,6 +201,9 @@ def _build_graph(config: FlyGIConfig) -> int:
         node_filter_column=config.graph.node_filter_column,
         node_filter_values=config.graph.node_filter_values,
         modulator_treatment=config.graph.modulator_treatment,  # type: ignore[arg-type]
+        unknown_transmitter_treatment=(
+            config.graph.unknown_transmitter_treatment  # type: ignore[arg-type]
+        ),
         overwrite=False,
     )
     urls = {name: source.url for name, _, source in _configured_sources(config)}

@@ -30,6 +30,7 @@ graph:
   weight_transform: log1p
   sign_mode: unsigned
   modulator_treatment: zero
+  unknown_transmitter_treatment: zero
   normalization: incoming_l1
   spectral_radius: null
   epsilon: 1.0e-8

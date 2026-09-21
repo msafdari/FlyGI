@@ -1,0 +1,89 @@
+# Signed sibling of configs/literal_rate.yaml. Every field is identical except
+# sign_mode and output_dir.
+#
+# The heuristic sign rule treats acetylcholine as excitatory and GABA,
+# glutamate, and histamine as inhibitory. Monoaminergic/modulatory and unknown
+# transmitters are given sign 0, which DELETES every outgoing edge of those
+# presynaptic neurons. This runtime therefore has fewer edges than the unsigned
+# runtime and is not edge-count-matched to it. Its null graphs must be generated
+# from this graph, never from the unsigned one.
+#
+# Transmitter identity is an approximation to connection sign: receptor and cell
+# context can reverse or modulate the actual effect. See
+# docs/modeling_assumptions.md.
+schema_version: 1
+seed: 20260919
+
+experiment:
+  name: literal-rate-signed
+  track: literal
+
+data:
+  release: male-cns:v1.0
+  weights_path: data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  annotations_path: data/raw/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  neurotransmitters_path: data/raw/body-neurotransmitters-male-cns-v1.0.feather
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed
+  sources:
+    weights:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    annotations:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    neurotransmitters:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+      sha256: null
+
+graph:
+  matrix_convention: "W[post_index, pre_index]"
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed
+  weight_transform: log1p
+  sign_mode: heuristic
+  modulator_treatment: zero
+  unknown_transmitter_treatment: zero
+  normalization: incoming_l1
+  spectral_radius: null
+  epsilon: 1.0e-8
+  allow_self_edges: false
+  # MaleCNS v1.0 inspection: a non-empty superclass retains the declared
+  # neuron population while excluding unclassified segments.
+  node_filter_column: superclass
+  node_filter_values: null
+  body_id_dtype: uint64
+  weight_dtype: float32
+
+# Exact value verified in the official MaleCNS v1.0 annotation table.
+groups:
+  descending_neurons:
+    superclass: descending_neuron
+
+dynamics:
+  backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
+  internal_steps: 2
+  leak: 0.3
+  recurrent_gain: 0.9
+  bias: 0.0
+  frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
+
+encoder:
+  kind: bio_visual
+  trainable: false
+  per_game_rules: false
+
+decoder:
+  kind: literal
+  readout: descending_neurons
+  trainable: false
+  action6_fallback: novelty_centroid
+  motor_groups: {}
+
+state:
+  reset_on_new_environment: true
+  preserve_across_levels: true
+  preserve_across_actions: true
+  preserve_after_game_over_reset: true

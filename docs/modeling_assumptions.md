@@ -47,7 +47,18 @@ bit-for-bit on the same backend. No GPU backend is currently claimed.
 The heuristic signed graph mode treats transmitter identity as an approximation
 to connection sign; receptor and cell context can reverse or modulate effects.
 Uncertain modulators remain configurable and are not silently relabeled
-excitatory.
+excitatory. Both `graph.modulator_treatment` and
+`graph.unknown_transmitter_treatment` are declared explicitly in every checked-in
+config rather than defaulted, because they change which edges exist.
+
+A treatment of `zero` assigns sign 0 to the affected presynaptic neurons, which
+deletes **all** of their outgoing edges. `configs/literal_rate_signed.yaml`
+therefore compiles a graph with fewer edges than
+`configs/literal_rate.yaml`, and the two are not edge-count-matched. Each signed
+condition requires null graphs generated from the signed graph itself. The
+manifest records the transmitter counts, both treatments, and
+`edges_zeroed_by_sign_or_normalization` so the difference is measured rather
+than assumed.
 
 ## Declared later-model choices
 

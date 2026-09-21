@@ -59,3 +59,66 @@ def test_invalid_dynamics_config_fails_closed(
 
     with pytest.raises(ConfigError, match=message):
         load_config(path)
+
+
+def test_transmitter_treatments_are_declared_not_defaulted() -> None:
+    """Sign handling changes the compiled edge set, so it must be explicit."""
+
+    for name in ("literal_rate", "literal_rate_signed"):
+        document = yaml.safe_load(Path(f"configs/{name}.yaml").read_text(encoding="utf-8"))
+        assert "modulator_treatment" in document["graph"]
+        assert "unknown_transmitter_treatment" in document["graph"]
+
+    signed = load_config("configs/literal_rate_signed.yaml")
+    assert signed.graph.sign_mode == "heuristic"
+    assert signed.graph.modulator_treatment == "zero"
+    assert signed.graph.unknown_transmitter_treatment == "zero"
+
+
+def test_signed_config_differs_from_unsigned_only_where_intended() -> None:
+    """The signed condition must not silently change any other build choice."""
+
+    unsigned = load_config("configs/literal_rate.yaml").graph
+    signed = load_config("configs/literal_rate_signed.yaml").graph
+
+    assert unsigned.sign_mode == "unsigned"
+    assert signed.sign_mode == "heuristic"
+    assert unsigned.output_dir != signed.output_dir
+
+    for field in (
+        "matrix_convention",
+        "weight_transform",
+        "modulator_treatment",
+        "unknown_transmitter_treatment",
+        "normalization",
+        "spectral_radius",
+        "epsilon",
+        "allow_self_edges",
+        "node_filter_column",
+        "node_filter_values",
+        "body_id_dtype",
+        "weight_dtype",
+    ):
+        assert getattr(unsigned, field) == getattr(signed, field), field
+
+
+def test_signed_and_unsigned_runtimes_are_separate_assets() -> None:
+    unsigned = load_config("configs/literal_rate.yaml")
+    signed = load_config("configs/literal_rate_signed.yaml")
+
+    assert unsigned.data.output_dir == unsigned.graph.output_dir
+    assert signed.data.output_dir == signed.graph.output_dir
+    assert signed.graph.output_dir != unsigned.graph.output_dir
+    assert signed.dynamics == unsigned.dynamics
+    assert dict(signed.groups) == dict(unsigned.groups)
+
+
+@pytest.mark.parametrize("key", ["modulator_treatment", "unknown_transmitter_treatment"])
+def test_invalid_transmitter_treatment_fails_closed(tmp_path: Path, key: str) -> None:
+    document = yaml.safe_load(Path("configs/literal_rate.yaml").read_text(encoding="utf-8"))
+    document["graph"][key] = "excitatory"
+    path = tmp_path / "invalid.yaml"
+    path.write_text(yaml.safe_dump(document), encoding="utf-8")
+
+    with pytest.raises(ConfigError, match=f"unsupported {key}"):
+        load_config(path)
