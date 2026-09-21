@@ -915,9 +915,9 @@ scientific-control backlog.
    submission. Record its version, hashes, runtime status, and leaderboard score.
 7. **Add a positive control after the first leaderboard entry.** Every null is
    built to be no better than the fly. With real, bypass and null all near zero,
-   the design cannot separate "the
-   biological graph confers no advantage" from "this interface and operating
-   point cannot express an advantage any graph could confer." A reservoir
+   the design cannot separate "the biological graph confers no advantage" from
+   "this interface and operating point cannot express an advantage any graph
+   could confer." A reservoir
    deliberately tuned to the edge of chaos at matched node and edge count would
    separate them.
 8. **Complete the operating-point sweep.** `K=4` was chosen on anatomical
@@ -938,8 +938,8 @@ scientific-control backlog.
 
 ### Open design questions
 
-- **The primary endpoint is near-degenerate.** See step 5.
-- **There is no positive control.** See step 3.
+- **The primary endpoint is near-degenerate.** See step 9.
+- **There is no positive control.** See step 7.
 - **The structural finding has no behavioral consequence yet.** The real graph
   separates cleanly from its degree-preserving nulls on spectral radius (3.59x),
   pathway depth, readout dimensionality and retention. None of that produced an
