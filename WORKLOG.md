@@ -828,47 +828,111 @@ The reviewed index is `results/manifests/connectome_agent_gate2_20260921.json`.
 - The unsigned runtime has not been evaluated on ARC.
 - No competition submission has been made.
 
+## 2026-09-21 — Leaderboard-readiness audit
+
+### Observed external state
+
+- An authenticated read-only Kaggle query returned `No submissions found` for
+  `arc-prize-2026-arc-agi-3`.
+- An authenticated dataset listing returned `No datasets found` for the account,
+  so `megusalexandrus/flygi-malecns-runtime` is staged locally but is not yet
+  published or attachable by the notebook.
+- The existing private notebook
+  `megusalexandrus/flygi-arc-agi-3` reports `KernelWorkerStatus.COMPLETE`; that is
+  the earlier packaging smoke, not a connectome competition rerun.
+- The official competition page currently says notebook submissions may run for
+  up to nine hours and the final submission deadline is 2026-11-02. Kaggle staff
+  separately clarified that the effective limit is one submission per day. The
+  optional second milestone deadline is 2026-09-30 and requires a public,
+  open-source notebook for prize eligibility. None of these facts authorizes an
+  upload or submission.
+
+### Deployment defects found
+
+- The ordinary private notebook execution never instantiates `MyAgent`: the
+  adapter is imported only inside the competition-rerun branch. The current
+  instruction to confirm `mode=connectome` from an ordinary run therefore cannot
+  work. Add a no-game preflight that discovers, hashes, loads, and reports the
+  attached runtime before writing the dummy artifact.
+- A missing or invalid attached runtime still makes the competition adapter fall
+  back to random legal play. That is useful for a generic import smoke but unsafe
+  for an official FlyGI submission. Competition reruns must fail closed when the
+  connectome is unavailable; the fallback should remain opt-in for tests only.
+
+### Behavioral implications for the next decoder
+
+- Action-only temperature sampling does **not** repair the seed defect. Six
+  public games (`ft09`, `lp85`, `r11l`, `s5i5`, `tn36`, and `vc33`) expose only
+  `ACTION6` during active play. Their action choice cannot vary, so independent
+  runs require seeded coordinate selection as well.
+- In the Gate 2 real trace, `lp85` used only six unique coordinates in 80 clicks
+  and never changed the observation; `ft09` used four and changed it once. This
+  makes the ungrounded deterministic coordinate head an immediate leaderboard
+  bottleneck, not merely a statistical issue.
+- A read-only three-game probe found median legal-logit ranges of 0.157 on
+  `ls20` and 0.260 on `sp80`. On those visited states, a raw softmax temperature
+  of 1.0 had expected entropy within roughly 0.01 bits of uniform. Naively adding
+  `temperature=1` would therefore erase most graph preference. Use a declared,
+  scale-aware rule (for example z-score legal logits before sampling) or choose a
+  smaller temperature using behavior-only criteria, never public score.
+- The literal coordinate rule in the specification is a fixed novelty centroid,
+  whereas the current implementation folds arbitrary DN body-ID blocks into 64
+  bins per axis. A novelty-aware fallback is spatially grounded, but it still
+  needs a seeded exploration rule when a click produces no change; otherwise a
+  click-only game can repeat the same miss indefinitely.
+
 ## Next steps
 
-Gate 2 is passed and its result is negative: the real graph did not beat a
-parameter-matched bypass on ARC. The ordering below follows from that, and from
-two design defects Gate 2 exposed.
+Gate 2 is passed and the current agent is no longer a barebones submission. The
+shortest responsible route to the leaderboard is now separate from the longer
+scientific-control backlog.
 
-1. **Fix the sample-size defect.** All 25 games gave identical traces across all
-   five seeds, because the policy is deterministic and these environments are
-   deterministic given the game. The effective n is 25, not 125. Either give the
-   policy a declared stochastic component (for example sampling from masked
-   logits at a declared temperature, seeded per run) or stop reporting seeds as
-   replicates. This must be decided and recorded before any confirmatory
-   analysis, not after seeing more results.
-2. **Fix the exploration defect.** The connectome agent explores *less* than
-   chance: 52.8 unique observations against 64.2, and 23.7 consecutive repeats
-   against 13.6. A deterministic argmax falls into loops. Temperature sampling
-   would address both defects at once. Whatever is chosen must apply identically
-   to every graph condition.
-3. **Add a positive control.** Every null is built to be no better than the fly.
-   With real, bypass and null all near zero, the design cannot separate "the
+1. **Harden the Kaggle path.** Add the ordinary-run runtime preflight and make
+   competition reruns fail closed instead of silently becoming a random agent.
+   Test both missing-asset and verified-asset paths from the generated notebook.
+2. **Make the fixed policy genuinely seeded.** Sample both masked action logits
+   and the factorized `ACTION6` coordinate logits from one recorded per-run RNG.
+   Apply the identical sampler to real, null, and bypass conditions. Preserve
+   deterministic replay for the same seed and require different traces across
+   at least two seeds on games with more than one reachable decision.
+3. **Ground click exploration.** Add the specification's novelty-centroid
+   coordinate fallback, plus a fixed seeded rule for repeated/no-change clicks.
+   This is essential on click-only games where action temperature has no effect.
+4. **Calibrate without score tuning.** Evaluate a small predeclared sampler grid
+   using only action entropy, unique observations, consecutive repeats, graph
+   sensitivity, and runtime. Freeze the choice before looking at scores, then run
+   one full 25-game by five-seed real-agent gate. The deployment candidate must
+   keep zero illegal actions, valid coordinates, replay stability, and a live
+   graph-to-action causal path.
+5. **Stage and inspect the final bundle.** Rebuild the deterministic source zip
+   and 95 MB dataset, verify every digest from the staged directory, and run the
+   private notebook. Its ordinary log must explicitly report the signed
+   166,700-node runtime, 24,559,055 edges, and `K=4` before any official rerun.
+6. **Publish and submit only with explicit authorization.** Publishing the
+   private Kaggle Dataset, pushing the private notebook, and spending the daily
+   competition submission are three distinct outward-facing actions. After the
+   user authorizes them, verify the notebook log first and then make one official
+   submission. Record its version, hashes, runtime status, and leaderboard score.
+7. **Add a positive control after the first leaderboard entry.** Every null is
+   built to be no better than the fly. With real, bypass and null all near zero,
+   the design cannot separate "the
    biological graph confers no advantage" from "this interface and operating
    point cannot express an advantage any graph could confer." A reservoir
    deliberately tuned to the edge of chaos at matched node and edge count would
-   separate them. This is the single most informative missing condition.
-4. **Complete the operating-point sweep.** `K=4` was chosen on anatomical
+   separate them.
+8. **Complete the operating-point sweep.** `K=4` was chosen on anatomical
    grounds; `leak=0.3` and `gain=0.9` are unchanged from the original `K=2`
    declaration and have never been searched. Sweep `(K, leak, gain)` on the
    dynamical diagnostics, apply the winner identically to every condition.
-5. **Reconsider the primary endpoint.** Gate 0 chance is 2 of 125 rows; Gate 2
+9. **Reconsider the primary endpoint.** Gate 0 chance is 2 of 125 rows; Gate 2
    real is 5 of 125, all one game. A paired test on public-set RHAE at this base
    rate cannot detect anything. Promote the specification's section 13.3
    behavioral diagnostics to co-primary, and record the change before inspecting
    further results.
-6. **Scale the controls.** Evaluate all three existing nulls rather than one,
+10. **Scale the controls.** Evaluate all three existing nulls rather than one,
    build the remaining seven, and add the weight shuffle, the sign shuffle within
    transmitter strata, and the matched generic reservoir.
-7. **Kaggle submission.** The offline dataset is staged and verified and the
-   adapter runs the connectome. Publishing the dataset and spending a competition
-   submission are outward-facing actions that require explicit authorization each
-   time; passing the local gates does not confer standing permission.
-8. **Track B.** A small trained readout on a frozen graph is where the
+11. **Track B.** A small trained readout on a frozen graph is where the
    specification expects any real signal. It must be compared against the same
    parameter-matched bypass, which has now beaten the fly once already.
 
