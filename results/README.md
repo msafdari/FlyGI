@@ -36,3 +36,12 @@ Full-graph dynamics gate bundles are generated beneath `results/dynamics/` and
 are also ignored. Their tracked indexes preserve the verified runtime identity,
 correctness and stability outcomes, timing summaries, resource high-water mark,
 and exact source-artifact digest.
+
+Dynamics-regime probe bundles are generated beneath `results/diagnostics/` and
+are ignored as well. The probe is invoked with `make probe-regime`. It is a
+measurement, not an acceptance gate: it reports spectral properties, the number
+of anatomical hops and internal steps required for sensory drive to reach the
+readout population, cross-action memory decay, and readout-code dimensionality.
+Its optional within-row presynaptic shuffle preserves in-degree and per-row
+weight multisets only, and is never a substitute for the preregistered directed
+degree-preserving null.

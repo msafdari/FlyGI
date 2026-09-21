@@ -17,9 +17,12 @@ DYNAMICS_WARMUPS ?= 3
 DYNAMICS_SAMPLES ?= 25
 DYNAMICS_STABILITY_STEPS ?= 10000
 DYNAMICS_OUTPUT  ?=
+REGIME_CONFIG    ?= configs/literal_rate.yaml
+REGIME_NULL_SEED ?= 20260921
+REGIME_OUTPUT    ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local baseline-local benchmark-full-graph list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke play-local verify-local baseline-local benchmark-full-graph probe-regime list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -61,6 +64,11 @@ benchmark-full-graph: ## Run the manual Milestone 2 full-connectome dynamics gat
 		--warmup-actions $(DYNAMICS_WARMUPS) --measured-actions $(DYNAMICS_SAMPLES) \
 		--stability-steps $(DYNAMICS_STABILITY_STEPS) \
 		$(if $(DYNAMICS_OUTPUT),--output $(DYNAMICS_OUTPUT))
+
+probe-regime: ## Measure the dynamical regime of a compiled runtime (diagnostic, not a gate)
+	$(UV_RUN) python scripts/probe_dynamics_regime.py \
+		--config $(REGIME_CONFIG) --weak-null-seed $(REGIME_NULL_SEED) \
+		$(if $(REGIME_OUTPUT),--output $(REGIME_OUTPUT))
 
 list-games: ## List public ARC-AGI-3 games
 	$(UV_RUN) python scripts/play_local.py --list
