@@ -65,3 +65,35 @@ hash and the upstream interface revisions.
 Milestone 0 does **not** bundle a connectome. Later packaging must add compiled
 graph arrays and their provenance manifest beside this runtime zip; the
 evaluation notebook must never download MaleCNS or call neuPrint.
+
+## Publishing a connectome submission
+
+The notebook runs with internet disabled, so the compiled MaleCNS runtime must
+be attached as a Kaggle Dataset before it can be a connectome run. Without it
+the adapter falls back to the deterministic random-legal policy and prints
+`FlyGI agent mode=random-legal`, which is correct behavior but is not a FlyGI
+result.
+
+The order matters. `notebooks/kernel-metadata.json` already declares
+`dataset_sources`, so pushing the notebook before the dataset exists will fail.
+
+```bash
+# 1. Stage and self-verify the offline bundle (uploads nothing).
+uv run python scripts/package_kaggle_dataset.py --config configs/literal_rate_signed.yaml
+
+# 2. Review kaggle/dist/dataset/, then publish it privately. ~95 MB.
+KAGGLE_API_TOKEN=$(cat .kaggle/access_token) uv run kaggle datasets create \
+  -p kaggle/dist/dataset --dir-mode zip
+
+# 3. Build and push the notebook. This does not spend a submission.
+make submit
+
+# 4. Confirm the run log says mode=connectome before submitting anything.
+make status
+```
+
+Later dataset updates use `kaggle datasets version -p kaggle/dist/dataset -m "<message>"`.
+
+Publishing a dataset and spending a competition submission are outward-facing
+actions on the account owner's behalf. Passing the local acceptance gates does
+not confer standing permission for either; each needs explicit authorization.
