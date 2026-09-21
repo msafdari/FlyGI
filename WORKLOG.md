@@ -483,6 +483,131 @@ measured.
   than describe it.
 - No ARC game was played and no score was produced.
 
+## 2026-09-21 — Signed runtime condition compiled and measured
+
+### Completed
+
+- Surfaced `graph.unknown_transmitter_treatment` as a declared, validated config
+  field. It was previously reachable only as a `BuildOptions` default, and
+  because unknown config keys are rejected, omitting it from the YAML meant the
+  choice was being made silently. Both transmitter treatments are now written
+  explicitly in every checked-in config and fail closed on an unsupported value.
+- Added `configs/literal_rate_signed.yaml`. It differs from
+  `configs/literal_rate.yaml` in exactly two fields, `sign_mode` and
+  `output_dir`; a test asserts that every other build choice is identical.
+- Compiled the signed runtime with `flygi graph build --config
+  configs/literal_rate_signed.yaml` from clean commit
+  `50a2dc4b8e0855c34476ec847dc71a47bc8a1985`. The build took about 14 minutes
+  and peaked at roughly 4.3 GB observed resident memory.
+- Ran `flygi validate all --require-data --config configs/literal_rate_signed.yaml`
+  (exit 0) and `make probe-regime REGIME_CONFIG=configs/literal_rate_signed.yaml`.
+
+### Verification results
+
+- `uv run pytest`: 106 tests passed (101 before, plus five new config tests).
+- Ruff lint and formatting checks passed for all 84 checked files.
+- `validate all --require-data` reverified the three sources and the three
+  signed runtime outputs.
+
+### Measured signed build
+
+| Measurement | Unsigned | Signed |
+| --- | ---: | ---: |
+| Retained neurons | 166,700 | 166,700 |
+| Runtime nonzero directed edges | 25,582,837 | 24,559,055 |
+| Edges zeroed by sign or normalization | 0 | 1,023,782 |
+| Negative weight fraction | 0.0000 | 0.3996 |
+| Descending-neuron group | 1,314 | 1,314 |
+
+The 1,023,782 deleted edges (4.00% of the unsigned graph) are exactly the
+outgoing edges of the 541 modulatory and 3,177 unknown-transmitter presynaptic
+neurons, which `modulator_treatment: zero` and
+`unknown_transmitter_treatment: zero` assign sign 0. The two runtimes are
+therefore **not** edge-count-matched, and the signed condition requires null
+graphs generated from the signed graph itself.
+
+`node_metadata.npz` and `groups.npz` are byte-identical between the two
+runtimes (SHA-256 `2a84309b...` and `09736379...`). The node set, node order,
+and descending-neuron group membership are therefore provably shared, which is
+what the specification's fairness constraint requires of the sensory and readout
+identities across graph variants.
+
+| Signed runtime artifact | SHA-256 |
+| --- | --- |
+| `graph.npz` | `45e332d90ea4e881ece5d4d72216955bd53eec922aa60955a69db510272eff61` |
+| `node_metadata.npz` | `2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c` |
+| `groups.npz` | `09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d` |
+| `manifest.json` | `6223e065029b2699d2e21e079ca7a6a8349672785230a0ba3f4ecf83eacd27f4` |
+
+### Measured signed regime
+
+The ignored full artifact is
+`results/diagnostics/20260921T071754.435672Z-regime.json`: 17,904 bytes,
+SHA-256 `19a52aa679d36afdbf52421f721c113484655197d7c8fb0c627a1ddc46da2426`.
+Its reviewed index is tracked at
+`results/manifests/signed_runtime_regime_20260921.json`.
+
+**Signing makes the real graph far more distinguishable from a null.** At the
+same declared `K=2`, `leak=0.3`, `gain=0.9` operating point:
+
+| Measurement | Unsigned real | Unsigned weak null | Signed real | Signed weak null |
+| --- | ---: | ---: | ---: | ---: |
+| Spectral radius | 1.000254 | 0.997754 | 0.828897 | 0.229790 |
+| Real-to-null radius ratio | 1.003 | | 3.607 | |
+| State difference at 12 silent actions | 0.01154 | 0.00684 | 0.00335 | 0.00050 |
+| Real-to-null retention ratio | 1.69 | | 6.67 | |
+| Readout participation ratio | 5.53 | 28.95 | 4.42 | 28.81 |
+| Nodes unreachable from sensory | 2,879 | 302 | 8,957 | 327 |
+
+Under unsigned weights with incoming-L1 normalization the matrix is exactly
+row-stochastic, so its spectral radius is pinned near 1 for any topology and
+separates real from null by 0.3%. Signing releases that constraint and the
+separation becomes a factor of 3.6. This is the clearest real-versus-null
+structural signature measured so far.
+
+**Signing does not fix cross-action memory.** The half-life is still exactly
+2 actions. Because E/I cancellation lowers the spectral radius from 1.0003 to
+0.8289, the signed graph in fact retains *less* at a fixed gain: 0.00335 against
+0.01154 at 12 silent actions. Reaching comparable effective recurrence requires
+roughly 1.21x the gain, which the operating-point sweep must search rather than
+assume.
+
+**The anatomical constraint on `K` is unchanged and slightly stronger.** Sensory
+drive still needs three hops and four internal steps to move all 1,314
+descending neurons (3 at one hop, 528 at two, 1,314 at three; 528 versus 688 in
+the unsigned graph because inhibitory cancellation silences some two-hop
+targets). `K=2` remains too small.
+
+### Findings and decisions
+
+- The signed condition is promoted to a first-class compiled runtime rather than
+  an unexercised config option. Both runtimes are retained; neither replaces the
+  other, and the unsigned runtime remains the pinned Gate 1 identity.
+- Adding `unknown_transmitter_treatment: zero` to `configs/literal_rate.yaml`
+  changes that file's SHA-256. The value is unchanged from what the existing
+  unsigned manifest already recorded, so the compiled unsigned runtime is
+  unaffected and Gate 1's preprocessing cross-check still matches. The
+  `config_sha256` recorded in `results/manifests/dynamics_gate1_20260921.json`
+  remains an accurate record of the file as it was when that gate ran.
+- Retaining both runtimes costs about 200 MB of ignored local disk.
+- The `driven_readout_cosine` for two distinct inputs is near zero in all four
+  conditions (unsigned real +0.033, signed real -0.154). Instantaneous
+  separability at the readout is not the bottleneck; cross-action retention is.
+
+### Limitations
+
+- The 3.6x spectral-radius separation is measured against the probe's within-row
+  shuffle, which does not preserve out-degree. Some of the gap may be a pure
+  out-degree effect. It must be re-measured against the preregistered directed
+  degree-preserving null before it can support any claim, and against at least
+  ten independently seeded nulls before a confirmatory one.
+- The heuristic sign rule remains an approximation. Receptor and cell context can
+  reverse or modulate the real effect of a transmitter.
+- Deleting modulatory and unknown presynaptic neurons' outgoing edges is a
+  modeling choice, not a biological fact. `positive`, `negative`, and `error`
+  treatments are available and unexercised.
+- No ARC game was played and no score was produced.
+
 ## Next steps
 
 The ordering below changed on 2026-09-21. Milestone 3 freezes `K`, `leak`,
@@ -490,12 +615,9 @@ The ordering below changed on 2026-09-21. Milestone 3 freezes `K`, `leak`,
 dynamical-regime diagnostic showed that the currently declared values are not
 the right ones to freeze. The short diagnostic detour therefore runs first.
 
-1. **Signed runtime condition.** Compile `sign_mode: heuristic` as a second
-   immutable runtime beside the unsigned one, with its own manifest and hashes.
-   Record its observed edge count: `modulator_treatment: zero` and
-   `unknown_treatment: zero` delete every outgoing edge of the affected
-   presynaptic neurons, so the signed graph is **not** edge-count-matched to the
-   unsigned graph and needs its own nulls rather than the unsigned graph's.
+1. ~~**Signed runtime condition.**~~ Done 2026-09-21. The signed runtime is
+   compiled, validated, hashed, and measured; it has 24,559,055 edges against
+   the unsigned graph's 25,582,837 and needs its own nulls.
 2. **Preregistered directed degree-preserving null.** Implement
    `src/flygi/connectome/nulls.py`, which is still a stub, using batched
    vectorized directed double-edge swaps that preserve both in- and out-degree,
