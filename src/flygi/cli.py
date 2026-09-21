@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
+import time
 from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
@@ -12,6 +14,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+from scipy import sparse
 
 from . import __version__
 from .config import ConfigError, FlyGIConfig, load_config
@@ -24,7 +27,21 @@ from .connectome.build import (
 )
 from .connectome.download import SourceFile, fetch_source, write_download_manifest
 from .connectome.groups import load_groups
-from .connectome.manifest import HashMismatchError, load_manifest, verify_manifest_hashes
+from .connectome.manifest import (
+    HashMismatchError,
+    create_connectome_manifest,
+    file_record,
+    load_manifest,
+    sha256_file,
+    verify_manifest_hashes,
+    write_manifest,
+)
+from .connectome.normalize import normalize_matrix
+from .connectome.nulls import (
+    NullOptions,
+    degree_preserving_rewire,
+    null_invariants,
+)
 from .connectome.schema import (
     ANNOTATIONS_CONTRACT,
     NEUROTRANSMITTERS_CONTRACT,
@@ -72,11 +89,20 @@ def _parser() -> argparse.ArgumentParser:
     build = graph_commands.add_parser("build", help="compile a sparse runtime asset")
     _add_config(build)
     nulls = graph_commands.add_parser(
-        "nulls", help="reserved for the preregistered Milestone 4 control build"
+        "nulls", help="build seeded directed degree-preserving control graphs"
     )
     _add_config(nulls)
-    nulls.add_argument("--k", type=int, default=10)
+    nulls.add_argument("--k", type=int, default=10, help="number of independently seeded nulls")
     nulls.add_argument("--seed", type=int, default=20260919)
+    nulls.add_argument(
+        "--swaps-per-edge",
+        type=float,
+        default=10.0,
+        help="double-edge swaps attempted per edge; higher mixes more thoroughly",
+    )
+    nulls.add_argument(
+        "--batch-pairs", type=int, default=2_000_000, help="edge pairs proposed per batch"
+    )
 
     validate = commands.add_parser("validate", help="validate configuration and assets")
     validate_commands = validate.add_subparsers(dest="validate_command", required=True)
@@ -234,6 +260,155 @@ def _build_graph(config: FlyGIConfig) -> int:
     return 0
 
 
+def _null_output_root(config: FlyGIConfig) -> Path:
+    return config.graph.output_dir / "nulls" / "degree_preserving"
+
+
+def _write_null_runtime(
+    destination: Path,
+    matrix: sparse.csr_matrix,
+    source_dir: Path,
+    *,
+    config: FlyGIConfig,
+    release: str,
+    source_manifest: dict[str, Any],
+    statistics: dict[str, Any],
+    invariants: dict[str, Any],
+) -> dict[str, Any]:
+    """Serialize one null as a self-contained, hash-verified runtime bundle."""
+
+    if destination.exists():
+        raise FileExistsError(f"null runtime {destination} already exists; results are immutable")
+    destination.mkdir(parents=True)
+
+    with np.load(source_dir / "graph.npz", allow_pickle=False) as archive:
+        node_ids = np.asarray(archive["node_ids"])
+    arrays = {
+        "format_version": np.asarray([1], dtype=np.int16),
+        "indptr": matrix.indptr.astype(np.int64, copy=False),
+        "indices": matrix.indices.astype(np.int32, copy=False),
+        "weights": matrix.data.astype(np.float32, copy=False),
+        "node_ids": node_ids,
+        "body_to_index_ids": node_ids,
+        "body_to_index_values": np.arange(len(node_ids), dtype=np.int32),
+    }
+    np.savez_compressed(destination / "graph.npz", **arrays)
+
+    # The node set and declared groups are shared with the real graph by
+    # construction; copying keeps each null independently loadable and hashed.
+    for name in ("node_metadata.npz", "groups.npz"):
+        shutil.copyfile(source_dir / name, destination / name)
+
+    counts = dict(source_manifest["counts"])
+    counts["runtime_nonzero_edges"] = int(matrix.nnz)
+    counts["aggregated_directed_edges"] = int(matrix.nnz)
+    counts["self_edges"] = int(invariants["self_edges"])
+    preprocessing = dict(source_manifest["preprocessing"])
+    preprocessing["null"] = {
+        **statistics,
+        "source_runtime": str(source_dir),
+        "source_graph_sha256": sha256_file(source_dir / "graph.npz"),
+        "normalization_reapplied": config.graph.normalization,
+        "invariants": invariants,
+    }
+    manifest = create_connectome_manifest(
+        release=release,
+        sources=source_manifest.get("sources", []),
+        dataframe_schemas=source_manifest.get("dataframe_schemas", {}),
+        counts=counts,
+        preprocessing=preprocessing,
+        outputs=[
+            file_record(destination / name, name=name)
+            for name in ("graph.npz", "node_metadata.npz", "groups.npz")
+        ],
+    )
+    write_manifest(destination / "manifest.json", manifest)
+    return manifest
+
+
+def _build_nulls(config: FlyGIConfig, args: argparse.Namespace) -> int:
+    """Generate k independently seeded directed degree-preserving controls."""
+
+    if args.k <= 0:
+        raise CLIError("--k must be positive")
+    source_dir = config.graph.output_dir
+    if not (source_dir / "graph.npz").is_file():
+        raise CLIError(f"no compiled runtime at {source_dir}; run `flygi graph build` first")
+    source_manifest = load_manifest(source_dir / "manifest.json")
+    matrix, _ = load_runtime_graph(source_dir / "graph.npz")
+    groups = load_groups(source_dir / "groups.npz")
+
+    options = NullOptions(
+        kind="degree_preserving",
+        swaps_per_edge=float(args.swaps_per_edge),
+        allow_self_edges=bool(config.graph.allow_self_edges),
+        batch_pairs=int(args.batch_pairs),
+    )
+    root = _null_output_root(config)
+    written: list[dict[str, Any]] = []
+    for offset in range(int(args.k)):
+        seed = int(args.seed) + offset
+        started = time.perf_counter()
+        rewired, statistics = degree_preserving_rewire(matrix, seed=seed, options=options)
+        invariants = null_invariants(
+            matrix,
+            rewired,
+            expect_identical_weight_multiset=True,
+            preserved_groups=groups,
+        )
+        if not invariants["valid"]:
+            raise CLIError(f"null seed {seed} violated its invariants: {invariants['failures']}")
+        # The real condition's normalization must be re-applied, because moving
+        # edges between postsynaptic rows changes those rows' incoming sums.
+        normalized = normalize_matrix(
+            rewired,
+            config.graph.normalization,  # type: ignore[arg-type]
+            epsilon=config.graph.epsilon,
+            spectral_radius=(
+                0.9 if config.graph.spectral_radius is None else config.graph.spectral_radius
+            ),
+        )
+        normalized.sort_indices()
+        statistics["normalization_applied"] = True
+        statistics["seconds"] = time.perf_counter() - started
+        manifest = _write_null_runtime(
+            root / f"seed-{seed}",
+            normalized,
+            source_dir,
+            config=config,
+            release=config.data.release,
+            source_manifest=source_manifest,
+            statistics=statistics,
+            invariants=invariants,
+        )
+        written.append(
+            {
+                "seed": seed,
+                "output_dir": str(root / f"seed-{seed}"),
+                "edges": int(normalized.nnz),
+                "accepted_swaps": statistics["accepted_swaps"],
+                "acceptance_rate": statistics["acceptance_rate"],
+                "fraction_shared_with_real_graph": invariants["fraction_shared_with_real_graph"],
+                "seconds": statistics["seconds"],
+                "graph_sha256": next(
+                    record["sha256"]
+                    for record in manifest["outputs"]
+                    if record["name"] == "graph.npz"
+                ),
+            }
+        )
+        print(json.dumps(written[-1], indent=2, sort_keys=True), flush=True)
+
+    print(
+        json.dumps(
+            {"source_runtime": str(source_dir), "nulls": written},
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def _validate_source_schemas(config: FlyGIConfig) -> dict[str, Any]:
     contracts = {
         "weights": WEIGHTS_CONTRACT,
@@ -355,17 +530,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         if args.command == "smoke-test":
             return _validate_all(load_config(DEFAULT_CONFIG), require_data=False)
-        if args.command == "graph" and args.graph_command == "nulls":
-            raise CLIError(
-                "degree-preserving null generation is preregistered for Milestone 4; "
-                "Milestones 0-1 intentionally do not implement it"
-            )
-
         config = load_config(args.config)
         if args.command == "data" and args.data_command == "fetch":
             return _fetch(config, args)
         if args.command == "graph" and args.graph_command == "build":
             return _build_graph(config)
+        if args.command == "graph" and args.graph_command == "nulls":
+            return _build_nulls(config, args)
         if args.command == "validate" and args.validate_command == "all":
             return _validate_all(config, require_data=bool(args.require_data))
         parser.error("unhandled command")
