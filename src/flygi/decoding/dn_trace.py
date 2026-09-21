@@ -102,6 +102,117 @@ class DescendingTrace:
         return standardized, diagnostics
 
 
+class AdaptiveStandardizer:
+    """Per-neuron exponential-moving-average standardization of the readout.
+
+    Standardizing across the population within a turn is not enough. Measured on
+    the real graph, the descending block means are dominated by two things that
+    carry no information about the current frame: each neuron's fixed offset,
+    and a slow global drift as the state integrates toward the fixed point set
+    by its average input. Between-block offset exceeds frame-driven variation by
+    roughly a factor of two, and the drift saturates after a handful of turns,
+    so an argmax over raw block means locks onto one action and stops
+    responding. That is the specification's "output invariance" failure mode.
+
+    This standardizer removes both. It tracks a per-neuron EMA mean and variance
+    and reports the current deviation from the *prior* expectation in units of
+    that neuron's recent variability, which is a surprise signal rather than a
+    level. It has one declared scalar, the adaptation rate. Nothing is trained,
+    nothing is fitted per game, and the identical transform applies to every
+    graph condition.
+    """
+
+    def __init__(
+        self,
+        size: int,
+        *,
+        adaptation_rate: float = 0.1,
+        clip: float = 10.0,
+    ) -> None:
+        if size <= 0:
+            raise ReadoutError("adaptive standardizer requires a positive size")
+        if not 0.0 < adaptation_rate <= 1.0:
+            raise ReadoutError("adaptation_rate must lie in (0, 1]")
+        if not np.isfinite(clip) or clip <= 0:
+            raise ReadoutError("clip must be finite and positive")
+        self._size = int(size)
+        self._rate = np.float32(adaptation_rate)
+        self._clip = np.float32(clip)
+        self.reset()
+
+    @property
+    def size(self) -> int:
+        return self._size
+
+    @property
+    def adaptation_rate(self) -> float:
+        return float(self._rate)
+
+    @property
+    def clip(self) -> float:
+        return float(self._clip)
+
+    @property
+    def turns_seen(self) -> int:
+        return self._turns
+
+    def reset(self) -> None:
+        """Clear adaptation, as when a new environment resets the neural state."""
+
+        self._mean = np.zeros(self._size, dtype=np.float32)
+        self._variance = np.zeros(self._size, dtype=np.float32)
+        self._turns = 0
+
+    def describe(self) -> dict[str, object]:
+        return {
+            "kind": "adaptive_ema_per_neuron",
+            "adaptation_rate": float(self._rate),
+            "clip": float(self._clip),
+            "warmup_turns": 1,
+            "trainable": False,
+            "trainable_parameters": 0,
+        }
+
+    def transform(self, values: NDArray[np.float32]) -> NDArray[np.float32]:
+        """Standardize one turn's readout and advance the adaptation state."""
+
+        current = np.asarray(values, dtype=np.float32)
+        if current.shape != (self._size,):
+            raise ReadoutError(
+                f"adaptive standardizer expects shape ({self._size},), observed {current.shape}"
+            )
+        if not np.isfinite(current).all():
+            raise ReadoutError("adaptive standardizer received a non-finite trace")
+
+        if self._turns == 0:
+            # No expectation exists yet, so there is no deviation to report.
+            self._mean = current.copy()
+            self._turns = 1
+            return np.zeros(self._size, dtype=np.float32)
+
+        deviation = current - self._mean
+        self._mean += self._rate * deviation
+        self._variance += self._rate * (deviation * deviation - self._variance)
+        self._turns += 1
+
+        spread = np.sqrt(self._variance)
+        usable = spread > np.float32(1e-30)
+        standardized = np.zeros(self._size, dtype=np.float32)
+        if bool(usable.any()):
+            standardized[usable] = deviation[usable] / spread[usable]
+        if not bool(usable.all()):
+            # Before any variability has accumulated, fall back to a bounded
+            # population z-score of the deviation instead of dividing by zero.
+            rest = ~usable
+            residual = deviation[rest]
+            scale = float(residual.std())
+            if scale > float(EPSILON):
+                standardized[rest] = (residual - np.float32(residual.mean())) / np.float32(scale)
+
+        np.clip(standardized, -self._clip, self._clip, out=standardized)
+        return standardized
+
+
 def contiguous_groups(size: int, count: int) -> list[NDArray[np.int64]]:
     """Split ``range(size)`` into ``count`` contiguous, near-equal blocks.
 

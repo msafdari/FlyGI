@@ -319,13 +319,23 @@ def _weak_null(matrix: sparse.csr_matrix, seed: int) -> sparse.csr_matrix:
     return shuffled
 
 
+def _leak(config: FlyGIConfig, args: argparse.Namespace) -> float:
+    return float(config.dynamics.leak if args.leak is None else args.leak)
+
+
+def _gain(config: FlyGIConfig, args: argparse.Namespace) -> float:
+    return float(
+        config.dynamics.recurrent_gain if args.recurrent_gain is None else args.recurrent_gain
+    )
+
+
 def _network(
-    matrix: sparse.csr_matrix, config: FlyGIConfig, internal_steps: int
+    matrix: sparse.csr_matrix, config: FlyGIConfig, args: argparse.Namespace
 ) -> ScipyRateNetwork:
     parameters = RateParameters(
-        internal_steps=internal_steps,
-        leak=config.dynamics.leak,
-        recurrent_gain=config.dynamics.recurrent_gain,
+        internal_steps=args.internal_steps,
+        leak=_leak(config, args),
+        recurrent_gain=_gain(config, args),
         bias=config.dynamics.bias,
     )
     return ScipyRateNetwork(matrix, parameters, copy_connectivity=False)
@@ -341,10 +351,10 @@ def _measure_condition(
     include_reachability: bool,
 ) -> dict[str, Any]:
     started = time.perf_counter()
-    network = _network(matrix, config, args.internal_steps)
+    network = _network(matrix, config, args)
     spectral = estimate_spectral_radius(matrix, max_iterations=args.power_iterations)
-    leak = float(config.dynamics.leak)
-    gain = float(config.dynamics.recurrent_gain)
+    leak = _leak(config, args)
+    gain = _gain(config, args)
 
     generator = np.random.default_rng(args.seed)
     left = (generator.standard_normal(len(sensory)) * args.amplitude).astype(np.float32)
@@ -435,6 +445,12 @@ def _parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument(
+        "--runtime-dir",
+        type=Path,
+        default=None,
+        help="compiled runtime to probe; defaults to the config's graph.output_dir",
+    )
+    parser.add_argument(
         "--sensory-superclass",
         default="ol_sensory",
         help="node-metadata superclass used as the injection population",
@@ -445,6 +461,10 @@ def _parser() -> argparse.ArgumentParser:
         help="compiled group used as the readout population",
     )
     parser.add_argument("--internal-steps", type=int, default=None, help="defaults to the config K")
+    parser.add_argument("--leak", type=float, default=None, help="defaults to the config leak")
+    parser.add_argument(
+        "--recurrent-gain", type=float, default=None, help="defaults to the config gain"
+    )
     parser.add_argument("--arrival-steps", type=int, default=16)
     parser.add_argument("--max-hops", type=int, default=8)
     parser.add_argument("--drive-actions", type=int, default=8)
@@ -482,6 +502,10 @@ def _validate_args(args: argparse.Namespace) -> None:
         raise SystemExit("--amplitude must be positive")
     if args.internal_steps is not None and args.internal_steps <= 0:
         raise SystemExit("--internal-steps must be positive")
+    if args.leak is not None and not 0.0 < args.leak <= 1.0:
+        raise SystemExit("--leak must lie in (0, 1]")
+    if args.recurrent_gain is not None and args.recurrent_gain < 0.0:
+        raise SystemExit("--recurrent-gain must be non-negative")
 
 
 def run_probe(args: argparse.Namespace) -> tuple[dict[str, Any], Path]:
@@ -489,7 +513,11 @@ def run_probe(args: argparse.Namespace) -> tuple[dict[str, Any], Path]:
     if args.internal_steps is None:
         args.internal_steps = int(config.dynamics.internal_steps)
 
-    runtime_dir = (ROOT / config.graph.output_dir).resolve()
+    runtime_dir = (
+        Path(args.runtime_dir).resolve()
+        if args.runtime_dir is not None
+        else (ROOT / config.graph.output_dir).resolve()
+    )
     load_started = time.perf_counter()
     bundle: RuntimeConnectome = load_runtime_connectome(
         runtime_dir, required_groups=(args.readout_group,)
@@ -514,8 +542,8 @@ def run_probe(args: argparse.Namespace) -> tuple[dict[str, Any], Path]:
         "load_seconds": load_seconds,
         "operating_point": {
             "internal_steps": int(args.internal_steps),
-            "leak": float(config.dynamics.leak),
-            "recurrent_gain": float(config.dynamics.recurrent_gain),
+            "leak": _leak(config, args),
+            "recurrent_gain": _gain(config, args),
             "bias": float(config.dynamics.bias),
             "activation": config.dynamics.activation,
         },

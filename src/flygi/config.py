@@ -84,6 +84,9 @@ class DecoderConfig:
     readout: str = "descending_neurons"
     action_slots: int = 8
     coordinate_head: str = "literal_factorized_bins"
+    readout_normalization: str = "adaptive"
+    adaptation_rate: float = 0.1
+    clip: float = 10.0
     trainable: bool = False
 
 
@@ -274,6 +277,9 @@ def load_config(path: str | Path) -> FlyGIConfig:
             readout=str(decoder_raw.pop("readout", "descending_neurons")),
             action_slots=int(decoder_raw.pop("action_slots", 8)),
             coordinate_head=str(decoder_raw.pop("coordinate_head", "literal_factorized_bins")),
+            readout_normalization=str(decoder_raw.pop("readout_normalization", "adaptive")),
+            adaptation_rate=float(decoder_raw.pop("adaptation_rate", 0.1)),
+            clip=float(decoder_raw.pop("clip", 10.0)),
             trainable=bool(decoder_raw.pop("trainable", False)),
         )
         state = StateLifetimeConfig(
@@ -353,6 +359,14 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError("unsupported decoder.coordinate_head")
     if decoder.action_slots != 8:
         raise ConfigError("decoder.action_slots must be 8 for ARC-AGI-3")
+    if decoder.readout_normalization not in {"adaptive", "population"}:
+        raise ConfigError(
+            f"unsupported decoder.readout_normalization: {decoder.readout_normalization}"
+        )
+    if not 0.0 < decoder.adaptation_rate <= 1.0:
+        raise ConfigError("decoder.adaptation_rate must lie in (0, 1]")
+    if not math.isfinite(decoder.clip) or decoder.clip <= 0:
+        raise ConfigError("decoder.clip must be finite and positive")
     if decoder.trainable:
         raise ConfigError("the literal decoder must be nonlearned")
     if not state.preserve_across_actions:

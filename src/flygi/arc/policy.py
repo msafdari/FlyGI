@@ -21,7 +21,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from flygi.decoding.coordinate_head import CoordinateHead
-from flygi.decoding.dn_trace import DescendingTrace
+from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
 from flygi.decoding.literal import LiteralActionMap
 from flygi.dynamics.rate import ScipyRateNetwork
 from flygi.encoding.features import encode_observation
@@ -83,6 +83,7 @@ class ConnectomePolicy:
         action_map: LiteralActionMap,
         coordinate_head: CoordinateHead,
         internal_steps: int,
+        standardizer: AdaptiveStandardizer | None = None,
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
     ) -> None:
@@ -104,6 +105,9 @@ class ConnectomePolicy:
         self._internal_steps = int(internal_steps)
         self._state_policy = state_policy or StatePolicy()
         self._ablate_graph = bool(ablate_graph)
+        self._standardizer = standardizer
+        if standardizer is not None and standardizer.size != readout.size:
+            raise PolicyError("standardizer and readout population disagree in size")
 
         self._state = network.initial_state()
         self._previous_grid: NDArray[np.int8] | None = None
@@ -141,6 +145,11 @@ class ConnectomePolicy:
             "readout": {
                 "kind": "descending_neurons",
                 "size": self._readout.size,
+                "normalization": (
+                    {"kind": "population_zscore", "trainable": False}
+                    if self._standardizer is None
+                    else self._standardizer.describe()
+                ),
             },
             "action_map": self._action_map.describe(),
             "coordinate_head": self._coordinates.describe(),
@@ -161,6 +170,8 @@ class ConnectomePolicy:
         self._state = self._network.initial_state()
         self._previous_grid = None
         self._previous_action_id = None
+        if self._standardizer is not None:
+            self._standardizer.reset()
 
     def is_done(self, latest_frame: FrameLike) -> bool:
         """Stop after a win; a game-over frame is reset and retried."""
@@ -193,7 +204,12 @@ class ConnectomePolicy:
 
         turn = ArcTurnState.from_frame(latest_frame)
         state, changed_cells = self._advance(latest_frame, turn)
-        trace, diagnostics = self._readout.standardized(state)
+        population, diagnostics = self._readout.standardized(state)
+        trace = (
+            population
+            if self._standardizer is None
+            else self._standardizer.transform(self._readout.raw(state))
+        )
 
         reset = self._actions.RESET
         reset_id = action_id(reset)

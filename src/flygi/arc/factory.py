@@ -19,7 +19,7 @@ from numpy.typing import NDArray
 
 from flygi.config import FlyGIConfig
 from flygi.decoding.coordinate_head import CoordinateHead
-from flygi.decoding.dn_trace import DescendingTrace
+from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
 from flygi.decoding.literal import LiteralActionMap
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.dynamics.runtime import RuntimeConnectome, load_runtime_connectome
@@ -141,6 +141,15 @@ def build_connectome_policy(
             readout=readout,
             action_map=LiteralActionMap(readout.size, action_slots=config.decoder.action_slots),
             coordinate_head=CoordinateHead(readout.size),
+            standardizer=(
+                AdaptiveStandardizer(
+                    readout.size,
+                    adaptation_rate=config.decoder.adaptation_rate,
+                    clip=config.decoder.clip,
+                )
+                if config.decoder.readout_normalization == "adaptive"
+                else None
+            ),
             internal_steps=network.parameters.internal_steps,
             state_policy=StatePolicy(
                 reset_on_new_environment=config.state.reset_on_new_environment,

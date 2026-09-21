@@ -357,3 +357,109 @@ def test_coordinate_head_responds_to_the_trace() -> None:
 def test_coordinate_head_requires_enough_readout_neurons() -> None:
     with pytest.raises(ReadoutError):
         CoordinateHead(64)
+
+
+# --- adaptive readout -------------------------------------------------------
+
+
+def _adaptive_policy(**kwargs: object) -> ConnectomePolicy:
+    from flygi.decoding.dn_trace import AdaptiveStandardizer
+
+    policy = _policy(**kwargs)  # type: ignore[arg-type]
+    policy._standardizer = AdaptiveStandardizer(READOUT, adaptation_rate=0.1, clip=10.0)
+    return policy
+
+
+def test_adaptive_standardizer_removes_a_constant_offset() -> None:
+    """Fixed per-neuron offsets must not decide the action."""
+
+    from flygi.decoding.dn_trace import AdaptiveStandardizer
+
+    standardizer = AdaptiveStandardizer(64, adaptation_rate=0.3)
+    offset = np.linspace(0.0, 1.0, 64).astype(np.float32)
+    generator = np.random.default_rng(0)
+
+    outputs = []
+    for _ in range(40):
+        signal = offset + (generator.standard_normal(64) * 1e-3).astype(np.float32)
+        outputs.append(standardizer.transform(signal))
+
+    settled = np.asarray(outputs[20:])
+    # If the offset survived, the same neurons would dominate every turn.
+    assert abs(float(settled.mean())) < 1.0
+    assert len({int(np.argmax(row)) for row in settled}) > 1
+
+
+def test_adaptive_standardizer_removes_a_slow_drift() -> None:
+    """The measured failure mode: a drifting state locks the argmax."""
+
+    from flygi.decoding.dn_trace import AdaptiveStandardizer
+
+    standardizer = AdaptiveStandardizer(32, adaptation_rate=0.3)
+    generator = np.random.default_rng(1)
+    picks = []
+    for step in range(40):
+        drift = np.full(32, step * 0.5, dtype=np.float32)
+        drift[0] += 5.0  # a persistently high neuron
+        signal = drift + (generator.standard_normal(32) * 0.1).astype(np.float32)
+        picks.append(int(np.argmax(standardizer.transform(signal))))
+
+    assert len(set(picks[10:])) > 1
+
+
+def test_adaptive_standardizer_first_turn_has_no_expectation() -> None:
+    from flygi.decoding.dn_trace import AdaptiveStandardizer
+
+    standardizer = AdaptiveStandardizer(16)
+    first = standardizer.transform(np.arange(16, dtype=np.float32))
+    assert np.array_equal(first, np.zeros(16, dtype=np.float32))
+    assert standardizer.turns_seen == 1
+
+
+def test_adaptive_standardizer_output_is_always_bounded() -> None:
+    from flygi.decoding.dn_trace import AdaptiveStandardizer
+
+    standardizer = AdaptiveStandardizer(16, adaptation_rate=0.5, clip=10.0)
+    generator = np.random.default_rng(2)
+    for step in range(50):
+        scale = 1e-9 if step % 2 else 1e6
+        values = (generator.standard_normal(16) * scale).astype(np.float32)
+        output = standardizer.transform(values)
+        assert np.isfinite(output).all()
+        assert float(np.abs(output).max()) <= 10.0
+
+
+def test_adaptive_standardizer_resets_with_the_neural_state() -> None:
+    from flygi.decoding.dn_trace import AdaptiveStandardizer
+
+    standardizer = AdaptiveStandardizer(8)
+    standardizer.transform(np.ones(8, dtype=np.float32))
+    standardizer.transform(np.full(8, 2.0, dtype=np.float32))
+    assert standardizer.turns_seen == 2
+    standardizer.reset()
+    assert standardizer.turns_seen == 0
+
+
+def test_adaptive_readout_produces_varied_actions_where_population_zscore_locks() -> None:
+    """Regression guard for the observed constant-argmax behavior."""
+
+    generator = np.random.default_rng(3)
+    frames = [_frame(int(seed)) for seed in generator.integers(0, 10_000, size=24)]
+
+    plain = _policy()
+    adaptive = _adaptive_policy()
+    plain_actions = [plain.choose_action(frame).value for frame in frames]
+    adaptive_actions = [adaptive.choose_action(frame).value for frame in frames]
+
+    assert len(set(adaptive_actions)) >= len(set(plain_actions))
+    assert len(set(adaptive_actions)) > 1
+
+
+def test_adaptive_readout_still_respects_the_mask_and_coordinates() -> None:
+    policy = _adaptive_policy()
+    for step in range(10):
+        action = policy.choose_action(_frame(step, available_actions=[2, 6]))
+        assert action.value in (2, 6)
+        if action.value == 6:
+            assert 0 <= action.action_data["x"] <= 63
+            assert 0 <= action.action_data["y"] <= 63

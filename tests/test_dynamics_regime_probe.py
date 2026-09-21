@@ -132,6 +132,8 @@ def _args(**overrides: object) -> argparse.Namespace:
         "code_inputs": 4,
         "amplitude": 0.5,
         "internal_steps": 2,
+        "leak": None,
+        "recurrent_gain": None,
     }
     defaults.update(overrides)
     return argparse.Namespace(**defaults)
@@ -139,12 +141,16 @@ def _args(**overrides: object) -> argparse.Namespace:
 
 def test_validate_args_rejects_degenerate_protocols() -> None:
     _validate_args(_args())
+    _validate_args(_args(leak=0.1, recurrent_gain=1.4))
     for override in (
         {"arrival_steps": 0},
         {"drive_actions": -1},
         {"code_inputs": 1},
         {"amplitude": 0.0},
         {"internal_steps": 0},
+        {"leak": 0.0},
+        {"leak": 1.5},
+        {"recurrent_gain": -0.1},
     ):
         with pytest.raises(SystemExit):
             _validate_args(_args(**override))

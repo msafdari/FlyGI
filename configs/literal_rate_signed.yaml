@@ -88,6 +88,12 @@ decoder:
   readout: descending_neurons
   action_slots: 8
   coordinate_head: literal_factorized_bins
+  # Population z-scoring alone leaves the decision dominated by each neuron's
+  # fixed offset and by the slow global drift of the state. The adaptive
+  # readout reports deviation from a per-neuron EMA expectation instead.
+  readout_normalization: adaptive
+  adaptation_rate: 0.1
+  clip: 10.0
   trainable: false
 
 state:

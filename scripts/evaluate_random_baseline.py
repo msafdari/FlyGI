@@ -21,7 +21,7 @@ import resource
 import subprocess
 import sys
 from collections import Counter
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from itertools import pairwise
@@ -386,8 +386,15 @@ def evaluate_one(
     environments_dir: Path,
     *,
     arcade_factory: Callable[[], Any] | None = None,
+    policy_factory: Callable[[int], Any] | None = None,
+    extra_row_fields: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Evaluate one fresh seed/game pair and always return a result row."""
+    """Evaluate one fresh seed/game pair and always return a result row.
+
+    ``policy_factory`` receives the derived policy seed and returns any object
+    exposing ``is_done(frame)`` and ``choose_action(frame)``. The default is the
+    uniform random-legal chance control, so the Gate 0 result stays reproducible.
+    """
 
     if action_budget <= 0:
         raise ValueError("action_budget must be positive")
@@ -426,6 +433,8 @@ def evaluate_one(
         "trace": [],
         "replay_trace_sha256": None,
     }
+    if extra_row_fields:
+        row.update(dict(extra_row_fields))
     action_counts: Counter[str] = Counter()
     observation_hashes: list[str] = []
     policy_times: list[int] = []
@@ -470,7 +479,11 @@ def evaluate_one(
         if latest_frame is None:
             raise RuntimeError("environment has no initial observation")
         observation_hashes.append(_frame_fingerprint(latest_frame))
-        policy = RandomLegalPolicy(runtime.GameAction, seed=policy_seed)
+        policy = (
+            RandomLegalPolicy(runtime.GameAction, seed=policy_seed)
+            if policy_factory is None
+            else policy_factory(policy_seed)
+        )
         reset_id = action_id(runtime.GameAction.RESET)
 
         # This range is the budget authority; unlike the upstream loop, it can
@@ -732,6 +745,8 @@ def _deterministic_replay_check(
     action_budget: int,
     environments_dir: Path,
     rows: Sequence[dict[str, Any]],
+    *,
+    policy_factory: Callable[[int], Any] | None = None,
 ) -> dict[str, Any]:
     """Repeat one seeded game and compare its deterministic trace."""
 
@@ -749,6 +764,7 @@ def _deterministic_replay_check(
         target_seed,
         action_budget,
         environments_dir,
+        policy_factory=policy_factory,
     )
     matched = (
         reference["status"] == "success"
@@ -806,15 +822,18 @@ def build_result(
     action_budget: int,
     rows: Sequence[dict[str, Any]],
     replay_check: dict[str, Any],
+    schema: str = "flygi.random-baseline",
+    policy_label: str = "uniform-random-legal",
+    extra: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Assemble the immutable result document."""
 
-    return {
-        "schema": "flygi.random-baseline",
+    document = {
+        "schema": schema,
         "schema_version": SCHEMA_VERSION,
         "created_at": datetime.now(UTC).isoformat(),
         "parameters": {
-            "policy": "uniform-random-legal",
+            "policy": policy_label,
             "strict_offline": True,
             "seeds": list(seeds),
             "action_budget": action_budget,
@@ -843,6 +862,9 @@ def build_result(
             ),
         },
     }
+    if extra:
+        document.update(dict(extra))
+    return document
 
 
 def write_json_exclusive(path: Path, result: dict[str, Any]) -> None:
