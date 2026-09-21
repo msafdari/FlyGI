@@ -720,6 +720,114 @@ policy whose action never changes cannot test anything.
   by a completed operating-point sweep over `(K, leak, gain)`.
 - No ARC performance comparison is recorded in this entry.
 
+## 2026-09-21 — Gate 2: the first FlyGI ARC-AGI-3 results
+
+### Completed
+
+- Ran the closed-loop FlyGI agent and two controls on all 25 cached public games,
+  seeds 0-4, exact 80-action ceiling, `K=4`, on the heuristic-signed runtime.
+  Each condition is 125 rows and 10,000 actions.
+- Staged and verified the offline Kaggle dataset (94,508,993 bytes) and rewrote
+  the Kaggle adapter to run the connectome policy.
+
+### Gate 2 outcome: passed
+
+All three connectome conditions passed: 125/125 rows each, zero exceptions,
+zero illegal actions, zero invalid `ACTION6` coordinates, zero budget
+violations, and a matching deterministic replay. The complete 166,700-neuron,
+24,559,055-edge graph is in every decision, with zero trainable parameters.
+Median policy time was 164 ms per action; the maximum was 231 ms.
+
+### Measured ARC results
+
+| Condition | Mean score | Max | Rows > 0 | Levels | Games with a level |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Real signed MaleCNS | **0.190476** | 4.7619 | 5 | 5 | `sp80` |
+| No-recurrent-graph bypass | **0.190476** | 4.7619 | 5 | 5 | `r11l` |
+| Degree-preserving null | 0.000000 | 0.0000 | 0 | 0 | none |
+| Random legal (Gate 0) | 0.050626 | 4.7619 | 2 | 2 | `sp80` |
+
+**The real graph and the interface-matched bypass scored exactly the same mean.**
+Each completed one level in exactly one game out of 25, and they were different
+games. This is the specification's section 19.3 cautionary pattern realized: a
+parameter-matched adapter that bypasses the graph matches the graph. The
+degree-preserving null scored zero, but the whole comparison rests on one game
+per condition and carries no statistical weight.
+
+### The seeds are not replicates
+
+In every connectome condition, all 25 games produced **identical action traces
+across all five seeds**. The policy is deterministic and these environments are
+deterministic given the game, so the seeds add nothing. The effective sample
+size is 25 games, not 125 rows. This removes most of the power the paired
+`(game, seed)` design was assumed to have, and it must be corrected before any
+confirmatory analysis: either the policy needs a declared stochastic component,
+or the design needs many more games.
+
+The random control does not share this property, because its policy is seeded;
+its 25 games each produced five distinct traces.
+
+### Behavioral diagnostics
+
+| Measurement | Real | Null | Bypass | Random |
+| --- | ---: | ---: | ---: | ---: |
+| Mean unique observations per run | 52.84 | 49.08 | 55.12 | **64.18** |
+| Observation repeat rate | 34.8% | 39.4% | 32.0% | **20.8%** |
+| Mean consecutive repeats | 23.72 | 28.16 | 22.96 | **13.64** |
+| Mean action entropy (bits) | 1.385 | 1.157 | 1.439 | **1.718** |
+| `ACTION6` share | 47.4% | 35.3% | 39.2% | 35.3% |
+| Rows with entropy < 0.2 bits | 30 | 40 | 35 | 30 |
+
+**The connectome agent explores less than chance.** A deterministic argmax
+policy falls into loops that a random policy escapes. The real graph sits
+between the null and the bypass on most of these measures. The real condition
+also leans much harder on `ACTION6` than any other condition.
+
+No action trace was identical between any two graph conditions in any game
+(0/25 for real versus bypass, 0/25 for real versus null), so the graph does
+causally determine behavior. It simply does not determine it better than a
+matched bypass does.
+
+### What this does and does not establish
+
+Established:
+
+- engineering success, in the specification's sense: a valid, gate-passing
+  ARC-AGI-3 agent that uses the complete MaleCNS graph in every decision;
+- a live, tested causal path from frame to action through the graph;
+- a replicable structural difference between the real graph and its
+  degree-preserving nulls, recorded separately on this date.
+
+Not established, and not claimed:
+
+- that the fly connectome confers any advantage on ARC-AGI-3. It did not beat a
+  parameter-matched bypass;
+- that the structural difference measured in the dynamics probe has any
+  behavioral consequence. The agent comparison is the test of that, and it came
+  out flat;
+- anything at all from the `sp80` result. One game, one level, at a score the
+  random control also reached.
+
+### Artifacts
+
+| Condition | Artifact | Bytes | SHA-256 |
+| --- | --- | ---: | --- |
+| Real signed | `results/connectome_agent/20260921T144321.262543Z-real-signed.json` | 8,224,279 | see index |
+| Null | `results/connectome_agent/20260921T144956.557736Z-null-degree-preserving.json` | — | see index |
+| Bypass | `results/connectome_agent/20260921T144908.137005Z-no-graph-bypass.json` | — | see index |
+
+The reviewed index is `results/manifests/connectome_agent_gate2_20260921.json`.
+
+### Limitations
+
+- One null seed was evaluated on ARC, though three were built.
+- No weight shuffle, sign shuffle, or matched generic reservoir exists.
+- The operating point `K=4`, `leak=0.3`, `gain=0.9` was chosen on anatomical
+  grounds, not by a completed sweep. `leak` and `gain` are unchanged from the
+  original K=2 declaration and have never been searched.
+- The unsigned runtime has not been evaluated on ARC.
+- No competition submission has been made.
+
 ## Next steps
 
 The ordering below changed on 2026-09-21. Milestone 3 freezes `K`, `leak`,
