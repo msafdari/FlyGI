@@ -19,7 +19,7 @@ from numpy.typing import NDArray
 
 from flygi.config import FlyGIConfig
 from flygi.decoding.coordinate_head import CoordinateHead
-from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
+from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace, ReadoutError
 from flygi.decoding.literal import LiteralActionMap
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.dynamics.runtime import RuntimeConnectome, load_runtime_connectome
@@ -90,6 +90,9 @@ def build_connectome_policy(
     projection: SensoryProjection | None = None,
     ablate_graph: bool = False,
     internal_steps: int | None = None,
+    decision_seed: int | None = None,
+    action_temperature: float | None = None,
+    coordinate_temperature: float | None = None,
 ) -> AssembledPolicy:
     """Build one closed-loop policy. Pass ``bundle`` to reuse a loaded graph."""
 
@@ -146,14 +149,32 @@ def build_connectome_policy(
         copy_connectivity=False,
     )
     readout = DescendingTrace(readout_indices, loaded.node_count)
+    resolved_decision_seed = (
+        derive_seed(config.seed, "decision") if decision_seed is None else decision_seed
+    )
     try:
         policy = ConnectomePolicy(
             actions,
             network=network,
             projection=projection,
             readout=readout,
-            action_map=LiteralActionMap(readout.size, action_slots=config.decoder.action_slots),
-            coordinate_head=CoordinateHead(readout.size),
+            action_map=LiteralActionMap(
+                readout.size,
+                action_slots=config.decoder.action_slots,
+                temperature=(
+                    config.decoder.action_temperature
+                    if action_temperature is None
+                    else action_temperature
+                ),
+            ),
+            coordinate_head=CoordinateHead(
+                readout.size,
+                temperature=(
+                    config.decoder.coordinate_temperature
+                    if coordinate_temperature is None
+                    else coordinate_temperature
+                ),
+            ),
             standardizer=(
                 AdaptiveStandardizer(
                     readout.size,
@@ -164,6 +185,7 @@ def build_connectome_policy(
                 else None
             ),
             internal_steps=network.parameters.internal_steps,
+            decision_seed=resolved_decision_seed,
             state_policy=StatePolicy(
                 reset_on_new_environment=config.state.reset_on_new_environment,
                 preserve_across_levels=config.state.preserve_across_levels,
@@ -172,7 +194,7 @@ def build_connectome_policy(
             ),
             ablate_graph=ablate_graph,
         )
-    except PolicyError as exc:
+    except (PolicyError, ReadoutError) as exc:
         raise RuntimeAssemblyError(str(exc)) from exc
 
     return AssembledPolicy(

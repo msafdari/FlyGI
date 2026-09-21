@@ -20,7 +20,7 @@ from typing import Any
 import numpy as np
 from numpy.typing import NDArray
 
-from flygi.decoding.coordinate_head import CoordinateHead
+from flygi.decoding.coordinate_head import CoordinateDecision, CoordinateHead, novelty_centroid
 from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
 from flygi.decoding.literal import LiteralActionMap
 from flygi.dynamics.rate import ScipyRateNetwork
@@ -68,6 +68,14 @@ class TurnRecord:
     forced_reset: bool
     graph_advanced: bool
     logits: list[float] = field(default_factory=list)
+    action_probability: float | None = None
+    action_entropy_bits: float | None = None
+    action_logit_scale: float | None = None
+    coordinate_x: int | None = None
+    coordinate_y: int | None = None
+    coordinate_method: str | None = None
+    coordinate_proposed_x: int | None = None
+    coordinate_proposed_y: int | None = None
 
 
 class ConnectomePolicy:
@@ -83,6 +91,7 @@ class ConnectomePolicy:
         action_map: LiteralActionMap,
         coordinate_head: CoordinateHead,
         internal_steps: int,
+        decision_seed: int = 0,
         standardizer: AdaptiveStandardizer | None = None,
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
@@ -100,6 +109,10 @@ class ConnectomePolicy:
             raise PolicyError("readout population and coordinate head disagree in size")
         if internal_steps <= 0:
             raise PolicyError("internal_steps must be positive")
+        if isinstance(decision_seed, bool) or not isinstance(decision_seed, int):
+            raise PolicyError("decision_seed must be an integer")
+        if not 0 <= decision_seed <= np.iinfo(np.uint64).max:
+            raise PolicyError("decision_seed must lie in the unsigned 64-bit range")
 
         self._actions = actions
         self._network = network
@@ -108,6 +121,8 @@ class ConnectomePolicy:
         self._action_map = action_map
         self._coordinates = coordinate_head
         self._internal_steps = int(internal_steps)
+        self._decision_seed = int(decision_seed)
+        self._rng = np.random.default_rng(self._decision_seed)
         self._state_policy = state_policy or StatePolicy()
         self._ablate_graph = bool(ablate_graph)
         self._standardizer = standardizer
@@ -117,6 +132,7 @@ class ConnectomePolicy:
         self._state = network.initial_state()
         self._previous_grid: NDArray[np.int8] | None = None
         self._previous_action_id: int | None = None
+        self._clicked_coordinates: set[tuple[int, int]] = set()
         self._step = 0
         self.records: list[TurnRecord] = []
 
@@ -132,6 +148,10 @@ class ConnectomePolicy:
     def internal_steps(self) -> int:
         return self._internal_steps
 
+    @property
+    def decision_seed(self) -> int:
+        return self._decision_seed
+
     def describe(self) -> dict[str, Any]:
         """Full interface provenance, written into every result bundle."""
 
@@ -141,6 +161,12 @@ class ConnectomePolicy:
             "internal_steps": self._internal_steps,
             "node_count": self._network.node_count,
             "backend": self._network.backend_name,
+            "decision_rng": {
+                "library": "numpy",
+                "bit_generator": type(self._rng.bit_generator).__name__,
+                "seed": self._decision_seed,
+                "seed_policy": "one explicit seed per policy; config-derived only if omitted",
+            },
             "dynamics": {
                 "leak": float(self._network.parameters.leak),
                 "recurrent_gain": float(self._network.parameters.recurrent_gain),
@@ -175,6 +201,8 @@ class ConnectomePolicy:
         self._state = self._network.initial_state()
         self._previous_grid = None
         self._previous_action_id = None
+        self._clicked_coordinates.clear()
+        self._rng = np.random.default_rng(self._decision_seed)
         if self._standardizer is not None:
             self._standardizer.reset()
 
@@ -183,12 +211,15 @@ class ConnectomePolicy:
 
         return ArcTurnState.from_frame(latest_frame).is_win
 
-    def _advance(self, frame: FrameLike, turn: ArcTurnState) -> tuple[NDArray[np.float32], int]:
+    def _advance(
+        self, frame: FrameLike, turn: ArcTurnState
+    ) -> tuple[NDArray[np.float32], int, tuple[int, int] | None]:
         """Encode the frame, advance the graph, and return the readout trace."""
 
+        previous_grid = self._previous_grid
         features = encode_observation(
             frame,
-            previous_grid=self._previous_grid,
+            previous_grid=previous_grid,
             previous_action_id=self._previous_action_id,
             available_action_ids=turn.available_action_ids,
         )
@@ -197,14 +228,15 @@ class ConnectomePolicy:
         # branch here: a bypass condition runs the identical update with zero
         # recurrent gain and a readout-targeted projection of matched budget.
         self._state = self._network.advance(self._state, drive, internal_steps=self._internal_steps)
-        self._previous_grid = features.grid
-        return self._state, features.changed_cells
+        centroid = novelty_centroid(previous_grid, features.grid)
+        self._previous_grid = np.array(features.grid, dtype=np.int8, copy=True)
+        return self._state, features.changed_cells, centroid
 
     def choose_action(self, latest_frame: FrameLike) -> ActionLike:
         """Run one full closed-loop decision."""
 
         turn = ArcTurnState.from_frame(latest_frame)
-        state, changed_cells = self._advance(latest_frame, turn)
+        state, changed_cells, centroid = self._advance(latest_frame, turn)
         population, diagnostics = self._readout.standardized(state)
         trace = (
             population
@@ -214,6 +246,10 @@ class ConnectomePolicy:
 
         reset = self._actions.RESET
         reset_id = action_id(reset)
+        action_probability: float | None = None
+        action_entropy_bits: float | None = None
+        action_logit_scale: float | None = None
+        coordinate: CoordinateDecision | None = None
         if turn.needs_reset:
             # The protocol forces RESET here. The graph still saw the frame, so
             # the failed attempt leaves a trace in the persistent state.
@@ -226,13 +262,27 @@ class ConnectomePolicy:
                 raise PolicyError(
                     f"active ARC frame in state {turn.game_state!r} declares no legal actions"
                 )
-            decision = self._action_map.decide(trace, turn.available_action_ids)
+            decision = self._action_map.decide(
+                trace,
+                turn.available_action_ids,
+                rng=self._rng,
+            )
             chosen_id = decision.action_id
             unique = decision.argmax_was_unique
             logits = [float(value) for value in decision.logits]
+            action_probability = decision.selected_probability
+            action_entropy_bits = decision.entropy_bits
+            action_logit_scale = decision.logit_scale
             action = self._resolve_action(chosen_id)
             if chosen_id == ACTION6:
-                self._attach_coordinates(action, trace)
+                coordinate = self._attach_coordinates(
+                    action,
+                    trace,
+                    centroid=centroid,
+                    explore_unchanged_click=(
+                        self._previous_action_id == ACTION6 and changed_cells == 0
+                    ),
+                )
 
         self._annotate(action, chosen_id, turn)
         self.records.append(
@@ -248,6 +298,14 @@ class ConnectomePolicy:
                 forced_reset=turn.needs_reset,
                 graph_advanced=not self._ablate_graph,
                 logits=logits,
+                action_probability=action_probability,
+                action_entropy_bits=action_entropy_bits,
+                action_logit_scale=action_logit_scale,
+                coordinate_x=None if coordinate is None else coordinate.x,
+                coordinate_y=None if coordinate is None else coordinate.y,
+                coordinate_method=None if coordinate is None else coordinate.method,
+                coordinate_proposed_x=None if coordinate is None else coordinate.proposed_x,
+                coordinate_proposed_y=None if coordinate is None else coordinate.proposed_y,
             )
         )
         self._previous_action_id = chosen_id
@@ -266,12 +324,27 @@ class ConnectomePolicy:
                 return candidate
         raise PolicyError(f"unknown ARC action id {identifier}")
 
-    def _attach_coordinates(self, action: ActionLike, trace: NDArray[np.float32]) -> None:
-        x, y = self._coordinates.coordinates(trace)
+    def _attach_coordinates(
+        self,
+        action: ActionLike,
+        trace: NDArray[np.float32],
+        *,
+        centroid: tuple[int, int] | None,
+        explore_unchanged_click: bool,
+    ) -> CoordinateDecision:
+        decision = self._coordinates.sample(
+            trace,
+            rng=self._rng,
+            centroid=centroid,
+            explore_unchanged_click=explore_unchanged_click,
+            clicked_coordinates=self._clicked_coordinates,
+        )
         setter = getattr(action, "set_data", None)
         if not callable(setter):
             raise PolicyError("complex ARC actions must implement set_data(data)")
-        setter({"x": x, "y": y})
+        setter({"x": decision.x, "y": decision.y})
+        self._clicked_coordinates.add((decision.x, decision.y))
+        return decision
 
     def _annotate(self, action: ActionLike, chosen_id: int, turn: ArcTurnState) -> None:
         reasoning: Any = {
@@ -279,6 +352,7 @@ class ConnectomePolicy:
             "action_id": chosen_id,
             "legal_action_ids": list(turn.available_action_ids),
             "internal_steps": self._internal_steps,
+            "decision_seed": self._decision_seed,
         }
         with suppress(AttributeError, TypeError):
             action.reasoning = reasoning

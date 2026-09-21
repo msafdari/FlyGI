@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import builtins
 import importlib.util
+import json
 import sys
 from dataclasses import dataclass
 from enum import Enum, StrEnum
 from importlib import import_module
 from pathlib import Path
-from types import ModuleType
+from types import ModuleType, SimpleNamespace
 
 import pytest
 
@@ -128,7 +129,8 @@ def test_random_adapter_obeys_official_contract_with_fakes(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     module = _load_adapter(monkeypatch)
-    agent = module.MyAgent(game_id="smoke-v1", rng_seed=20260919)
+    monkeypatch.setattr(module, "_find_runtime", lambda: None)
+    agent = module.MyAgent(game_id="smoke-v1", rng_seed=20260919, allow_random_fallback=True)
 
     initial = FakeFrameData(FakeGameState.NOT_PLAYED, [])
     assert agent.is_done([], initial) is False
@@ -156,8 +158,143 @@ def test_random_adapter_refuses_an_empty_active_action_mask(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     module = _load_adapter(monkeypatch)
-    agent = module.MyAgent(game_id="smoke-v1", rng_seed=0)
+    monkeypatch.setattr(module, "_find_runtime", lambda: None)
+    agent = module.MyAgent(game_id="smoke-v1", rng_seed=0, allow_random_fallback=True)
     active = FakeFrameData(FakeGameState.NOT_FINISHED, [])
 
     with pytest.raises(NoLegalActionError):
         agent.choose_action([], active)
+
+
+def test_connectome_adapter_passes_the_per_game_decision_seed(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module = _load_adapter(monkeypatch)
+    bundle = SimpleNamespace(node_count=166_700, edge_count=24_559_055)
+    module._LOADED.update(
+        {
+            "available": True,
+            "config": object(),
+            "runtime_dir": Path("/attached/runtime"),
+            "bundle": bundle,
+            "projection": object(),
+            "interface": {"internal_steps": 4},
+        }
+    )
+    observed: dict[str, object] = {}
+
+    def fake_build_connectome_policy(*args: object, **kwargs: object) -> SimpleNamespace:
+        observed["args"] = args
+        observed["kwargs"] = kwargs
+        return SimpleNamespace(policy=SimpleNamespace(internal_steps=4))
+
+    factory = import_module("flygi.arc.factory")
+    monkeypatch.setattr(factory, "build_connectome_policy", fake_build_connectome_policy)
+
+    agent = module.MyAgent(game_id="seeded-game", rng_seed=12345)
+
+    assert agent._mode == "connectome"
+    assert observed["kwargs"]["decision_seed"] == 12345
+
+
+def test_adapter_fails_closed_when_runtime_is_missing(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    module = _load_adapter(monkeypatch)
+    monkeypatch.delenv("FLYGI_RUNTIME_DIR", raising=False)
+    monkeypatch.delenv("FLYGI_ALLOW_RANDOM_FALLBACK", raising=False)
+    monkeypatch.delenv("KAGGLE_IS_COMPETITION_RERUN", raising=False)
+    monkeypatch.setattr(module, "_KAGGLE_INPUT", tmp_path)
+
+    with pytest.raises(module.RuntimePreflightError, match="Random fallback is disabled"):
+        module.MyAgent(game_id="missing-runtime")
+
+
+def test_competition_rerun_ignores_random_fallback_opt_in(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    module = _load_adapter(monkeypatch)
+    monkeypatch.delenv("FLYGI_RUNTIME_DIR", raising=False)
+    monkeypatch.setenv("KAGGLE_IS_COMPETITION_RERUN", "1")
+    monkeypatch.setenv("FLYGI_ALLOW_RANDOM_FALLBACK", "1")
+    monkeypatch.setattr(module, "_KAGGLE_INPUT", tmp_path)
+
+    with pytest.raises(module.RuntimePreflightError, match="official competition rerun"):
+        module.MyAgent(game_id="competition", allow_random_fallback=True)
+
+
+def test_preflight_prints_machine_readable_verified_identity(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    module = _load_adapter(monkeypatch)
+    bundle = SimpleNamespace(
+        node_count=166_700,
+        edge_count=24_559_055,
+        manifest={
+            "release": "male-cns:v1.0",
+            "preprocessing": {"sign_mode": "heuristic"},
+        },
+        verified_hashes={
+            "/attached/runtime/graph.npz": "a" * 64,
+            "/attached/runtime/groups.npz": "b" * 64,
+            "/attached/runtime/node_metadata.npz": "c" * 64,
+        },
+    )
+    monkeypatch.setattr(
+        module,
+        "_shared_runtime",
+        lambda: {
+            "available": True,
+            "bundle": bundle,
+            "interface": {"internal_steps": 4},
+        },
+    )
+
+    identity = module.preflight_runtime()
+    output = capsys.readouterr().out.strip()
+
+    assert output.startswith("FLYGI_PREFLIGHT=")
+    assert json.loads(output.removeprefix("FLYGI_PREFLIGHT=")) == identity
+    assert identity == {
+        "edges": 24_559_055,
+        "internal_steps": 4,
+        "mode": "connectome",
+        "nodes": 166_700,
+        "release": "male-cns:v1.0",
+        "sign_mode": "heuristic",
+        "verified": True,
+        "verified_output_hashes": {
+            "graph.npz": "a" * 64,
+            "groups.npz": "b" * 64,
+            "node_metadata.npz": "c" * 64,
+        },
+    }
+
+
+def test_preflight_fails_closed_without_runtime(monkeypatch: pytest.MonkeyPatch) -> None:
+    module = _load_adapter(monkeypatch)
+    monkeypatch.setattr(
+        module,
+        "_shared_runtime",
+        lambda: {"available": False, "reason": "hash mismatch"},
+    )
+
+    with pytest.raises(module.RuntimePreflightError, match="hash mismatch"):
+        module.preflight_runtime()
+
+
+def test_preflight_fails_closed_for_an_incomplete_runtime(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    runtime = tmp_path / "runtime"
+    runtime.mkdir()
+    (runtime / "graph.npz").write_bytes(b"not a graph")
+    (runtime / "config.yaml").write_text(
+        (REPOSITORY_ROOT / "configs" / "literal_rate_signed.yaml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("FLYGI_RUNTIME_DIR", str(runtime))
+    module = _load_adapter(monkeypatch)
+
+    with pytest.raises(module.RuntimePreflightError, match=r"manifest\.json"):
+        module.preflight_runtime()

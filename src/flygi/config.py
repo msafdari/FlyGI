@@ -84,6 +84,12 @@ class DecoderConfig:
     readout: str = "descending_neurons"
     action_slots: int = 8
     coordinate_head: str = "literal_factorized_bins"
+    sampling_method: str = "zscore_softmax_categorical"
+    action_temperature: float = 0.35
+    coordinate_temperature: float = 0.5
+    decision_seed_policy: str = "explicit_per_policy_or_config_derived"
+    coordinate_fallback: str = "novelty_centroid"
+    unchanged_click_exploration: str = "seeded_untried_uniform"
     readout_normalization: str = "adaptive"
     adaptation_rate: float = 0.1
     clip: float = 10.0
@@ -272,11 +278,31 @@ def load_config(path: str | Path) -> FlyGIConfig:
             trainable=bool(encoder_raw.pop("trainable", False)),
             per_game_rules=bool(encoder_raw.pop("per_game_rules", False)),
         )
+        action_temperature_raw = decoder_raw.pop("action_temperature", 0.35)
+        coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.5)
+        if isinstance(action_temperature_raw, bool) or not isinstance(
+            action_temperature_raw, (int, float)
+        ):
+            raise ConfigError("decoder.action_temperature must be numeric")
+        if isinstance(coordinate_temperature_raw, bool) or not isinstance(
+            coordinate_temperature_raw, (int, float)
+        ):
+            raise ConfigError("decoder.coordinate_temperature must be numeric")
         decoder = DecoderConfig(
             kind=str(decoder_raw.pop("kind", "literal")),
             readout=str(decoder_raw.pop("readout", "descending_neurons")),
             action_slots=int(decoder_raw.pop("action_slots", 8)),
             coordinate_head=str(decoder_raw.pop("coordinate_head", "literal_factorized_bins")),
+            sampling_method=str(decoder_raw.pop("sampling_method", "zscore_softmax_categorical")),
+            action_temperature=float(action_temperature_raw),
+            coordinate_temperature=float(coordinate_temperature_raw),
+            decision_seed_policy=str(
+                decoder_raw.pop("decision_seed_policy", "explicit_per_policy_or_config_derived")
+            ),
+            coordinate_fallback=str(decoder_raw.pop("coordinate_fallback", "novelty_centroid")),
+            unchanged_click_exploration=str(
+                decoder_raw.pop("unchanged_click_exploration", "seeded_untried_uniform")
+            ),
             readout_normalization=str(decoder_raw.pop("readout_normalization", "adaptive")),
             adaptation_rate=float(decoder_raw.pop("adaptation_rate", 0.1)),
             clip=float(decoder_raw.pop("clip", 10.0)),
@@ -357,6 +383,23 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unsupported decoder.kind: {decoder.kind}")
     if decoder.coordinate_head != "literal_factorized_bins":
         raise ConfigError("unsupported decoder.coordinate_head")
+    if decoder.sampling_method != "zscore_softmax_categorical":
+        raise ConfigError(f"unsupported decoder.sampling_method: {decoder.sampling_method}")
+    if not math.isfinite(decoder.action_temperature) or decoder.action_temperature <= 0:
+        raise ConfigError("decoder.action_temperature must be finite and positive")
+    if not math.isfinite(decoder.coordinate_temperature) or decoder.coordinate_temperature <= 0:
+        raise ConfigError("decoder.coordinate_temperature must be finite and positive")
+    if decoder.decision_seed_policy != "explicit_per_policy_or_config_derived":
+        raise ConfigError(
+            f"unsupported decoder.decision_seed_policy: {decoder.decision_seed_policy}"
+        )
+    if decoder.coordinate_fallback != "novelty_centroid":
+        raise ConfigError(f"unsupported decoder.coordinate_fallback: {decoder.coordinate_fallback}")
+    if decoder.unchanged_click_exploration != "seeded_untried_uniform":
+        raise ConfigError(
+            "unsupported decoder.unchanged_click_exploration: "
+            f"{decoder.unchanged_click_exploration}"
+        )
     if decoder.action_slots != 8:
         raise ConfigError("decoder.action_slots must be 8 for ARC-AGI-3")
     if decoder.readout_normalization not in {"adaptive", "population"}:

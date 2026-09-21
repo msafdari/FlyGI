@@ -75,6 +75,12 @@ decoder:
   readout: descending_neurons
   action_slots: 8
   coordinate_head: literal_factorized_bins
+  sampling_method: zscore_softmax_categorical
+  action_temperature: 0.35
+  coordinate_temperature: 0.5
+  decision_seed_policy: explicit_per_policy_or_config_derived
+  coordinate_fallback: novelty_centroid
+  unchanged_click_exploration: seeded_untried_uniform
   # Population z-scoring alone leaves the decision dominated by each neuron's
   # fixed offset and by the slow global drift of the state. The adaptive
   # readout reports deviation from a per-neuron EMA expectation instead.

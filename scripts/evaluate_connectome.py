@@ -23,6 +23,7 @@ import argparse
 import importlib.util
 import json
 import sys
+from collections import Counter
 from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
@@ -59,18 +60,39 @@ def _load_baseline_module() -> ModuleType:
 BASELINE = _load_baseline_module()
 
 
-def _policy_summary(records: list[Any]) -> dict[str, Any]:
+def _policy_summary(records: list[Any], *, decision_seed: int | None = None) -> dict[str, Any]:
     """Behavioral diagnostics that remain informative when the score is zero."""
 
     if not records:
-        return {"turns": 0}
+        return {"turns": 0, "decision_seed": decision_seed}
     readout_std = np.asarray([record.readout_std for record in records], dtype=np.float64)
     state_mean = np.asarray([record.state_mean_abs for record in records], dtype=np.float64)
     changed = np.asarray([record.changed_cells for record in records], dtype=np.float64)
     decided = [record for record in records if not record.forced_reset]
     ties = sum(1 for record in decided if not record.argmax_unique)
+    sampled = [
+        record for record in decided if getattr(record, "action_entropy_bits", None) is not None
+    ]
+    action_entropies = np.asarray(
+        [record.action_entropy_bits for record in sampled], dtype=np.float64
+    )
+    selected_probabilities = np.asarray(
+        [record.action_probability for record in sampled], dtype=np.float64
+    )
+    coordinates = [
+        (int(record.coordinate_x), int(record.coordinate_y))
+        for record in records
+        if getattr(record, "coordinate_x", None) is not None
+        and getattr(record, "coordinate_y", None) is not None
+    ]
+    coordinate_methods = Counter(
+        str(record.coordinate_method)
+        for record in records
+        if getattr(record, "coordinate_method", None) is not None
+    )
     return {
         "turns": len(records),
+        "decision_seed": decision_seed,
         "decided_turns": len(decided),
         "forced_resets": len(records) - len(decided),
         "silent_readout_turns": sum(1 for record in records if record.readout_silent),
@@ -91,6 +113,18 @@ def _policy_summary(records: list[Any]) -> dict[str, Any]:
             "median": float(np.median(changed)),
             "max": float(changed.max()),
             "zero_change_turns": int(np.count_nonzero(changed == 0)),
+        },
+        "sampler": {
+            "sampled_turns": len(sampled),
+            "mean_action_entropy_bits": (float(action_entropies.mean()) if sampled else None),
+            "median_selected_action_probability": (
+                float(np.median(selected_probabilities)) if sampled else None
+            ),
+        },
+        "coordinates": {
+            "draws": len(coordinates),
+            "unique": len(set(coordinates)),
+            "methods": dict(sorted(coordinate_methods.items())),
         },
         "graph_advanced_turns": sum(1 for record in records if record.graph_advanced),
     }
@@ -145,6 +179,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     bundle = assembled.bundle
     projection = assembled.projection
     interface = assembled.describe()
+    decision_rng = dict(interface["decision_rng"])
+    decision_rng.pop("seed", None)
+    decision_rng.update(
+        {
+            "seed_policy": "derived independently for each experiment-seed/game row",
+            "per_row_seed_field": "rows[].policy_diagnostics.decision_seed",
+        }
+    )
+    interface["decision_rng"] = decision_rng
     print(
         f"loaded {bundle.node_count:,} nodes / {bundle.edge_count:,} edges | "
         f"sensory {assembled.sensory_indices.size} | readout {assembled.readout_indices.size} | "
@@ -155,7 +198,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     def policy_factory(policy_seed: int) -> Any:
         # A fresh policy per row implements "reset neural state on a new
         # environment"; the graph and projection objects are reused unchanged.
-        del policy_seed
         fresh = build_connectome_policy(
             config,
             runtime.GameAction,
@@ -164,6 +206,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             projection=projection,
             ablate_graph=bool(args.ablate_graph),
             internal_steps=args.internal_steps,
+            decision_seed=policy_seed,
         )
         policy_factory.current = fresh.policy  # type: ignore[attr-defined]
         return fresh.policy
@@ -183,7 +226,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
             current = getattr(policy_factory, "current", None)
             row["policy_diagnostics"] = _policy_summary(
-                list(current.records) if current is not None else []
+                list(current.records) if current is not None else [],
+                decision_seed=(current.decision_seed if current is not None else None),
             )
             rows.append(row)
             official = row.get("official") or {}

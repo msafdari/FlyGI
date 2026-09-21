@@ -94,6 +94,23 @@ def build() -> dict[str, object]:
     write_agent_cell = _code_cell(
         "%%writefile /tmp/my_agent.py\n" + AGENT_SOURCE.read_text(encoding="utf-8")
     )
+    preflight_cell = _code_cell(
+        dedent(
+            """\
+            import importlib.util, os
+
+            if not os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+                _flygi_adapter_spec = importlib.util.spec_from_file_location(
+                    '_flygi_submission_adapter', '/tmp/my_agent.py'
+                )
+                if _flygi_adapter_spec is None or _flygi_adapter_spec.loader is None:
+                    raise RuntimeError('could not import /tmp/my_agent.py for runtime preflight')
+                _flygi_submission_adapter = importlib.util.module_from_spec(_flygi_adapter_spec)
+                _flygi_adapter_spec.loader.exec_module(_flygi_submission_adapter)
+                _flygi_runtime_identity = _flygi_submission_adapter.preflight_runtime()
+            """
+        )
+    )
     slim_registry = dedent(
         """\
         from typing import Type
@@ -178,6 +195,7 @@ def build() -> dict[str, object]:
             install_cell,
             runtime_cell,
             write_agent_cell,
+            preflight_cell,
             run_cell,
             dummy_cell,
         ],

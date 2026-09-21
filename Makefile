@@ -20,9 +20,14 @@ DYNAMICS_OUTPUT  ?=
 REGIME_CONFIG    ?= configs/literal_rate.yaml
 REGIME_NULL_SEED ?= 20260921
 REGIME_OUTPUT    ?=
+CALIBRATION_SEEDS ?= 0 1
+CALIBRATION_GAMES ?= lp85 ft09 ls20 sp80
+CALIBRATION_ACTIONS ?= 40
+CALIBRATION_CANDIDATES ?= focused balanced exploratory
+CALIBRATION_OUTPUT ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local baseline-local benchmark-full-graph probe-regime list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke play-local verify-local baseline-local benchmark-full-graph probe-regime calibrate-sampler list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -69,6 +74,12 @@ probe-regime: ## Measure the dynamical regime of a compiled runtime (diagnostic,
 	$(UV_RUN) python scripts/probe_dynamics_regime.py \
 		--config $(REGIME_CONFIG) --weak-null-seed $(REGIME_NULL_SEED) \
 		$(if $(REGIME_OUTPUT),--output $(REGIME_OUTPUT))
+
+calibrate-sampler: ## Rank the preregistered sampler grid using score-blind behavior
+	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/calibrate_sampler.py \
+		--seeds $(CALIBRATION_SEEDS) --games $(CALIBRATION_GAMES) \
+		--action-budget $(CALIBRATION_ACTIONS) --candidates $(CALIBRATION_CANDIDATES) \
+		$(if $(CALIBRATION_OUTPUT),--output $(CALIBRATION_OUTPUT))
 
 list-games: ## List public ARC-AGI-3 games
 	$(UV_RUN) python scripts/play_local.py --list

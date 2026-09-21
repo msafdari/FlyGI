@@ -70,9 +70,21 @@ evaluation notebook must never download MaleCNS or call neuPrint.
 
 The notebook runs with internet disabled, so the compiled MaleCNS runtime must
 be attached as a Kaggle Dataset before it can be a connectome run. Without it
-the adapter falls back to the deterministic random-legal policy and prints
-`FlyGI agent mode=random-legal`, which is correct behavior but is not a FlyGI
-result.
+the ordinary notebook preflight and an official competition rerun both fail
+closed. A missing or corrupt asset can therefore never silently turn a FlyGI
+submission into a random-agent result.
+
+Every ordinary notebook run imports the adapter without starting a game,
+discovers the attached runtime, verifies every manifest output hash, assembles
+the policy, and prints one machine-readable log line beginning
+`FLYGI_PREFLIGHT=`. For the current signed bundle, that JSON must report
+`mode=connectome`, `verified=true`, 166,700 nodes, 24,559,055 edges, `K=4`,
+release `male-cns:v1.0`, heuristic signs, and the verified output digests.
+
+The random-legal adapter path is retained only for local import/unit smokes. It
+requires the explicit constructor argument `allow_random_fallback=True` or the
+environment variable `FLYGI_ALLOW_RANDOM_FALLBACK=1`; an official competition
+rerun ignores both opt-ins and still fails closed.
 
 The order matters. `notebooks/kernel-metadata.json` already declares
 `dataset_sources`, so pushing the notebook before the dataset exists will fail.
@@ -88,7 +100,7 @@ KAGGLE_API_TOKEN=$(cat .kaggle/access_token) uv run kaggle datasets create \
 # 3. Build and push the notebook. This does not spend a submission.
 make submit
 
-# 4. Confirm the run log says mode=connectome before submitting anything.
+# 4. Confirm the ordinary run log contains a verified FLYGI_PREFLIGHT JSON line.
 make status
 ```
 

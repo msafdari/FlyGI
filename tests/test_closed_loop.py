@@ -10,9 +10,9 @@ import pytest
 from scipy import sparse
 
 from flygi.arc.policy import ConnectomePolicy, PolicyError, StatePolicy
-from flygi.decoding.coordinate_head import CoordinateHead
+from flygi.decoding.coordinate_head import CoordinateHead, novelty_centroid
 from flygi.decoding.dn_trace import DescendingTrace, ReadoutError, contiguous_groups
-from flygi.decoding.literal import LiteralActionMap
+from flygi.decoding.literal import LiteralActionMap, scale_aware_probabilities
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.encoding.features import (
     FEATURE_DIMENSION,
@@ -97,7 +97,7 @@ def _network(gain: float = 0.9, seed: int = 0) -> ScipyRateNetwork:
     )
 
 
-def _policy(*, ablate_graph: bool = False, seed: int = 0) -> ConnectomePolicy:
+def _policy(*, ablate_graph: bool = False, decision_seed: int = 0) -> ConnectomePolicy:
     """Mirror the factory, including the matched bypass for the ablation."""
 
     readout_indices = np.arange(NODES - READOUT, NODES, dtype=np.int64)
@@ -113,7 +113,7 @@ def _policy(*, ablate_graph: bool = False, seed: int = 0) -> ConnectomePolicy:
     projection = build_sensory_projection(
         target,
         NODES,
-        seed=seed,
+        seed=0,
         options=ProjectionOptions(connections_per_neuron=per_neuron, input_scale=1.0),
     )
     readout = DescendingTrace(readout_indices, NODES)
@@ -125,6 +125,7 @@ def _policy(*, ablate_graph: bool = False, seed: int = 0) -> ConnectomePolicy:
         action_map=LiteralActionMap(READOUT),
         coordinate_head=CoordinateHead(READOUT),
         internal_steps=4,
+        decision_seed=decision_seed,
         state_policy=StatePolicy(),
         ablate_graph=ablate_graph,
     )
@@ -316,16 +317,44 @@ def test_an_empty_mask_in_an_active_state_is_an_error_not_a_guess() -> None:
 
 
 def test_the_same_seed_and_frames_give_the_same_actions() -> None:
-    first = [_policy().choose_action(_frame(step)).value for step in range(8)]
-    policy = _policy()
-    second = [policy.choose_action(_frame(step)).value for step in range(8)]
-    assert first[0] == second[0]
+    frames = [_frame(step) for step in range(8)]
+    repeat_a = _policy(decision_seed=17)
+    repeat_b = _policy(decision_seed=17)
+    first = [repeat_a.choose_action(frame).value for frame in frames]
+    second = [repeat_b.choose_action(frame).value for frame in frames]
+    assert first == second
 
-    repeat_a = _policy()
-    repeat_b = _policy()
-    assert [repeat_a.choose_action(_frame(s)).value for s in range(8)] == [
-        repeat_b.choose_action(_frame(s)).value for s in range(8)
-    ]
+
+def test_same_seed_replays_click_payloads_and_different_seeds_diverge() -> None:
+    """Click-only games need seeded coordinate diversity, not action diversity."""
+
+    frame = _frame(7, available_actions=[6])
+
+    def click_trace(seed: int) -> list[tuple[int, int]]:
+        policy = _policy(decision_seed=seed)
+        trace = []
+        for _ in range(12):
+            action = policy.choose_action(frame)
+            trace.append((int(action.action_data["x"]), int(action.action_data["y"])))
+        return trace
+
+    assert click_trace(41) == click_trace(41)
+    assert click_trace(41) != click_trace(42)
+
+
+def test_reset_state_rewinds_the_single_policy_rng() -> None:
+    policy = _policy(decision_seed=123)
+    frame = _frame(7, available_actions=[6])
+    first = []
+    for _ in range(5):
+        action = policy.choose_action(frame)
+        first.append(dict(action.action_data))
+    policy.reset_state()
+    replay = []
+    for _ in range(5):
+        action = policy.choose_action(frame)
+        replay.append(dict(action.action_data))
+    assert replay == first
 
 
 def test_policy_reports_zero_trainable_parameters() -> None:
@@ -334,6 +363,9 @@ def test_policy_reports_zero_trainable_parameters() -> None:
     assert description["encoder"]["trainable"] is False
     assert description["action_map"]["trainable"] is False
     assert description["coordinate_head"]["trainable"] is False
+    assert description["decision_rng"]["seed"] == 0
+    assert description["action_map"]["selection"] == "zscore_softmax_categorical"
+    assert description["coordinate_head"]["selection"] == "zscore_softmax_categorical"
 
 
 # --- decoder units ----------------------------------------------------------
@@ -375,9 +407,27 @@ def test_action_map_never_selects_a_masked_action_even_when_it_scores_highest() 
     trace = np.zeros(READOUT, dtype=np.float32)
     blocks = contiguous_groups(READOUT, 8)
     trace[blocks[4]] = 10.0  # ACTION4 would win if the mask were ignored.
-    decision = action_map.decide(trace, [1, 2])
+    decision = action_map.decide(trace, [1, 2], rng=np.random.default_rng(0))
     assert decision.action_id in (1, 2)
     assert float(decision.masked_logits[4]) == float("-inf")
+    assert decision.probabilities[4] == 0.0
+    assert np.isclose(decision.probabilities.sum(), 1.0)
+
+
+def test_scale_aware_sampling_is_invariant_to_positive_affine_logit_scale() -> None:
+    logits = np.asarray([-0.2, 0.1, 0.9, 0.4], dtype=np.float32)
+    first, _ = scale_aware_probabilities(logits, 0.35)
+    second, _ = scale_aware_probabilities(logits * 1000.0 + 27.0, 0.35)
+    assert np.allclose(first, second, atol=1e-6)
+
+
+def test_flat_logits_are_sampled_uniformly_and_singletons_are_certain() -> None:
+    flat, flat_scale = scale_aware_probabilities(np.zeros(4, dtype=np.float32), 0.35)
+    singleton, singleton_scale = scale_aware_probabilities(np.ones(1, dtype=np.float32), 0.35)
+    assert np.array_equal(flat, np.full(4, 0.25))
+    assert flat_scale == 0.0
+    assert np.array_equal(singleton, np.ones(1))
+    assert singleton_scale == 0.0
 
 
 def test_coordinate_head_responds_to_the_trace() -> None:
@@ -393,6 +443,42 @@ def test_coordinate_head_responds_to_the_trace() -> None:
 def test_coordinate_head_requires_enough_readout_neurons() -> None:
     with pytest.raises(ReadoutError):
         CoordinateHead(64)
+
+
+def test_novelty_centroid_uses_changed_cells_in_xy_order() -> None:
+    before = np.zeros((64, 64), dtype=np.int8)
+    after = np.array(before, copy=True)
+    after[10, 20] = 1
+    after[12, 24] = 1
+    assert novelty_centroid(before, after) == (22, 11)
+    assert novelty_centroid(after, after) is None
+    assert novelty_centroid(None, after) is None
+
+
+def test_unchanged_clicks_explore_distinct_seeded_coordinates() -> None:
+    policy = _policy(decision_seed=5)
+    frame = _frame(9, available_actions=[6])
+    coordinates = []
+    methods = []
+    for _ in range(10):
+        action = policy.choose_action(frame)
+        coordinates.append((action.action_data["x"], action.action_data["y"]))
+        methods.append(policy.records[-1].coordinate_method)
+
+    assert methods[0] == "factorized_sample"
+    assert methods[1:] == ["seeded_untried_uniform"] * 9
+    assert len(set(coordinates)) == len(coordinates)
+
+
+def test_a_changed_frame_after_a_click_uses_the_novelty_centroid() -> None:
+    policy = _policy(decision_seed=5)
+    first = np.zeros((64, 64), dtype=np.int8)
+    second = np.array(first, copy=True)
+    second[7, 13] = 1
+    policy.choose_action(FakeFrame(available_actions=[6], frame=[first]))
+    action = policy.choose_action(FakeFrame(available_actions=[6], frame=[second]))
+    assert action.action_data == {"x": 13, "y": 7}
+    assert policy.records[-1].coordinate_method == "novelty_centroid"
 
 
 # --- adaptive readout -------------------------------------------------------

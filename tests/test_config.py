@@ -35,6 +35,12 @@ def test_checked_in_configs_parse() -> None:
     assert literal.dynamics.frozen_graph is True
     assert literal.dynamics.initial_state == "zeros"
     assert literal.dynamics.state_dtype == "float32"
+    assert literal.decoder.sampling_method == "zscore_softmax_categorical"
+    assert literal.decoder.action_temperature == 0.35
+    assert literal.decoder.coordinate_temperature == 0.5
+    assert literal.decoder.decision_seed_policy == "explicit_per_policy_or_config_derived"
+    assert literal.decoder.coordinate_fallback == "novelty_centroid"
+    assert literal.decoder.unchanged_click_exploration == "seeded_untried_uniform"
 
 
 def test_seed_derivation_does_not_use_salted_python_hash() -> None:
@@ -65,6 +71,43 @@ def test_invalid_dynamics_config_fails_closed(
 
     with pytest.raises(ConfigError, match=message):
         load_config(path)
+
+
+@pytest.mark.parametrize(
+    ("key", "value", "message"),
+    [
+        ("sampling_method", "raw_softmax", "unsupported decoder.sampling_method"),
+        ("action_temperature", 0.0, "action_temperature must be finite and positive"),
+        ("action_temperature", True, "action_temperature must be numeric"),
+        ("coordinate_temperature", float("nan"), "coordinate_temperature must be finite"),
+        ("decision_seed_policy", "global", "unsupported decoder.decision_seed_policy"),
+        ("coordinate_fallback", "none", "unsupported decoder.coordinate_fallback"),
+        (
+            "unchanged_click_exploration",
+            "repeat",
+            "unsupported decoder.unchanged_click_exploration",
+        ),
+        ("unexpected", 1, "unknown decoder keys"),
+    ],
+)
+def test_invalid_stochastic_decoder_config_fails_closed(
+    tmp_path: Path, key: str, value: object, message: str
+) -> None:
+    document = yaml.safe_load(Path("configs/literal_rate.yaml").read_text(encoding="utf-8"))
+    document["decoder"][key] = value
+    path = tmp_path / "invalid.yaml"
+    path.write_text(yaml.safe_dump(document), encoding="utf-8")
+
+    with pytest.raises(ConfigError, match=message):
+        load_config(path)
+
+
+def test_graph_conditions_share_the_stochastic_decoder_contract() -> None:
+    unsigned = load_config("configs/literal_rate.yaml").decoder
+    signed = load_config("configs/literal_rate_signed.yaml").decoder
+    reservoir = load_config("configs/reservoir_rate.yaml").decoder
+    assert signed == unsigned
+    assert reservoir == unsigned
 
 
 def test_transmitter_treatments_are_declared_not_defaulted() -> None:

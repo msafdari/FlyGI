@@ -8,13 +8,15 @@ The evaluation notebook runs with internet disabled, so the compiled MaleCNS
 runtime is attached as a Kaggle Dataset and discovered on disk. It is loaded and
 hash-verified exactly once per process, not once per game: the framework builds
 one ``MyAgent`` per game, and a 24-million-edge graph must not be re-read each
-time. If no runtime is attached, the adapter falls back to the deterministic
-random-legal policy and says so, rather than pretending a connectome ran.
+time. Competition reruns fail closed when that runtime is absent or invalid.
+The random-legal policy remains available only through an explicit smoke-test
+opt-in; it must never silently replace FlyGI in an official evaluation.
 """
 
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from pathlib import Path
 from typing import Any
@@ -53,10 +55,18 @@ except ModuleNotFoundError as exc:  # pragma: no cover - exercised by import smo
 
 # Candidate locations for the attached runtime, most specific first.
 _RUNTIME_ENV_VAR = "FLYGI_RUNTIME_DIR"
+_FALLBACK_ENV_VAR = "FLYGI_ALLOW_RANDOM_FALLBACK"
+_COMPETITION_RERUN_ENV_VAR = "KAGGLE_IS_COMPETITION_RERUN"
 _KAGGLE_INPUT = Path("/kaggle/input")
 _RUNTIME_HINTS = ("flygi-malecns-runtime", "flygi")
+_REQUIRED_VERIFIED_OUTPUTS = frozenset({"graph.npz", "node_metadata.npz", "groups.npz"})
+_PREFLIGHT_PREFIX = "FLYGI_PREFLIGHT="
 
 _LOADED: dict[str, Any] = {}
+
+
+class RuntimePreflightError(RuntimeError):
+    """Raised when a verified connectome is required but unavailable."""
 
 
 def _candidate_runtime_dirs() -> list[Path]:
@@ -108,6 +118,12 @@ def _shared_runtime() -> dict[str, Any]:
         assembled = build_connectome_policy(
             config, GameAction, runtime_dir=runtime_dir, bundle=None
         )
+        verified_outputs = {Path(path).name for path in assembled.bundle.verified_hashes}
+        missing_hashes = sorted(_REQUIRED_VERIFIED_OUTPUTS - verified_outputs)
+        if missing_hashes:
+            raise ValueError(
+                f"runtime manifest did not hash every deployment array; missing {missing_hashes}"
+            )
         _LOADED.update(
             {
                 "available": True,
@@ -123,6 +139,58 @@ def _shared_runtime() -> dict[str, Any]:
     return _LOADED
 
 
+def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
+    """Return a stable, JSON-serializable identity for a verified runtime."""
+
+    if not shared.get("available"):
+        return {
+            "mode": "unavailable",
+            "reason": str(shared.get("reason", "unknown")),
+            "verified": False,
+        }
+
+    bundle = shared["bundle"]
+    interface = shared["interface"]
+    verified_hashes = {
+        Path(path).name: digest for path, digest in sorted(bundle.verified_hashes.items())
+    }
+    return {
+        "edges": int(bundle.edge_count),
+        "internal_steps": int(interface["internal_steps"]),
+        "mode": "connectome",
+        "nodes": int(bundle.node_count),
+        "release": str(bundle.manifest.get("release")),
+        "sign_mode": str(bundle.manifest.get("preprocessing", {}).get("sign_mode")),
+        "verified": True,
+        "verified_output_hashes": verified_hashes,
+    }
+
+
+def preflight_runtime(*, emit: bool = True) -> dict[str, Any]:
+    """Discover, load and hash-verify the attached connectome without a game.
+
+    The ordinary Kaggle notebook calls this before producing its dummy output.
+    A single prefixed JSON line makes the exact runtime identity easy to inspect
+    in the kernel log and easy for automation to parse.
+    """
+
+    identity = _runtime_identity(_shared_runtime())
+    if not identity["verified"]:
+        raise RuntimePreflightError(
+            "FlyGI connectome runtime preflight failed: " + str(identity["reason"])
+        )
+    if emit:
+        print(
+            _PREFLIGHT_PREFIX + json.dumps(identity, sort_keys=True, separators=(",", ":")),
+            flush=True,
+        )
+    return identity
+
+
+def _environment_opt_in(name: str) -> bool:
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _seed_for_game(game_id: str) -> int:
     """Create a process-independent replay seed from the framework game id."""
 
@@ -131,7 +199,7 @@ def _seed_for_game(game_id: str) -> int:
 
 
 class MyAgent(Agent):
-    """FlyGI connectome agent, with an explicit random fallback."""
+    """FlyGI connectome agent, with a smoke-test-only random fallback."""
 
     MAX_ACTIONS = 80
 
@@ -139,6 +207,7 @@ class MyAgent(Agent):
         # ``rng_seed`` is a FlyGI-only testing/replay override and must not be
         # forwarded to the official Agent constructor.
         rng_seed = kwargs.pop("rng_seed", None)
+        allow_random_fallback = bool(kwargs.pop("allow_random_fallback", False))
         super().__init__(*args, **kwargs)
         if _ARC_IMPORT_ERROR is not None or GameAction is None:
             raise RuntimeError(
@@ -147,6 +216,7 @@ class MyAgent(Agent):
                 "still be imported and tested without them."
             ) from _ARC_IMPORT_ERROR
 
+        decision_seed = _seed_for_game(str(self.game_id)) if rng_seed is None else int(rng_seed)
         shared = _shared_runtime()
         if shared.get("available"):
             from flygi.arc.factory import build_connectome_policy
@@ -157,6 +227,7 @@ class MyAgent(Agent):
                 runtime_dir=shared["runtime_dir"],
                 bundle=shared["bundle"],
                 projection=shared["projection"],
+                decision_seed=decision_seed,
             )
             self._policy = assembled.policy
             self._mode = "connectome"
@@ -165,10 +236,21 @@ class MyAgent(Agent):
                 f"{shared['bundle'].edge_count} edges, K={self._policy.internal_steps}"
             )
         else:
-            seed = _seed_for_game(str(self.game_id)) if rng_seed is None else int(rng_seed)
-            self._policy = RandomLegalPolicy(GameAction, seed=seed)
+            reason = str(shared.get("reason", "unknown"))
+            competition_rerun = bool(os.environ.get(_COMPETITION_RERUN_ENV_VAR))
+            fallback_opted_in = allow_random_fallback or _environment_opt_in(_FALLBACK_ENV_VAR)
+            if competition_rerun or not fallback_opted_in:
+                context = (
+                    "official competition rerun" if competition_rerun else "adapter construction"
+                )
+                raise RuntimePreflightError(
+                    f"FlyGI connectome runtime is required for {context}: {reason}. "
+                    f"Random fallback is disabled; {_FALLBACK_ENV_VAR}=1 is only "
+                    "for non-competition smoke tests."
+                )
+            self._policy = RandomLegalPolicy(GameAction, seed=decision_seed)
             self._mode = "random-legal"
-            self._detail = str(shared.get("reason", "unknown"))
+            self._detail = reason
         print(f"FlyGI agent mode={self._mode} ({self._detail})", flush=True)
 
     @property

@@ -887,18 +887,19 @@ Gate 2 is passed and the current agent is no longer a barebones submission. The
 shortest responsible route to the leaderboard is now separate from the longer
 scientific-control backlog.
 
-1. **Harden the Kaggle path.** Add the ordinary-run runtime preflight and make
-   competition reruns fail closed instead of silently becoming a random agent.
-   Test both missing-asset and verified-asset paths from the generated notebook.
-2. **Make the fixed policy genuinely seeded.** Sample both masked action logits
-   and the factorized `ACTION6` coordinate logits from one recorded per-run RNG.
-   Apply the identical sampler to real, null, and bypass conditions. Preserve
-   deterministic replay for the same seed and require different traces across
-   at least two seeds on games with more than one reachable decision.
-3. **Ground click exploration.** Add the specification's novelty-centroid
-   coordinate fallback, plus a fixed seeded rule for repeated/no-change clicks.
-   This is essential on click-only games where action temperature has no effect.
-4. **Calibrate without score tuning.** Evaluate a small predeclared sampler grid
+1. **Completed: harden the Kaggle path.** The ordinary-run runtime preflight now
+   verifies and reports the attached graph, and competition reruns fail closed
+   rather than silently becoming a random agent. Missing, incomplete, verified,
+   and competition-rerun paths have tests.
+2. **Completed: make the fixed policy genuinely seeded.** Both masked action
+   logits and factorized `ACTION6` coordinate logits now use one recorded,
+   per-policy NumPy RNG. The same sampler is used by every graph condition, and
+   the full evaluator now passes and records the derived seed for every row.
+3. **Completed: ground click exploration.** The policy uses the changed-cell
+   novelty centroid when available, then seeded untried-grid exploration after
+   a click causes no observation change.
+4. **In progress: calibrate without score tuning.** Evaluate the preregistered
+   three-point sampler grid
    using only action entropy, unique observations, consecutive repeats, graph
    sensitivity, and runtime. Freeze the choice before looking at scores, then run
    one full 25-game by five-seed real-agent gate. The deployment candidate must
@@ -908,11 +909,11 @@ scientific-control backlog.
    and 95 MB dataset, verify every digest from the staged directory, and run the
    private notebook. Its ordinary log must explicitly report the signed
    166,700-node runtime, 24,559,055 edges, and `K=4` before any official rerun.
-6. **Publish and submit only with explicit authorization.** Publishing the
-   private Kaggle Dataset, pushing the private notebook, and spending the daily
-   competition submission are three distinct outward-facing actions. After the
-   user authorizes them, verify the notebook log first and then make one official
-   submission. Record its version, hashes, runtime status, and leaderboard score.
+6. **Publish and submit under the user's explicit authorization.** The user
+   authorized the private Kaggle Dataset publish, private notebook push, and one
+   daily competition submission on 2026-09-21. Execute them only after the local
+   calibration and full gate pass, verify the ordinary notebook log first, and
+   record the version, hashes, runtime status, and leaderboard score.
 7. **Add a positive control after the first leaderboard entry.** Every null is
    built to be no better than the fly. With real, bypass and null all near zero,
    the design cannot separate "the biological graph confers no advantage" from
@@ -946,3 +947,56 @@ scientific-control backlog.
   ARC advantage. Either the interface cannot exploit those properties, or they
   are not useful for this task. Distinguishing those two is what the positive
   control is for.
+
+## 2026-09-21 — Seeded decoder and deployment-hardening checkpoint
+
+The source implementation for leaderboard hardening is complete and locally
+verified; the score-blind calibration itself has not yet been run at full
+declared size.
+
+### Implemented
+
+- Legal action choice now uses a declared z-score/softmax categorical sampler.
+  The three preregistered action/coordinate temperature pairs are `focused`
+  (0.15/0.20), `balanced` (0.35/0.50), and `exploratory` (0.70/1.00).
+- `ACTION6` samples both factorized axes from the same policy RNG. A changed
+  observation supplies a novelty-centroid click; an unchanged observation after
+  a click supplies a seeded, not-yet-clicked uniform grid location.
+- One derived 64-bit decision seed is supplied per `(experiment seed, game)`
+  row. Same-seed replay rewinds the RNG, while tests establish different-seed
+  divergence for click payloads. The full evaluator previously discarded this
+  seed; it now passes it to the policy and records it in each row's diagnostics.
+- The score-blind calibration runner evaluates matched real and no-recurrent-
+  graph bypass conditions. Its equal-weight ordinal criteria are unique
+  observations, consecutive repeats, legal-normalized action entropy, causal
+  real/bypass turn disagreement, and median policy time. It strips official
+  score and level-progress fields before writing its immutable artifact.
+- Kaggle ordinary runs now load and hash-verify all three deployment arrays and
+  emit one `FLYGI_PREFLIGHT=` JSON identity line. Missing or invalid assets fail
+  closed. Random fallback requires an explicit local smoke-test opt-in and is
+  disabled unconditionally during competition reruns.
+
+### Verification observed before checkpoint
+
+- `UV_CACHE_DIR=/tmp/flygi-uv-cache uv run pytest -q`: **189 passed**.
+- `UV_CACHE_DIR=/tmp/flygi-uv-cache uv run ruff check .`: passed.
+- `UV_CACHE_DIR=/tmp/flygi-uv-cache uv run ruff format --check .`: all 91 files
+  already formatted.
+- Real staged Kaggle bundle preflight: **166,700 nodes**, **24,559,055 edges**,
+  `K=4`, release `male-cns:v1.0`, heuristic signs, with `graph.npz`,
+  `node_metadata.npz`, and `groups.npz` all verified against manifest hashes.
+- A four-action, two-seed real-graph smoke on `ls20` completed with the
+  `balanced` candidate and demonstrated the runner end to end. This smoke is not
+  the calibration result and does not freeze the candidate.
+
+### Immediate ordered next steps
+
+1. Commit and push this source-only checkpoint.
+2. Run the full declared score-blind calibration and freeze its eligible winner
+   into every deployment config without inspecting public score.
+3. Run one 25-game by five-seed signed-real gate at 80 actions, verify engineering
+   validity, replay, seed diversity, and graph-causal diagnostics, then record an
+   immutable reviewed manifest.
+4. Rebuild and verify the staged dataset and deterministic notebook source.
+5. Publish the private dataset, run the private notebook, verify its preflight
+   log, and make exactly one official competition submission.
