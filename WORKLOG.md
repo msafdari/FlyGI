@@ -1037,3 +1037,67 @@ The focused temperatures are now frozen in all three checked-in decoder
 configs and in the source defaults. The next action is the full 25-game by
 five-seed signed-real gate; only that post-freeze run may be inspected for ARC
 performance before deployment.
+
+## 2026-09-21 — Post-freeze full signed-real gate passed and audited
+
+The frozen `focused` policy was run with `make connectome-local` at Git commit
+`e5695d3e4e5b6b5ad0cedbe4ec504f9740644d2d`: all 25 cached public games,
+seeds 0 through 4, exact 80-action ceiling, signed MaleCNS runtime, `K=4`, and
+zero trainable parameters. The immutable ignored artifact is
+`results/connectome_agent/20260921T215856.747869Z-real-signed-focused.json`.
+
+Observed before the detailed artifact audit:
+
+- the engineering gate passed all **125/125 rows** with no reported issues;
+- all 10,000 attempted actions completed, with zero failed rows, illegal
+  actions, invalid `ACTION6` coordinates, or budget violations;
+- the fixed-seed replay on `lf52`, seed 0, matched exactly;
+- `sp80` completed one level for seeds 1, 3, and 4, each scoring 4.76190476;
+  seeds 0 and 2 did not complete a level;
+- all other games and seeds scored zero;
+- the overall mean score is therefore **0.1142857143**, with three total level
+  completions in 125 rows. This is below the old deterministic real-condition
+  mean of 0.190476 and above the earlier random-control mean of 0.050626, but all
+  signal still comes from one game and no biological advantage is claimed;
+- the artifact reports mean policy time 140.44 ms/action, median 136.48 ms,
+  p95 157.05 ms, peak process RSS 422,723,584 bytes, and the expected signed
+  graph identity: 166,700 nodes, 24,559,055 edges.
+
+The evaluator's final console line printed `mean score=None max=None` because it
+looked for those fields at `summaries` rather than `summaries.overall`; the
+artifact itself contains complete scorecards and the correct summary. The
+report-only lookup is fixed in the working tree and does not require rerunning
+the 10,000-action experiment.
+
+### Audit results and next actions
+
+The detailed audit found zero policy-seed provenance mismatches and zero rows in
+which the graph failed to advance on every decision. All 25 games produced five
+distinct action/payload trace hashes across the five seeds; no game retained the
+old duplicate-seed defect.
+
+The new policy averaged 54.664 unique observations and 20.76 consecutive
+repeats per row, compared with 52.84 and 23.72 for the old deterministic real
+condition and 64.184 and 13.64 for random legal play. Exploration improved
+modestly but remains worse than chance. Across 4,292 clicks, the policy used the
+novelty centroid 2,701 times, seeded untried exploration 1,512 times, and the
+factorized graph proposal 79 times; the sum of within-row unique coordinates was
+3,574. In `lp85`, rows used 78–80 unique coordinates while still seeing only
+2–6 unique observations, confirming that the remaining loop is not caused by
+repeating the same click.
+
+The artifact is 8,256,340 bytes with SHA-256
+`8ca66324e5a91a5407cf6e9688ffe3f5f2bd3f8439a474b502c769ae1b5e6cca`.
+The reviewed tracked summary is
+`results/manifests/connectome_agent_seeded_gate_20260921.json`.
+
+Next:
+
+1. commit and push the report fix, reviewed manifest, and worklog checkpoint;
+2. rebuild the deterministic notebook source and the signed runtime dataset,
+   verify every staged hash, and run tests;
+3. publish the authorized private Kaggle Dataset and push the authorized private
+   notebook;
+4. inspect the ordinary notebook log for the exact verified
+   `FLYGI_PREFLIGHT=` identity before making the one authorized official
+   submission; then record its version and status here.

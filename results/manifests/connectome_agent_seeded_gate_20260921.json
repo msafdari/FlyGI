@@ -1,0 +1,114 @@
+{
+  "artifact": {
+    "bytes": 8256340,
+    "relative_path": "results/connectome_agent/20260921T215856.747869Z-real-signed-focused.json",
+    "sha256": "8ca66324e5a91a5407cf6e9688ffe3f5f2bd3f8439a474b502c769ae1b5e6cca",
+    "tracked_in_git": false
+  },
+  "behavior": {
+    "coordinate_draws": 4292,
+    "coordinate_method_counts": {
+      "factorized_sample": 79,
+      "novelty_centroid": 2701,
+      "seeded_untried_uniform": 1512
+    },
+    "games_with_five_unique_seed_traces": 25,
+    "games_with_one_unique_seed_trace": 0,
+    "mean_action_entropy_bits_per_row": 1.4187002440218608,
+    "mean_consecutive_observation_repeats": 20.76,
+    "mean_observation_repeat_rate": 0.32513580246913604,
+    "mean_sampler_entropy_bits_per_turn": 0.2292255373038001,
+    "mean_unique_coordinates_within_row": 28.592,
+    "mean_unique_observations_per_row": 54.664,
+    "sum_within_row_unique_coordinates": 3574
+  },
+  "checks": {
+    "action_budget_violations": 0,
+    "deterministic_replay_matched": true,
+    "failed_rows": 0,
+    "gate_issues": [],
+    "gate_passed": true,
+    "graph_advanced_turn_mismatches": 0,
+    "illegal_actions": 0,
+    "invalid_action6_coordinates": 0,
+    "policy_seed_provenance_mismatches": 0,
+    "rows": 125,
+    "successful_rows": 125
+  },
+  "comparison": {
+    "earlier_deterministic_real": {
+      "games_with_five_unique_seed_traces": 0,
+      "mean_action_entropy_bits_per_row": 1.3848028348165848,
+      "mean_consecutive_observation_repeats": 23.72,
+      "mean_observation_repeat_rate": 0.3476543209876543,
+      "mean_score": 0.19047619047619047,
+      "mean_unique_observations_per_row": 52.84
+    },
+    "earlier_random_legal": {
+      "games_with_five_unique_seed_traces": 25,
+      "mean_action_entropy_bits_per_row": 1.7182475714484988,
+      "mean_consecutive_observation_repeats": 13.64,
+      "mean_observation_repeat_rate": 0.20760493827160492,
+      "mean_score": 0.0506261328060636,
+      "mean_unique_observations_per_row": 64.184
+    }
+  },
+  "headline": {
+    "games_with_any_level": 1,
+    "max_score": 4.761904761904762,
+    "mean_score": 0.11428571428571428,
+    "positive_rows": 3,
+    "rows_with_progress": 3,
+    "solved_game": "sp80-589a99af",
+    "successful_sp80_seeds": [
+      1,
+      3,
+      4
+    ],
+    "total_levels_completed": 3
+  },
+  "interpretation": "The post-calibration engineering gate passed completely. Unlike the earlier deterministic agent, every one of the 25 games produced five distinct action/payload traces across five seeds, and each row's recorded policy seed exactly matched the evaluator-derived seed. The grounded coordinate rules generated 3,574 within-row unique coordinates across 4,292 clicks. Exploration improved modestly versus the old real condition but remained worse than the random-legal control: 54.664 versus 52.84 old and 64.184 random mean unique observations, and 20.76 versus 23.72 old and 13.64 random consecutive repeats. Performance remained sparse: three of five sp80 seeds completed one level, all other rows scored zero, and mean score 0.114286 was below the old deterministic real mean 0.190476 but above the earlier random mean 0.050626. This is sufficient as a non-barebones, reproducible deployment baseline; it is not evidence of a biological advantage.",
+  "is_arc_performance_result": true,
+  "is_biological_advantage_claim": false,
+  "protocol": {
+    "action_budget": 80,
+    "action_temperature": 0.15,
+    "condition": "real-signed-focused",
+    "coordinate_temperature": 0.2,
+    "games": 25,
+    "internal_steps": 4,
+    "runtime": "heuristic-signed MaleCNS v1.0, 166,700 nodes, 24,559,055 edges",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "strict_offline": true,
+    "trainable_parameters": 0
+  },
+  "provenance": {
+    "config_sha256": "98f6d7b10acd6336af73daa2bae47933b721988758858a3cedd021991a803262",
+    "connectome_evaluator_sha256": "d2e22e8fa1defa86bff0255bdbf9828e8c4e3cb0fa7c1e2c0c186aa52cad0885",
+    "created_at_utc": "2026-09-21T21:58:56.657387+00:00",
+    "git_commit": "e5695d3e4e5b6b5ad0cedbe4ec504f9740644d2d",
+    "git_dirty": false,
+    "peak_rss_bytes": 422723584,
+    "shared_harness_sha256": "648af6412da18ee638aac7232fcf4f788a548dcc4be2f867afec2c9f1da4b2f4",
+    "uv_lock_sha256": "f388bfa4457476e6687ee0faab9cc4f9929c7e61083f0d3cae0e1af6220d8397"
+  },
+  "resources": {
+    "environment_step_median_ns": 675208.5,
+    "environment_step_p95_ns": 2174111.049999998,
+    "evaluation_wall_ns": 1421733877664,
+    "policy_mean_ns": 140439649.9957,
+    "policy_median_ns": 136484395.5,
+    "policy_p95_ns": 157049880.64999998
+  },
+  "result_id": "connectome-agent-seeded-public-gate-20260921",
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "scope": "Post-score-blind-calibration signed-real FlyGI gate on all 25 cached public ARC-AGI-3 games, seeds 0-4, exact 80-action ceiling",
+  "status": "passed"
+}

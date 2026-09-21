@@ -275,11 +275,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     gate = result["checks"]["gate"]
     summaries = result["summaries"]
+    overall = summaries.get("overall", {})
     print(json.dumps({"output": str(output), "gate": gate}, indent=2, sort_keys=True))
-    print(
-        f"mean score={summaries.get('mean_score')} "
-        f"max={summaries.get('max_score')} rows={len(rows)}"
-    )
+    print(f"mean score={overall.get('mean_score')} max={overall.get('max_score')} rows={len(rows)}")
     return 0 if gate.get("passed") else 1
 
 
