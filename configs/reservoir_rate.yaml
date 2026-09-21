@@ -56,18 +56,28 @@ dynamics:
   state_dtype: float32
 
 encoder:
-  kind: neutral_sparse_projection
-  seed: 20260919
+  # Track B will train only a small interface; until then this declares the same
+  # nonlearned projection the literal condition uses.
+  kind: sparse_projection
+  sensory_superclass: ol_sensory
+  connections_per_neuron: 64
+  input_scale: 1.0
   trainable: false
-  include_game_id: false
-  include_hidden_score: false
+  per_game_rules: false
 
 decoder:
-  kind: linear_policy
+  kind: literal
   readout: descending_neurons
-  coordinate_head: factorized_64x64
-  legal_action_mask: true
+  action_slots: 8
+  coordinate_head: literal_factorized_bins
+  trainable: false
+
+state:
+  reset_on_new_environment: true
+  preserve_across_levels: true
+  preserve_across_actions: true
+  preserve_after_game_over_reset: true
 
 training:
   enabled: false
-  note: Milestones 0-1 do not implement or run Track B training.
+  note: Track B training is not implemented or run yet.

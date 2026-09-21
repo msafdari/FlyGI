@@ -60,16 +60,24 @@ dynamics:
   state_dtype: float32
 
 encoder:
-  kind: bio_visual
+  # Fixed seeded sparse projection from declared ARC observation features into
+  # the annotated visual sensory population. Generated once from `seed` above
+  # and reused unchanged for the real graph and every null graph.
+  kind: sparse_projection
+  sensory_superclass: ol_sensory
+  connections_per_neuron: 64
+  input_scale: 1.0
   trainable: false
   per_game_rules: false
 
 decoder:
+  # Contiguous descending-neuron blocks in ascending body-ID order, one block
+  # per ARC action slot. No seed, no tuning, no per-game branch.
   kind: literal
   readout: descending_neurons
+  action_slots: 8
+  coordinate_head: literal_factorized_bins
   trainable: false
-  action6_fallback: novelty_centroid
-  motor_groups: {}
 
 state:
   reset_on_new_environment: true

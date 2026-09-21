@@ -65,12 +65,48 @@ class DynamicsConfig:
 
 
 @dataclass(frozen=True)
+class EncoderConfig:
+    """Declared, nonlearned ARC-to-sensory interface."""
+
+    kind: str = "sparse_projection"
+    sensory_superclass: str = "ol_sensory"
+    connections_per_neuron: int = 64
+    input_scale: float = 1.0
+    trainable: bool = False
+    per_game_rules: bool = False
+
+
+@dataclass(frozen=True)
+class DecoderConfig:
+    """Declared, nonlearned readout-to-action interface."""
+
+    kind: str = "literal"
+    readout: str = "descending_neurons"
+    action_slots: int = 8
+    coordinate_head: str = "literal_factorized_bins"
+    trainable: bool = False
+
+
+@dataclass(frozen=True)
+class StateLifetimeConfig:
+    """Declared lifetime of the persistent connectome state."""
+
+    reset_on_new_environment: bool = True
+    preserve_across_levels: bool = True
+    preserve_across_actions: bool = True
+    preserve_after_game_over_reset: bool = True
+
+
+@dataclass(frozen=True)
 class FlyGIConfig:
     schema_version: int
     seed: int
     data: DataConfig
     graph: GraphConfig
     dynamics: DynamicsConfig
+    encoder: EncoderConfig = field(default_factory=EncoderConfig)
+    decoder: DecoderConfig = field(default_factory=DecoderConfig)
+    state: StateLifetimeConfig = field(default_factory=StateLifetimeConfig)
     groups: Mapping[str, Any] = field(default_factory=dict)
     future: Mapping[str, Any] = field(default_factory=dict)
 
@@ -221,6 +257,33 @@ def load_config(path: str | Path) -> FlyGIConfig:
             initial_state=str(dynamics_raw.pop("initial_state", "zeros")),
             state_dtype=str(dynamics_raw.pop("state_dtype", "float32")),
         )
+
+        encoder_raw = dict(root.pop("encoder", {}) or {})
+        decoder_raw = dict(root.pop("decoder", {}) or {})
+        state_raw = dict(root.pop("state", {}) or {})
+        encoder = EncoderConfig(
+            kind=str(encoder_raw.pop("kind", "sparse_projection")),
+            sensory_superclass=str(encoder_raw.pop("sensory_superclass", "ol_sensory")),
+            connections_per_neuron=int(encoder_raw.pop("connections_per_neuron", 64)),
+            input_scale=float(encoder_raw.pop("input_scale", 1.0)),
+            trainable=bool(encoder_raw.pop("trainable", False)),
+            per_game_rules=bool(encoder_raw.pop("per_game_rules", False)),
+        )
+        decoder = DecoderConfig(
+            kind=str(decoder_raw.pop("kind", "literal")),
+            readout=str(decoder_raw.pop("readout", "descending_neurons")),
+            action_slots=int(decoder_raw.pop("action_slots", 8)),
+            coordinate_head=str(decoder_raw.pop("coordinate_head", "literal_factorized_bins")),
+            trainable=bool(decoder_raw.pop("trainable", False)),
+        )
+        state = StateLifetimeConfig(
+            reset_on_new_environment=bool(state_raw.pop("reset_on_new_environment", True)),
+            preserve_across_levels=bool(state_raw.pop("preserve_across_levels", True)),
+            preserve_across_actions=bool(state_raw.pop("preserve_across_actions", True)),
+            preserve_after_game_over_reset=bool(
+                state_raw.pop("preserve_after_game_over_reset", True)
+            ),
+        )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc
 
@@ -230,6 +293,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unknown graph keys: {sorted(graph_raw)}")
     if dynamics_raw:
         raise ConfigError(f"unknown dynamics keys: {sorted(dynamics_raw)}")
+    if encoder_raw:
+        raise ConfigError(f"unknown encoder keys: {sorted(encoder_raw)}")
+    if decoder_raw:
+        raise ConfigError(f"unknown decoder keys: {sorted(decoder_raw)}")
+    if state_raw:
+        raise ConfigError(f"unknown state keys: {sorted(state_raw)}")
     if graph.weight_transform not in {"raw", "log1p", "sqrt", "binary"}:
         raise ConfigError(f"unsupported weight_transform: {graph.weight_transform}")
     if graph.sign_mode not in {"unsigned", "heuristic"}:
@@ -270,6 +339,27 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError("dynamics.initial_state must be zeros")
     if dynamics.state_dtype != "float32":
         raise ConfigError("dynamics.state_dtype must be float32")
+    if encoder.kind not in {"sparse_projection", "bio_visual"}:
+        raise ConfigError(f"unsupported encoder.kind: {encoder.kind}")
+    if encoder.connections_per_neuron <= 0:
+        raise ConfigError("encoder.connections_per_neuron must be positive")
+    if not math.isfinite(encoder.input_scale) or encoder.input_scale <= 0:
+        raise ConfigError("encoder.input_scale must be finite and positive")
+    if encoder.trainable or encoder.per_game_rules:
+        raise ConfigError("the literal encoder must be nonlearned and game-agnostic")
+    if decoder.kind != "literal":
+        raise ConfigError(f"unsupported decoder.kind: {decoder.kind}")
+    if decoder.coordinate_head != "literal_factorized_bins":
+        raise ConfigError("unsupported decoder.coordinate_head")
+    if decoder.action_slots != 8:
+        raise ConfigError("decoder.action_slots must be 8 for ARC-AGI-3")
+    if decoder.trainable:
+        raise ConfigError("the literal decoder must be nonlearned")
+    if not state.preserve_across_actions:
+        raise ConfigError(
+            "state.preserve_across_actions must remain true; a recurrent graph "
+            "cannot matter if its state does not outlive one decision"
+        )
 
     # Name/track are descriptive and remain available to manifests without
     # coupling the shared runtime config to later experimental tracks.
@@ -281,6 +371,9 @@ def load_config(path: str | Path) -> FlyGIConfig:
         data=data,
         graph=graph,
         dynamics=dynamics,
+        encoder=encoder,
+        decoder=decoder,
+        state=state,
         groups=groups,
         future=root,
     )
