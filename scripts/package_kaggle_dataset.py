@@ -33,6 +33,13 @@ RUNTIME_FILES = ("graph.npz", "node_metadata.npz", "groups.npz", "manifest.json"
 MAX_FILE_BYTES = 20 * 1024 * 1024 * 1024
 
 
+def _relative(path: Path) -> str:
+    """Record a repository-relative path when possible, absolute otherwise."""
+
+    resolved = Path(path).resolve()
+    return str(resolved.relative_to(ROOT)) if resolved.is_relative_to(ROOT) else str(resolved)
+
+
 def _stage(config_path: Path, runtime_dir: Path, stage: Path, slug: str) -> dict[str, Any]:
     from flygi.connectome.manifest import sha256_file
     from flygi.dynamics.runtime import load_runtime_connectome
@@ -77,8 +84,8 @@ def _stage(config_path: Path, runtime_dir: Path, stage: Path, slug: str) -> dict
         "created_at": datetime.now(UTC).isoformat(),
         "contains_connectome_assets": True,
         "slug": slug,
-        "source_runtime_dir": str(runtime_dir.relative_to(ROOT)),
-        "config_path": str(config_path.relative_to(ROOT)),
+        "source_runtime_dir": _relative(runtime_dir),
+        "config_path": _relative(config_path),
         "release": verified.manifest.get("release"),
         "nodes": verified.node_count,
         "edges": verified.edge_count,

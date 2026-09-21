@@ -27,3 +27,8 @@ validation:
   require_exact_degree_sequences: true
   require_exact_weight_multiset: true
   write_seed_and_hash: true
+
+dynamics:
+  # See configs/literal_rate_signed.yaml: four internal steps is the measured
+  # anatomical minimum for sensory drive to reach every descending neuron.
+  internal_steps: 4

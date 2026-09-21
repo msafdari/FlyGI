@@ -21,3 +21,8 @@ runtime:
   neuprint_calls_during_evaluation: false
   build_graph_during_evaluation: false
   load_assets_once: true
+
+dynamics:
+  # See configs/literal_rate_signed.yaml: four internal steps is the measured
+  # anatomical minimum for sensory drive to reach every descending neuron.
+  internal_steps: 4

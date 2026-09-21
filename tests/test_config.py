@@ -13,7 +13,13 @@ from flygi.seed import derive_seed
 
 def test_checked_in_configs_parse() -> None:
     for path in sorted(Path("configs").glob("*.yaml")):
-        assert load_config(path).schema_version == 1
+        config = load_config(path)
+        assert config.schema_version == 1
+        # K must never be silent: it is the deployment setting and the
+        # anatomical measurement says the default of 2 is too small.
+        document = yaml.safe_load(path.read_text(encoding="utf-8"))
+        assert "internal_steps" in document.get("dynamics", {}), path.name
+        assert config.dynamics.internal_steps >= 4, path.name
 
     literal = load_config("configs/literal_rate.yaml")
     assert literal.graph.node_filter_column == "superclass"
@@ -22,7 +28,7 @@ def test_checked_in_configs_parse() -> None:
     assert literal.dynamics.backend == "rate"
     assert literal.dynamics.execution_backend == "scipy-csr-cpu"
     assert literal.dynamics.activation == "tanh"
-    assert literal.dynamics.internal_steps == 2
+    assert literal.dynamics.internal_steps == 4
     assert literal.dynamics.leak == 0.3
     assert literal.dynamics.recurrent_gain == 0.9
     assert literal.dynamics.bias == 0.0

@@ -47,7 +47,12 @@ dynamics:
   backend: rate
   execution_backend: scipy-csr-cpu
   activation: tanh
-  internal_steps: 2
+  # Measured 2026-09-21: sensory drive needs three anatomical hops and four
+  # internal steps before all 1,314 descending neurons carry any activity. At
+  # K=2 the readout is blind on an episode's first decision. K=4 is the
+  # anatomical minimum, and costs about 140 ms per action on the development
+  # machine. Kaggle-runtime timing must be rechecked before deployment.
+  internal_steps: 4
   leak: 0.3
   recurrent_gain: 0.9
   bias: 0.0
