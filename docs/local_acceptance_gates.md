@@ -32,6 +32,12 @@ chance behavior; it is not a FlyGI or connectome result.
 
 ## Gate 1 — full-graph dynamics
 
+Run the manual full-data gate with:
+
+```bash
+make benchmark-full-graph
+```
+
 Before the graph is connected to ARC decisions:
 
 - execute one CPU update on the full 166,700-neuron graph with the declared

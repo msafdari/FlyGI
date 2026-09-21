@@ -633,14 +633,27 @@ def load_runtime_graph(
 
     with np.load(Path(path), allow_pickle=False) as archive:
         version = np.asarray(archive["format_version"])
-        indptr = np.asarray(archive["indptr"], dtype=np.int64)
-        indices = np.asarray(archive["indices"], dtype=np.int32)
-        weights = np.asarray(archive["weights"], dtype=np.float32)
-        node_ids = np.asarray(archive["node_ids"], dtype=np.uint64)
-        inverse_ids = np.asarray(archive["body_to_index_ids"], dtype=np.uint64)
-        inverse_values = np.asarray(archive["body_to_index_values"], dtype=np.int32)
+        raw_indptr = np.asarray(archive["indptr"])
+        indices = np.asarray(archive["indices"])
+        weights = np.asarray(archive["weights"])
+        node_ids = np.asarray(archive["node_ids"])
+        inverse_ids = np.asarray(archive["body_to_index_ids"])
+        inverse_values = np.asarray(archive["body_to_index_values"])
+    if version.dtype != np.int16:
+        raise ValueError("graph format_version dtype must be int16")
     if version.tolist() != [1]:
         raise ValueError(f"Unsupported graph format version: {version.tolist()}")
+    if raw_indptr.dtype not in (np.dtype(np.int32), np.dtype(np.int64)):
+        raise ValueError("graph indptr dtype must be int32 or int64")
+    if indices.dtype != np.int32:
+        raise ValueError("graph indices dtype must be int32")
+    if weights.dtype != np.float32:
+        raise ValueError("graph weights dtype must be float32")
+    if node_ids.dtype != np.uint64 or inverse_ids.dtype != np.uint64:
+        raise ValueError("graph node ID arrays must have uint64 dtype")
+    if inverse_values.dtype != np.int32:
+        raise ValueError("graph body-to-index values must have int32 dtype")
+    indptr = raw_indptr.astype(np.int64, copy=False)
     node_index = NodeIndex(node_ids)
     if not np.array_equal(inverse_ids, node_ids) or not np.array_equal(
         inverse_values, np.arange(len(node_ids), dtype=np.int32)

@@ -1,5 +1,5 @@
-# Track A declaration. Milestones 0-1 build the sparse graph asset; the
-# dynamics, encoder, decoder, and state sections become executable later.
+# Track A declaration. The sparse graph and rate dynamics are executable;
+# encoder, decoder, and closed-loop state policy become executable in Milestone 3.
 schema_version: 1
 seed: 20260919
 
@@ -48,10 +48,15 @@ groups:
 
 dynamics:
   backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
   internal_steps: 2
   leak: 0.3
   recurrent_gain: 0.9
+  bias: 0.0
   frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
 
 encoder:
   kind: bio_visual

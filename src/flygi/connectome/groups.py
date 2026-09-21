@@ -140,15 +140,28 @@ def load_groups(path: str | Path) -> dict[str, np.ndarray]:
     with np.load(Path(path), allow_pickle=False) as archive:
         version = np.asarray(archive["format_version"])
         names = np.asarray(archive["names"])
-        offsets = np.asarray(archive["offsets"], dtype=np.int64)
-        indices = np.asarray(archive["indices"], dtype=np.int32)
+        offsets = np.asarray(archive["offsets"])
+        indices = np.asarray(archive["indices"])
+    if version.dtype != np.int16:
+        raise ValueError("group format_version dtype must be int16")
     if version.tolist() != [1]:
         raise ValueError(f"Unsupported group format version: {version.tolist()}")
+    if names.dtype.kind != "U":
+        raise ValueError("group names must use a fixed-width Unicode dtype")
+    normalized_names = [str(name) for name in names]
+    if any(not name for name in normalized_names):
+        raise ValueError("group names must be non-empty")
+    if len(set(normalized_names)) != len(normalized_names):
+        raise ValueError("group names must be unique")
+    if offsets.dtype != np.int64:
+        raise ValueError("group offsets dtype must be int64")
+    if indices.dtype != np.int32:
+        raise ValueError("group indices dtype must be int32")
     if offsets.shape != (len(names) + 1,) or offsets[0] != 0:
         raise ValueError("invalid group offsets")
     if np.any(offsets[1:] < offsets[:-1]) or offsets[-1] != len(indices):
         raise ValueError("invalid group offset bounds")
     return {
-        str(name): indices[int(offsets[i]) : int(offsets[i + 1])].copy()
-        for i, name in enumerate(names)
+        name: indices[int(offsets[i]) : int(offsets[i + 1])].copy()
+        for i, name in enumerate(normalized_names)
     }

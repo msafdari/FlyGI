@@ -2,17 +2,20 @@
 
 ## Current scope
 
-This repository begins with Milestones 0 and 1 only:
+This repository has completed Milestones 0 and 1 and implemented the Milestone
+2 backend:
 
 1. exercise the official ARC-AGI-3-compatible random-agent path locally; and
 2. reproducibly fetch, inspect, and convert MaleCNS v1.0 into a sparse runtime
-   graph with a provenance manifest.
+   graph with a provenance manifest; and
+3. run the frozen full-graph leaky-rate equation through a deterministic SciPy
+   CPU backend with a separate correctness, stability, and timing gate.
 
-The existence of configuration sections for neural dynamics, encoders,
-decoders, controls, or Kaggle packaging does not mean those later milestones
-have been executed. Run the repository's verification commands and inspect an
-actual manifest before making a completion claim. No leaderboard or biological
-performance result is reported at this stage.
+The existence of configuration sections for encoders, decoders, controls, or
+Kaggle packaging does not mean those later milestones have been executed. Run
+the repository's verification commands and inspect an actual result manifest
+before making a completion claim. No connectome-driven ARC, leaderboard, or
+biological-performance result is reported at this stage.
 
 ## Scientific question
 

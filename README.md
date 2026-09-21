@@ -6,10 +6,12 @@ The scientific question is deliberately narrower than the joke: when the
 interface and compute budget are matched, does the biological wiring make useful
 closed-loop computations more accessible than rigorous null graphs?
 
-This checkout implements **Milestones 0–1**: repository and ARC submission
-plumbing, MaleCNS source acquisition and verification, sparse graph compilation,
-provenance manifests, and synthetic acceptance tests. Neural dynamics, trained
-interfaces, plasticity, and biological-performance claims are not included yet.
+This checkout implements **Milestones 0–1 and the Milestone 2 backend**:
+repository and ARC submission plumbing, MaleCNS source acquisition and
+verification, sparse graph compilation, the frozen SciPy/CPU leaky-rate
+backend, provenance manifests, and acceptance tests. Check `WORKLOG.md` for the
+full-data Gate 1 status. The ARC encoder/decoder loop, learning, plasticity, and
+biological-performance claims are not included yet.
 
 See [WORKLOG.md](WORKLOG.md) for the latest reproducible checkpoint, measured
 full-data results, current limitations, and ordered next steps.
@@ -43,6 +45,19 @@ and records source metadata. Supply known hashes to make acquisition fail closed
 see [data/README.md](data/README.md). The build command validates actual Feather
 schemas before interpreting any column and refuses to overwrite an existing
 runtime asset.
+
+The full-connectome dynamics gate is intentionally separate from unit tests
+because its 10,000-step stability run takes minutes on a laptop:
+
+```bash
+make benchmark-full-graph
+```
+
+It hash-checks and loads the compiled graph once, exercises the exact declared
+rate equation, checks deterministic CPU execution and descending-neuron input
+sensitivity, runs 10,000 internal steps, and profiles `K = 1, 2, 4, 8`. The
+immutable detailed result is written beneath the Git-ignored `results/dynamics/`
+tree. No machine-dependent speed threshold is used as a correctness criterion.
 
 ## ARC-AGI-3 workflow
 

@@ -1,4 +1,4 @@
-# FlyGI Milestones 0-1 developer and ARC-AGI-3 submission workflow.
+# FlyGI developer, dynamics-gate, and ARC-AGI-3 submission workflow.
 PYTHON           ?= python3.12
 UV               ?= uv
 UV_RUN           := $(UV) run
@@ -12,9 +12,14 @@ BASELINE_SEEDS   ?= 0 1 2 3 4
 BASELINE_ACTIONS ?= 80
 BASELINE_GAMES   ?= all
 BASELINE_OUTPUT  ?=
+DYNAMICS_STEPS   ?= 1 2 4 8
+DYNAMICS_WARMUPS ?= 3
+DYNAMICS_SAMPLES ?= 25
+DYNAMICS_STABILITY_STEPS ?= 10000
+DYNAMICS_OUTPUT  ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local baseline-local list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke play-local verify-local baseline-local benchmark-full-graph list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -36,7 +41,7 @@ lint: ## Run static lint and formatting checks
 	$(UV_RUN) ruff check .
 	$(UV_RUN) ruff format --check .
 
-smoke: ## Run offline Milestone 0-1 smoke validation
+smoke: ## Run offline configuration and available-asset validation
 	$(UV_RUN) python scripts/smoke_test.py
 
 play-local: ## Play all public games, or one with GAME=ls20
@@ -49,6 +54,13 @@ baseline-local: ## Run the strict-offline five-seed public random baseline
 	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/evaluate_random_baseline.py \
 		--seeds $(BASELINE_SEEDS) --games $(BASELINE_GAMES) \
 		--action-budget $(BASELINE_ACTIONS) $(if $(BASELINE_OUTPUT),--output $(BASELINE_OUTPUT))
+
+benchmark-full-graph: ## Run the manual Milestone 2 full-connectome dynamics gate
+	$(UV_RUN) python scripts/benchmark_runtime.py \
+		--config configs/literal_rate.yaml --internal-steps $(DYNAMICS_STEPS) \
+		--warmup-actions $(DYNAMICS_WARMUPS) --measured-actions $(DYNAMICS_SAMPLES) \
+		--stability-steps $(DYNAMICS_STABILITY_STEPS) \
+		$(if $(DYNAMICS_OUTPUT),--output $(DYNAMICS_OUTPUT))
 
 list-games: ## List public ARC-AGI-3 games
 	$(UV_RUN) python scripts/play_local.py --list

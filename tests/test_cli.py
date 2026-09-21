@@ -88,3 +88,11 @@ def test_cli_build_then_validate_tiny_asset(
     assert validation["config"] == "valid"
     assert validation["runtime"]["verified_files"] == 6
     assert validation["runtime"]["groups"] == {"descending_neurons": 1}
+    assert validation["runtime"]["dynamics"] == {
+        "backend": "scipy-csr-cpu",
+        "configured_internal_steps": 2,
+        "finite": True,
+        "one_step_shape": [3],
+        "same_backend_exact_repeat": True,
+        "state_dtype": "float32",
+    }

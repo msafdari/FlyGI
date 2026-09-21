@@ -24,13 +24,32 @@ contained in the connectome.
   exact v1.0 `descending_neuron` group label. Both choices appear in the output
   manifest; the code does not silently apply them to other releases.
 
-## Declared later-model choices
+## Milestone 2 dynamics assumptions
 
-The checked-in rate configs declare a leaky tanh network, but full-graph
-dynamics are Milestone 2 work. The heuristic signed mode treats transmitter
-identity as an approximation to connection sign; receptor and cell context can
-reverse or modulate effects. Uncertain modulators remain configurable and are
-not silently relabeled excitatory.
+The implemented SciPy/CPU reference backend uses the explicit float32 update
+
+```text
+h_next = (1 - leak) * h + leak * tanh(gain * (W @ h) + drive + bias)
+```
+
+where `drive` is already projected into graph space. It is held fixed for the
+configured number of internal steps. The literal baseline declares `K=2`,
+`leak=0.3`, `gain=0.9`, scalar `bias=0`, zero initialization, and a frozen
+graph. State transitions return a new vector and never mutate the caller's
+state, input, or graph. A deterministic nonzero initialization exists only as
+an explicit seeded diagnostic; it is not the literal-agent initialization.
+
+The `tanh` and convex leak keep a state initialized in `[-1, 1]` bounded absent
+non-finite arithmetic, but the repository still executes and records an actual
+10,000-step full-graph stability gate. SciPy CPU repeatability is tested
+bit-for-bit on the same backend. No GPU backend is currently claimed.
+
+The heuristic signed graph mode treats transmitter identity as an approximation
+to connection sign; receptor and cell context can reverse or modulate effects.
+Uncertain modulators remain configurable and are not silently relabeled
+excitatory.
+
+## Declared later-model choices
 
 The neutral encoder will use a fixed seeded sparse projection shared across the
 real graph and all nulls. The bio-oriented encoder necessarily imposes a mapping

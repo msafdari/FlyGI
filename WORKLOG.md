@@ -266,18 +266,61 @@ After one warmup update, eight exploratory timings of the simple float32 update
 | 4 | 141.50 | 142.18 | 7.07 |
 | 8 | 282.84 | 303.58 | 3.54 |
 
-These are back-of-the-envelope sparse-update timings, not a Milestone 2
-benchmark: the dynamics backend, sensory input, state contract, 10,000-step
-finite-activity test, and controlled benchmark protocol do not exist yet. At
-the observed medians, graph updates alone would take approximately 71, 142,
-283, or 566 seconds for one 25-game seed at 80 actions for `K=1,2,4,8`.
+These were back-of-the-envelope sparse-update timings, not a Milestone 2
+benchmark: at the time, the dynamics backend, sensory input, state contract,
+10,000-step finite-activity test, and controlled benchmark protocol did not yet
+exist. At the observed medians, graph updates alone would take approximately
+71, 142, 283, or 566 seconds for one 25-game seed at 80 actions for
+`K=1,2,4,8`.
+
+### Milestone 2 implementation checkpoint
+
+- Implemented the exact declared float32 rate equation
+  `h_next = (1 - leak) h + leak tanh(gain W h + drive + bias)` behind a pure
+  SciPy/CPU sparse interface. `step` is exactly one internal update; `advance`
+  holds a graph-aligned drive fixed for `K` updates and returns a new state.
+- Promoted the dynamics YAML into strict typed configuration. The literal
+  baseline now explicitly declares the rate model, SciPy CSR CPU execution,
+  tanh activation, `K=2`, leak `0.3`, gain `0.9`, scalar zero bias, zero
+  initialization, float32 state, and a frozen graph.
+- Added one-time runtime-bundle loading that verifies output hashes and manifest
+  graph semantics, cross-checks node/edge counts, validates required sorted
+  groups, and freezes the CSR and group arrays. Serialized graph/group loaders
+  now reject unexpected dtypes instead of silently casting them.
+- Replaced the benchmark placeholder with an immutable Gate 1 runner. It
+  selects a deterministic real edge entering the descending-neuron group,
+  checks an actual graph-mediated response, exact CPU repeatability, finite and
+  bounded activity, and warmed `K=1,2,4,8` timings without imposing a
+  machine-dependent speed threshold. A pass is pinned to the exact literal
+  runtime release, 166,700 nodes, 25,582,837 edges, three runtime digests, and
+  config-matched preprocessing; it also requires at least three warmups and 25
+  measured actions per `K` and records an RSS snapshot after each `K`.
+- Added fast unit coverage for the exact equation, directionality, `step` versus
+  `advance`, caller immutability, same-seed determinism, a 10,000-step tiny-graph
+  stability case, descending-neuron sensitivity, runtime asset tampering, and
+  benchmark protocol helpers.
+
+Verification before the source checkpoint:
+
+- `uv run pytest`: 93 tests passed.
+- Ruff lint and formatting checks passed for all 82 checked files.
+- `flygi validate all --require-data` reverified all six source/runtime files,
+  then ran a finite, exact-repeat full-graph CPU update with shape `(166700,)`
+  and dtype float32.
+- An intentionally abbreviated real-graph integration smoke loaded and verified
+  166,700 nodes, 25,582,837 edges, and 1,314 descending neurons in 0.905 seconds
+  at 332 MiB peak RSS. The graph-mediated probe selected body 70869 feeding
+  descending body 55579 and produced opposite nonzero target activity after two
+  internal steps. Its formal gate status was correctly `failed` because the
+  development tree was dirty, stability was shortened to 10 steps, and only
+  `K=1,2` were timed. That smoke is not a Gate 1 result.
 
 ## Next steps
 
-1. **Milestone 2 — full-graph dynamics.** Implement the sparse leaky rate
-   backend, deterministic initialization, finite-activity tests, CPU graph-step
-   benchmark, and runtime/memory measurements for internal-step counts
-   `K = 1, 2, 4, 8`.
+1. **Complete Gate 1 from a clean checkpoint.** Run `make benchmark-full-graph`
+   for 10,000 real-connectome internal steps and the full `K=1,2,4,8` timing
+   sweep. Record the ignored artifact's hash and reviewed summary here before
+   declaring Milestone 2 complete.
 2. **Milestone 3 — closed-loop FlyGI.** Implement the fixed neutral visual
    encoder, persistent connectome state, descending-neuron trace, literal
    readout, legal-action masking, coordinate head, and declared reset policy.

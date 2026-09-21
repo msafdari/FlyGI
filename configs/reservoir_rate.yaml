@@ -1,5 +1,5 @@
-# Track B declaration for later milestones. Milestones 0-1 only consume the
-# data and graph sections; no learning is implemented by this configuration.
+# Track B declaration for later milestones. Data, graph, and rate dynamics are
+# typed today; no reservoir interface training is implemented by this config.
 schema_version: 1
 seed: 20260919
 
@@ -45,10 +45,15 @@ groups:
 
 dynamics:
   backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
   internal_steps: 2
   leak: 0.3
   recurrent_gain: 0.9
+  bias: 0.0
   frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
 
 encoder:
   kind: neutral_sparse_projection

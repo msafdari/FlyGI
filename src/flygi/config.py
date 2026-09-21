@@ -1,7 +1,8 @@
-"""Configuration loading for the versioned FlyGI build pipeline."""
+"""Configuration loading for the versioned FlyGI build and runtime pipeline."""
 
 from __future__ import annotations
 
+import math
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -49,11 +50,26 @@ class GraphConfig:
 
 
 @dataclass(frozen=True)
+class DynamicsConfig:
+    backend: str = "rate"
+    execution_backend: str = "scipy-csr-cpu"
+    activation: str = "tanh"
+    internal_steps: int = 2
+    leak: float = 0.3
+    recurrent_gain: float = 0.9
+    bias: float = 0.0
+    frozen_graph: bool = True
+    initial_state: str = "zeros"
+    state_dtype: str = "float32"
+
+
+@dataclass(frozen=True)
 class FlyGIConfig:
     schema_version: int
     seed: int
     data: DataConfig
     graph: GraphConfig
+    dynamics: DynamicsConfig
     groups: Mapping[str, Any] = field(default_factory=dict)
     future: Mapping[str, Any] = field(default_factory=dict)
 
@@ -94,6 +110,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
     seed = int(experiment.pop("seed", legacy_seed))
     data_raw = _mapping(root.pop("data", None), "data")
     graph_raw = _mapping(root.pop("graph", None), "graph")
+    dynamics_raw = _mapping(root.pop("dynamics", None), "dynamics")
     groups = _mapping(root.pop("groups", None), "groups")
 
     source_raw = _mapping(
@@ -176,6 +193,30 @@ def load_config(path: str | Path) -> FlyGIConfig:
             weight_dtype=str(graph_raw.pop("weight_dtype", "float32")),
         )
         graph_raw.pop("spectral_radius", None)
+        frozen_graph = dynamics_raw.pop("frozen_graph", True)
+        if not isinstance(frozen_graph, bool):
+            raise ConfigError("dynamics.frozen_graph must be a boolean")
+        internal_steps = dynamics_raw.pop("internal_steps", 2)
+        if isinstance(internal_steps, bool) or not isinstance(internal_steps, int):
+            raise ConfigError("dynamics.internal_steps must be an integer")
+        numeric_dynamics: dict[str, float] = {}
+        for key, default in (("leak", 0.3), ("recurrent_gain", 0.9), ("bias", 0.0)):
+            raw_value = dynamics_raw.pop(key, default)
+            if isinstance(raw_value, bool) or not isinstance(raw_value, (int, float)):
+                raise ConfigError(f"dynamics.{key} must be numeric")
+            numeric_dynamics[key] = float(raw_value)
+        dynamics = DynamicsConfig(
+            backend=str(dynamics_raw.pop("backend", "rate")),
+            execution_backend=str(dynamics_raw.pop("execution_backend", "scipy-csr-cpu")),
+            activation=str(dynamics_raw.pop("activation", "tanh")),
+            internal_steps=internal_steps,
+            leak=numeric_dynamics["leak"],
+            recurrent_gain=numeric_dynamics["recurrent_gain"],
+            bias=numeric_dynamics["bias"],
+            frozen_graph=frozen_graph,
+            initial_state=str(dynamics_raw.pop("initial_state", "zeros")),
+            state_dtype=str(dynamics_raw.pop("state_dtype", "float32")),
+        )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc
 
@@ -183,6 +224,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unknown data keys: {sorted(data_raw)}")
     if graph_raw:
         raise ConfigError(f"unknown graph keys: {sorted(graph_raw)}")
+    if dynamics_raw:
+        raise ConfigError(f"unknown dynamics keys: {sorted(dynamics_raw)}")
     if graph.weight_transform not in {"raw", "log1p", "sqrt", "binary"}:
         raise ConfigError(f"unsupported weight_transform: {graph.weight_transform}")
     if graph.sign_mode not in {"unsigned", "heuristic"}:
@@ -197,9 +240,31 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError("graph.body_id_dtype must be uint64")
     if graph.weight_dtype != "float32":
         raise ConfigError("graph.weight_dtype must be float32")
+    if dynamics.backend != "rate":
+        raise ConfigError("dynamics.backend must be rate for the Milestone 2 backend")
+    if dynamics.execution_backend != "scipy-csr-cpu":
+        raise ConfigError("dynamics.execution_backend must be scipy-csr-cpu")
+    if dynamics.activation != "tanh":
+        raise ConfigError("dynamics.activation must be tanh")
+    if dynamics.internal_steps <= 0:
+        raise ConfigError("dynamics.internal_steps must be positive")
+    if not 0.0 < dynamics.leak <= 1.0:
+        raise ConfigError("dynamics.leak must be in (0, 1]")
+    if dynamics.recurrent_gain < 0.0:
+        raise ConfigError("dynamics.recurrent_gain must be non-negative")
+    if not all(
+        math.isfinite(value) for value in (dynamics.leak, dynamics.recurrent_gain, dynamics.bias)
+    ):
+        raise ConfigError("dynamics numeric values must be finite")
+    if not dynamics.frozen_graph:
+        raise ConfigError("dynamics.frozen_graph must remain true before plasticity experiments")
+    if dynamics.initial_state != "zeros":
+        raise ConfigError("dynamics.initial_state must be zeros")
+    if dynamics.state_dtype != "float32":
+        raise ConfigError("dynamics.state_dtype must be float32")
 
     # Name/track are descriptive and remain available to manifests without
-    # coupling Milestone 0-1 code to later experimental tracks.
+    # coupling the shared runtime config to later experimental tracks.
     root["experiment"] = experiment
 
     return FlyGIConfig(
@@ -207,6 +272,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         seed=seed,
         data=data,
         graph=graph,
+        dynamics=dynamics,
         groups=groups,
         future=root,
     )

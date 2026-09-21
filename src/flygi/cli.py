@@ -1,4 +1,4 @@
-"""Command-line interface for FlyGI Milestones 0-1."""
+"""Command-line interface for FlyGI data, graph, and validation workflows."""
 
 from __future__ import annotations
 
@@ -33,6 +33,7 @@ from .connectome.schema import (
     inspect_table_schema,
     validate_observed_schema,
 )
+from .dynamics.rate import RateParameters, ScipyRateNetwork
 
 DEFAULT_CONFIG = Path("configs/literal_rate.yaml")
 _SOURCE_PATH_ATTRIBUTES = {
@@ -300,12 +301,32 @@ def _validate_all(config: FlyGIConfig, *, require_data: bool) -> int:
             metadata_ids = np.asarray(metadata["body_ids"], dtype=np.uint64)
         if not np.array_equal(metadata_ids, node_index.body_ids):
             raise CLIError("node metadata body IDs disagree with the runtime graph")
+        parameters = RateParameters(
+            internal_steps=config.dynamics.internal_steps,
+            leak=config.dynamics.leak,
+            recurrent_gain=config.dynamics.recurrent_gain,
+            bias=config.dynamics.bias,
+        )
+        dynamics = ScipyRateNetwork(matrix, parameters, copy_connectivity=False)
+        diagnostic_state = dynamics.initial_state(seed=config.seed, scale=0.01)
+        first = dynamics.step(diagnostic_state)
+        repeated = dynamics.step(diagnostic_state)
+        if not np.array_equal(first, repeated):
+            raise CLIError("CPU rate update was not deterministic for an identical state")
         runtime_status = {
             "manifest": str(manifest_path),
             "verified_files": len(verified),
             "source_hashes_reverified": all(present),
             "groups": {name: len(indices) for name, indices in groups.items()},
             "counts": counts,
+            "dynamics": {
+                "backend": dynamics.backend_name,
+                "configured_internal_steps": parameters.internal_steps,
+                "one_step_shape": list(first.shape),
+                "state_dtype": str(first.dtype),
+                "same_backend_exact_repeat": True,
+                "finite": bool(np.isfinite(first).all()),
+            },
         }
     elif config.graph.output_dir.exists() and any(config.graph.output_dir.iterdir()):
         raise CLIError(f"runtime asset is incomplete: {config.graph.output_dir}")
