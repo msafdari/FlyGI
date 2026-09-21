@@ -60,11 +60,11 @@ The fly played ARC. Now the real question begins: did being a fly help?
 
 I made a fly take ARC-AGI-3. 🪰🧠
 
-166,700 neurons. 24,559,055 edges. The full signed connectome in every decision.
-0 trainable parameters.
+166,700 neurons. 24,559,055 edges. Full signed connectome, every decision. 0
+trainable parameters.
 
-It passed 125/125 local runs and made its first official submission—but it has
-not beaten a matched bypass. The honest negative result is the point.
+It passed 125/125 local runs and made its first official submission—but didn't
+beat a matched bypass. The honest negative result is the point.
 
 ## X — thread version
 
