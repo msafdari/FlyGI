@@ -1160,3 +1160,26 @@ inspect its server-side log for `FLYGI_PREFLIGHT=` with `mode=connectome`,
 spend the authorized competition submission unless that exact validation
 passes. After validation, submit notebook version 2 once and record the Kaggle
 submission identifier/status here; make no second submission.
+
+## 2026-09-21 — Private notebook version 2 validated on Kaggle
+
+Kaggle reported `KernelWorkerStatus.COMPLETE` for private notebook version 2.
+The server-side log emitted the required identity at 23.92 seconds:
+
+```text
+FLYGI_PREFLIGHT={"edges":24559055,"internal_steps":4,"mode":"connectome","nodes":166700,"release":"male-cns:v1.0","sign_mode":"heuristic","verified":true,"verified_output_hashes":{"graph.npz":"45e332d90ea4e881ece5d4d72216955bd53eec922aa60955a69db510272eff61","groups.npz":"09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d","node_metadata.npz":"2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c"}}
+```
+
+This proves that Kaggle, not only the local machine, discovered the attached
+private dataset, loaded the complete signed MaleCNS graph, verified every
+deployment array, and assembled the declared `K=4` policy. The ordinary run
+also produced `submission.parquet` (868 bytes; Kaggle creation time 22:10 UTC).
+Pip printed unrelated dependency-conflict warnings for preinstalled Dopamine and
+Gradio packages, but the required competition wheels installed, preflight
+passed, the notebook completed, and the output exists.
+
+Current action: make the one authorized official submission for competition
+`arc-prize-2026-arc-agi-3` from notebook
+`megusalexandrus/flygi-arc-agi-3`, version 2, file `submission.parquet`. Record
+the returned submission reference/status and monitor it to completion. Do not
+submit another version.
