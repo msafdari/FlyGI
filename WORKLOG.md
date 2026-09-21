@@ -1139,3 +1139,24 @@ Current action: publish the staged dataset privately. Next: confirm the dataset
 exists and is private, push the private notebook, wait for its ordinary run,
 inspect the log for the exact preflight identity above, and only then make the
 one authorized official submission.
+
+## 2026-09-21 — Private Kaggle assets published; notebook validation running
+
+The authorized external packaging actions have begun:
+
+- Kaggle accepted the runtime as the **private** Dataset
+  `megusalexandrus/flygi-malecns-runtime`; the creation command explicitly
+  reported “Your private Dataset is being created.” A subsequent authenticated
+  status query returned `status=ready`, `current_version_number=1`.
+- Kaggle accepted **private notebook version 2** for
+  `megusalexandrus/flygi-arc-agi-3`. The notebook remains CPU-only,
+  internet-disabled, and attached to private dataset version 1 through its
+  declared dataset source.
+
+Current action: wait for notebook version 2 to finish its ordinary run, then
+inspect its server-side log for `FLYGI_PREFLIGHT=` with `mode=connectome`,
+`verified=true`, 166,700 nodes, 24,559,055 edges, `K=4`, release
+`male-cns:v1.0`, heuristic signs, and all three expected array hashes. Do not
+spend the authorized competition submission unless that exact validation
+passes. After validation, submit notebook version 2 once and record the Kaggle
+submission identifier/status here; make no second submission.
