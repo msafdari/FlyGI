@@ -608,6 +608,118 @@ targets). `K=2` remains too small.
   treatments are available and unexercised.
 - No ARC game was played and no score was produced.
 
+## 2026-09-21 — Degree-preserving nulls, closed-loop agent, and the first FlyGI ARC runs
+
+### Completed
+
+- Implemented `src/flygi/connectome/nulls.py`, previously a one-line stub: batched
+  directed double-edge swaps that preserve both degree sequences exactly, with
+  fourteen invariant tests. `flygi graph nulls` writes each null as a
+  self-contained, hash-verified runtime bundle.
+- Generated three independently seeded degree-preserving nulls of the signed
+  runtime (seeds 20260921-20260923), 10 swaps per edge, about 350 s each.
+- Implemented Milestone 3: the closed-loop connectome policy, its encoder,
+  descending trace, literal action map, coordinate head and state policy.
+- Implemented the corrected no-recurrent-graph bypass control.
+- Launched the first full public evaluations of the FlyGI agent.
+
+### Measured null quality
+
+| Seed | Accepted swaps | Acceptance | Fraction of real edges retained |
+| --- | ---: | ---: | ---: |
+| 20260921 | 245,590,550 | 0.9895 | 0.005079 |
+| 20260922 | 245,590,550 | 0.9895 | 0.005088 |
+| 20260923 | 245,590,550 | 0.9895 | 0.005083 |
+
+Each null keeps 0.51% of the real edge set, so the topology is thoroughly
+randomized while in-degree, out-degree and the weight multiset are exact.
+
+### The preregistered degree-preserving comparison
+
+This is the comparison the whole project was gated on. Measured at `K=4`,
+`leak=0.3`, `gain=0.9` on the heuristic-signed runtime.
+
+| Measurement | Real signed | Null 20260921 | Null 20260922 | Null 20260923 |
+| --- | ---: | ---: | ---: | ---: |
+| Spectral radius | **0.828897** | 0.236000 | 0.234800 | 0.221900 |
+| Hops to reach all 1,314 DNs | **3** | 2 | 2 | 2 |
+| Readout targets per hop | 3, 528, 1314 | 783, 1314 | 795, 1314 | 787, 1314 |
+| Nodes unreachable from sensory | 8,957 | 457 | 458 | 458 |
+| Readout participation ratio | **5.385** | 18.54 | 14.33 | 16.00 |
+| Settled mean absolute DN activity | 4.345e-06 | — | — | 4.798e-03 (mean) |
+| State difference at 12 silent actions | **1.90e-04** | 1e-06 | 1e-06 | 1e-06 |
+
+Null spectral radius: mean 0.230894, standard deviation 0.007816. The ratio is
+**3.590**.
+
+**The separation is not an out-degree artifact.** The earlier within-row shuffle,
+which preserves in-degree only, gave 0.2298. Preserving out-degree exactly as
+well moves it to 0.2309. Both are about a quarter of the real graph's 0.8289.
+
+The reading is that excitation and inhibition in the fly are arranged so that
+they do not cancel as completely as in a degree-matched random rewiring. The
+real graph additionally keeps a deeper sensory-to-readout pathway, a roughly
+three times lower-dimensional readout code, and measurably more cross-action
+retention.
+
+**This is a structural and dynamical result about the graph. It is not an ARC
+result.** It does not show that any of these properties help on ARC-AGI-3. The
+paired agent comparison is what tests that, and it is running.
+
+The reviewed index is `results/manifests/degree_preserving_comparison_20260921.json`.
+
+### Two control defects found and fixed
+
+- **The graph ablation was degenerate.** It zeroed the persistent state every
+  turn, so the readout was never driven and the control measured nothing; it
+  finished all 125 rows in 45 seconds. The corrected bypass keeps the entire
+  interface and removes only the graph: the projection targets the descending
+  population directly with `connections_per_neuron` rescaled so total interface
+  nonzeros match the real condition (389,471 against 390,272), and the recurrent
+  gain is zero. The policy now refuses to be constructed as ablated with nonzero
+  gain.
+- **Null bundles were unloadable.** `file_record` stores an absolute filesystem
+  path while runtime loading resolves output hashes relative to the bundle root,
+  so every null was rejected with "manifest is missing runtime outputs". The
+  arrays were always correct; only the manifest records were wrong, so the three
+  existing nulls were repaired in place instead of being regenerated.
+
+### The output-invariance failure and the adaptive readout
+
+The first real-graph closed-loop run chose `ACTION1` on all twelve turns of
+`ls20` with action entropy 0.000, while the readout was neither silent nor tied.
+
+Measured cause: the descending block means are dominated by each neuron's fixed
+offset and by a slow monotonic drift as the state integrates toward the fixed
+point set by its average input. Between-block offset exceeds frame-driven
+variation by roughly a factor of two, and the drift saturates within a handful
+of turns, so an argmax over raw block means locks.
+
+`AdaptiveStandardizer` reports each neuron's deviation from an EMA expectation
+in units of its recent variability. One declared scalar, no trained parameter,
+no per-game fitting, identical across graph conditions, output clipped. After
+the change the same smoke gives entropy 1.459 on `ls20` and 1.895 on `sp80`.
+
+This was a numerical-behavior fix, not tuning toward a score: the specification
+requires checking output invariance before interpreting action patterns, and a
+policy whose action never changes cannot test anything.
+
+### Verification results
+
+- `uv run pytest`: 158 tests passed (25 at the first checkpoint).
+- Ruff lint and formatting checks passed.
+- A staged Kaggle dataset loads and hash-checks through the ordinary runtime
+  loader with no network and no source tables present.
+
+### Limitations
+
+- Three nulls were generated. The preregistration requires at least ten for a
+  confirmatory claim.
+- The signed graph's sign assignment remains a transmitter heuristic.
+- `K=4` was chosen on the measured anatomical grounds recorded on this date, not
+  by a completed operating-point sweep over `(K, leak, gain)`.
+- No ARC performance comparison is recorded in this entry.
+
 ## Next steps
 
 The ordering below changed on 2026-09-21. Milestone 3 freezes `K`, `leak`,

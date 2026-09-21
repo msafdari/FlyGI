@@ -1,0 +1,189 @@
+{
+  "conditions": {
+    "null_seed_20260921": {
+      "anatomical_hops_to_all_readout_targets": 2,
+      "artifact": {
+        "bytes": 12109,
+        "relative_path": "results/diagnostics/dp-20260921-k4.json",
+        "sha256": "7c03648de21eeefdd4d7281a9c9964b395d6973bb3c3e105f5ca0ca6886bc95b",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "linearized_leading_eigenvalue": 0.7637244010762825,
+      "nodes_unreachable_from_sensory": 457,
+      "readout_mean_abs": 0.004729717504233122,
+      "readout_participation_ratio": 18.53964165870067,
+      "readout_targets_per_hop": [
+        783,
+        1314
+      ],
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed/nulls/degree_preserving/seed-20260921",
+      "spectral_radius": 0.23601630028252765,
+      "state_difference_fraction_by_silent_action": [
+        0.2697790563106537,
+        0.07863495498895645,
+        0.023992009460926056,
+        0.0075132292695343494,
+        0.002390278037637472,
+        0.0007686289609409869,
+        0.00024915850372053683,
+        8.12890357337892e-05,
+        2.6661073206923902e-05,
+        8.781584256212227e-06,
+        2.9020577585470164e-06,
+        9.613671636543586e-07
+      ]
+    },
+    "null_seed_20260922": {
+      "anatomical_hops_to_all_readout_targets": 2,
+      "artifact": {
+        "bytes": 12116,
+        "relative_path": "results/diagnostics/dp-20260922-k4.json",
+        "sha256": "8dde1ea575eea709be74c338c08c32730628e25909fb0a8eb2ee49be2dfd9a61",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "linearized_leading_eigenvalue": 0.7633875117695026,
+      "nodes_unreachable_from_sensory": 458,
+      "readout_mean_abs": 0.004924269858747721,
+      "readout_participation_ratio": 14.328515706438969,
+      "readout_targets_per_hop": [
+        795,
+        1314
+      ],
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed/nulls/degree_preserving/seed-20260922",
+      "spectral_radius": 0.2347685621092691,
+      "state_difference_fraction_by_silent_action": [
+        0.27230802178382874,
+        0.0806201621890068,
+        0.02506064996123314,
+        0.008008456788957119,
+        0.0026037762872874737,
+        0.0008569653728045523,
+        0.00028458694578148425,
+        9.507562208455056e-05,
+        3.186200774507597e-05,
+        1.0684238077374175e-05,
+        3.5783855310000945e-06,
+        1.195724394165154e-06
+      ]
+    },
+    "null_seed_20260923": {
+      "anatomical_hops_to_all_readout_targets": 2,
+      "artifact": {
+        "bytes": 12097,
+        "relative_path": "results/diagnostics/dp-20260923-k4.json",
+        "sha256": "e169fc17934bec82415c0b62848bfcd55bcaf9ba6bcb90b3ffb054aed6461755",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "linearized_leading_eigenvalue": 0.7599125390237258,
+      "nodes_unreachable_from_sensory": 458,
+      "readout_mean_abs": 0.004740349017083645,
+      "readout_participation_ratio": 15.999056264498256,
+      "readout_targets_per_hop": [
+        787,
+        1314
+      ],
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed/nulls/degree_preserving/seed-20260923",
+      "spectral_radius": 0.22189829268046624,
+      "state_difference_fraction_by_silent_action": [
+        0.2712046205997467,
+        0.08012484014034271,
+        0.024993781000375748,
+        0.008039349690079689,
+        0.002627266338095069,
+        0.0008652239921502769,
+        0.0002859490050468594,
+        9.46511936490424e-05,
+        3.1353025406133384e-05,
+        1.039114340528613e-05,
+        3.4464105738152284e-06,
+        1.1444585652498063e-06
+      ]
+    },
+    "real_signed": {
+      "anatomical_hops_to_all_readout_targets": 3,
+      "artifact": {
+        "bytes": 10498,
+        "relative_path": "results/diagnostics/dp-real-k4.json",
+        "sha256": "ee20f074f52ebdc659afe4e65f23b381e847a0b3260b507249d9881ac5dd5926",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "linearized_leading_eigenvalue": 0.9238022733295597,
+      "nodes_unreachable_from_sensory": 8957,
+      "readout_mean_abs": 4.345252818893641e-06,
+      "readout_participation_ratio": 5.384508784605779,
+      "readout_targets_per_hop": [
+        3,
+        528,
+        1314
+      ],
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed",
+      "spectral_radius": 0.8288973086279988,
+      "state_difference_fraction_by_silent_action": [
+        0.28726184368133545,
+        0.09524071216583252,
+        0.03524300456047058,
+        0.014397661201655865,
+        0.006555676925927401,
+        0.0033454818185418844,
+        0.0018793229246512055,
+        0.0011266398942098022,
+        0.0007023912039585412,
+        0.000448202365078032,
+        0.000290161173325032,
+        0.0001896416360978037
+      ]
+    }
+  },
+  "headline": {
+    "null_participation_ratio_mean": 16.2890712098793,
+    "null_participation_ratio_stdev": 2.1204897896149566,
+    "null_spectral_radius_mean": 0.23089438502408766,
+    "null_spectral_radius_stdev": 0.007815783436641187,
+    "ratio": 3.5899413861516187,
+    "real_participation_ratio": 5.384508784605779,
+    "real_spectral_radius": 0.8288973086279988
+  },
+  "interpretation": "The real heuristic-signed MaleCNS graph has a spectral radius of 0.8289 while three independently seeded directed degree-preserving rewirings of the same graph have 0.2360, 0.2348 and 0.2219, a ratio of 3.59. The weaker within-row shuffle gave 0.2298, so the separation is not an out-degree artifact: it survives exact preservation of both degree sequences and of the weight multiset. The interpretation is that excitation and inhibition in the fly are arranged so that they do not cancel as completely as in a degree-matched random rewiring. The real graph also keeps a deeper sensory-to-readout pathway (three hops against two), a roughly three times lower-dimensional readout code (5.39 against 16.29), and measurably more cross-action retention. This is a structural and dynamical result about the graph. It is NOT an ARC performance result, and it does not show that any of these properties help on ARC-AGI-3; that is what the paired agent comparison tests.",
+  "is_acceptance_gate": false,
+  "is_arc_performance_result": false,
+  "null_generation": {
+    "fraction_of_real_edges_retained": [
+      0.005079348533565319,
+      0.005087655042101579,
+      0.0050829317333260585
+    ],
+    "in_and_out_degree_preserved_exactly": true,
+    "kind": "directed_degree_preserving_double_edge_swap",
+    "normalization_reapplied": "incoming_l1",
+    "seeds": [
+      20260921,
+      20260922,
+      20260923
+    ],
+    "swaps_per_edge": 10.0,
+    "weight_multiset_preserved": true
+  },
+  "operating_point": {
+    "activation": "tanh",
+    "internal_steps": 4,
+    "leak": 0.3,
+    "recurrent_gain": 0.9
+  },
+  "provenance": {
+    "config_sha256": "04d802f1b15ef76c03763a6bf304f26f27876b3c49070ed7bd381a718064fa7d",
+    "created_at_utc": "2026-09-21T07:56:59.266231+00:00",
+    "git_commit": "b6cd353f23d771d599bd871b73e7a4683458788d",
+    "git_dirty": false,
+    "nulls_module_sha256": "15b9b8d58da7f75777652636f4fefe846f3666c30b3023df3cc6022b20ff036f",
+    "probe_script_sha256": "8f732205a1f303036abc22313e3005ca0b19eb388f555ccfe27a99dae6088bfc"
+  },
+  "result_id": "degree-preserving-comparison-20260921",
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "scope": "preregistered directed degree-preserving comparison of the heuristic-signed MaleCNS runtime, on dynamical-regime measures at K=4",
+  "status": "measured"
+}
