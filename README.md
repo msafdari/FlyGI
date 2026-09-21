@@ -6,12 +6,24 @@ The scientific question is deliberately narrower than the joke: when the
 interface and compute budget are matched, does the biological wiring make useful
 closed-loop computations more accessible than rigorous null graphs?
 
-This checkout implements **Milestones 0–2**: repository and ARC submission
-plumbing, MaleCNS source acquisition and verification, sparse graph compilation,
-the frozen SciPy/CPU leaky-rate backend, provenance manifests, and acceptance
-tests. The full-data dynamics gate passes; see `WORKLOG.md` for its artifact and
-measurements. The ARC encoder/decoder loop, learning, plasticity, and
-biological-performance claims are not included yet.
+This checkout implements **Milestones 0–3 and part of Milestone 4**: repository
+and ARC submission plumbing, MaleCNS acquisition and verification, unsigned and
+heuristic-signed sparse graph compilation, the frozen SciPy/CPU leaky-rate
+backend, a live closed loop from ARC frame to legal ARC action through the full
+166,700-neuron graph, seeded directed degree-preserving nulls, an
+interface-matched no-recurrent-graph bypass, provenance manifests, and 158
+tests. Learning (Track B) and plasticity (Track C) are not implemented.
+
+**Current results, in short.** The agent works and is not better than a bypass.
+Gate 2 passed on all 25 public games with zero trainable parameters. The real
+signed graph and the interface-matched bypass scored an identical mean of
+0.190476, each completing one level in one game out of 25; the degree-preserving
+null scored zero; the random control scored 0.050626. The connectome agent
+explores *less* than chance. Separately, the real graph does separate cleanly
+from its degree-preserving nulls on dynamical measures — spectral radius 0.8289
+against 0.2309 ± 0.0078 over three seeds, a ratio of 3.59 — but that structural
+difference produced no ARC advantage. No leaderboard submission has been made
+and no biological advantage is claimed. See [WORKLOG.md](WORKLOG.md).
 
 See [WORKLOG.md](WORKLOG.md) for the latest reproducible checkpoint, measured
 full-data results, current limitations, and ordered next steps.

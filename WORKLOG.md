@@ -830,62 +830,55 @@ The reviewed index is `results/manifests/connectome_agent_gate2_20260921.json`.
 
 ## Next steps
 
-The ordering below changed on 2026-09-21. Milestone 3 freezes `K`, `leak`,
-`gain`, `sign_mode`, and the readout population into the agent, and the
-dynamical-regime diagnostic showed that the currently declared values are not
-the right ones to freeze. The short diagnostic detour therefore runs first.
+Gate 2 is passed and its result is negative: the real graph did not beat a
+parameter-matched bypass on ARC. The ordering below follows from that, and from
+two design defects Gate 2 exposed.
 
-1. ~~**Signed runtime condition.**~~ Done 2026-09-21. The signed runtime is
-   compiled, validated, hashed, and measured; it has 24,559,055 edges against
-   the unsigned graph's 25,582,837 and needs its own nulls.
-2. **Preregistered directed degree-preserving null.** Implement
-   `src/flygi/connectome/nulls.py`, which is still a stub, using batched
-   vectorized directed double-edge swaps that preserve both in- and out-degree,
-   reject self-loops and duplicate aggregated edges, preserve sensory and
-   readout node identities, and serialize every seed and graph hash. Validate
-   the degree sequences and weight multisets programmatically. This is the gate
-   on every real-versus-null claim in the project; the probe's within-row
-   shuffle does not substitute for it.
-3. **Operating-point sweep.** Run `make probe-regime` across
-   {unsigned, signed} x {real, degree-preserving null} x candidate `(K, leak,
-   gain)` points, with `K >= 4` on the anatomical grounds recorded above. Select
-   the point by cross-action memory and real-versus-null separation, not by ARC
-   score, and apply the identical selected point to every graph condition.
-4. **Milestone 3 — closed-loop FlyGI**, built against the point selected in
-   step 3. Implement the fixed neutral visual encoder, persistent connectome
-   state, descending-neuron trace, literal readout, legal-action masking,
-   coordinate head, and declared reset policy. Add causal-path tests proving
-   that changing the frame can change sensory input, graph activity, logits, and
-   the selected action. The decoder must standardize the descending trace;
-   settled mean absolute DN activity is of order 1e-6.
-5. **Full-agent public gate.** Run the literal FlyGI agent on the same 25 games,
-   seeds, and action budget as the random control. Preserve immutable results
-   and compare matched `(game, seed)` rows without requiring a positive score or
-   claiming a biological advantage.
-6. **Offline Kaggle packaging.** Publish `graph.npz`, `node_metadata.npz`,
-   `groups.npz`, the config, and reviewed manifests as a versioned private
-   Kaggle Dataset. Update the notebook to load and verify these assets exactly
-   once, without downloading MaleCNS or rebuilding the graph during evaluation.
-   Remeasure candidate `K` values on the actual Kaggle runtime before freezing
-   the deployment setting.
-7. **Milestone 4 — scientific controls.** Add weight shuffles, sign shuffles
-   within transmitter strata, a matched generic sparse reservoir, the
-   no-reservoir baseline, at least ten independently seeded degree-preserving
-   nulls, paired evaluation, and the preregistered statistical analysis. Do not
-   claim a biological advantage without the degree-preserving comparison.
+1. **Fix the sample-size defect.** All 25 games gave identical traces across all
+   five seeds, because the policy is deterministic and these environments are
+   deterministic given the game. The effective n is 25, not 125. Either give the
+   policy a declared stochastic component (for example sampling from masked
+   logits at a declared temperature, seeded per run) or stop reporting seeds as
+   replicates. This must be decided and recorded before any confirmatory
+   analysis, not after seeing more results.
+2. **Fix the exploration defect.** The connectome agent explores *less* than
+   chance: 52.8 unique observations against 64.2, and 23.7 consecutive repeats
+   against 13.6. A deterministic argmax falls into loops. Temperature sampling
+   would address both defects at once. Whatever is chosen must apply identically
+   to every graph condition.
+3. **Add a positive control.** Every null is built to be no better than the fly.
+   With real, bypass and null all near zero, the design cannot separate "the
+   biological graph confers no advantage" from "this interface and operating
+   point cannot express an advantage any graph could confer." A reservoir
+   deliberately tuned to the edge of chaos at matched node and edge count would
+   separate them. This is the single most informative missing condition.
+4. **Complete the operating-point sweep.** `K=4` was chosen on anatomical
+   grounds; `leak=0.3` and `gain=0.9` are unchanged from the original `K=2`
+   declaration and have never been searched. Sweep `(K, leak, gain)` on the
+   dynamical diagnostics, apply the winner identically to every condition.
+5. **Reconsider the primary endpoint.** Gate 0 chance is 2 of 125 rows; Gate 2
+   real is 5 of 125, all one game. A paired test on public-set RHAE at this base
+   rate cannot detect anything. Promote the specification's section 13.3
+   behavioral diagnostics to co-primary, and record the change before inspecting
+   further results.
+6. **Scale the controls.** Evaluate all three existing nulls rather than one,
+   build the remaining seven, and add the weight shuffle, the sign shuffle within
+   transmitter strata, and the matched generic reservoir.
+7. **Kaggle submission.** The offline dataset is staged and verified and the
+   adapter runs the connectome. Publishing the dataset and spending a competition
+   submission are outward-facing actions that require explicit authorization each
+   time; passing the local gates does not confer standing permission.
+8. **Track B.** A small trained readout on a frozen graph is where the
+   specification expects any real signal. It must be compared against the same
+   parameter-matched bypass, which has now beaten the fly once already.
 
-### Open design questions raised by the 2026-09-21 diagnostic
+### Open design questions
 
-- **The primary endpoint is near-degenerate.** Gate 0 measured 2 of 125
-  chance-control rows with any level progress, both in `sp80`, and those two
-  rows account for the entire 0.0506 mean. A paired test on public-set RHAE at
-  that base rate has very little power. Consider promoting the predeclared
-  behavioral diagnostics in the specification's section 13.3 to co-primary
-  status. Any such change must be made and recorded *before* confirmatory
-  results are inspected, or it is not a preregistration.
-- **There is no positive control.** Every null in the specification's section 12
-  is designed to be no better than the real graph. If all conditions score zero,
-  the design cannot separate "the biological graph confers no advantage" from
-  "this interface and operating point cannot express an advantage that any graph
-  could confer." A deliberately well-tuned reservoir at matched node and edge
-  count would make that distinction.
+- **The primary endpoint is near-degenerate.** See step 5.
+- **There is no positive control.** See step 3.
+- **The structural finding has no behavioral consequence yet.** The real graph
+  separates cleanly from its degree-preserving nulls on spectral radius (3.59x),
+  pathway depth, readout dimensionality and retention. None of that produced an
+  ARC advantage. Either the interface cannot exploit those properties, or they
+  are not useful for this task. Distinguishing those two is what the positive
+  control is for.
