@@ -1207,3 +1207,8 @@ or an actionable failure. In parallel, prepare honest LinkedIn and X copy around
 the negative/uncertain scientific result. Do not publish social content or make
 another competition submission; save drafts in the repository and update them
 with the actual leaderboard status when known.
+
+A thread heartbeat named `Monitor FlyGI submission` is active at a 20-minute
+interval. It is instructed to remain quiet while the state is unchanged, never
+submit or retry, and on completion/failure to update this worklog and the social
+draft, run checks, commit, push, and report the outcome.
