@@ -2731,3 +2731,83 @@ games.
 
 No claim of a connectome advantage attaches to this submission. Random legal
 play still outscores the real graph on the public set.
+
+## 2026-09-22 — Resumption audit and artifact reconciliation
+
+This audit was performed after a context handoff by rereading the durable
+record, inspecting the latest commits and working tree, checking for surviving
+long-running processes, querying Kaggle read-only, and reading the immutable
+result artifacts directly.
+
+### Current repository and external state
+
+- `main` and `origin/main` both point to `9559da9`; the tracked working tree is
+  clean. Only the expected ignored data, generated notebooks, result artifacts,
+  caches, virtual environment, and vendored framework are present.
+- No connectome evaluation, plasticity evaluation, or head-training process is
+  still running locally.
+- At `2026-09-22T09:23:03Z`, Kaggle still reported submission **56459984** as
+  `SubmissionStatus.PENDING`, with no public score. Submission 56444435 remains
+  complete at 0.00.
+- `UV_CACHE_DIR=/tmp/flygi-uv-cache uv run pytest -q`: **284 passed**.
+- `UV_CACHE_DIR=/tmp/flygi-uv-cache uv run ruff check .`: passed.
+
+### The completed 75-row loop-escape gate
+
+The previously launched all-public 500-action run did finish, but its result
+had not been summarized in this worklog. The immutable artifact is
+`results/connectome_agent/20260922T063641.421126Z-real-signed-loop-escape.json`:
+62,514,535 bytes, SHA-256
+`81deaa8a7088646199344a09b908259f0ae4b663530b63c3fa8db65a5ab41189`.
+
+All 75 rows succeeded with zero illegal actions, invalid coordinates, or budget
+violations. Mean score was **0.12698413**, with two completed first levels:
+`cd82` seed 0 and `sp80` seed 1, both scoring 4.76190476. The preregistered gate
+therefore beat the old real mean of 0.06475067 but **failed** its second
+requirement of more than two completed levels; it also remained below the
+stronger random-control target of more than six levels. This is mixed evidence,
+not a passed score gate.
+
+### Correction to the 1,600-action statement
+
+The preceding submission entry says “1600 actions bought nothing over 600” and
+lists the 1,600-action run as 0.190476 on `cd82` alone. The immutable artifact is
+authoritative and shows otherwise:
+
+- `results/connectome_agent/20260922T090944.177284Z-sweep1600-mild.json`;
+- 66,624,583 bytes;
+- SHA-256
+  `cf74199a088a81cd4b8713ebdb8545808fba0adf705eefef11702f45e69e4d01`;
+- mean score **0.19128930**;
+- three completed first levels in three games: `cd82` at action 55, `sk48` at
+  action 1,033, and `sp80` at action 825.
+
+Thus 1,600 actions did unlock two additional games. Their level scores were only
+0.348706 and 0.223471 before game weighting, producing per-game scores of
+0.009686 and 0.010641. The mean gain over the 600-action candidate was therefore
+only **+0.00081311**, while worst-case deployment work increased by 2.67x. The
+decision to submit the 600-action configuration remains defensible on
+score-per-runtime grounds, but the literal claim that the larger budget bought
+nothing is retracted.
+
+### Reconciled position and ordered next work
+
+1. Wait for submission 56459984 to finish and record its score before spending
+   or requesting another daily slot.
+2. The best local mean is now 0.19128930 at 1,600 actions; the practical deployed
+   candidate is 0.19047619 at 600 actions. Both are still driven by first-level
+   completions and neither demonstrates a connectome advantage.
+3. Mushroom-body plasticity is implemented and moves exploration, but it did
+   not unlock a level and did not separate significantly from the rewired
+   control. Scientific hardening remains deferred under the score-first
+   directive.
+4. Track B's 520-parameter head and CEM trainer are implemented but no trained
+   weights exist. Training is an overnight-scale experiment, not a quick next
+   submission.
+5. The highest-value finite score intervention is a generic state-graph/effect
+   controller with component-grounded clicks and frontier replay. Reproduce a
+   pinned permissively licensed controller standalone first; only if it beats
+   the random control should it be combined with the connectome as a guarded
+   action/click tie-breaker. This avoids another long optimization run with no
+   demonstrated score path and preserves clean controller-only and hybrid
+   ablations for later analysis.
