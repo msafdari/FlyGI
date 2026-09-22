@@ -1969,3 +1969,69 @@ outward-facing action on the account owner's behalf; passing local gates confers
 no standing permission. Everything is staged so that authorization is the only
 remaining step. Track B training continues in the meantime and would target a
 later slot.
+
+## 2026-09-22 — Score campaign: target 2x per submission
+
+### Direction set by the user
+
+Every submission must be worth its daily slot: a minimum of 2x the previous
+score, improving fairly and without per-game hardcoding or public-set
+overfitting dressed up as generality. The trajectory being aimed at is roughly
+0.2 -> 0.4 -> 0.8 -> 1.6 -> 3.2 -> 6.4 -> above 10.0 within a week. Checkpoint
+and push at every step so the work can be resumed by anyone at any point.
+
+### What sets the score, restated as an operating rule
+
+The scorecard caps each game at `completed_level_weight / total_weight * 100`.
+A first level in a six-level game is worth `100/21 = 4.76190476`, and a mean is
+taken across games. On a 25-game set that makes **each additional game reaching
+level one worth about +0.19 of mean score**. The current best local result,
+`0.190476`, is exactly one such game.
+
+The 2x ladder therefore translates directly into games solved: 1 -> 2 -> 4 -> 8
+-> 17, or fewer games solved more deeply. Deeper levels are worth much more
+(level 2 of six carries weight 2 of 21, level 3 carries 3), so depth becomes the
+only route past roughly 4.0.
+
+### Honest assessment of today's options
+
+Full CEM training of the 520-parameter head will not converge today. At roughly
+four minutes per candidate evaluation it needs on the order of a thousand
+evaluations, which is an overnight job, not an afternoon one. It remains the
+largest multiplier and is scheduled next.
+
+Today's highest-expected-value lever is the one already demonstrated twice:
+**budget plus exploration strength**. `r11l` was only ever completed between 164
+and 333 actions, and `cd82` appeared only at 600. Each unlock is worth about
++0.19.
+
+### In progress — loop-escape strength sweep at 800 actions
+
+Three matched runs over all 25 public games, seed 0, 800-action ceiling:
+
+| Config | Exploration bonus | Unchanged-failure penalty |
+| --- | ---: | ---: |
+| `literal_rate_signed_loop_escape` (frozen `mild`) | 0.25 | 0.50 |
+| `literal_rate_signed_loop_balanced` | 0.50 | 1.00 |
+| `literal_rate_signed_loop_strong` | 1.00 | 2.00 |
+
+800 was chosen as the submission-safe ceiling: at a pessimistic 300 ms per
+action it costs about 100 minutes for 25 hidden games and about 6.7 hours for
+100, which stays inside the seven-hour wall-clock guard so that no game is cut
+off before it starts.
+
+The earlier strength calibration found no measurable difference, but it compared
+strengths over only 40 actions per row. The `cd82` unlock at 600 actions shows
+the layer matters at realistic budgets, so strength is worth retesting there.
+
+**Selection rule, fixed before results are seen:** choose the highest mean
+public score; break ties on games reaching level one, then on mean unique
+observations. This is public-set model selection. It is standard practice and is
+the specification's "public-ARC development" regime, and it will be labelled as
+such rather than presented as zero-shot generality.
+
+### Next
+
+1. Pick the winning strength, package it with the 800-action ceiling, verify the
+   Kaggle preflight, and spend today's submission on it.
+2. Start CEM training of the 520-parameter head overnight for tomorrow's slot.
