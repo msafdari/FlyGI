@@ -2437,3 +2437,55 @@ normalization.
 | Drift from frozen baseline | 0.000e+00 | 3.567e-05 |
 
 Verification: `uv run pytest -q` → **263 passed**; ruff clean.
+
+### Stages 4 and 5 built; evaluation in flight
+
+**The falsification control is implemented and launched.**
+`rewire_mushroom_body` shuffles which Kenyon cell contacts which MBON while
+preserving each MBON's input degree and exact weight multiset and leaving the
+rest of the graph byte-identical. `configs/literal_rate_plastic_mb_rewired.yaml`
+differs from the real plastic config in `rewire_mushroom_body_seed` alone, which
+a test asserts field by field.
+
+**A second bug, caught by checking that the runs actually started.** The rewired
+control crashed on launch with `assignment destination is read-only`.
+`ScipyRateNetwork` freezes `indices` unconditionally, by design: a learning rule
+may change how strong a connection is, never which neurons are connected.
+Rewiring is a topology edit, so applying it after construction was always going
+to be refused, and the refusal was correct. The rewire now runs on the private
+writable copy before the network is built, which keeps the invariant intact and
+establishes the condition's topology at build time. A regression test pins the
+ordering.
+
+Two bugs in this stage would each have produced a confident false negative: a
+plasticity rule that never moved a weight, and a control that never ran. Neither
+was visible from the code; both required measuring.
+
+### Running now
+
+Four background runs, all checkpointed and wrapped in `caffeinate`, all resumable
+with `--resume`:
+
+| Run | Condition | Purpose |
+| --- | --- | --- |
+| `mb-frozen` | real mushroom body, learning off | plasticity baseline |
+| `mb-plastic` | real mushroom body, learning on | the experiment |
+| `mb-plastic-rewired` | partners shuffled, learning on | the falsification control |
+| `sweep1600-mild` | frozen agent, 1600-action ceiling | today's submission candidate |
+
+The first three share one runtime, one interface, one seed, one budget and one
+set of games; only the named variable differs.
+
+### The criterion, fixed before any of these finish
+
+If the rewired mushroom body learns as well as the real one, the result is about
+having roughly 61,000 plastic synapses in a three-layer architecture, not about
+the fly's specific wiring. All three conditions will be reported whichever way
+the comparison falls.
+
+### Not yet done
+
+- The paired statistical analysis over the plasticity conditions.
+- The bypass has not been given the same plasticity budget.
+- One seed only, so these are directional rather than confirmatory.
+- No submission has been made today.
