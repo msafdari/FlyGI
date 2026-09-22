@@ -2105,3 +2105,111 @@ higher becomes today's submission candidate.
 
 CEM training runs after those finish, since both compete for the same
 memory bandwidth.
+
+## 2026-09-22 — Anatomical audit: the fly's learning circuit is present, and we deleted its reward system
+
+### Question asked
+
+Can the connectome's actual modules -- sensing, learning, navigation -- be used
+for the task instead of arbitrary mappings, and could the fly form and refine a
+latent world model through interaction?
+
+This was answered by measurement against the compiled runtimes, not by argument.
+
+### The modules are present and annotated
+
+| Structure | Count | Role |
+| --- | ---: | --- |
+| Kenyon cells (`class=Kenyon_Cell`) | 4,064 | sparse high-dimensional expansion |
+| MBONs (`class=MBON`) | 97 | learned valence readout |
+| Dopaminergic `PAM`/`PPL`/`PPM` | 354 (350 confirmed dopamine) | teaching signal |
+| Ellipsoid-body ring `ER*` | 282 | visual/contextual input to the compass |
+| Compass `EPG`/`PEN`/`PEG` | 110 | ring-attractor heading state |
+| Motion detectors `T4`/`T5` | 13,585 | elementary motion |
+| Lobula columnar `LC`/`LPLC` | 4,670 | feature and looming detection |
+
+### The circuits are genuinely wired
+
+Measured on the signed runtime unless noted, as `W[post, pre]` submatrices:
+
+| Pathway | Edges | Density |
+| --- | ---: | ---: |
+| Kenyon cells -> MBON | 61,210 | 0.1553 |
+| ER ring -> compass | 13,760 | 0.4436 |
+| compass -> compass (ring attractor) | 4,503 | 0.3721 |
+| T4/T5 -> LC/LPLC | 54,515 | 0.0009 |
+| MBON -> dopaminergic (value loop) | 2,618 | 0.0762 |
+| MBON -> descending | 409 | 0.0032 |
+
+The mushroom-body readout and the central-complex ring attractor are both dense
+and intact. These are not labels; they are working subgraphs.
+
+### The finding that matters: we deleted the fly's reward system
+
+| Pathway | Unsigned runtime | **Signed runtime (submitted)** |
+| --- | ---: | ---: |
+| dopaminergic -> Kenyon cells | **129,132 edges**, weight sum 567.93 | **0** |
+| dopaminergic -> MBON | 3,195 edges, weight sum 3.62 | **0** |
+
+`modulator_treatment: zero` assigns sign 0 to monoaminergic neurons, which
+deletes every one of their outgoing edges. 350 of the 354 PAM/PPL/PPM neurons
+are dopaminergic, so the signed graph -- **the configuration actually
+submitted** -- has the entire dopaminergic pathway removed, including the
+single largest input to the mushroom body at 129,132 edges.
+
+In Drosophila, reinforcement learning happens at Kenyon-cell-to-MBON synapses
+under dopaminergic gating. FlyGI submitted a fly with its reward machinery
+surgically removed and then observed that it did not learn. That treatment was
+declared and recorded from the start, and it was defensible for a *frozen*
+model where modulators have no dynamics to modulate. It is indefensible for any
+experiment about learning.
+
+### One genuine anatomical constraint
+
+`LC`/`LPLC` -> Kenyon cells is **20 edges**, essentially nothing, and
+photoreceptor -> `T4`/`T5` is zero directly because that pathway runs through
+lamina and medulla. The adult *Drosophila* mushroom body is overwhelmingly
+**olfactory**; it receives very little visual input. There is therefore no
+strong biological route from an ARC image into the learning circuit, and any
+visual-to-MB injection is an interface choice rather than something the fly
+does. The honest visual route into persistent state is the ring-neuron pathway
+into the central complex, which is dense.
+
+### What a fly world model would and would not be
+
+Supported by the anatomy:
+
+- the central complex maintains a genuine persistent latent state -- a
+  ring-attractor bump encoding heading, updated by self-motion and vision, with
+  fan-shaped-body vector memory for path integration;
+- the mushroom body is a three-layer learning system: a sparse high-dimensional
+  code, a linear valence readout, and a dopaminergic teaching signal, with
+  plasticity at a specific, known synapse.
+
+Not supported: compositional symbolic model building. The fly's latent state is
+low-dimensional and domain-shaped, for orientation, place and stimulus valence.
+Flies do goal-directed navigation and associative learning; they do not do
+program induction, which is what ARC-AGI-3 ultimately asks for.
+
+### Proposed direction
+
+Replace the 520-parameter arbitrary head with the fly's own learning circuit:
+
+1. compile a runtime that **preserves modulators** instead of deleting them;
+2. apply reward-modulated plasticity **only at Kenyon-cell-to-MBON synapses**,
+   gated by dopaminergic activity, which is where fly plasticity actually
+   occurs;
+3. derive the reward from ARC progress and inject it into the dopaminergic
+   population;
+4. read MBONs for valence and the central complex for persistent state, instead
+   of eight body-ID-ordered descending blocks.
+
+This is Track C, but anatomically grounded rather than generic, and it remains
+falsifiable: the same plasticity can be applied to a mushroom body that has been
+rewired while degree is preserved, and to the no-recurrent-graph bypass.
+
+### Cost, stated plainly
+
+This is a larger change than the current score campaign and will not produce a
+submission today. It is recorded here as the highest-value scientific direction,
+not as a substitute for the in-flight budget runs.
