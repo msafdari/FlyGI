@@ -1676,3 +1676,80 @@ Current action: checkpoint and push the calibration result, reviewed index, and
 frozen config. Next: run exactly 25 games by seeds 0-2 at 500 actions from that
 checkpoint, then compare mean score and completed levels against the frozen
 real baseline (`0.06475067`, 2 levels) and random (`0.09756824`, 6 levels).
+
+## 2026-09-22 — Correction: action budget IS a score lever, and the plan to exploit it
+
+### A wrong conclusion, corrected
+
+The 2026-09-22 sweep entry records "the action budget is not the binding
+constraint" on the basis of an `sp80` rerun at 2,000 actions. That test was run
+on the one game the frozen agent already solved within 80 actions, so it could
+only ever show that `sp80` does not go *deeper*. It could not show whether a
+larger budget unlocks *other* games, which is a different question and the one
+that matters for the score.
+
+Re-reading the completed 500-action artifacts answers it directly. Of the twelve
+level completions recorded across all four conditions, **nine required more than
+80 actions**:
+
+| Condition | Game | Seed | Score | Within the deployed 80-action ceiling? |
+| --- | --- | ---: | ---: | --- |
+| real signed | `sp80` | 1 | 4.76190 | yes |
+| real signed | `sp80` | 2 | 0.09440 | no |
+| degree-preserving null | `sp80` | 0, 1, 2 | 0.07889, 0.28292, 0.22860 | no |
+| no-graph bypass | `sp80` | 2 | 0.05651 | no |
+| random legal | `sp80` | 0 | 0.81970 | no |
+| random legal | `sp80` | 1, 2 | 1.56636, 4.76190 | yes |
+| random legal | `r11l` | 0, 1, 2 | 0.02078, 0.08569, 0.06318 | no |
+
+`r11l` was completed only beyond 80 actions, at 164, 191, and 333 actions. The
+submitted configuration used an 80-action ceiling, so it could not have reached
+`r11l` at all. **The deployed budget was leaving completions on the table.**
+
+### What actually sets the score
+
+The scorecard caps a game at `max_weights / total_weights * 100` over completed
+levels. For a six-level game that makes the first level worth at most
+`100/21 = 4.76190476`, and both the fly's 9-action completion and random's
+14-action completion hit that cap exactly. Efficiency therefore stops mattering
+once the cap is reached; **what matters is how many games yield a first level
+at all.**
+
+That reframes the objective. Five games at level one across a 25-game set gives
+a mean of about `0.95`, roughly ten times the best result observed so far. The
+levers, in order of expected effect:
+
+1. a budget large enough to reach first levels that sit beyond 80 actions;
+2. exploration good enough to find them in more games;
+3. efficiency, which only matters until the per-game cap is hit.
+
+### Compute headroom
+
+Competition notebooks may run up to nine hours. At the observed 136-164 ms per
+action, a 25-game hidden set at 800 actions per game is roughly 20,000 actions,
+about 55 minutes. The 80-action ceiling was conservative by more than an order
+of magnitude.
+
+### Plan, in small shippable chunks
+
+1. **Chunk A (this entry).** Record the correction and the revised objective.
+2. **Chunk B (running).** Score-blind loop-escape calibration on the
+   preregistered subset; freeze the winner.
+3. **Chunk C.** Quick score probe: loop escape enabled, all 25 games, seed 0, at
+   a raised budget. Compare against the frozen real baseline `0.06475067` and
+   the matched random baseline `0.09756824`.
+4. **Chunk D.** If the probe improves on the baseline, rebuild the Kaggle bundle
+   with the raised budget and the frozen loop-escape setting, verify the
+   preflight, and submit.
+
+Detailed statistical hardening, the paired censored analysis, and the ARC
+evaluation of the positive control are explicitly deferred to a later session by
+the user's decision, in order to establish a leaderboard position early. They
+remain in the backlog and are not cancelled.
+
+### Standing caveat
+
+Random legal still outscores the real graph at 500 actions (`0.09756824` against
+`0.06475067`, six completed levels against two). Nothing in this plan claims a
+connectome advantage; the objective here is the leaderboard number, and the
+controls already on record continue to say the fly has not earned credit for it.
