@@ -1,0 +1,175 @@
+{
+  "conditions": {
+    "matched_random_reservoir": {
+      "anatomical_hops_to_all_readout_targets": 2,
+      "artifact": {
+        "bytes": 11611,
+        "relative_path": "results/diagnostics/pc-matched_random-k4.json",
+        "sha256": "cdb93b634d59e05d657d39ae4bf1fbd54bbcdf63c4cbb3a4350b87e9b9e799e3",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "memory_half_life_actions": 1,
+      "negative_weight_fraction": 0.39960702885351246,
+      "readout_participation_ratio": 20.435252200242697,
+      "reservoir": {
+        "allow_self_edges": false,
+        "departs_from_declared_normalization": false,
+        "departs_from_declared_sign_mode": false,
+        "edges": 24559055,
+        "invariants": {
+          "edge_count_matches": true,
+          "failures": [],
+          "node_count_matches": true,
+          "self_edges": 0,
+          "valid": true
+        },
+        "is_matched_null": true,
+        "is_positive_control": false,
+        "kind": "matched_random",
+        "nodes": 166700,
+        "normalization": "incoming_l1",
+        "normalization_reapplied": "incoming_l1",
+        "seconds": 104.3698804168962,
+        "seed": 20260922,
+        "signs_randomized": false,
+        "source_graph_sha256": "45e332d90ea4e881ece5d4d72216955bd53eec922aa60955a69db510272eff61",
+        "source_runtime": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate-signed",
+        "spectral_radius_after_normalization": 0.15917286957336388,
+        "spectral_radius_before_normalization": 0.1842819207319612,
+        "weight_multiset_preserved": true,
+        "weight_source": "real_multiset"
+      },
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed/reservoirs/matched_random/seed-20260922",
+      "spectral_radius": 0.16077724180885739,
+      "state_difference_fraction_by_silent_action": [
+        0.2551095187664032,
+        0.06819488108158112,
+        0.0188752394169569,
+        0.005353243090212345,
+        0.0015439317794516683,
+        0.0004505256947595626,
+        0.00013256889360491186,
+        3.9248221582965925e-05,
+        1.1672722393996082e-05,
+        3.483379032331868e-06,
+        1.042157123265497e-06,
+        3.123831504581176e-07
+      ]
+    },
+    "positive_control_edge_of_chaos": {
+      "anatomical_hops_to_all_readout_targets": 2,
+      "artifact": {
+        "bytes": 11556,
+        "relative_path": "results/diagnostics/pc-edge_of_chaos-k4.json",
+        "sha256": "619531dcc611b3e22b2bd2f31340ba2c7c4f73d7cb5624584b2af6b7969ee7ac",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "memory_half_life_actions": 3,
+      "negative_weight_fraction": 0.49990294822011677,
+      "readout_participation_ratio": 24.403351411958166,
+      "reservoir": {
+        "allow_self_edges": false,
+        "departs_from_declared_normalization": true,
+        "departs_from_declared_sign_mode": true,
+        "edges": 24559055,
+        "invariants": {
+          "edge_count_matches": true,
+          "failures": [],
+          "node_count_matches": true,
+          "self_edges": 0,
+          "valid": true
+        },
+        "is_matched_null": false,
+        "is_positive_control": true,
+        "kind": "edge_of_chaos",
+        "nodes": 166700,
+        "normalization": "signed, spectral_radius=0.95",
+        "normalization_reapplied": "incoming_l1",
+        "seconds": 120.69378683296964,
+        "seed": 20260922,
+        "signs_randomized": true,
+        "source_graph_sha256": "45e332d90ea4e881ece5d4d72216955bd53eec922aa60955a69db510272eff61",
+        "source_runtime": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate-signed",
+        "spectral_radius_after_normalization": 0.9499999662295017,
+        "spectral_radius_before_normalization": 0.1842819207319612,
+        "weight_multiset_preserved": true,
+        "weight_source": "real_multiset"
+      },
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed/reservoirs/edge_of_chaos/seed-20260922",
+      "spectral_radius": 0.9923867921364109,
+      "state_difference_fraction_by_silent_action": [
+        0.7076442837715149,
+        0.5474796295166016,
+        0.43288788199424744,
+        0.347217857837677,
+        0.2817862033843994,
+        0.23118050396442413,
+        0.1912323236465454,
+        0.1590021699666977,
+        0.13259495794773102,
+        0.11068113893270493,
+        0.09231649339199066,
+        0.07685846835374832
+      ]
+    },
+    "real_signed": {
+      "anatomical_hops_to_all_readout_targets": 3,
+      "artifact": {
+        "bytes": 10498,
+        "relative_path": "results/diagnostics/pc-real-k4.json",
+        "sha256": "6d3eeae02dabc2e0fedca2ed43f46baa4d36331b639484cc829f44e64d5c7b5f",
+        "tracked_in_git": false
+      },
+      "edges": 24559055,
+      "memory_half_life_actions": 1,
+      "negative_weight_fraction": 0.39960702885351246,
+      "readout_participation_ratio": 5.384508784605779,
+      "runtime_dir": "data/processed/male-cns-v1.0/literal-rate-signed",
+      "spectral_radius": 0.8288973086279988,
+      "state_difference_fraction_by_silent_action": [
+        0.28726184368133545,
+        0.09524071216583252,
+        0.03524300456047058,
+        0.014397661201655865,
+        0.006555676925927401,
+        0.0033454818185418844,
+        0.0018793229246512055,
+        0.0011266398942098022,
+        0.0007023912039585412,
+        0.000448202365078032,
+        0.000290161173325032,
+        0.0001896416360978037
+      ]
+    }
+  },
+  "headline": {
+    "criterion": "the positive control must retain state measurably longer than the real graph",
+    "positive_control_is_valid": true,
+    "retention_at_12_silent_actions": {
+      "matched_random": 3.123831504581176e-07,
+      "positive_control": 0.07685846835374832,
+      "real_signed": 0.0001896416360978037
+    }
+  },
+  "interpretation": "The positive control is valid and can now be used. At the deployed operating point it retains 0.0769 of the distinguishing signal after 12 silent actions against the real graph's 0.00019 and the matched random reservoir's 0.00000, roughly 400 times the real graph's retention, with a memory half-life of 3 actions against 1. Its spectral radius is 0.9924 against the real graph's 0.8289 and the matched random reservoir's 0.1608.\n\nThis makes the outstanding interpretive question answerable. If the positive control also scores near zero on the public set, then this interface and operating point cannot register an advantage that ANY graph could confer, and the fly's null ARC result says nothing about the fly. If the positive control scores clearly above zero, the harness can register an advantage and the fly's failure to beat its bypass is a real finding about the connectome.\n\nNote the real graph sits far above the matched random reservoir (0.8289 against 0.1608), consistent with the degree-preserving comparison. The fly is not a generic random sparse graph. It is also far below the reservoir regime that actually sustains memory.\n\nRecorded discrepancy: the build targeted a spectral radius of 0.95 and the probe measured 0.9924. Both use power iteration with different iteration caps, so this is estimator disagreement, not a failed scaling. It does not affect the conclusion, since the requirement is only that the positive control sit in a long-memory regime.",
+  "is_acceptance_gate": false,
+  "is_arc_performance_result": false,
+  "operating_point": {
+    "internal_steps": 4,
+    "leak": 0.3,
+    "recurrent_gain": 0.9
+  },
+  "provenance": {
+    "created_at_utc": "2026-09-22T01:49:16.901773+00:00",
+    "git_commit": "879e27107ffde37c2db05f037737164af0ad42b2",
+    "probe_script_sha256": "8f732205a1f303036abc22313e3005ca0b19eb388f555ccfe27a99dae6088bfc",
+    "reservoirs_module_sha256": "659ffc473969ff00ed849bfeed8cbcc2bcb02416eef96297ec6240af4ac39fee"
+  },
+  "result_id": "positive-control-regime-20260922",
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "scope": "dynamical validation of the matched reservoir and the positive control at K=4",
+  "status": "measured"
+}

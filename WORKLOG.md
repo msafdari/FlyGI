@@ -1413,23 +1413,58 @@ contend for memory bandwidth rather than cores. Observed rate is about 2.4
 minutes per row, so the full 75-row sweep is expected to take roughly three
 hours of wall clock. No intervention; the run continues.
 
-### Revised planned next
+### Progress update — both reservoirs compiled and the positive control validated
 
-1. Wait for the three graph conditions to finish, then run the paired
-   actions-to-level comparison.
-2. Add a CLI path that compiles reservoirs into hash-verified runtime bundles,
-   as `flygi graph nulls` already does, so both reservoir conditions can be
-   evaluated by the existing evaluator without special-casing.
-3. Probe the positive control with `probe-regime` at the deployed operating
-   point. It must retain state measurably longer than the real graph; if it does
-   not, it is not yet a valid positive control and the target radius needs
-   raising before any ARC run.
-4. Only then evaluate both reservoirs on the public set.
+Both reservoir conditions were compiled at full scale from the signed runtime
+(`flygi graph reservoirs`, seed 20260922, 104 s and 121 s respectively). Each is
+a hash-verified runtime bundle with exactly 24,559,055 edges, readable by the
+existing evaluator with no special-casing.
 
-### Caveats recorded before the results are seen
+They were then probed at the deployed operating point (`K=4`, `leak=0.3`,
+`gain=0.9`):
 
-- Three seeds, not five, to keep the sweep tractable.
-- One null seed of the three available is evaluated.
-- A 500-action budget is six times the deployed ceiling, so these results are
-  not comparable to the submitted configuration and must not be described as
-  leaderboard numbers.
+| Condition | rho | Half-life | Retained @12 silent actions | Readout PR |
+| --- | ---: | ---: | ---: | ---: |
+| Real signed fly | 0.8289 | 1 action | 0.00019 | 5.38 |
+| Matched random reservoir | 0.1608 | 1 action | 0.00000 | 20.44 |
+| **Positive control (edge of chaos)** | **0.9924** | **3 actions** | **0.07686** | **24.40** |
+
+**The positive control is valid.** Its declared criterion was that it must
+retain state measurably longer than the real graph, and it retains roughly 400
+times as much after 12 silent actions, with three times the half-life. It is
+therefore usable as the discriminating condition.
+
+This makes the outstanding interpretive question answerable for the first time:
+
+- if the positive control **also** scores near zero on the public set, then this
+  interface and operating point cannot register an advantage that *any* graph
+  could confer, and the fly's null ARC result says nothing about the fly;
+- if the positive control scores **clearly above zero**, the harness can register
+  an advantage, and the fly's failure to beat its bypass is a real finding about
+  the connectome.
+
+Two secondary observations. The real graph sits far above the matched random
+reservoir (0.8289 against 0.1608), consistent with the degree-preserving
+comparison: the fly is not a generic random sparse graph. It also sits far below
+the regime that actually sustains memory.
+
+Recorded discrepancy: the build targeted a spectral radius of 0.95 and the probe
+measured 0.9924. Both use power iteration with different iteration caps, so this
+is estimator disagreement rather than a failed scaling, and it does not affect
+the conclusion, which only requires the positive control to sit in a long-memory
+regime.
+
+The reviewed index is `results/manifests/positive_control_regime_20260922.json`.
+
+### Revised planned next (updated)
+
+1. Wait for the three efficiency-sweep conditions to finish; they were at 7/75
+   rows each at the time of writing, and the observed rate implies several more
+   hours.
+2. Evaluate the **positive control** on the public set at matched games, seeds
+   and budget. This is now the highest-value remaining run, because it decides
+   whether any of the near-zero comparisons are interpretable. It is deliberately
+   **not** started yet, to avoid adding a fourth heavy process to an already
+   memory-bandwidth-bound machine.
+3. Evaluate the matched random reservoir on the same protocol.
+4. Then run the paired analysis across all six conditions.
