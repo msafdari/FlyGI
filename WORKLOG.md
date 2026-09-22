@@ -148,6 +148,50 @@ This predicts the hidden-set outcome directly: a trained head would also score
 0.00, because the hidden set is held out by construction. **Track B is not a
 submission candidate**, and training harder would only deepen the in-sample fit.
 
+### 3. The coordinate head is worse than random clicking
+
+A diagnostic over the 20 games no condition has ever solved found that the
+obvious explanation is wrong. **Effect rate is not the problem.** Actions change
+the frame at a similar rate whether or not a game is ever solved:
+
+| Group | Fly effect rate | Random effect rate |
+| --- | ---: | ---: |
+| Solved (5 games) | 84.7% | 91.2% |
+| **Never solved (20 games)** | **76.3%** | **81.1%** |
+
+The agent is not stuck. Its actions do things. It simply gets nowhere, which
+rules out exploration volume as the core failure and points at what it does with
+the effects it causes.
+
+**Six games expose `ACTION6` as their only legal action**, so coordinates are
+the *only* thing that can differ between conditions there. Isolating them:
+
+| Game | Fly unique observations | Random unique observations | Ratio |
+| --- | ---: | ---: | ---: |
+| `ft09` | 130 | 81 | 0.63x |
+| `lp85` | 15 | 14 | 0.91x |
+| `r11l` | 121 | 576 | **4.76x** |
+| `s5i5` | 51 | 276 | **5.42x** |
+| `tn36` | 62 | 339 | **5.47x** |
+| `vc33` | 51 | 126 | 2.48x |
+| **mean** | **72** | **236** | **3.29x** |
+
+With the identical single action available, **uniform random clicking explores
+3.29 times more than the coordinate head**, and random solved `r11l` while the
+fly never has. The novelty-centroid and untried-grid logic is not merely
+unhelpful in these games; it is actively worse than clicking at random, and it
+accounts for roughly 63% of all clicks the agent makes.
+
+`lp85` is separately pathological: a 2.5% effect rate and 15 unique observations
+for the fly, 2.2% and 14 for random. Almost nothing either agent clicks changes
+the frame at all, so that game needs targeted rather than broader clicking.
+
+A coordinate-temperature test is running over those six games at three seeds:
+the frozen 0.2 against 1.0 and 4.0. This is a component that is demonstrably
+worse than chance at its one job, so raising its temperature is a defect fix
+rather than a tuning pass -- though it is still public-set development and is
+recorded as such.
+
 ### Phase 0 — retinotopic optic-lobe encoder
 
 `encoder.kind: retinotopic` injects the 64x64 grid into the fly's own columnar
