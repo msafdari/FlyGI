@@ -198,6 +198,7 @@ def build_connectome_policy(
         )
 
     plastic = config.plasticity.enabled
+    kenyon = mbons = dopaminergic = None
     if plastic:
         # Plasticity mutates weights, so this policy gets a private writable
         # copy. The shared loaded bundle stays frozen and hash-verified.
@@ -205,6 +206,27 @@ def build_connectome_policy(
         connectivity.data = np.array(connectivity.data, dtype=np.float32, copy=True)
         connectivity.indices = np.array(connectivity.indices, copy=True)
         connectivity.indptr = np.array(connectivity.indptr, copy=True)
+        kenyon, mbons, dopaminergic = mushroom_body_populations(directory)
+        if config.plasticity.rewire_mushroom_body_seed is not None:
+            # The falsification control. This is a topology edit, so it must
+            # happen here, before the network freezes `indices` for the run.
+            # Same degrees, same per-MBON weight multiset, different partners,
+            # nothing else in the graph touched.
+            try:
+                rewire_mushroom_body(
+                    connectivity,
+                    resolve_mushroom_body(
+                        connectivity,
+                        kenyon_cells=kenyon,
+                        mbons=mbons,
+                        dopaminergic=dopaminergic,
+                    ),
+                    seed=config.plasticity.rewire_mushroom_body_seed,
+                )
+            except Exception as exc:
+                raise RuntimeAssemblyError(
+                    f"mushroom-body rewire could not be applied: {exc}"
+                ) from exc
     else:
         connectivity = loaded.matrix
     network = ScipyRateNetwork(
@@ -223,7 +245,6 @@ def build_connectome_policy(
 
     mushroom_body = None
     if plastic:
-        kenyon, mbons, dopaminergic = mushroom_body_populations(directory)
         try:
             anatomy = resolve_mushroom_body(
                 network.connectivity,
@@ -231,20 +252,6 @@ def build_connectome_policy(
                 mbons=mbons,
                 dopaminergic=dopaminergic,
             )
-            if config.plasticity.rewire_mushroom_body_seed is not None:
-                # The falsification control: same degrees, same weights,
-                # different partners, everything else untouched.
-                rewire_mushroom_body(
-                    network.connectivity,
-                    anatomy,
-                    seed=config.plasticity.rewire_mushroom_body_seed,
-                )
-                anatomy = resolve_mushroom_body(
-                    network.connectivity,
-                    kenyon_cells=kenyon,
-                    mbons=mbons,
-                    dopaminergic=dopaminergic,
-                )
             mushroom_body = MushroomBody(
                 network.connectivity,
                 anatomy,

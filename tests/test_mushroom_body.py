@@ -444,3 +444,29 @@ def test_a_rewired_mushroom_body_still_learns() -> None:
     )
     report = body.update(matrix, _state(), reward=1.0)
     assert report["absolute_change"] > 0.0
+
+
+def test_rewire_happens_before_the_network_freezes_topology() -> None:
+    """Regression: the rewired control crashed on launch.
+
+    ScipyRateNetwork freezes `indices` unconditionally, because a learning rule
+    may change connection strength but never which neurons are connected.
+    Rewiring is a topology edit, so it has to be applied to the writable copy
+    before the network is constructed, not afterwards.
+    """
+
+    from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
+    from flygi.plasticity import rewire_mushroom_body
+
+    matrix = _graph()
+    network = ScipyRateNetwork(
+        matrix,
+        RateParameters(internal_steps=1),
+        copy_connectivity=False,
+        allow_plasticity=True,
+    )
+    assert network.connectivity.data.flags.writeable
+    assert not network.connectivity.indices.flags.writeable
+
+    with pytest.raises(ValueError):
+        rewire_mushroom_body(network.connectivity, _anatomy(network.connectivity), seed=1)
