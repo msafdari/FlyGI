@@ -379,3 +379,68 @@ def test_reward_magnitude_still_matters_after_normalization() -> None:
         deltas.append(float(np.abs(matrix[np.ix_(MBON, KC)].toarray() - before).sum()))
 
     assert deltas[1] > deltas[0] * 5
+
+
+# --- the falsification control ----------------------------------------------
+
+
+def test_rewire_preserves_every_mbon_degree_and_weight_multiset() -> None:
+    """Same number of inputs, same weights, different partners."""
+
+    from flygi.plasticity import rewire_mushroom_body
+
+    matrix = _graph()
+    anatomy = _anatomy(matrix)
+    before_block = matrix[np.ix_(MBON, KC)].toarray().copy()
+    before_degrees = np.diff(matrix.indptr).copy()
+    outside = matrix[np.ix_(OTHER, KC)].toarray().copy()
+    dan_block = matrix[np.ix_(MBON, DAN)].toarray().copy()
+
+    report = rewire_mushroom_body(matrix, anatomy, seed=3)
+
+    assert report["rewired_mbons"] == len(MBON)
+    assert np.array_equal(np.diff(matrix.indptr), before_degrees)
+    after_block = matrix[np.ix_(MBON, KC)].toarray()
+    for row in range(len(MBON)):
+        assert np.allclose(np.sort(before_block[row]), np.sort(after_block[row]))
+    # The rest of the graph, including the dopaminergic compartment map, is untouched.
+    assert np.array_equal(matrix[np.ix_(OTHER, KC)].toarray(), outside)
+    assert np.array_equal(matrix[np.ix_(MBON, DAN)].toarray(), dan_block)
+
+
+def test_rewire_actually_moves_partners() -> None:
+    from flygi.plasticity import rewire_mushroom_body
+
+    matrix = _graph()
+    before = matrix[np.ix_(MBON, KC)].toarray().copy()
+    rewire_mushroom_body(matrix, _anatomy(matrix), seed=4)
+    assert not np.array_equal(matrix[np.ix_(MBON, KC)].toarray(), before)
+
+
+def test_rewire_is_deterministic_and_seed_sensitive() -> None:
+    from flygi.plasticity import rewire_mushroom_body
+
+    blocks = []
+    for seed in (7, 7, 8):
+        matrix = _graph()
+        rewire_mushroom_body(matrix, _anatomy(matrix), seed=seed)
+        blocks.append(matrix[np.ix_(MBON, KC)].toarray())
+    assert np.array_equal(blocks[0], blocks[1])
+    assert not np.array_equal(blocks[0], blocks[2])
+
+
+def test_a_rewired_mushroom_body_still_learns() -> None:
+    """It must, which is exactly why it is the control and not a sanity check."""
+
+    from flygi.plasticity import rewire_mushroom_body
+
+    matrix = _graph()
+    anatomy = _anatomy(matrix)
+    rewire_mushroom_body(matrix, anatomy, seed=9)
+    body = MushroomBody(
+        matrix,
+        _anatomy(matrix),
+        MushroomBodyParameters(learning_rate=0.2, decay=0.0),
+    )
+    report = body.update(matrix, _state(), reward=1.0)
+    assert report["absolute_change"] > 0.0

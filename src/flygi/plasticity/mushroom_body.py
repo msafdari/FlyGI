@@ -295,3 +295,59 @@ class MushroomBody:
         matrix.data[self._positions] = self._baseline
         self._updates = 0
         self._total_absolute_change = 0.0
+
+
+def rewire_mushroom_body(
+    matrix: sparse.csr_matrix,
+    anatomy: MushroomBodyAnatomy,
+    *,
+    seed: int,
+) -> dict[str, Any]:
+    """Shuffle which Kenyon cell contacts which MBON, in place.
+
+    The falsification control for every plastic result. Each MBON keeps exactly
+    the same number of Kenyon-cell inputs and exactly the same multiset of
+    weights; only *which* Kenyon cell supplies each one is randomized. Nothing
+    outside the Kenyon-cell-to-MBON block is touched, so the rest of the
+    connectome, the dopaminergic compartment map, and every degree in the graph
+    are unchanged.
+
+    If a rewired mushroom body learns as well as the real one, the result is
+    about having roughly 61,000 plastic synapses, not about the fly's wiring.
+    """
+
+    generator = np.random.default_rng(seed)
+    kenyon = set(int(node) for node in anatomy.kenyon_cells)
+    all_kenyon = np.asarray(anatomy.kenyon_cells, dtype=np.int32)
+    indptr, indices = matrix.indptr, matrix.indices
+
+    rewired_rows = 0
+    rewired_edges = 0
+    for node in anatomy.mbons:
+        start, stop = int(indptr[node]), int(indptr[node + 1])
+        row = indices[start:stop]
+        positions = np.flatnonzero(np.array([int(c) in kenyon for c in row], dtype=bool))
+        if positions.size == 0:
+            continue
+        replacement = generator.choice(all_kenyon, size=positions.size, replace=False)
+        indices[start + positions] = replacement.astype(indices.dtype)
+        rewired_rows += 1
+        rewired_edges += int(positions.size)
+
+    # CSR requires sorted column indices within each row; the weights must move
+    # with their columns so each MBON keeps its exact weight multiset.
+    for node in anatomy.mbons:
+        start, stop = int(indptr[node]), int(indptr[node + 1])
+        order = np.argsort(matrix.indices[start:stop], kind="stable")
+        matrix.indices[start:stop] = matrix.indices[start:stop][order]
+        matrix.data[start:stop] = matrix.data[start:stop][order]
+
+    return {
+        "kind": "kenyon_to_mbon_degree_preserving_rewire",
+        "seed": int(seed),
+        "rewired_mbons": rewired_rows,
+        "rewired_edges": rewired_edges,
+        "preserves_in_degree_per_mbon": True,
+        "preserves_weight_multiset_per_mbon": True,
+        "touches_rest_of_graph": False,
+    }

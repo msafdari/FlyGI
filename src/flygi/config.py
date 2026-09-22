@@ -119,6 +119,7 @@ class PlasticityConfig:
     reward_source: str = "observation_change"
     level_reward: float = 1.0
     reset_on_new_environment: bool = True
+    rewire_mushroom_body_seed: int | None = None
 
 
 @dataclass(frozen=True)
@@ -356,6 +357,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
             ),
             trainable=bool(decoder_raw.pop("trainable", False)),
         )
+        rewire_seed = plasticity_raw.get("rewire_mushroom_body_seed")
         plasticity = PlasticityConfig(
             enabled=bool(plasticity_raw.pop("enabled", False)),
             site=str(plasticity_raw.pop("site", "kenyon_cell_to_mbon")),
@@ -366,6 +368,11 @@ def load_config(path: str | Path) -> FlyGIConfig:
             reward_source=str(plasticity_raw.pop("reward_source", "observation_change")),
             level_reward=float(plasticity_raw.pop("level_reward", 1.0)),
             reset_on_new_environment=bool(plasticity_raw.pop("reset_on_new_environment", True)),
+            rewire_mushroom_body_seed=(
+                None
+                if plasticity_raw.pop("rewire_mushroom_body_seed", None) is None
+                else int(rewire_seed)
+            ),
         )
         state = StateLifetimeConfig(
             reset_on_new_environment=bool(state_raw.pop("reset_on_new_environment", True)),

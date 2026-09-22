@@ -276,8 +276,34 @@ def test_plasticity_is_disabled_in_every_other_config() -> None:
 
     for path in sorted(Path("configs").glob("*.yaml")):
         config = load_config(path)
-        if path.name == "literal_rate_plastic_mb.yaml":
+        if path.name.startswith("literal_rate_plastic_mb"):
             assert config.plasticity.enabled
         else:
             assert not config.plasticity.enabled, path.name
             assert config.dynamics.frozen_graph, path.name
+
+
+def test_the_rewired_control_differs_only_in_its_rewire_seed() -> None:
+    """A control that differs in anything else is not a control."""
+
+    real = load_config("configs/literal_rate_plastic_mb.yaml")
+    rewired = load_config("configs/literal_rate_plastic_mb_rewired.yaml")
+
+    assert real.plasticity.rewire_mushroom_body_seed is None
+    assert rewired.plasticity.rewire_mushroom_body_seed == 20260922
+
+    for field in (
+        "enabled",
+        "site",
+        "learning_rate",
+        "decay",
+        "weight_ceiling_scale",
+        "reward_scale",
+        "reward_source",
+        "level_reward",
+    ):
+        assert getattr(real.plasticity, field) == getattr(rewired.plasticity, field), field
+    assert real.dynamics == rewired.dynamics
+    assert real.encoder == rewired.encoder
+    assert real.decoder == rewired.decoder
+    assert real.graph.output_dir == rewired.graph.output_dir

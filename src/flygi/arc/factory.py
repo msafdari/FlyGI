@@ -37,6 +37,7 @@ from flygi.plasticity import (
     MushroomBody,
     MushroomBodyParameters,
     resolve_mushroom_body,
+    rewire_mushroom_body,
 )
 from flygi.seed import derive_seed
 
@@ -224,14 +225,29 @@ def build_connectome_policy(
     if plastic:
         kenyon, mbons, dopaminergic = mushroom_body_populations(directory)
         try:
-            mushroom_body = MushroomBody(
+            anatomy = resolve_mushroom_body(
                 network.connectivity,
-                resolve_mushroom_body(
+                kenyon_cells=kenyon,
+                mbons=mbons,
+                dopaminergic=dopaminergic,
+            )
+            if config.plasticity.rewire_mushroom_body_seed is not None:
+                # The falsification control: same degrees, same weights,
+                # different partners, everything else untouched.
+                rewire_mushroom_body(
+                    network.connectivity,
+                    anatomy,
+                    seed=config.plasticity.rewire_mushroom_body_seed,
+                )
+                anatomy = resolve_mushroom_body(
                     network.connectivity,
                     kenyon_cells=kenyon,
                     mbons=mbons,
                     dopaminergic=dopaminergic,
-                ),
+                )
+            mushroom_body = MushroomBody(
+                network.connectivity,
+                anatomy,
                 MushroomBodyParameters(
                     learning_rate=config.plasticity.learning_rate,
                     decay=config.plasticity.decay,

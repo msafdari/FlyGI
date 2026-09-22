@@ -6,6 +6,7 @@ from .mushroom_body import (
     MushroomBodyError,
     MushroomBodyParameters,
     resolve_mushroom_body,
+    rewire_mushroom_body,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "MushroomBodyError",
     "MushroomBodyParameters",
     "resolve_mushroom_body",
+    "rewire_mushroom_body",
 ]
