@@ -155,6 +155,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--generations", type=int, default=20)
     parser.add_argument("--sigma", type=float, default=0.5)
     parser.add_argument("--sigma-decay", type=float, default=0.93)
+    parser.add_argument(
+        "--sigma-floor",
+        type=float,
+        default=0.15,
+        help="minimum sigma as a fraction of the initial, so the search cannot "
+        "collapse to a point and stop exploring",
+    )
     parser.add_argument("--level-bonus", type=float, default=500.0)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--cem-seed", type=int, default=20260922)
@@ -182,6 +189,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     generator = np.random.default_rng(args.cem_seed)
     mean = np.zeros(dimension, dtype=np.float64)
     sigma = np.full(dimension, float(args.sigma), dtype=np.float64)
+    sigma_floor = float(args.sigma) * float(args.sigma_floor)
 
     history: list[dict[str, Any]] = []
     best = {"objective": float("-inf"), "parameters": mean.tolist(), "generation": -1}
@@ -238,8 +246,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             order = np.argsort(-np.where(finite, objectives, -np.inf))
             elite = samples[order[: args.elites]]
             mean = elite.mean(axis=0)
-            sigma = np.maximum(elite.std(axis=0), 1e-3) * 1.0
-            sigma *= args.sigma_decay
+            # Without a floor the elite spread shrinks to nothing within a
+            # generation or two and every later sample is the same point.
+            sigma = np.maximum(elite.std(axis=0) * args.sigma_decay, sigma_floor)
 
             top = int(order[0])
             if objectives[top] > best["objective"]:
@@ -280,8 +289,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
             os.replace(temporary, args.checkpoint)
 
-        # Trace ablation: does the winner actually use the connectome?
-        ablation = _evaluate((0, best["parameters"], args.seed, args.level_bonus, True))
+        # Trace ablation: does the winner actually use the connectome? This has
+        # to run *in a worker*, because the graph and games live in the worker
+        # globals; calling it in the parent raises KeyError and silently reports
+        # the honesty check as failed.
+        ablation = next(
+            iter(
+                pool.map(
+                    _evaluate,
+                    [(0, best["parameters"], args.seed, args.level_bonus, True)],
+                )
+            )
+        )
 
     result = {
         "schema": "flygi.head-training",
