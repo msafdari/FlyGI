@@ -2055,3 +2055,53 @@ the trained head must change the action sequence relative to the untrained
 policy, and it must never select an action outside the legal mask.
 
 Verification: `uv run pytest -q` → **242 passed**; ruff clean.
+
+### Track B chunk 3 — the CEM trainer, with a built-in honesty check
+
+`scripts/train_head.py` trains the 520-parameter head by cross-entropy method
+while the graph, encoder, descending population and standardizer stay frozen.
+Workers load the graph once each rather than once per candidate, and a failed
+candidate returns negative infinity instead of killing the run.
+
+**The objective is dense, by necessity.** Raw ARC score cannot train anything:
+the real agent completed two levels across 75 rows of the 500-action sweep. The
+declared objective is
+
+    mean over rows of ( unique_observations + level_bonus * levels_completed )
+
+with `level_bonus` defaulting to 500. Unique-observation count is the measured
+deficit -- 213.3 for the real agent against random legal play's 335.2 -- and the
+condition that explores most also completes most levels, so it is a defensible
+proxy that keeps real progress dominant whenever it occurs.
+
+**Trace ablation is built into the run.** After the final generation the winning
+parameters are re-evaluated with the descending trace zeroed, through a proper
+`ablate_trace` flag on the policy rather than a monkey-patched attribute. If the
+objective barely drops, the head has learned to ignore the connectome and the
+result is an interface result, not a connectome result. That number is recorded
+in the artifact next to the winning objective so it cannot be quietly omitted. A
+test pins the flag's behaviour.
+
+### Two declared limitations, recorded before any training result
+
+1. This trains on public games. It is the specification's "public-ARC
+   development" regime, legitimate for a leaderboard entry, and it is **not**
+   evidence of zero-shot generality.
+2. The no-recurrent-graph bypass must receive the identical head, budget and
+   trainer before any claim that the connectome deserves credit for a trained
+   result. Deferred, not cancelled.
+
+Verification: `uv run pytest -q` → **243 passed**; ruff clean.
+
+### Schedule reality, stated plainly
+
+Three-way concurrent evaluation was running at roughly one row per twenty
+minutes, which would not finish today. Two of the three strength arms were
+stopped -- the earlier calibration had already shown strength makes no
+measurable difference -- and the freed capacity was redirected to the lever that
+is actually proven: budget. Two runs are in flight, `mild` at 800 actions and
+`mild` at 1600 actions, both over all 25 games at seed 0. Whichever scores
+higher becomes today's submission candidate.
+
+CEM training runs after those finish, since both compete for the same
+memory bandwidth.

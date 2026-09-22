@@ -106,6 +106,7 @@ class ConnectomePolicy:
         loop_escape: LoopEscapeParameters | None = None,
         standardizer: AdaptiveStandardizer | None = None,
         trained_head: TrainedActionHead | None = None,
+        ablate_trace: bool = False,
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
     ) -> None:
@@ -141,6 +142,10 @@ class ConnectomePolicy:
         self._ablate_graph = bool(ablate_graph)
         self._standardizer = standardizer
         self._trained_head = trained_head
+        # Diagnostic only: zero the descending trace before the trained head
+        # sees it. If the objective barely drops, the head has learned to
+        # ignore the connectome and the result is an interface result.
+        self._ablate_trace = bool(ablate_trace)
         if trained_head is not None and trained_head.spec.readout_size != readout.size:
             raise PolicyError("trained head and readout population disagree in size")
         if standardizer is not None and standardizer.size != readout.size:
@@ -175,6 +180,7 @@ class ConnectomePolicy:
         return {
             "policy": "connectome-literal",
             "graph_ablated": self._ablate_graph,
+            "trace_ablated": self._ablate_trace,
             "internal_steps": self._internal_steps,
             "node_count": self._network.node_count,
             "backend": self._network.backend_name,
@@ -315,8 +321,9 @@ class ConnectomePolicy:
                 )
             logits_override = None
             if self._trained_head is not None:
+                head_trace = np.zeros_like(trace) if self._ablate_trace else trace
                 logits_override = self._trained_head.logits(
-                    trace, self._previous_action_id, turn.available_action_ids
+                    head_trace, self._previous_action_id, turn.available_action_ids
                 )
             decision = self._action_map.decide(
                 trace,

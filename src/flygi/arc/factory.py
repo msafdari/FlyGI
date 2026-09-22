@@ -97,6 +97,7 @@ def build_connectome_policy(
     internal_steps: int | None = None,
     trained_head_parameters: NDArray[np.floating] | None = None,
     trained_head_feature_dim: int = 48,
+    ablate_trace: bool = False,
     decision_seed: int | None = None,
     action_temperature: float | None = None,
     coordinate_temperature: float | None = None,
@@ -185,6 +186,7 @@ def build_connectome_policy(
                     else coordinate_temperature
                 ),
             ),
+            ablate_trace=ablate_trace,
             trained_head=(
                 None
                 if trained_head_parameters is None

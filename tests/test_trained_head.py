@@ -127,3 +127,25 @@ def test_trained_head_still_respects_the_legal_mask() -> None:
     for step in range(12):
         action = policy.choose_action(loop._frame(step, available_actions=[2, 5]))
         assert action.value in (2, 5)
+
+
+def test_trace_ablation_blinds_the_head_to_the_connectome() -> None:
+    """The diagnostic that decides whether a trained result is a graph result."""
+
+    import test_closed_loop as loop
+
+    head = TrainedActionHead(TrainedHeadSpec(readout_size=loop.READOUT))
+    head.set_parameters(np.random.default_rng(11).standard_normal(head.parameter_count) * 3.0)
+
+    live = loop._adaptive_policy()
+    live._trained_head = head
+    blind = loop._adaptive_policy()
+    blind._trained_head = head
+    blind._ablate_trace = True
+
+    frames = [loop._frame(step) for step in range(14)]
+    assert [live.choose_action(f).value for f in frames] != [
+        blind.choose_action(f).value for f in frames
+    ]
+    assert blind.describe()["trace_ablated"] is True
+    assert live.describe()["trace_ablated"] is False
