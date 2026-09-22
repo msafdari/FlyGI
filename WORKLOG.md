@@ -71,23 +71,50 @@ Four experiments, zero score improvements. The single actionable defect found is
 the coordinate head, which explores 3.29x less than random clicking in the six
 games where clicking is the only legal action.
 
-### Open: the coordinate-temperature test
+### The coordinate-head defect, diagnosed
 
-Testing the one measured defect: the coordinate head explores **3.29x less than
-random clicking** in the six games where `ACTION6` is the only legal action.
-Comparing the frozen temperature of 0.2 against 1.0 and 4.0, over those six
-games at three seeds and 600 actions.
+**Temperature is not the problem.** Six click-only games, three seeds, 600
+actions:
 
-The launch failed twice before this with
-`requested game 'ft09 lp85 r11l s5i5 tn36 vc33' is not cached`. Diagnosed rather
-than guessed: a direct two-game invocation works correctly, so `--games` and its
-`nargs="+"` were never at fault. The list was being collapsed into one string by
-a `for` loop inside a backgrounded shell wrapper. A third attempt then lost one
-of the two runs to a separate zsh failure, where `rm -f` on a glob matching
-nothing aborts the `&&` chain. Both are shell-quoting mistakes on my part; no
-compute was consumed by any of them.
+| Condition | Mean score | Mean unique observations |
+| --- | ---: | ---: |
+| Coordinate temperature 0.2 (submitted) | 0.000000 | 71.7 |
+| Coordinate temperature 1.0 | 0.000000 | 67.0 |
+| Coordinate temperature 4.0 | 0.000000 | 67.0 |
+| **Random clicking** | **0.009425** | **235.6** |
 
-Now running as explicit single commands, both confirmed progressing.
+1.0 and 4.0 produced **identical** results, which is the clue. At a near-uniform
+temperature of 4.0 the agent still touches only 1-2% of the grid:
+
+| Game | Unique coordinates used | Share of 4,096 cells |
+| --- | ---: | ---: |
+| `r11l` | 96 | 2.3% |
+| `s5i5` | 52 | 1.3% |
+| `tn36` | 63 | 1.5% |
+| `vc33` | 52 | 1.3% |
+| `lp85` | 1,434 | 35.0% |
+
+**The cause is the branch order, not the distribution.** The head selects by:
+
+```
+if explore_unchanged_click: seeded uniform
+elif centroid is not None:  novelty_centroid   <- deterministic
+else:                       factorized_sample  <- the only temperature-controlled path
+```
+
+When a click *does* change the frame, `centroid` is not None, so the agent
+deterministically clicks the centroid of the changed cells and the
+temperature-controlled sample is never reached. That collapses it onto a handful
+of self-reinforcing locations in exactly the games that respond to clicking.
+
+`lp85` is the proof: it has a 2.5% effect rate, so clicks almost never change
+anything, the unchanged-click branch fires instead, and coverage jumps to 35%.
+**The heuristic explores widely precisely when the game ignores it, and collapses
+precisely when the game responds.**
+
+`decoder.coordinate_fallback: factorized` now disables the centroid branch. A
+test of it is running over the same six games and seeds. This is a defect fix
+with a measured mechanism behind it, not a tuning pass.
 
 ## Immutable data and runtime identity
 

@@ -78,7 +78,23 @@ def novelty_centroid(
 class CoordinateHead:
     """Map a standardized readout trace to a legal ``(x, y)`` ARC coordinate."""
 
-    def __init__(self, readout_size: int, *, temperature: float = 0.2) -> None:
+    def __init__(
+        self,
+        readout_size: int,
+        *,
+        temperature: float = 0.2,
+        fallback: str = "novelty_centroid",
+    ) -> None:
+        """``fallback="factorized"`` disables the novelty-centroid branch.
+
+        Measured: when clicks change the frame, the centroid branch fires and
+        deterministically clicks the centroid of the changed cells, bypassing
+        the temperature-controlled sample entirely. In the six click-only
+        games that collapses the agent onto 1-2% of the grid, against random
+        clicking's far wider coverage, and raising the temperature from 0.2 to
+        4.0 changed nothing because the softmax was never reached.
+        """
+
         if readout_size < 2 * GRID_BINS:
             raise ReadoutError(
                 f"coordinate head needs at least {2 * GRID_BINS} readout neurons, "
@@ -86,6 +102,9 @@ class CoordinateHead:
             )
         self._readout_size = int(readout_size)
         self._temperature = _validate_temperature(temperature, "coordinate temperature")
+        if fallback not in ("novelty_centroid", "factorized"):
+            raise ReadoutError(f"unsupported coordinate fallback: {fallback!r}")
+        self._fallback = fallback
         split = readout_size // 2
         self._x_slice = slice(0, split)
         self._y_slice = slice(split, readout_size)
@@ -110,7 +129,9 @@ class CoordinateHead:
             "selection": SAMPLING_METHOD,
             "scale": "population standard deviation per coordinate axis",
             "temperature": self._temperature,
-            "novelty_fallback": "changed_cell_centroid",
+            "novelty_fallback": (
+                "changed_cell_centroid" if self._fallback == "novelty_centroid" else "disabled"
+            ),
             "unchanged_click_exploration": "seeded_untried_uniform",
             "trainable": False,
             "trainable_parameters": 0,
@@ -159,7 +180,7 @@ class CoordinateHead:
         if explore_unchanged_click:
             x, y = self._seeded_untried_coordinate(rng, clicked_coordinates)
             method = "seeded_untried_uniform"
-        elif centroid is not None:
+        elif centroid is not None and self._fallback == "novelty_centroid":
             x, y = self._validate_coordinate(*centroid)
             method = "novelty_centroid"
         else:

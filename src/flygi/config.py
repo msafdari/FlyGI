@@ -566,7 +566,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(
             f"unsupported decoder.decision_seed_policy: {decoder.decision_seed_policy}"
         )
-    if decoder.coordinate_fallback != "novelty_centroid":
+    if decoder.coordinate_fallback not in ("novelty_centroid", "factorized"):
         raise ConfigError(f"unsupported decoder.coordinate_fallback: {decoder.coordinate_fallback}")
     if decoder.unchanged_click_exploration != "seeded_untried_uniform":
         raise ConfigError(

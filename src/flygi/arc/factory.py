@@ -312,6 +312,7 @@ def build_connectome_policy(
             ),
             coordinate_head=CoordinateHead(
                 readout.size,
+                fallback=config.decoder.coordinate_fallback,
                 temperature=(
                     config.decoder.coordinate_temperature
                     if coordinate_temperature is None
