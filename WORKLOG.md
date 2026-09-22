@@ -1281,7 +1281,7 @@ zero-versus-zero comparison cannot distinguish "the biological graph confers no
 advantage" from "this interface cannot express an advantage any graph could
 confer."
 
-## 2026-09-22 — Action-efficiency sweep (IN PROGRESS)
+## 2026-09-22 — Action-efficiency sweep (COMPLETE)
 
 ### Why this is running
 
@@ -1342,33 +1342,68 @@ The primary measurement is **actions taken to complete a level**, on
 This is a predeclared comparison of efficiency, not of depth; the 2,000-action
 probe already established that depth does not move.
 
-### Completed so far
+### Completed results
 
-- Random legal control finished: 75/75 successful rows, mean score
-  **0.09756824**. Artifact
-  `results/random_baseline/20260922T013053.669084Z-d8b863adad.json`
-  (28,934,324 bytes, ignored by Git).
+All four conditions completed their full 75-row matrices. Every condition had
+75/75 successful rows, 37,500/37,500 completed actions, zero exceptions,
+illegal actions, invalid `ACTION6` coordinates, or budget violations, and a
+matching deterministic `lf52` replay.
 
-### In progress
+| Condition | Mean score | Max score | Rows with progress | Levels | Unique observations | Observation repeats | Median policy ms/action |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Real signed MaleCNS | **0.06475067** | 4.76190476 | 2 | 2 | 15,996 | 21,579 | 164.12 |
+| Degree-preserving null | 0.00787215 | 0.28292411 | 3 | 3 | 16,262 | 21,313 | 164.62 |
+| No-graph bypass | 0.00075350 | 0.05651241 | 1 | 1 | 16,339 | 21,236 | 164.21 |
+| Random legal | **0.09756824** | 4.76190476 | 6 | 6 | **25,140** | **12,435** | 0.0277 |
 
-- `eff-real-signed`, `eff-null-degree-preserving` and `eff-no-graph-bypass` are
-  running in parallel. Each is 37,500 actions at roughly 136 ms per action, so
-  expect a few hours of wall clock under three-way CPU contention.
+The three graph conditions were deliberately run concurrently and contended for
+memory bandwidth, so their approximately 164 ms policy timings describe that
+execution regime. The random policy has no sparse graph update and its timing
+is not a compute-matched comparison.
 
-### Planned next
+Every graph-condition completion was the first level of `sp80`:
 
-1. When all four finish, compare matched `(game, seed)` rows on actions-to-level
-   and on score, write an immutable reviewed manifest, and record whether the
-   `sp80` efficiency advantage generalizes.
-2. If it does not generalize, say so plainly; a single-game artifact is the more
-   likely outcome and must not be reported as a connectome advantage.
-3. Regardless of outcome, the frozen policy has now been shown to have no path
-   past level 1. The next substantive work is Track C plasticity, which is the
-   only mechanism in the specification that lets behavior change within an
-   episode, and which reframes the question as whether the connectome is a
-   useful initialization for online learning.
-4. The matched positive-control reservoir remains outstanding and still blocks
-   any interpretation of a zero-versus-zero comparison.
+- real signed: seed 1 in **9 actions** (score 4.76190476) and seed 2 in
+  **277 actions** (score 0.09439530);
+- degree-preserving null: seeds 0, 1, and 2 in **303, 160, and 178 actions**
+  (scores 0.07889049, 0.28292411, and 0.22859668);
+- no-graph bypass: seed 2 in **358 actions** (score 0.05651241).
+
+Random legal completed the first `sp80` level in **94, 68, and 14 actions** for
+seeds 0, 1, and 2, and the first `r11l` level in **333, 164, and 191 actions**.
+No condition completed a second level.
+
+### Preliminary reading, before formal paired analysis
+
+The isolated 9-action fly completion is real, but its efficiency advantage did
+not generalize consistently across matched seeds. On `sp80` seed 1 the fly was
+faster than random and the degree-preserving null; on seed 2 it was much slower
+than both. Seed 0 produced no fly completion. Across the full matrix, random
+legal had the highest mean score and twice as many level completions as the real
+graph; the degree-preserving null completed more levels than the real graph but
+at lower scores.
+
+This is descriptive, not a completed statistical result. Progress is confined
+to two games, and rows without a completion are right-censored at 500 actions.
+The completion-only action counts must not be averaged as though the censored
+rows were missing at random. The paired-analysis implementation must predeclare
+that treatment, cluster uncertainty over games, and preserve all zero rows.
+
+The evidence therefore does **not** support a connectome efficiency advantage.
+It does strengthen the earlier conclusion that the frozen literal policy has no
+observed path beyond level 1, even when given far more actions.
+
+### Immutable artifacts
+
+All full artifacts are ignored by Git; the paths, byte counts, and SHA-256
+digests below are the durable identities used by the forthcoming analysis.
+
+| Condition | Artifact | Bytes | SHA-256 |
+| --- | --- | ---: | --- |
+| Real signed | `results/connectome_agent/20260922T032548.496866Z-eff-real-signed.json` | 29,229,516 | `9e97aa7a726d31cad82492f0dd44659578a16326828ffdef60a404d9c583338f` |
+| Degree-preserving null | `results/connectome_agent/20260922T032558.385563Z-eff-null-degree-preserving.json` | 29,195,496 | `18d53914a9d96b5f1b070cf381fbd44b6f75d86fedc9348de311b5990c408b25` |
+| No-graph bypass | `results/connectome_agent/20260922T032518.416940Z-eff-no-graph-bypass.json` | 29,209,629 | `f40c1454631d735149b0cc7873163cac608906b6ca09a3c1499a655d7867e22e` |
+| Random legal | `results/random_baseline/20260922T013053.669084Z-d8b863adad.json` | 28,934,324 | `0a1c036c62b2503842e263d18909b796a78801bd078dfa61da5b094a1f9defe5` |
 
 ### Progress update — positive control implemented
 
@@ -1407,11 +1442,11 @@ passed.
 
 ### Sweep throughput, measured
 
-Each of the three graph conditions is running at 58-59% CPU rather than 100%.
-Three concurrent sparse matrix-vector products over a roughly 200 MB working set
-contend for memory bandwidth rather than cores. Observed rate is about 2.4
-minutes per row, so the full 75-row sweep is expected to take roughly three
-hours of wall clock. No intervention; the run continues.
+During execution, each of the three graph conditions used 58-59% CPU rather
+than 100%. Three concurrent sparse matrix-vector products over a roughly 200 MB
+working set contended for memory bandwidth rather than cores. The observed rate
+was about 2.4 minutes per row and the three artifacts completed within seconds
+of one another at 03:25 UTC. No sweep process remains active.
 
 ### Progress update — both reservoirs compiled and the positive control validated
 
@@ -1456,15 +1491,23 @@ regime.
 
 The reviewed index is `results/manifests/positive_control_regime_20260922.json`.
 
-### Revised planned next (updated)
+### Revised planned next (updated after sweep completion)
 
-1. Wait for the three efficiency-sweep conditions to finish; they were at 7/75
-   rows each at the time of writing, and the observed rate implies several more
-   hours.
-2. Evaluate the **positive control** on the public set at matched games, seeds
-   and budget. This is now the highest-value remaining run, because it decides
-   whether any of the near-zero comparisons are interpretable. It is deliberately
-   **not** started yet, to avoid adding a fourth heavy process to an already
-   memory-bandwidth-bound machine.
-3. Evaluate the matched random reservoir on the same protocol.
-4. Then run the paired analysis across all six conditions.
+1. Implement the currently placeholder Milestone 4 paired-analysis stack:
+   strict artifact/protocol validation, a complete 75-pair join, explicit
+   handling of budget-censored non-completions, paired outcome and behavioral
+   summaries, game-clustered bootstrap intervals, within-pair permutation
+   tests, immutable output, and unit tests.
+2. Freeze the analysis endpoints and pairwise contrasts before inspecting new
+   reservoir ARC outcomes.
+3. Evaluate the **positive control** on the public set at the same 25 games,
+   seeds 0-2, and 500-action budget. Then evaluate the matched random reservoir
+   on the identical protocol. Both compiled bundles already load through the
+   existing evaluator; these are experiment runs, not new model implementation.
+4. Run the paired six-condition analysis and write a small reviewed manifest.
+5. Complete the remaining Milestone 4 control implementations: weight shuffle,
+   sign shuffle within declared transmitter strata, and seven additional
+   degree-preserving nulls for the required ten-null distribution.
+6. Follow the specification's declared order: controls, then Track B's frozen
+   trained interface. Track C plasticity remains later work because it changes
+   the research question and makes null matching substantially harder.
