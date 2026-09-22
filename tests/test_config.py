@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -61,7 +62,7 @@ def test_seed_derivation_does_not_use_salted_python_hash() -> None:
         ("leak", True, "leak must be numeric"),
         ("leak", 0.0, "leak must be in"),
         ("recurrent_gain", -1.0, "recurrent_gain must be non-negative"),
-        ("frozen_graph", False, "frozen_graph must remain true"),
+        ("frozen_graph", False, "may only be false when plasticity.enabled is true"),
         ("state_dtype", "float64", "state_dtype must be float32"),
         ("unexpected", 1, "unknown dynamics keys"),
     ],
@@ -247,3 +248,36 @@ def test_invalid_transmitter_treatment_fails_closed(tmp_path: Path, key: str) ->
 
     with pytest.raises(ConfigError, match=f"unsupported {key}"):
         load_config(path)
+
+
+def test_frozen_graph_and_plasticity_must_agree() -> None:
+    """Neither half of the invariant may be set alone."""
+
+    import copy
+
+    base = yaml.safe_load(Path("configs/literal_rate_plastic_mb.yaml").read_text(encoding="utf-8"))
+    assert base["plasticity"]["enabled"] is True
+    assert base["dynamics"]["frozen_graph"] is False
+
+    for mutate in (
+        lambda d: d["dynamics"].__setitem__("frozen_graph", True),
+        lambda d: d["plasticity"].__setitem__("enabled", False),
+    ):
+        document = copy.deepcopy(base)
+        mutate(document)
+        path = Path(tempfile.mkdtemp()) / "invalid.yaml"
+        path.write_text(yaml.safe_dump(document), encoding="utf-8")
+        with pytest.raises(ConfigError):
+            load_config(path)
+
+
+def test_plasticity_is_disabled_in_every_other_config() -> None:
+    """Enabling learning must be an explicit choice, never a drifted default."""
+
+    for path in sorted(Path("configs").glob("*.yaml")):
+        config = load_config(path)
+        if path.name == "literal_rate_plastic_mb.yaml":
+            assert config.plasticity.enabled
+        else:
+            assert not config.plasticity.enabled, path.name
+            assert config.dynamics.frozen_graph, path.name

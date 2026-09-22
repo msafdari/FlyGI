@@ -70,6 +70,7 @@ class ScipyRateNetwork:
         parameters: RateParameters | None = None,
         *,
         copy_connectivity: bool = True,
+        allow_plasticity: bool = False,
     ) -> None:
         if not sparse.isspmatrix_csr(connectivity):
             raise TypeError("connectivity must be a SciPy CSR matrix")
@@ -87,14 +88,25 @@ class ScipyRateNetwork:
         matrix = connectivity.copy() if copy_connectivity else connectivity
         if not np.isfinite(matrix.data).all():
             raise DynamicsValidationError("connectivity contains NaN or infinity")
-        matrix.data.flags.writeable = False
+        # Topology is frozen unconditionally: a learning rule may change how
+        # strong a connection is, never which neurons are connected. Weights
+        # stay read-only too unless plasticity is explicitly requested, so
+        # the frozen-graph guarantee cannot be lost by accident.
+        matrix.data.flags.writeable = bool(allow_plasticity)
         matrix.indices.flags.writeable = False
         matrix.indptr.flags.writeable = False
+        self._allow_plasticity = bool(allow_plasticity)
 
         self._connectivity = matrix
         self._parameters = parameters or RateParameters()
         self._zero_input = np.zeros(matrix.shape[0], dtype=np.float32)
         self._zero_input.flags.writeable = False
+
+    @property
+    def allows_plasticity(self) -> bool:
+        """Whether this network's weights may be modified in place."""
+
+        return self._allow_plasticity
 
     @property
     def backend_name(self) -> str:

@@ -28,11 +28,13 @@ from flygi.decoding.trained_head import TrainedActionHead
 from flygi.dynamics.rate import ScipyRateNetwork
 from flygi.encoding.features import encode_observation
 from flygi.encoding.sparse_projection import SensoryProjection
+from flygi.plasticity import MushroomBody
 
 from .protocol import ActionFactory, ActionLike, FrameLike
 from .state import ArcTurnState, action_id
 
 ACTION6 = 6
+GRID_CELLS = 64 * 64
 
 
 class PolicyError(RuntimeError):
@@ -107,6 +109,9 @@ class ConnectomePolicy:
         standardizer: AdaptiveStandardizer | None = None,
         trained_head: TrainedActionHead | None = None,
         ablate_trace: bool = False,
+        mushroom_body: MushroomBody | None = None,
+        reward_source: str = "observation_change",
+        level_reward: float = 1.0,
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
     ) -> None:
@@ -146,6 +151,16 @@ class ConnectomePolicy:
         # sees it. If the objective barely drops, the head has learned to
         # ignore the connectome and the result is an interface result.
         self._ablate_trace = bool(ablate_trace)
+        self._mushroom_body = mushroom_body
+        self._reward_source = str(reward_source)
+        self._level_reward = float(level_reward)
+        self._previous_levels = 0
+        self.plasticity_records: list[dict[str, Any]] = []
+        if mushroom_body is not None and not network.connectivity.data.flags.writeable:
+            raise PolicyError(
+                "plasticity needs a writable connectivity matrix; build the policy "
+                "with a plastic runtime rather than the frozen shared one"
+            )
         if trained_head is not None and trained_head.spec.readout_size != readout.size:
             raise PolicyError("trained head and readout population disagree in size")
         if standardizer is not None and standardizer.size != readout.size:
@@ -181,6 +196,15 @@ class ConnectomePolicy:
             "policy": "connectome-literal",
             "graph_ablated": self._ablate_graph,
             "trace_ablated": self._ablate_trace,
+            "plasticity": (
+                None
+                if self._mushroom_body is None
+                else {
+                    **self._mushroom_body.describe(),
+                    "reward_source": self._reward_source,
+                    "level_reward": self._level_reward,
+                }
+            ),
             "internal_steps": self._internal_steps,
             "node_count": self._network.node_count,
             "backend": self._network.backend_name,
@@ -233,6 +257,9 @@ class ConnectomePolicy:
         self._rng = np.random.default_rng(self._decision_seed)
         if self._standardizer is not None:
             self._standardizer.reset()
+        self._previous_levels = 0
+        if self._mushroom_body is not None:
+            self._mushroom_body.reset(self._network.connectivity)
 
     def is_done(self, latest_frame: FrameLike) -> bool:
         """Stop after a win; a game-over frame is reset and retried."""
@@ -427,9 +454,33 @@ class ConnectomePolicy:
                 loop_escape_bias_changed_argmax=loop_changed_argmax,
             )
         )
+        if self._mushroom_body is not None:
+            reward = self._reward(latest_frame, changed_cells)
+            record = self._mushroom_body.update(self._network.connectivity, state, reward)
+            record["step"] = self._step
+            self.plasticity_records.append(record)
         self._previous_action_id = chosen_id
         self._step += 1
         return action
+
+    def _reward(self, frame: FrameLike, changed_cells: int) -> float:
+        """Reward the agent can actually observe, from the ARC protocol alone.
+
+        ``observation_change`` is dense: did the action do anything at all? That
+        is the measured deficit, since the agent repeats states far more than
+        chance. ``level_progress`` is sparse but unambiguous. Neither reads
+        hidden scoring state; both come from what the frame already reports.
+        """
+
+        reward = 0.0
+        if self._reward_source in ("observation_change", "both"):
+            reward += float(changed_cells) / float(GRID_CELLS)
+        if self._reward_source in ("level_progress", "both"):
+            levels = int(getattr(frame, "levels_completed", 0) or 0)
+            if levels > self._previous_levels:
+                reward += self._level_reward * float(levels - self._previous_levels)
+            self._previous_levels = levels
+        return reward
 
     def _resolve_action(self, identifier: int) -> ActionLike:
         resolver = getattr(self._actions, "from_id", None)

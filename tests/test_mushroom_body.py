@@ -211,3 +211,113 @@ def test_parameters_and_populations_are_validated() -> None:
         resolve_mushroom_body(
             matrix, kenyon_cells=np.array([NODES + 5]), mbons=MBON, dopaminergic=DAN
         )
+
+
+# --- closed-loop integration ------------------------------------------------
+
+
+def _plastic_policy(reward_source: str = "observation_change", learning_rate: float = 0.5):
+    """A toy closed-loop policy whose mushroom body is wired and plastic."""
+
+    import test_closed_loop as loop
+
+    from flygi.arc.policy import ConnectomePolicy, StatePolicy
+    from flygi.decoding.coordinate_head import CoordinateHead
+    from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
+    from flygi.decoding.literal import LiteralActionMap
+    from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
+    from flygi.encoding.sparse_projection import ProjectionOptions, build_sensory_projection
+
+    nodes = loop.NODES
+    generator = np.random.default_rng(3)
+    dense = (generator.random((nodes, nodes)) < 0.05) * generator.random((nodes, nodes))
+    np.fill_diagonal(dense, 0.0)
+    kc = np.arange(100, 260, dtype=np.int64)
+    mbon = np.arange(260, 300, dtype=np.int64)
+    dan = np.arange(300, 340, dtype=np.int64)
+    readout = np.arange(nodes - loop.READOUT, nodes, dtype=np.int64)
+    dense[np.ix_(mbon, kc)] = generator.random((len(mbon), len(kc))) * 0.5 + 0.2
+    dense[np.ix_(mbon, dan)] = generator.random((len(mbon), len(dan))) * 0.3 + 0.1
+    dense[np.ix_(readout, mbon)] = generator.random((len(readout), len(mbon))) * 0.4 + 0.1
+
+    matrix = sparse.csr_matrix(dense.astype(np.float32))
+    matrix.sort_indices()
+    rows = np.asarray(abs(matrix).sum(axis=1)).ravel()
+    matrix = (sparse.diags((1.0 / (1e-8 + rows)).astype(np.float32)) @ matrix).tocsr()
+    matrix.sort_indices()
+    matrix.eliminate_zeros()
+    matrix.data = np.array(matrix.data, dtype=np.float32, copy=True)
+
+    network = ScipyRateNetwork(
+        matrix,
+        RateParameters(internal_steps=4, leak=0.3, recurrent_gain=0.9),
+        copy_connectivity=False,
+        allow_plasticity=True,
+    )
+    body = MushroomBody(
+        network.connectivity,
+        resolve_mushroom_body(network.connectivity, kenyon_cells=kc, mbons=mbon, dopaminergic=dan),
+        MushroomBodyParameters(learning_rate=learning_rate, decay=0.0),
+    )
+    return ConnectomePolicy(
+        loop.FakeGameAction,
+        network=network,
+        projection=build_sensory_projection(
+            np.arange(loop.SENSORY, dtype=np.int64),
+            nodes,
+            seed=0,
+            options=ProjectionOptions(connections_per_neuron=32),
+        ),
+        readout=DescendingTrace(readout, nodes),
+        action_map=LiteralActionMap(loop.READOUT),
+        coordinate_head=CoordinateHead(loop.READOUT),
+        internal_steps=4,
+        standardizer=AdaptiveStandardizer(loop.READOUT),
+        state_policy=StatePolicy(),
+        mushroom_body=body,
+        reward_source=reward_source,
+    ), loop
+
+
+def test_plasticity_changes_the_action_sequence() -> None:
+    """If learning never reaches behaviour, the circuit is decorative."""
+
+    plastic, loop = _plastic_policy(learning_rate=5.0)
+    frozen, _ = _plastic_policy(learning_rate=0.0)
+    frames = [loop._frame(step) for step in range(16)]
+
+    assert [plastic.choose_action(f).value for f in frames] != [
+        frozen.choose_action(f).value for f in frames
+    ]
+    assert plastic.plasticity_records
+    assert any(r["absolute_change"] > 0 for r in plastic.plasticity_records)
+
+
+def test_zero_reward_means_no_weight_change_in_the_closed_loop() -> None:
+    """The dense reward is observation change; identical frames earn nothing."""
+
+    policy, loop = _plastic_policy(learning_rate=5.0)
+    same = loop._frame(4)
+    for _ in range(6):
+        policy.choose_action(same)
+    # After the first turn the frame stops changing, so reward falls to zero.
+    assert policy.plasticity_records[-1]["reward"] == 0.0
+    assert policy.plasticity_records[-1]["absolute_change"] == 0.0
+
+
+def test_reset_restores_the_baseline_graph_in_the_closed_loop() -> None:
+    policy, loop = _plastic_policy(learning_rate=5.0)
+    baseline = policy._network.connectivity.data.copy()
+    for step in range(8):
+        policy.choose_action(loop._frame(step))
+    assert not np.array_equal(policy._network.connectivity.data, baseline)
+    policy.reset_state()
+    assert np.array_equal(policy._network.connectivity.data, baseline)
+
+
+def test_plasticity_is_reported_in_the_interface_description() -> None:
+    policy, _ = _plastic_policy()
+    described = policy.describe()["plasticity"]
+    assert described["site"] == "Kenyon cell -> MBON"
+    assert described["rest_of_graph_frozen"] is True
+    assert described["reward_source"] == "observation_change"

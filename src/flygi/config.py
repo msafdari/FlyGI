@@ -102,6 +102,26 @@ class DecoderConfig:
 
 
 @dataclass(frozen=True)
+class PlasticityConfig:
+    """Reward-modulated plasticity at Kenyon-cell-to-MBON synapses.
+
+    Disabled by default. Every pre-existing config and every recorded result
+    therefore describes a fully frozen graph, and enabling this is an explicit,
+    recorded decision rather than a drift in defaults.
+    """
+
+    enabled: bool = False
+    site: str = "kenyon_cell_to_mbon"
+    learning_rate: float = 0.05
+    decay: float = 0.01
+    weight_ceiling_scale: float = 2.0
+    reward_scale: float = 1.0
+    reward_source: str = "observation_change"
+    level_reward: float = 1.0
+    reset_on_new_environment: bool = True
+
+
+@dataclass(frozen=True)
 class StateLifetimeConfig:
     """Declared lifetime of the persistent connectome state."""
 
@@ -121,6 +141,7 @@ class FlyGIConfig:
     encoder: EncoderConfig = field(default_factory=EncoderConfig)
     decoder: DecoderConfig = field(default_factory=DecoderConfig)
     state: StateLifetimeConfig = field(default_factory=StateLifetimeConfig)
+    plasticity: PlasticityConfig = field(default_factory=PlasticityConfig)
     groups: Mapping[str, Any] = field(default_factory=dict)
     future: Mapping[str, Any] = field(default_factory=dict)
 
@@ -275,6 +296,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         encoder_raw = dict(root.pop("encoder", {}) or {})
         decoder_raw = dict(root.pop("decoder", {}) or {})
         state_raw = dict(root.pop("state", {}) or {})
+        plasticity_raw = dict(root.pop("plasticity", {}) or {})
         encoder = EncoderConfig(
             kind=str(encoder_raw.pop("kind", "sparse_projection")),
             sensory_superclass=str(encoder_raw.pop("sensory_superclass", "ol_sensory")),
@@ -334,6 +356,17 @@ def load_config(path: str | Path) -> FlyGIConfig:
             ),
             trainable=bool(decoder_raw.pop("trainable", False)),
         )
+        plasticity = PlasticityConfig(
+            enabled=bool(plasticity_raw.pop("enabled", False)),
+            site=str(plasticity_raw.pop("site", "kenyon_cell_to_mbon")),
+            learning_rate=float(plasticity_raw.pop("learning_rate", 0.05)),
+            decay=float(plasticity_raw.pop("decay", 0.01)),
+            weight_ceiling_scale=float(plasticity_raw.pop("weight_ceiling_scale", 2.0)),
+            reward_scale=float(plasticity_raw.pop("reward_scale", 1.0)),
+            reward_source=str(plasticity_raw.pop("reward_source", "observation_change")),
+            level_reward=float(plasticity_raw.pop("level_reward", 1.0)),
+            reset_on_new_environment=bool(plasticity_raw.pop("reset_on_new_environment", True)),
+        )
         state = StateLifetimeConfig(
             reset_on_new_environment=bool(state_raw.pop("reset_on_new_environment", True)),
             preserve_across_levels=bool(state_raw.pop("preserve_across_levels", True)),
@@ -357,6 +390,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unknown decoder keys: {sorted(decoder_raw)}")
     if state_raw:
         raise ConfigError(f"unknown state keys: {sorted(state_raw)}")
+    if plasticity_raw:
+        raise ConfigError(f"unknown plasticity keys: {sorted(plasticity_raw)}")
     if graph.weight_transform not in {"raw", "log1p", "sqrt", "binary"}:
         raise ConfigError(f"unsupported weight_transform: {graph.weight_transform}")
     if graph.sign_mode not in {"unsigned", "heuristic"}:
@@ -391,8 +426,11 @@ def load_config(path: str | Path) -> FlyGIConfig:
         math.isfinite(value) for value in (dynamics.leak, dynamics.recurrent_gain, dynamics.bias)
     ):
         raise ConfigError("dynamics numeric values must be finite")
-    if not dynamics.frozen_graph:
-        raise ConfigError("dynamics.frozen_graph must remain true before plasticity experiments")
+    if not dynamics.frozen_graph and not plasticity.enabled:
+        raise ConfigError(
+            "dynamics.frozen_graph may only be false when plasticity.enabled is true; "
+            "an unfrozen graph without a declared learning rule is just an unguarded graph"
+        )
     if dynamics.initial_state != "zeros":
         raise ConfigError("dynamics.initial_state must be zeros")
     if dynamics.state_dtype != "float32":
@@ -458,6 +496,26 @@ def load_config(path: str | Path) -> FlyGIConfig:
         )
     if decoder.trainable:
         raise ConfigError("the literal decoder must be nonlearned")
+    if plasticity.site != "kenyon_cell_to_mbon":
+        raise ConfigError(
+            f"unsupported plasticity.site: {plasticity.site}; the only implemented "
+            "site is where Drosophila actually learns"
+        )
+    if plasticity.reward_source not in {"observation_change", "level_progress", "both"}:
+        raise ConfigError(f"unsupported plasticity.reward_source: {plasticity.reward_source}")
+    if not math.isfinite(plasticity.learning_rate) or plasticity.learning_rate < 0:
+        raise ConfigError("plasticity.learning_rate must be finite and non-negative")
+    if not 0.0 <= plasticity.decay <= 1.0:
+        raise ConfigError("plasticity.decay must lie in [0, 1]")
+    if plasticity.weight_ceiling_scale < 1.0:
+        raise ConfigError("plasticity.weight_ceiling_scale must be at least 1")
+    if not math.isfinite(plasticity.reward_scale):
+        raise ConfigError("plasticity.reward_scale must be finite")
+    if plasticity.enabled and dynamics.frozen_graph:
+        raise ConfigError(
+            "plasticity.enabled requires dynamics.frozen_graph: false; a config "
+            "must not claim a frozen graph while modifying its weights"
+        )
     if not state.preserve_across_actions:
         raise ConfigError(
             "state.preserve_across_actions must remain true; a recurrent graph "
@@ -477,6 +535,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         encoder=encoder,
         decoder=decoder,
         state=state,
+        plasticity=plasticity,
         groups=groups,
         future=root,
     )

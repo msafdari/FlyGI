@@ -2348,3 +2348,45 @@ Tested guarantees:
   under a learning rate of 5.0 and a reward of 1000 sustained for 50 updates, so
   plasticity can modulate the connectome but never invert or erase it;
 - decay relaxes toward the frozen baseline, and `reset` restores it exactly.
+
+### Stages 2 and 3 complete — declared config and a live plastic loop
+
+**Configuration.** `PlasticityConfig` is typed and validated, and **disabled in
+every pre-existing config**, so every recorded result still describes a fully
+frozen graph. A test asserts that: `literal_rate_plastic_mb.yaml` is the only
+config with plasticity enabled, and every other one both disables it and keeps
+`frozen_graph: true`.
+
+The two halves of the invariant are now paired in both directions. Enabling
+plasticity with `frozen_graph: true` is rejected, because a config must not
+claim a frozen graph while modifying its weights; and `frozen_graph: false`
+without plasticity is rejected too, because an unfrozen graph with no declared
+learning rule is just an unguarded graph. Both rejections are tested.
+
+**Weights writable, topology never.** `ScipyRateNetwork` gained
+`allow_plasticity`. When set, the weight array becomes writable; `indices` and
+`indptr` stay read-only unconditionally. A learning rule may change how strong a
+connection is, never which neurons are connected. A plastic policy also gets a
+private writable copy of the connectivity, so the shared hash-verified bundle
+stays frozen for every other condition in the process.
+
+**Reward, from the protocol only.** `observation_change` is the dense term --
+normalized changed-cell count, answering "did my action do anything" -- and it
+targets the measured deficit directly, since the agent repeats states far more
+than chance. `level_progress` is sparse and unambiguous. The plastic config uses
+`both`. Neither term reads hidden scoring state; both come from what the frame
+already reports.
+
+**Tested in the closed loop.** Four integration tests beyond the eleven unit
+tests:
+
+- plasticity changes the action sequence relative to an identical policy with
+  learning rate zero, so learning genuinely reaches behaviour;
+- a repeated identical frame earns zero reward and produces exactly zero weight
+  change, so the dense reward cannot leak signal from nowhere;
+- `reset_state` restores the baseline graph byte-for-byte at an environment
+  boundary;
+- the interface description reports the plasticity site and settings, so no
+  result artifact can hide that the graph was not frozen.
+
+Verification: `uv run pytest -q` → **260 passed**; ruff clean.

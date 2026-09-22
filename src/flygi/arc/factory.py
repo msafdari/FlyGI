@@ -33,6 +33,11 @@ from flygi.encoding.sparse_projection import (
     SensoryProjection,
     build_sensory_projection,
 )
+from flygi.plasticity import (
+    MushroomBody,
+    MushroomBodyParameters,
+    resolve_mushroom_body,
+)
 from flygi.seed import derive_seed
 
 from .policy import ConnectomePolicy, PolicyError, StatePolicy
@@ -58,6 +63,50 @@ def sensory_indices_for_superclass(runtime_dir: str | Path, superclass: str) -> 
             f"sensory superclass {superclass!r} matched no nodes; available: {available}"
         )
     return selected
+
+
+MUSHROOM_BODY_KENYON_CLASS = "Kenyon_Cell"
+MUSHROOM_BODY_MBON_CLASS = "MBON"
+DOPAMINERGIC_TYPE_PREFIXES = ("PAM", "PPL", "PPM")
+
+
+def mushroom_body_populations(
+    runtime_dir: str | Path,
+) -> tuple[NDArray[np.int64], NDArray[np.int64], NDArray[np.int64]]:
+    """Resolve Kenyon cells, MBONs and dopaminergic neurons from annotations.
+
+    Populations come from the dataset's own ``class`` and ``type`` labels, not
+    from a hand-listed body-ID set, so the circuit is whatever MaleCNS says it
+    is.
+    """
+
+    path = Path(runtime_dir) / "node_metadata.npz"
+    with np.load(path, allow_pickle=False) as archive:
+        for column in ("class", "type"):
+            if column not in archive:
+                raise RuntimeAssemblyError(f"{path} has no {column!r} column")
+        classes = archive["class"]
+        types = archive["type"]
+
+    kenyon = np.flatnonzero(classes == MUSHROOM_BODY_KENYON_CLASS).astype(np.int64)
+    mbons = np.flatnonzero(classes == MUSHROOM_BODY_MBON_CLASS).astype(np.int64)
+    dopaminergic = np.flatnonzero(
+        np.array(
+            [str(value).startswith(DOPAMINERGIC_TYPE_PREFIXES) for value in types],
+            dtype=bool,
+        )
+    ).astype(np.int64)
+
+    for name, found in (
+        ("Kenyon cells", kenyon),
+        ("MBONs", mbons),
+        ("dopaminergic neurons", dopaminergic),
+    ):
+        if found.size == 0:
+            raise RuntimeAssemblyError(
+                f"no {name} found in {path}; this runtime cannot support mushroom-body plasticity"
+            )
+    return kenyon, mbons, dopaminergic
 
 
 @dataclass(frozen=True)
@@ -147,8 +196,18 @@ def build_connectome_policy(
             "the interface must not vary across graph conditions"
         )
 
+    plastic = config.plasticity.enabled
+    if plastic:
+        # Plasticity mutates weights, so this policy gets a private writable
+        # copy. The shared loaded bundle stays frozen and hash-verified.
+        connectivity = loaded.matrix.copy()
+        connectivity.data = np.array(connectivity.data, dtype=np.float32, copy=True)
+        connectivity.indices = np.array(connectivity.indices, copy=True)
+        connectivity.indptr = np.array(connectivity.indptr, copy=True)
+    else:
+        connectivity = loaded.matrix
     network = ScipyRateNetwork(
-        loaded.matrix,
+        connectivity,
         RateParameters(
             internal_steps=(
                 config.dynamics.internal_steps if internal_steps is None else internal_steps
@@ -158,7 +217,32 @@ def build_connectome_policy(
             bias=config.dynamics.bias,
         ),
         copy_connectivity=False,
+        allow_plasticity=plastic,
     )
+
+    mushroom_body = None
+    if plastic:
+        kenyon, mbons, dopaminergic = mushroom_body_populations(directory)
+        try:
+            mushroom_body = MushroomBody(
+                network.connectivity,
+                resolve_mushroom_body(
+                    network.connectivity,
+                    kenyon_cells=kenyon,
+                    mbons=mbons,
+                    dopaminergic=dopaminergic,
+                ),
+                MushroomBodyParameters(
+                    learning_rate=config.plasticity.learning_rate,
+                    decay=config.plasticity.decay,
+                    weight_ceiling_scale=config.plasticity.weight_ceiling_scale,
+                    reward_scale=config.plasticity.reward_scale,
+                ),
+            )
+        except Exception as exc:
+            raise RuntimeAssemblyError(
+                f"mushroom-body plasticity could not be assembled: {exc}"
+            ) from exc
     readout = DescendingTrace(readout_indices, loaded.node_count)
     resolved_decision_seed = (
         derive_seed(config.seed, "decision") if decision_seed is None else decision_seed
@@ -187,6 +271,9 @@ def build_connectome_policy(
                 ),
             ),
             ablate_trace=ablate_trace,
+            mushroom_body=mushroom_body,
+            reward_source=config.plasticity.reward_source,
+            level_reward=config.plasticity.level_reward,
             trained_head=(
                 None
                 if trained_head_parameters is None
