@@ -97,3 +97,33 @@ def test_spec_rejects_unusable_shapes() -> None:
     ):
         with pytest.raises(ReadoutError):
             TrainedHeadSpec(**kwargs)  # type: ignore[arg-type]
+
+
+def test_trained_head_changes_the_policy_action_sequence() -> None:
+    """If the head did not reach the action, Track B would be decorative."""
+
+    import test_closed_loop as loop
+
+    frames = [loop._frame(step) for step in range(14)]
+    baseline = loop._adaptive_policy()
+    base_actions = [baseline.choose_action(f).value for f in frames]
+
+    head = TrainedActionHead(TrainedHeadSpec(readout_size=loop.READOUT))
+    head.set_parameters(np.random.default_rng(7).standard_normal(head.parameter_count) * 3.0)
+    trained = loop._adaptive_policy()
+    trained._trained_head = head
+    trained_actions = [trained.choose_action(f).value for f in frames]
+
+    assert base_actions != trained_actions
+
+
+def test_trained_head_still_respects_the_legal_mask() -> None:
+    import test_closed_loop as loop
+
+    head = TrainedActionHead(TrainedHeadSpec(readout_size=loop.READOUT))
+    head.set_parameters(np.random.default_rng(8).standard_normal(head.parameter_count) * 5.0)
+    policy = loop._adaptive_policy()
+    policy._trained_head = head
+    for step in range(12):
+        action = policy.choose_action(loop._frame(step, available_actions=[2, 5]))
+        assert action.value in (2, 5)

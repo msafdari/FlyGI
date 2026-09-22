@@ -2035,3 +2035,23 @@ such rather than presented as zero-shot generality.
 1. Pick the winning strength, package it with the 800-action ceiling, verify the
    Kaggle preflight, and spend today's submission on it.
 2. Start CEM training of the 520-parameter head overnight for tomorrow's slot.
+
+### Track B chunk 2 — the head is wired into the live policy
+
+`LiteralActionMap.decide` gained one optional `logits_override` seam. When a
+trained head is present it supplies the eight action scores; everything
+downstream is untouched and still applies in exactly the declared order: legal
+masking, the loop-escape bias, temperature sampling, and the seeded per-policy
+RNG. When unused, behaviour is byte-identical to before, which the existing
+suite confirms.
+
+`ConnectomePolicy` and `build_connectome_policy` now accept an optional trained
+head. `describe()` reports it and switches `trainable_parameters` from 0 to the
+head's count, so no result artifact can silently claim zero trainable parameters
+while a trained head is active.
+
+Two causal tests were added, mirroring the ones that pin the graph itself:
+the trained head must change the action sequence relative to the untrained
+policy, and it must never select an action outside the legal mask.
+
+Verification: `uv run pytest -q` → **242 passed**; ruff clean.

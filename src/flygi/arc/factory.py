@@ -25,6 +25,7 @@ from flygi.decoding.loop_escape import (
     LoopEscapeError,
     LoopEscapeParameters,
 )
+from flygi.decoding.trained_head import TrainedActionHead, TrainedHeadSpec
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.dynamics.runtime import RuntimeConnectome, load_runtime_connectome
 from flygi.encoding.sparse_projection import (
@@ -94,6 +95,8 @@ def build_connectome_policy(
     projection: SensoryProjection | None = None,
     ablate_graph: bool = False,
     internal_steps: int | None = None,
+    trained_head_parameters: NDArray[np.floating] | None = None,
+    trained_head_feature_dim: int = 48,
     decision_seed: int | None = None,
     action_temperature: float | None = None,
     coordinate_temperature: float | None = None,
@@ -181,6 +184,17 @@ def build_connectome_policy(
                     if coordinate_temperature is None
                     else coordinate_temperature
                 ),
+            ),
+            trained_head=(
+                None
+                if trained_head_parameters is None
+                else TrainedActionHead(
+                    TrainedHeadSpec(
+                        readout_size=readout.size,
+                        feature_dim=trained_head_feature_dim,
+                    ),
+                    trained_head_parameters,
+                )
             ),
             standardizer=(
                 AdaptiveStandardizer(

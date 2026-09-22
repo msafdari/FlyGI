@@ -178,8 +178,15 @@ class LiteralActionMap:
         *,
         rng: np.random.Generator,
         standardized_bias: NDArray[np.floating] | None = None,
+        logits_override: NDArray[np.floating] | None = None,
     ) -> ActionDecision:
-        """Sample one legal action; illegal actions have exactly zero mass."""
+        """Sample one legal action; illegal actions have exactly zero mass.
+
+        ``logits_override`` lets a trained readout supply the action scores
+        while every downstream guarantee -- legal masking, the loop-escape bias,
+        temperature sampling and the seeded RNG -- stays exactly as declared. It
+        is the single seam Track B needs, and it changes nothing when unused.
+        """
 
         legal = tuple(dict.fromkeys(int(identifier) for identifier in legal_action_ids))
         if not legal:
@@ -191,7 +198,17 @@ class LiteralActionMap:
                     f"{self._action_slots} action slots"
                 )
 
-        scores = self.logits(trace)
+        if logits_override is None:
+            scores = self.logits(trace)
+        else:
+            scores = np.asarray(logits_override, dtype=np.float32)
+            if scores.shape != (self._action_slots,):
+                raise ReadoutError(
+                    f"logits_override must have shape ({self._action_slots},), "
+                    f"observed {scores.shape}"
+                )
+            if not np.isfinite(scores).all():
+                raise ReadoutError("logits_override contains NaN or infinity")
         masked = np.full(self._action_slots, -np.inf, dtype=np.float32)
         legal_index = np.asarray(legal, dtype=np.int64)
         masked[legal_index] = scores[legal_index]

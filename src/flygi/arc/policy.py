@@ -24,6 +24,7 @@ from flygi.decoding.coordinate_head import CoordinateDecision, CoordinateHead, n
 from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
 from flygi.decoding.literal import LiteralActionMap
 from flygi.decoding.loop_escape import LoopEscapeMemory, LoopEscapeParameters
+from flygi.decoding.trained_head import TrainedActionHead
 from flygi.dynamics.rate import ScipyRateNetwork
 from flygi.encoding.features import encode_observation
 from flygi.encoding.sparse_projection import SensoryProjection
@@ -104,6 +105,7 @@ class ConnectomePolicy:
         decision_seed: int = 0,
         loop_escape: LoopEscapeParameters | None = None,
         standardizer: AdaptiveStandardizer | None = None,
+        trained_head: TrainedActionHead | None = None,
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
     ) -> None:
@@ -138,6 +140,9 @@ class ConnectomePolicy:
         self._state_policy = state_policy or StatePolicy()
         self._ablate_graph = bool(ablate_graph)
         self._standardizer = standardizer
+        self._trained_head = trained_head
+        if trained_head is not None and trained_head.spec.readout_size != readout.size:
+            raise PolicyError("trained head and readout population disagree in size")
         if standardizer is not None and standardizer.size != readout.size:
             raise PolicyError("standardizer and readout population disagree in size")
 
@@ -195,6 +200,7 @@ class ConnectomePolicy:
                 ),
             },
             "action_map": self._action_map.describe(),
+            "trained_head": (None if self._trained_head is None else self._trained_head.describe()),
             "coordinate_head": self._coordinates.describe(),
             "loop_escape": self._loop_escape.parameters.describe(),
             "state_policy": {
@@ -205,7 +211,9 @@ class ConnectomePolicy:
                     self._state_policy.preserve_after_game_over_reset
                 ),
             },
-            "trainable_parameters": 0,
+            "trainable_parameters": (
+                0 if self._trained_head is None else self._trained_head.parameter_count
+            ),
         }
 
     def reset_state(self) -> None:
@@ -305,11 +313,17 @@ class ConnectomePolicy:
                     turn.available_action_ids,
                     action_slots=self._action_map.action_slots,
                 )
+            logits_override = None
+            if self._trained_head is not None:
+                logits_override = self._trained_head.logits(
+                    trace, self._previous_action_id, turn.available_action_ids
+                )
             decision = self._action_map.decide(
                 trace,
                 turn.available_action_ids,
                 rng=self._rng,
                 standardized_bias=standardized_bias,
+                logits_override=logits_override,
             )
             chosen_id = decision.action_id
             unique = decision.argmax_was_unique
