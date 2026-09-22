@@ -2489,3 +2489,59 @@ the comparison falls.
 - The bypass has not been given the same plasticity budget.
 - One seed only, so these are directional rather than confirmatory.
 - No submission has been made today.
+
+## 2026-09-22 — Paired analysis implemented (and it immediately qualifies an earlier claim)
+
+`src/flygi/evaluation/paired_analysis.py` was a one-line placeholder, and every
+comparison in this project had been computed ad hoc in a throwaway script. That
+is fine for looking and wrong for reporting. It is now a tested module with
+twelve tests, plus `scripts/compare_conditions.py`.
+
+### Three things it refuses to do quietly
+
+**Seeds are not replicates when the policy is deterministic.** The frozen agent
+produced byte-identical traces across all five seeds in all 25 games, so a test
+over 125 rows would have claimed five times the evidence it had. Uncertainty is
+clustered on the **game**, never the row, and the comparison reports how many
+distinct traces it actually saw. A test adds eight seeds of the same five games
+and asserts the interval does **not** collapse.
+
+**Action counts for uncompleted levels are right-censored, not missing.** A row
+that never completed did not take zero actions. Averaging completion times over
+completers only is selection-biased and flatters whichever condition completes
+the rarest, hardest game. A test encodes exactly that trap: an agent that
+completes one easy game in 10 actions looks five times faster than one that
+completes four games in 300 each, until the restricted mean and completion rate
+are used.
+
+**A near-degenerate outcome cannot support a confident interval.** With one or
+two nonzero games, the bootstrap is reported alongside the count of nonzero
+clusters so a reader can see the effect rests on a single game.
+
+### It immediately qualified an existing claim
+
+Re-running the completed 500-action sweep through it:
+
+| Comparison | Mean difference | 95% CI | p | Nonzero games |
+| --- | ---: | --- | ---: | ---: |
+| degree-preserving null minus real, score | -0.056879 | [-0.170636, +0.000000] | 1.0000 | **1 / 25** |
+| same, unique observations | +3.546667 | [-15.481667, +25.280000] | 0.7401 | 19 / 25 |
+
+The earlier entry reported those means descriptively and noted progress was
+confined to two games. The formal analysis is blunter: the score difference
+rests on a single game, its interval includes zero, and the permutation p is
+1.0000. **Nothing separates the real graph from its degree-preserving null on
+ARC score.** That was the honest reading before and it is now the recorded one.
+
+### A data gap this exposed
+
+`censored_summary` reported a completer-only mean of exactly 500.0 actions,
+which is meaningless: the evaluator records `actions_completed` as the **total
+length of the row**, not the action at which a level was completed. The official
+scorecard's `level_actions` field comes back `null` in the local harness, so
+actions-to-completion is **not currently recorded anywhere**.
+
+The censoring machinery is correct and tested, but it cannot do its job until
+the evaluator captures the action index at each level completion. That is a
+recorded limitation, not a metric to quote. Until it is fixed, completion
+*rate* is the honest efficiency measure and completion *speed* is unavailable.
