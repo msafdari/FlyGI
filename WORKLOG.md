@@ -2390,3 +2390,50 @@ tests:
   result artifact can hide that the graph was not frozen.
 
 Verification: `uv run pytest -q` → **260 passed**; ruff clean.
+
+### Stage 4 complete — the modulator-preserving runtime
+
+Compiled `literal-rate-signed-modulators` with `modulator_treatment: positive`.
+
+| Runtime | Edges | DAN->MBON gate | DAN->KC |
+| --- | ---: | ---: | ---: |
+| signed (**submitted**) | 24,559,055 | **0** | **0** |
+| unsigned | 25,582,837 | 3,195 | 129,132 |
+| **signed + modulators** | **24,994,595** | **3,194** | **129,118** |
+
+The teaching pathway is back: 435,540 edges restored relative to the submitted
+configuration, and the mushroom body now has a gate.
+
+### Stage 5 — a real bug, found by measuring rather than assuming
+
+The first closed-loop run on the real connectome reported a nonzero gate on 59
+of 60 turns and **exactly zero weight change**. The rule was arithmetically
+correct and behaviourally inert.
+
+Cause: connectome activity is of order `1e-6` and the plastic weights are of
+order `1e-3`, so an update written in raw units lands near `1e-18`. Float32
+cannot represent an increment that small against a `1e-3` weight, so every
+update rounded to zero. This is the same magnitude trap that produced the
+constant-argmax failure in the readout, appearing in a second place.
+
+Fix: each factor is normalized to unit mean magnitude before it is used, and the
+step is scaled by each synapse's own frozen weight. The learning rate now means
+a fraction of baseline weight per unit of rewarded coincidence, independent of
+the absolute activity scale, while the *pattern* across neurons -- the part that
+carries information -- is preserved. The reward scalar is applied after
+normalization so reward magnitude still matters.
+
+Three regression tests were added: the rule must move weight at real connectome
+scale (`1e-6` activity), learning must be invariant to a thousandfold change in
+activity scale, and reward magnitude must still change the outcome after
+normalization.
+
+**Verified on the real graph after the fix**, `sp80`, 60 turns:
+
+| Measurement | Before fix | After fix |
+| --- | ---: | ---: |
+| Turns with nonzero weight change | **0 / 60** | **59 / 60** |
+| Total absolute weight change | 0.000000 | **3.166623** |
+| Drift from frozen baseline | 0.000e+00 | 3.567e-05 |
+
+Verification: `uv run pytest -q` → **263 passed**; ruff clean.

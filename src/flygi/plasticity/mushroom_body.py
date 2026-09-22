@@ -202,19 +202,40 @@ class MushroomBody:
     def dopaminergic_activity(self, state: NDArray[np.floating]) -> NDArray[np.float32]:
         return np.asarray(state, dtype=np.float32)[self._anatomy.dopaminergic].copy()
 
+    @staticmethod
+    def _unit_scale(values: NDArray[np.float32]) -> NDArray[np.float32]:
+        """Rescale a pattern to mean magnitude one, or to zeros if it is silent.
+
+        Connectome activity here is of order 1e-6, and the plastic weights are of
+        order 1e-3. A rule written directly in those units produces updates near
+        1e-18, which is far below float32 resolution and rounds to exactly zero:
+        measured on the real graph, a full 60-turn episode moved no weight at
+        all despite a nonzero gate on 59 turns. Normalizing each factor to unit
+        mean magnitude makes the learning rate mean what it says regardless of
+        the absolute activity scale, while preserving the *pattern* across
+        neurons, which is the part that carries information.
+        """
+
+        magnitude = float(np.abs(values).mean())
+        if magnitude <= 0.0 or not np.isfinite(magnitude):
+            return np.zeros_like(values, dtype=np.float32)
+        return (values / np.float32(magnitude)).astype(np.float32)
+
     def gate(self, state: NDArray[np.floating], reward: float) -> NDArray[np.float32]:
         """Dopaminergic drive per MBON compartment, scaled by reward.
 
         The compartment map is the real dopaminergic-to-MBON adjacency, so which
         MBON a teaching signal reaches is decided by the connectome rather than
-        by an assumption.
+        by an assumption. The spatial pattern is normalized; the reward scalar is
+        applied afterwards so reward magnitude still matters.
         """
 
         if not np.isfinite(reward):
             raise MushroomBodyError("reward must be finite")
         dan = np.abs(self.dopaminergic_activity(state))
         drive = np.asarray(self._anatomy.dan_to_mbon @ dan, dtype=np.float32)
-        return (drive * np.float32(reward * self._parameters.reward_scale)).astype(np.float32)
+        pattern = self._unit_scale(drive)
+        return (pattern * np.float32(reward * self._parameters.reward_scale)).astype(np.float32)
 
     def update(
         self,
@@ -229,8 +250,18 @@ class MushroomBody:
         kenyon = np.asarray(state, dtype=np.float32)[self._anatomy.kenyon_cells]
 
         current = np.asarray(matrix.data[self._positions], dtype=np.float32)
-        # Dopamine depresses the synapses that were active when it arrived.
-        delta = -np.float32(parameters.learning_rate) * gate[self._rows] * kenyon[self._columns]
+        # Dopamine depresses the synapses that were active when it arrived. The
+        # step is proportional to each synapse's own frozen magnitude, so the
+        # learning rate reads as a fraction of baseline weight per unit of
+        # rewarded coincidence rather than as an absolute quantity in units the
+        # connectome does not share.
+        kenyon_pattern = self._unit_scale(kenyon)
+        delta = (
+            -np.float32(parameters.learning_rate)
+            * gate[self._rows]
+            * kenyon_pattern[self._columns]
+            * np.abs(self._baseline)
+        )
         if parameters.decay:
             delta += np.float32(parameters.decay) * (self._baseline - current)
 
@@ -252,6 +283,7 @@ class MushroomBody:
             "reward": float(reward),
             "absolute_change": change,
             "mean_gate": float(gate.mean()),
+            "mean_absolute_gate": float(np.abs(gate).mean()),
             "active_kenyon_cells": int(np.count_nonzero(np.abs(kenyon) > 1e-9)),
             "mean_plastic_weight": float(updated.mean()),
             "drift_from_baseline": float(np.abs(updated - self._baseline).mean()),

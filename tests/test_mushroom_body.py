@@ -321,3 +321,61 @@ def test_plasticity_is_reported_in_the_interface_description() -> None:
     assert described["site"] == "Kenyon cell -> MBON"
     assert described["rest_of_graph_frozen"] is True
     assert described["reward_source"] == "observation_change"
+
+
+def test_the_rule_works_at_connectome_activity_scale() -> None:
+    """Regression: real activity is ~1e-6 and real weights ~1e-3.
+
+    Written in raw units the update lands near 1e-18, rounds to zero in float32,
+    and a full episode moves no weight at all. That is exactly what happened on
+    the real graph before the rule was made scale-free.
+    """
+
+    matrix = _graph()
+    body = MushroomBody(
+        matrix, _anatomy(matrix), MushroomBodyParameters(learning_rate=0.05, decay=0.0)
+    )
+    tiny = np.zeros(NODES, dtype=np.float32)
+    generator = np.random.default_rng(5)
+    tiny[KC] = (generator.random(len(KC)) * 1e-6).astype(np.float32)
+    tiny[DAN] = (generator.random(len(DAN)) * 1e-6).astype(np.float32)
+
+    report = body.update(matrix, tiny, reward=0.02)
+    assert report["absolute_change"] > 0.0
+
+
+def test_learning_is_invariant_to_the_activity_scale() -> None:
+    """A thousandfold change in activity must not change what is learned."""
+
+    generator = np.random.default_rng(6)
+    base = np.zeros(NODES, dtype=np.float32)
+    base[KC] = generator.random(len(KC)).astype(np.float32)
+    base[DAN] = generator.random(len(DAN)).astype(np.float32)
+
+    changes = []
+    for scale in (1.0, 1e-3, 1e-6):
+        matrix = _graph()
+        body = MushroomBody(
+            matrix, _anatomy(matrix), MushroomBodyParameters(learning_rate=0.1, decay=0.0)
+        )
+        body.update(matrix, (base * scale).astype(np.float32), reward=1.0)
+        changes.append(matrix[np.ix_(MBON, KC)].toarray())
+
+    assert np.allclose(changes[0], changes[1], rtol=1e-4, atol=1e-9)
+    assert np.allclose(changes[0], changes[2], rtol=1e-4, atol=1e-9)
+
+
+def test_reward_magnitude_still_matters_after_normalization() -> None:
+    """Normalizing the spatial pattern must not normalize away the reward."""
+
+    deltas = []
+    for reward in (0.1, 1.0):
+        matrix = _graph()
+        body = MushroomBody(
+            matrix, _anatomy(matrix), MushroomBodyParameters(learning_rate=0.1, decay=0.0)
+        )
+        before = matrix[np.ix_(MBON, KC)].toarray().copy()
+        body.update(matrix, _state(), reward=reward)
+        deltas.append(float(np.abs(matrix[np.ix_(MBON, KC)].toarray() - before).sum()))
+
+    assert deltas[1] > deltas[0] * 5
