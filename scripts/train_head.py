@@ -159,6 +159,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--cem-seed", type=int, default=20260922)
     parser.add_argument("--output", type=Path, default=None)
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=DEFAULT_RESULTS_DIR / "head_training_checkpoint.json",
+        help="written after every generation; delete it to start fresh",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="continue from --checkpoint instead of starting at generation 0",
+    )
     args = parser.parse_args(argv)
 
     if args.elites >= args.population:
@@ -175,13 +186,44 @@ def main(argv: Sequence[str] | None = None) -> int:
     history: list[dict[str, Any]] = []
     best = {"objective": float("-inf"), "parameters": mean.tolist(), "generation": -1}
     started = datetime.now(UTC)
+    first_generation = 0
+
+    # A laptop sleeps, crashes and reboots. Training writes its full state after
+    # every generation so a run can continue from the last completed one instead
+    # of discarding hours of evaluation.
+    if args.resume and args.checkpoint.is_file():
+        saved = json.loads(args.checkpoint.read_text(encoding="utf-8"))
+        if saved.get("parameter_count") != dimension:
+            raise SystemExit(
+                f"checkpoint has {saved.get('parameter_count')} parameters, "
+                f"this run needs {dimension}; delete it or match --feature-dim"
+            )
+        mean = np.asarray(saved["mean"], dtype=np.float64)
+        sigma = np.asarray(saved["sigma"], dtype=np.float64)
+        history = list(saved["history"])
+        best = dict(saved["best"])
+        first_generation = int(saved["next_generation"])
+        generator = np.random.default_rng(args.cem_seed + first_generation)
+        print(
+            json.dumps(
+                {
+                    "resumed_from": str(args.checkpoint),
+                    "next_generation": first_generation,
+                    "best_objective": best["objective"],
+                },
+                sort_keys=True,
+            ),
+            flush=True,
+        )
+        if first_generation >= args.generations:
+            print("checkpoint already reached --generations; nothing to do", flush=True)
 
     with ProcessPoolExecutor(
         max_workers=args.workers,
         initializer=_worker_init,
         initargs=(str(args.config), list(args.games), args.action_budget, args.feature_dim),
     ) as pool:
-        for generation in range(args.generations):
+        for generation in range(first_generation, args.generations):
             samples = generator.normal(mean, sigma, size=(args.population, dimension))
             payloads = [
                 (i, samples[i].tolist(), args.seed, args.level_bonus, False)
@@ -218,6 +260,25 @@ def main(argv: Sequence[str] | None = None) -> int:
             }
             history.append(record)
             print(json.dumps(record, sort_keys=True), flush=True)
+
+            args.checkpoint.parent.mkdir(parents=True, exist_ok=True)
+            temporary = args.checkpoint.with_suffix(".partial")
+            temporary.write_text(
+                json.dumps(
+                    {
+                        "parameter_count": dimension,
+                        "next_generation": generation + 1,
+                        "mean": mean.tolist(),
+                        "sigma": sigma.tolist(),
+                        "best": best,
+                        "history": history,
+                    },
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            os.replace(temporary, args.checkpoint)
 
         # Trace ablation: does the winner actually use the connectome?
         ablation = _evaluate((0, best["parameters"], args.seed, args.level_bonus, True))

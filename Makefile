@@ -26,6 +26,16 @@ DYNAMICS_OUTPUT  ?=
 REGIME_CONFIG    ?= configs/literal_rate.yaml
 REGIME_NULL_SEED ?= 20260921
 REGIME_OUTPUT    ?=
+# caffeinate keeps the machine awake for the duration of a long run. macOS
+# only suspends processes on sleep rather than killing them, but a suspended
+# run makes no progress, and lid-close sleep can still interrupt an overnight
+# job. -i blocks idle sleep, -m keeps disks awake, -s applies while on power.
+AWAKE            := caffeinate -ims
+TRAIN_GAMES      ?= all
+TRAIN_ACTIONS    ?= 200
+TRAIN_GENERATIONS ?= 20
+TRAIN_POPULATION ?= 16
+TRAIN_WORKERS    ?= 4
 CALIBRATION_SEEDS ?= 0 1
 CALIBRATION_GAMES ?= lp85 ft09 ls20 sp80
 CALIBRATION_ACTIONS ?= 40
@@ -38,7 +48,7 @@ LOOP_CALIBRATION_CANDIDATES ?= mild balanced strong
 LOOP_CALIBRATION_OUTPUT ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local baseline-local connectome-local benchmark-full-graph probe-regime calibrate-sampler calibrate-loop-escape list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke train-head train-head-resume play-local verify-local baseline-local connectome-local benchmark-full-graph probe-regime calibrate-sampler calibrate-loop-escape list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -105,6 +115,18 @@ calibrate-loop-escape: ## Select a loop-escape strength using score-blind behavi
 		--action-budget $(LOOP_CALIBRATION_ACTIONS) \
 		--candidates $(LOOP_CALIBRATION_CANDIDATES) \
 		$(if $(LOOP_CALIBRATION_OUTPUT),--output $(LOOP_CALIBRATION_OUTPUT))
+
+train-head: ## Train the Track B action head (resumable, keeps the machine awake)
+	$(AWAKE) $(UV_RUN) python scripts/train_head.py \
+		--games $(TRAIN_GAMES) --action-budget $(TRAIN_ACTIONS) \
+		--generations $(TRAIN_GENERATIONS) --population $(TRAIN_POPULATION) \
+		--workers $(TRAIN_WORKERS)
+
+train-head-resume: ## Continue head training from its last completed generation
+	$(AWAKE) $(UV_RUN) python scripts/train_head.py --resume \
+		--games $(TRAIN_GAMES) --action-budget $(TRAIN_ACTIONS) \
+		--generations $(TRAIN_GENERATIONS) --population $(TRAIN_POPULATION) \
+		--workers $(TRAIN_WORKERS)
 
 list-games: ## List public ARC-AGI-3 games
 	$(UV_RUN) python scripts/play_local.py --list

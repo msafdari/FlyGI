@@ -202,6 +202,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument("--environments-dir", type=Path, default=BASELINE.DEFAULT_ENVIRONMENTS_DIR)
     parser.add_argument("--output", type=Path, default=None)
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=None,
+        help="append each completed row here; pass the same path with --resume",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="skip (seed, game) rows already present in --checkpoint",
+    )
     args = parser.parse_args(argv)
 
     if args.action_budget <= 0:
@@ -262,9 +273,31 @@ def main(argv: Sequence[str] | None = None) -> int:
         policy_factory.current = fresh.policy  # type: ignore[attr-defined]
         return fresh.policy
 
+    # A laptop sleeps, crashes and reboots, and a full matrix is hours of work.
+    # Each completed row is appended immediately so an interrupted run resumes
+    # from where it stopped instead of discarding everything.
+    checkpoint = args.checkpoint
+    if checkpoint is None and args.output is not None:
+        checkpoint = args.output.with_suffix(".rows.jsonl")
+    elif checkpoint is None:
+        checkpoint = DEFAULT_RESULTS_DIR / f"{args.condition}.rows.jsonl"
+
     rows: list[dict[str, Any]] = []
+    done: set[tuple[int, str]] = set()
+    if args.resume and checkpoint.is_file():
+        for line in checkpoint.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            saved = json.loads(line)
+            rows.append(saved)
+            done.add((int(saved["seed"]), str(saved["game_id"])))
+        print(f"resumed {len(rows)} completed rows from {checkpoint}", flush=True)
+
+    checkpoint.parent.mkdir(parents=True, exist_ok=True)
     for seed in args.seeds:
         for game in games:
+            if (seed, game.game_id) in done:
+                continue
             policy_factory.current = None  # type: ignore[attr-defined]
             row = BASELINE.evaluate_one(
                 runtime,
@@ -283,6 +316,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                 decision_seed=(current.decision_seed if current is not None else None),
             )
             rows.append(row)
+            with checkpoint.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(row, sort_keys=True) + "\n")
             official = row.get("official") or {}
             print(
                 f"  {game.game_id} seed={seed} status={row['status']} "
