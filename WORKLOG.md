@@ -2594,3 +2594,71 @@ been either explained by a defect in the harness or retracted on measurement.
 What remains standing is only the structural result: the real graph separates
 from its degree-preserving nulls by 3.59x in spectral radius, with no behavioural
 consequence yet found.
+
+## 2026-09-22 — Plasticity result: exploration moves, outcome does not, falsification inconclusive
+
+Three matched conditions, 25 public games, seed 0, 600-action ceiling, one
+runtime, one interface. Only the named variable differs.
+
+| Condition | Mean score | Levels | Games with a level | Mean unique observations |
+| --- | ---: | ---: | ---: | ---: |
+| `mb-frozen` (learning off) | 0.001418 | 1 | 1 / 25 | 256.96 |
+| `mb-plastic` (real mushroom body) | 0.005337 | 1 | 1 / 25 | **270.96** |
+| `mb-plastic-rewired` (partners shuffled) | 0.000892 | 1 | 1 / 25 | 261.80 |
+
+### Outcome: unchanged
+
+All three completed exactly one level in exactly one game. Plasticity unlocked
+nothing. Paired on games, `mb-plastic` minus `mb-frozen` on levels completed is
+**+0.000000** with **0 of 25 games differing**. On score the difference is
++0.003918 with p = 1.0000 and one game carrying it, which is noise.
+
+**Restoring the fly's reward system did not make it better at ARC.**
+
+### Behaviour: the real circuit moved exploration, the rewired one did not
+
+Against the frozen baseline, on unique observations:
+
+| Comparison | Mean difference | 95% CI | p | Games differing |
+| --- | ---: | --- | ---: | ---: |
+| real plastic minus frozen | **+14.000** | [+0.319, +32.121] | 0.0824 | 16 / 25 |
+| rewired plastic minus frozen | +4.840 | [-7.720, +19.641] | 0.5335 | 15 / 25 |
+
+The real mushroom body's interval excludes zero; the rewired one's does not.
+That is the first measurement in this project where the real circuit does
+something a degree-matched control does not.
+
+### The falsification test itself is inconclusive
+
+Comparing the two plastic conditions **directly**, which is the comparison the
+criterion was written about:
+
+| Comparison | Mean difference | 95% CI | p | Games differing |
+| --- | ---: | --- | ---: | ---: |
+| real plastic minus rewired plastic | +9.160 | **[-1.240, +21.720]** | **0.1539** | 16 / 25 |
+
+The interval **includes zero** and p is 0.1539. The preregistered criterion was
+that if the rewired mushroom body learns as well as the real one, the result is
+about having roughly 61,000 plastic synapses rather than about the fly's
+wiring. On this evidence that question is **not answered**: the point estimate
+favours the real circuit, and the uncertainty does not exclude the null.
+
+Reading each comparison against the frozen baseline separately and concluding
+"one is significant and the other is not" would be the difference-of-significance
+error. The direct comparison is the one that counts, and it is inconclusive.
+
+### What would settle it
+
+One seed over 25 games gives 25 clusters and an interval roughly 23 units wide
+around a 9-unit effect. More seeds will not help as much as expected while the
+policy remains near-deterministic, so the honest requirements are more games,
+more seeds **with verified trace diversity**, and several independent rewire
+seeds so the control is a distribution rather than one draw.
+
+### Not claimed
+
+That the fly's mushroom body confers an advantage. The score is unchanged, the
+level count is identical across all three conditions, and the one behavioural
+difference does not clear its own direct control.
+
+The reviewed index is `results/manifests/plasticity_comparison_20260922.json`.

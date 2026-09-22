@@ -1,0 +1,72 @@
+{
+  "artifacts": [
+    "results/connectome_agent/20260922T090108.786307Z-mb-plastic-rewired.json",
+    "results/connectome_agent/20260922T085801.576388Z-mb-plastic.json"
+  ],
+  "censored": {
+    "mb-plastic": {
+      "censored": 24,
+      "censoring_note": "completer-only mean is selection-biased; the restricted mean substitutes the action budget for censored rows and is a lower bound",
+      "completed": 1,
+      "completer_only_mean_actions": 233.0,
+      "completion_rate": 0.04,
+      "completions_without_a_trace": 0,
+      "restricted_mean_actions": 585.32,
+      "rows": 25
+    },
+    "mb-plastic-rewired": {
+      "censored": 24,
+      "censoring_note": "completer-only mean is selection-biased; the restricted mean substitutes the action budget for censored rows and is a lower bound",
+      "completed": 1,
+      "completer_only_mean_actions": 570.0,
+      "completion_rate": 0.04,
+      "completions_without_a_trace": 0,
+      "restricted_mean_actions": 598.8,
+      "rows": 25
+    }
+  },
+  "comparisons": [
+    {
+      "bootstrap_95_ci": [
+        -1.24,
+        21.72
+      ],
+      "clusters": 25,
+      "condition": "mb-plastic",
+      "distinct_traces_a": 25,
+      "distinct_traces_b": 25,
+      "mean_difference": 9.16,
+      "median_difference": 0.0,
+      "metric": "unique_observations",
+      "nonzero_clusters": 16,
+      "pairs": 25,
+      "permutation_p": 0.15389230538473075,
+      "uncertainty_clustered_on": "game",
+      "warnings": []
+    },
+    {
+      "bootstrap_95_ci": [
+        0.0,
+        0.013334448491574386
+      ],
+      "clusters": 25,
+      "condition": "mb-plastic",
+      "distinct_traces_a": 25,
+      "distinct_traces_b": 25,
+      "mean_difference": 0.004444816163858128,
+      "median_difference": 0.0,
+      "metric": "score",
+      "nonzero_clusters": 1,
+      "pairs": 25,
+      "permutation_p": 1.0,
+      "uncertainty_clustered_on": "game",
+      "warnings": [
+        "only 1 game(s) show any difference; the estimate rests on those games and the interval should not be read as a general effect"
+      ]
+    }
+  ],
+  "created_at": "2026-09-22T09:02:19.104560+00:00",
+  "reference": "mb-plastic-rewired",
+  "schema": "flygi.paired-comparison",
+  "uncertainty_clustered_on": "game"
+}
