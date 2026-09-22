@@ -192,6 +192,42 @@ worse than chance at its one job, so raising its temperature is a defect fix
 rather than a tuning pass -- though it is still public-set development and is
 recorded as such.
 
+### 4. A retinotopic interface made things worse, not better
+
+Phase 0 existed to test the standing excuse that the connectome has never had a
+fair interface. All 25 public games, seed 0, 600 actions, identical to the
+submitted configuration except the encoder.
+
+| Measurement | Sparse projection (submitted) | **Retinotopic** |
+| --- | ---: | ---: |
+| Mean score | **0.190476** | **0.003156** |
+| Games with a level | 1 (`cd82`) | 1 (`sp80`) |
+| Mean unique observations | 280.3 | 238.0 |
+| Mean action entropy (bits) | 1.703 | 1.398 |
+
+Preserving retinotopy made the agent **worse on every axis measured**: sixty
+times lower score, less exploration, less varied behaviour. Both conditions
+completed one level, but the retinotopic one's was worth 0.0789 against the
+sparse condition's 4.76.
+
+**The most likely cause is a trade I did not notice making.** The sparse encoder
+feeds a 16-channel one-hot of the frame, so colour identity is preserved
+exactly. The retinotopic encoder collapses those 16 categorical colours onto a
+scalar luminance ramp before injecting them, because a column has to receive a
+number. ARC is a game about categorical colour, and two unrelated colours with
+adjacent indices become nearly identical under that mapping.
+
+So Phase 0 bought spatial structure and paid for it in colour structure, and the
+exchange was bad. That is a specific, testable explanation rather than a
+mystery, and per the standing rule it will be *tested cheaply before* any
+colour-preserving encoder is built.
+
+**This also weakens the project's standing excuse.** "The connectome has never
+had a fair interface" has been the explanation for every null result so far. One
+dimension of fairness has now been restored, and performance fell. That is
+evidence, not proof -- the colour trade confounds it -- but it is the first
+direct test of the excuse, and the excuse did not survive it cleanly.
+
 ### Phase 0 — retinotopic optic-lobe encoder
 
 `encoder.kind: retinotopic` injects the 64x64 grid into the fly's own columnar
