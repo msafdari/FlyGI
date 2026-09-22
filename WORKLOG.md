@@ -1925,3 +1925,47 @@ Verification: `uv run pytest -q` → **240 passed**; ruff clean.
 Training on public games and evaluating on the hidden set is legitimate for the
 leaderboard and is the specification's "public-ARC development" regime. It is
 **not** evidence of zero-shot generality, and it will not be described as such.
+
+### Chunk C result — loop escape wins, and unlocks a game nothing had solved
+
+Both 600-action probes passed their engineering gate with 25/25 rows.
+
+| Probe | Mean score | Levels | Mean unique observations | Game solved |
+| --- | ---: | ---: | ---: | --- |
+| `probe600-loopescape` | **0.190476** | 1 | **280.3** | **`cd82`** |
+| `probe600-plain` | 0.000000 | 0 | 234.4 | none |
+
+Loop escape wins on both the dense behavioral measure and the score, raising
+unique observations by about 20%. More importantly it completed the first level
+of **`cd82`**, a game no condition had ever completed in any previous run: all
+prior progress across every condition was confined to `sp80` and `r11l`.
+
+Two cautions attach to this. It is a single seed over 25 rows, so the means are
+noisy; and the plain condition's 0.000000 is worse than its own three-seed
+500-action baseline of `0.06475067`, which is consistent with the known fact
+that `sp80` does not complete at seed 0. The comparison is therefore directional
+rather than decisive. It is nonetheless the best evidence available, it points
+the same way on two independent measures, and the new-game completion is not
+something noise readily produces.
+
+Earlier this session the calibration was recorded as showing loop-escape
+*strength* made no measurable difference. That remains true and is not in
+conflict: the calibration compared three enabled strengths against each other
+over 40 actions, never enabled against disabled. This probe is the first test of
+whether the layer helps at all, and it indicates that it does.
+
+**Decision: the submission candidate is loop escape enabled at 600 actions.**
+That requires Kaggle dataset version 2, because the deployed `config.yaml` lives
+in the dataset and must become
+`configs/literal_rate_signed_loop_escape.yaml`
+(`63b50521c324ecd1c2d39e1498dd8113b9d6838731ea7f31b3fb8a94317e5c7c`). That
+bundle is already staged and locally preflighted at
+`kaggle/dist/dataset-loopescape`.
+
+### Submission status
+
+Not submitted. A competition submission spends the single daily slot and is an
+outward-facing action on the account owner's behalf; passing local gates confers
+no standing permission. Everything is staged so that authorization is the only
+remaining step. Track B training continues in the meantime and would target a
+later slot.
