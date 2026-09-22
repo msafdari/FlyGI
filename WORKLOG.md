@@ -71,14 +71,23 @@ Four experiments, zero score improvements. The single actionable defect found is
 the coordinate head, which explores 3.29x less than random clicking in the six
 games where clicking is the only legal action.
 
-### Open and blocked
+### Open: the coordinate-temperature test
 
-The coordinate-temperature test (0.2 frozen against 1.0 and 4.0, on the six
-click-only games) has failed to launch twice with
-`requested game 'ft09 lp85 r11l s5i5 tn36 vc33' is not cached` -- the game list
-is reaching the evaluator as a single string rather than six arguments. No
-compute was consumed; the runs died at startup both times. This is the next
-thing to fix, and it is the only open lead with a measured defect behind it.
+Testing the one measured defect: the coordinate head explores **3.29x less than
+random clicking** in the six games where `ACTION6` is the only legal action.
+Comparing the frozen temperature of 0.2 against 1.0 and 4.0, over those six
+games at three seeds and 600 actions.
+
+The launch failed twice before this with
+`requested game 'ft09 lp85 r11l s5i5 tn36 vc33' is not cached`. Diagnosed rather
+than guessed: a direct two-game invocation works correctly, so `--games` and its
+`nargs="+"` were never at fault. The list was being collapsed into one string by
+a `for` loop inside a backgrounded shell wrapper. A third attempt then lost one
+of the two runs to a separate zsh failure, where `rm -f` on a glob matching
+nothing aborts the `&&` chain. Both are shell-quoting mistakes on my part; no
+compute was consumed by any of them.
+
+Now running as explicit single commands, both confirmed progressing.
 
 ## Immutable data and runtime identity
 
