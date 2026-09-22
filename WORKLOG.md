@@ -1797,3 +1797,48 @@ six. The probes use one seed, so their means are noisier than those baselines
 and will be read as a direction, not a measurement.
 
 Verification before launch: `uv run pytest -q` → **229 passed**; ruff clean.
+
+### Parallel work completed while the probes run
+
+Three chunks were taken off the critical path so that submission is a single
+command once the probes land.
+
+**External readiness, read-only.** One submission exists (`56444435`, 2026-09-21
+22:14 UTC, score 0.00); it is now 2026-09-22 05:25 UTC, so a fresh daily slot is
+expected. The private dataset `megusalexandrus/flygi-malecns-runtime` is
+published at 93,436,139 bytes. Its `config.yaml` is **byte-identical** to the
+current `configs/literal_rate_signed.yaml` (both
+`98f6d7b10acd6336af73daa2bae47933b721988758858a3cedd021991a803262`), which
+determines the deployment path:
+
+- if loop escape **loses**, no dataset version bump is required and only the
+  notebook needs pushing;
+- if loop escape **wins**, dataset version 2 is required, carrying
+  `configs/literal_rate_signed_loop_escape.yaml`
+  (`63b50521c324ecd1c2d39e1498dd8113b9d6838731ea7f31b3fb8a94317e5c7c`).
+
+**Runtime projection.** The two concurrent probes are averaging about 1.72
+minutes per 600-action row. At a pessimistic 300 ms per action on Kaggle, a
+25-game hidden set costs about 75 minutes and 100 games about five hours,
+against a nine-hour notebook limit. The 600-action budget is therefore safe for
+any plausible hidden set.
+
+**Wall-clock guard added.** The residual risk is that an unexpectedly large
+hidden set overruns the notebook, which would lose both the run and the day's
+submission quota. The adapter now carries a deadline, default seven hours and
+overridable by `FLYGI_DEADLINE_SECONDS`. Past it every agent reports itself done,
+which ends its game cleanly and **preserves levels already completed** instead of
+failing the run. Three tests cover it, including one asserting the default is
+below the nine-hour notebook limit and one asserting the deployed budget stays
+at or above 500 so the `r11l` class of completion remains reachable.
+
+**Both candidate bundles staged and locally preflighted.** Each reports
+`available=True`, `MAX_ACTIONS=600`, a 25,200-second deadline, `K=4`, 166,700
+nodes, and the correct loop-escape flag: disabled for `kaggle/dist/dataset`,
+enabled at 0.25/0.50 for `kaggle/dist/dataset-loopescape`.
+
+Verification: `uv run pytest -q` → **232 passed** (229 before the guard); ruff
+clean; notebook rebuilt at 122,655 bytes with `MAX_ACTIONS = 600`, the deadline
+guard, and the `FLYGI_PREFLIGHT` line all confirmed embedded.
+
+Still blocked on the probes: choosing the configuration, and submitting.

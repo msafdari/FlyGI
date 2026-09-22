@@ -18,6 +18,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any
 
@@ -63,6 +64,20 @@ _REQUIRED_VERIFIED_OUTPUTS = frozenset({"graph.npz", "node_metadata.npz", "group
 _PREFLIGHT_PREFIX = "FLYGI_PREFLIGHT="
 
 _LOADED: dict[str, Any] = {}
+
+# Competition notebooks may run for up to nine hours. At 600 actions per game
+# and a pessimistic 300 ms per action, 25 games take about 75 minutes and even
+# 100 games stay under five hours, so the budget is safe for any plausible
+# hidden set. The guard exists because a notebook that overruns loses the whole
+# submission and the day's quota with it: past the deadline every agent reports
+# itself done, which ends its game cleanly and preserves the levels already
+# completed rather than failing the run.
+_WALL_CLOCK_DEADLINE_SECONDS = float(os.environ.get("FLYGI_DEADLINE_SECONDS", 7 * 3600))
+_PROCESS_STARTED = time.monotonic()
+
+
+def _deadline_exceeded() -> bool:
+    return (time.monotonic() - _PROCESS_STARTED) >= _WALL_CLOCK_DEADLINE_SECONDS
 
 
 class RuntimePreflightError(RuntimeError):
@@ -259,6 +274,7 @@ class MyAgent(Agent):
             self._policy = RandomLegalPolicy(GameAction, seed=decision_seed)
             self._mode = "random-legal"
             self._detail = reason
+        self._deadline_reported = False
         print(f"FlyGI agent mode={self._mode} ({self._detail})", flush=True)
 
     @property
@@ -267,6 +283,15 @@ class MyAgent(Agent):
 
     def is_done(self, frames: list[FrameData], latest_frame: FrameData) -> bool:
         del frames
+        if _deadline_exceeded():
+            if not self._deadline_reported:
+                self._deadline_reported = True
+                print(
+                    "FLYGI_DEADLINE: wall-clock guard reached; ending games cleanly "
+                    "to preserve completed levels",
+                    flush=True,
+                )
+            return True
         return self._policy.is_done(latest_frame)
 
     def choose_action(self, frames: list[FrameData], latest_frame: FrameData) -> GameAction:

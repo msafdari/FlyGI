@@ -298,3 +298,34 @@ def test_preflight_fails_closed_for_an_incomplete_runtime(
 
     with pytest.raises(module.RuntimePreflightError, match=r"manifest\.json"):
         module.preflight_runtime()
+
+
+def test_wall_clock_guard_reports_done_past_the_deadline(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A notebook overrun loses the submission and the day's quota with it."""
+
+    adapter = _load_adapter(monkeypatch)
+    monkeypatch.setattr(adapter, "_WALL_CLOCK_DEADLINE_SECONDS", 0.0)
+    assert adapter._deadline_exceeded()
+
+    monkeypatch.setattr(adapter, "_WALL_CLOCK_DEADLINE_SECONDS", float("inf"))
+    assert not adapter._deadline_exceeded()
+
+
+def test_wall_clock_deadline_defaults_below_the_notebook_limit(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Nine hours is the notebook limit; the guard must fire before it."""
+
+    adapter = _load_adapter(monkeypatch)
+    assert 0 < adapter._WALL_CLOCK_DEADLINE_SECONDS < 9 * 3600
+
+
+def test_deployed_action_budget_exceeds_observed_completion_costs(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """r11l was only ever completed at 164-333 actions; 80 could not reach it."""
+
+    adapter = _load_adapter(monkeypatch)
+    assert adapter.MyAgent.MAX_ACTIONS >= 500
