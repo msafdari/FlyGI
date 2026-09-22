@@ -13,9 +13,10 @@ repository.
 | Directed degree-preserving rewires | Implemented in `flygi/connectome/nulls.py`; three seeds built and evaluated |
 | No recurrent graph (bypass) | Implemented; interface-matched and evaluated |
 | Random legal agent | Implemented; Gate 0 chance floor recorded |
+| Generic matched sparse reservoir | Implemented and compiled; ARC run pending |
+| Positive control (edge of chaos) | Implemented, compiled and validated; ARC run pending |
 | Weight shuffle | Not implemented |
 | Sign shuffle within transmitter strata | Not implemented |
-| Generic matched sparse reservoir | Not implemented |
 
 ## The implemented degree-preserving null
 
@@ -49,6 +50,38 @@ as ablated with nonzero gain, and a test asserts its readout is not silent: a
 bypass whose readout is always zero measures nothing. An earlier version of
 this control simply zeroed the persistent state, which made it a do-nothing
 agent rather than a matched comparison.
+
+## The positive control
+
+Every condition above is built to be no better than the fly. That is what makes
+a set of near-zero results uninterpretable: it cannot separate "the biological
+graph confers no advantage" from "this interface and operating point cannot
+express an advantage that *any* graph could confer."
+
+The positive control exists to break that tie. It is a reservoir deliberately
+placed in the regime reservoir computing says is good, so it *should* outperform
+if the harness can register an advantage at all.
+
+Placing it there takes two changes, not one. Scaling to a spectral radius near
+one is not sufficient, because incoming-L1 normalization of non-negative weights
+already produces a row-stochastic matrix whose radius is exactly one for any
+topology; such a matrix is an averaging operator that diffuses information. The
+positive control therefore also assigns symmetric random signs, which is the
+standard echo-state construction. An early version omitted the signs, targeted
+0.95, and landed *below* its own null; its own test caught this.
+
+Because its purpose is to differ, it departs from the declared normalization and
+sign mode. Both departures are recorded in its statistics as
+`departs_from_declared_normalization` and `departs_from_declared_sign_mode`, and
+it must never be reported as a matched null.
+
+Validated at the deployed operating point:
+
+| Condition | rho | Memory half-life | Retained after 12 silent actions |
+| --- | ---: | ---: | ---: |
+| Real signed fly | 0.8289 | 1 action | 0.00019 |
+| Matched random reservoir | 0.1608 | 1 action | 0.00000 |
+| Positive control | 0.9924 | 3 actions | 0.07686 |
 
 ## The full declared control set
 
