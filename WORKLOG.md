@@ -2213,3 +2213,101 @@ rewired while degree is preserved, and to the no-recurrent-graph bypass.
 This is a larger change than the current score campaign and will not produce a
 submission today. It is recorded here as the highest-value scientific direction,
 not as a substitute for the in-flight budget runs.
+
+## 2026-09-22 — PLAN: the plastic mushroom body (anatomically grounded Track C)
+
+### Where this stands, in one place
+
+**Done.**
+
+- FlyGI runs the complete 166,700-neuron signed MaleCNS graph in every ARC
+  decision with zero trainable parameters, passes its engineering gate on all 25
+  public games, and holds a scored leaderboard entry (submission `56444435`,
+  public score 0.00, rank 3212 of 3215).
+- Controls exist and are measured: three directed degree-preserving nulls, an
+  interface-matched no-recurrent-graph bypass, a matched random reservoir, and a
+  validated positive control that retains roughly 400x the real graph's state.
+- The real graph separates from its degree-preserving nulls by 3.59x in spectral
+  radius. That structural difference has produced **no** ARC advantage.
+- Score levers found by measurement: the 80-action ceiling could not reach games
+  needing 164-333 actions, and a loop-escape layer unlocked `cd82`, a game no
+  condition had ever completed. Both are in the current candidate.
+- A 520-parameter trained head (Track B) is implemented, wired into the live
+  policy, and covered by causal tests, with a CEM trainer that includes a
+  trace-ablation honesty check. It has **not** been trained.
+- **The audit that changed the plan:** `modulator_treatment: zero` deleted every
+  dopaminergic edge -- 129,132 into Kenyon cells and 3,195 into MBONs. The
+  submitted fly had no reward system, and we then observed that it did not
+  learn.
+
+**Doing now.** Building the fly's own learning circuit, described below.
+
+**Next, in order.** Finish the in-flight budget runs and spend today's
+submission on the better of them; train the Track B head overnight as a
+comparison arm; then evaluate the plastic mushroom body against it.
+
+### Why the mushroom body instead of a bigger trained head
+
+Track B's head is 520 arbitrary parameters bolted onto an arbitrary readout. The
+mushroom body is a three-layer learning system the fly already has, and the
+measurements confirm it is intact: 4,064 Kenyon cells giving a sparse
+high-dimensional expansion, 61,210 Kenyon-cell-to-MBON edges at density 0.155
+forming a learned valence readout, 354 dopaminergic neurons supplying a teaching
+signal, and a 2,618-edge MBON-to-dopaminergic recurrent value loop.
+
+Plasticity in *Drosophila* occurs specifically at Kenyon-cell-to-MBON synapses
+and is gated by dopaminergic activity, with dopamine **depressing** the synapses
+active at the time. That is established neuroscience, not a modeling invention,
+and it gives roughly 61,000 plastic weights in the biologically correct place
+rather than 520 in an invented one.
+
+### The build, in five stages
+
+1. **`flygi.plasticity.mushroom_body`** -- resolve Kenyon cells, MBONs and
+   dopaminergic neurons from node metadata; extract the Kenyon-cell-to-MBON
+   submatrix as the plastic block; implement a bounded three-factor rule;
+   expose MBON activity. Unit-tested on synthetic graphs.
+2. **Declared configuration** -- learning rate, decay, weight bounds, reward
+   scale and the reward definition, all typed and validated, disabled by default
+   so every existing config and result is untouched.
+3. **Policy integration** -- compute reward from ARC progress each turn, drive
+   the dopaminergic population with it, update the plastic block, and let the
+   change reach behaviour through the existing MBON-to-descending pathway.
+   Causal tests: plasticity must change the action sequence, and must not when
+   the reward is identically zero.
+4. **A runtime that preserves modulators** -- a new compiled asset with
+   `modulator_treatment: positive` so the 129,132 dopaminergic edges exist. The
+   sign is an acknowledged approximation: dopamine's real effect is to gate
+   plasticity, not to drive, and the rule uses dopaminergic *activity* rather
+   than its synaptic sign.
+5. **Evaluation** -- the plastic agent against the frozen agent on identical
+   games, seeds and budget, then against the preregistered controls.
+
+### Falsifiability, fixed before any result
+
+A plastic mushroom body that improves the score proves nothing on its own. The
+same plasticity, learning rate and reward must be applied to:
+
+- a mushroom body rewired with degree preserved, keeping Kenyon-cell and MBON
+  counts and degrees but destroying which cell contacts which;
+- the no-recurrent-graph bypass.
+
+If a degree-preserving rewire of the mushroom body learns equally well, the
+result is about having 61,000 plastic synapses, not about the fly's wiring.
+
+### The constraint that shapes the interface
+
+Lobula-columnar input to Kenyon cells is **20 edges**. The adult mushroom body
+is overwhelmingly olfactory and barely sees. There is therefore no biological
+visual route into the learning circuit, and any image-to-Kenyon-cell injection
+is a declared interface choice rather than something the fly does. The dense
+visual route into persistent state is the ring neurons into the central complex,
+which is why the central complex remains the honest place to look for a latent
+world-model state later.
+
+### What this is not
+
+The fly's latent state is low-dimensional and domain-shaped, for orientation,
+place and stimulus valence. It supports associative learning and goal-directed
+navigation, not the compositional program induction ARC ultimately rewards. The
+expectation is a measurable improvement in adaptation, not a solved benchmark.
