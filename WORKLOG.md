@@ -471,3 +471,42 @@ training budget, and seeds.
   but it requires a new world-model-and-planning system. It is not a credible
   outcome of more loop-escape tuning, a larger budget, or the 520-parameter head
   alone.
+
+## 2026-09-22 — Second submission scored: 0.00 again
+
+Submission **56459984** completed with a **public score of 0.00**, unchanged
+from the first submission's 0.00.
+
+| Submission | Config | Public score |
+| --- | --- | ---: |
+| 56444435 | 80-action ceiling, no loop escape | 0.00 |
+| **56459984** | **600-action ceiling, loop escape mild** | **0.00** |
+
+### Reading it honestly
+
+The configuration change was real and was verified end to end: the served
+config.yaml hash matched the loop-escape config byte for byte, and the
+server-side preflight confirmed `mode=connectome` with all three array digests
+matching. This was not a packaging failure. The agent that ran on the hidden set
+was the one intended.
+
+It simply did not find anything. The local 0.190476 came from a single public
+game, `cd82`, out of 25. The hidden set evidently contains nothing the agent can
+reach within 600 actions, which was recorded as a plausible outcome before
+submitting.
+
+**The budget and exploration levers are now exhausted as score levers.** 1600
+actions bought nothing over 600 locally, and 600 bought nothing over 80 on the
+hidden set. What separates 0.00 from a score is not how long the agent flails or
+how widely it wanders; it is whether it can work out what a game wants. Nothing
+built so far does that.
+
+### Consequence for the plan
+
+Two submissions have now been spent establishing that configuration tuning does
+not move the hidden-set score. The remaining untried lever is a learned policy,
+which is what Track B is training now. If a trained head also returns 0.00, the
+honest conclusion is that a frozen connectome with a small readout cannot reach
+the first level of an unseen ARC-AGI-3 game, and the project's contribution is
+the controlled negative result plus the structural finding, not a leaderboard
+position.
