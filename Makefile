@@ -31,9 +31,14 @@ CALIBRATION_GAMES ?= lp85 ft09 ls20 sp80
 CALIBRATION_ACTIONS ?= 40
 CALIBRATION_CANDIDATES ?= focused balanced exploratory
 CALIBRATION_OUTPUT ?=
+LOOP_CALIBRATION_SEEDS ?= 0 1
+LOOP_CALIBRATION_GAMES ?= ft09 lp85 ls20 sp80
+LOOP_CALIBRATION_ACTIONS ?= 40
+LOOP_CALIBRATION_CANDIDATES ?= mild balanced strong
+LOOP_CALIBRATION_OUTPUT ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke play-local verify-local baseline-local connectome-local benchmark-full-graph probe-regime calibrate-sampler list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke play-local verify-local baseline-local connectome-local benchmark-full-graph probe-regime calibrate-sampler calibrate-loop-escape list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -93,6 +98,13 @@ calibrate-sampler: ## Rank the preregistered sampler grid using score-blind beha
 		--seeds $(CALIBRATION_SEEDS) --games $(CALIBRATION_GAMES) \
 		--action-budget $(CALIBRATION_ACTIONS) --candidates $(CALIBRATION_CANDIDATES) \
 		$(if $(CALIBRATION_OUTPUT),--output $(CALIBRATION_OUTPUT))
+
+calibrate-loop-escape: ## Select a loop-escape strength using score-blind behavior
+	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/calibrate_loop_escape.py \
+		--seeds $(LOOP_CALIBRATION_SEEDS) --games $(LOOP_CALIBRATION_GAMES) \
+		--action-budget $(LOOP_CALIBRATION_ACTIONS) \
+		--candidates $(LOOP_CALIBRATION_CANDIDATES) \
+		$(if $(LOOP_CALIBRATION_OUTPUT),--output $(LOOP_CALIBRATION_OUTPUT))
 
 list-games: ## List public ARC-AGI-3 games
 	$(UV_RUN) python scripts/play_local.py --list

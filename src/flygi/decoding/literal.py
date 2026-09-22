@@ -35,7 +35,10 @@ def _validate_temperature(value: float, name: str = "temperature") -> float:
 
 
 def scale_aware_probabilities(
-    logits: NDArray[np.floating], temperature: float
+    logits: NDArray[np.floating],
+    temperature: float,
+    *,
+    standardized_bias: NDArray[np.floating] | None = None,
 ) -> tuple[NDArray[np.float64], float]:
     """Turn finite logits into probabilities without depending on raw scale.
 
@@ -52,15 +55,41 @@ def scale_aware_probabilities(
     if not np.isfinite(values).all():
         raise ReadoutError("categorical logits must all be finite")
     checked_temperature = _validate_temperature(temperature)
+    if standardized_bias is None:
+        # Preserve the frozen sampler's exact arithmetic and RNG-facing
+        # probabilities when loop escape is disabled.
+        if values.size == 1:
+            return np.ones(1, dtype=np.float64), 0.0
+
+        scale = float(values.std())
+        if scale <= _SCALE_EPSILON:
+            return np.full(values.size, 1.0 / values.size, dtype=np.float64), scale
+
+        standardized = (values - float(values.mean())) / scale
+        exponent = standardized / checked_temperature
+        exponent -= float(exponent.max())
+        weights = np.exp(exponent)
+        probabilities = weights / float(weights.sum())
+        if not np.isfinite(probabilities).all() or not np.isclose(probabilities.sum(), 1.0):
+            raise ReadoutError("scale-aware categorical normalization failed")
+        return probabilities, scale
+
+    bias = np.asarray(standardized_bias, dtype=np.float64)
+    if bias.shape != values.shape:
+        raise ReadoutError(
+            f"standardized bias shape {bias.shape} does not match logits shape {values.shape}"
+        )
+    if not np.isfinite(bias).all():
+        raise ReadoutError("standardized bias must contain only finite values")
     if values.size == 1:
         return np.ones(1, dtype=np.float64), 0.0
 
     scale = float(values.std())
     if scale <= _SCALE_EPSILON:
-        return np.full(values.size, 1.0 / values.size, dtype=np.float64), scale
-
-    standardized = (values - float(values.mean())) / scale
-    exponent = standardized / checked_temperature
+        standardized = np.zeros(values.size, dtype=np.float64)
+    else:
+        standardized = (values - float(values.mean())) / scale
+    exponent = (standardized + bias) / checked_temperature
     exponent -= float(exponent.max())
     weights = np.exp(exponent)
     probabilities = weights / float(weights.sum())
@@ -82,6 +111,8 @@ class ActionDecision:
     selected_probability: float
     entropy_bits: float
     logit_scale: float
+    standardized_bias: NDArray[np.float64]
+    bias_changed_argmax: bool
 
 
 class LiteralActionMap:
@@ -146,6 +177,7 @@ class LiteralActionMap:
         legal_action_ids: tuple[int, ...] | list[int],
         *,
         rng: np.random.Generator,
+        standardized_bias: NDArray[np.floating] | None = None,
     ) -> ActionDecision:
         """Sample one legal action; illegal actions have exactly zero mass."""
 
@@ -164,10 +196,34 @@ class LiteralActionMap:
         legal_index = np.asarray(legal, dtype=np.int64)
         masked[legal_index] = scores[legal_index]
 
-        best = int(np.argmax(masked))
         top = masked[legal_index]
-        unique = bool(np.count_nonzero(top == masked[best]) == 1)
-        legal_probabilities, logit_scale = scale_aware_probabilities(top, self._temperature)
+        full_bias = np.zeros(self._action_slots, dtype=np.float64)
+        legal_bias: NDArray[np.float64] | None = None
+        if standardized_bias is not None:
+            supplied = np.asarray(standardized_bias, dtype=np.float64)
+            if supplied.shape != (self._action_slots,):
+                raise ReadoutError(
+                    "standardized action bias must have shape "
+                    f"({self._action_slots},), observed {supplied.shape}"
+                )
+            if not np.isfinite(supplied).all():
+                raise ReadoutError("standardized action bias must contain only finite values")
+            full_bias = supplied.copy()
+            legal_bias = full_bias[legal_index]
+        legal_probabilities, logit_scale = scale_aware_probabilities(
+            top,
+            self._temperature,
+            standardized_bias=legal_bias,
+        )
+        raw_best_offset = int(np.argmax(top))
+        biased_best_offset = int(np.argmax(legal_probabilities))
+        if standardized_bias is None:
+            unique = bool(np.count_nonzero(top == top[raw_best_offset]) == 1)
+        else:
+            unique = bool(
+                np.count_nonzero(legal_probabilities == legal_probabilities[biased_best_offset])
+                == 1
+            )
         selected_offset = int(rng.choice(len(legal), p=legal_probabilities))
         selected = legal[selected_offset]
         probabilities = np.zeros(self._action_slots, dtype=np.float64)
@@ -186,4 +242,6 @@ class LiteralActionMap:
             selected_probability=float(probabilities[selected]),
             entropy_bits=entropy,
             logit_scale=logit_scale,
+            standardized_bias=full_bias,
+            bias_changed_argmax=raw_best_offset != biased_best_offset,
         )

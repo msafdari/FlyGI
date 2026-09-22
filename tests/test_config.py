@@ -41,6 +41,11 @@ def test_checked_in_configs_parse() -> None:
     assert literal.decoder.decision_seed_policy == "explicit_per_policy_or_config_derived"
     assert literal.decoder.coordinate_fallback == "novelty_centroid"
     assert literal.decoder.unchanged_click_exploration == "seeded_untried_uniform"
+    assert literal.decoder.loop_escape_enabled is False
+    assert literal.decoder.loop_escape_exploration_bonus == 0.0
+    assert literal.decoder.loop_escape_unchanged_failure_penalty == 0.0
+    assert literal.decoder.loop_escape_state_hash == "blake2b_128"
+    assert literal.decoder.loop_escape_coordinate_memory == "per_observation"
 
 
 def test_seed_derivation_does_not_use_salted_python_hash() -> None:
@@ -87,6 +92,28 @@ def test_invalid_dynamics_config_fails_closed(
             "repeat",
             "unsupported decoder.unchanged_click_exploration",
         ),
+        ("loop_escape_enabled", "yes", "loop_escape_enabled must be a boolean"),
+        (
+            "loop_escape_exploration_bonus",
+            True,
+            "loop_escape_exploration_bonus must be numeric",
+        ),
+        (
+            "loop_escape_exploration_bonus",
+            -0.1,
+            "loop_escape_exploration_bonus must be finite and non-negative",
+        ),
+        (
+            "loop_escape_unchanged_failure_penalty",
+            float("nan"),
+            "loop_escape_unchanged_failure_penalty must be finite and non-negative",
+        ),
+        ("loop_escape_state_hash", "python", "unsupported decoder.loop_escape_state_hash"),
+        (
+            "loop_escape_coordinate_memory",
+            "global",
+            "unsupported decoder.loop_escape_coordinate_memory",
+        ),
         ("unexpected", 1, "unknown decoder keys"),
     ],
 )
@@ -99,6 +126,31 @@ def test_invalid_stochastic_decoder_config_fails_closed(
     path.write_text(yaml.safe_dump(document), encoding="utf-8")
 
     with pytest.raises(ConfigError, match=message):
+        load_config(path)
+
+
+def test_enabled_loop_escape_requires_and_loads_explicit_strengths(tmp_path: Path) -> None:
+    document = yaml.safe_load(Path("configs/literal_rate_signed.yaml").read_text(encoding="utf-8"))
+    document["decoder"].update(
+        {
+            "loop_escape_enabled": True,
+            "loop_escape_exploration_bonus": 0.5,
+            "loop_escape_unchanged_failure_penalty": 1.0,
+            "loop_escape_state_hash": "blake2b_128",
+            "loop_escape_coordinate_memory": "per_observation",
+        }
+    )
+    path = tmp_path / "loop.yaml"
+    path.write_text(yaml.safe_dump(document), encoding="utf-8")
+
+    decoder = load_config(path).decoder
+    assert decoder.loop_escape_enabled is True
+    assert decoder.loop_escape_exploration_bonus == 0.5
+    assert decoder.loop_escape_unchanged_failure_penalty == 1.0
+
+    document["decoder"]["loop_escape_exploration_bonus"] = 0.0
+    path.write_text(yaml.safe_dump(document), encoding="utf-8")
+    with pytest.raises(ConfigError, match="must be positive when loop escape is enabled"):
         load_config(path)
 
 

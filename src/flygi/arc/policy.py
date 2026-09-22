@@ -23,6 +23,7 @@ from numpy.typing import NDArray
 from flygi.decoding.coordinate_head import CoordinateDecision, CoordinateHead, novelty_centroid
 from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace
 from flygi.decoding.literal import LiteralActionMap
+from flygi.decoding.loop_escape import LoopEscapeMemory, LoopEscapeParameters
 from flygi.dynamics.rate import ScipyRateNetwork
 from flygi.encoding.features import encode_observation
 from flygi.encoding.sparse_projection import SensoryProjection
@@ -76,6 +77,15 @@ class TurnRecord:
     coordinate_method: str | None = None
     coordinate_proposed_x: int | None = None
     coordinate_proposed_y: int | None = None
+    loop_escape_state_key: str | None = None
+    loop_escape_standardized_bias: list[float] = field(default_factory=list)
+    loop_escape_selected_bias: float | None = None
+    loop_escape_attempts_before: int | None = None
+    loop_escape_unchanged_failures_before: int | None = None
+    loop_escape_attempt_counts: list[int] = field(default_factory=list)
+    loop_escape_unchanged_failure_counts: list[int] = field(default_factory=list)
+    loop_escape_prior_choice_failed: bool | None = None
+    loop_escape_bias_changed_argmax: bool | None = None
 
 
 class ConnectomePolicy:
@@ -92,6 +102,7 @@ class ConnectomePolicy:
         coordinate_head: CoordinateHead,
         internal_steps: int,
         decision_seed: int = 0,
+        loop_escape: LoopEscapeParameters | None = None,
         standardizer: AdaptiveStandardizer | None = None,
         state_policy: StatePolicy | None = None,
         ablate_graph: bool = False,
@@ -123,6 +134,7 @@ class ConnectomePolicy:
         self._internal_steps = int(internal_steps)
         self._decision_seed = int(decision_seed)
         self._rng = np.random.default_rng(self._decision_seed)
+        self._loop_escape = LoopEscapeMemory(loop_escape or LoopEscapeParameters())
         self._state_policy = state_policy or StatePolicy()
         self._ablate_graph = bool(ablate_graph)
         self._standardizer = standardizer
@@ -184,6 +196,7 @@ class ConnectomePolicy:
             },
             "action_map": self._action_map.describe(),
             "coordinate_head": self._coordinates.describe(),
+            "loop_escape": self._loop_escape.parameters.describe(),
             "state_policy": {
                 "reset_on_new_environment": self._state_policy.reset_on_new_environment,
                 "preserve_across_levels": self._state_policy.preserve_across_levels,
@@ -202,6 +215,7 @@ class ConnectomePolicy:
         self._previous_grid = None
         self._previous_action_id = None
         self._clicked_coordinates.clear()
+        self._loop_escape.reset()
         self._rng = np.random.default_rng(self._decision_seed)
         if self._standardizer is not None:
             self._standardizer.reset()
@@ -213,7 +227,12 @@ class ConnectomePolicy:
 
     def _advance(
         self, frame: FrameLike, turn: ArcTurnState
-    ) -> tuple[NDArray[np.float32], int, tuple[int, int] | None]:
+    ) -> tuple[
+        NDArray[np.float32],
+        int,
+        tuple[int, int] | None,
+        NDArray[np.int8],
+    ]:
         """Encode the frame, advance the graph, and return the readout trace."""
 
         previous_grid = self._previous_grid
@@ -229,14 +248,15 @@ class ConnectomePolicy:
         # recurrent gain and a readout-targeted projection of matched budget.
         self._state = self._network.advance(self._state, drive, internal_steps=self._internal_steps)
         centroid = novelty_centroid(previous_grid, features.grid)
-        self._previous_grid = np.array(features.grid, dtype=np.int8, copy=True)
-        return self._state, features.changed_cells, centroid
+        current_grid = np.array(features.grid, dtype=np.int8, copy=True)
+        self._previous_grid = current_grid
+        return self._state, features.changed_cells, centroid, current_grid
 
     def choose_action(self, latest_frame: FrameLike) -> ActionLike:
         """Run one full closed-loop decision."""
 
         turn = ArcTurnState.from_frame(latest_frame)
-        state, changed_cells, centroid = self._advance(latest_frame, turn)
+        state, changed_cells, centroid, current_grid = self._advance(latest_frame, turn)
         population, diagnostics = self._readout.standardized(state)
         trace = (
             population
@@ -250,6 +270,19 @@ class ConnectomePolicy:
         action_entropy_bits: float | None = None
         action_logit_scale: float | None = None
         coordinate: CoordinateDecision | None = None
+        loop_state_key: bytes | None = None
+        loop_bias: list[float] = []
+        loop_selected_bias: float | None = None
+        loop_attempts_before: int | None = None
+        loop_failures_before: int | None = None
+        loop_attempt_counts: list[int] = []
+        loop_failure_counts: list[int] = []
+        loop_prior_choice_failed: bool | None = None
+        loop_changed_argmax: bool | None = None
+        loop_enabled = self._loop_escape.parameters.enabled
+        if loop_enabled:
+            loop_state_key = self._loop_escape.observe(current_grid)
+            loop_prior_choice_failed = self._loop_escape.last_choice_failed
         if turn.needs_reset:
             # The protocol forces RESET here. The graph still saw the frame, so
             # the failed attempt leaves a trace in the persistent state.
@@ -257,15 +290,26 @@ class ConnectomePolicy:
             action = reset
             unique = True
             logits: list[float] = []
+            if loop_enabled:
+                self._loop_escape.discard_pending_choice()
         else:
             if not turn.available_action_ids:
                 raise PolicyError(
                     f"active ARC frame in state {turn.game_state!r} declares no legal actions"
                 )
+            standardized_bias = None
+            if loop_enabled:
+                assert loop_state_key is not None
+                standardized_bias = self._loop_escape.standardized_bias(
+                    loop_state_key,
+                    turn.available_action_ids,
+                    action_slots=self._action_map.action_slots,
+                )
             decision = self._action_map.decide(
                 trace,
                 turn.available_action_ids,
                 rng=self._rng,
+                standardized_bias=standardized_bias,
             )
             chosen_id = decision.action_id
             unique = decision.argmax_was_unique
@@ -273,18 +317,63 @@ class ConnectomePolicy:
             action_probability = decision.selected_probability
             action_entropy_bits = decision.entropy_bits
             action_logit_scale = decision.logit_scale
+            if loop_enabled:
+                assert loop_state_key is not None
+                loop_bias = [float(value) for value in decision.standardized_bias]
+                loop_selected_bias = float(decision.standardized_bias[chosen_id])
+                loop_attempts_before, loop_failures_before = self._loop_escape.counts(
+                    loop_state_key, chosen_id
+                )
+                loop_attempt_counts, loop_failure_counts = self._loop_escape.count_vectors(
+                    loop_state_key,
+                    action_slots=self._action_map.action_slots,
+                )
+                loop_changed_argmax = decision.bias_changed_argmax
             action = self._resolve_action(chosen_id)
             if chosen_id == ACTION6:
+                if loop_enabled:
+                    assert loop_state_key is not None
+                    excluded_coordinates = self._loop_escape.failed_click_coordinates(
+                        loop_state_key
+                    )
+                    explore_unchanged_click = bool(excluded_coordinates)
+                else:
+                    excluded_coordinates = self._clicked_coordinates
+                    explore_unchanged_click = (
+                        self._previous_action_id == ACTION6 and changed_cells == 0
+                    )
                 coordinate = self._attach_coordinates(
                     action,
                     trace,
                     centroid=centroid,
-                    explore_unchanged_click=(
-                        self._previous_action_id == ACTION6 and changed_cells == 0
-                    ),
+                    explore_unchanged_click=explore_unchanged_click,
+                    excluded_coordinates=excluded_coordinates,
+                    remember_immediately=not loop_enabled,
+                )
+            if loop_enabled:
+                assert loop_state_key is not None
+                self._loop_escape.record_choice(
+                    loop_state_key,
+                    chosen_id,
+                    coordinate=(None if coordinate is None else (coordinate.x, coordinate.y)),
                 )
 
-        self._annotate(action, chosen_id, turn)
+        loop_record = (
+            None
+            if not loop_enabled
+            else {
+                "state_key": None if loop_state_key is None else loop_state_key.hex(),
+                "standardized_bias": loop_bias,
+                "selected_bias": loop_selected_bias,
+                "attempts_before": loop_attempts_before,
+                "unchanged_failures_before": loop_failures_before,
+                "attempt_counts": loop_attempt_counts,
+                "unchanged_failure_counts": loop_failure_counts,
+                "prior_choice_failed": loop_prior_choice_failed,
+                "bias_changed_argmax": loop_changed_argmax,
+            }
+        )
+        self._annotate(action, chosen_id, turn, loop_escape=loop_record)
         self.records.append(
             TurnRecord(
                 step=self._step,
@@ -306,6 +395,15 @@ class ConnectomePolicy:
                 coordinate_method=None if coordinate is None else coordinate.method,
                 coordinate_proposed_x=None if coordinate is None else coordinate.proposed_x,
                 coordinate_proposed_y=None if coordinate is None else coordinate.proposed_y,
+                loop_escape_state_key=(None if loop_state_key is None else loop_state_key.hex()),
+                loop_escape_standardized_bias=loop_bias,
+                loop_escape_selected_bias=loop_selected_bias,
+                loop_escape_attempts_before=loop_attempts_before,
+                loop_escape_unchanged_failures_before=loop_failures_before,
+                loop_escape_attempt_counts=loop_attempt_counts,
+                loop_escape_unchanged_failure_counts=loop_failure_counts,
+                loop_escape_prior_choice_failed=loop_prior_choice_failed,
+                loop_escape_bias_changed_argmax=loop_changed_argmax,
             )
         )
         self._previous_action_id = chosen_id
@@ -331,22 +429,32 @@ class ConnectomePolicy:
         *,
         centroid: tuple[int, int] | None,
         explore_unchanged_click: bool,
+        excluded_coordinates: set[tuple[int, int]],
+        remember_immediately: bool,
     ) -> CoordinateDecision:
         decision = self._coordinates.sample(
             trace,
             rng=self._rng,
             centroid=centroid,
             explore_unchanged_click=explore_unchanged_click,
-            clicked_coordinates=self._clicked_coordinates,
+            clicked_coordinates=excluded_coordinates,
         )
         setter = getattr(action, "set_data", None)
         if not callable(setter):
             raise PolicyError("complex ARC actions must implement set_data(data)")
         setter({"x": decision.x, "y": decision.y})
-        self._clicked_coordinates.add((decision.x, decision.y))
+        if remember_immediately:
+            self._clicked_coordinates.add((decision.x, decision.y))
         return decision
 
-    def _annotate(self, action: ActionLike, chosen_id: int, turn: ArcTurnState) -> None:
+    def _annotate(
+        self,
+        action: ActionLike,
+        chosen_id: int,
+        turn: ArcTurnState,
+        *,
+        loop_escape: dict[str, Any] | None = None,
+    ) -> None:
         reasoning: Any = {
             "policy": "flygi-connectome-literal",
             "action_id": chosen_id,
@@ -354,5 +462,7 @@ class ConnectomePolicy:
             "internal_steps": self._internal_steps,
             "decision_seed": self._decision_seed,
         }
+        if loop_escape is not None:
+            reasoning["loop_escape"] = loop_escape
         with suppress(AttributeError, TypeError):
             action.reasoning = reasoning

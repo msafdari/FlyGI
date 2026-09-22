@@ -1511,3 +1511,116 @@ The reviewed index is `results/manifests/positive_control_regime_20260922.json`.
 6. Follow the specification's declared order: controls, then Track B's frozen
    trained interface. Track C plasticity remains later work because it changes
    the research question and makes null matching substantially harder.
+
+## 2026-09-22 — Score-improvement intervention 1: state-conditioned loop escape (PREREGISTERED)
+
+### Why this is the next finite change
+
+The completed 500-action sweep rules out action budget as the immediate
+bottleneck and identifies a concrete behavioral deficit: the real signed agent
+recorded 21,579 repeated observations across 75 rows, versus 12,435 for random
+legal play. Its 15,996 unique observations were also well below random's
+25,140. All real-agent progress remained confined to two first-level
+completions in `sp80`, with mean score `0.06475067`; random reached six first
+levels across `sp80` and `r11l`, with mean score `0.09756824`.
+
+The next intervention is therefore a bounded state-conditioned loop-escape
+layer, not another budget increase or an analysis-only subsystem. It preserves
+the signed MaleCNS computation and adds a recorded bias to its action logits:
+
+- identify the current observation by a stable grid hash;
+- remember action attempts and unchanged-observation failures separately for
+  each observation;
+- give less-tried legal actions a finite exploration bonus and penalize actions
+  that previously left that same observation unchanged;
+- keep the first decision in a newly observed state graph-driven because every
+  legal action receives the same initial bonus;
+- track attempted `ACTION6` coordinates per observation rather than globally,
+  so a click known to fail in one state is avoided when that state recurs;
+- reset all loop memory at the environment boundary and use only the existing
+  policy-owned seeded RNG.
+
+The feature will be explicit in typed configuration, disabled by default, and
+fully visible in turn records. Existing configs and policies must retain their
+current behavior when it is disabled. If the intervention fails, it remains as
+a named optional ablation with its result documented; source history will not
+be rewritten or reverted merely because the outcome is negative.
+
+### Frozen selection and score gate
+
+Action and coordinate temperatures stay fixed at the already frozen focused
+values, `0.15` and `0.20`. Three strength settings will be compared using only
+behavioral diagnostics on the predeclared calibration subset `ft09`, `lp85`,
+`ls20`, and `sp80`, seeds 0 and 1, at exactly 40 actions per row:
+
+| Candidate | Untried-action bonus | Unchanged-failure penalty |
+| --- | ---: | ---: |
+| mild | 0.25 | 0.50 |
+| balanced | 0.50 | 1.00 |
+| strong | 1.00 | 2.00 |
+
+Eligibility requires zero failed rows, illegal actions, invalid coordinates,
+or budget violations, plus matching same-seed replay and across-seed diversity.
+The winner is selected without using score or level progress: maximize unique
+observations, minimize consecutive observation repeats, then use higher
+legal-normalized action entropy and lower policy time as fixed tie-breakers.
+The chosen setting is frozen in a separate checked-in config before the full
+score artifact is inspected.
+
+The only score-bearing gate is then all 25 public games, seeds 0-2, at exactly
+500 actions. Minimum success is both mean score greater than the frozen real
+baseline `0.06475067` and more than two completed levels. The stronger target is
+to exceed the matched random baseline mean `0.09756824` and its six completed
+levels. No Kaggle submission is authorized by this experiment.
+
+Current action: implement the configuration, state memory, standardized-logit
+bias, per-observation click memory, turn provenance, and focused unit tests.
+Next: run all fast checks, checkpoint and push; run the score-blind calibration,
+freeze its winner, checkpoint and push; only then launch the full score gate.
+
+### Implementation checkpoint — complete, calibration not yet run
+
+The bounded intervention is implemented behind typed configuration and remains
+disabled in every pre-existing config. The disabled path retains the frozen
+sampler's original probability arithmetic, RNG calls, global click history,
+actions, payloads, and selected-action probabilities; an explicit multi-turn
+regression compares it with the legacy constructor.
+
+When enabled, `LoopEscapeMemory` hashes the exact grid with 128-bit BLAKE2b,
+attributes an unchanged outcome to the prior observation/action exactly once,
+and emits the preregistered additive bias *after* legal graph logits are
+standardized. A prior click coordinate enters the per-observation exclusion set
+only after it is observed to fail; a click that changes the frame is not marked
+as failed. Forced protocol resets are never counted as policy choices. All maps,
+pending outcomes, graph state, standardizer state, and the seeded RNG reset at
+the environment boundary.
+
+Every enabled turn persists its state key, complete eight-slot bias vector,
+attempt vector, unchanged-failure vector, selected bias/counts, prior-outcome
+status, and whether the bias changed the graph argmax. The ordinary connectome
+evaluator now copies this provenance into its immutable trace and summarizes
+revisits, failures, and argmax changes.
+
+A dedicated `flygi.loop-escape-calibration` runner preserves the historical
+temperature-calibration schema. It fixes temperatures at `0.15/0.20`, accepts
+only the three declared strength pairs, strips all score and level-progress
+fields, applies the frozen lexicographic selection order, and writes every
+turn's loop provenance. `make calibrate-loop-escape` is the reproducible entry
+point.
+
+Verification observed:
+
+- `uv run pytest -q`: **228 passed** (200 before this intervention);
+- ruff lint passed and all 98 checked files are formatted;
+- a temporary 4-action end-to-end smoke covered all four calibration games and
+  both seeds: 8/8 rows succeeded, the same-seed replay matched, seed diversity
+  passed, and the one smoke candidate was eligible;
+- a recursive JSON-key audit of that smoke artifact found no keys named
+  `official`, `score`, `levels_completed`, or `final_levels_completed`;
+- the smoke artifact is temporary under `/tmp` and is not an experimental
+  result or a source of candidate selection.
+
+Current action: review, commit, and push this verified implementation checkpoint.
+Next: run the exact three-candidate, eight-row-per-candidate score-blind
+calibration; inspect only the declared behavioral metrics; freeze the selected
+strength in a separate signed config before any full score-bearing evaluation.

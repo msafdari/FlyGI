@@ -21,6 +21,10 @@ from flygi.config import FlyGIConfig
 from flygi.decoding.coordinate_head import CoordinateHead
 from flygi.decoding.dn_trace import AdaptiveStandardizer, DescendingTrace, ReadoutError
 from flygi.decoding.literal import LiteralActionMap
+from flygi.decoding.loop_escape import (
+    LoopEscapeError,
+    LoopEscapeParameters,
+)
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.dynamics.runtime import RuntimeConnectome, load_runtime_connectome
 from flygi.encoding.sparse_projection import (
@@ -93,6 +97,9 @@ def build_connectome_policy(
     decision_seed: int | None = None,
     action_temperature: float | None = None,
     coordinate_temperature: float | None = None,
+    loop_escape_enabled: bool | None = None,
+    loop_escape_exploration_bonus: float | None = None,
+    loop_escape_unchanged_failure_penalty: float | None = None,
 ) -> AssembledPolicy:
     """Build one closed-loop policy. Pass ``bundle`` to reuse a loaded graph."""
 
@@ -186,6 +193,25 @@ def build_connectome_policy(
             ),
             internal_steps=network.parameters.internal_steps,
             decision_seed=resolved_decision_seed,
+            loop_escape=LoopEscapeParameters(
+                enabled=(
+                    config.decoder.loop_escape_enabled
+                    if loop_escape_enabled is None
+                    else loop_escape_enabled
+                ),
+                exploration_bonus=(
+                    config.decoder.loop_escape_exploration_bonus
+                    if loop_escape_exploration_bonus is None
+                    else loop_escape_exploration_bonus
+                ),
+                unchanged_failure_penalty=(
+                    config.decoder.loop_escape_unchanged_failure_penalty
+                    if loop_escape_unchanged_failure_penalty is None
+                    else loop_escape_unchanged_failure_penalty
+                ),
+                state_hash=config.decoder.loop_escape_state_hash,
+                coordinate_memory=config.decoder.loop_escape_coordinate_memory,
+            ),
             state_policy=StatePolicy(
                 reset_on_new_environment=config.state.reset_on_new_environment,
                 preserve_across_levels=config.state.preserve_across_levels,
@@ -194,7 +220,7 @@ def build_connectome_policy(
             ),
             ablate_graph=ablate_graph,
         )
-    except (PolicyError, ReadoutError) as exc:
+    except (LoopEscapeError, PolicyError, ReadoutError) as exc:
         raise RuntimeAssemblyError(str(exc)) from exc
 
     return AssembledPolicy(

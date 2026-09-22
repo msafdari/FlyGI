@@ -90,6 +90,14 @@ def _policy_summary(records: list[Any], *, decision_seed: int | None = None) -> 
         for record in records
         if getattr(record, "coordinate_method", None) is not None
     )
+    loop_records = [
+        record for record in records if getattr(record, "loop_escape_state_key", None) is not None
+    ]
+    selected_loop_biases = [
+        float(record.loop_escape_selected_bias)
+        for record in loop_records
+        if getattr(record, "loop_escape_selected_bias", None) is not None
+    ]
     return {
         "turns": len(records),
         "decision_seed": decision_seed,
@@ -127,7 +135,50 @@ def _policy_summary(records: list[Any], *, decision_seed: int | None = None) -> 
             "methods": dict(sorted(coordinate_methods.items())),
         },
         "graph_advanced_turns": sum(1 for record in records if record.graph_advanced),
+        "loop_escape": {
+            "enabled": bool(loop_records),
+            "recorded_turns": len(loop_records),
+            "revisited_decisions": sum(
+                int(getattr(record, "loop_escape_attempts_before", 0) or 0) > 0
+                for record in loop_records
+            ),
+            "prior_unchanged_failures": sum(
+                bool(getattr(record, "loop_escape_prior_choice_failed", False))
+                for record in loop_records
+            ),
+            "bias_changed_argmax_turns": sum(
+                bool(getattr(record, "loop_escape_bias_changed_argmax", False))
+                for record in loop_records
+            ),
+            "mean_selected_bias": (
+                float(np.mean(selected_loop_biases)) if selected_loop_biases else None
+            ),
+        },
     }
+
+
+def _attach_loop_escape_trace(records: list[Any], trace: list[dict[str, Any]]) -> None:
+    """Persist every loop-memory input and bias beside the action it affected."""
+
+    if len(records) != len(trace):
+        raise RuntimeError(
+            f"policy emitted {len(records)} records for {len(trace)} completed decisions"
+        )
+    for record, entry in zip(records, trace, strict=True):
+        state_key = getattr(record, "loop_escape_state_key", None)
+        if state_key is None:
+            continue
+        entry["loop_escape"] = {
+            "state_key": state_key,
+            "standardized_bias": list(record.loop_escape_standardized_bias),
+            "selected_bias": record.loop_escape_selected_bias,
+            "attempts_before": record.loop_escape_attempts_before,
+            "unchanged_failures_before": record.loop_escape_unchanged_failures_before,
+            "attempt_counts": list(record.loop_escape_attempt_counts),
+            "unchanged_failure_counts": list(record.loop_escape_unchanged_failure_counts),
+            "prior_choice_failed": record.loop_escape_prior_choice_failed,
+            "bias_changed_argmax": record.loop_escape_bias_changed_argmax,
+        }
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -225,8 +276,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                 extra_row_fields={"condition": args.condition},
             )
             current = getattr(policy_factory, "current", None)
+            records = list(current.records) if current is not None else []
+            _attach_loop_escape_trace(records, row["trace"])
             row["policy_diagnostics"] = _policy_summary(
-                list(current.records) if current is not None else [],
+                records,
                 decision_seed=(current.decision_seed if current is not None else None),
             )
             rows.append(row)

@@ -93,6 +93,11 @@ class DecoderConfig:
     readout_normalization: str = "adaptive"
     adaptation_rate: float = 0.1
     clip: float = 10.0
+    loop_escape_enabled: bool = False
+    loop_escape_exploration_bonus: float = 0.0
+    loop_escape_unchanged_failure_penalty: float = 0.0
+    loop_escape_state_hash: str = "blake2b_128"
+    loop_escape_coordinate_memory: str = "per_observation"
     trainable: bool = False
 
 
@@ -288,6 +293,18 @@ def load_config(path: str | Path) -> FlyGIConfig:
             coordinate_temperature_raw, (int, float)
         ):
             raise ConfigError("decoder.coordinate_temperature must be numeric")
+        loop_escape_enabled_raw = decoder_raw.pop("loop_escape_enabled", False)
+        if not isinstance(loop_escape_enabled_raw, bool):
+            raise ConfigError("decoder.loop_escape_enabled must be a boolean")
+        loop_escape_numeric: dict[str, float] = {}
+        for key in (
+            "loop_escape_exploration_bonus",
+            "loop_escape_unchanged_failure_penalty",
+        ):
+            raw_value = decoder_raw.pop(key, 0.0)
+            if isinstance(raw_value, bool) or not isinstance(raw_value, (int, float)):
+                raise ConfigError(f"decoder.{key} must be numeric")
+            loop_escape_numeric[key] = float(raw_value)
         decoder = DecoderConfig(
             kind=str(decoder_raw.pop("kind", "literal")),
             readout=str(decoder_raw.pop("readout", "descending_neurons")),
@@ -306,6 +323,15 @@ def load_config(path: str | Path) -> FlyGIConfig:
             readout_normalization=str(decoder_raw.pop("readout_normalization", "adaptive")),
             adaptation_rate=float(decoder_raw.pop("adaptation_rate", 0.1)),
             clip=float(decoder_raw.pop("clip", 10.0)),
+            loop_escape_enabled=loop_escape_enabled_raw,
+            loop_escape_exploration_bonus=loop_escape_numeric["loop_escape_exploration_bonus"],
+            loop_escape_unchanged_failure_penalty=loop_escape_numeric[
+                "loop_escape_unchanged_failure_penalty"
+            ],
+            loop_escape_state_hash=str(decoder_raw.pop("loop_escape_state_hash", "blake2b_128")),
+            loop_escape_coordinate_memory=str(
+                decoder_raw.pop("loop_escape_coordinate_memory", "per_observation")
+            ),
             trainable=bool(decoder_raw.pop("trainable", False)),
         )
         state = StateLifetimeConfig(
@@ -410,6 +436,26 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError("decoder.adaptation_rate must lie in (0, 1]")
     if not math.isfinite(decoder.clip) or decoder.clip <= 0:
         raise ConfigError("decoder.clip must be finite and positive")
+    for field_name in (
+        "loop_escape_exploration_bonus",
+        "loop_escape_unchanged_failure_penalty",
+    ):
+        value = getattr(decoder, field_name)
+        if not math.isfinite(value) or value < 0.0:
+            raise ConfigError(f"decoder.{field_name} must be finite and non-negative")
+    if decoder.loop_escape_enabled and decoder.loop_escape_exploration_bonus <= 0.0:
+        raise ConfigError(
+            "decoder.loop_escape_exploration_bonus must be positive when loop escape is enabled"
+        )
+    if decoder.loop_escape_state_hash != "blake2b_128":
+        raise ConfigError(
+            f"unsupported decoder.loop_escape_state_hash: {decoder.loop_escape_state_hash}"
+        )
+    if decoder.loop_escape_coordinate_memory != "per_observation":
+        raise ConfigError(
+            "unsupported decoder.loop_escape_coordinate_memory: "
+            f"{decoder.loop_escape_coordinate_memory}"
+        )
     if decoder.trainable:
         raise ConfigError("the literal decoder must be nonlearned")
     if not state.preserve_across_actions:

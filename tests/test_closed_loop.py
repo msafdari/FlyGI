@@ -13,6 +13,7 @@ from flygi.arc.policy import ConnectomePolicy, PolicyError, StatePolicy
 from flygi.decoding.coordinate_head import CoordinateHead, novelty_centroid
 from flygi.decoding.dn_trace import DescendingTrace, ReadoutError, contiguous_groups
 from flygi.decoding.literal import LiteralActionMap, scale_aware_probabilities
+from flygi.decoding.loop_escape import LoopEscapeParameters
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.encoding.features import (
     FEATURE_DIMENSION,
@@ -97,7 +98,12 @@ def _network(gain: float = 0.9, seed: int = 0) -> ScipyRateNetwork:
     )
 
 
-def _policy(*, ablate_graph: bool = False, decision_seed: int = 0) -> ConnectomePolicy:
+def _policy(
+    *,
+    ablate_graph: bool = False,
+    decision_seed: int = 0,
+    loop_escape: LoopEscapeParameters | None = None,
+) -> ConnectomePolicy:
     """Mirror the factory, including the matched bypass for the ablation."""
 
     readout_indices = np.arange(NODES - READOUT, NODES, dtype=np.int64)
@@ -126,6 +132,7 @@ def _policy(*, ablate_graph: bool = False, decision_seed: int = 0) -> Connectome
         coordinate_head=CoordinateHead(READOUT),
         internal_steps=4,
         decision_seed=decision_seed,
+        loop_escape=loop_escape,
         state_policy=StatePolicy(),
         ablate_graph=ablate_graph,
     )
@@ -430,6 +437,50 @@ def test_flat_logits_are_sampled_uniformly_and_singletons_are_certain() -> None:
     assert singleton_scale == 0.0
 
 
+def test_standardized_bias_is_applied_after_raw_logit_scaling() -> None:
+    logits = np.asarray([-1.0, 1.0], dtype=np.float32)
+    bias = np.asarray([3.0, 0.0], dtype=np.float64)
+
+    original, _ = scale_aware_probabilities(logits, 1.0)
+    biased, _ = scale_aware_probabilities(logits, 1.0, standardized_bias=bias)
+    affine, _ = scale_aware_probabilities(
+        logits * 500.0 + 19.0,
+        1.0,
+        standardized_bias=bias,
+    )
+
+    assert original[1] > original[0]
+    assert biased[0] > biased[1]
+    assert np.allclose(biased, affine, atol=1e-7)
+
+
+def test_equal_standardized_bias_leaves_graph_probabilities_unchanged() -> None:
+    logits = np.asarray([-0.5, 0.2, 1.7], dtype=np.float32)
+    original, _ = scale_aware_probabilities(logits, 0.15)
+    biased, _ = scale_aware_probabilities(
+        logits,
+        0.15,
+        standardized_bias=np.full(3, 0.5, dtype=np.float64),
+    )
+    assert np.allclose(original, biased, atol=1e-15)
+
+
+def test_bias_can_break_flat_logits_but_must_match_the_legal_shape() -> None:
+    biased, scale = scale_aware_probabilities(
+        np.zeros(3, dtype=np.float32),
+        1.0,
+        standardized_bias=np.asarray([1.0, 0.0, 0.0]),
+    )
+    assert scale == 0.0
+    assert biased[0] > biased[1]
+    with pytest.raises(ReadoutError, match="bias shape"):
+        scale_aware_probabilities(
+            np.zeros(3, dtype=np.float32),
+            1.0,
+            standardized_bias=np.zeros(2, dtype=np.float64),
+        )
+
+
 def test_coordinate_head_responds_to_the_trace() -> None:
     head = CoordinateHead(READOUT)
     generator = np.random.default_rng(0)
@@ -479,6 +530,106 @@ def test_a_changed_frame_after_a_click_uses_the_novelty_centroid() -> None:
     action = policy.choose_action(FakeFrame(available_actions=[6], frame=[second]))
     assert action.action_data == {"x": 13, "y": 7}
     assert policy.records[-1].coordinate_method == "novelty_centroid"
+
+
+def test_disabled_loop_escape_preserves_the_legacy_trace_and_probabilities() -> None:
+    legacy = _policy(decision_seed=37)
+    explicit = _policy(
+        decision_seed=37,
+        loop_escape=LoopEscapeParameters(enabled=False),
+    )
+    frames = [
+        _frame(11, available_actions=[1, 2, 6]),
+        _frame(11, available_actions=[1, 2, 6]),
+        _frame(12, available_actions=[6]),
+        _frame(12, available_actions=[6]),
+    ]
+
+    def run(policy: ConnectomePolicy) -> tuple[list[tuple[int, dict[str, int]]], list[float]]:
+        decisions = []
+        for frame in frames:
+            action = policy.choose_action(frame)
+            decisions.append((action.value, dict(action.action_data)))
+        probabilities = [
+            float(record.action_probability)
+            for record in policy.records
+            if record.action_probability is not None
+        ]
+        return decisions, probabilities
+
+    assert run(legacy) == run(explicit)
+    assert all(not record.loop_escape_standardized_bias for record in explicit.records)
+
+
+def test_loop_escape_penalizes_a_failed_action_in_the_same_observation() -> None:
+    policy = _policy(
+        decision_seed=3,
+        loop_escape=LoopEscapeParameters(
+            enabled=True,
+            exploration_bonus=0.5,
+            unchanged_failure_penalty=1.0,
+        ),
+    )
+    frame = _frame(21, available_actions=[1, 2])
+    first_action = policy.choose_action(frame).value
+    first = policy.records[-1]
+    policy.choose_action(frame)
+    second = policy.records[-1]
+
+    assert first.loop_escape_standardized_bias[first_action] == pytest.approx(0.5)
+    assert second.loop_escape_attempts_before in (0, 1)
+    assert second.loop_escape_standardized_bias[first_action] == pytest.approx(
+        0.5 / np.sqrt(2.0) - 1.0
+    )
+    other = 1 if first_action == 2 else 2
+    assert second.loop_escape_standardized_bias[other] == pytest.approx(0.5)
+
+
+def test_loop_escape_click_failures_are_remembered_per_observation() -> None:
+    policy = _policy(
+        decision_seed=5,
+        loop_escape=LoopEscapeParameters(
+            enabled=True,
+            exploration_bonus=0.5,
+            unchanged_failure_penalty=1.0,
+        ),
+    )
+    first_grid = np.zeros((64, 64), dtype=np.int8)
+    second_grid = np.array(first_grid, copy=True)
+    second_grid[7, 13] = 1
+
+    first = policy.choose_action(FakeFrame(available_actions=[6], frame=[first_grid]))
+    first_coordinate = dict(first.action_data)
+    policy.choose_action(FakeFrame(available_actions=[6], frame=[first_grid]))
+    assert policy.records[-1].coordinate_method == "seeded_untried_uniform"
+
+    policy.choose_action(FakeFrame(available_actions=[6], frame=[second_grid]))
+    assert policy.records[-1].coordinate_method == "novelty_centroid"
+
+    revisited = policy.choose_action(FakeFrame(available_actions=[6], frame=[first_grid]))
+    assert policy.records[-1].coordinate_method == "seeded_untried_uniform"
+    assert dict(revisited.action_data) != first_coordinate
+
+
+def test_reset_clears_loop_escape_memory_and_rewinds_its_replay() -> None:
+    policy = _policy(
+        decision_seed=9,
+        loop_escape=LoopEscapeParameters(
+            enabled=True,
+            exploration_bonus=0.5,
+            unchanged_failure_penalty=1.0,
+        ),
+    )
+    frame = _frame(33, available_actions=[6])
+    first = dict(policy.choose_action(frame).action_data)
+    policy.choose_action(frame)
+    assert policy.records[-1].coordinate_method == "seeded_untried_uniform"
+
+    policy.reset_state()
+    replay = dict(policy.choose_action(frame).action_data)
+    assert replay == first
+    assert policy.records[-1].coordinate_method == "factorized_sample"
+    assert policy.records[-1].loop_escape_attempts_before == 0
 
 
 # --- adaptive readout -------------------------------------------------------
