@@ -510,3 +510,83 @@ honest conclusion is that a frozen connectome with a small readout cannot reach
 the first level of an unseen ARC-AGI-3 game, and the project's contribution is
 the controlled negative result plus the structural finding, not a leaderboard
 position.
+
+## 2026-09-22 — Phase 0: retinotopic optic-lobe encoder
+
+### Why this comes before the planner, not after
+
+The plan placed "make the fly useful" last, after a competent state/effect
+controller and planner. That ordering makes the fly's contribution
+**unmeasurable**: once a planner is solving games, ceiling effects hide whatever
+the interface does, and the question this project exists to ask can no longer be
+answered. The encoder is roughly a day of work and every control needed to
+evaluate it -- degree-preserving nulls, the interface-matched bypass, the
+positive control, the rewired mushroom body -- is already built and tested.
+
+### The measurement that shaped the design
+
+The plan proposed a "36x39 retinotopic optic-lobe mapping". Checking the data
+first changed where it has to go:
+
+| Population | Count | Carries `assignedOlHex1/2` |
+| --- | ---: | --- |
+| `ol_sensory` (photoreceptors) | 6,098 | **0 of 6,098** |
+| `ol_intrinsic` | 23,720 | **all 23,720** |
+
+**Photoreceptors carry no column assignment at all**, so they cannot be targeted
+retinotopically. The coordinates live on the lamina and medulla interneurons --
+L1, L2, L3, L5, Mi1, Mi4, Mi9, T1, C2, C3 -- spanning hex1 1..36 and hex2 1..39
+across **892 occupied columns**. Those are one synapse downstream of the
+photoreceptors and are the only population the data lets us address spatially.
+
+### What was built
+
+- `scripts/build_retinotopy.py` compiles the column map into a small hashed
+  asset beside the graph (`retinotopy.npz`, SHA-256
+  `ebc2b699e541330097a257003c2346f367d4beda1f04e88b2aaa1e1542db1a8d`), so a
+  deployed bundle carries it without the 14 MB annotation table.
+- `src/flygi/encoding/retinotopic.py` maps the 64x64 ARC grid onto the column
+  lattice by a fixed affine assignment, so cells adjacent on screen drive
+  columns adjacent in the eye.
+
+### Verified on the real graph
+
+| Check | Result |
+| --- | --- |
+| Neurons driven | 15,582 of 166,700 |
+| Drive range | [-1.0000, 1.0000] |
+| A spatially shifted image changes the drive | yes |
+| **A 6x6 corner edit changes only 43 of 15,582 driven neurons** | **locality preserved** |
+
+That last row is the whole point. Under the random sparse projection a local
+edit perturbs the entire sensory population indiscriminately; here it stays
+local, which is the property the optic lobe is built to exploit.
+
+### Declared, and not claimed
+
+Channel assignment is a **heuristic, not a physiological claim**. Luminance is
+injected with positive sign to declared ON types (L1, Mi1, Mi4, Tm3), negative
+sign to declared OFF types (L2, L3, Tm1, Tm2, Tm4, Tm9), and the changed-cell
+signal goes to declared change types (T1, C2, C3, L5, Mi9). Mapping ARC's 16
+categorical colours to a scalar luminance is likewise a declared ordering
+choice. Both live in configuration so they can be varied and ablated rather than
+assumed.
+
+### Concurrent work in the same tree
+
+A parallel session is implementing the Phase 1 state/effect controller:
+`src/flygi/controller/` with `policy.py`, `scene.py` and `state_graph.py`, plus
+`configs/state_graph_controller.yaml`, `scripts/evaluate_state_graph.py` and
+three test modules, together with additive `ControllerConfig` changes to
+`config.py`. That work is **uncommitted** in the shared working tree.
+
+This entry and its commit therefore stage **only** the two Phase 0 files by
+name. `git add -A` in this tree would sweep half-finished controller work into
+an unrelated commit. All 320 tests pass with both sets of changes present, and
+the plasticity and loop-escape configs verify unchanged.
+
+### Next
+
+Wire the encoder behind `encoder.kind: retinotopic`, then evaluate it against
+the sparse projection on identical games, seeds and budget, and against the
+existing controls. That comparison is the point of Phase 0.
