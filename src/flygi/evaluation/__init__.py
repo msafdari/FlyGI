@@ -6,6 +6,7 @@ from .paired_analysis import (
     censored_summary,
     compare,
     extract_metric,
+    level_completion_actions,
     match_rows,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "censored_summary",
     "compare",
     "extract_metric",
+    "level_completion_actions",
     "match_rows",
 ]

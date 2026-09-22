@@ -135,10 +135,10 @@ def test_censored_summary_does_not_average_completers_only() -> None:
     """A row that never completed did not take zero actions."""
 
     rows = [
-        _row(0, "g1", levels=1, actions=50),
-        _row(0, "g2", levels=0, actions=600),
-        _row(0, "g3", levels=0, actions=600),
-        _row(0, "g4", levels=0, actions=600),
+        _traced_row(0, "g1", completion_steps={49}),
+        _traced_row(0, "g2", completion_steps=set()),
+        _traced_row(0, "g3", completion_steps=set()),
+        _traced_row(0, "g4", completion_steps=set()),
     ]
     summary = censored_summary(rows, budget=600)
 
@@ -154,11 +154,11 @@ def test_censored_summary_does_not_average_completers_only() -> None:
 def test_censoring_bias_favours_the_rarest_completer() -> None:
     """The exact trap: completing one easy game fast looks better than completing many."""
 
-    lucky = [_row(0, "g1", levels=1, actions=10)] + [
-        _row(0, f"g{i}", levels=0, actions=600) for i in range(2, 6)
+    lucky = [_traced_row(0, "g1", completion_steps={9})] + [
+        _traced_row(0, f"g{i}", completion_steps=set()) for i in range(2, 6)
     ]
-    steady = [_row(0, f"g{i}", levels=1, actions=300) for i in range(1, 5)] + [
-        _row(0, "g5", levels=0, actions=600)
+    steady = [_traced_row(0, f"g{i}", completion_steps={299}) for i in range(1, 5)] + [
+        _traced_row(0, "g5", completion_steps=set())
     ]
 
     lucky_summary = censored_summary(lucky, budget=600)
@@ -178,3 +178,52 @@ def test_censored_summary_validates_its_inputs() -> None:
         censored_summary([_row(0, "g1")], budget=0)
     with pytest.raises(PairedAnalysisError):
         censored_summary([], budget=600)
+
+
+# --- actions to completion, recovered from the trace ------------------------
+
+
+def _traced_row(seed, game, completion_steps, total=600):
+    trace, levels = [], 0
+    for step in range(total):
+        before = levels
+        if step in completion_steps:
+            levels += 1
+        trace.append(
+            {"step": step, "levels_completed_before": before, "levels_completed_after": levels}
+        )
+    row = _row(seed, game, levels=levels, actions=total)
+    row["trace"] = trace
+    return row
+
+
+def test_completion_actions_are_recovered_from_the_trace() -> None:
+    from flygi.evaluation import level_completion_actions
+
+    row = _traced_row(0, "g1", completion_steps={8, 120})
+    assert level_completion_actions(row) == [9, 121]
+    assert level_completion_actions(_traced_row(0, "g2", completion_steps=set())) == []
+
+
+def test_censored_summary_uses_real_completion_speed() -> None:
+    """Previously this reported the budget for every row and meant nothing."""
+
+    rows = [
+        _traced_row(0, "g1", completion_steps={8}),
+        _traced_row(0, "g2", completion_steps={299}),
+        _traced_row(0, "g3", completion_steps=set()),
+        _traced_row(0, "g4", completion_steps=set()),
+    ]
+    summary = censored_summary(rows, budget=600)
+
+    assert summary["completed"] == 2
+    assert summary["completions_without_a_trace"] == 0
+    assert summary["completer_only_mean_actions"] == pytest.approx((9 + 300) / 2)
+    assert summary["restricted_mean_actions"] == pytest.approx((9 + 300 + 600 + 600) / 4)
+
+
+def test_a_completion_without_a_trace_is_bounded_not_guessed() -> None:
+    row = _row(0, "g1", levels=1, actions=600)  # no trace attached
+    summary = censored_summary([row], budget=600)
+    assert summary["completions_without_a_trace"] == 1
+    assert summary["completer_only_mean_actions"] == 600.0

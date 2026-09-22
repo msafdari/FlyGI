@@ -233,6 +233,29 @@ def compare(
     )
 
 
+def level_completion_actions(row: Mapping[str, Any]) -> list[int]:
+    """Actions taken to reach each level completion, read from the trace.
+
+    The evaluator stores ``actions_completed`` as the total length of the row,
+    which is the action budget for anything that did not finish, so it cannot
+    answer "how fast". The per-step trace does: every entry carries
+    ``levels_completed_before`` and ``levels_completed_after``, so a completion
+    is any step where the count rises, and the action index is the step number
+    plus one.
+
+    This works retroactively on every artifact already recorded, so no run has
+    to be repeated to obtain it.
+    """
+
+    completions: list[int] = []
+    for entry in row.get("trace") or []:
+        before = int(entry.get("levels_completed_before") or 0)
+        after = int(entry.get("levels_completed_after") or 0)
+        if after > before:
+            completions.extend([int(entry["step"]) + 1] * (after - before))
+    return completions
+
+
 def censored_summary(
     rows: Sequence[Mapping[str, Any]],
     *,
@@ -249,11 +272,19 @@ def censored_summary(
 
     if budget <= 0:
         raise PairedAnalysisError("budget must be positive")
-    completed, censored = [], 0
+    completed, censored, untraced = [], 0, 0
     for row in rows:
         official = row.get("official") or {}
         if official.get("levels_completed"):
-            completed.append(float(row.get("actions_completed") or budget))
+            actions = level_completion_actions(row)
+            if actions:
+                # Time to the FIRST completion; later levels are a separate question.
+                completed.append(float(min(actions)))
+            else:
+                # The row completed but carries no trace, so its speed is unknown.
+                # Counting it as the budget is a declared upper bound, not a guess.
+                completed.append(float(budget))
+                untraced += 1
         else:
             censored += 1
     total = len(completed) + censored
@@ -265,6 +296,7 @@ def censored_summary(
         "completed": len(completed),
         "censored": censored,
         "completion_rate": len(completed) / total,
+        "completions_without_a_trace": untraced,
         "restricted_mean_actions": restricted,
         "completer_only_mean_actions": (sum(completed) / len(completed) if completed else None),
         "censoring_note": (

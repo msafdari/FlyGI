@@ -2545,3 +2545,52 @@ The censoring machinery is correct and tested, but it cannot do its job until
 the evaluator captures the action index at each level completion. That is a
 recorded limitation, not a metric to quote. Until it is fixed, completion
 *rate* is the honest efficiency measure and completion *speed* is unavailable.
+
+### Actions-to-completion recovered, and the efficiency claim does not survive it
+
+The gap recorded above turned out to be recoverable without rerunning anything.
+The evaluator already stores `levels_completed_before` and
+`levels_completed_after` on **every trace entry**, so a completion is any step
+where the count rises and the action index is that step plus one.
+`level_completion_actions` reads it, and it works retroactively on every
+artifact already on disk. `sp80` seed 1, for instance, completed level one at
+step 8, which is 9 actions.
+
+Applied to the completed 500-action sweep, right-censored at the budget:
+
+| Condition | Completed | Rate | Restricted mean | **Completer-only mean actions** |
+| --- | ---: | ---: | ---: | ---: |
+| Real signed fly | 2 / 75 | 0.027 | 490.5 | **143.0** |
+| Degree-preserving null | 3 / 75 | 0.040 | 488.5 | 213.7 |
+| No-graph bypass | 1 / 75 | 0.013 | 498.1 | 358.0 |
+| **Random legal** | **6 / 75** | **0.080** | **471.5** | **144.0** |
+
+**This retracts the efficiency claim.** An earlier entry recorded that on `sp80`
+at a matched 2,000-action budget the fly scored 4.76 against random's 0.82 and
+1.57, and read that as the fly reaching level one in far fewer actions -- "the
+first measurement in which the connectome beats chance on the competition metric
+itself". That inference came from *scores*, not from measured action counts,
+because action counts were not being recorded.
+
+Measured directly, the fly takes **143.0** actions to its first completion and
+random takes **144.0**. They are indistinguishable. Random also completes three
+times as often, 6 rows against 2, and has the better restricted mean. The
+apparent advantage was an artifact of comparing scores on a single game.
+
+Paired, clustered on games, over the full matrix:
+
+| Comparison | Mean difference | 95% CI | p | Nonzero games |
+| --- | ---: | --- | ---: | ---: |
+| random minus real, score | +0.032818 | [+0.000000, +0.096191] | 0.5052 | 2 / 25 |
+| random minus real, levels | +0.053333 | [+0.000000, +0.146667] | 0.5052 | 2 / 25 |
+
+Random is nominally ahead and not significantly so; two games carry everything.
+The honest statement is that **no condition is distinguishable from any other on
+ARC outcome**, and the connectome has no measured efficiency advantage over
+chance.
+
+Every "the fly does something better" claim this project has produced has now
+been either explained by a defect in the harness or retracted on measurement.
+What remains standing is only the structural result: the real graph separates
+from its degree-preserving nulls by 3.59x in spectral radius, with no behavioural
+consequence yet found.
