@@ -201,7 +201,15 @@ def _seed_for_game(game_id: str) -> int:
 class MyAgent(Agent):
     """FlyGI connectome agent, with a smoke-test-only random fallback."""
 
-    MAX_ACTIONS = 80
+    # Measured 2026-09-22: nine of the twelve level completions observed across
+    # all four conditions of the 500-action public sweep required MORE than 80
+    # actions, and r11l was only ever completed at 164, 191 and 333 actions. The
+    # previous 80-action ceiling could not reach those games at all. The
+    # scorecard caps a game by the level weight completed, so a larger budget
+    # only adds completion opportunities; it never slows a completion that would
+    # have happened sooner. Competition notebooks may run nine hours, which at
+    # the observed 136-164 ms per action leaves ample headroom here.
+    MAX_ACTIONS = 600
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         # ``rng_seed`` is a FlyGI-only testing/replay override and must not be

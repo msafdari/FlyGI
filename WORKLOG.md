@@ -1753,3 +1753,47 @@ Random legal still outscores the real graph at 500 actions (`0.09756824` against
 `0.06475067`, six completed levels against two). Nothing in this plan claims a
 connectome advantage; the objective here is the leaderboard number, and the
 controls already on record continue to say the fly has not earned credit for it.
+
+### Chunk B result — loop-escape calibration selected `mild`, but the strengths are indistinguishable
+
+The preregistered score-blind calibration completed and selected `mild`
+(exploration bonus 0.25, unchanged-failure penalty 0.50). All three candidates
+were eligible.
+
+The selection keys are worth recording because they qualify the result:
+
+| Candidate | Unique observations | Consecutive repeats | Legal-normalized entropy |
+| --- | ---: | ---: | ---: |
+| mild | 28.0 | 12.375 | 0.11344597 |
+| balanced | 28.0 | 12.375 | 0.11344214 |
+| strong | 28.0 | 12.375 | 0.11343802 |
+
+The two primary criteria are **identical to the last digit** across all three
+strengths, and the tie was broken on the fourth decimal place of entropy. Over
+the calibration subset at 40 actions per row, loop-escape strength made no
+measurable behavioral difference. The selection procedure was followed exactly
+and its winner is frozen, but it should not be read as evidence that the
+intervention works. Whether the layer helps at all is a separate question from
+which strength to use, and the calibration was not designed to answer it.
+
+### Chunk C — raising the deployed budget, and the probe now running
+
+`kaggle/agent/my_agent.py` had `MAX_ACTIONS = 80`, the ceiling that made `r11l`
+unreachable. It is now **600**, with the measurement recorded inline. A larger
+budget only adds completion opportunities: the scorecard caps a game by the
+level weight completed, and a bigger ceiling never slows a completion that would
+have happened earlier. At 136-164 ms per action, 25 games at 600 actions is
+roughly 40 minutes against a nine-hour notebook limit.
+
+Two probes are running to decide what to submit, both at all 25 public games,
+seed 0, and exactly 600 actions:
+
+- `probe600-loopescape` — the frozen `mild` loop-escape configuration;
+- `probe600-plain` — the same frozen sampler with loop escape disabled.
+
+Comparison baselines, both at 500 actions over seeds 0-2: frozen real
+`0.06475067` with two completed levels, and matched random `0.09756824` with
+six. The probes use one seed, so their means are noisier than those baselines
+and will be read as a direction, not a measurement.
+
+Verification before launch: `uv run pytest -q` → **229 passed**; ruff clean.
