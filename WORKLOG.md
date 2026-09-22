@@ -1370,6 +1370,62 @@ probe already established that depth does not move.
 4. The matched positive-control reservoir remains outstanding and still blocks
    any interpretation of a zero-versus-zero comparison.
 
+### Progress update — positive control implemented
+
+While the sweep runs, `src/flygi/connectome/reservoirs.py` was implemented with
+eleven tests. It provides both remaining reservoir conditions:
+
+- **`matched_random`** — the specification's generic matched reservoir. Real
+  node count, real edge count, the real weight multiset permuted rather than
+  resampled, edges placed uniformly at random, and the *same* incoming-L1
+  normalization as the real condition. A negative control.
+- **`edge_of_chaos`** — the positive control. Not a null; its purpose is to be
+  good, so that a set of near-zero results can distinguish "the biological graph
+  confers no advantage" from "this interface cannot express an advantage that
+  any graph could confer."
+
+**A design error was caught by its own test.** The positive control was first
+built by scaling to a spectral radius of 0.95, which failed against the matched
+null. The reason is the finding already recorded on 2026-09-21: incoming-L1
+normalization of non-negative weights yields a row-stochastic matrix whose
+spectral radius is exactly one for *any* topology. Targeting 0.95 therefore
+placed the "positive" control *below* its own null, and a memory probe confirmed
+it retained less state.
+
+A non-negative row-stochastic matrix is an averaging operator: repeated
+application diffuses and its memory is confined to one global mode. Scaling the
+radius is not sufficient. The positive control now assigns symmetric random
+signs before scaling, which is the standard echo-state construction, and its
+statistics record `signs_randomized`, `departs_from_declared_normalization`, and
+`departs_from_declared_sign_mode` so it can never be reported as a matched null.
+
+This is the same mechanism behind the real graph's measured 3.59x separation
+from its degree-preserving nulls appearing only in the signed condition.
+
+Verification: `uv run pytest -q` → **200 passed**; ruff lint and format checks
+passed.
+
+### Sweep throughput, measured
+
+Each of the three graph conditions is running at 58-59% CPU rather than 100%.
+Three concurrent sparse matrix-vector products over a roughly 200 MB working set
+contend for memory bandwidth rather than cores. Observed rate is about 2.4
+minutes per row, so the full 75-row sweep is expected to take roughly three
+hours of wall clock. No intervention; the run continues.
+
+### Revised planned next
+
+1. Wait for the three graph conditions to finish, then run the paired
+   actions-to-level comparison.
+2. Add a CLI path that compiles reservoirs into hash-verified runtime bundles,
+   as `flygi graph nulls` already does, so both reservoir conditions can be
+   evaluated by the existing evaluator without special-casing.
+3. Probe the positive control with `probe-regime` at the deployed operating
+   point. It must retain state measurably longer than the real graph; if it does
+   not, it is not yet a valid positive control and the target radius needs
+   raising before any ARC run.
+4. Only then evaluate both reservoirs on the public set.
+
 ### Caveats recorded before the results are seen
 
 - Three seeds, not five, to keep the sweep tractable.
