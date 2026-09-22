@@ -50,15 +50,35 @@ intelligence: a connectome is anatomy, not a complete brain emulation.
 - Private repository: <https://github.com/msafdari/FlyGI>.
 - Branch: `main`, tracking `origin/main`.
 - 320 tests pass; Ruff clean for FlyGI-owned files.
-- Both official submissions scored **0.00**.
-- **Track B training is finished**, stopped early at generation 25 of 60 because
-  the objective had plateaued. Its result is in *Decisive results*.
+- Both official submissions scored **0.00**. No submission remains today.
 - A parallel session is implementing the Phase 1 state/effect controller in the
   same working tree (`src/flygi/controller/`, uncommitted). Stage files by name;
   `git add -A` here would sweep in half-finished work.
 - No raw connectome, compiled arrays, ARC game packages, result traces, model
   checkpoints, credentials, virtual environments, or generated notebooks belong
   in normal Git history.
+
+### Experiments closed on this date
+
+| Experiment | Outcome | Score change |
+| --- | --- | --- |
+| Budget 80 → 600 → 1600 | Saturated at 600 | none beyond 600 |
+| Plasticity, real vs rewired mushroom body | Falsification inconclusive | none |
+| Track B trained head | Uses the connectome; **zero held-out generalization** | none held out |
+| Phase 0 retinotopic encoder | **Worse on every axis** | 0.190476 → 0.003156 |
+
+Four experiments, zero score improvements. The single actionable defect found is
+the coordinate head, which explores 3.29x less than random clicking in the six
+games where clicking is the only legal action.
+
+### Open and blocked
+
+The coordinate-temperature test (0.2 frozen against 1.0 and 4.0, on the six
+click-only games) has failed to launch twice with
+`requested game 'ft09 lp85 r11l s5i5 tn36 vc33' is not cached` -- the game list
+is reaching the evaluator as a single string rather than six arguments. No
+compute was consumed; the runs died at startup both times. This is the next
+thing to fix, and it is the only open lead with a measured defect behind it.
 
 ## Immutable data and runtime identity
 
