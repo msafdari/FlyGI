@@ -590,3 +590,51 @@ the plasticity and loop-escape configs verify unchanged.
 Wire the encoder behind `encoder.kind: retinotopic`, then evaluate it against
 the sparse projection on identical games, seeds and budget, and against the
 existing controls. That comparison is the point of Phase 0.
+
+## 2026-09-22 — Track B stopped early at generation 25: the objective plateaued
+
+### Why it was stopped
+
+| Generation | Best objective | Levels (8 training games) | Unique obs | Sigma |
+| ---: | ---: | ---: | ---: | ---: |
+| 0 | 185.62 | 1 | 123.12 | 0.3688 |
+| 4 | 300.62 | 3 | 113.12 | 0.1342 |
+| 10 | 315.75 | 3 | 128.25 | 0.0845 |
+| **16** | **320.25** | **3** | **132.75** | 0.0797 |
+| 20 | 319.12 | 3 | 131.62 | 0.0807 |
+| 24 | 256.12 | 2 | 131.12 | 0.0805 |
+
+Every gain arrived in the first ten generations. The peak was **320.25 at
+generation 16**, and nothing after it improved; generations 22 and 24 sampled
+worse points and fell back to two levels. Sigma sat at **0.080** against its
+declared floor of 0.075 from generation 8 onward, so the search had already
+contracted as far as it was allowed to.
+
+Running the remaining 35 generations would have cost roughly six hours to
+re-sample a converged distribution. The run was stopped, the checkpoint retained,
+and the best parameters extracted from generation 16.
+
+### What did move
+
+Level completions across the eight training games went from **1 to 3**, and
+unique observations from 123.1 to 132.8. That is the first time anything in this
+project learned its way to more levels rather than stumbling onto one.
+
+**It is in-sample.** Those eight games are the training set, chosen to include
+`cd82`, `sp80` and `r11l` precisely because they are the only games ever solved,
+so the level term would not be identically zero. Three levels there says nothing
+about held-out games, which is what the two runs now in flight measure.
+
+### The two runs that decide what this means
+
+Both over all 25 public games, seed 0, 600 actions, identical in every respect
+except the named variable:
+
+- `head-trained` — the generation-16 parameters, against the untrained
+  `probe600-loopescape` baseline of **0.190476**;
+- `head-trained-blind` — the same parameters with the descending trace **zeroed
+  before the head sees it**.
+
+The second is the one that matters for the project's question. If blinding the
+head to the connectome barely changes the result, the head learned to ignore the
+fly and this is an interface result, not a connectome result.

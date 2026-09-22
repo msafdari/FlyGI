@@ -196,6 +196,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--action-budget", type=int, default=80)
     parser.add_argument("--internal-steps", type=int, default=None)
     parser.add_argument(
+        "--trained-head",
+        type=Path,
+        default=None,
+        help="JSON parameters for the Track B head; omit for the untrained policy",
+    )
+    parser.add_argument(
+        "--ablate-trace",
+        action="store_true",
+        help="zero the descending trace before the trained head sees it, to test "
+        "whether the head actually uses the connectome",
+    )
+    parser.add_argument(
         "--ablate-graph",
         action="store_true",
         help="preregistered control: keep the interface, remove the graph's contribution",
@@ -220,8 +232,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     if len(set(args.seeds)) != len(args.seeds):
         raise SystemExit("--seeds must not contain duplicates")
 
+    import numpy as np
+
     from flygi.arc.factory import build_connectome_policy
     from flygi.config import load_config
+
+    head_parameters = None
+    head_provenance: dict[str, Any] | None = None
+    if args.trained_head is not None:
+        record = json.loads(args.trained_head.read_text(encoding="utf-8"))
+        head_parameters = np.asarray(record["parameters"], dtype=np.float32)
+        head_provenance = {key: value for key, value in record.items() if key != "parameters"}
+        head_provenance["source"] = str(args.trained_head)
 
     config = load_config(args.config)
     runtime = BASELINE.load_arc_runtime()
@@ -237,6 +259,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         runtime_dir=args.runtime_dir,
         ablate_graph=bool(args.ablate_graph),
         internal_steps=args.internal_steps,
+        trained_head_parameters=head_parameters,
+        ablate_trace=bool(args.ablate_trace),
     )
     bundle = assembled.bundle
     projection = assembled.projection
@@ -269,6 +293,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             ablate_graph=bool(args.ablate_graph),
             internal_steps=args.internal_steps,
             decision_seed=policy_seed,
+            trained_head_parameters=head_parameters,
+            ablate_trace=bool(args.ablate_trace),
         )
         policy_factory.current = fresh.policy  # type: ignore[attr-defined]
         return fresh.policy
@@ -353,6 +379,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                 args.runtime_dir if args.runtime_dir is not None else config.graph.output_dir
             ),
             "ablate_graph": bool(args.ablate_graph),
+            "ablate_trace": bool(args.ablate_trace),
+            "trained_head": head_provenance,
         },
     )
     output = args.output or (
