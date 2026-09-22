@@ -1842,3 +1842,86 @@ clean; notebook rebuilt at 122,655 bytes with `MAX_ACTIONS = 600`, the deadline
 guard, and the `FLYGI_PREFLIGHT` line all confirmed embedded.
 
 Still blocked on the probes: choosing the configuration, and submitting.
+
+## 2026-09-22 — Track B: trained readout on the frozen graph (the score multiplier)
+
+### Why this, and why it is expected to be the biggest lever
+
+The measured deficit is not randomness. Over the 500-action sweep the real
+agent and random legal play had comparable action entropy, 1.618 against 1.776
+bits, but very different reach: **213.3 mean unique observations against
+335.2**. The fly's *choices* are worse at reaching new states, not merely less
+random.
+
+The simplest explanation is structural. The connectome is a function from fly
+sensory input to fly motor output. FlyGI computes `h(f(g(ARC)))` where `g`, the
+encoder, is a seeded random projection of a one-hot ARC grid, and `h`, the
+decoder, splits 1,314 descending neurons into eight contiguous blocks by body-ID
+order. Descending neurons encode commands for a body that is not present, and
+nothing aligns those blocks with ARC's action slots. **Both `g` and `h` are
+frozen and arbitrary, so the composition is arbitrary however good `f` is.**
+
+Three further reasons the innate structure has not transferred, recorded so the
+negative result is not over-read:
+
+1. **The sensorimotor loop is cut.** Those circuits are tuned to actions that
+   change sensory input in specific ways. Mapping a descending command to
+   `ACTION3` breaks the contingency they were shaped by.
+2. **The input statistics are wrong.** Photoreceptors expect luminance over a
+   hexagonal eye with self-motion optic flow, not a projected one-hot grid.
+3. **The physiology was replaced with something that cannot remember.** Spiking,
+   adaptation, neuromodulation and heterogeneous time constants were replaced by
+   one uniform leaky-tanh unit with a single global leak and gain. The measured
+   memory half-life is 1-3 actions, while fly central-complex circuits hold
+   heading for minutes. The machinery that would implement working memory was
+   removed, and then the agent was asked to plan.
+
+A genuine ceiling also exists -- ARC-AGI-3 requires inferring novel symbolic
+rules, which flies do not do -- but points 1 to 3 dominate so completely that it
+has not been tested. **The result so far shows the harness cannot express an
+advantage, not that the connectome lacks one.**
+
+Track B unfreezes exactly one thing: a small readout. The graph, encoder,
+descending population and standardizer all stay frozen, so whatever the head
+learns it learns *through* the connectome's dynamics.
+
+### Chunk 1 complete — the head
+
+`src/flygi/decoding/trained_head.py` with eight tests. The standardized
+descending trace is compressed by a **fixed, seeded, never-trained** projection
+to 48 dimensions, concatenated with the previous-action one-hot and the
+legal-action mask, and mapped linearly to eight action logits.
+
+| Property | Value |
+| --- | ---: |
+| Frozen readout size | 1,314 |
+| Fixed compression | 48 |
+| Head input dimension | 64 |
+| **Trainable parameters** | **520** |
+
+The budget is deliberately tiny. A head large enough to solve ARC by itself
+would prove nothing, and the specification's section 19.3 warning is precisely
+that a parameter-matched adapter bypassing the graph can match it. The identical
+budget must therefore be given to the no-recurrent-graph bypass before any
+fly-credit claim; that comparison is deferred, not cancelled.
+
+Verification: `uv run pytest -q` → **240 passed**; ruff clean.
+
+### Planned next chunks
+
+2. A CEM trainer over the 520 parameters. Raw ARC score is far too sparse to
+   learn from -- roughly one completion per 25 games -- so the declared training
+   objective is dense: unique observations visited, plus a large bonus per
+   completed level. Exploration is the measured deficit and random legal play,
+   which explores most, also completes most.
+3. Train on public games with parallel candidate evaluation, then freeze the
+   winning parameters into a checked-in artifact.
+4. Evaluate the trained head at 600 actions against the frozen real baseline
+   `0.06475067` and the matched random baseline `0.09756824`, then package and
+   submit if it improves.
+
+### Declared limitation, fixed before any result is seen
+
+Training on public games and evaluating on the hidden set is legitimate for the
+leaderboard and is the specification's "public-ARC development" regime. It is
+**not** evidence of zero-shot generality, and it will not be described as such.
