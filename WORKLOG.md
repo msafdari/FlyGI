@@ -49,49 +49,16 @@ intelligence: a connectome is anatomy, not a complete brain emulation.
 
 - Private repository: <https://github.com/msafdari/FlyGI>.
 - Branch: `main`, tracking `origin/main`.
-- Current source checkpoint at the last recovery audit: `505a9eb`.
-- Fast verification before that checkpoint: 284 tests passed and Ruff passed.
+- 320 tests pass; Ruff clean for FlyGI-owned files.
+- Both official submissions scored **0.00**.
+- **Track B training is finished**, stopped early at generation 25 of 60 because
+  the objective had plateaued. Its result is in *Decisive results*.
+- A parallel session is implementing the Phase 1 state/effect controller in the
+  same working tree (`src/flygi/controller/`, uncommitted). Stage files by name;
+  `git add -A` here would sweep in half-finished work.
 - No raw connectome, compiled arrays, ARC game packages, result traces, model
   checkpoints, credentials, virtual environments, or generated notebooks belong
   in normal Git history.
-- Submission `56459984` completed with public score **0.00**. A read-only Kaggle
-  CLI poll confirmed the result at `2026-09-22T09:46:10Z`.
-- A Track B CEM job is active; do not launch another memory-bandwidth-heavy run
-  until it ends or is deliberately stopped.
-
-### Active Track B training
-
-The current process trains the 520-parameter action head on eight public games:
-
-```bash
-caffeinate -ims uv run python scripts/train_head.py \
-  --config configs/literal_rate_signed_loop_escape.yaml \
-  --games ar25 bp35 cd82 cn04 lf52 ls20 r11l sp80 \
-  --action-budget 150 --population 16 --elites 4 \
-  --generations 60 --workers 4 --sigma 0.5 --sigma-floor 0.15 \
-  --level-bonus 500
-```
-
-Checkpoint path: `results/head_training/head_training_checkpoint.json`.
-Final reviewed parameters, if the run succeeds, belong in
-`results/manifests/trained_head_parameters.json`.
-
-Two smoke-discovered defects were fixed in `505a9eb` before launch:
-
-1. trace ablation now evaluates inside a worker with initialized graph/game
-   globals instead of silently returning negative infinity in the parent;
-2. CEM sigma has a declared floor at 15% of its initial value instead of
-   collapsing to a point after one generation.
-
-The smoke winner scored objective 271 versus 21 with its descending trace
-ablated. That is evidence the head can use graph output in the smoke protocol,
-not an ARC score and not evidence that real topology beats controls.
-
-Generation 0 completed at `2026-09-22T09:48Z`. Its best candidate had training
-objective 185.625, one level completion, and 123.125 mean unique observations;
-the population mean was 136.59375, the elite mean was 181.59375, and no
-candidates failed. These are eight-game training-objective values, not held-out
-ARC scores. The checkpoint's `next_generation` is 1 of 60.
 
 ## Immutable data and runtime identity
 
@@ -146,6 +113,66 @@ runtime records live in `data/manifests/` and the tracked result manifests.
 - Track C: local dopamine-gated KC->MBON depression with bounded normalized
   updates, writable weights but immutable topology, a modulator-preserving
   runtime, and a degree-preserving mushroom-body partner rewire.
+
+### Track B: the head uses the connectome, and generalizes nothing
+
+CEM trained the 520-parameter action head on eight public games, stopped early
+at generation 25 of 60: the objective peaked at **320.25 at generation 16**,
+nothing after improved, and sigma sat at its 0.075 floor from generation 8. The
+remaining 35 generations would have re-sampled a converged distribution.
+
+All 25 public games, seed 0, 600 actions, split by whether the game was in the
+eight-game training set:
+
+| Condition | All 25 | Training (8) | **Held out (17)** |
+| --- | ---: | ---: | ---: |
+| Untrained (the submitted policy) | 0.190476 | 0.595238 | **0.000000** |
+| **Trained head** | **0.283458** | **0.885805** | **0.000000** |
+| Trained head, descending trace zeroed | 0.000000 | 0.000000 | 0.000000 |
+| Random legal, 600 actions, seeds 0-2 | 0.097568 | — | — |
+
+**Two findings, pulling opposite ways.**
+
+*The head genuinely uses the connectome.* Zeroing the descending trace before
+the head sees it drops the score from 0.283458 to **exactly 0.000000**, and mean
+unique observations from 263.4 to 169.5. The head did not learn to route around
+the graph; without the graph it does nothing. That is the cleanest
+connectome-dependence result the project has produced.
+
+*It generalizes nothing.* Every point of its advantage is on games it trained
+on: 0.885805 there against the untrained 0.595238. On the seventeen held-out
+games it scores **0.000000**, exactly like the untrained policy. The two games
+it solved, `ar25` and `sp80`, are both in the training set.
+
+This predicts the hidden-set outcome directly: a trained head would also score
+0.00, because the hidden set is held out by construction. **Track B is not a
+submission candidate**, and training harder would only deepen the in-sample fit.
+
+### Phase 0 — retinotopic optic-lobe encoder
+
+`encoder.kind: retinotopic` injects the 64x64 grid into the fly's own columnar
+lattice, replacing the random projection that destroys spatial structure.
+
+Where it injects was decided by measurement, not by the plan. Photoreceptors
+(`ol_sensory`) carry **no** column assignment -- 0 of 6,098 -- so they cannot be
+targeted retinotopically at all. The coordinates live on **23,720
+`ol_intrinsic`** lamina and medulla interneurons (L1, L2, L3, L5, Mi1, Mi4, Mi9,
+T1, C2, C3) spanning hex1 1..36 and hex2 1..39 over **892 occupied columns**.
+
+`scripts/build_retinotopy.py` compiles that map into a hashed asset beside the
+graph (`retinotopy.npz`, SHA-256 `ebc2b699e541330097a257003c2346f367d4beda1f04e88b2aaa1e1542db1a8d`)
+so a deployed bundle needs no annotation table.
+
+Verified on the real graph: 15,582 neurons driven, and a 6x6 corner edit changes
+only **43** of them. Under the random projection any local edit perturbs the
+whole sensory population; here it stays local, which is the property the optic
+lobe exists to exploit.
+
+Channel assignment (ON: L1/Mi1/Mi4/Tm3, OFF: L2/L3/Tm1/Tm2/Tm4/Tm9, change:
+T1/C2/C3/L5/Mi9) and the mapping of 16 categorical ARC colours to a scalar
+luminance are **declared heuristics, not physiological claims**, and live in
+config so they can be ablated. The bypass is refused a retinotopic projection,
+because its projection must address the readout population.
 
 ## Decisive results
 
@@ -238,7 +265,17 @@ not a connectome-advantage claim.
 
 The version-3 notebook preflighted the exact 166,700-node / 24,559,055-edge
 runtime, `K=4`, loop escape 0.25/0.50, zero trainable parameters, and the three
-expected array hashes. No fallback policy was used.
+expected array hashes. No fallback policy was used. The published dataset's
+`config.yaml` was downloaded back and hashed before submitting
+(`63b50521c324ecd1c2d39e1498dd8113b9d6838731ea7f31b3fb8a94317e5c7c`,
+byte-identical to the intended config); the preflight verifies the three array
+hashes but **not** the config, so serving the previous version would otherwise
+have silently submitted the 0.000000 condition.
+
+Both submissions establish the same thing: **configuration tuning does not move
+the hidden-set score.** Budget is saturated (1600 actions bought nothing over
+600 locally; 600 bought nothing over 80 on the hidden set), and the held-out
+split above shows why -- every local gain so far lives on specific known games.
 
 ## Why a living connectome can score 0.00
 
@@ -471,205 +508,3 @@ training budget, and seeds.
   but it requires a new world-model-and-planning system. It is not a credible
   outcome of more loop-escape tuning, a larger budget, or the 520-parameter head
   alone.
-
-## 2026-09-22 — Second submission scored: 0.00 again
-
-Submission **56459984** completed with a **public score of 0.00**, unchanged
-from the first submission's 0.00.
-
-| Submission | Config | Public score |
-| --- | --- | ---: |
-| 56444435 | 80-action ceiling, no loop escape | 0.00 |
-| **56459984** | **600-action ceiling, loop escape mild** | **0.00** |
-
-### Reading it honestly
-
-The configuration change was real and was verified end to end: the served
-config.yaml hash matched the loop-escape config byte for byte, and the
-server-side preflight confirmed `mode=connectome` with all three array digests
-matching. This was not a packaging failure. The agent that ran on the hidden set
-was the one intended.
-
-It simply did not find anything. The local 0.190476 came from a single public
-game, `cd82`, out of 25. The hidden set evidently contains nothing the agent can
-reach within 600 actions, which was recorded as a plausible outcome before
-submitting.
-
-**The budget and exploration levers are now exhausted as score levers.** 1600
-actions bought nothing over 600 locally, and 600 bought nothing over 80 on the
-hidden set. What separates 0.00 from a score is not how long the agent flails or
-how widely it wanders; it is whether it can work out what a game wants. Nothing
-built so far does that.
-
-### Consequence for the plan
-
-Two submissions have now been spent establishing that configuration tuning does
-not move the hidden-set score. The remaining untried lever is a learned policy,
-which is what Track B is training now. If a trained head also returns 0.00, the
-honest conclusion is that a frozen connectome with a small readout cannot reach
-the first level of an unseen ARC-AGI-3 game, and the project's contribution is
-the controlled negative result plus the structural finding, not a leaderboard
-position.
-
-## 2026-09-22 — Phase 0: retinotopic optic-lobe encoder
-
-### Why this comes before the planner, not after
-
-The plan placed "make the fly useful" last, after a competent state/effect
-controller and planner. That ordering makes the fly's contribution
-**unmeasurable**: once a planner is solving games, ceiling effects hide whatever
-the interface does, and the question this project exists to ask can no longer be
-answered. The encoder is roughly a day of work and every control needed to
-evaluate it -- degree-preserving nulls, the interface-matched bypass, the
-positive control, the rewired mushroom body -- is already built and tested.
-
-### The measurement that shaped the design
-
-The plan proposed a "36x39 retinotopic optic-lobe mapping". Checking the data
-first changed where it has to go:
-
-| Population | Count | Carries `assignedOlHex1/2` |
-| --- | ---: | --- |
-| `ol_sensory` (photoreceptors) | 6,098 | **0 of 6,098** |
-| `ol_intrinsic` | 23,720 | **all 23,720** |
-
-**Photoreceptors carry no column assignment at all**, so they cannot be targeted
-retinotopically. The coordinates live on the lamina and medulla interneurons --
-L1, L2, L3, L5, Mi1, Mi4, Mi9, T1, C2, C3 -- spanning hex1 1..36 and hex2 1..39
-across **892 occupied columns**. Those are one synapse downstream of the
-photoreceptors and are the only population the data lets us address spatially.
-
-### What was built
-
-- `scripts/build_retinotopy.py` compiles the column map into a small hashed
-  asset beside the graph (`retinotopy.npz`, SHA-256
-  `ebc2b699e541330097a257003c2346f367d4beda1f04e88b2aaa1e1542db1a8d`), so a
-  deployed bundle carries it without the 14 MB annotation table.
-- `src/flygi/encoding/retinotopic.py` maps the 64x64 ARC grid onto the column
-  lattice by a fixed affine assignment, so cells adjacent on screen drive
-  columns adjacent in the eye.
-
-### Verified on the real graph
-
-| Check | Result |
-| --- | --- |
-| Neurons driven | 15,582 of 166,700 |
-| Drive range | [-1.0000, 1.0000] |
-| A spatially shifted image changes the drive | yes |
-| **A 6x6 corner edit changes only 43 of 15,582 driven neurons** | **locality preserved** |
-
-That last row is the whole point. Under the random sparse projection a local
-edit perturbs the entire sensory population indiscriminately; here it stays
-local, which is the property the optic lobe is built to exploit.
-
-### Declared, and not claimed
-
-Channel assignment is a **heuristic, not a physiological claim**. Luminance is
-injected with positive sign to declared ON types (L1, Mi1, Mi4, Tm3), negative
-sign to declared OFF types (L2, L3, Tm1, Tm2, Tm4, Tm9), and the changed-cell
-signal goes to declared change types (T1, C2, C3, L5, Mi9). Mapping ARC's 16
-categorical colours to a scalar luminance is likewise a declared ordering
-choice. Both live in configuration so they can be varied and ablated rather than
-assumed.
-
-### Concurrent work in the same tree
-
-A parallel session is implementing the Phase 1 state/effect controller:
-`src/flygi/controller/` with `policy.py`, `scene.py` and `state_graph.py`, plus
-`configs/state_graph_controller.yaml`, `scripts/evaluate_state_graph.py` and
-three test modules, together with additive `ControllerConfig` changes to
-`config.py`. That work is **uncommitted** in the shared working tree.
-
-This entry and its commit therefore stage **only** the two Phase 0 files by
-name. `git add -A` in this tree would sweep half-finished controller work into
-an unrelated commit. All 320 tests pass with both sets of changes present, and
-the plasticity and loop-escape configs verify unchanged.
-
-### Next
-
-Wire the encoder behind `encoder.kind: retinotopic`, then evaluate it against
-the sparse projection on identical games, seeds and budget, and against the
-existing controls. That comparison is the point of Phase 0.
-
-## 2026-09-22 — Track B stopped early at generation 25: the objective plateaued
-
-### Why it was stopped
-
-| Generation | Best objective | Levels (8 training games) | Unique obs | Sigma |
-| ---: | ---: | ---: | ---: | ---: |
-| 0 | 185.62 | 1 | 123.12 | 0.3688 |
-| 4 | 300.62 | 3 | 113.12 | 0.1342 |
-| 10 | 315.75 | 3 | 128.25 | 0.0845 |
-| **16** | **320.25** | **3** | **132.75** | 0.0797 |
-| 20 | 319.12 | 3 | 131.62 | 0.0807 |
-| 24 | 256.12 | 2 | 131.12 | 0.0805 |
-
-Every gain arrived in the first ten generations. The peak was **320.25 at
-generation 16**, and nothing after it improved; generations 22 and 24 sampled
-worse points and fell back to two levels. Sigma sat at **0.080** against its
-declared floor of 0.075 from generation 8 onward, so the search had already
-contracted as far as it was allowed to.
-
-Running the remaining 35 generations would have cost roughly six hours to
-re-sample a converged distribution. The run was stopped, the checkpoint retained,
-and the best parameters extracted from generation 16.
-
-### What did move
-
-Level completions across the eight training games went from **1 to 3**, and
-unique observations from 123.1 to 132.8. That is the first time anything in this
-project learned its way to more levels rather than stumbling onto one.
-
-**It is in-sample.** Those eight games are the training set, chosen to include
-`cd82`, `sp80` and `r11l` precisely because they are the only games ever solved,
-so the level term would not be identically zero. Three levels there says nothing
-about held-out games, which is what the two runs now in flight measure.
-
-### The two runs that decide what this means
-
-Both over all 25 public games, seed 0, 600 actions, identical in every respect
-except the named variable:
-
-- `head-trained` — the generation-16 parameters, against the untrained
-  `probe600-loopescape` baseline of **0.190476**;
-- `head-trained-blind` — the same parameters with the descending trace **zeroed
-  before the head sees it**.
-
-The second is the one that matters for the project's question. If blinding the
-head to the connectome barely changes the result, the head learned to ignore the
-fly and this is an interface result, not a connectome result.
-
-### Phase 0 wired and running, plus a control we were missing
-
-**The encoder is live.** `encoder.kind: retinotopic` is a declared config
-option, both encoders expose a common `drive_features` entry point so the policy
-does not branch, and `configs/literal_rate_signed_retinotopic.yaml` differs from
-the loop-escape submission config only in the encoder block. Smoke on the real
-graph reports `retinotopic_optic_lobe`, 23,720 neurons, 892 columns,
-`preserves_retinotopy: true`.
-
-Two guards were added because they are easy to get wrong later: the ON and OFF
-type lists may not overlap, and the retinotopic channel lists are rejected
-outright on any config that does not use the retinotopic encoder, so they cannot
-sit in a file looking as though they apply.
-
-The bypass is explicitly refused a retinotopic projection. That control's
-projection has to address the readout population, so it keeps the sparse
-encoder, and the factory raises rather than silently producing a mismatched
-control.
-
-**A missing control.** Every comparison at 600 actions has been against the
-*untrained connectome* baseline of 0.190476. There has never been a matched
-random-legal control at that budget -- the only random numbers on record are at
-500 actions over three seeds (0.097568) and at 80. A chance control is now
-running at 600 actions over seeds 0-2, so the submission candidate can be
-compared against chance at its own budget rather than against a different one.
-
-### Four runs in flight
-
-| Run | Question |
-| --- | --- |
-| `head-trained` | does the trained head beat 0.190476 on all 25 games? |
-| `head-trained-blind` | does it still work with the connectome zeroed? |
-| `retinotopic` | does a fair, spatially-structured interface change anything? |
-| random legal @ 600 | what does chance score at the submitted budget? |
