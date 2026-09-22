@@ -42,6 +42,11 @@ from .connectome.nulls import (
     degree_preserving_rewire,
     null_invariants,
 )
+from .connectome.reservoirs import (
+    ReservoirOptions,
+    build_matched_reservoir,
+    reservoir_invariants,
+)
 from .connectome.schema import (
     ANNOTATIONS_CONTRACT,
     NEUROTRANSMITTERS_CONTRACT,
@@ -102,6 +107,23 @@ def _parser() -> argparse.ArgumentParser:
     )
     nulls.add_argument(
         "--batch-pairs", type=int, default=2_000_000, help="edge pairs proposed per batch"
+    )
+    reservoirs = graph_commands.add_parser(
+        "reservoirs", help="build matched generic reservoirs and the positive control"
+    )
+    _add_config(reservoirs)
+    reservoirs.add_argument(
+        "--kind",
+        choices=("matched_random", "edge_of_chaos", "both"),
+        default="both",
+        help="edge_of_chaos is the positive control and is NOT a matched null",
+    )
+    reservoirs.add_argument("--seed", type=int, default=20260922)
+    reservoirs.add_argument(
+        "--spectral-radius",
+        type=float,
+        default=0.95,
+        help="target radius for the positive control only",
     )
 
     validate = commands.add_parser("validate", help="validate configuration and assets")
@@ -411,6 +433,73 @@ def _build_nulls(config: FlyGIConfig, args: argparse.Namespace) -> int:
     return 0
 
 
+def _build_reservoirs(config: FlyGIConfig, args: argparse.Namespace) -> int:
+    """Compile matched generic reservoirs and the positive control."""
+
+    source_dir = config.graph.output_dir
+    if not (source_dir / "graph.npz").is_file():
+        raise CLIError(f"no compiled runtime at {source_dir}; run `flygi graph build` first")
+    source_manifest = load_manifest(source_dir / "manifest.json")
+    matrix, _ = load_runtime_graph(source_dir / "graph.npz")
+    groups = load_groups(source_dir / "groups.npz")
+    del groups
+
+    kinds = ("matched_random", "edge_of_chaos") if args.kind == "both" else (args.kind,)
+    written: list[dict[str, Any]] = []
+    for kind in kinds:
+        started = time.perf_counter()
+        reservoir, statistics = build_matched_reservoir(
+            matrix.shape[0],
+            matrix.nnz,
+            np.asarray(matrix.data),
+            seed=int(args.seed),
+            options=ReservoirOptions(
+                kind=kind,  # type: ignore[arg-type]
+                allow_self_edges=config.graph.allow_self_edges,
+                spectral_radius=float(args.spectral_radius),
+            ),
+        )
+        invariants = reservoir_invariants(matrix, reservoir, expect_weight_multiset_match=False)
+        if not invariants["valid"]:
+            raise CLIError(f"reservoir {kind} violated its invariants: {invariants['failures']}")
+        statistics["seconds"] = time.perf_counter() - started
+        destination = source_dir / "reservoirs" / kind / f"seed-{int(args.seed)}"
+        manifest = _write_null_runtime(
+            destination,
+            reservoir,
+            source_dir,
+            config=config,
+            release=config.data.release,
+            source_manifest=source_manifest,
+            statistics=statistics,
+            invariants=invariants,
+        )
+        written.append(
+            {
+                "kind": kind,
+                "seed": int(args.seed),
+                "output_dir": str(destination),
+                "edges": int(reservoir.nnz),
+                "spectral_radius": statistics["spectral_radius_after_normalization"],
+                "is_positive_control": statistics["is_positive_control"],
+                "seconds": statistics["seconds"],
+                "graph_sha256": next(
+                    record["sha256"]
+                    for record in manifest["outputs"]
+                    if record["name"] == "graph.npz"
+                ),
+            }
+        )
+        print(json.dumps(written[-1], indent=2, sort_keys=True), flush=True)
+
+    print(
+        json.dumps(
+            {"source_runtime": str(source_dir), "reservoirs": written}, indent=2, sort_keys=True
+        )
+    )
+    return 0
+
+
 def _validate_source_schemas(config: FlyGIConfig) -> dict[str, Any]:
     contracts = {
         "weights": WEIGHTS_CONTRACT,
@@ -539,6 +628,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _build_graph(config)
         if args.command == "graph" and args.graph_command == "nulls":
             return _build_nulls(config, args)
+        if args.command == "graph" and args.graph_command == "reservoirs":
+            return _build_reservoirs(config, args)
         if args.command == "validate" and args.validate_command == "all":
             return _validate_all(config, require_data=bool(args.require_data))
         parser.error("unhandled command")
