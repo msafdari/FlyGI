@@ -283,7 +283,9 @@ class ConnectomePolicy:
             previous_action_id=self._previous_action_id,
             available_action_ids=turn.available_action_ids,
         )
-        drive = self._projection.drive(features.vector)
+        # Both encoders expose drive_features; the retinotopic one needs the
+        # grid itself, not the flattened feature vector.
+        drive = self._projection.drive_features(features)
         # The ablation is a property of the network and the projection, not a
         # branch here: a bypass condition runs the identical update with zero
         # recurrent gain and a readout-targeted projection of matched budget.

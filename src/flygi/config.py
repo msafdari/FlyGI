@@ -74,6 +74,12 @@ class EncoderConfig:
     input_scale: float = 1.0
     trainable: bool = False
     per_game_rules: bool = False
+    # Retinotopic encoder only. Channel assignment is a declared heuristic,
+    # not a physiological claim, so it lives here to be varied and ablated.
+    on_types: tuple[str, ...] = ()
+    off_types: tuple[str, ...] = ()
+    change_types: tuple[str, ...] = ()
+    change_gain: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -133,6 +139,33 @@ class StateLifetimeConfig:
 
 
 @dataclass(frozen=True)
+class ControllerConfig:
+    """Generic online state/effect controller, disabled for frozen baselines.
+
+    The controller is deliberately configured beside the connectome rather
+    than smuggled into its decoder.  Historical literal-policy configs omit
+    this section and therefore remain byte-for-byte behaviorally unchanged.
+    """
+
+    enabled: bool = False
+    kind: str = "state_graph"
+    state_hash: str = "blake2b_128"
+    mask_freeze_after: int = 8
+    volatile_threshold: float = 0.25
+    volatile_min_changes: int = 2
+    ui_border_width: int = 4
+    component_min_area: int = 1
+    component_limit: int = 64
+    coarse_cell_size: int = 8
+    max_candidate_tier: int = 2
+    max_clicks_per_tier: int = 64
+    effect_exploration_bonus: float = 1.5
+    advancement_bonus: float = 0.6
+    death_penalty: float = 0.4
+    replan_cooldown: int = 3
+
+
+@dataclass(frozen=True)
 class FlyGIConfig:
     schema_version: int
     seed: int
@@ -143,6 +176,7 @@ class FlyGIConfig:
     decoder: DecoderConfig = field(default_factory=DecoderConfig)
     state: StateLifetimeConfig = field(default_factory=StateLifetimeConfig)
     plasticity: PlasticityConfig = field(default_factory=PlasticityConfig)
+    controller: ControllerConfig = field(default_factory=ControllerConfig)
     groups: Mapping[str, Any] = field(default_factory=dict)
     future: Mapping[str, Any] = field(default_factory=dict)
 
@@ -298,6 +332,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         decoder_raw = dict(root.pop("decoder", {}) or {})
         state_raw = dict(root.pop("state", {}) or {})
         plasticity_raw = dict(root.pop("plasticity", {}) or {})
+        controller_raw = dict(root.pop("controller", {}) or {})
         encoder = EncoderConfig(
             kind=str(encoder_raw.pop("kind", "sparse_projection")),
             sensory_superclass=str(encoder_raw.pop("sensory_superclass", "ol_sensory")),
@@ -305,6 +340,10 @@ def load_config(path: str | Path) -> FlyGIConfig:
             input_scale=float(encoder_raw.pop("input_scale", 1.0)),
             trainable=bool(encoder_raw.pop("trainable", False)),
             per_game_rules=bool(encoder_raw.pop("per_game_rules", False)),
+            on_types=tuple(encoder_raw.pop("on_types", ()) or ()),
+            off_types=tuple(encoder_raw.pop("off_types", ()) or ()),
+            change_types=tuple(encoder_raw.pop("change_types", ()) or ()),
+            change_gain=float(encoder_raw.pop("change_gain", 1.0)),
         )
         action_temperature_raw = decoder_raw.pop("action_temperature", 0.15)
         coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.2)
@@ -382,6 +421,56 @@ def load_config(path: str | Path) -> FlyGIConfig:
                 state_raw.pop("preserve_after_game_over_reset", True)
             ),
         )
+        controller_enabled_raw = controller_raw.pop("enabled", False)
+        if not isinstance(controller_enabled_raw, bool):
+            raise ConfigError("controller.enabled must be a boolean")
+        controller_integer_defaults = {
+            "mask_freeze_after": 8,
+            "volatile_min_changes": 2,
+            "ui_border_width": 4,
+            "component_min_area": 1,
+            "component_limit": 64,
+            "coarse_cell_size": 8,
+            "max_candidate_tier": 2,
+            "max_clicks_per_tier": 64,
+            "replan_cooldown": 3,
+        }
+        controller_integers: dict[str, int] = {}
+        for key, default in controller_integer_defaults.items():
+            raw_value = controller_raw.pop(key, default)
+            if isinstance(raw_value, bool) or not isinstance(raw_value, int):
+                raise ConfigError(f"controller.{key} must be an integer")
+            controller_integers[key] = raw_value
+        controller_numeric_defaults = {
+            "volatile_threshold": 0.25,
+            "effect_exploration_bonus": 1.5,
+            "advancement_bonus": 0.6,
+            "death_penalty": 0.4,
+        }
+        controller_numbers: dict[str, float] = {}
+        for key, default in controller_numeric_defaults.items():
+            raw_value = controller_raw.pop(key, default)
+            if isinstance(raw_value, bool) or not isinstance(raw_value, (int, float)):
+                raise ConfigError(f"controller.{key} must be numeric")
+            controller_numbers[key] = float(raw_value)
+        controller = ControllerConfig(
+            enabled=controller_enabled_raw,
+            kind=str(controller_raw.pop("kind", "state_graph")),
+            state_hash=str(controller_raw.pop("state_hash", "blake2b_128")),
+            mask_freeze_after=controller_integers["mask_freeze_after"],
+            volatile_threshold=controller_numbers["volatile_threshold"],
+            volatile_min_changes=controller_integers["volatile_min_changes"],
+            ui_border_width=controller_integers["ui_border_width"],
+            component_min_area=controller_integers["component_min_area"],
+            component_limit=controller_integers["component_limit"],
+            coarse_cell_size=controller_integers["coarse_cell_size"],
+            max_candidate_tier=controller_integers["max_candidate_tier"],
+            max_clicks_per_tier=controller_integers["max_clicks_per_tier"],
+            effect_exploration_bonus=controller_numbers["effect_exploration_bonus"],
+            advancement_bonus=controller_numbers["advancement_bonus"],
+            death_penalty=controller_numbers["death_penalty"],
+            replan_cooldown=controller_integers["replan_cooldown"],
+        )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc
 
@@ -399,6 +488,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unknown state keys: {sorted(state_raw)}")
     if plasticity_raw:
         raise ConfigError(f"unknown plasticity keys: {sorted(plasticity_raw)}")
+    if controller_raw:
+        raise ConfigError(f"unknown controller keys: {sorted(controller_raw)}")
     if graph.weight_transform not in {"raw", "log1p", "sqrt", "binary"}:
         raise ConfigError(f"unsupported weight_transform: {graph.weight_transform}")
     if graph.sign_mode not in {"unsigned", "heuristic"}:
@@ -442,8 +533,19 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError("dynamics.initial_state must be zeros")
     if dynamics.state_dtype != "float32":
         raise ConfigError("dynamics.state_dtype must be float32")
-    if encoder.kind not in {"sparse_projection", "bio_visual"}:
+    if encoder.kind not in {"sparse_projection", "retinotopic", "bio_visual"}:
         raise ConfigError(f"unsupported encoder.kind: {encoder.kind}")
+    if not math.isfinite(encoder.change_gain) or encoder.change_gain < 0:
+        raise ConfigError("encoder.change_gain must be finite and non-negative")
+    overlap = set(encoder.on_types) & set(encoder.off_types)
+    if overlap:
+        raise ConfigError(f"a cell type cannot be both ON and OFF: {sorted(overlap)}")
+    if encoder.kind != "retinotopic" and (
+        encoder.on_types or encoder.off_types or encoder.change_types
+    ):
+        raise ConfigError(
+            "on_types, off_types and change_types apply only to the retinotopic encoder"
+        )
     if encoder.connections_per_neuron <= 0:
         raise ConfigError("encoder.connections_per_neuron must be positive")
     if not math.isfinite(encoder.input_scale) or encoder.input_scale <= 0:
@@ -528,6 +630,39 @@ def load_config(path: str | Path) -> FlyGIConfig:
             "state.preserve_across_actions must remain true; a recurrent graph "
             "cannot matter if its state does not outlive one decision"
         )
+    if controller.kind != "state_graph":
+        raise ConfigError(f"unsupported controller.kind: {controller.kind}")
+    if controller.state_hash != "blake2b_128":
+        raise ConfigError(f"unsupported controller.state_hash: {controller.state_hash}")
+    for field_name in (
+        "mask_freeze_after",
+        "volatile_min_changes",
+        "ui_border_width",
+        "component_min_area",
+        "component_limit",
+        "coarse_cell_size",
+        "max_clicks_per_tier",
+    ):
+        if getattr(controller, field_name) <= 0:
+            raise ConfigError(f"controller.{field_name} must be positive")
+    if controller.max_candidate_tier < 0:
+        raise ConfigError("controller.max_candidate_tier must be non-negative")
+    if controller.replan_cooldown < 0:
+        raise ConfigError("controller.replan_cooldown must be non-negative")
+    if controller.ui_border_width > 32:
+        raise ConfigError("controller.ui_border_width must not exceed 32")
+    if controller.coarse_cell_size > 64:
+        raise ConfigError("controller.coarse_cell_size must not exceed 64")
+    if not 0.0 < controller.volatile_threshold <= 1.0:
+        raise ConfigError("controller.volatile_threshold must lie in (0, 1]")
+    for field_name in (
+        "effect_exploration_bonus",
+        "advancement_bonus",
+        "death_penalty",
+    ):
+        value = getattr(controller, field_name)
+        if not math.isfinite(value) or value < 0.0:
+            raise ConfigError(f"controller.{field_name} must be finite and non-negative")
 
     # Name/track are descriptive and remain available to manifests without
     # coupling the shared runtime config to later experimental tracks.
@@ -543,6 +678,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         decoder=decoder,
         state=state,
         plasticity=plasticity,
+        controller=controller,
         groups=groups,
         future=root,
     )

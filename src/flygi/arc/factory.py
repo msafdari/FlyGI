@@ -28,6 +28,10 @@ from flygi.decoding.loop_escape import (
 from flygi.decoding.trained_head import TrainedActionHead, TrainedHeadSpec
 from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.dynamics.runtime import RuntimeConnectome, load_runtime_connectome
+from flygi.encoding.retinotopic import (
+    RetinotopicOptions,
+    build_retinotopic_projection,
+)
 from flygi.encoding.sparse_projection import (
     ProjectionOptions,
     SensoryProjection,
@@ -157,7 +161,7 @@ def build_connectome_policy(
 ) -> AssembledPolicy:
     """Build one closed-loop policy. Pass ``bundle`` to reuse a loaded graph."""
 
-    if config.encoder.kind != "sparse_projection":
+    if config.encoder.kind not in ("sparse_projection", "retinotopic"):
         raise RuntimeAssemblyError(
             f"encoder kind {config.encoder.kind!r} is declared but not implemented"
         )
@@ -181,7 +185,28 @@ def build_connectome_policy(
     else:
         per_neuron = int(config.encoder.connections_per_neuron)
 
-    if projection is None:
+    retinotopic = config.encoder.kind == "retinotopic"
+    if retinotopic and ablate_graph:
+        raise RuntimeAssemblyError(
+            "the no-recurrent-graph bypass has no retinotopic target; its projection "
+            "must address the readout population, so use the sparse encoder for it"
+        )
+
+    if projection is None and retinotopic:
+        # The retinotopic encoder chooses its own targets: the optic-lobe columns
+        # carrying hex coordinates, which is a different population from the
+        # declared sensory superclass.
+        options = RetinotopicOptions(
+            input_scale=config.encoder.input_scale,
+            change_gain=config.encoder.change_gain,
+            **{
+                name: tuple(getattr(config.encoder, name))
+                for name in ("on_types", "off_types", "change_types")
+                if getattr(config.encoder, name)
+            },
+        )
+        projection = build_retinotopic_projection(directory, loaded.node_count, options=options)
+    elif projection is None:
         projection = build_sensory_projection(
             target,
             loaded.node_count,
@@ -191,7 +216,7 @@ def build_connectome_policy(
                 input_scale=config.encoder.input_scale,
             ),
         )
-    elif not np.array_equal(projection.sensory_indices, target):
+    elif not retinotopic and not np.array_equal(projection.sensory_indices, target):
         raise RuntimeAssemblyError(
             "a reused projection must target the same population; "
             "the interface must not vary across graph conditions"

@@ -638,3 +638,38 @@ except the named variable:
 The second is the one that matters for the project's question. If blinding the
 head to the connectome barely changes the result, the head learned to ignore the
 fly and this is an interface result, not a connectome result.
+
+### Phase 0 wired and running, plus a control we were missing
+
+**The encoder is live.** `encoder.kind: retinotopic` is a declared config
+option, both encoders expose a common `drive_features` entry point so the policy
+does not branch, and `configs/literal_rate_signed_retinotopic.yaml` differs from
+the loop-escape submission config only in the encoder block. Smoke on the real
+graph reports `retinotopic_optic_lobe`, 23,720 neurons, 892 columns,
+`preserves_retinotopy: true`.
+
+Two guards were added because they are easy to get wrong later: the ON and OFF
+type lists may not overlap, and the retinotopic channel lists are rejected
+outright on any config that does not use the retinotopic encoder, so they cannot
+sit in a file looking as though they apply.
+
+The bypass is explicitly refused a retinotopic projection. That control's
+projection has to address the readout population, so it keeps the sparse
+encoder, and the factory raises rather than silently producing a mismatched
+control.
+
+**A missing control.** Every comparison at 600 actions has been against the
+*untrained connectome* baseline of 0.190476. There has never been a matched
+random-legal control at that budget -- the only random numbers on record are at
+500 actions over three seeds (0.097568) and at 80. A chance control is now
+running at 600 actions over seeds 0-2, so the submission candidate can be
+compared against chance at its own budget rather than against a different one.
+
+### Four runs in flight
+
+| Run | Question |
+| --- | --- |
+| `head-trained` | does the trained head beat 0.190476 on all 25 games? |
+| `head-trained-blind` | does it still work with the connectome zeroed? |
+| `retinotopic` | does a fair, spatially-structured interface change anything? |
+| random legal @ 600 | what does chance score at the submitted budget? |

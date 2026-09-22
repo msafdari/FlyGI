@@ -109,6 +109,11 @@ class SensoryProjection:
             "trainable": False,
         }
 
+    def drive_features(self, features: object) -> NDArray[np.float32]:
+        """Common entry point shared with the retinotopic encoder."""
+
+        return self.drive(getattr(features, "vector", features))
+
     def drive(self, features: NDArray[np.float32]) -> NDArray[np.float32]:
         """Project features into a full graph-space drive vector."""
 
