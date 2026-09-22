@@ -284,6 +284,44 @@ dimension of fairness has now been restored, and performance fell. That is
 evidence, not proof -- the colour trade confounds it -- but it is the first
 direct test of the excuse, and the excuse did not survive it cleanly.
 
+### 5. Disabling the novelty centroid fixed it — the first real improvement
+
+Six click-only games, three seeds, 600 actions:
+
+| Condition | Mean score | Unique obs | Levels | Games solved |
+| --- | ---: | ---: | ---: | --- |
+| Centroid ON, T=0.2 (submitted) | 0.000000 | 71.7 | 0 | none |
+| Centroid ON, T=4.0 | 0.000000 | 67.0 | 0 | none |
+| **Centroid OFF, T=1.0** | **0.010120** | **247.4** | **3** | **`r11l`, `vc33`** |
+| Random clicking | 0.009425 | 235.6 | 3 | `r11l` |
+
+Coordinate coverage recovered by roughly fourteen-fold in the affected games:
+
+| Game | Centroid ON | **Centroid OFF** |
+| --- | ---: | ---: |
+| `r11l` | 96 | **1,383** |
+| `s5i5` | 52 | **1,352** |
+| `tn36` | 63 | **1,391** |
+| `vc33` | 52 | **1,367** |
+
+**`vc33` had never been completed by any condition in this project.** The agent
+now completes it.
+
+This is also the first time the connectome has scored **above** random rather
+than below it on a matched comparison -- 0.010120 against 0.009425, solving two
+games to random's one.
+
+**The honest limits.** That margin is 7% on eighteen rows and is not
+significant; the defensible claim is that the fly now *matches* random here
+rather than losing to it. The result covers six of twenty-five games. A full
+25-game run is in flight to see whether it beats the submitted 0.190476, which
+is the only number that would justify spending a submission.
+
+**What this cost.** The defect shipped in both competition submissions. It had
+six passing tests, none of which compared it to clicking at random. It is the
+exact failure the standing rule in `AGENTS.md` was written for, found four days
+late.
+
 ### Phase 0 — retinotopic optic-lobe encoder
 
 `encoder.kind: retinotopic` injects the 64x64 grid into the fly's own columnar
