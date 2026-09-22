@@ -1280,3 +1280,100 @@ unchanged and is led by the matched positive-control reservoir, without which a
 zero-versus-zero comparison cannot distinguish "the biological graph confers no
 advantage" from "this interface cannot express an advantage any graph could
 confer."
+
+## 2026-09-22 — Action-efficiency sweep (IN PROGRESS)
+
+### Why this is running
+
+The 0.00 hidden-set score prompted a question about what would raise it. Two
+diagnoses were tested rather than assumed.
+
+**Diagnosis 1: the score is depth-limited, not efficiency-limited.** The ARC
+scorecard computes `sum(level_score * level_index) / sum(level_index)` and caps
+the result at `max_weights / total_weights * 100`, where `max_weights` sums the
+indices of levels actually completed. The observed `sp80` score of
+`4.76190476` is exactly `100/21`: the agent completed level 1 at or better than
+the human action baseline, and was capped at one level's weight out of 21. Its
+efficiency on that level was already maximal. What limits the score is how many
+levels it clears.
+
+**Diagnosis 2: the action budget is not the binding constraint. Measured.**
+`sp80` was rerun at 2,000 actions, 25x the deployed ceiling:
+
+| Seed | 80 actions | 2,000 actions |
+| --- | --- | --- |
+| 0 | 0 levels, score 0 | **0 levels, score 0** |
+| 1 | 1 level, 4.76190476 | **1 level, 4.76190476** |
+
+Twenty-five times the budget produced no additional level on either seed. Seed 0
+used all 2,000 actions with 76 resets and a 0.562 observation repeat rate. The
+frozen agent does not run out of budget; it exhausts what a fixed policy can do.
+Raising `MAX_ACTIONS` is therefore not a route to a better score, and the
+framework's 80 is an anti-infinite-loop default rather than a competition rule.
+
+**The signal that prompted this sweep.** At a matched 2,000-action budget on
+`sp80`, the fly and the random control reached the same depth but not the same
+efficiency:
+
+| Condition | Levels | Score |
+| --- | ---: | ---: |
+| Real signed fly | 1 | **4.76190476** |
+| Random legal, seed 0 | 1 | 0.81969864 |
+| Random legal, seed 1 | 1 | 1.56636184 |
+
+The fly reached level 1 in far fewer actions, and RHAE rewards exactly that.
+This is the first measurement in which the connectome beats chance on the
+competition metric itself. It is a single game, so it may be an `sp80`
+artifact. This sweep tests whether it generalizes.
+
+### Protocol
+
+All 25 cached public games, seeds 0-2, **500-action ceiling**, strict offline,
+frozen `focused` sampler, signed runtime, `K=4`, zero trainable parameters.
+37,500 actions per condition. Four matched conditions:
+
+1. `eff-real-signed` — real heuristic-signed MaleCNS;
+2. `eff-null-degree-preserving` — directed degree-preserving null, seed 20260921;
+3. `eff-no-graph-bypass` — interface-matched, zero recurrent gain;
+4. random legal — the chance control, same games/seeds/budget.
+
+The primary measurement is **actions taken to complete a level**, on
+`(game, seed)` rows where any condition completes one, plus the official score.
+This is a predeclared comparison of efficiency, not of depth; the 2,000-action
+probe already established that depth does not move.
+
+### Completed so far
+
+- Random legal control finished: 75/75 successful rows, mean score
+  **0.09756824**. Artifact
+  `results/random_baseline/20260922T013053.669084Z-d8b863adad.json`
+  (28,934,324 bytes, ignored by Git).
+
+### In progress
+
+- `eff-real-signed`, `eff-null-degree-preserving` and `eff-no-graph-bypass` are
+  running in parallel. Each is 37,500 actions at roughly 136 ms per action, so
+  expect a few hours of wall clock under three-way CPU contention.
+
+### Planned next
+
+1. When all four finish, compare matched `(game, seed)` rows on actions-to-level
+   and on score, write an immutable reviewed manifest, and record whether the
+   `sp80` efficiency advantage generalizes.
+2. If it does not generalize, say so plainly; a single-game artifact is the more
+   likely outcome and must not be reported as a connectome advantage.
+3. Regardless of outcome, the frozen policy has now been shown to have no path
+   past level 1. The next substantive work is Track C plasticity, which is the
+   only mechanism in the specification that lets behavior change within an
+   episode, and which reframes the question as whether the connectome is a
+   useful initialization for online learning.
+4. The matched positive-control reservoir remains outstanding and still blocks
+   any interpretation of a zero-versus-zero comparison.
+
+### Caveats recorded before the results are seen
+
+- Three seeds, not five, to keep the sweep tractable.
+- One null seed of the three available is evaluated.
+- A 500-action budget is six times the deployed ceiling, so these results are
+  not comparable to the submitted configuration and must not be described as
+  leaderboard numbers.
