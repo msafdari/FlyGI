@@ -1624,3 +1624,55 @@ Current action: review, commit, and push this verified implementation checkpoint
 Next: run the exact three-candidate, eight-row-per-candidate score-blind
 calibration; inspect only the declared behavioral metrics; freeze the selected
 strength in a separate signed config before any full score-bearing evaluation.
+
+### Score-blind calibration result — mild frozen, no short-horizon improvement
+
+The exact calibration ran from clean commit
+`f5c2423c946a3c1583ee792a95782588a2d903e4`: four declared games, seeds 0 and
+1, 40 actions, frozen focused temperatures, and the real signed graph. All
+24/24 candidate rows succeeded with zero illegal actions, invalid coordinates,
+or budget violations. Every candidate passed same-seed replay and across-seed
+diversity. A recursive artifact audit found zero keys named `official`, `score`,
+`levels_completed`, or `final_levels_completed`.
+
+| Candidate | Mean unique obs. | Mean consecutive repeats | Legal-normalized entropy | Median policy ms | Rank |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| **mild (0.25 / 0.50)** | **28.000** | **12.375** | **0.11344597** | 136.46 | **1** |
+| balanced (0.50 / 1.00) | 28.000 | 12.375 | 0.11344214 | **135.91** | 2 |
+| strong (1.00 / 2.00) | 28.000 | 12.375 | 0.11343802 | 136.01 | 3 |
+
+The result is weaker than the rank alone suggests. All three strength settings
+produced identical action/payload traces on all eight matched rows: zero
+differing turns out of 320 in every pairwise comparison. Each recorded 103
+unchanged prior choices, 103 revisit decisions, 103 state-conditioned click
+explorations, and **zero graph-argmax changes**. The frozen third criterion
+therefore selected mild on an entropy difference of only `3.83e-06` over
+balanced.
+
+Relative to the earlier focused no-loop calibration on the identical games,
+seeds, and budget, mild was slightly worse descriptively: 28.000 versus 28.125
+mean unique observations and 12.375 versus 12.250 mean consecutive repeats.
+The calibration therefore provides **no evidence of a short-horizon behavioral
+improvement**. It does establish that the implementation is safe and that the
+three declared strengths are behaviorally indistinguishable over 40 actions.
+The predeclared procedure still freezes mild; the 500-action score gate is the
+finite longer-horizon test, not a presumed win.
+
+The ignored immutable artifact is
+`results/loop_escape_calibration/20260922T045245.693168Z-6cb9eb2696.json`:
+1,929,105 bytes, SHA-256
+`8526ff343ad2ec02b69b716112afa8fa9e7103a3f34fda1368646727165490e1`.
+Its reviewed tracked index is
+`results/manifests/loop_escape_calibration_20260922.json`.
+
+The selected candidate is frozen in
+`configs/literal_rate_signed_loop_escape.yaml` with SHA-256
+`63b50521c324ecd1c2d39e1498dd8113b9d6838731ea7f31b3fb8a94317e5c7c`.
+A config-diff test proves it shares the signed baseline's data, graph, dynamics,
+encoder, state policy, groups, temperatures, and every decoder field except the
+three declared loop-escape enable/strength values.
+
+Current action: checkpoint and push the calibration result, reviewed index, and
+frozen config. Next: run exactly 25 games by seeds 0-2 at 500 actions from that
+checkpoint, then compare mean score and completed levels against the frozen
+real baseline (`0.06475067`, 2 levels) and random (`0.09756824`, 6 levels).

@@ -1,0 +1,97 @@
+{
+  "artifact": {
+    "bytes": 1929105,
+    "relative_path": "results/loop_escape_calibration/20260922T045245.693168Z-6cb9eb2696.json",
+    "sha256": "8526ff343ad2ec02b69b716112afa8fa9e7103a3f34fda1368646727165490e1",
+    "tracked_in_git": false
+  },
+  "candidates": {
+    "balanced": {
+      "eligible": true,
+      "exploration_bonus": 0.5,
+      "metrics": {
+        "action_entropy_fraction_of_legal_max": 0.11344214084532683,
+        "mean_consecutive_repeats": 12.375,
+        "mean_unique_observations": 28.0,
+        "median_policy_ns": 135912708.5
+      },
+      "rank": 2,
+      "unchanged_failure_penalty": 1.0
+    },
+    "mild": {
+      "eligible": true,
+      "exploration_bonus": 0.25,
+      "metrics": {
+        "action_entropy_fraction_of_legal_max": 0.11344597470810738,
+        "mean_consecutive_repeats": 12.375,
+        "mean_unique_observations": 28.0,
+        "median_policy_ns": 136462916.5
+      },
+      "rank": 1,
+      "unchanged_failure_penalty": 0.5
+    },
+    "strong": {
+      "eligible": true,
+      "exploration_bonus": 1.0,
+      "metrics": {
+        "action_entropy_fraction_of_legal_max": 0.11343801632398927,
+        "mean_consecutive_repeats": 12.375,
+        "mean_unique_observations": 28.0,
+        "median_policy_ns": 136014583.5
+      },
+      "rank": 3,
+      "unchanged_failure_penalty": 2.0
+    }
+  },
+  "checks": {
+    "all_candidates_eligible": true,
+    "forbidden_score_or_level_key_paths_in_artifact": 0,
+    "illegal_actions": 0,
+    "invalid_action6_coordinates": 0,
+    "same_seed_replay_passed": true,
+    "seed_diversity_passed": true,
+    "successful_rows": 24,
+    "total_rows": 24
+  },
+  "interpretation": "All three loop-strength candidates tied on the two primary behavioral metrics and produced identical action/payload traces on all 8 matched rows (0 differing turns out of 320 for every pair). Each recorded 103 unchanged prior choices, 103 revisit decisions, 103 state-conditioned click explorations, and zero graph-argmax changes. The preregistered third criterion therefore selected mild on an extremely small entropy difference. Relative to the earlier focused no-loop calibration on the identical games, seeds, and 40-action budget, mild was slightly worse descriptively (28.0 versus 28.125 mean unique observations; 12.375 versus 12.25 mean consecutive repeats). This calibration does not show a behavioral improvement. Mild is frozen because the declared procedure requires selecting among the three candidates; the 500-action gate is the finite test of whether the intervention has any longer-horizon score effect.",
+  "is_arc_performance_result": false,
+  "is_biological_advantage_claim": false,
+  "protocol": {
+    "action_budget": 40,
+    "action_temperature": 0.15,
+    "condition": "real-signed-loop-escape",
+    "coordinate_temperature": 0.2,
+    "games": [
+      "ft09-0d8bbf25",
+      "lp85-305b61c3",
+      "ls20-9607627b",
+      "sp80-589a99af"
+    ],
+    "score_blind": true,
+    "seeds": [
+      0,
+      1
+    ],
+    "selection_method": "lexicographic: unique observations, consecutive repeats, legal-normalized action entropy, policy time"
+  },
+  "provenance": {
+    "calibration_config_sha256": "98f6d7b10acd6336af73daa2bae47933b721988758858a3cedd021991a803262",
+    "calibration_runner_sha256": "d577e473a05e147bb0ec619c6bef83b27fe29b705dc961b2e9812b517d6f429d",
+    "created_at_utc": "2026-09-22T04:52:45.693168+00:00",
+    "evaluation_harness_sha256": "648af6412da18ee638aac7232fcf4f788a548dcc4be2f867afec2c9f1da4b2f4",
+    "git_commit": "f5c2423c946a3c1583ee792a95782588a2d903e4",
+    "git_dirty": false,
+    "peak_rss_bytes": 422084608
+  },
+  "result_id": "loop-escape-calibration-20260922",
+  "schema": "flygi.result-index",
+  "schema_version": 1,
+  "selected": {
+    "action_temperature": 0.15,
+    "coordinate_temperature": 0.2,
+    "exploration_bonus": 0.25,
+    "name": "mild",
+    "unchanged_failure_penalty": 0.5
+  },
+  "status": "selected-and-frozen"
+}

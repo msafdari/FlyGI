@@ -214,6 +214,30 @@ def test_signed_and_unsigned_runtimes_are_separate_assets() -> None:
     assert dict(signed.groups) == dict(unsigned.groups)
 
 
+def test_loop_escape_config_changes_only_the_declared_decoder_fields() -> None:
+    signed = load_config("configs/literal_rate_signed.yaml")
+    loop = load_config("configs/literal_rate_signed_loop_escape.yaml")
+
+    assert loop.data == signed.data
+    assert loop.graph == signed.graph
+    assert loop.dynamics == signed.dynamics
+    assert loop.encoder == signed.encoder
+    assert loop.state == signed.state
+    assert dict(loop.groups) == dict(signed.groups)
+    assert loop.decoder.loop_escape_enabled is True
+    assert loop.decoder.loop_escape_exploration_bonus == 0.25
+    assert loop.decoder.loop_escape_unchanged_failure_penalty == 0.5
+
+    allowed = {
+        "loop_escape_enabled",
+        "loop_escape_exploration_bonus",
+        "loop_escape_unchanged_failure_penalty",
+    }
+    for field_name in signed.decoder.__dataclass_fields__:
+        if field_name not in allowed:
+            assert getattr(loop.decoder, field_name) == getattr(signed.decoder, field_name)
+
+
 @pytest.mark.parametrize("key", ["modulator_treatment", "unknown_transmitter_treatment"])
 def test_invalid_transmitter_treatment_fails_closed(tmp_path: Path, key: str) -> None:
     document = yaml.safe_load(Path("configs/literal_rate.yaml").read_text(encoding="utf-8"))
