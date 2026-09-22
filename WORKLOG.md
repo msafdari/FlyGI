@@ -87,6 +87,12 @@ The smoke winner scored objective 271 versus 21 with its descending trace
 ablated. That is evidence the head can use graph output in the smoke protocol,
 not an ARC score and not evidence that real topology beats controls.
 
+Generation 0 completed at `2026-09-22T09:48Z`. Its best candidate had training
+objective 185.625, one level completion, and 123.125 mean unique observations;
+the population mean was 136.59375, the elite mean was 181.59375, and no
+candidates failed. These are eight-game training-objective values, not held-out
+ARC scores. The checkpoint's `next_generation` is 1 of 60.
+
 ## Immutable data and runtime identity
 
 MaleCNS source release: `male-cns:v1.0`.
