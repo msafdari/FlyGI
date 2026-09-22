@@ -1212,3 +1212,71 @@ A thread heartbeat named `Monitor FlyGI submission` is active at a 20-minute
 interval. It is instructed to remain quiet while the state is unchanged, never
 submit or retry, and on completion/failure to update this worklog and the social
 draft, run checks, commit, push, and report the outcome.
+
+## 2026-09-22 — First official submission scored: 0.00, rank 3212 of 3215
+
+### Observed external result
+
+Submission **56444435** finished. The authenticated competition record now
+reads:
+
+- competition: `arc-prize-2026-arc-agi-3`;
+- submission ref: **56444435**;
+- file: `submission.parquet` from private notebook version 2;
+- submitted at: `2026-09-21T22:14:13.373000` UTC;
+- status: **`SubmissionStatus.COMPLETE`**;
+- **public score: 0.00**;
+- private score: not available.
+
+A downloaded public-leaderboard snapshot taken at `2026-09-22T00:25:25` UTC
+(223,877 bytes, SHA-256
+`8251a9fb93dc791a5cfae558d9112764b5fb823596568d71b71c2926fc1acd58`, not
+committed) places the entry as:
+
+| Field | Observed |
+| --- | --- |
+| Team | `Megus Alexandrus` (`megusalexandrus`), team id 16928093 |
+| Rank | **3212 of 3215** |
+| Score | 0.00 |
+| Submission count | 1 |
+
+Distribution context from the same snapshot: 3,052 teams scored above zero, the
+lowest nonzero score was 0.01, the top score was 18.81, and **163 teams are tied
+at 0.00** occupying ranks 3050 through 3212. FlyGI sits at the bottom of that
+tied band.
+
+### Reading the result honestly
+
+The hidden-set score is zero. That is the outcome the specification anticipated
+in its closing section, and it is consistent with everything measured locally:
+all of the public-set signal came from a single game (`sp80`), and the hidden
+set does not contain it.
+
+What the submission does establish is the specification's level-1 success: a
+valid, accepted competition entry in which the complete 166,700-neuron,
+24,559,055-edge signed MaleCNS graph is verified on Kaggle's own machine and
+used in every decision, with zero trainable parameters. The server-side
+`FLYGI_PREFLIGHT=` line with `mode=connectome`, `verified=true`, and all three
+matching array hashes is the evidence that this was a connectome run and not a
+fallback.
+
+What it does not establish is any of levels 3 through 5. A zero score cannot
+separate the real graph from its controls, and no biological advantage is
+claimed. The local Gate 2 finding stands unchanged: the real graph did not beat
+an interface-matched bypass.
+
+### Process note
+
+The 20-minute monitor heartbeat described in the previous entry did not fire on
+completion; it ended with the session that created it. The submission had
+already been `COMPLETE` for some time before this entry was written. Any future
+monitoring of an external state should not rely on a session-scoped heartbeat
+surviving across sessions.
+
+### Next
+
+No further competition submission is authorized. The scientific backlog is
+unchanged and is led by the matched positive-control reservoir, without which a
+zero-versus-zero comparison cannot distinguish "the biological graph confers no
+advantage" from "this interface cannot express an advantage any graph could
+confer."

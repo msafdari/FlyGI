@@ -1,8 +1,13 @@
 # FlyGI social announcement drafts
 
-These drafts are intentionally honest about the result. Replace the bracketed
-leaderboard line only after Kaggle submission `56444435` finishes. Do not imply
-that FlyGI solved ARC-AGI-3 or that biological topology beat its controls.
+These drafts are intentionally honest about the result. Do not imply that FlyGI
+solved ARC-AGI-3 or that biological topology beat its controls.
+
+**Leaderboard status is final.** Submission `56444435` completed with a public
+score of **0.00**, ranked **3212 of 3215** teams. From the same public snapshot:
+3,052 teams scored above zero, the lowest nonzero score was 0.01, the top was
+18.81, and 163 teams are tied at 0.00 across ranks 3050-3212. Nothing below
+should be posted with a number that contradicts these.
 
 ## LinkedIn
 
@@ -47,7 +52,13 @@ What I learned:
 4. “Biologically inspired” means very little unless the biology is causally
    tested against matched alternatives.
 
-Leaderboard status: **[replace when submission 56444435 completes]**
+Leaderboard: **0.00. Rank 3212 of 3215.** Dead last band, and I am posting it
+anyway.
+
+That is the honest number, and it is not a surprise. Every point of local signal
+came from a single public game, and the hidden set does not contain it. A fly
+brain with zero trainable parameters was never going to out-reason the top entry
+at 18.81.
 
 Next up: a matched positive-control reservoir, the full operating-point sweep,
 and a small trained readout on the frozen graph.
@@ -63,8 +74,10 @@ I made a fly take ARC-AGI-3. 🪰🧠
 166,700 neurons. 24,559,055 edges. Full signed connectome, every decision. 0
 trainable parameters.
 
-It passed 125/125 local runs and made its first official submission—but didn't
-beat a matched bypass. The honest negative result is the point.
+It passed 125/125 local runs and scored **0.00** on the hidden set—rank 3212 of
+3215—and did not beat a matched bypass locally either.
+
+The honest negative result is the point.
 
 ## X — thread version
 
@@ -133,13 +146,15 @@ Replication has to be real.
 
 ### 7/7
 
-Official submission: `56444435`
-Leaderboard: **[replace when complete]**
+Official submission `56444435`: **0.00. Rank 3212/3215.**
+
+Last place band, posted on purpose. Top score is 18.81. A zero-parameter fly
+brain was never beating that.
 
 Next: a matched positive-control reservoir, an operating-point sweep, and a
 small trained readout.
 
-The fly played ARC. Now we find out whether being a fly helps. 🪰
+The fly played ARC. It lost. 🪰
 
 ## Posting notes
 
@@ -148,7 +163,12 @@ The fly played ARC. Now we find out whether being a fly helps. 🪰
 - Strongest first comment: “The repo includes the negative control, failed
   assumptions, exact hashes, and worklog—not just the headline.” Add a public
   repository or write-up link only after one exists.
-- If the leaderboard score is zero, say so plainly. The hook still works because
-  the engineering and controlled negative result are the story.
-- If the submission fails technically, do not use “reached the leaderboard.”
-  Change it to “made its first official submission attempt” and name the failure.
+- The score is zero and the drafts say so plainly. The hook still works because
+  the engineering and the controlled negative result are the story.
+- The submission did not fail technically. It completed, and the server-side
+  preflight proves Kaggle loaded and verified the full signed graph, so
+  “reached the leaderboard” is accurate.
+- Do not describe rank 3212 as “near the bottom” without noting that 163 teams
+  share the 0.00 score; the within-tie ordering is not a measure of quality.
+- Resist any edit that softens 0.00. The reason this is worth posting is that
+  the number is real and the controls are published alongside it.
