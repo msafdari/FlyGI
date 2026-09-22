@@ -284,43 +284,57 @@ dimension of fairness has now been restored, and performance fell. That is
 evidence, not proof -- the colour trade confounds it -- but it is the first
 direct test of the excuse, and the excuse did not survive it cleanly.
 
-### 5. Disabling the novelty centroid fixed it — the first real improvement
+### 5. Disabling the novelty centroid: the first real improvement
 
-Six click-only games, three seeds, 600 actions:
+**The defect.** The coordinate head selects by branch order:
+
+```
+if explore_unchanged_click: seeded uniform
+elif centroid is not None:  novelty_centroid   <- deterministic
+else:                       factorized_sample  <- the only temperature-controlled path
+```
+
+When a click changes the frame, `centroid` is not None and the agent
+deterministically clicks the centroid of the changed cells, never reaching the
+sampler. Temperature is therefore irrelevant: 1.0 and 4.0 produced **identical**
+results. `lp85` proves the mechanism -- its 2.5% effect rate means clicks rarely
+change anything, the unchanged-click branch fires instead, and coverage jumps to
+35% of the grid. The heuristic explores widely precisely when the game ignores
+it and collapses precisely when the game responds.
+
+**Six click-only games, three seeds, 600 actions:**
 
 | Condition | Mean score | Unique obs | Levels | Games solved |
 | --- | ---: | ---: | ---: | --- |
 | Centroid ON, T=0.2 (submitted) | 0.000000 | 71.7 | 0 | none |
 | Centroid ON, T=4.0 | 0.000000 | 67.0 | 0 | none |
-| **Centroid OFF, T=1.0** | **0.010120** | **247.4** | **3** | **`r11l`, `vc33`** |
+| **Centroid OFF** | **0.010120** | **247.4** | **3** | `r11l`, `vc33` |
 | Random clicking | 0.009425 | 235.6 | 3 | `r11l` |
 
-Coordinate coverage recovered by roughly fourteen-fold in the affected games:
+Coordinate coverage recovered roughly fourteen-fold: `r11l` 96 to 1,383, `s5i5`
+52 to 1,352, `tn36` 63 to 1,391, `vc33` 52 to 1,367 distinct cells of 4,096.
 
-| Game | Centroid ON | **Centroid OFF** |
-| --- | ---: | ---: |
-| `r11l` | 96 | **1,383** |
-| `s5i5` | 52 | **1,352** |
-| `tn36` | 63 | **1,391** |
-| `vc33` | 52 | **1,367** |
+**All 25 games, seed 0, 600 actions:**
 
-**`vc33` had never been completed by any condition in this project.** The agent
-now completes it.
+| Condition | Mean | Click-only (6) | Other (19) | Unique obs | Games solved |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Submitted | 0.190476 | 0.000000 | 0.250627 | 280.3 | `cd82` |
+| **Centroid OFF** | **0.195388** | **0.020466** | 0.250627 | **322.6** | `cd82`, `r11l` |
 
-This is also the first time the connectome has scored **above** random rather
-than below it on a matched comparison -- 0.010120 against 0.009425, solving two
-games to random's one.
+**Strictly dominant: 1 game better, 0 worse, 24 unchanged.** The nineteen games
+where clicking is not the only action are **identical to six decimal places**, so
+the change does no harm where it does not apply, and all of the gain is where
+the defect was.
 
-**The honest limits.** That margin is 7% on eighteen rows and is not
-significant; the defensible claim is that the fly now *matches* random here
-rather than losing to it. The result covers six of twenty-five games. A full
-25-game run is in flight to see whether it beats the submitted 0.190476, which
-is the only number that would justify spending a submission.
+**Status: adopted as the default, not a submission on its own.** The overall
+margin is +2.6%, far short of the 2x bar for spending a daily slot, and both
+prior submissions scored 0.00 on games this class of fix does not reach. It
+should be carried into whatever the Phase 1 controller produces rather than
+spent alone.
 
-**What this cost.** The defect shipped in both competition submissions. It had
-six passing tests, none of which compared it to clicking at random. It is the
-exact failure the standing rule in `AGENTS.md` was written for, found four days
-late.
+**What it cost.** The defect shipped in both competition submissions. It had six
+passing tests, none comparing it against clicking at random. It is the exact
+failure the standing rule in `AGENTS.md` was written for, found four days late.
 
 ### Phase 0 — retinotopic optic-lobe encoder
 
