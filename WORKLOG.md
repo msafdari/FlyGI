@@ -2662,3 +2662,72 @@ level count is identical across all three conditions, and the one behavioural
 difference does not clear its own direct control.
 
 The reviewed index is `results/manifests/plasticity_comparison_20260922.json`.
+
+## 2026-09-22 — Second official submission: 600-action loop-escape config
+
+### Submitted
+
+- competition: `arc-prize-2026-arc-agi-3`;
+- submission ref: **56459984**;
+- submitted at: `2026-09-22T09:12:47.110000` UTC;
+- source: private notebook `megusalexandrus/flygi-arc-agi-3`, **version 3**,
+  output `submission.parquet`;
+- status: `SubmissionStatus.PENDING`. Kaggle reported zero submissions remaining
+  today, so the daily slot is consumed and no retry is authorized.
+
+### What was submitted, and why this one
+
+| Config | Local mean score | Games solved |
+| --- | ---: | --- |
+| Previous submission, 80-action ceiling | **0.00 on the hidden set** | none |
+| 600 actions, loop escape **off** | 0.000000 | none |
+| **600 actions, loop escape on (submitted)** | **0.190476** | `cd82` |
+| 1600 actions, loop escape on | 0.190476 | `cd82` |
+
+Two changes account for the improvement, both fixes to the harness rather than
+to the fly. The 80-action ceiling could not reach games needing 164-333 actions;
+and loop escape, which scored 0.190476 against the same configuration's 0.000000
+without it, is what first completed `cd82`, a game no condition had ever solved.
+
+**1600 actions bought nothing over 600.** The budget lever is saturated, which
+is why 600 was submitted rather than the larger ceiling.
+
+### Pre-submission verification
+
+- Config asserted before staging: signed runtime, `K=4`, loop escape enabled at
+  0.25/0.50, temperatures 0.15/0.20, plasticity off, `frozen_graph: true`.
+- Local adapter preflight against the exact staged bundle: `available=True`,
+  `MAX_ACTIONS=600`, 25,200-second wall-clock guard, 166,700 nodes, 24,559,055
+  edges, zero trainable parameters.
+- Kaggle Dataset published as **version 2**, and the served `config.yaml` was
+  downloaded back and hashed: `63b50521c324ecd1c2d39e1498dd8113b9d6838731ea7f31b3fb8a94317e5c7c`,
+  **byte-identical** to `configs/literal_rate_signed_loop_escape.yaml`. This
+  check mattered: the preflight line verifies the three array hashes but not the
+  config, so serving version 1's plain config would have silently submitted the
+  0.000000 condition.
+- Private notebook version 3 completed with `KernelWorkerStatus.COMPLETE` and
+  emitted `FLYGI_PREFLIGHT` with `mode=connectome`, `verified=true`,
+  `internal_steps=4`, 166,700 nodes, 24,559,055 edges, and all three array
+  digests matching the local bundle.
+- The only error-matching line in the run log is the pre-existing Kaggle image
+  pip dependency-resolver warning for Dopamine and Gradio, unrelated to FlyGI
+  and already recorded on 2026-09-19.
+
+### A failed first attempt, recorded
+
+The first `kaggle competitions submit` call returned HTTP 400 because `-f` was
+omitted; code-competition submissions need the kernel output filename. The
+submissions endpoint was queried before retrying to confirm no submission had
+been created, so the daily slot was not spent twice.
+
+### Expectation
+
+The local 0.190476 comes from one game of 25. The hidden set is different games,
+so the honest expectation is a small nonzero score rather than a proportional
+one, and a plausible outcome remains 0.00 if the hidden set contains nothing in
+reach. What the submission does establish either way is that the deployed
+configuration is no longer the one that provably could not reach `r11l`-class
+games.
+
+No claim of a connectome advantage attaches to this submission. Random legal
+play still outscores the real graph on the public set.
