@@ -2311,3 +2311,40 @@ The fly's latent state is low-dimensional and domain-shaped, for orientation,
 place and stimulus valence. It supports associative learning and goal-directed
 navigation, not the compositional program induction ARC ultimately rewards. The
 expectation is a measurable improvement in adaptation, not a solved benchmark.
+
+### Stage 1 complete — and it demonstrates the deletion directly
+
+`flygi.plasticity.mushroom_body` implements the three-factor rule with eleven
+tests. Running it against both compiled runtimes settles the audit empirically:
+
+| Runtime | Plastic KC->MBON edges | DAN->MBON edges | Mean gate | **Weight change after one rewarded update** |
+| --- | ---: | ---: | ---: | ---: |
+| Signed (**the configuration submitted**) | 61,210 | **0** | 0.0 | **0.000000** |
+| Unsigned (modulators retained) | 61,210 | 3,195 | 1.859e-04 | 0.002782 |
+
+The 61,210 plastic synapses are present in both. In the submitted configuration
+the teaching signal that gates them does not exist, so a rewarded update changes
+**exactly nothing**. The mushroom body was physically incapable of learning, and
+no amount of reward would have changed that.
+
+One update costs 1.1 ms against roughly 136 ms for a single graph step, so
+plasticity is essentially free relative to the dynamics.
+
+### What the rule does, and the guarantees around it
+
+`dw[mbon, kc] = -rate * gate[mbon] * kc_activity[kc]`, with dopamine
+**depressing** the synapses active when it arrives, which is the established
+direction of the effect rather than a convenience. `gate` comes from the real
+dopaminergic-to-MBON adjacency, so which MBON a teaching signal reaches is
+decided by the connectome; a test removes dopaminergic input from half the MBONs
+and asserts only the innervated half learns.
+
+Tested guarantees:
+
+- everything outside the Kenyon-cell-to-MBON block stays byte-identical;
+- all three factors are required -- zero reward, zero Kenyon activity or zero
+  dopamine each produce no change at all;
+- weights stay finite, keep their original sign, and stay inside a declared band
+  under a learning rate of 5.0 and a reward of 1000 sustained for 50 updates, so
+  plasticity can modulate the connectome but never invert or erase it;
+- decay relaxes toward the frozen baseline, and `reset` restores it exactly.
