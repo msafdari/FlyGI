@@ -649,6 +649,111 @@ computation. Real equal to null means the fly is acting as a seeded hash and the
 honest report is that the scaffold scores, not the fly. Real below null is a
 real finding too, and gets recorded.
 
+### 8. The operating point is dead, and that outranks the mushroom body
+
+Research before building, per the user's instruction. Three independent sources
+converge on how connectome-based MB learning is actually done, and two of their
+documented failure modes are ones this repository can be checked for in minutes.
+
+**Established practice for KC->MBON learning:**
+
+- Plasticity is **depression only**, never potentiation. Dopamine coincident
+  with KC activity depresses the KC->MBON synapse (LTD). Published
+  implementations use learning rate ~0.06 with a **weight floor** (~0.25 of
+  baseline) so synapses cannot be driven to zero, plus slow recovery toward
+  baseline as a forgetting term.
+- Credit assignment uses an **eligibility trace**, decaying ~0.55 per step so
+  roughly six steps stay eligible. Reward arrives after the action; without a
+  trace there is nothing to assign credit to.
+- Valence is anatomical: **PAM** neurons carry reward, **PPL1** punishment, and
+  they innervate distinct MBON compartments. Punishment depresses the channel
+  taken; reward depresses the channels not taken.
+- KC->DAN synapses stay **fixed**; only KC->MBON is plastic.
+- The code must be **sparse**, a few percent of KCs per stimulus, maintained by
+  APL feedback inhibition.
+
+**The two failure modes worth checking first, both documented:**
+
+1. *Saturation.* If every KC fires every step the eligibility trace is a
+   constant and the rule degenerates to a per-compartment scalar. One project
+   traced this to KC->KC recurrence being 56% of KC input against 9.3% from APL,
+   pushing loop gain above unity. **Ours is worse: KC->KC is 85.3% of KC input
+   (642,932 edges) against 2.4% from APL.**
+2. *No reach.* A published MB-lesion control found that cutting MB output left
+   behaviour unchanged -- the MB never reached the readout, so no plasticity
+   could have mattered.
+
+**What the checks found here is a third thing, and it is worse.**
+
+`modulator_treatment: zero` in the deployed config deletes the entire
+dopaminergic pathway: **0 DAN->KC and 0 DAN->MBON edges**. There is no teaching
+signal to gate anything. The `-modulators` build (`modulator_treatment:
+positive`) restores 129,099 DAN->KC and 3,159 DAN->MBON edges and is the graph
+any learning work must use.
+
+But the blocking problem is the operating point. At the deployed `gain=0.9`:
+
+| Group | mean abs activity | vs sensory drive |
+| --- | ---: | ---: |
+| `ol_sensory` (drive) | 2.295e-01 | 1x |
+| `ol_intrinsic` (1 hop) | 2.332e-03 | 100x weaker |
+| **descending neurons (the readout)** | **2.611e-06** | **87,906x weaker** |
+| KC / MBON / DAN | 1.6-3.4e-06 | comparable to DN |
+
+Float32 epsilon is 1.19e-7, so the readout carries roughly one significant digit
+above quantization. **The whole post-sensory network is silent, not just the
+mushroom body.** Incoming-L1 normalization makes rows sum to one, and with
+signed weights a row of mixed signs averages to near zero, so amplitude is lost
+at ~100x per hop rather than the ~0.9x the gain suggests.
+
+This retroactively explains a great deal: why the connectome policy never beat
+an interface-matched bypass, why the trained head generalized nothing, and why
+the fly ties the controller while still beating a random tiebreaker -- its
+readout is structured, but at an amplitude barely above the numerical floor.
+
+**A gain sweep finds a narrow biological window.** KC active fraction against
+recurrent gain, ten turns, biological target 0.05-0.11:
+
+| gain | mean abs DN | KC frac >0.1 | mean KC |
+| ---: | ---: | ---: | ---: |
+| 0.9 (deployed) | 2.6e-06 | 0.000 | 0.0000 |
+| 2.4 | 5.9e-05 | 0.000 | 0.0119 |
+| **2.6** | 9.5e-05 | **0.031** | 0.0327 |
+| **2.8** | 1.6e-04 | **0.188** | 0.0774 |
+| 3.0 | 2.7e-04 | 0.800 | 0.1813 |
+| 3.4 | 1.2e-03 | 0.991 | 0.6381 |
+| 4.0+ | -- | 1.000 | ~0.97 (latched) |
+
+Between silence and latching there is roughly `gain in [2.6, 2.9]`. There the
+KC code is biologically sparse and DN amplitude sits ~40-100x above the current
+value and ~1000x above float32 epsilon.
+
+**A sharp prediction falls out of this.** At `gain~2.7` the real graph
+(spectral radius 0.8289) sits at effective radius ~2.2 and comes alive, while a
+degree-preserving null (radius ~0.23) sits at ~0.63 and stays silent. The 3.59x
+structural separation, which has never produced a behavioural difference, would
+for the first time be placed at an operating point where it *should* produce
+one. That is preregistered here before the run.
+
+**Ordered plan.**
+
+1. Re-tune the operating point on the `-modulators` graph: pick the gain where
+   KC sparsity lands in 0.05-0.11, and confirm DN amplitude clears the float32
+   floor by a wide margin. Nothing else can be trusted until this is done.
+2. Run the MB reach test at that operating point: zero every MBON outgoing edge
+   and check whether the action sequence changes at all. If it does not, MB
+   plasticity cannot affect behaviour and the plan stops here.
+3. Re-measure the existing three arms at the new operating point. Changing gain
+   invalidates every score in this worklog; those scores are of a dead network,
+   so this is a cost worth paying, but it must be paid explicitly and not
+   quietly.
+4. Only then implement KC->MBON depression: depression-only, floor at 0.25 of
+   baseline, learning rate ~0.06, eligibility trace decaying ~0.55 per turn,
+   PAM-gated on level advance and PPL1-gated on death, with the controller
+   supplying the reinforcement signal the connectome has never had.
+5. Control it with the rewired mushroom body already implemented in
+   `rewire_mushroom_body`, and with reinforcement shuffled in time.
+
 ## Official submissions
 
 | Ref | Configuration | Status | Public score |
