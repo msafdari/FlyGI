@@ -771,6 +771,59 @@ every other step, and report what was left out.
 5. Control it with the rewired mushroom body already implemented in
    `rewire_mushroom_body`, and with reinforcement shuffled in time.
 
+### 9. Validation battery for the mushroom-body build
+
+Implementation complete and committed before any of this ran, per the user's
+execution directive. Results recorded as measured.
+
+**1. MB reach test -- PASSES, decisively.** Zeroing every outgoing MBON edge
+changes the descending-neuron readout by **22.286% of its own magnitude** and
+touches **92.2% of readout entries** (20 turns, `results/mb_reach_gain2.7.json`).
+The published failure mode -- an MB that never reaches the readout, where a
+lesion changes nothing and no plasticity could matter -- is absent here.
+KC->MBON plasticity can affect actions. The per-turn effect decays across the
+episode (0.316 at turn 1 to 0.151 at turn 20), which is worth watching but does
+not threaten the result.
+
+**2. Operating point -- the dead-network defect is fixed; sparsity is a declared
+compromise.** The first gain sweep used uncorrelated random frames and picked
+2.7. That was wrong. Real ARC frames are highly correlated -- a persistent grid
+with small edits -- and correlated drive sustains the Kenyon-cell population far
+more effectively. Re-swept with correlated input:
+
+| gain | KC active frac (mean / max) | mean abs DN | x float32 eps |
+| ---: | ---: | ---: | ---: |
+| 0.9 (deployed) | 0.000 / 0.000 | 2.61e-06 | **22** |
+| 1.5 | 0.000 / 0.000 | 1.09e-05 | 92 |
+| 1.8 | 0.002 / 0.037 | 5.47e-05 | 460 |
+| **2.0 (adopted)** | **0.123 / 0.555** | **5.95e-04** | **4998** |
+| 2.2 | 0.265 / 1.000 | 1.36e-03 | 11448 |
+| 2.7 | 0.496 / 1.000 | 8.96e-03 | 75292 |
+
+Adopted 2.0. The readout now sits ~5000x above float32 epsilon against the
+deployed 22x, which is the defect that matters most. Mean KC activity of 0.123
+is **above** the biological 0.05-0.11 band and the population still latches on
+individual turns (max 0.555), so the eligibility trace is not as sharp as the
+literature's. Measured spread is 2.09, well clear of the degenerate zero, so the
+trace still carries structure.
+
+There is **no gain that delivers both** biological sparsity and a readout clear
+of the numerical floor. The anatomy says why: KC->KC is 85.3% of Kenyon-cell
+input against 2.4% from APL, which makes the transition from silent to latched
+abrupt. The principled fix is to strengthen APL feedback rather than scale the
+global gain -- a separate change with its own controls, not folded in here.
+
+**3-5. Arms running.** `sg-g2-nolearn` and `sg-g2-learn` at gain 2.0 on the
+`-modulators` graph, 3 seeds x 25 games x 600 actions. The falsification
+controls (`--fly-rewire-mb`, `--fly-shuffle-credit`) follow.
+
+**The controller-only reference survives the operating-point change.** It never
+touches the connectome, so gain does not affect it: 0.194691, 20 levels, 7/25
+games stands as the comparison point. Every *connectome* score recorded before
+this section was measured at gain 0.9 and describes a dead network, including
+the degree-preserving null arm that completed during this build. Those are
+retained as a record of the dead regime and are not comparable to what follows.
+
 ## Official submissions
 
 | Ref | Configuration | Status | Public score |

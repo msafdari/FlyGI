@@ -50,10 +50,11 @@ def _traces(config: Any, runtime_dir: Path, *, lesion: bool, turns: int, seed: i
         # weights go to zero -- so the comparison isolates MB influence rather
         # than changing the graph the dynamics run on.
         matrix = fly._network.connectivity
-        mbons = set(_populations(runtime_dir)["mbons"].tolist())
-        columns = matrix.indices
-        mask = np.fromiter((int(c) in mbons for c in columns), dtype=bool, count=columns.size)
-        matrix.data[mask] = 0.0
+        # A lesion is a deliberate weight edit, so plasticity is declared for it
+        # exactly as the learning site declares it. Topology is untouched.
+        matrix.data.flags.writeable = True
+        mbons = _populations(runtime_dir)["mbons"]
+        matrix.data[np.isin(matrix.indices, mbons)] = 0.0
 
     rng = np.random.default_rng(seed)
     grid = rng.integers(0, 16, (64, 64), dtype=np.int8)
