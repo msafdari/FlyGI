@@ -63,6 +63,10 @@ class RetinotopicOptions:
     off_types: tuple[str, ...] = DEFAULT_OFF_TYPES
     change_types: tuple[str, ...] = DEFAULT_CHANGE_TYPES
     change_gain: float = 1.0
+    # ColumnarColourProjection only: seeded permutation of which cell type
+    # carries which colour. The falsification control for that encoder's
+    # largest assumption; None means the declared c % channels rule.
+    colour_permutation_seed: int | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -348,6 +352,34 @@ class ColumnarColourProjection:
         # If it is wrong: results still hold as "retinotopic categorical input
         # helps", but not as "the fly's visual feature channels help".
         self._colour_channel = np.arange(COLOR_COUNT, dtype=np.int64) % self._channel_count
+        self._permutation_seed = settings.colour_permutation_seed
+        if self._permutation_seed is not None:
+            # THE CONTROL for the assumption above. A seeded permutation of the
+            # channels reassigns which cell type carries which colour while
+            # keeping the collision structure (0 and 15 still share), the
+            # retinotopy, the histogram semantics and every magnitude identical.
+            # If this scores the same as the declared rule, the specific
+            # colour-to-type mapping carries nothing.
+            #
+            # KNOWN IMPERFECTION, measured before first use: cell types have
+            # different neuron counts per column, so reassigning colours moves
+            # traffic onto types with different multiplicity. Total injected
+            # drive differs by ~4% between the declared rule and seed 20260923
+            # (1531.5 vs 1593.2 on a random frame), and nonzero support by
+            # ~3.7%. The control is therefore matched in information and
+            # structure but not exactly in input energy. The adaptive
+            # per-neuron standardizer downstream removes global scale, so a
+            # small score difference should not be read as mapping semantics
+            # without checking drive totals first.
+            permutation = np.random.default_rng(int(self._permutation_seed)).permutation(
+                self._channel_count
+            )
+            if np.array_equal(permutation, np.arange(self._channel_count)):
+                raise RetinotopyError(
+                    "the permutation control drew the identity permutation; "
+                    "choose another seed, or the control controls nothing"
+                )
+            self._colour_channel = permutation[self._colour_channel]
         # Flat bin index for the (column, channel) histogram.
         self._cell_bin_base = self._cell_column * self._channel_count
 
@@ -375,7 +407,16 @@ class ColumnarColourProjection:
             "occupied_columns": int(np.unique(self._column_key).size),
             "channels": self._channel_count,
             "channel_names": list(self._channel_names),
-            "colour_to_channel": "colour c drives type index c % channels (fixed rule)",
+            "colour_to_channel": (
+                "colour c drives type index c % channels (fixed rule)"
+                if self._permutation_seed is None
+                else f"PERMUTED control, seed {self._permutation_seed}"
+            ),
+            "colour_permutation_seed": self._permutation_seed,
+            "colour_channel_map": {
+                str(colour): self._channel_names[int(self._colour_channel[colour])]
+                for colour in range(COLOR_COUNT)
+            },
             "colliding_channels": shared,
             "colour_representation": "categorical histogram per column, never averaged",
             "change_channel": "none; motion is left to T4/T5",

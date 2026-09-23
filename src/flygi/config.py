@@ -64,6 +64,14 @@ class DynamicsConfig:
     state_dtype: str = "float32"
 
 
+def _optional_int(value: object, name: str) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ConfigError(f"{name} must be an integer or null")
+    return int(value)
+
+
 @dataclass(frozen=True)
 class EncoderConfig:
     """Declared, nonlearned ARC-to-sensory interface."""
@@ -80,6 +88,13 @@ class EncoderConfig:
     off_types: tuple[str, ...] = ()
     change_types: tuple[str, ...] = ()
     change_gain: float = 1.0
+    # Falsification control for the retinotopic_colour encoder's largest
+    # ASSUMPTION: colour c drives medulla type index c % 15, a coding convention
+    # with no biological motivation. A seed here permutes which type carries
+    # which colour, keeping the collision structure and everything else fixed.
+    # If a permuted assignment scores the same, the specific mapping carries
+    # nothing and only categorical-plus-retinotopic structure matters.
+    colour_permutation_seed: int | None = None
 
 
 @dataclass(frozen=True)
@@ -344,6 +359,10 @@ def load_config(path: str | Path) -> FlyGIConfig:
             off_types=tuple(encoder_raw.pop("off_types", ()) or ()),
             change_types=tuple(encoder_raw.pop("change_types", ()) or ()),
             change_gain=float(encoder_raw.pop("change_gain", 1.0)),
+            colour_permutation_seed=_optional_int(
+                encoder_raw.pop("colour_permutation_seed", None),
+                "encoder.colour_permutation_seed",
+            ),
         )
         action_temperature_raw = decoder_raw.pop("action_temperature", 0.15)
         coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.2)
@@ -545,6 +564,11 @@ def load_config(path: str | Path) -> FlyGIConfig:
     overlap = set(encoder.on_types) & set(encoder.off_types)
     if overlap:
         raise ConfigError(f"a cell type cannot be both ON and OFF: {sorted(overlap)}")
+    if encoder.colour_permutation_seed is not None and encoder.kind != "retinotopic_colour":
+        raise ConfigError(
+            "colour_permutation_seed is the falsification control for the "
+            "retinotopic_colour encoder and applies to no other kind"
+        )
     if encoder.kind not in ("retinotopic", "retinotopic_colour") and (
         encoder.on_types or encoder.off_types or encoder.change_types
     ):

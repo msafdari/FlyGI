@@ -264,6 +264,7 @@ def build_connectome_policy(
         options = RetinotopicOptions(
             input_scale=config.encoder.input_scale,
             change_gain=config.encoder.change_gain,
+            colour_permutation_seed=config.encoder.colour_permutation_seed,
             **{
                 name: tuple(getattr(config.encoder, name))
                 for name in ("on_types", "off_types", "change_types")

@@ -1021,6 +1021,42 @@ categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
 
+### 13. The bio-eye battery: main arm, its falsification control, and T4/T5
+
+Three arms complete the encoder experiment. All assemble and discriminate,
+verified before launch, all on the threaded matvec (4 threads, bit-identical).
+
+| Arm | Config | What it isolates |
+| --- | --- | --- |
+| `sg-bioeye-lc` (running) | `literal_rate_bioeye_lc` | encoder vs the scrambled `sg-lc` control: does retinotopic categorical colour matter at all |
+| `sg-bioeye-lc-permuted` (queued) | `literal_rate_bioeye_lc_permuted` | assumption A: does it matter *which* medulla type carries which colour |
+| `sg-bioeye-t4t5` (queued) | `literal_rate_bioeye_t4t5` | the highest-signal readout (13,585 T4/T5, ~25x DN discriminative signal) with usable input; `sg-t4t5` becomes its matched scrambled control |
+
+**The permutation control, measured before use.** `colour_permutation_seed:
+20260923` reassigns 14 of 16 colours to different cell types; the 0/15
+collision pair still shares a channel, so the collision structure is matched.
+Deterministic across builds. An identity permutation is refused at construction
+-- a control that changes nothing must fail loudly, not run quietly.
+
+**Known imperfection of the control, declared rather than discovered later:**
+cell types differ in neurons per column, so reassigning colours shifts total
+injected drive by ~4% (1531.5 vs 1593.2 on a random frame) and nonzero support
+by ~3.7%. Matched in information and structure, not exactly in input energy.
+The adaptive per-neuron standardizer removes global scale downstream, but a
+small score difference between the declared rule and the permutation should be
+checked against drive totals before being read as mapping semantics.
+
+**How to read the three results together, written before any of them exist:**
+
+- bio-eye > scrambled, permuted = bio-eye: retinotopic categorical input helps;
+  the specific colour-to-type assignment is harmless convention, as assumed.
+- bio-eye > scrambled, permuted < bio-eye: the assignment itself carries weight
+  it has no biological right to carry; report as an interface artifact, not as
+  fly computation.
+- bio-eye = scrambled: the encoder fix, the best-motivated change in the
+  project, did not matter either -- and the perception readouts join the list of
+  correctly-implemented components that produced nothing.
+
 ### 12. Plan: give the fly's eye a real image (measured before designing)
 
 The first principle above says every computation must be carried by fly neurons.
