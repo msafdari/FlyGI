@@ -369,13 +369,33 @@ experiments:
     regime: gain2.0-modulators
     baseline: sg-bioeye-lc
     tests: [H-RETINO-DECODER]
-    note: Retinotopic state-change click coordinates; encoder and readout identical to baseline.
+    preregistered_endpoints:
+      primary: click_games_19
+      secondary: click_dominant_9
+      full_set: reported_alongside
+    note: >
+      Retinotopic state-change click coordinates; encoder and readout identical
+      to baseline. ENDPOINTS PREREGISTERED 2026-09-23 BEFORE THE ARM RAN:
+      measured on sg-g2-nolearn action counts, 6 of 25 games never click
+      (g50t, ls20, re86, tr87, tu93, wa30), so a click-decoder effect is
+      structurally diluted on the full set. Primary endpoint is the 19 games
+      where ACTION6 occurs; secondary is the 9 click-dominant games (>60% of
+      actions: bp35, dc22, ft09, lp85, r11l, s5i5, su15, tn36, vc33); the full
+      25-game comparison is reported alongside, never suppressed. Declared
+      before unblinding so this is a design, not a post-hoc subgroup hunt.
   sg-bioeye-lc-surprise:
     config: configs/literal_rate_bioeye_lc_surprise.yaml
     regime: gain2.0-modulators
     baseline: sg-bioeye-lc-retdec
     tests: [H-RETINO-DECODER]
-    note: Prediction-error variant; costs one extra network advance per turn. 3.5 vs 12.1 cells through the real path.
+    preregistered_endpoints:
+      primary: click_games_19
+      secondary: click_dominant_9
+      full_set: reported_alongside
+    note: >
+      Prediction-error variant; one extra network advance per turn; 3.5 vs
+      12.1 cells through the real path. Same preregistered endpoints as
+      sg-bioeye-lc-retdec, declared before the arm ran.
 
   sg-bioeye-lc-efference:
     config: configs/literal_rate_bioeye_lc_efference.yaml

@@ -1021,6 +1021,36 @@ categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
 
+### 18. Three proposed improvements, two killed by measurement in ten minutes
+
+Asked what else would make a positive difference. Applying the claim-tier rule
+before building anything:
+
+1. **More seeds per arm -- rejected, measured.** Variance decomposition of the
+   paired differences (bio-eye vs control): between-game variance 0.080,
+   within-game 0.068. At 3 seeds the game term contributes ~78% of the cluster
+   variance, so doubling seeds narrows CIs by ~6% for 2x compute. The games
+   are the noise, not the seeds. (The probe script's own printed inference
+   said otherwise; its threshold compared between to within instead of
+   between to within/n_seeds -- the claim-tier rule catching a bad bridge in
+   the same hour it was written.)
+
+2. **Saliency-guided candidate injection -- demoted, measured.** On 323
+   click-tie turns across three click-dominant games, the controller's
+   candidate menu already lies within 3 cells of the fly's saliency argmax on
+   76% of turns (median 2.0 cells; 5% beyond 8). The menu is not the
+   bottleneck. Parked with its measurement; worth revisiting only if the
+   decoder arms show an effect that the 5% tail could be capping.
+
+3. **Treatment-matched endpoints -- adopted, free.** Measured on
+   sg-g2-nolearn: 6 of 25 games never click, so every click-decoder effect is
+   structurally diluted ~24% on the full-set mean, and game heterogeneity is
+   the dominant noise term (see 1). The decoder arms now carry PREREGISTERED
+   endpoints, declared before either arm has run a row: primary = the 19
+   click games, secondary = the 9 click-dominant games, with the full 25-game
+   comparison always reported alongside. Registered in EXPERIMENTS.yaml; this
+   is a design decision made blind, not a post-hoc subgroup.
+
 ### 17. The efference copy: the connectome learns what it just did
 
 Prompted by asking whether any non-visual sense exists for ARC. Two do, and one
