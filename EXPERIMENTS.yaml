@@ -83,10 +83,14 @@ hypotheses:
       An input that preserves both retinotopy and categorical colour lets the
       fly's visual hierarchy (T4/T5, LC) do work that the scrambled projection
       made impossible.
-    status: open
+    status: "null"
     evidence:
       - "Encoder verified: adjacency preserved, colours categorical, T4/T5 pattern change 3.41x for motion"
-      - "Awaiting sg-bioeye-lc vs sg-lc"
+      - >
+        sg-bioeye-lc vs sg-lc, 75 matched rows: +0.009151, CI [-0.125, +0.172],
+        p=0.817, levels exactly tied 16-16. The partial had drifted to +0.072 at
+        59 rows and collapsed in the final 16 -- the third occurrence of this
+        seed-ordered mirage. t4t5 arm pending; status set on the LC result.
     updated: 2026-09-23
   H-COLOUR-MAP:
     statement: >
@@ -103,7 +107,8 @@ hypotheses:
       activity) beats reading descending neurons -- under scrambled input.
     status: "null"
     evidence:
-      - "sg-lc / sg-t4t5 vs sg-g2-nolearn under the scrambled encoder: no separation (pending final rows)"
+      - "sg-lc vs sg-g2-nolearn, complete: +0.0378, CI [-0.068,+0.150], p=0.526"
+      - "sg-t4t5 vs sg-g2-nolearn, complete: -0.0280, CI [-0.163,+0.094], p=0.557"
       - "Under the bio-eye encoder this becomes H-RETINOTOPY-COLOUR."
     updated: 2026-09-23
   H-APL:

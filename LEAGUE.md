@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-23T18:43:13.053431+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-23T19:18:58.357868+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -18,9 +18,9 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | sg-lc | gain2.0-modulators | complete | 75 | 0.2412 | 16 | +0.0378 [-0.068,+0.150] p=0.526 -> null | sg-g2-nolearn |
 | sg-t4t5 | gain2.0-modulators | complete | 75 | 0.1754 | 13 | -0.0280 [-0.163,+0.094] p=0.557 -> null | sg-g2-nolearn |
 | sg-cx | gain2.0-modulators | killed | 30 | 0.0551 | 5 | partial: -0.0301 (30 pairs, no verdict) | sg-g2-nolearn |
-| sg-bioeye-lc | gain2.0-modulators | running | 56 | 0.2380 | 14 | partial: +0.0829 (56 pairs, no verdict) | sg-lc |
-| sg-bioeye-lc-permuted | gain2.0-modulators | running | 2 | 0.0291 | 1 | partial: -0.0133 (2 pairs, no verdict) | sg-bioeye-lc |
-| sg-bioeye-t4t5 | gain2.0-modulators | running | 2 | 0.0454 | 1 | partial: +0.0454 (2 pairs, no verdict) | sg-t4t5 |
+| sg-bioeye-lc | gain2.0-modulators | complete | 75 | 0.2504 | 16 | +0.0092 [-0.121,+0.174] p=0.818 -> null | sg-lc |
+| sg-bioeye-lc-permuted | gain2.0-modulators | running | 25 | 0.3287 | 5 | partial: +0.1073 (25 pairs, no verdict) | sg-bioeye-lc |
+| sg-bioeye-t4t5 | gain2.0-modulators | running | 24 | 0.2250 | 7 | partial: +0.0724 (24 pairs, no verdict) | sg-t4t5 |
 | real-signed | gain0.9-dead | complete | 125 | 0.1905 | 5 | +0.0000 [-0.571,+0.571] p=1.000 -> null | no-graph-bypass |
 | no-graph-bypass | gain0.9-dead | complete | 125 | 0.1905 | 5 | — | — |
 | null-degree-preserving | gain0.9-dead | complete | 125 | 0.0000 | 0 | -0.1905 [-0.571,+0.000] p=1.000 -> null | real-signed |
@@ -55,7 +55,7 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | H-BUDGET | refuted | Score is limited by the 600-action budget. |
 | H-MB-LEARNING | invalidated | Controller-supplied reinforcement through KC->MBON depression improves score. |
 | H-OPERATING-POINT | null | Waking the network from the numerical floor (gain 0.9 -> 2.0 on the -modulators graph) improves score by itself. |
-| H-RETINOTOPY-COLOUR | open | An input that preserves both retinotopy and categorical colour lets the fly's visual hierarchy (T4/T5, LC) do work that the scrambled projection made impossible. |
+| H-RETINOTOPY-COLOUR | null | An input that preserves both retinotopy and categorical colour lets the fly's visual hierarchy (T4/T5, LC) do work that the scrambled projection made impossible. |
 | H-COLOUR-MAP | open | The colour->type rule (c % 15) is harmless convention; only the categorical-plus-retinotopic structure matters, not which medulla type carries which colour. (Assumption A of the encoder.) |
 | H-PERCEPTION-READOUT | null | Reading high-signal perception populations (LC 16.1x, T4/T5 54.5x the DN activity) beats reading descending neurons -- under scrambled input. |
 | H-APL | supported | Strengthening APL feedback inhibition -- the fly's own sparsification circuit -- restores biological KC sparsity (0.05-0.11) at a live operating point, where global gain provably cannot (KC->KC is 85.3% of KC input; the silent-to-latched transition is abrupt). |

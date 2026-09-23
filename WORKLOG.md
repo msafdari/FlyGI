@@ -1021,6 +1021,34 @@ categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
 
+### 15. The bio-eye result: null, and the third partial-lead collapse
+
+`sg-bioeye-lc` against its matched scrambled control `sg-lc`, 75 rows each,
+identical readout, identical everything except the encoder:
+
+| | score | levels | delta |
+| --- | ---: | ---: | --- |
+| scrambled projection (`sg-lc`) | 0.241245 | 16 | reference |
+| retinotopic categorical colour (`sg-bioeye-lc`) | 0.250396 | **16** | `+0.009151`, CI `[-0.125, +0.172]`, p=0.817 |
+
+Levels exactly tied. H-RETINOTOPY-COLOUR is **null** on the LC readout: giving
+the visual hierarchy input it can use -- adjacency preserved, colours
+categorical, motion visible to T4/T5 at 3.4x -- changed nothing the score can
+see. The T4/T5 bio-eye arm is still running and gets its own verdict.
+
+**The partial-lead collapse, third occurrence.** At 59 rows the matched delta
+had drifted to +0.072 with a 14-12 level lead; the final 16 rows erased it
+completely. Same shape as the tiebreak arm (+10.6% at 41 rows, gone at 75) and
+consistent across this project: seed-ordered partials drift positive in the
+middle rows and regress by the end. The league's no-verdict-on-partials rule
+has now paid for itself three times. The currently running arms show partial
+deltas of +0.12 (permuted) and +0.07 (bio-eye t4t5); given the pattern, the
+expectation is regression, and no excitement is licensed before row 75.
+
+Both scrambled-readout arms also completed and received verdicts:
+`sg-lc` +0.0378 (p=0.526) and `sg-t4t5` -0.0280 (p=0.557) against
+`sg-g2-nolearn` -- H-PERCEPTION-READOUT closes as null on complete pairs.
+
 ### 14. The mushroom body done right: built, calibrated, awaiting its turn
 
 Built now, to run after the bio-eye battery settles, per the plan. Everything
