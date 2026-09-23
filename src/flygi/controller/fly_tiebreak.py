@@ -90,6 +90,7 @@ class FlyTiebreaker:
         self._state = self._network.initial_state()
         self._previous_grid: NDArray[np.int8] | None = None
         self._mushroom_body = None
+        self._rewire_report: dict[str, Any] | None = None
         self._reinforcements = 0
         self._absolute_weight_change = 0.0
         self._last_update: dict[str, Any] | None = None
@@ -223,17 +224,6 @@ class FlyTiebreaker:
         # a learning site is actually attached. Topology stays frozen
         # unconditionally, so the connectome's wiring cannot drift.
         matrix.data.flags.writeable = True
-        if rewire:
-            # The falsification control: same degrees, same weights, Kenyon-cell
-            # to MBON connectivity scrambled. If learning works equally well
-            # here, it is not the fly's wiring doing it.
-            matrix = _rewire(
-                matrix,
-                kenyon_cells=kenyon,
-                mbons=mbons,
-                seed=rewire_seed,
-            )
-            self._network._connectivity = matrix
 
         anatomy = resolve_mushroom_body(
             matrix,
@@ -243,6 +233,23 @@ class FlyTiebreaker:
             reward_dans=pam,
             punishment_dans=ppl,
         )
+        if rewire:
+            # The falsification control: each MBON keeps its exact number of
+            # Kenyon-cell inputs and the exact multiset of weights; only which
+            # Kenyon cell supplies each one is randomized. Applied in place,
+            # after the anatomy is resolved, so the compartment map is the real
+            # one and only the plastic block is scrambled.
+            # Scrambling which Kenyon cell contacts which MBON is a topology
+            # edit, and ScipyRateNetwork freezes topology unconditionally so it
+            # cannot drift during a run. That guarantee is about drift, not
+            # about a declared control applied once before any turn is taken, so
+            # the window is opened explicitly here and closed immediately.
+            matrix.indices.flags.writeable = True
+            try:
+                self._rewire_report = _rewire(matrix, anatomy, seed=rewire_seed)
+                matrix.sort_indices()
+            finally:
+                matrix.indices.flags.writeable = False
         from flygi.plasticity.mushroom_body import MushroomBody
 
         return MushroomBody(matrix, anatomy, MushroomBodyParameters(shuffle_credit=shuffle_credit))
