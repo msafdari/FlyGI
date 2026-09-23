@@ -1,0 +1,271 @@
+# The experiment league: every condition, every hypothesis, one file.
+#
+# This is the project's central claim-tracker. `scripts/league.py` joins it
+# against the immutable result bundles, the live checkpoints and the telemetry
+# to render the leaderboard; nothing here duplicates a number that an artifact
+# already holds. What this file owns is the part no artifact can derive:
+# WHY each experiment exists, WHAT it is fairly compared against, and WHICH
+# hypothesis its result moves.
+#
+# Rules, enforced by scripts/league.py where it can:
+# - Every experiment names the condition string inside its result bundle.
+# - Comparisons are valid only within the same regime. gain0.9 results were
+#   measured on a network whose readout sat one significant digit above float32
+#   epsilon (WORKLOG section 8); they are a record of that dead regime, not
+#   baselines for anything since.
+# - Hypothesis statuses move on evidence, with the experiment named. `open`
+#   means untested, `null` means tested and no effect found, `invalidated`
+#   means the test itself was later shown unsound -- which is not the same as
+#   the hypothesis being false, and the note must say why.
+
+schema_version: 1
+
+regimes:
+  gain0.9-dead:
+    note: >
+      Deployed operating point until 2026-09-23. Post-sensory activity ~2.6e-6,
+      ~22x float32 epsilon; the whole regime is a measurement of numerical
+      noise. Kept as history.
+  gain2.0-modulators:
+    note: >
+      Operating point from WORKLOG section 9: -modulators graph (dopaminergic
+      pathway present), recurrent_gain 2.0, readout ~5000x above epsilon. KC
+      sparsity 0.123 vs biological 0.05-0.11, a declared compromise (H-APL).
+  controller-only:
+    note: Uses no connectome, so it is valid as a reference in every regime.
+
+hypotheses:
+  H-ANATOMY-TIEBREAK:
+    statement: >
+      The connectome breaking the controller's ties beats the controller's own
+      deterministic hash.
+    status: "null"
+    evidence:
+      - "sg-fly-real vs sg-controller-only: levels exactly tied 20-20, score +0.0216, p=0.835"
+    updated: 2026-09-23
+  H-STATE-DEPENDENCE:
+    statement: >
+      Any observation-dependent tiebreaker helps; the fly would be incidental.
+      (The deflationary reading of the fly's early partial lead.)
+    status: refuted
+    evidence:
+      - "sg-fly-gridhash: 9 levels vs controller's 20; noise in the same seam actively hurts"
+    updated: 2026-09-23
+  H-BUDGET:
+    statement: Score is limited by the 600-action budget.
+    status: refuted
+    evidence:
+      - "sg-fly-real-1800: zero level completions after action 600 across 21 matched rows"
+    updated: 2026-09-23
+  H-MB-LEARNING:
+    statement: >
+      Controller-supplied reinforcement through KC->MBON depression improves
+      score.
+    status: invalidated
+    evidence:
+      - "sg-g2-learn vs sg-g2-nolearn: flat (0.203451 vs 0.203443, fewer levels)"
+      - >
+        Test unsound: Kenyon cells receive 0.00% of their input from any driven
+        sensory population (WORKLOG section 11), so the circuit being taught
+        never heard the agent's senses. Retest requires H-MB-INPUT-BUS.
+    updated: 2026-09-23
+  H-OPERATING-POINT:
+    statement: >
+      Waking the network from the numerical floor (gain 0.9 -> 2.0 on the
+      -modulators graph) improves score by itself.
+    status: "null"
+    evidence:
+      - "sg-g2-nolearn vs sg-controller-only: +0.0088, p=0.8625"
+      - "The defect was real (22x -> ~5000x epsilon) and fixing it was necessary; it was not sufficient."
+    updated: 2026-09-23
+  H-RETINOTOPY-COLOUR:
+    statement: >
+      An input that preserves both retinotopy and categorical colour lets the
+      fly's visual hierarchy (T4/T5, LC) do work that the scrambled projection
+      made impossible.
+    status: open
+    evidence:
+      - "Encoder verified: adjacency preserved, colours categorical, T4/T5 pattern change 3.41x for motion"
+      - "Awaiting sg-bioeye-lc vs sg-lc"
+    updated: 2026-09-23
+  H-COLOUR-MAP:
+    statement: >
+      The colour->type rule (c % 15) is harmless convention; only the
+      categorical-plus-retinotopic structure matters, not which medulla type
+      carries which colour. (Assumption A of the encoder.)
+    status: open
+    evidence:
+      - "Awaiting sg-bioeye-lc-permuted vs sg-bioeye-lc"
+    updated: 2026-09-23
+  H-PERCEPTION-READOUT:
+    statement: >
+      Reading high-signal perception populations (LC 16.1x, T4/T5 54.5x the DN
+      activity) beats reading descending neurons -- under scrambled input.
+    status: "null"
+    evidence:
+      - "sg-lc / sg-t4t5 vs sg-g2-nolearn under the scrambled encoder: no separation (pending final rows)"
+      - "Under the bio-eye encoder this becomes H-RETINOTOPY-COLOUR."
+    updated: 2026-09-23
+  H-APL:
+    statement: >
+      Strengthening APL feedback inhibition -- the fly's own sparsification
+      circuit -- restores biological KC sparsity (0.05-0.11) at a live
+      operating point, where global gain provably cannot (KC->KC is 85.3% of
+      KC input; the silent-to-latched transition is abrupt).
+    status: open
+    evidence:
+      - "Named as the principled fix in WORKLOG section 9; not yet built"
+    updated: 2026-09-23
+  H-MB-INPUT-BUS:
+    statement: >
+      Driving the mushroom body through its real input pathway (antennal-lobe
+      projection neurons -> Kenyon cells, 2 hops, reaches 4,025/4,064 KCs)
+      gives the learning circuit sensory content, making a fair retest of
+      H-MB-LEARNING possible. ARC has no odours, so any PN drive is a declared
+      invention (assumption G): the claim is about the MB as associative
+      memory, never about olfaction.
+    status: open
+    evidence:
+      - "Pathway measured in WORKLOG section 12; encoder not yet built"
+    updated: 2026-09-23
+
+experiments:
+  # ---- controller reference (no connectome; regime-independent) ----
+  sg-controller-only:
+    config: configs/state_graph_controller.yaml
+    regime: controller-only
+    baseline: null
+    tests: []
+    note: The scaffold alone. 0.194691, 20 levels, 7/25 games.
+
+  # ---- gain0.9 dead regime (history; not comparable forward) ----
+  sg-fly-real:
+    config: configs/literal_rate_signed_nocentroid.yaml
+    regime: gain0.9-dead
+    baseline: sg-controller-only
+    tests: [H-ANATOMY-TIEBREAK]
+    note: Fly in the tie slot, dead operating point.
+  sg-fly-gridhash:
+    config: configs/literal_rate_signed_nocentroid.yaml
+    regime: gain0.9-dead
+    baseline: sg-controller-only
+    tests: [H-STATE-DEPENDENCE]
+    note: Anatomy-free state-dependent control.
+  sg-fly-null:
+    config: configs/literal_rate_signed_nocentroid.yaml
+    regime: gain0.9-dead
+    baseline: sg-fly-real
+    tests: [H-ANATOMY-TIEBREAK]
+    note: Degree-preserving null fly, dead regime.
+  sg-fly-real-1800:
+    config: configs/literal_rate_signed_nocentroid.yaml
+    regime: gain0.9-dead
+    baseline: sg-fly-real
+    tests: [H-BUDGET]
+    expected_rows: 25
+    note: Budget tripled, seed 0 only.
+
+  # ---- gain2.0 live regime ----
+  sg-g2-nolearn:
+    config: configs/literal_rate_mb_learning.yaml
+    regime: gain2.0-modulators
+    baseline: sg-controller-only
+    tests: [H-OPERATING-POINT]
+    note: Fly in tie slot at the live operating point, frozen weights.
+  sg-g2-learn:
+    config: configs/literal_rate_mb_learning.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-nolearn
+    tests: [H-MB-LEARNING]
+    note: KC->MBON depression, controller reinforcement. Test later invalidated.
+  sg-g2-learn-rewired:
+    config: configs/literal_rate_mb_learning.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-learn
+    tests: [H-MB-LEARNING]
+    status_override: killed
+    note: Falsification control; killed at 29/75 when the main effect was null and the test unsound.
+  sg-g2-learn-shuffled:
+    config: configs/literal_rate_mb_learning.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-learn
+    tests: [H-MB-LEARNING]
+    status_override: killed
+    note: Credit-shuffle control; killed at 33/75, same reason.
+  sg-lc:
+    config: configs/literal_rate_lc_readout.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-nolearn
+    tests: [H-PERCEPTION-READOUT]
+    note: LC readout, scrambled encoder. Doubles as the control for sg-bioeye-lc.
+  sg-t4t5:
+    config: configs/literal_rate_t4t5_readout.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-nolearn
+    tests: [H-PERCEPTION-READOUT]
+    note: T4/T5 readout, scrambled encoder. Control for sg-bioeye-t4t5.
+  sg-cx:
+    config: configs/literal_rate_central_complex.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-nolearn
+    tests: [H-PERCEPTION-READOUT]
+    status_override: killed
+    note: >
+      Killed at 30/75: reads a ring attractor that receives no angular
+      velocity, under scrambled input -- doubly uninformative, as preregistered.
+  sg-bioeye-lc:
+    config: configs/literal_rate_bioeye_lc.yaml
+    regime: gain2.0-modulators
+    baseline: sg-lc
+    tests: [H-RETINOTOPY-COLOUR]
+    note: The encoder fix. Retinotopic categorical colour, LC readout.
+  sg-bioeye-lc-permuted:
+    config: configs/literal_rate_bioeye_lc_permuted.yaml
+    regime: gain2.0-modulators
+    baseline: sg-bioeye-lc
+    tests: [H-COLOUR-MAP]
+    note: Seeded permutation of colour->type; the control for assumption A.
+  sg-bioeye-t4t5:
+    config: configs/literal_rate_bioeye_t4t5.yaml
+    regime: gain2.0-modulators
+    baseline: sg-t4t5
+    tests: [H-RETINOTOPY-COLOUR]
+    note: Bio-eye input read through the motion detectors.
+
+  # ---- Track A/B history, all in the dead regime; registered so the record
+  # ---- is complete, with the minimal baseline pairs that were actually used.
+  real-signed:
+    config: configs/literal_rate_signed.yaml
+    regime: gain0.9-dead
+    baseline: no-graph-bypass
+    tests: []
+    note: Track A literal fly vs interface-matched bypass. Identical 0.190476.
+  no-graph-bypass:
+    config: configs/literal_rate_signed.yaml
+    regime: gain0.9-dead
+    baseline: null
+    tests: []
+    note: Interface-matched no-recurrent-graph control.
+  null-degree-preserving:
+    config: configs/literal_rate_signed.yaml
+    regime: gain0.9-dead
+    baseline: real-signed
+    tests: []
+    note: Track A degree-preserving null.
+  real-signed-focused: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: null, tests: [], note: Focused-game subset run.}
+  real-signed-loop-escape: {config: configs/literal_rate_signed_loop_escape.yaml, regime: gain0.9-dead, baseline: real-signed, tests: [], note: Loop-escape calibration winner.}
+  eff-real-signed: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-no-graph-bypass, tests: [], note: Efficiency-sweep replicate.}
+  eff-no-graph-bypass: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: null, tests: [], note: Efficiency-sweep bypass.}
+  eff-null-degree-preserving: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-real-signed, tests: [], note: Efficiency-sweep null.}
+  sweep800-escape: {config: configs/literal_rate_signed_loop_escape.yaml, regime: gain0.9-dead, baseline: null, tests: [H-BUDGET], note: 800-action budget probe.}
+  sweep1600-mild: {config: configs/literal_rate_signed_loop_balanced.yaml, regime: gain0.9-dead, baseline: null, tests: [H-BUDGET], note: 1600-action budget probe.}
+  mb-frozen: {config: configs/literal_rate_plastic_mb.yaml, regime: gain0.9-dead, baseline: null, tests: [H-MB-LEARNING], note: Old MB baseline; graph had zero DAN edges.}
+  mb-plastic: {config: configs/literal_rate_plastic_mb.yaml, regime: gain0.9-dead, baseline: mb-frozen, tests: [H-MB-LEARNING], note: Old plasticity arm; teaching pathway absent, moved zero weight until unit-scaling.}
+  mb-plastic-rewired: {config: configs/literal_rate_plastic_mb_rewired.yaml, regime: gain0.9-dead, baseline: mb-plastic, tests: [H-MB-LEARNING], note: Old MB rewire control.}
+  head-trained: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: full-nocentroid, tests: [], note: Track B trained head; 0.886 on training games, 0.000 held out.}
+  head-trained-blind: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: head-trained, tests: [], note: Track B blind control.}
+  retinotopic: {config: configs/literal_rate_signed_retinotopic.yaml, regime: gain0.9-dead, baseline: full-nocentroid, tests: [H-RETINOTOPY-COLOUR], note: Luminance-collapsing retinotopic encoder, 0.0032. The defect the bio-eye encoder fixes.}
+  click-coorduniform: {config: configs/literal_rate_signed_coorduniform.yaml, regime: gain0.9-dead, baseline: click-nocentroid, tests: [], note: Coordinate-head diagnosis arm.}
+  click-coordhot: {config: configs/literal_rate_signed_coordhot.yaml, regime: gain0.9-dead, baseline: click-nocentroid, tests: [], note: Coordinate-head diagnosis arm.}
+  click-nocentroid: {config: configs/literal_rate_signed_nocentroid.yaml, regime: gain0.9-dead, baseline: null, tests: [], note: Centroid-off click baseline.}
+  full-nocentroid: {config: configs/literal_rate_signed_nocentroid.yaml, regime: gain0.9-dead, baseline: real-signed-loop-escape, tests: [], note: Centroid-off full set; adopted default of the dead regime.}

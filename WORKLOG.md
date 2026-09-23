@@ -1220,6 +1220,31 @@ the `src/flygi/dynamics/spmv.py` docstring. Short version: default 4 threads,
 `FLYGI_SPMV_THREADS=6` for a machine to yourself, `=1` to reproduce a
 pre-optimisation measurement, and keep `arms x threads <= 10`.
 
+## The experiment league
+
+`EXPERIMENTS.yaml` at the repository root is the central claim-tracker: every
+condition ever run, the baseline it is fairly compared against, the operating
+regime it belongs to, and the hypothesis its result moves. `scripts/league.py`
+joins it with the immutable bundles, the live checkpoints and the telemetry to
+render the leaderboard -- the registry owns the *why*, the artifacts own every
+number, so the table cannot drift from reality. `LEAGUE.md` is the generated
+snapshot; edit the registry, never the snapshot.
+
+Guardrails, each one a mistake this project actually made:
+
+- **No verdict from a partial.** A 41-row seed-ordered partial once showed
+  +10.6% that the full matrix erased. Partials get a delta labelled `partial`
+  and an explicit "biased sample, no verdict" warning.
+- **No cross-regime comparison.** gain0.9 numbers are measurements of a
+  numerically dead network; the league refuses to compare them against live
+  ones (controller-only excepted, since it uses no connectome).
+- **Unregistered bundles are surfaced loudly.** All 20 historical Track A/B
+  bundles are now registered, so the full ablation record -- 35 experiments, 10
+  hypotheses, 3 regimes -- is in one queryable place.
+
+The hypothesis register in `EXPERIMENTS.yaml` supersedes the prose assumptions
+table below as the tracked state; the prose stays as narrative.
+
 ## Assumptions register
 
 Every mapping from an ARC quantity onto a fly quantity is an invention until
