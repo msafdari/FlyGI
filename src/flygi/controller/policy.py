@@ -124,6 +124,8 @@ class StateGraphPolicy:
         # still decides first, so the fly can never override what the
         # controller has actually learned.
         self._fly = fly
+        self._fly_ranked = 0
+        self._fly_decisive = 0
         self._scene_tracker = SceneTracker(
             SceneConfig(
                 volatile_mask=VolatileMaskConfig(
@@ -229,6 +231,12 @@ class StateGraphPolicy:
             "pending_reset": self._pending_reset is not None,
             "outcomes": dict(sorted(self._outcomes.items())),
             "level_epoch": self._level_epoch,
+            "fly_present": self._fly is not None,
+            "fly_ranked_turns": self._fly_ranked,
+            "fly_decisive_turns": self._fly_decisive,
+            "fly_decisive_rate": (
+                0.0 if self._fly_ranked == 0 else self._fly_decisive / self._fly_ranked
+            ),
             "effect_observations": self._effects.observation_count,
             "effect_levels_started": self._effects.levels_started,
             "graph_nodes": len(self._graph.nodes),
@@ -589,7 +597,9 @@ class StateGraphPolicy:
             if stats is not None:
                 family_attempts[known.action_id] += stats.attempts
 
-        def rank(candidate: ActionCandidate) -> tuple[float | int | bytes, ...]:
+        def rank(
+            candidate: ActionCandidate, *, use_fly: bool = True
+        ) -> tuple[float | int | bytes, ...]:
             metadata = observed.candidate_metadata.get(candidate)
             color = self._clicked_color(candidate, metadata, observed.scene)
             estimate = self._effects.estimate(candidate, clicked_color=color)
@@ -598,7 +608,7 @@ class StateGraphPolicy:
             attempts = 0 if stats is None else stats.attempts
             retry_prefix = attempts if retries else family_attempts[candidate.action_id]
             fly_rank = 0.0
-            if self._fly is not None:
+            if use_fly and self._fly is not None:
                 # Negated: higher connectome preference sorts earlier.
                 fly_rank = -float(
                     self._fly.preference(candidate.action_id, candidate.x, candidate.y)
@@ -612,7 +622,18 @@ class StateGraphPolicy:
                 candidate.to_bytes(),
             )
 
-        return tuple(sorted(candidates, key=rank))
+        ordered = tuple(sorted(candidates, key=rank))
+        if self._fly is not None and ordered:
+            # How often does the connectome actually decide? Everything ranked
+            # before it can leave no tie at all, in which case the fly is present
+            # but inert. Counting the turns where removing it would have chosen
+            # differently is the only honest measure of its influence, and it is
+            # what tells us whether the tie position has headroom left.
+            self._fly_ranked += 1
+            without = min(candidates, key=lambda c: rank(c, use_fly=False))
+            if without != ordered[0]:
+                self._fly_decisive += 1
+        return ordered
 
     def _tie_digest(self, state_key: bytes, candidate: ActionCandidate) -> bytes:
         digest = hashlib.blake2b(digest_size=16)

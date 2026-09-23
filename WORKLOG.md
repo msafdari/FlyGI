@@ -549,11 +549,39 @@ already exist at
 `data/processed/male-cns-v1.0/literal-rate-signed/nulls/degree_preserving/seed-20260921`
 and load as a tiebreaker (166,700 nodes / 24,559,055 edges, identical to real).
 
-| Condition | Mean score | Levels | Games with progress |
+| Condition | Mean score | Levels/row | Games with progress |
 | --- | ---: | ---: | ---: |
-| Controller alone (3 seeds x 25 games x 600 actions) | 0.194691 | 20 | 7/25 |
-| Controller + real fly | pending | pending | pending |
-| Controller + degree-preserving null fly | pending | pending | pending |
+| Controller alone (3 seeds x 25 games x 600 actions) | 0.194691 | 0.267 | 7/25 |
+| Controller + **grid-hash** (state-dependent, no anatomy) | **0.179650** | 0.120 | 4/25 |
+| Controller + real fly | running | | |
+| Controller + degree-preserving null fly | queued | | |
+
+**The grid-hash control came back and it favours the fly.** Against
+controller-only on identical `(seed, game)` rows: score `-0.015041`, 95% CI
+`[-0.152719, +0.098567]`, `p=0.7662`; levels `-0.146667`, 95% CI
+`[-0.293333, -0.026667]`, `p=0.1228`. So a tiebreaker that varies with the
+observation but contains no anatomy does **not** reproduce the connectome's
+partial gain -- it is neutral on score and slightly worse on levels. The
+obvious deflationary explanation for the fly result ("any state-dependent
+tiebreak buys exploration diversity") is therefore not supported. The
+degree-preserving null remains the sharper test of anatomy and is queued.
+
+**How often is the fly actually decisive?** `fly_decisive_rate` in
+`policy_diagnostics` counts turns where removing the connectome would have
+chosen a different candidate: 24.7% on ar25, 28.5-37.2% on ls20. It is neither
+inert nor saturated -- on roughly three turns in four the controller's own
+learning already picks a unique winner and the fly is silent, which is the
+guardrail working.
+
+**The action budget is binding, and this is the cheapest score gain available.**
+All 125 completed rows across both conditions ended by `budget_exhausted`; not
+one ended in a win. Level completions run as late as action 514 (controller) and
+599 (fly) -- the literal last action of the budget. Exploration has not
+plateaued: rows still find 72.9 (controller) and 74.6 (fly) new observations in
+their last 100 actions against 91.5/91.7 in their first 100, an 80-81%
+retention, with only 3 of 75 rows finding 5 or fewer. A 1800-action arm is
+running to measure the gain. Kaggle allows nine hours; at 0.148 s/action the fly
+costs 266 s/game at 1800 actions, so the budget is not the constraint there.
 
 Baseline games with progress: ar25, g50t, lp85, m0r0, r11l, tn36, vc33. The
 75-row controller-only matrix is in
