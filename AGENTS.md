@@ -36,6 +36,34 @@ The test to apply before adding anything: *if the connectome were replaced by a
 degree-preserving null tomorrow, would this component still work?* If yes, it is
 not part of this project.
 
+## State every claim at its tier
+
+The claims in this repository that later needed reverting were never the
+measurements; they were the bridges built on top of them. The record, audited
+2026-09-23: statements of the form "I measured X under protocol Y" have held
+essentially without exception, statements of the form "X, therefore Y" account
+for every reversal (the binding-budget inference, the 41-row partial, the
+gain-2.7 sweep run on unrepresentative input), and statements about what a
+change will do to the score are 0 for 11.
+
+So every claim carries its tier, in the same sentence that makes it:
+
+- **Measured** -- this number, this protocol, stated together. Trustworthy at
+  face value, and the tier to prefer when writing headlines.
+- **Inferred** -- a measurement plus an untested bridge. Say the bridge out
+  loud ("assuming exploration predicts conversion"), because the bridge is the
+  part that fails.
+- **Expected** -- a prediction about score or outcome. Always accompanied by
+  the base rate, which at the time of writing is eleven straight nulls.
+
+The headline sentence never carries broader scope than the measurement under
+it: "the agent was action-blind" when only the connectome was measured is how
+a true finding becomes a retraction. Scope words -- agent, connectome, circuit,
+readout -- are part of the claim, not decoration.
+
+This is a precision rule, not a tone rule. Enthusiasm is wanted; it just has
+to be spent on the tier the evidence bought.
+
 ## Label every assumption where it lives
 
 Any code written on a hypothesis or an assumption must say so, in a comment at
