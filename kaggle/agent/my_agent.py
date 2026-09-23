@@ -297,6 +297,19 @@ class MyAgent(Agent):
                 f"{shared['bundle'].node_count} nodes / "
                 f"{shared['bundle'].edge_count} edges in the tie position"
             )
+            # Kaggle debugging happens through stdout alone, so the exact agent
+            # identity -- encoder kind, coordinate source, efference state,
+            # graph size -- is emitted machine-readably once per game.
+            print(
+                "FLYGI_AGENT="
+                + json.dumps(
+                    {"game_id": str(self.game_id), **fly.describe()},
+                    sort_keys=True,
+                    separators=(",", ":"),
+                    default=str,
+                ),
+                flush=True,
+            )
         elif shared.get("available"):
             from flygi.arc.factory import build_connectome_policy
 
@@ -352,4 +365,44 @@ class MyAgent(Agent):
 
     def choose_action(self, frames: list[FrameData], latest_frame: FrameData) -> GameAction:
         del frames
-        return self._policy.choose_action(latest_frame)  # type: ignore[return-value]
+        try:
+            action = self._policy.choose_action(latest_frame)
+        except Exception as exc:
+            # Fail visible, then fail closed: the notebook log must say where,
+            # on what turn, with what error, before the exception propagates.
+            print(
+                "FLYGI_ERROR="
+                + json.dumps(
+                    {
+                        "game_id": str(self.game_id),
+                        "turn": getattr(self, "_flygi_turns", 0),
+                        "error": f"{type(exc).__name__}: {exc}",
+                    },
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
+                flush=True,
+            )
+            raise
+        self._flygi_turns = getattr(self, "_flygi_turns", 0) + 1
+        if self._flygi_turns % 100 == 0:
+            diagnostics = getattr(self._policy, "diagnostics", None)
+            if callable(diagnostics):
+                snapshot = diagnostics()
+                print(
+                    "FLYGI_DIAG="
+                    + json.dumps(
+                        {
+                            "game_id": str(self.game_id),
+                            "turn": self._flygi_turns,
+                            "fly_decisive_rate": snapshot.get("fly_decisive_rate"),
+                            "states": snapshot.get("states_discovered"),
+                            "outcomes": snapshot.get("outcomes"),
+                        },
+                        sort_keys=True,
+                        separators=(",", ":"),
+                        default=str,
+                    ),
+                    flush=True,
+                )
+        return action  # type: ignore[return-value]

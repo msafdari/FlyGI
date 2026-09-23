@@ -127,6 +127,36 @@ source-equivalence audit including the git_dirty=2cf2098 mixed-launch caveat,
 closure report, one tested closure commit) begins only after the fourth bundle
 lands.
 
+### Submission 3 assembled and shipped — 2026-09-23 14:0x PDT
+
+On Mustafa's explicit instruction ("whatever improvements we have planned and
+that we think will help that are crucial -- like efference copy -- make those
+and submit all of those to kaggle asap"), which by the handoff's own authority
+clause overrides its no-submit-during-closure provision. Deviation recorded
+here; the running decoder arms are untouched (their code was imported at
+launch).
+
+**Shipped stack** (`configs/kaggle_bioeye_t4t5_efference.yaml`), tiers stated:
+retinotopic-colour encoder + T4/T5 readout (measured HELPS, borderline, audit
+pending), retinotopic-surprise coordinates (measured 3.5-cell localization;
+behavioural arm still running), Johnston's-organ efference copy at 0.05
+(measured separation/cancellation; behaviourally untested by design).
+**Excluded**: MB learning -- 31:1 punishment-dominated teaching signal, unknown
+sign, unevaluated; a deliberate omission, not an oversight.
+
+**Verified before shipping**: packaging now carries `retinotopy.npz` (it did
+not before -- the encoder would have failed closed on Kaggle); staged config and
+controller byte-identical to intent; the exact config played locally (tn36
+level completed at 80 actions); server file list confirmed all 8 files with the
+modulators graph at 93,348,402 bytes; the SERVED config downloaded back and
+hash-matched (`edb956eb...`), per the submission-2 precedent. Instrumentation:
+`FLYGI_AGENT=` identity line per game, `FLYGI_DIAG=` every 100 turns
+(decisive rate, states, outcomes), `FLYGI_ERROR=` with turn and game on any
+exception before fail-closed propagation.
+
+Dataset version pushed; kernel version 4 pushed. Submission to the competition
+follows kernel completion.
+
 ## Current snapshot — 2026-09-22
 
 - Private repository: <https://github.com/msafdari/FlyGI>.

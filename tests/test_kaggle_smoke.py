@@ -377,6 +377,9 @@ def test_attached_controller_puts_the_connectome_in_the_tie_position(
         def __init__(self, *args: object, **kwargs: object) -> None:
             built["fly_kwargs"] = sorted(kwargs)
 
+        def describe(self) -> dict:
+            return {"kind": "stub"}
+
         def reset(self) -> None:
             return None
 

@@ -28,7 +28,16 @@ if str(SOURCE) not in sys.path:
 
 DEFAULT_CONFIG = ROOT / "configs/literal_rate_signed.yaml"
 DEFAULT_STAGE = ROOT / "kaggle" / "dist" / "dataset"
-RUNTIME_FILES = ("graph.npz", "node_metadata.npz", "groups.npz", "manifest.json")
+# retinotopy.npz is required by the retinotopic_colour encoder and the
+# retinotopic saliency decoders; a bundle without it fails closed at assembly
+# rather than silently degrading, but it must ship for those configs to run.
+RUNTIME_FILES = (
+    "graph.npz",
+    "node_metadata.npz",
+    "groups.npz",
+    "manifest.json",
+    "retinotopy.npz",
+)
 # Kaggle rejects single files above this size on the standard dataset path.
 MAX_FILE_BYTES = 20 * 1024 * 1024 * 1024
 
