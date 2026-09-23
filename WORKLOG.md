@@ -1225,6 +1225,25 @@ another tool to consume.
 Secrets are never captured: environment recording is an explicit allowlist, and
 a test asserts a token in the environment does not reach the log.
 
+## Interruption and recovery
+
+Every evaluation checkpoints each completed row to `<condition>.rows.jsonl`
+immediately, rows are independent and deterministic given (seed, game) -- the
+tiebreaker and its standardizer are reset per game -- so an interrupted run
+loses at most the row in flight, and `--resume` continues exactly. Laptop sleep
+is not an interruption at all: macOS suspends the processes and they continue
+on wake.
+
+The gap was recovery after a real death (reboot, battery, kill): nothing
+auto-restarts and the launch commands lived in nobody's head reliably.
+`scripts/resume_runs.py` closes it using what telemetry already records --
+every run's full argv at `run.start`. It lists each condition that has a
+checkpoint but no final bundle and no clean `run.end`, prints the exact command
+to continue it, skips anything currently running (checked against the process
+table), and relaunches only with `--exec`. After any reboot:
+
+    uv run python scripts/resume_runs.py --exec
+
 ## Execution speed
 
 The agent is one sparse matvec in a loop, and SciPy's `csr_matvec` is a
