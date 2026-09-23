@@ -549,22 +549,45 @@ already exist at
 `data/processed/male-cns-v1.0/literal-rate-signed/nulls/degree_preserving/seed-20260921`
 and load as a tiebreaker (166,700 nodes / 24,559,055 edges, identical to real).
 
-| Condition | Mean score | Levels/row | Games with progress |
+| Condition (3 seeds x 25 games x 600 actions) | Mean score | Levels | Games w/ progress |
 | --- | ---: | ---: | ---: |
-| Controller alone (3 seeds x 25 games x 600 actions) | 0.194691 | 0.267 | 7/25 |
-| Controller + **grid-hash** (state-dependent, no anatomy) | **0.179650** | 0.120 | 4/25 |
-| Controller + real fly | running | | |
-| Controller + degree-preserving null fly | queued | | |
+| Controller alone | 0.194691 | 20 | 7/25 |
+| Controller + real fly | 0.216301 | **20** | 10/25 |
+| Controller + grid-hash (state-dependent, no anatomy) | 0.179650 | 9 | 3/25 |
 
-**The grid-hash control came back and it favours the fly.** Against
-controller-only on identical `(seed, game)` rows: score `-0.015041`, 95% CI
-`[-0.152719, +0.098567]`, `p=0.7662`; levels `-0.146667`, 95% CI
-`[-0.293333, -0.026667]`, `p=0.1228`. So a tiebreaker that varies with the
-observation but contains no anatomy does **not** reproduce the connectome's
-partial gain -- it is neutral on score and slightly worse on levels. The
-obvious deflationary explanation for the fly result ("any state-dependent
-tiebreak buys exploration diversity") is therefore not supported. The
-degree-preserving null remains the sharper test of anatomy and is queued.
+**Result: the fly does not beat the controller.** Level count is *exactly*
+tied, 20 against 20. Score is `+0.021610`, 95% CI `[-0.166096, +0.186871]`,
+`p=0.8350`. Row-level: 15 better, 10 worse, 50 tied. The connectome is
+mechanically load-bearing -- decisive on 25-37% of turns -- and that influence
+does not convert into levels.
+
+What the fly does do is **trade depth for breadth**. It reaches a first level in
+four games the controller never cracked (cd82, lf52, s5i5, sp80) and loses one
+it had (ar25), for 10 games with progress against 7. With five discordant games
+split 4-1 that is not significant either. Both conditions still complete twenty
+levels in total; the fly spreads them differently.
+
+**Against the anatomy-free control the fly does separate.** Real minus
+grid-hash: levels `+0.146667`, 95% CI `[+0.013333, +0.293333]` (excludes zero),
+`p=0.0822`; score `+0.036651`, `p=0.5028`. Injecting a *random* state-dependent
+tiebreaker into the same seam costs the controller more than half its levels
+(20 -> 9) and most of its coverage (7 -> 3 games), while injecting the
+connectome costs it nothing. So the fly's signal is structured rather than
+noise-like. Suggestive, not significant at 0.05, and confounded by scale: the
+grid hash draws uniformly on [0,1) while the readout is smooth and standardized.
+Do not report this as the connectome beating a matched control.
+
+**Discipline note.** At 41 of 75 rows this comparison read `+10.6%` on score and
+`+3` on levels, and was reported as partial. Seeds 1 and 2 erased it entirely.
+The 41-row snapshot was seed-0-heavy, and seed 0 is where the fly's wins
+concentrate. Partial matrices from a seed-ordered run are not small versions of
+the result; they are a biased sample of it. Wait for the full matrix.
+
+**Submission gate: not cleared.** The user's condition is that the fly be
+load-bearing *and* the agent beat both 0.00 submissions. The fly is load-bearing
+in the mechanical sense and produces no demonstrable improvement, so this agent
+is not a submission candidate. The budget arm below is the live route to an
+actual gain.
 
 **How often is the fly actually decisive?** `fly_decisive_rate` in
 `policy_diagnostics` counts turns where removing the connectome would have
