@@ -916,6 +916,77 @@ against it. Driving it properly means synthesizing a heading from something in
 the ARC frame, which is engineering rather than anatomy and needs its own
 justification.
 
+### 11. We have not been using the circuits properly. Three of three.
+
+Prompted by the user asking whether the components are connected and calibrated
+as they should be. They are not, and this revises the "stop adding fly
+components" recommendation made just before it. The null results so far are not
+evidence that these circuits cannot help; they are evidence that each was given
+input it cannot use.
+
+**1. The mushroom body is wired to a sense we never drive.** Input composition
+of the 4,064 Kenyon cells, by total absolute incoming weight:
+
+| Source | Share of KC input |
+| --- | ---: |
+| Other Kenyon cells (KCg-m, KCab-s/m/c, KCa'b'-*) | ~85% |
+| APL | 2.0% |
+| PAM dopaminergic | ~7% |
+| `cb_sensory` (the olfactory pathway) | **0.00%** |
+| `ol_sensory` (what we drive) | **0.00%** |
+
+In *Drosophila* the mushroom body is primarily an olfactory structure: Kenyon
+cells are driven by uniglomerular projection neurons from the antennal lobe.
+Those neurons live in `cb_sensory`, 4,868 of them, and the encoder drives
+`ol_sensory` -- photoreceptors -- exclusively. So the learning experiment in
+section 9 taught a circuit that receives essentially none of this agent's
+sensory input, and is otherwise dominated by its own recurrence. The rule fired
+and moved weight on activity that was mostly indirect leakage. That is why it
+did nothing, and it says nothing about mushroom-body learning.
+
+**2. T4/T5 and LC are correctly wired but fed spatially scrambled input.** Their
+anatomy checks out -- photoreceptors to `ol_intrinsic` lamina/medulla (97.4% of
+T4/T5 input) to T4/T5 to LC (62.0% `ol_intrinsic`, 26.2% `visual_projection`).
+The defect is upstream. `build_sensory_projection` assigns each photoreceptor 64
+**uniformly random** features:
+
+```python
+columns = generator.integers(0, FEATURE_DIMENSION, size=(rows, per_row))
+```
+
+Neighbouring photoreceptors therefore see uncorrelated parts of the screen. T4
+and T5 compute direction-selective motion by comparing *adjacent* columns with a
+delay; LC neurons integrate over retinotopic neighbourhoods. Both are pure
+spatial computations, and retinotopy is destroyed before the graph sees
+anything. The three perception arms now running are motion and object detectors
+fed a spatial scramble.
+
+**3. The two encoders are each broken, in complementary ways.**
+
+| Encoder | Retinotopy | Colour |
+| --- | --- | --- |
+| `sparse_projection` (deployed) | **destroyed** (random) | preserved (16-way one-hot) |
+| `retinotopic` | preserved (columnar lattice) | **destroyed** (`grid / 15.0` scalar) |
+
+This is the real explanation for the retinotopic encoder's 0.190476 -> 0.003156
+collapse, which was previously guessed at. ARC colours are **categorical**:
+colour 3 is not between 2 and 4. Mapping sixteen categories onto a scalar
+luminance ramp discards the distinction the benchmark is built from. So one
+encoder gives the fly colour without space, the other space without colour, and
+the fly's visual system needs both.
+
+**Consequence.** No experiment run so far has given the fly's visual hierarchy an
+input it could use, and no experiment has given the mushroom body any sensory
+input at all. The sequence of nulls is consistent with that and does not yet
+license a conclusion about the fly.
+
+**Next, and it is upstream of everything else:** a retinotopic encoder that
+preserves colour identity. The fly's medulla carries roughly 60 cell types per
+column, each encoding different visual features, so distributing ARC's sixteen
+categorical colours across distinct medulla types within each column is
+anatomically defensible rather than invented. The currently running arms become
+the matched scrambled-retinotopy control for it rather than wasted work.
+
 ## Official submissions
 
 | Ref | Configuration | Status | Public score |
