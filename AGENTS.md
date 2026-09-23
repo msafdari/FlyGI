@@ -36,6 +36,32 @@ The test to apply before adding anything: *if the connectome were replaced by a
 degree-preserving null tomorrow, would this component still work?* If yes, it is
 not part of this project.
 
+## Label every assumption where it lives
+
+Any code written on a hypothesis or an assumption must say so, in a comment at
+the place the assumption is encoded, and again in `WORKLOG.md` so it is visible
+without reading the source. This is not a documentation preference. An
+unlabelled assumption is indistinguishable from a measured fact six weeks later,
+and this repository has already spent days on results that turned out to rest on
+one.
+
+Use the words. A comment that begins **ASSUMPTION** or **HYPOTHESIS** is
+greppable; a comment that merely explains the code is not. State what was
+assumed, what it would take to check it, and what breaks if it is wrong.
+
+Distinguish three things explicitly, because they are routinely conflated:
+
+- **Measured** -- observed in this repository, with the number and the command.
+- **Established** -- taken from the literature or the connectome's own
+  annotations, with the source.
+- **Assumed** -- chosen by us because something had to be chosen. This includes
+  every mapping from an ARC quantity onto a fly quantity, all of which are
+  inventions until shown otherwise.
+
+A declared assumption that turns out wrong is an ordinary cost of research. An
+undeclared one that turns out wrong discredits everything measured downstream of
+it, because no reader can tell which results depended on it.
+
 ## Resume from the durable record
 
 1. At the beginning of every work session, read `WORKLOG.md` before planning or

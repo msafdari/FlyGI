@@ -533,14 +533,19 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError("dynamics.initial_state must be zeros")
     if dynamics.state_dtype != "float32":
         raise ConfigError("dynamics.state_dtype must be float32")
-    if encoder.kind not in {"sparse_projection", "retinotopic", "bio_visual"}:
+    if encoder.kind not in {
+        "sparse_projection",
+        "retinotopic",
+        "retinotopic_colour",
+        "bio_visual",
+    }:
         raise ConfigError(f"unsupported encoder.kind: {encoder.kind}")
     if not math.isfinite(encoder.change_gain) or encoder.change_gain < 0:
         raise ConfigError("encoder.change_gain must be finite and non-negative")
     overlap = set(encoder.on_types) & set(encoder.off_types)
     if overlap:
         raise ConfigError(f"a cell type cannot be both ON and OFF: {sorted(overlap)}")
-    if encoder.kind != "retinotopic" and (
+    if encoder.kind not in ("retinotopic", "retinotopic_colour") and (
         encoder.on_types or encoder.off_types or encoder.change_types
     ):
         raise ConfigError(

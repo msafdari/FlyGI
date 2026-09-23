@@ -1093,6 +1093,45 @@ confound.
    its matched control.
 5. Only afterwards, and separately, consider the mushroom-body input bus.
 
+## Assumptions register
+
+Every mapping from an ARC quantity onto a fly quantity is an invention until
+shown otherwise. This is the list, kept current, so no reader has to guess which
+results rest on a choice rather than a fact. Each is labelled in the source with
+`ASSUMPTION` or `HYPOTHESIS` at the line that encodes it.
+
+| # | Assumption | Where | Status | If wrong |
+| --- | --- | --- | --- | --- |
+| A | Colour `c` drives medulla type index `c % 15` | `encoding/retinotopic.py` | **assumed, biologically unmotivated** | Results hold as "retinotopic categorical input helps", not as "the fly's visual feature channels help" |
+| B | Channel order is the sorted type name | `encoding/retinotopic.py` | assumed, arbitrary | Nothing, if A's permutation control is null |
+| C | Drive magnitude is fractional colour occupancy of a column | `encoding/retinotopic.py` | assumed | Weakly constrained; ~3.4 ARC cells per column |
+| D | All drive is positive; ON/OFF opponency dropped | `encoding/retinotopic.py` | assumed | The lamina's opponency is unexercised by this input |
+| E | T4/T5 can compute motion from the frame sequence | `encoding/retinotopic.py` | **hypothesis, partially verified** | See below |
+| F | Dopamine's sign in ordinary propagation is positive | `configs/*_modulators.yaml` | declared approximation | Modulator contribution to rate is mis-signed; plasticity uses activity and real anatomy, not this sign |
+| G | The mushroom body may be driven through its olfactory input bus | WORKLOG section 12 | **assumed, not yet built** | ARC has no odours; this is a different arbitrary mapping, not a more faithful one |
+| H | `gain=2.0` is the right operating point | `configs/literal_rate_mb_learning.yaml` | measured compromise | KC sparsity sits at 0.123 against a biological 0.05-0.11; declared, not hidden |
+
+**On A, the largest one.** Medulla and lamina types are not colour bins. L1 and
+L2 head the ON and OFF luminance pathways; Mi and Tm types carry sustained and
+transient features. None of them encodes "ARC colour 7". The mapping exists
+because the grid has sixteen categories and a column has fifteen addressable
+types, and something had to be chosen. **The control that tests it** is a
+permuted colour-to-type assignment: if a permutation scores the same, the
+specific mapping carries nothing and only the categorical-plus-retinotopic
+structure matters. That control must run before any claim that the fly's visual
+*types* are doing work.
+
+**On E, including a wrong measurement.** The first check compared population-mean
+T4/T5 activity for a moving versus a static bar and found a ratio of 1.001,
+which reads as failure. That metric was wrong: direction-selective cells encode
+motion in *which* cells fire, not how many. Measured at the pattern level, the
+frame-to-frame change in T4/T5 activity is **3.41x** larger for a moving bar,
+2.53x for LC, with the conditions separated by ~10% of activity. Motion is
+visible. What is **not** established is that it is visible as *direction-
+selective* motion: a frozen rate model has none of the explicit delay lines that
+make T4/T5 direction-tuned in the animal, so this may be undifferentiated change
+sensitivity wearing a motion detector's name.
+
 ## Official submissions
 
 | Ref | Configuration | Status | Public score |

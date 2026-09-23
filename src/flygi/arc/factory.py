@@ -31,6 +31,7 @@ from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
 from flygi.dynamics.runtime import RuntimeConnectome, load_runtime_connectome
 from flygi.encoding.retinotopic import (
     RetinotopicOptions,
+    build_columnar_colour_projection,
     build_retinotopic_projection,
 )
 from flygi.encoding.sparse_projection import (
@@ -208,7 +209,11 @@ def build_connectome_policy(
 ) -> AssembledPolicy:
     """Build one closed-loop policy. Pass ``bundle`` to reuse a loaded graph."""
 
-    if config.encoder.kind not in ("sparse_projection", "retinotopic"):
+    if config.encoder.kind not in (
+        "sparse_projection",
+        "retinotopic",
+        "retinotopic_colour",
+    ):
         raise RuntimeAssemblyError(
             f"encoder kind {config.encoder.kind!r} is declared but not implemented"
         )
@@ -245,7 +250,7 @@ def build_connectome_policy(
     else:
         per_neuron = int(config.encoder.connections_per_neuron)
 
-    retinotopic = config.encoder.kind == "retinotopic"
+    retinotopic = config.encoder.kind in ("retinotopic", "retinotopic_colour")
     if retinotopic and ablate_graph:
         raise RuntimeAssemblyError(
             "the no-recurrent-graph bypass has no retinotopic target; its projection "
@@ -265,7 +270,12 @@ def build_connectome_policy(
                 if getattr(config.encoder, name)
             },
         )
-        projection = build_retinotopic_projection(directory, loaded.node_count, options=options)
+        if config.encoder.kind == "retinotopic_colour":
+            projection = build_columnar_colour_projection(
+                directory, loaded.node_count, options=options
+            )
+        else:
+            projection = build_retinotopic_projection(directory, loaded.node_count, options=options)
     elif projection is None:
         projection = build_sensory_projection(
             target,
