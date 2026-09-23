@@ -95,6 +95,38 @@ goes to the fly only when the real graph beats controller-only, bypass, and
 matched graph controls. A zero score does not show that a biological fly lacks
 intelligence: a connectome is anatomy, not a complete brain emulation.
 
+## Coordination checkpoint — 2026-09-23 13:21 PDT
+
+Created `CLAUDE_CODE_REFACTOR_HANDOFF.md` at Mustafa's request as the explicit
+boundary between the live FlyARC queue and the incoming Experiment 000
+mushroom-body refactor. No process, config, source module, result artifact,
+commit, or remote was changed as part of this checkpoint.
+
+Measured locally while preparing the handoff: `sg-bioeye-lc-permuted` and
+`sg-bioeye-t4t5` were healthy and checkpointed; the two decoder arms had an
+armed waiter; no launcher existed for the four registered `sg-mbdr-*` arms.
+The operational decision is to finish and close the four already-running/armed
+bio-eye/decoder arms, then **not launch the legacy MBdr battery**. Experiment 000
+supersedes its PN/DAN selectors, dynamics, plasticity scope, and non-degree-exact
+rewire, so deferral is a priority decision rather than a falsification of
+H-MB-LEARNING. The handoff records exact config hashes, recovery behavior,
+closure checks, ownership, and the staged logical-first refactor plan.
+
+### Handoff adopted — Claude Code, 2026-09-23
+
+The handoff above is adopted as the operating contract for the remainder of the
+ARC queue. Confirmed at adoption: all four config SHA-256 values match the
+handoff's frozen table; HEAD is the inspected `96353dd`; the decoder waiter is
+armed; both active arms were at 68/75 and advancing. Until all four bundles
+exist: monitor-only on the read-locked surfaces, no tuning from partials, no
+duplicate launches, and the `sg-mbdr-*` battery is not launched -- reversing
+this session's earlier plan to queue it, as a priority decision. Closure work
+(artifact validation, declared comparisons with the preregistered 19/9/25
+endpoints, the smallest endpoint analyzer if still needed, provenance and
+source-equivalence audit including the git_dirty=2cf2098 mixed-launch caveat,
+closure report, one tested closure commit) begins only after the fourth bundle
+lands.
+
 ## Current snapshot — 2026-09-22
 
 - Private repository: <https://github.com/msafdari/FlyGI>.
