@@ -64,3 +64,24 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## ARC-AGI-3 state-graph references
+
+FlyGI's Phase 1 controller is a native implementation informed by generic
+exploration mechanisms described in two public agents. Their source trees are
+not vendored, and public-game-specific rules were deliberately excluded.
+
+- Shlok Sah's
+  [FrugalExplorer](https://github.com/shloksah/arc-agi-3-agent/tree/7dccef15650fa00ef1db1c21cc7279adcf4a9e2a),
+  pinned at `7dccef15650fa00ef1db1c21cc7279adcf4a9e2a`, is licensed
+  under MIT No Attribution (MIT-0). It motivated the training-free action-effect
+  prior, component-grounded candidate set, and return-to-frontier pattern.
+- Will Dick's
+  [Blind Squirrel](https://github.com/wd13ca/ARC-AGI-3-Agents/tree/641c00ef6b149527e5268927a664a6a6d6bb13fa),
+  pinned at `641c00ef6b149527e5268927a664a6a6d6bb13fa`, is licensed under
+  MIT. It was consulted for the empirical directed-state-graph design.
+
+FlyGI reimplements these ideas against its own dependency-free policy boundary,
+with collision-checked BLAKE2b identities, empirical multi-successor edges,
+seeded deterministic ties, and no named-game branches, hard-coded ARC colors,
+or imported game logic.

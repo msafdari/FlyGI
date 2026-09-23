@@ -47,11 +47,47 @@ def test_checked_in_configs_parse() -> None:
     assert literal.decoder.loop_escape_unchanged_failure_penalty == 0.0
     assert literal.decoder.loop_escape_state_hash == "blake2b_128"
     assert literal.decoder.loop_escape_coordinate_memory == "per_observation"
+    assert literal.controller.enabled is False
+
+    controller = load_config("configs/state_graph_controller.yaml").controller
+    assert controller.enabled is True
+    assert controller.kind == "state_graph"
+    assert controller.state_hash == "blake2b_128"
+    assert controller.mask_freeze_after == 8
+    assert controller.volatile_min_changes == 2
+    assert controller.ui_border_width == 4
+    assert controller.component_limit == 64
+    assert controller.max_candidate_tier == 2
 
 
 def test_seed_derivation_does_not_use_salted_python_hash() -> None:
     assert derive_seed(7, "graph") == derive_seed(7, "graph")
     assert derive_seed(7, "graph") != derive_seed(7, "encoder")
+
+
+@pytest.mark.parametrize(
+    ("key", "value", "message"),
+    [
+        ("enabled", "yes", "enabled must be a boolean"),
+        ("kind", "oracle", "unsupported controller.kind"),
+        ("state_hash", "python", "unsupported controller.state_hash"),
+        ("mask_freeze_after", 0, "mask_freeze_after must be positive"),
+        ("component_limit", True, "component_limit must be an integer"),
+        ("volatile_threshold", 0.0, "volatile_threshold must lie"),
+        ("death_penalty", -1.0, "death_penalty must be finite and non-negative"),
+        ("unexpected", 1, "unknown controller keys"),
+    ],
+)
+def test_invalid_controller_config_fails_closed(
+    tmp_path: Path, key: str, value: object, message: str
+) -> None:
+    document = yaml.safe_load(Path("configs/state_graph_controller.yaml").read_text())
+    document["controller"][key] = value
+    path = tmp_path / "invalid-controller.yaml"
+    path.write_text(yaml.safe_dump(document), encoding="utf-8")
+
+    with pytest.raises(ConfigError, match=message):
+        load_config(path)
 
 
 @pytest.mark.parametrize(

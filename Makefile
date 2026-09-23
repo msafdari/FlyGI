@@ -18,6 +18,12 @@ CONNECTOME_GAMES ?= all
 CONNECTOME_ACTIONS ?= 80
 CONNECTOME_CONDITION ?= real-signed-focused
 CONNECTOME_OUTPUT ?=
+CONTROLLER_CONFIG ?= configs/state_graph_controller.yaml
+CONTROLLER_SEEDS ?= 0 1 2
+CONTROLLER_GAMES ?= all
+CONTROLLER_ACTIONS ?= 500
+CONTROLLER_CONDITION ?= controller-only
+CONTROLLER_OUTPUT ?=
 DYNAMICS_STEPS   ?= 1 2 4 8
 DYNAMICS_WARMUPS ?= 3
 DYNAMICS_SAMPLES ?= 25
@@ -48,7 +54,7 @@ LOOP_CALIBRATION_CANDIDATES ?= mild balanced strong
 LOOP_CALIBRATION_OUTPUT ?=
 KAGGLE           := KAGGLE_API_TOKEN=$$(cat .kaggle/access_token) $(UV_RUN) kaggle
 
-.PHONY: help setup test lint smoke train-head train-head-resume play-local verify-local baseline-local connectome-local benchmark-full-graph probe-regime calibrate-sampler calibrate-loop-escape list-games notebook submit status clean _check-kaggle
+.PHONY: help setup test lint smoke train-head train-head-resume play-local verify-local baseline-local connectome-local controller-local benchmark-full-graph probe-regime calibrate-sampler calibrate-loop-escape list-games notebook submit status clean _check-kaggle
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -90,6 +96,13 @@ connectome-local: ## Run the frozen signed FlyGI gate on all cached public games
 		--seeds $(CONNECTOME_SEEDS) --games $(CONNECTOME_GAMES) \
 		--action-budget $(CONNECTOME_ACTIONS) \
 		$(if $(CONNECTOME_OUTPUT),--output $(CONNECTOME_OUTPUT))
+
+controller-local: ## Run the exact three-seed Phase 1 state/effect-controller gate
+	MPLCONFIGDIR=/tmp/flygi-mpl-cache $(UV_RUN) python scripts/evaluate_state_graph.py \
+		--config $(CONTROLLER_CONFIG) --condition $(CONTROLLER_CONDITION) \
+		--seeds $(CONTROLLER_SEEDS) --games $(CONTROLLER_GAMES) \
+		--action-budget $(CONTROLLER_ACTIONS) --require-promotion \
+		$(if $(CONTROLLER_OUTPUT),--output $(CONTROLLER_OUTPUT))
 
 benchmark-full-graph: ## Run the manual Milestone 2 full-connectome dynamics gate
 	$(UV_RUN) python scripts/benchmark_runtime.py \

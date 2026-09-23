@@ -137,6 +137,29 @@ class CoordinateHead:
             "trainable_parameters": 0,
         }
 
+    def axis_scores(
+        self, trace: NDArray[np.float32]
+    ) -> tuple[NDArray[np.float32], NDArray[np.float32]]:
+        """Per-bin x and y scores for a trace, without sampling.
+
+        ``sample`` consumes these through a temperature and an RNG. A caller that
+        only wants the connectome's spatial preference -- a ranking signal rather
+        than a draw -- needs the scores themselves, so this exposes them with the
+        same validation and no side effects.
+        """
+
+        values = np.asarray(trace, dtype=np.float32)
+        if values.shape != (self._readout_size,):
+            raise ReadoutError(
+                f"coordinate head expects shape ({self._readout_size},), observed {values.shape}"
+            )
+        if not np.isfinite(values).all():
+            raise ReadoutError("coordinate head received a non-finite trace")
+        return (
+            self._axis_scores(values[self._x_slice], self._x_bins),
+            self._axis_scores(values[self._y_slice], self._y_bins),
+        )
+
     @staticmethod
     def _axis_scores(
         values: NDArray[np.float32], bins: list[NDArray[np.int64]]
