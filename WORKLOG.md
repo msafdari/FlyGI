@@ -813,9 +813,53 @@ input against 2.4% from APL, which makes the transition from silent to latched
 abrupt. The principled fix is to strengthen APL feedback rather than scale the
 global gain -- a separate change with its own controls, not folded in here.
 
-**3-5. Arms running.** `sg-g2-nolearn` and `sg-g2-learn` at gain 2.0 on the
-`-modulators` graph, 3 seeds x 25 games x 600 actions. The falsification
-controls (`--fly-rewire-mb`, `--fly-shuffle-credit`) follow.
+**3-4. Waking the network did not help, and neither did learning.** 3 seeds x 25
+games x 600 actions, matched rows, clustered on games.
+
+| Condition | Mean score | Levels/row | Levels | vs controller (score) |
+| --- | ---: | ---: | ---: | --- |
+| Controller alone | 0.194691 | 0.2667 | 20 | reference |
+| Fly at gain 2.0, frozen | 0.203443 | 0.2800 | 21 | `+0.008752`, p=0.8625 |
+| Fly at gain 2.0, **learning** | 0.203451 | 0.2400 | **18** | `+0.008760`, p=0.8675 |
+
+Learning against no-learning is the comparison that matters and it is flat:
+score identical to five decimal places, and the learning arm completes *fewer*
+levels (18 against 21). Nothing here is significant; every confidence interval
+spans zero comfortably.
+
+**The learning rule is not inert.** Instrumented over three games: 29
+`reinforce()` calls moving a total absolute weight change of 95.21. It fires, it
+moves real weight at the right site, and it changes behaviour -- the learning and
+frozen arms are not bit-identical. It simply does not help.
+
+**The teaching signal is pathologically imbalanced, and this is the finding
+worth keeping.** In that instrumented sample: **2 rewards against 27
+punishments**. Across all 75 rows: 18 level advances against 569 game-over
+frames, a ratio of about 31 to 1. Mushroom-body plasticity is depression-only,
+so an agent that is punished thirty times for every reward spends nearly all of
+its learning depressing PPL1-gated compartments. The PAM reward channel -- 316
+of the 340 dopaminergic neurons -- fires almost never. The circuit is being
+taught almost exclusively what not to do, by an agent that dies constantly and
+succeeds rarely, and depression-only plasticity has no mechanism to recover from
+that except slow decay toward baseline.
+
+That is a property of the *task signal*, not of the fly. ARC-AGI-3 gives an
+agent this bad no usable reward statistics, and no associative learning rule can
+extract a curriculum from 2 positive examples.
+
+**5. Falsification controls running** (`--fly-rewire-mb`, `--fly-shuffle-credit`).
+With a null main effect they cannot explain anything away, but they are run
+because the plan preregistered them and because a control that *did* show a
+difference would indicate something wrong with the harness.
+
+**Standing conclusion after this battery.** Three separate interventions --
+tiebreaking, operating point, associative learning -- have each been implemented
+correctly, verified to fire, and produced no score gain. The bottleneck is not
+any of them. What remains untried is the fly's perceptual machinery: 13,585
+T4/T5 motion detectors at 54.5x the readout's activity and 4,257 LC object
+detectors at 16.1x, all firing on every frame, all upstream of the 1,314
+descending neurons this agent actually reads. See section 10.
+
 
 **The controller-only reference survives the operating-point change.** It never
 touches the connectome, so gain does not affect it: 0.194691, 20 levels, 7/25
