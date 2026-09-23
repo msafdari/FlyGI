@@ -24,6 +24,22 @@ ARC frame + action history
         -> legal ARC action
 ```
 
+**The essence of the project, stated plainly: what computation does the fly's
+innate wiring give us for free?** Not a network trained on the fly's shape, not
+a network initialized from the connectome and then fitted -- the measured
+synaptic graph itself, frozen, with its evolved modules doing whatever they
+already do. The mushroom body's 4,064 Kenyon cells and 97 MBONs, the central
+complex's ring attractor, the optic lobe's 892 retinotopic columns: these
+circuits were shaped over roughly 400 million years for foraging, navigation and
+learning in a real world. The question is how much of that transfers, unpaid, to
+a benchmark nobody evolved for.
+
+This is why every engineered component in this repository is on probation. A
+scaffold that scores well while the connectome sits inert is a negative result
+about the fly, however good it looks on a leaderboard. Whatever the agent scores,
+the number that matters is the gap between the real graph and a degree-preserving
+rewiring of it, because that gap is the only part that anatomy can claim.
+
 The engineering goal is a valid, reproducible leaderboard agent that genuinely
 executes the full connectome on every decision. The scientific question is
 narrower and more demanding:
@@ -49,11 +65,13 @@ intelligence: a connectome is anatomy, not a complete brain emulation.
 
 - Private repository: <https://github.com/msafdari/FlyGI>.
 - Branch: `main`, tracking `origin/main`.
-- 320 tests pass; Ruff clean for FlyGI-owned files.
+- 325 tests pass; Ruff clean for FlyGI-owned files.
 - Both official submissions scored **0.00**. No submission remains today.
-- A parallel session is implementing the Phase 1 state/effect controller in the
-  same working tree (`src/flygi/controller/`, uncommitted). Stage files by name;
-  `git add -A` here would sweep in half-finished work.
+- The Phase 1 state/effect controller and the Phase 5 fly tiebreaker are
+  committed (`8ad3863`). 325 tests pass; Ruff clean across `src/` and the
+  evaluator.
+- A parallel session works in the same tree. Stage files by name; `git add -A`
+  here would sweep in half-finished work.
 - No raw connectome, compiled arrays, ARC game packages, result traces, model
   checkpoints, credentials, virtual environments, or generated notebooks belong
   in normal Git history.
@@ -487,6 +505,67 @@ rewired plastic, was +9.16 with 95% interval `[-1.24, +21.72]`, p=0.1539.
 Plasticity unlocked no level. The result is interesting but inconclusive and is
 not a connectome-advantage claim.
 
+### 7. Phase 5 — the fly returned to the decision loop (in progress)
+
+The Phase 1 state-graph controller reached 7 of 25 games with progress against
+the connectome policy's 2, which raised the objection that makes or breaks this
+project: the fly had stopped doing anything. Phase 5 puts it back, at exactly
+one place.
+
+The controller ranks candidates by
+
+```text
+(retry_prefix, attempts, -(priority + exploration), TIEBREAK, bytes)
+```
+
+`TIEBREAK` was `_tie_digest`, a deterministic hash: reproducible, carrying no
+information. `src/flygi/controller/fly_tiebreak.py` puts the connectome there and
+nowhere else, so it cannot override legality, a known death state, a verified
+plan, or a learned effect estimate. It speaks only where the controller is
+genuinely indifferent. That placement is also what makes the experiment clean:
+real graph, degree-preserving rewiring, and hash differ in one thing only.
+
+Measured before the full run, per the `AGENTS.md` rule:
+
+| Check | Trivial alternative | Result |
+| --- | --- | --- |
+| Does the fly discriminate? | a constant | 6/6 distinct action preferences after warmup; click scores span 1.8-4.5 |
+| Does it change decisions? | the hash | diverges at step 1; 63% of 200 steps differ |
+| Does it stay in its slot? | unconfined | action totals byte-identical with and without |
+
+Turn 0 is exactly zero for every candidate, because the adaptive standardizer's
+EMA mean equals its first sample. `preference()` returns 0.0 there, so an
+unobserved turn degrades to the controller's own ordering rather than to noise.
+
+Cost: the connectome advance is ~0.148 s/action, roughly 16x the controller
+alone. Caching the per-turn decode was necessary first -- the trace changes once
+per observation, but one turn ranks hundreds of candidate clicks, and
+recomputing the readout reduction for each cost ~10x on click-heavy games
+(ar25: ~15 min -> 98.8 s per 600-action row). Verified bit-identical by replay
+hash before adoption.
+
+The three-way ablation is running against the matched baseline below. Nulls
+already exist at
+`data/processed/male-cns-v1.0/literal-rate-signed/nulls/degree_preserving/seed-20260921`
+and load as a tiebreaker (166,700 nodes / 24,559,055 edges, identical to real).
+
+| Condition | Mean score | Levels | Games with progress |
+| --- | ---: | ---: | ---: |
+| Controller alone (3 seeds x 25 games x 600 actions) | 0.194691 | 20 | 7/25 |
+| Controller + real fly | pending | pending | pending |
+| Controller + degree-preserving null fly | pending | pending | pending |
+
+Baseline games with progress: ar25, g50t, lp85, m0r0, r11l, tn36, vc33. The
+75-row controller-only matrix is in
+`results/connectome_agent/sg-full.rows.jsonl`; its final JSON write was lost
+when the process exited, but every row is on disk.
+
+**Reading the result in advance, so it cannot be read motivatedly later.** Real
+above null is the first evidence in this project that anatomy buys ARC-relevant
+computation. Real equal to null means the fly is acting as a seeded hash and the
+honest report is that the scaffold scores, not the fly. Real below null is a
+real finding too, and gets recorded.
+
 ## Official submissions
 
 | Ref | Configuration | Status | Public score |
@@ -712,13 +791,16 @@ training budget, and seeds.
 
 ## Ordered next actions
 
-1. Monitor the active CEM run without competing for memory bandwidth; record
-   each completed-generation checkpoint and the final trace-ablation result.
-2. Treat submission 56459984's 0.00 as the stop result for budget/loop-escape
+1. Finish the Phase 5 three-way ablation (controller alone / + real fly / +
+   degree-preserving null fly) and record all three rows before interpreting any
+   of them.
+2. If the real fly beats both the null fly and controller-alone, that is the
+   submission candidate and the headline claim. If it ties the null, report that
+   the controller scores and the fly does not, and say so in the social drafts.
+3. Treat submission 56459984's 0.00 as the stop result for budget/loop-escape
    tuning; do not spend another slot on variants of the same capability.
-3. Audit and pin a permissively licensed state-graph donor; reproduce it
+4. Audit and pin a permissively licensed state-graph donor; reproduce it
    standalone before hybridizing it.
-4. Implement Phase 1 behind a new config without changing frozen baselines.
 5. Download and schema-audit the official human replay dataset for Phase 2;
    keep it outside Git and commit only hashes/provenance.
 6. Build game-held-out evaluation before training the affordance/value model.

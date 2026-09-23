@@ -6,6 +6,22 @@ The scientific question is deliberately narrower than the joke: when the
 interface and compute budget are matched, does the biological wiring make useful
 closed-loop computations more accessible than rigorous null graphs?
 
+**The essence of the project, stated plainly: what computation does the fly's
+innate wiring give us for free?** Not a network trained on the fly's shape, not
+a network initialized from the connectome and then fitted -- the measured
+synaptic graph itself, frozen, with its evolved modules doing whatever they
+already do. The mushroom body's 4,064 Kenyon cells and 97 MBONs, the central
+complex's ring attractor, the optic lobe's 892 retinotopic columns: these
+circuits were shaped over roughly 400 million years for foraging, navigation and
+learning in a real world. The question is how much of that transfers, unpaid, to
+a benchmark nobody evolved for.
+
+This is why every engineered component in this repository is on probation. A
+scaffold that scores well while the connectome sits inert is a negative result
+about the fly, however good it looks on a leaderboard. Whatever the agent scores,
+the number that matters is the gap between the real graph and a degree-preserving
+rewiring of it, because that gap is the only part that anatomy can claim.
+
 This checkout implements **Milestones 0–3 and part of Milestone 4**: repository
 and ARC submission plumbing, MaleCNS acquisition and verification, unsigned and
 heuristic-signed sparse graph compilation, the frozen SciPy/CPU leaky-rate
