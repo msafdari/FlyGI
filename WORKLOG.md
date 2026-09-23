@@ -1093,6 +1093,56 @@ confound.
    its matched control.
 5. Only afterwards, and separately, consider the mushroom-body input bus.
 
+## Execution telemetry
+
+Every runnable component is instrumented. Result bundles already recorded
+*provenance* -- which graph, which config, which game, hashed. What nothing
+recorded was *execution*: what a run did, in what order, how long each stage
+took, what it decided and why, and how it ended. That lived in ad-hoc `print`
+calls whose format differed per script, so reconstructing a run meant reading
+the source that produced it.
+
+`src/flygi/telemetry.py` is the single place that changes. One JSON object per
+line in `results/telemetry/<run_id>.jsonl`, append-only, so a killed run still
+leaves everything up to the moment it died -- which is when telemetry matters
+most. The console keeps its existing prose: machines read the file, people read
+the terminal, neither is degraded for the other.
+
+**Coverage: 22 of 22 scripts plus the `flygi` CLI.** Each gets `run.start`,
+`run.end` and a recorded cause when it does not finish, from one line at its
+`__main__`.
+
+The five questions a reader or tool can answer without the source:
+
+| Question | Answered by |
+| --- | --- |
+| what | `event` (dotted, hierarchical) plus `data` |
+| when | `ts` wall clock, `elapsed_s` monotonic, `seq` for ordering within a timestamp |
+| where | `run.start`: git commit and dirty flag, host, platform, Python and package versions, pid, argv, cwd, plus the resolved path and SHA-256 of every config read |
+| how | `phase.begin`/`phase.end` with per-phase duration and outcome |
+| why | every decision, warning and failure carries `reason` |
+
+Read them with `scripts/inspect_telemetry.py`: recent runs, one run in full,
+filtered by component or event name, `--failures` for bad endings, `--json` for
+another tool to consume.
+
+**Three defects the tests and first runs caught, all fixed:**
+
+- `json.dumps(default=str)` invokes `__repr__` on the payload, which is
+  arbitrary code and can raise anything. The guard caught only `TypeError` and
+  `ValueError`, so an awkward object could have killed a six-hour evaluation.
+  Now deliberately broad, degrading the event to a warning.
+- `argparse --help` exits via `SystemExit(0)`, which was recorded as **failed**.
+  Every help invocation would have poisoned the failure list until real failures
+  stopped standing out. Clean exits are now `ok`; nonzero is `failed` with the
+  code.
+- A coverage audit reported the CLI as instrumented. It was a false positive:
+  `cli.py` owns an unrelated function also called `entrypoint`. The CLI was
+  genuinely uninstrumented and now is, via an aliased import.
+
+Secrets are never captured: environment recording is an explicit allowlist, and
+a test asserts a token in the environment does not reach the log.
+
 ## Assumptions register
 
 Every mapping from an ARC quantity onto a fly quantity is an invention until

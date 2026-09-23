@@ -648,7 +648,15 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 def entrypoint() -> None:
-    raise SystemExit(main())
+    """Console entry point, instrumented like every other runnable component.
+
+    Imported as ``run_instrumented`` rather than ``entrypoint`` because this
+    module already owns that name for the console script.
+    """
+
+    from .telemetry import entrypoint as run_instrumented
+
+    raise SystemExit(run_instrumented("flygi-cli", main))
 
 
 if __name__ == "__main__":

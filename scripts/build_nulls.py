@@ -9,4 +9,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    from flygi.telemetry import entrypoint
+
+    raise SystemExit(entrypoint("build_nulls", main))

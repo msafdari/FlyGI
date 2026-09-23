@@ -172,12 +172,28 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     from flygi.config import load_config
     from flygi.controller import StateGraphPolicy
+    from flygi.telemetry import run_or_null
+
+    telemetry = run_or_null()
+    telemetry.config(args.config)
+    telemetry.info(
+        "eval.configured",
+        condition=args.condition,
+        seeds=list(args.seeds),
+        action_budget=args.action_budget,
+        games=list(args.games),
+        fly=args.fly,
+        fly_learning=bool(args.fly_learning),
+        fly_rewire_mb=bool(args.fly_rewire_mb),
+        fly_shuffle_credit=bool(args.fly_shuffle_credit),
+    )
 
     config = load_config(args.config)
     if not config.controller.enabled:
         raise SystemExit(f"controller is disabled in {args.config}")
 
-    runtime = BASELINE.load_arc_runtime()
+    with telemetry.phase("arc.runtime.load"):
+        runtime = BASELINE.load_arc_runtime()
     try:
         games = BASELINE.discover_games(
             runtime,
@@ -231,6 +247,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         if args.fly == "null" and args.fly_runtime_dir is None:
             raise SystemExit("--fly null requires --fly-runtime-dir pointing at a null bundle")
+        telemetry.config(args.fly_config, role="fly")
         fly_config = load_config(args.fly_config)
         # One tiebreaker is assembled once and reset per game. Rebuilding it per
         # game would reload 24.5M edges 75 times for an identical frozen graph.
@@ -252,6 +269,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             "shuffle_credit": bool(args.fly_shuffle_credit),
             **fly_tiebreaker.describe(),
         }
+        telemetry.decision(
+            "fly.assembled",
+            reason=f"--fly {args.fly} selected the connectome tiebreaker",
+            **{k: v for k, v in fly_description.items() if k != "mushroom_body"},
+        )
         print(
             f"fly={args.fly} nodes={fly_description['nodes']:,} "
             f"edges={fly_description['edges']:,} readout={fly_description['readout']}",
@@ -280,6 +302,13 @@ def main(argv: Sequence[str] | None = None) -> int:
                 continue
             position += 1
             print(f"[{position}/{total}] seed={seed} game={game.game_id}", flush=True)
+            telemetry.info(
+                "eval.row.begin",
+                position=position,
+                total=total,
+                seed=seed,
+                game_id=game.game_id,
+            )
             policy_factory.current = None  # type: ignore[attr-defined]
             row = BASELINE.evaluate_one(
                 runtime,
@@ -297,6 +326,33 @@ def main(argv: Sequence[str] | None = None) -> int:
             with checkpoint.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(row, sort_keys=True, allow_nan=False) + "\n")
             official = row.get("official") or {}
+            diagnostics = row["policy_diagnostics"]
+            telemetry.count("rows")
+            telemetry.count("levels", float(row.get("final_levels_completed") or 0))
+            telemetry.count("actions", float(row.get("actions_completed") or 0))
+            telemetry.info(
+                "eval.row.end",
+                position=position,
+                seed=seed,
+                game_id=game.game_id,
+                status=row["status"],
+                termination_reason=row.get("termination_reason"),
+                actions=row.get("actions_completed"),
+                levels=row.get("final_levels_completed"),
+                score=official.get("score"),
+                unique_observations=(row.get("observations") or {}).get("unique"),
+                action_entropy_bits=row.get("action_entropy_bits"),
+                wall_s=round((row.get("timing") or {}).get("evaluation_wall_ns", 0) / 1e9, 3),
+                fly_decisive_rate=diagnostics.get("fly_decisive_rate"),
+                states_discovered=diagnostics.get("states_discovered"),
+            )
+            if row["status"] != "success":
+                telemetry.warning(
+                    "eval.row.failed",
+                    reason=str(row.get("failure") or row.get("termination_reason") or "unknown"),
+                    seed=seed,
+                    game_id=game.game_id,
+                )
             print(
                 f"  {row['status']}: actions={row['actions_completed']} "
                 f"levels={official.get('levels_completed')} score={official.get('score')} "
@@ -335,7 +391,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         },
     )
     result["checks"]["promotion"] = promotion_check(rows)
-    BASELINE.write_json_exclusive(output, result)
+    with telemetry.phase("result.write"):
+        BASELINE.write_json_exclusive(output, result)
+    telemetry.artifact("result", output, condition=args.condition)
+    telemetry.info(
+        "eval.summary",
+        condition=args.condition,
+        rows=len(rows),
+        mean_score=result["summaries"]["overall"].get("mean_score"),
+        levels=sum(int(r.get("final_levels_completed") or 0) for r in rows),
+        engineering_gate=result["checks"]["gate"]["passed"],
+        promotion_gate=result["checks"]["promotion"]["passed"],
+        progress_games=result["checks"]["promotion"].get("progress_games"),
+    )
 
     engineering = result["checks"]["gate"]
     promotion = result["checks"]["promotion"]
@@ -354,4 +422,6 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    from flygi.telemetry import entrypoint
+
+    raise SystemExit(entrypoint("evaluate_state_graph", main))

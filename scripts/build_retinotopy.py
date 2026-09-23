@@ -110,4 +110,6 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    from flygi.telemetry import entrypoint
+
+    raise SystemExit(entrypoint("build_retinotopy", main))
