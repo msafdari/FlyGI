@@ -735,6 +735,23 @@ structural separation, which has never produced a behavioural difference, would
 for the first time be placed at an operating point where it *should* produce
 one. That is preregistered here before the run.
 
+**Execution directive for this plan (set by the user, 2026-09-23).**
+
+Follow all five steps to completion before running the test and validation
+batteries. Do **not** abort the implementation partway because an intermediate
+check looks unfavourable, and do not revert work already built in this plan.
+Measure twice, cut once: the measuring has been done -- operating point, KC
+sparsity, DAN edge counts and the gain window are all recorded above -- so the
+remaining work is the cut.
+
+This deliberately suspends the `AGENTS.md` habit of killing a build at the first
+bad intermediate signal, and it is not a licence to skip validation. Validation
+happens at the end, in full, and its results are reported whatever they say. The
+rule being replaced was aimed at *speculative* builds; this build's premises
+were checked first, which is precisely why it earns a straight run. If a step
+turns out to be impossible rather than merely discouraging, record it, finish
+every other step, and report what was left out.
+
 **Ordered plan.**
 
 1. Re-tune the operating point on the `-modulators` graph: pick the gain where

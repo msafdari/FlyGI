@@ -67,10 +67,10 @@ class StubFly:
         self._preferences = preferences
         self.observations = 0
 
-    def observe(self, grid, legal_action_ids) -> None:  # noqa: ANN001
+    def observe(self, grid, legal_action_ids) -> None:
         self.observations += 1
 
-    def preference(self, action_id: int, x, y) -> float:  # noqa: ANN001
+    def preference(self, action_id: int, x, y) -> float:
         return self._preferences.get(int(action_id), 0.0)
 
     def reset(self) -> None:
@@ -134,3 +134,68 @@ def test_the_fly_observes_every_grid_bearing_turn() -> None:
     for frame in _frames(5):
         policy.choose_action(frame)
     assert fly.observations == 5
+
+
+class LearningStubFly(StubFly):
+    """A fly that records the reinforcement the controller sends it."""
+
+    def __init__(self) -> None:
+        super().__init__({})
+        self.reinforcements: list[float] = []
+
+    def reinforce(self, value: float) -> None:
+        self.reinforcements.append(float(value))
+
+
+def _drive(policy, frames) -> None:
+    for frame in frames:
+        policy.choose_action(frame)
+
+
+def test_clearing_a_level_reinforces_the_fly() -> None:
+    """Without this the connectome has no teaching signal and cannot learn."""
+
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _config(), decision_seed=7, fly=fly)
+    frames = _frames(4)
+    policy.choose_action(frames[0])
+    # The next frame reports a completed level, which the controller reconciles
+    # against the pending transition as LEVEL_ADVANCE.
+    frames[1].levels_completed = 1
+    policy.choose_action(frames[1])
+    assert 1.0 in fly.reinforcements, (
+        "clearing a level sent no reward; the controller's own outcome signal "
+        "is not reaching the mushroom body"
+    )
+
+
+def test_a_fatal_move_punishes_the_fly() -> None:
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _config(), decision_seed=7, fly=fly)
+    frames = _frames(4)
+    policy.choose_action(frames[0])
+    frames[1].state = FakeState.GAME_OVER
+    policy.choose_action(frames[1])
+    assert -1.0 in fly.reinforcements, "a fatal move sent no punishment"
+
+
+def test_an_ordinary_turn_sends_no_reinforcement() -> None:
+    """Reinforcement on every turn would make the teaching signal meaningless."""
+
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _config(), decision_seed=7, fly=fly)
+    _drive(policy, _frames(5))
+    assert fly.reinforcements == [], (
+        "uneventful turns produced reinforcement; the signal carries no information"
+    )
+
+
+def test_a_tiebreaker_without_a_learning_site_is_unaffected() -> None:
+    """GridHashTiebreaker has no reinforce(); the controller must not require one."""
+
+    fly = StubFly({1: 2.0})
+    policy = StateGraphPolicy(FakeAction, _config(), decision_seed=7, fly=fly)
+    frames = _frames(3)
+    policy.choose_action(frames[0])
+    frames[1].levels_completed = 1
+    policy.choose_action(frames[1])  # must not raise

@@ -113,6 +113,24 @@ def _parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
+        "--fly-learning",
+        action="store_true",
+        help=(
+            "unfreeze the Kenyon-cell-to-MBON block and let the controller's own "
+            "level-advance and death outcomes supply the dopaminergic teaching signal"
+        ),
+    )
+    parser.add_argument(
+        "--fly-rewire-mb",
+        action="store_true",
+        help="falsification control: scramble KC->MBON wiring, preserving degrees",
+    )
+    parser.add_argument(
+        "--fly-shuffle-credit",
+        action="store_true",
+        help="falsification control: permute the eligibility trace before each update",
+    )
+    parser.add_argument(
         "--fly",
         choices=("none", "real", "null", "grid_hash"),
         default="none",
@@ -216,13 +234,22 @@ def main(argv: Sequence[str] | None = None) -> int:
         fly_config = load_config(args.fly_config)
         # One tiebreaker is assembled once and reset per game. Rebuilding it per
         # game would reload 24.5M edges 75 times for an identical frozen graph.
-        fly_tiebreaker = FlyTiebreaker(fly_config, runtime_dir=args.fly_runtime_dir)
+        fly_tiebreaker = FlyTiebreaker(
+            fly_config,
+            runtime_dir=args.fly_runtime_dir,
+            learning=args.fly_learning,
+            rewire_mushroom_body=args.fly_rewire_mb,
+            shuffle_credit=args.fly_shuffle_credit,
+        )
         fly_description = {
             "kind": args.fly,
             "connectome": True,
             "config_path": str(args.fly_config),
             "config_sha256": BASELINE.sha256_file(args.fly_config),
             "runtime_dir": str(args.fly_runtime_dir) if args.fly_runtime_dir else None,
+            "learning": bool(args.fly_learning),
+            "rewire_mushroom_body": bool(args.fly_rewire_mb),
+            "shuffle_credit": bool(args.fly_shuffle_credit),
             **fly_tiebreaker.describe(),
         }
         print(

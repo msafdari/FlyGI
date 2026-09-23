@@ -470,3 +470,138 @@ def test_rewire_happens_before_the_network_freezes_topology() -> None:
 
     with pytest.raises(ValueError):
         rewire_mushroom_body(network.connectivity, _anatomy(network.connectivity), seed=1)
+
+
+# --- Eligibility trace, valence routing and the floor ------------------------
+#
+# These are the three pieces the published mushroom-body models treat as
+# essential and that the first version of this module did not have. Each test
+# compares against the trivial alternative: no trace, one undifferentiated
+# dopamine pool, and a floor of zero.
+
+REWARD_DAN = DAN[:3]
+PUNISH_DAN = DAN[3:]
+
+
+def _valenced_anatomy(matrix: sparse.csr_matrix):
+    return resolve_mushroom_body(
+        matrix,
+        kenyon_cells=KC,
+        mbons=MBON,
+        dopaminergic=DAN,
+        reward_dans=REWARD_DAN,
+        punishment_dans=PUNISH_DAN,
+    )
+
+
+def test_the_eligibility_trace_decays_as_declared() -> None:
+    """Without decay the trace is a running sum and credit never expires."""
+
+    matrix = _graph()
+    body = MushroomBody(matrix, _anatomy(matrix), MushroomBodyParameters(eligibility_decay=0.5))
+    quiet = np.zeros(NODES, dtype=np.float32)
+    first = _state(seed=2)
+    body.accumulate(first)
+    peak = float(np.abs(body.eligibility).mean())
+    for _ in range(4):
+        body.accumulate(quiet)
+    faded = float(np.abs(body.eligibility).mean())
+    assert faded < peak, "the trace did not decay; credit would never expire"
+    assert faded > 0.0, "the trace collapsed to nothing in four steps"
+
+
+def test_credit_goes_to_earlier_activity_not_only_the_rewarded_instant() -> None:
+    """The trivial alternative is no trace: credit only for the current step."""
+
+    early = _state(seed=3)
+    silent = np.zeros(NODES, dtype=np.float32)
+    silent[DAN] = early[DAN]
+
+    with_trace = _graph()
+    body = MushroomBody(with_trace, _anatomy(with_trace))
+    body.accumulate(early)
+    body.accumulate(silent)
+    traced = body.update(with_trace, silent, 1.0)
+
+    without = _graph()
+    plain = MushroomBody(without, _anatomy(without))
+    instant = plain.update(without, silent, 1.0)
+
+    assert traced["eligibility_used"] is True
+    assert instant["eligibility_used"] is False
+    assert traced["absolute_change"] > instant["absolute_change"], (
+        "reward arriving after the activity that earned it moved no extra weight; "
+        "the eligibility trace is not carrying credit backwards"
+    )
+
+
+def test_reward_and_punishment_reach_different_synapses() -> None:
+    """One undifferentiated dopamine pool would make these updates identical."""
+
+    state = _state(seed=4)
+    rewarded = _graph()
+    body_r = MushroomBody(rewarded, _valenced_anatomy(rewarded))
+    body_r.accumulate(state)
+    body_r.update(rewarded, state, 1.0)
+
+    punished = _graph()
+    body_p = MushroomBody(punished, _valenced_anatomy(punished))
+    body_p.accumulate(state)
+    body_p.update(punished, state, -1.0)
+
+    assert not np.allclose(rewarded.data, punished.data), (
+        "reward and punishment produced identical weights; PAM/PPL1 routing is inert"
+    )
+
+
+def test_depression_cannot_erase_the_connectome_it_started_from() -> None:
+    """With a floor of zero, depression-only plasticity abolishes synapses."""
+
+    matrix = _graph()
+    baseline = matrix.data.copy()
+    body = MushroomBody(
+        matrix,
+        _anatomy(matrix),
+        MushroomBodyParameters(learning_rate=5.0, decay=0.0, floor_scale=0.25),
+    )
+    state = _state(seed=5)
+    for _ in range(40):
+        body.accumulate(state)
+        body.update(matrix, state, 1.0)
+
+    plastic = matrix.data[body._positions]
+    floor = 0.25 * np.abs(baseline[body._positions])
+    assert np.all(np.abs(plastic) >= floor - 1e-6), "a synapse was driven below its floor"
+    assert np.all(np.abs(plastic) > 0.0), "a synapse was abolished entirely"
+
+
+def test_shuffled_credit_moves_the_same_weight_to_different_places() -> None:
+    """The falsification control must be matched in magnitude, not in target."""
+
+    state = _state(seed=6)
+    honest = _graph()
+    body_h = MushroomBody(honest, _anatomy(honest))
+    body_h.accumulate(state)
+    report_h = body_h.update(honest, state, 1.0)
+
+    shuffled = _graph()
+    body_s = MushroomBody(shuffled, _anatomy(shuffled), MushroomBodyParameters(shuffle_credit=True))
+    body_s.accumulate(state)
+    report_s = body_s.update(shuffled, state, 1.0)
+
+    assert not np.allclose(honest.data, shuffled.data), (
+        "shuffling credit changed nothing; the control cannot falsify anything"
+    )
+    assert report_s["absolute_change"] == pytest.approx(report_h["absolute_change"], rel=0.35), (
+        "the control moved a very different amount of weight; it is not matched"
+    )
+
+
+def test_reset_clears_the_trace_so_games_do_not_leak() -> None:
+    matrix = _graph()
+    body = MushroomBody(matrix, _anatomy(matrix))
+    body.accumulate(_state(seed=7))
+    assert body.eligibility is not None
+    body.reset(matrix)
+    assert body.eligibility is None
+    assert np.allclose(matrix.data, _graph().data)

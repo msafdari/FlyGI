@@ -368,6 +368,19 @@ class StateGraphPolicy:
         else:
             outcome = "NOOP"
 
+        # The reinforcement the connectome has never had. The controller knows
+        # what the fly cannot work out for itself -- that a level was cleared or
+        # that a move was fatal -- and the mushroom body is the anatomy evolved
+        # to consume exactly that signal. Sent through getattr so a tiebreaker
+        # without a learning site is unaffected.
+        if self._fly is not None:
+            reinforce = getattr(self._fly, "reinforce", None)
+            if callable(reinforce):
+                if outcome in ("WIN", "LEVEL_ADVANCE"):
+                    reinforce(1.0)
+                elif outcome == "DEATH":
+                    reinforce(-1.0)
+
         self._graph.record_transition(
             pending.source_key,
             pending.candidate,

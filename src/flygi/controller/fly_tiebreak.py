@@ -48,6 +48,10 @@ class FlyTiebreaker:
         runtime_dir: str | Path | None = None,
         bundle: Any | None = None,
         projection: Any | None = None,
+        learning: bool = False,
+        rewire_mushroom_body: bool = False,
+        rewire_seed: int = 20260923,
+        shuffle_credit: bool = False,
     ) -> None:
         from flygi.arc.factory import build_connectome_policy
 
@@ -76,6 +80,7 @@ class FlyTiebreaker:
 
         self._policy = assembled.policy
         self._bundle = assembled.bundle
+        self._graph_dir = config.graph.output_dir
         self._network = self._policy._network
         self._readout = self._policy._readout
         self._action_map = self._policy._action_map
@@ -84,6 +89,18 @@ class FlyTiebreaker:
         self._projection = assembled.projection
         self._state = self._network.initial_state()
         self._previous_grid: NDArray[np.int8] | None = None
+        self._mushroom_body = None
+        self._reinforcements = 0
+        self._absolute_weight_change = 0.0
+        self._last_update: dict[str, Any] | None = None
+        self._eligibility_spread = 0.0
+        if learning:
+            self._mushroom_body = self._build_mushroom_body(
+                runtime_dir,
+                rewire=rewire_mushroom_body,
+                rewire_seed=rewire_seed,
+                shuffle_credit=shuffle_credit,
+            )
         self._trace: NDArray[np.float32] | None = None
         self._action_logits: NDArray[np.float32] | None = None
         self._x_scores: NDArray[np.float32] | None = None
@@ -105,6 +122,18 @@ class FlyTiebreaker:
             "internal_steps": self._policy.internal_steps,
             "trainable_parameters": 0,
             "turns_observed": self._turns,
+            "learning": self._mushroom_body is not None,
+            "mushroom_body": (
+                None
+                if self._mushroom_body is None
+                else {
+                    **self._mushroom_body.anatomy.describe(),
+                    "plastic_edges": self._mushroom_body.plastic_edge_count,
+                    "reinforcements": self._reinforcements,
+                    "absolute_weight_change": self._absolute_weight_change,
+                    "eligibility_spread": self._eligibility_spread,
+                }
+            ),
         }
 
     def observe(self, grid: NDArray[np.integer], legal_action_ids: tuple[int, ...]) -> None:
@@ -135,6 +164,10 @@ class FlyTiebreaker:
         )
         self._action_logits = self._action_map.logits(self._trace)
         self._x_scores, self._y_scores = self._coordinates.axis_scores(self._trace)
+        if self._mushroom_body is not None:
+            # Every turn, rewarded or not. The trace is what lets reinforcement
+            # that arrives later reach the Kenyon cells that earned it.
+            self._eligibility_spread = self._mushroom_body.accumulate(self._state)
         self._turns += 1
 
     def preference(self, action_id: int, x: int | None, y: int | None) -> float:
@@ -152,6 +185,85 @@ class FlyTiebreaker:
             score += float(self._x_scores[int(x)]) + float(self._y_scores[int(y)])
         return score
 
+    def _build_mushroom_body(
+        self,
+        runtime_dir: str | Path | None,
+        *,
+        rewire: bool,
+        rewire_seed: int,
+        shuffle_credit: bool = False,
+    ) -> Any:
+        """Attach the plastic Kenyon-cell-to-MBON block over the frozen graph."""
+
+        from flygi.plasticity.mushroom_body import (
+            MushroomBodyParameters,
+            resolve_mushroom_body,
+        )
+        from flygi.plasticity.mushroom_body import (
+            rewire_mushroom_body as _rewire,
+        )
+
+        directory = Path(runtime_dir) if runtime_dir is not None else Path(self._graph_dir)
+        meta = np.load(directory / "node_metadata.npz", allow_pickle=True)
+        types = meta["type"]
+        kenyon = np.flatnonzero(np.char.startswith(types, "KC"))
+        mbons = np.flatnonzero(np.char.startswith(types, "MBON"))
+        pam = np.flatnonzero(np.char.startswith(types, "PAM"))
+        ppl = np.flatnonzero(np.char.startswith(types, "PPL"))
+        dopaminergic = np.union1d(pam, ppl)
+        if kenyon.size == 0 or mbons.size == 0 or dopaminergic.size == 0:
+            raise FlyTiebreakError(
+                "the runtime has no mushroom body to learn in: "
+                f"{kenyon.size} KCs, {mbons.size} MBONs, {dopaminergic.size} DANs"
+            )
+
+        matrix = self._network.connectivity
+        # ScipyRateNetwork freezes weights unless plasticity is declared. This is
+        # the declaration: only the weight array becomes writable, and only when
+        # a learning site is actually attached. Topology stays frozen
+        # unconditionally, so the connectome's wiring cannot drift.
+        matrix.data.flags.writeable = True
+        if rewire:
+            # The falsification control: same degrees, same weights, Kenyon-cell
+            # to MBON connectivity scrambled. If learning works equally well
+            # here, it is not the fly's wiring doing it.
+            matrix = _rewire(
+                matrix,
+                kenyon_cells=kenyon,
+                mbons=mbons,
+                seed=rewire_seed,
+            )
+            self._network._connectivity = matrix
+
+        anatomy = resolve_mushroom_body(
+            matrix,
+            kenyon_cells=kenyon,
+            mbons=mbons,
+            dopaminergic=dopaminergic,
+            reward_dans=pam,
+            punishment_dans=ppl,
+        )
+        from flygi.plasticity.mushroom_body import MushroomBody
+
+        return MushroomBody(matrix, anatomy, MushroomBodyParameters(shuffle_credit=shuffle_credit))
+
+    def reinforce(self, value: float) -> dict[str, Any] | None:
+        """Apply one dopamine-gated update at the Kenyon-cell-to-MBON synapse.
+
+        ``value`` is positive for reward (a level cleared) and negative for
+        punishment (a fatal move). Which synapses move is decided by the
+        eligibility trace accumulated over preceding turns and by the real
+        PAM/PPL1 compartment anatomy, not by this scalar alone.
+        """
+
+        if self._mushroom_body is None or self._state is None:
+            return None
+        report = self._mushroom_body.update(self._network.connectivity, self._state, float(value))
+        self._reinforcements += 1
+        self._absolute_weight_change += float(report["absolute_change"])
+        self._last_update = report
+        return report
+
     def reset(self) -> None:
         self._state = self._network.initial_state()
         self._previous_grid = None
@@ -160,6 +272,14 @@ class FlyTiebreaker:
         self._x_scores = None
         self._y_scores = None
         self._turns = 0
+        if self._mushroom_body is not None:
+            # A new environment restores the frozen baseline: what the fly
+            # learned in one game must not leak into the next.
+            self._mushroom_body.reset(self._network.connectivity)
+            self._reinforcements = 0
+            self._absolute_weight_change = 0.0
+            self._last_update = None
+            self._eligibility_spread = 0.0
         if self._standardizer is not None:
             self._standardizer.reset()
 
