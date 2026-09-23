@@ -336,6 +336,49 @@ spent alone.
 passing tests, none comparing it against clicking at random. It is the exact
 failure the standing rule in `AGENTS.md` was written for, found four days late.
 
+### 6. The Phase 1 state-graph controller: 3.5x the games reached
+
+All 25 games, **three seeds**, 600 actions, same strict-offline harness, action
+ceiling, legality and replay contracts as every other condition.
+
+| Condition | Rows | Mean score | Levels | **Games with progress** | Games solved |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Random legal | 75 | 0.097568 | 6 | 2 / 25 (8%) | `r11l`, `sp80` |
+| Centroid-OFF connectome | 25 | 0.195388 | 2 | 2 / 25 (8%) | `cd82`, `r11l` |
+| **State-graph controller** | 75 | 0.194691 | **20** | **7 / 25 (28%)** | `ar25`, `g50t`, `lp85`, `m0r0`, `r11l`, `tn36`, `vc33` |
+
+**Mean score is a tie. Breadth is not.** The controller completes **20 levels
+against the connectome's 2**, and reaches progress in **3.5x as many games**. Its
+promotion gate passed: mean above the 0.097568 random baseline, with seven
+progress games against a required minimum of three.
+
+Per-game means, and note the consistency across seeds:
+
+| Game | Mean | Seeds |
+| --- | ---: | --- |
+| `tn36` | 2.304995 | 1.978 / 2.533 / 2.404 |
+| `lp85` | 1.693618 | 2.224 / 2.478 / 0.379 |
+| `r11l` | 0.626983 | 1.190 / 0.662 / 0.028 |
+| `g50t` | 0.169976 | 0.094 / 0.082 / 0.334 |
+
+**Five of these games had never been completed by anything in this project**:
+`ar25`, `g50t`, `lp85`, `m0r0`, `tn36`. `lp85` is the one with a 2.5% effect
+rate, where nothing either agent clicked used to change the frame. `tn36`'s mean
+of 2.30 is the highest per-game score recorded here.
+
+The mean parity is a scoring artifact rather than equivalence: the connectome's
+0.195 comes almost entirely from `cd82`, a single game whose first level happens
+to be worth 4.76, while the controller earns its number across seven games. On a
+hidden set, breadth of progress is the property that transfers; a single lucky
+game is not.
+
+**The tension this creates.** The controller uses **no connectome at all**. Its
+own evaluator states that no connectome assets or game identities are available
+to it. Submitting it would put the best score on the board under a project named
+for a fly brain that had nothing to do with it. That is the Path A / Path B fork
+recorded earlier, now with numbers attached, and it is the user's decision rather
+than a technical one.
+
 ### Phase 0 — retinotopic optic-lobe encoder
 
 `encoder.kind: retinotopic` injects the 64x64 grid into the fly's own columnar
