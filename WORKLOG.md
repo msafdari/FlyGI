@@ -596,6 +596,38 @@ inert nor saturated -- on roughly three turns in four the controller's own
 learning already picks a unique winner and the fly is silent, which is the
 guardrail working.
 
+**The action budget is NOT binding. This inference was wrong and is retracted.**
+All 125 rows at 600 actions ended `budget_exhausted` with zero wins, completions
+landed as late as action 599, and exploration had not plateaued -- 72.9-74.6 new
+observations in the last 100 actions against 91.5-91.7 in the first. That looked
+like a binding budget and it was recorded as the cheapest score gain available.
+
+The 1800-action arm settles it: **tripling the budget bought exactly nothing.**
+21 matched seed-0 rows, all running the full 1800 actions, all
+`budget_exhausted`: 7 levels at 600 and 7 levels at 1800, mean score identical
+to six decimal places, and **zero level completions after action 600**. The
+agent is still finding 62.3 novel observations per 100 actions at action 1800.
+
+The lesson is that **novel-state discovery is not progress**. The agent wanders
+into genuinely new states indefinitely and converts none of them into level
+completions. Continued exploration was read as evidence of unfinished business;
+it is evidence of an agent that cannot tell which states matter. The bottleneck
+is credit assignment, not action count. `MAX_ACTIONS` stays at 600 -- raising it
+costs wall-clock on Kaggle and buys nothing.
+
+**Submission gate: not cleared.** The user's condition is that the fly be
+load-bearing *and* the agent beat both 0.00 submissions. The fly is load-bearing
+in the mechanical sense and produces no demonstrable improvement, so this agent
+is not a submission candidate. The budget arm below is the live route to an
+actual gain.
+
+**How often is the fly actually decisive?** `fly_decisive_rate` in
+`policy_diagnostics` counts turns where removing the connectome would have
+chosen a different candidate: 24.7% on ar25, 28.5-37.2% on ls20. It is neither
+inert nor saturated -- on roughly three turns in four the controller's own
+learning already picks a unique winner and the fly is silent, which is the
+guardrail working.
+
 **The action budget is binding, and this is the cheapest score gain available.**
 All 125 completed rows across both conditions ended by `budget_exhausted`; not
 one ended in a win. Level completions run as late as action 514 (controller) and
