@@ -46,6 +46,8 @@ class FlyTiebreaker:
         config: Any,
         *,
         runtime_dir: str | Path | None = None,
+        bundle: Any | None = None,
+        projection: Any | None = None,
     ) -> None:
         from flygi.arc.factory import build_connectome_policy
 
@@ -59,7 +61,16 @@ class FlyTiebreaker:
                 return identifier
 
         try:
-            assembled = build_connectome_policy(config, _NullActions, runtime_dir=runtime_dir)
+            # ``bundle``/``projection`` let a caller that has already paid for the
+            # 24.5M-edge load reuse it. On Kaggle every game constructs a fresh
+            # agent, so reloading per game would dominate the action budget.
+            assembled = build_connectome_policy(
+                config,
+                _NullActions,
+                runtime_dir=runtime_dir,
+                bundle=bundle,
+                projection=projection,
+            )
         except Exception as exc:  # A missing runtime must fail loudly, not silently.
             raise FlyTiebreakError(f"could not assemble the connectome: {exc}") from exc
 
@@ -151,3 +162,61 @@ class FlyTiebreaker:
         self._turns = 0
         if self._standardizer is not None:
             self._standardizer.reset()
+
+
+class GridHashTiebreaker:
+    """A state-dependent tiebreaker with no connectome in it at all.
+
+    This is the control that decides whether the fly result means anything.
+    ``_tie_digest`` is constant with respect to what is on screen; the
+    connectome is not, and that difference alone buys exploration diversity.
+    So a gain over the hash does not yet implicate anatomy -- it may only show
+    that varying the tiebreak with the observation helps.
+
+    This class varies with the observation and contains no anatomy: a
+    deterministic keyed digest of the grid, the action, and the coordinate. If
+    it reproduces the connectome's gain, the honest report is that
+    state-dependent tiebreaking helps and the fly is incidental.
+    """
+
+    def __init__(self, seed: int = 0) -> None:
+        self._seed = int(seed)
+        self._digest: bytes | None = None
+        self._turns = 0
+
+    @property
+    def turns_observed(self) -> int:
+        return self._turns
+
+    def describe(self) -> dict[str, Any]:
+        return {
+            "kind": "grid_hash_tiebreak",
+            "placement": "tie position only; identical seam to the connectome",
+            "nodes": 0,
+            "edges": 0,
+            "readout": 0,
+            "seed": self._seed,
+            "trainable_parameters": 0,
+            "turns_observed": self._turns,
+        }
+
+    def observe(self, grid: NDArray[np.integer], legal_action_ids: tuple[int, ...]) -> None:
+        from hashlib import blake2b
+
+        array = np.ascontiguousarray(np.asarray(grid, dtype=np.int8))
+        self._digest = blake2b(array.tobytes(), digest_size=16).digest()
+        self._turns += 1
+
+    def preference(self, action_id: int, x: int | None, y: int | None) -> float:
+        from hashlib import blake2b
+
+        if self._digest is None:
+            return 0.0
+        key = f"{self._seed}:{int(action_id)}:{x}:{y}".encode()
+        raw = blake2b(self._digest + key, digest_size=8).digest()
+        # Map to [0, 1) so the scale is comparable to a standardized readout.
+        return int.from_bytes(raw, "big") / float(1 << 64)
+
+    def reset(self) -> None:
+        self._digest = None
+        self._turns = 0

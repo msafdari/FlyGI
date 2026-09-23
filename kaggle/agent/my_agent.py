@@ -113,6 +113,24 @@ def _find_runtime() -> tuple[Path, Path] | None:
     return None
 
 
+def _find_controller_config(runtime_dir: Path, config_path: Path) -> Path | None:
+    """Return the packaged controller declaration, if the dataset carries one.
+
+    Absent, the adapter builds the pure connectome policy exactly as before, so
+    an existing dataset keeps producing a byte-identical agent. Present, the fly
+    moves into the controller's tie position -- the submission gate requires the
+    connectome to stay load-bearing, so there is no controller-only mode here.
+    """
+
+    for candidate in (
+        runtime_dir / "controller.yaml",
+        config_path.parent / "controller.yaml",
+    ):
+        if candidate.is_file():
+            return candidate
+    return None
+
+
 def _shared_runtime() -> dict[str, Any]:
     """Load, verify and cache the connectome once for the whole process."""
 
@@ -139,10 +157,20 @@ def _shared_runtime() -> dict[str, Any]:
             raise ValueError(
                 f"runtime manifest did not hash every deployment array; missing {missing_hashes}"
             )
+        controller_path = _find_controller_config(runtime_dir, config_path)
+        controller_config = None
+        if controller_path is not None:
+            controller_config = load_config(controller_path)
+            if not controller_config.controller.enabled:
+                raise ValueError(
+                    f"{controller_path.name} is attached but controller.enabled is false"
+                )
         _LOADED.update(
             {
                 "available": True,
                 "config": config,
+                "controller_config": controller_config,
+                "controller_path": controller_path,
                 "runtime_dir": runtime_dir,
                 "bundle": assembled.bundle,
                 "projection": assembled.projection,
@@ -170,9 +198,12 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
         Path(path).name: digest for path, digest in sorted(bundle.verified_hashes.items())
     }
     return {
+        "controller": (
+            None if shared.get("controller_path") is None else Path(shared["controller_path"]).name
+        ),
         "edges": int(bundle.edge_count),
         "internal_steps": int(interface["internal_steps"]),
-        "mode": "connectome",
+        "mode": "controller-fly" if shared.get("controller_config") is not None else "connectome",
         "nodes": int(bundle.node_count),
         "release": str(bundle.manifest.get("release")),
         "sign_mode": str(bundle.manifest.get("preprocessing", {}).get("sign_mode")),
@@ -241,7 +272,32 @@ class MyAgent(Agent):
 
         decision_seed = _seed_for_game(str(self.game_id)) if rng_seed is None else int(rng_seed)
         shared = _shared_runtime()
-        if shared.get("available"):
+        if shared.get("available") and shared.get("controller_config") is not None:
+            from flygi.controller import StateGraphPolicy
+            from flygi.controller.fly_tiebreak import FlyTiebreaker
+
+            # The connectome occupies the controller's tie position and nothing
+            # else: it cannot override legality, a known death state, a verified
+            # plan, or a learned effect estimate. The loaded bundle is shared, so
+            # this costs no second traversal of the graph.
+            fly = FlyTiebreaker(
+                shared["config"],
+                runtime_dir=shared["runtime_dir"],
+                bundle=shared["bundle"],
+                projection=shared["projection"],
+            )
+            self._policy = StateGraphPolicy(
+                GameAction,
+                shared["controller_config"].controller,
+                decision_seed=decision_seed,
+                fly=fly,
+            )
+            self._mode = "controller-fly"
+            self._detail = (
+                f"{shared['bundle'].node_count} nodes / "
+                f"{shared['bundle'].edge_count} edges in the tie position"
+            )
+        elif shared.get("available"):
             from flygi.arc.factory import build_connectome_policy
 
             assembled = build_connectome_policy(

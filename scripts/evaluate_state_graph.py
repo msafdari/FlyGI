@@ -114,11 +114,12 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
         "--fly",
-        choices=("none", "real", "null"),
+        choices=("none", "real", "null", "grid_hash"),
         default="none",
         help=(
-            "who breaks ties the controller cannot break: nobody (a deterministic "
-            "hash), the real connectome, or a degree-preserving rewiring of it"
+            "who breaks ties the controller cannot break: nobody (a constant "
+            "digest), the real connectome, a degree-preserving rewiring of it, or "
+            "a state-dependent digest carrying no anatomy"
         ),
     )
     parser.add_argument(
@@ -201,7 +202,13 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     fly_description: dict[str, Any] = {"kind": "tie_digest", "connectome": False}
     fly_tiebreaker = None
-    if args.fly != "none":
+    if args.fly == "grid_hash":
+        from flygi.controller.fly_tiebreak import GridHashTiebreaker
+
+        fly_tiebreaker = GridHashTiebreaker(seed=config.controller.mask_freeze_after)
+        fly_description = {"connectome": False, **fly_tiebreaker.describe()}
+        print("fly=grid_hash (no connectome; state-dependent control)", flush=True)
+    elif args.fly != "none":
         from flygi.controller.fly_tiebreak import FlyTiebreaker
 
         if args.fly == "null" and args.fly_runtime_dir is None:

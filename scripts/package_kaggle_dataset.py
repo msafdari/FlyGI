@@ -40,7 +40,13 @@ def _relative(path: Path) -> str:
     return str(resolved.relative_to(ROOT)) if resolved.is_relative_to(ROOT) else str(resolved)
 
 
-def _stage(config_path: Path, runtime_dir: Path, stage: Path, slug: str) -> dict[str, Any]:
+def _stage(
+    config_path: Path,
+    runtime_dir: Path,
+    stage: Path,
+    slug: str,
+    controller_path: Path | None = None,
+) -> dict[str, Any]:
     from flygi.connectome.manifest import sha256_file
     from flygi.dynamics.runtime import load_runtime_connectome
 
@@ -76,6 +82,20 @@ def _stage(config_path: Path, runtime_dir: Path, stage: Path, slug: str) -> dict
         }
     )
 
+    # A controller declaration is optional. Without it the adapter builds the
+    # pure connectome policy exactly as before; with it the connectome moves
+    # into the controller's tie position. There is no controller-only package:
+    # the submission gate requires the fly to stay load-bearing.
+    if controller_path is not None:
+        shutil.copyfile(controller_path, stage / "controller.yaml")
+        records.append(
+            {
+                "path": "controller.yaml",
+                "bytes": (stage / "controller.yaml").stat().st_size,
+                "sha256": sha256_file(stage / "controller.yaml"),
+            }
+        )
+
     # The staged bundle must load and hash-check on its own, exactly as the
     # notebook will load it with no network and no source tables present.
     verified = load_runtime_connectome(stage / "runtime", required_groups=("descending_neurons",))
@@ -86,6 +106,8 @@ def _stage(config_path: Path, runtime_dir: Path, stage: Path, slug: str) -> dict
         "slug": slug,
         "source_runtime_dir": _relative(runtime_dir),
         "config_path": _relative(config_path),
+        "controller_path": None if controller_path is None else _relative(controller_path),
+        "agent_mode": "controller-fly" if controller_path is not None else "connectome",
         "release": verified.manifest.get("release"),
         "nodes": verified.node_count,
         "edges": verified.edge_count,
@@ -122,6 +144,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--runtime-dir", type=Path, default=None)
+    parser.add_argument(
+        "--controller-config",
+        type=Path,
+        default=None,
+        help=(
+            "stage this controller declaration beside the graph; the packaged agent "
+            "then runs the connectome in the controller's tie position"
+        ),
+    )
     parser.add_argument("--stage", type=Path, default=DEFAULT_STAGE)
     parser.add_argument("--slug", default=None, help="owner/dataset-name")
     args = parser.parse_args(argv)
@@ -140,7 +171,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         owner = json.loads(metadata.read_text())["id"].split("/")[0]
         slug = f"{owner}/flygi-malecns-runtime"
 
-    provenance = _stage(args.config, runtime_dir, args.stage.resolve(), slug)
+    controller_path = None
+    if args.controller_config is not None:
+        controller_path = args.controller_config.resolve()
+        controller = load_config(controller_path)
+        if not controller.controller.enabled:
+            raise SystemExit(
+                f"{controller_path} has controller.enabled=false; refusing to stage it"
+            )
+
+    provenance = _stage(
+        args.config, runtime_dir, args.stage.resolve(), slug, controller_path=controller_path
+    )
     print(json.dumps({"stage": str(args.stage.resolve()), **provenance}, indent=2, sort_keys=True))
     print(
         "\nStaged only. To publish privately, review the contents and then run:\n"

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import builtins
+import contextlib
 import importlib.util
 import json
 import sys
@@ -256,6 +257,9 @@ def test_preflight_prints_machine_readable_verified_identity(
     assert output.startswith("FLYGI_PREFLIGHT=")
     assert json.loads(output.removeprefix("FLYGI_PREFLIGHT=")) == identity
     assert identity == {
+        # No controller.yaml is attached here, so the adapter must still build
+        # the pure connectome policy and say so.
+        "controller": None,
         "edges": 24_559_055,
         "internal_steps": 4,
         "mode": "connectome",
@@ -329,3 +333,86 @@ def test_deployed_action_budget_exceeds_observed_completion_costs(
 
     adapter = _load_adapter(monkeypatch)
     assert adapter.MyAgent.MAX_ACTIONS >= 500
+
+
+def test_controller_config_discovery_is_opt_in(tmp_path: pytest.MonkeyPatch) -> None:
+    """Without a staged controller.yaml the adapter must behave exactly as before."""
+
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("_flygi_adapter_disc", ADAPTER_PATH)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    with contextlib.suppress(RuntimeError):
+        spec.loader.exec_module(module)
+
+    runtime = tmp_path / "runtime"  # type: ignore[operator]
+    runtime.mkdir(parents=True)
+    config = runtime.parent / "config.yaml"
+    config.write_text("schema_version: 1\n", encoding="utf-8")
+    assert module._find_controller_config(runtime, config) is None
+
+    (runtime / "controller.yaml").write_text("schema_version: 1\n", encoding="utf-8")
+    found = module._find_controller_config(runtime, config)
+    assert found is not None and found.name == "controller.yaml"
+
+
+def test_attached_controller_puts_the_connectome_in_the_tie_position(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The packaged agent must use the controller+fly path, not the plain policy.
+
+    The trivial alternative here is the connectome policy the adapter has always
+    built. If attaching a controller declaration does not change which policy is
+    constructed, the packaging change is inert and no submission built from it
+    would carry the controller at all.
+    """
+
+    from flygi.config import ControllerConfig
+
+    module = _load_adapter(monkeypatch)
+    built: dict[str, object] = {}
+
+    class _StubFly:
+        def __init__(self, *args: object, **kwargs: object) -> None:
+            built["fly_kwargs"] = sorted(kwargs)
+
+        def reset(self) -> None:
+            return None
+
+    class _StubPolicy:
+        def __init__(self, *args: object, **kwargs: object) -> None:
+            built["fly"] = kwargs.get("fly")
+
+        internal_steps = 4
+
+    controller_module = ModuleType("flygi.controller")
+    controller_module.StateGraphPolicy = _StubPolicy  # type: ignore[attr-defined]
+    tiebreak_module = ModuleType("flygi.controller.fly_tiebreak")
+    tiebreak_module.FlyTiebreaker = _StubFly  # type: ignore[attr-defined]
+    monkeypatch.setitem(sys.modules, "flygi.controller", controller_module)
+    monkeypatch.setitem(sys.modules, "flygi.controller.fly_tiebreak", tiebreak_module)
+
+    bundle = SimpleNamespace(node_count=166_700, edge_count=24_559_055)
+    monkeypatch.setattr(
+        module,
+        "_shared_runtime",
+        lambda: {
+            "available": True,
+            "config": object(),
+            "controller_config": SimpleNamespace(controller=ControllerConfig(enabled=True)),
+            "controller_path": "/attached/controller.yaml",
+            "runtime_dir": "/attached/runtime",
+            "bundle": bundle,
+            "projection": object(),
+            "interface": {"internal_steps": 4},
+        },
+    )
+
+    agent = module.MyAgent(game_id="controller-smoke", rng_seed=20260919)
+
+    assert agent._mode == "controller-fly", "the attached controller was ignored"
+    assert isinstance(built.get("fly"), _StubFly), "the connectome never reached the tie position"
+    assert "bundle" in built["fly_kwargs"], (
+        "the tiebreaker reloaded the graph instead of sharing it"
+    )

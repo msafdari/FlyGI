@@ -776,6 +776,27 @@ bypass, degree-preserving null, shuffled retinotopy, and named-module lesions.
 The real graph earns credit only by beating them on the same candidate set,
 training budget, and seeds.
 
+## Submission gate (set by the user, 2026-09-23)
+
+Nothing is submitted unless **both** hold:
+
+1. **The fly is load-bearing.** The agent must use the connectome in a way that
+   changes its decisions. The Phase 1 state-graph controller alone is not a
+   submission candidate however well it scores locally -- a scaffold that scores
+   with the connectome inert is a negative result about the fly wearing a
+   leaderboard entry as a disguise.
+2. **It beats both existing submissions.** `56444435` and `56459984` each scored
+   0.00, so the bar is a nonzero leaderboard score.
+
+Condition 1 is not satisfied merely by the fly being present in the process. It
+requires a control arm showing the connectome contributes beyond what any
+state-dependent tiebreaker would: see the `grid_hash` arm (no anatomy, varies
+with the observation) and the degree-preserving null arm. If the real fly ties
+the grid hash, the fly is decoration and the honest report is that the
+controller scores.
+
+Slots reset 00:00 UTC, one per day.
+
 ## Promotion and submission discipline
 
 - One frozen intervention, one exact local gate; no edit/revert tuning loops.
