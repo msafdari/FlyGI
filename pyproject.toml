@@ -50,6 +50,8 @@ addopts = "-ra --strict-config --strict-markers"
 testpaths = ["tests"]
 
 [tool.ruff]
+# Foreign workspace: never format, lint, or otherwise touch it.
+extend-exclude = [".fly-or-fake-work"]
 target-version = "py312"
 line-length = 100
 

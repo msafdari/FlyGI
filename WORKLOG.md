@@ -127,6 +127,31 @@ source-equivalence audit including the git_dirty=2cf2098 mixed-launch caveat,
 closure report, one tested closure commit) begins only after the fourth bundle
 lands.
 
+### Incident: repo-wide format touched the foreign workspace — 2026-09-23
+
+A `ruff format .` during closure descended into the untracked
+`.fly-or-fake-work/` directory and reformatted 7 Python files there, violating
+the do-not-touch instruction. Formatting is semantics-preserving and the two
+tracked modifications in that repo's own git predate the incident (ruff does
+not format JSON), but its owner should review with their own `git diff`. No
+revert was attempted -- most touched files are untracked there, and a revert
+could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
+is now in ruff's `extend-exclude`, and repo-wide format invocations are
+avoided in favour of explicit paths. Disclosed to Mustafa immediately.
+
+### ARC queue closed — 2026-09-23 evening
+
+All four bio-eye/decoder arms are resolved: permuted (null, as preregistered),
+bioeye-t4t5 (**the league's first HELPS**, +0.0717 CI [+0.005,+0.156] p=0.070,
+22 v 13 levels, survived the hash-grade source audit), retdec (HURTS on score
+at every preregistered endpoint while completing +5 levels everywhere — the
+breadth/depth trade at its sharpest), surprise (killed 18/75, priority).
+Submission 3 scored 0.00, consistent with both priors. MBdr deferred, not
+falsified. Full detail, provenance, audit, and deviations:
+`docs/arc_agi/ARC_CLOSURE_2026-09-23.md`. Registry, league, and this log agree.
+Next step: hand the closure SHA to Codex; the Experiment 000 refactor starts
+from it.
+
 ### Submission 3 assembled and shipped — 2026-09-23 14:0x PDT
 
 On Mustafa's explicit instruction ("whatever improvements we have planned and

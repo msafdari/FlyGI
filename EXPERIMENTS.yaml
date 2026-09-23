@@ -114,9 +114,12 @@ hypotheses:
       The colour->type rule (c % 15) is harmless convention; only the
       categorical-plus-retinotopic structure matters, not which medulla type
       carries which colour. (Assumption A of the encoder.)
-    status: open
+    status: supported
     evidence:
-      - "Awaiting sg-bioeye-lc-permuted vs sg-bioeye-lc"
+      - >
+        sg-bioeye-lc-permuted vs sg-bioeye-lc, complete: +0.022, CI
+        [-0.108,+0.198], p=0.974 -- null, as preregistered. The colour->type
+        assignment is harmless convention.
     updated: 2026-09-23
   H-PERCEPTION-READOUT:
     statement: >
@@ -182,10 +185,18 @@ hypotheses:
       model, zero trained parameters; through the real preference path it
       localizes at 3.5 cells vs state_change's 12.1, because the free-run
       reference cancels the network's own settling transients.
-    status: open
+    status: refuted
     evidence:
       - "Localization measured offline and through the wired path, 2026-09-23"
-      - "Behavioural effect untested; three straight nulls counsel no confidence beyond the measurement"
+      - >
+        sg-bioeye-lc-retdec vs sg-bioeye-lc, 75 matched rows, preregistered
+        endpoints: score HURTS at every endpoint (full -0.159 [-0.364,-0.003]
+        p=0.126; click-19 -0.209; click-dominant-9 -0.444) while LEVELS RISE
+        everywhere (21v16, 20v15, 14v9). Measured localization converted to
+        breadth, not score: better click targeting opened more first levels on
+        more games and lost more points than it gained. The surprise variant was
+        killed at 18/75 as a priority decision (its primary contrast was vs
+        retdec; no decision hinged on it post-pivot) -- killed, not falsified.
     updated: 2026-09-23
 
   H-EFFERENCE:
@@ -359,24 +370,28 @@ experiments:
   sg-mbdr-nolearn:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
+    status_override: deferred
     baseline: sg-g2-nolearn
     tests: [H-MB-INPUT-BUS, H-APL]
     note: Bus + APL x4 + rectified eligibility, learning off. Isolates the circuit changes.
   sg-mbdr-learn:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
+    status_override: deferred
     baseline: sg-mbdr-nolearn
     tests: [H-MB-LEARNING]
     note: The fair retest of mushroom-body learning, with sensory content and biological sparsity.
   sg-mbdr-learn-rewired:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
+    status_override: deferred
     baseline: sg-mbdr-learn
     tests: [H-MB-LEARNING]
     note: KC->MBON rewire control; run only if sg-mbdr-learn separates from its baseline.
   sg-mbdr-learn-shuffled:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
+    status_override: deferred
     baseline: sg-mbdr-learn
     tests: [H-MB-LEARNING]
     note: Credit-shuffle control; same gating.
@@ -405,6 +420,7 @@ experiments:
     regime: gain2.0-modulators
     baseline: sg-bioeye-lc-retdec
     tests: [H-RETINO-DECODER]
+    status_override: killed
     preregistered_endpoints:
       primary: click_games_19
       secondary: click_dominant_9
