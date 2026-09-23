@@ -154,6 +154,23 @@ hypotheses:
         Behavioural effect untested; awaiting the mb-done-right arms.
     updated: 2026-09-23
 
+  H-RETINO-DECODER:
+    statement: >
+      Click coordinates read retinotopically from the optic-lobe state (the
+      inverse of the encoder's column map) convert a measured 30x localization
+      gap into behaviour: the state localizes a known change to 0.8 cells
+      (joint readback) while the deployed body-id-block head reads the same
+      state at 23.5 cells, chance 37.2. Surprise variant: the reference is the
+      frozen connectome advanced on the previous frame -- its own forward
+      model, zero trained parameters; through the real preference path it
+      localizes at 3.5 cells vs state_change's 12.1, because the free-run
+      reference cancels the network's own settling transients.
+    status: open
+    evidence:
+      - "Localization measured offline and through the wired path, 2026-09-23"
+      - "Behavioural effect untested; three straight nulls counsel no confidence beyond the measurement"
+    updated: 2026-09-23
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
@@ -320,3 +337,16 @@ experiments:
     baseline: sg-mbdr-learn
     tests: [H-MB-LEARNING]
     note: Credit-shuffle control; same gating.
+
+  sg-bioeye-lc-retdec:
+    config: configs/literal_rate_bioeye_lc_retdec.yaml
+    regime: gain2.0-modulators
+    baseline: sg-bioeye-lc
+    tests: [H-RETINO-DECODER]
+    note: Retinotopic state-change click coordinates; encoder and readout identical to baseline.
+  sg-bioeye-lc-surprise:
+    config: configs/literal_rate_bioeye_lc_surprise.yaml
+    regime: gain2.0-modulators
+    baseline: sg-bioeye-lc-retdec
+    tests: [H-RETINO-DECODER]
+    note: Prediction-error variant; costs one extra network advance per turn. 3.5 vs 12.1 cells through the real path.

@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-23T19:18:58.357868+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-23T19:42:00.413919+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -19,8 +19,8 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | sg-t4t5 | gain2.0-modulators | complete | 75 | 0.1754 | 13 | -0.0280 [-0.163,+0.094] p=0.557 -> null | sg-g2-nolearn |
 | sg-cx | gain2.0-modulators | killed | 30 | 0.0551 | 5 | partial: -0.0301 (30 pairs, no verdict) | sg-g2-nolearn |
 | sg-bioeye-lc | gain2.0-modulators | complete | 75 | 0.2504 | 16 | +0.0092 [-0.121,+0.174] p=0.818 -> null | sg-lc |
-| sg-bioeye-lc-permuted | gain2.0-modulators | running | 25 | 0.3287 | 5 | partial: +0.1073 (25 pairs, no verdict) | sg-bioeye-lc |
-| sg-bioeye-t4t5 | gain2.0-modulators | running | 24 | 0.2250 | 7 | partial: +0.0724 (24 pairs, no verdict) | sg-t4t5 |
+| sg-bioeye-lc-permuted | gain2.0-modulators | running | 33 | 0.2531 | 6 | partial: +0.0853 (33 pairs, no verdict) | sg-bioeye-lc |
+| sg-bioeye-t4t5 | gain2.0-modulators | running | 33 | 0.1641 | 8 | partial: +0.0507 (33 pairs, no verdict) | sg-t4t5 |
 | real-signed | gain0.9-dead | complete | 125 | 0.1905 | 5 | +0.0000 [-0.571,+0.571] p=1.000 -> null | no-graph-bypass |
 | no-graph-bypass | gain0.9-dead | complete | 125 | 0.1905 | 5 | — | — |
 | null-degree-preserving | gain0.9-dead | complete | 125 | 0.0000 | 0 | -0.1905 [-0.571,+0.000] p=1.000 -> null | real-signed |
@@ -45,6 +45,8 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | sg-mbdr-learn | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-mbdr-nolearn |
 | sg-mbdr-learn-rewired | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-mbdr-learn |
 | sg-mbdr-learn-shuffled | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-mbdr-learn |
+| sg-bioeye-lc-retdec | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-bioeye-lc |
+| sg-bioeye-lc-surprise | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-bioeye-lc-retdec |
 
 ## Hypotheses
 
@@ -60,3 +62,4 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | H-PERCEPTION-READOUT | null | Reading high-signal perception populations (LC 16.1x, T4/T5 54.5x the DN activity) beats reading descending neurons -- under scrambled input. |
 | H-APL | supported | Strengthening APL feedback inhibition -- the fly's own sparsification circuit -- restores biological KC sparsity (0.05-0.11) at a live operating point, where global gain provably cannot (KC->KC is 85.3% of KC input; the silent-to-latched transition is abrupt). |
 | H-MB-INPUT-BUS | open | Driving the mushroom body through its real input pathway (antennal-lobe projection neurons -> Kenyon cells, 2 hops, reaches 4,025/4,064 KCs) gives the learning circuit sensory content, making a fair retest of H-MB-LEARNING possible. ARC has no odours, so any PN drive is a declared invention (assumption G): the claim is about the MB as associative memory, never about olfaction. |
+| H-RETINO-DECODER | open | Click coordinates read retinotopically from the optic-lobe state (the inverse of the encoder's column map) convert a measured 30x localization gap into behaviour: the state localizes a known change to 0.8 cells (joint readback) while the deployed body-id-block head reads the same state at 23.5 cells, chance 37.2. Surprise variant: the reference is the frozen connectome advanced on the previous frame -- its own forward model, zero trained parameters; through the real preference path it localizes at 3.5 cells vs state_change's 12.1, because the free-run reference cancels the network's own settling transients. |

@@ -110,6 +110,15 @@ class DecoderConfig:
 
     kind: str = "literal"
     readout: str = "descending_neurons"
+    # Where click coordinates come from. "readout_blocks" is the deployed
+    # head: axis scores from body-id-ordered blocks of the readout, measured
+    # at 23.5-cell localization error (chance is 37.2). "retinotopic_state"
+    # reads |state change| back through the optic-lobe column map (measured
+    # 0.8 cells); "retinotopic_surprise" reads |state - expectation| where
+    # the expectation is the frozen connectome advanced on the previous
+    # frame -- its own forward model, zero trained parameters, one extra
+    # network advance per turn (H-RETINO-DECODER).
+    coordinate_source: str = "readout_blocks"
     action_slots: int = 8
     coordinate_head: str = "literal_factorized_bins"
     sampling_method: str = "zscore_softmax_categorical"
@@ -434,6 +443,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         decoder = DecoderConfig(
             kind=str(decoder_raw.pop("kind", "literal")),
             readout=str(decoder_raw.pop("readout", "descending_neurons")),
+            coordinate_source=str(decoder_raw.pop("coordinate_source", "readout_blocks")),
             action_slots=int(decoder_raw.pop("action_slots", 8)),
             coordinate_head=str(decoder_raw.pop("coordinate_head", "literal_factorized_bins")),
             sampling_method=str(decoder_raw.pop("sampling_method", "zscore_softmax_categorical")),
@@ -609,6 +619,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
     overlap = set(encoder.on_types) & set(encoder.off_types)
     if overlap:
         raise ConfigError(f"a cell type cannot be both ON and OFF: {sorted(overlap)}")
+    if decoder.coordinate_source not in (
+        "readout_blocks",
+        "retinotopic_state",
+        "retinotopic_surprise",
+    ):
+        raise ConfigError(f"unknown decoder.coordinate_source: {decoder.coordinate_source!r}")
     if encoder.mb_input_bus is not None and encoder.mb_input_bus != "colour_histogram":
         raise ConfigError(
             f"unsupported encoder.mb_input_bus: {encoder.mb_input_bus!r} "

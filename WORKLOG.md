@@ -1021,6 +1021,54 @@ categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
 
+### 16. The decoder was the scrambled half all along -- measured, then fixed
+
+Prompted by asking what perception work is *demonstrably* wrong after the
+bio-eye null. Reference practice (flyvis, Lappalainen et al., Nature 2024)
+decodes the optic lobe as instantaneous per-column, per-cell-type activity.
+Ours decodes click coordinates from **body-id-ordered blocks** of the readout
+-- spatially meaningless, the exact mirror of the input scramble fixed in
+section 12.
+
+**The measurement that proves it** (16 trials, structured scenes, one 6x6
+change at a known place, bio-eye encoder):
+
+| method | median localization error |
+| --- | ---: |
+| hex-map readback of the state change (joint) | **0.8 cells** |
+| prediction-error readback (joint) | **0.8 cells** |
+| the deployed coordinate head | 23.5 cells |
+| chance | 37.2 cells |
+
+The fly's optic-lobe state knows WHERE to sub-cell precision; the deployed
+decoder reads that same brain at chance. Side-finding: T4/T5 carry no hex
+assignments in MaleCNS, so the spatial substrate is the 15 mapped
+lamina/medulla types.
+
+**Implemented**: `decoder.coordinate_source` --
+
+- `retinotopic_state`: click x/y scores from per-column |state change| mapped
+  back through the inverse of the encoder's affine assignment;
+- `retinotopic_surprise`: the reference is the frozen connectome advanced on
+  the previous frame -- the network free-running as its own one-step forward
+  model. Predictive coding in spirit, JEPA-adjacent in shape, and zero trained
+  parameters because the predictor IS the graph. Cost: one extra advance per
+  turn.
+
+**The wired-path measurement, and the day's most interesting number.** Through
+the real `preference()` path (separable x+y marginals over candidate clicks):
+state_change degrades to **12.1 cells**; surprise holds at **3.5**. Mechanism:
+the free-run reference contains the network's own settling transients, so they
+cancel, leaving only input-caused deviation -- the forward model explains away
+self-generated dynamics. The prediction is not decoration; it is what makes
+the marginal readback usable.
+
+**Claim boundary, stated before the arms run.** All of this is localization,
+measured; none of it is score. H-RETINO-DECODER is open, `sg-bioeye-lc-retdec`
+and `sg-bioeye-lc-surprise` are registered against `sg-bioeye-lc`, and three
+straight full-matrix nulls counsel exactly zero confidence beyond the
+measurements themselves.
+
 ### 15. The bio-eye result: null, and the third partial-lead collapse
 
 `sg-bioeye-lc` against its matched scrambled control `sg-lc`, 75 rows each,

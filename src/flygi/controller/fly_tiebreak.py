@@ -81,6 +81,17 @@ class FlyTiebreaker:
         self._policy = assembled.policy
         self._bundle = assembled.bundle
         self._graph_dir = config.graph.output_dir
+        self._saliency = None
+        self._last_drive = None
+        source = getattr(config.decoder, "coordinate_source", "readout_blocks")
+        if source != "readout_blocks":
+            from flygi.decoding.retinotopic_saliency import RetinotopicSaliency
+
+            mode = "surprise" if source == "retinotopic_surprise" else "state_change"
+            self._saliency = RetinotopicSaliency(
+                Path(runtime_dir) if runtime_dir is not None else Path(self._graph_dir),
+                mode=mode,
+            )
         self._network = self._policy._network
         self._readout = self._policy._readout
         self._action_map = self._policy._action_map
@@ -123,6 +134,9 @@ class FlyTiebreaker:
             "internal_steps": self._policy.internal_steps,
             "trainable_parameters": 0,
             "turns_observed": self._turns,
+            "coordinate_source": (
+                "readout_blocks" if self._saliency is None else self._saliency.describe()
+            ),
             "learning": self._mushroom_body is not None,
             "mushroom_body": (
                 None
@@ -153,9 +167,21 @@ class FlyTiebreaker:
             available_action_ids=tuple(legal_action_ids),
         )
         drive = self._projection.drive_features(features)
+        previous_state = self._state
+        expectation = None
+        if self._saliency is not None and self._saliency.mode == "surprise":
+            # The connectome's own one-step forward model: the network advanced
+            # as if the world had not changed (previous drive again). One extra
+            # advance per turn is the entire cost of the predictor; it has no
+            # trained parameters because it IS the frozen graph.
+            reference_drive = self._last_drive if self._last_drive is not None else drive
+            expectation = self._network.advance(
+                previous_state, reference_drive, internal_steps=self._policy.internal_steps
+            )
         self._state = self._network.advance(
             self._state, drive, internal_steps=self._policy.internal_steps
         )
+        self._last_drive = drive
         self._previous_grid = features.grid
         raw = self._readout.raw(self._state)
         self._trace = (
@@ -164,7 +190,11 @@ class FlyTiebreaker:
             else self._readout.standardized(self._state)[0]
         )
         self._action_logits = self._action_map.logits(self._trace)
-        self._x_scores, self._y_scores = self._coordinates.axis_scores(self._trace)
+        if self._saliency is not None:
+            reference = expectation if expectation is not None else previous_state
+            self._x_scores, self._y_scores = self._saliency.axis_scores(self._state, reference)
+        else:
+            self._x_scores, self._y_scores = self._coordinates.axis_scores(self._trace)
         if self._mushroom_body is not None:
             # Every turn, rewarded or not. The trace is what lets reinforcement
             # that arrives later reach the Kenyon cells that earned it.
@@ -282,6 +312,7 @@ class FlyTiebreaker:
         self._action_logits = None
         self._x_scores = None
         self._y_scores = None
+        self._last_drive = None
         self._turns = 0
         if self._mushroom_body is not None:
             # A new environment restores the frozen baseline: what the fly
