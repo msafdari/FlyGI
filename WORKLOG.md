@@ -1021,6 +1021,52 @@ categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
 
+### 14. The mushroom body done right: built, calibrated, awaiting its turn
+
+Built now, to run after the bio-eye battery settles, per the plan. Everything
+below is construction and calibration; no behavioural claim is made until the
+`sg-mbdr-*` arms run.
+
+**The input bus (H-MB-INPUT-BUS).** `encoder.mb_input_bus: colour_histogram`
+drives the 627 uniglomerular projection neurons -- measured direct: 22,581
+synapses reaching 3,811/4,064 Kenyon cells at ONE hop, 7.23% of KC input weight,
+which corrects section 11's "two hops" framing -- with the screen's global
+colour histogram as an odour-mixture analogue. Glomerular types are assigned to
+colours by sorted order, round-robin: convention, not biology, and the
+permutation-control pattern applies here too if the bus ever shows an effect.
+Live probe: PN activity 2.5e-05 -> 2.3e-01; KC patterns separate colour-9 from
+colour-3 screens by 23-78%; reinforcement moves |dW|=3.6. The composite
+projection refuses any overlap with the visual encoder, so nothing can be
+double-driven silently.
+
+**APL sparsification (H-APL) -- supported, with a mechanism finding worth more
+than the knob.** Scaling the 4,633 APL->KC inhibitory synapses is exact to the
+digit and touches nothing else. But in a signed tanh network, inhibition CANNOT
+sparsify absolute activity: it drives cells negative, and |-0.4| counts as
+active. Measured: APL x4-x25 made |abs| sparsity worse (0.123 -> 0.177,
+latching 0.95). On the positive lobe -- firing, the only biological reading --
+APL behaves exactly as Lin et al. 2014 predicts: x2 0.098, x4 0.078 (in the
+0.05-0.11 band), plateauing at x10-25 because negative feedback self-limits.
+
+**Corollary fix: rectified eligibility.** The plasticity trace previously used
+|abs| Kenyon activity, which counted an APL-inhibited cell as MORE eligible the
+harder it was suppressed -- backwards from the biology it models. Eligibility
+now reads the positive lobe only (`eligibility_rectified`, default true,
+declared with the measurement that exposed it; `false` restores |abs| for
+comparison).
+
+**Calibration, not assumption.** `mb_input_scale` swept against the KC firing
+band: every naive scale (1.0 down to 0.02) saturates the KC pool through its
+85% recurrence; 0.003 at APL x4 lands at 0.091, in band, DN live at 1.5e-04.
+The sparse-and-loud-but-starved regime (APL x10-25, tiny scale, separation up
+to 227% but DN dimming toward 5e-05) was measured and deliberately not chosen.
+
+**Registered ahead of running:** `sg-mbdr-nolearn` (circuit changes alone, vs
+`sg-g2-nolearn`), `sg-mbdr-learn` (the fair retest of H-MB-LEARNING, vs
+`sg-mbdr-nolearn`), and both falsification controls, gated on the main arm
+separating from its baseline. The league lists them as `missing` until they
+run.
+
 ### 13. The bio-eye battery: main arm, its falsification control, and T4/T5
 
 Three arms complete the encoder experiment. All assemble and discriminate,

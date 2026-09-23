@@ -95,6 +95,13 @@ class EncoderConfig:
     # If a permuted assignment scores the same, the specific mapping carries
     # nothing and only categorical-plus-retinotopic structure matters.
     colour_permutation_seed: int | None = None
+    # HYPOTHESIS H-MB-INPUT-BUS (assumption G): present the screen's colour
+    # composition to the antennal lobe as an odour mixture, driving the 627
+    # uniglomerular projection neurons whose 22,581 direct synapses reach 94%
+    # of Kenyon cells. ARC has no odours; this is a declared invention about
+    # the mushroom body as associative memory, never a claim about olfaction.
+    mb_input_bus: str | None = None
+    mb_input_scale: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -181,6 +188,31 @@ class ControllerConfig:
 
 
 @dataclass(frozen=True)
+class CircuitConfig:
+    """Declared, anatomy-targeted circuit calibrations.
+
+    Each field names a specific pathway measured in the graph and scales it for
+    a stated physiological reason. This is the sanctioned alternative to global
+    knobs: WORKLOG section 9 showed no global gain delivers both biological KC
+    sparsity and a readout clear of the numerical floor, because KC->KC
+    recurrence (85.3% of KC input) swamps APL inhibition (2.4%).
+    """
+
+    # HYPOTHESIS H-APL: strengthening the fly's own sparsification circuit --
+    # the GABAergic APL neuron's 4,633 inhibitory synapses onto Kenyon cells,
+    # the complete KC->APL->KC negative feedback loop measured present and
+    # correctly signed in this graph -- restores biological KC sparsity
+    # (0.05-0.11 active) where global gain provably cannot. Literature: Lin et
+    # al. 2014 showed disrupting this loop destroys sparse coding and
+    # discrimination of similar stimuli. 1.0 means anatomy as measured.
+    apl_to_kc_gain: float = 1.0
+
+    def __post_init__(self) -> None:
+        if not math.isfinite(self.apl_to_kc_gain) or self.apl_to_kc_gain <= 0:
+            raise ConfigError("circuit.apl_to_kc_gain must be finite and positive")
+
+
+@dataclass(frozen=True)
 class FlyGIConfig:
     schema_version: int
     seed: int
@@ -192,6 +224,7 @@ class FlyGIConfig:
     state: StateLifetimeConfig = field(default_factory=StateLifetimeConfig)
     plasticity: PlasticityConfig = field(default_factory=PlasticityConfig)
     controller: ControllerConfig = field(default_factory=ControllerConfig)
+    circuit: CircuitConfig = field(default_factory=CircuitConfig)
     groups: Mapping[str, Any] = field(default_factory=dict)
     future: Mapping[str, Any] = field(default_factory=dict)
 
@@ -348,6 +381,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
         state_raw = dict(root.pop("state", {}) or {})
         plasticity_raw = dict(root.pop("plasticity", {}) or {})
         controller_raw = dict(root.pop("controller", {}) or {})
+        circuit_raw = dict(root.pop("circuit", {}) or {})
+        circuit = CircuitConfig(
+            apl_to_kc_gain=float(circuit_raw.pop("apl_to_kc_gain", 1.0)),
+        )
+        if circuit_raw:
+            raise ConfigError(f"unknown circuit keys: {sorted(circuit_raw)}")
         encoder = EncoderConfig(
             kind=str(encoder_raw.pop("kind", "sparse_projection")),
             sensory_superclass=str(encoder_raw.pop("sensory_superclass", "ol_sensory")),
@@ -363,6 +402,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
                 encoder_raw.pop("colour_permutation_seed", None),
                 "encoder.colour_permutation_seed",
             ),
+            mb_input_bus=(
+                None
+                if (mb_bus_raw := encoder_raw.pop("mb_input_bus", None)) is None
+                else str(mb_bus_raw)
+            ),
+            mb_input_scale=float(encoder_raw.pop("mb_input_scale", 1.0)),
         )
         action_temperature_raw = decoder_raw.pop("action_temperature", 0.15)
         coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.2)
@@ -564,6 +609,13 @@ def load_config(path: str | Path) -> FlyGIConfig:
     overlap = set(encoder.on_types) & set(encoder.off_types)
     if overlap:
         raise ConfigError(f"a cell type cannot be both ON and OFF: {sorted(overlap)}")
+    if encoder.mb_input_bus is not None and encoder.mb_input_bus != "colour_histogram":
+        raise ConfigError(
+            f"unsupported encoder.mb_input_bus: {encoder.mb_input_bus!r} "
+            "(only 'colour_histogram' is implemented)"
+        )
+    if not math.isfinite(encoder.mb_input_scale) or encoder.mb_input_scale <= 0:
+        raise ConfigError("encoder.mb_input_scale must be finite and positive")
     if encoder.colour_permutation_seed is not None and encoder.kind != "retinotopic_colour":
         raise ConfigError(
             "colour_permutation_seed is the falsification control for the "
@@ -708,6 +760,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         state=state,
         plasticity=plasticity,
         controller=controller,
+        circuit=circuit,
         groups=groups,
         future=root,
     )

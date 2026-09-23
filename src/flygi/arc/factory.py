@@ -257,6 +257,7 @@ def build_connectome_policy(
             "must address the readout population, so use the sparse encoder for it"
         )
 
+    caller_supplied_projection = projection is not None
     if projection is None and retinotopic:
         # The retinotopic encoder chooses its own targets: the optic-lobe columns
         # carrying hex coordinates, which is a different population from the
@@ -325,6 +326,72 @@ def build_connectome_policy(
                 ) from exc
     else:
         connectivity = loaded.matrix
+
+    if config.circuit.apl_to_kc_gain != 1.0:
+        # HYPOTHESIS H-APL. Scale exactly the APL->KC inhibitory synapses --
+        # the fly's own sparsification pathway -- and nothing else. The bundle's
+        # matrix is shared across policies (Kaggle builds one per game), so the
+        # scaling is applied to a fresh data array on a shallow-copied matrix:
+        # indices and indptr stay shared and frozen, weights are private.
+        from scipy import sparse as _sparse
+
+        metadata_path = Path(directory) / "node_metadata.npz"
+        with np.load(metadata_path, allow_pickle=False) as archive:
+            type_names = archive["type"]
+        apl = np.flatnonzero(np.char.startswith(type_names, "APL"))
+        kc = np.flatnonzero(np.char.startswith(type_names, "KC"))
+        if apl.size == 0 or kc.size == 0:
+            raise RuntimeAssemblyError(
+                "circuit.apl_to_kc_gain is set but APL or Kenyon cells are missing"
+            )
+        scaled = _sparse.csr_matrix(connectivity.shape, dtype=connectivity.dtype)
+        scaled.data = connectivity.data.copy()
+        scaled.indices = connectivity.indices
+        scaled.indptr = connectivity.indptr
+        is_kc_row = np.zeros(connectivity.shape[0], dtype=bool)
+        is_kc_row[kc] = True
+        is_apl_col = np.zeros(connectivity.shape[1], dtype=bool)
+        is_apl_col[apl] = True
+        row_of = np.repeat(np.arange(connectivity.shape[0]), np.diff(connectivity.indptr))
+        target = is_kc_row[row_of] & is_apl_col[connectivity.indices]
+        edges = int(target.sum())
+        if edges == 0:
+            raise RuntimeAssemblyError("no APL->KC edges found; wrong graph for H-APL")
+        scaled.data[target] *= np.float32(config.circuit.apl_to_kc_gain)
+        connectivity = scaled
+        from flygi.telemetry import run_or_null
+
+        run_or_null().decision(
+            "circuit.apl_gain_applied",
+            reason="circuit.apl_to_kc_gain declared in config (H-APL)",
+            gain=config.circuit.apl_to_kc_gain,
+            edges_scaled=edges,
+            apl_neurons=int(apl.size),
+        )
+    if config.encoder.mb_input_bus == "colour_histogram" and not caller_supplied_projection:
+        # A caller-supplied projection (the Kaggle shared bundle, the
+        # tiebreaker reusing an assembly) already carries the bus if its own
+        # build declared it; composing again would double-drive the PNs. The
+        # composite's overlap check would catch that loudly, but the correct
+        # behaviour is to not attempt it.
+        # H-MB-INPUT-BUS: the screen's colour composition into the antennal
+        # lobe. Composed over the visual projection; the composite refuses any
+        # overlap between the two target populations.
+        from flygi.encoding.mb_bus import CompositeProjection, PNColourBus
+
+        metadata_path = Path(directory) / "node_metadata.npz"
+        with np.load(metadata_path, allow_pickle=False) as archive:
+            bus_types = archive["type"]
+        bus = PNColourBus(bus_types, loaded.node_count, input_scale=config.encoder.mb_input_scale)
+        projection = CompositeProjection(projection, bus)
+        from flygi.telemetry import run_or_null
+
+        run_or_null().decision(
+            "encoder.mb_input_bus_attached",
+            reason="encoder.mb_input_bus declared in config (H-MB-INPUT-BUS)",
+            **{k: v for k, v in bus.describe().items() if k != "claim_boundary"},
+        )
+
     network = ScipyRateNetwork(
         connectivity,
         RateParameters(

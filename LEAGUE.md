@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-23T18:24:43.018169+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-23T18:43:13.053431+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -15,12 +15,12 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | sg-g2-learn | gain2.0-modulators | complete | 75 | 0.2035 | 18 | +0.0000 [-0.002,+0.003] p=1.000 -> null | sg-g2-nolearn |
 | sg-g2-learn-rewired | gain2.0-modulators | killed | 29 | 0.1503 | 9 | partial: +0.0630 (29 pairs, no verdict) | sg-g2-learn |
 | sg-g2-learn-shuffled | gain2.0-modulators | killed | 33 | 0.0767 | 5 | partial: +0.0000 (33 pairs, no verdict) | sg-g2-learn |
-| sg-lc | gain2.0-modulators | running | 71 | 0.2548 | 16 | partial: +0.0402 (71 pairs, no verdict) | sg-g2-nolearn |
-| sg-t4t5 | gain2.0-modulators | running | 71 | 0.1853 | 13 | partial: -0.0293 (71 pairs, no verdict) | sg-g2-nolearn |
+| sg-lc | gain2.0-modulators | complete | 75 | 0.2412 | 16 | +0.0378 [-0.068,+0.150] p=0.526 -> null | sg-g2-nolearn |
+| sg-t4t5 | gain2.0-modulators | complete | 75 | 0.1754 | 13 | -0.0280 [-0.163,+0.094] p=0.557 -> null | sg-g2-nolearn |
 | sg-cx | gain2.0-modulators | killed | 30 | 0.0551 | 5 | partial: -0.0301 (30 pairs, no verdict) | sg-g2-nolearn |
-| sg-bioeye-lc | gain2.0-modulators | running | 42 | 0.2414 | 10 | partial: +0.0487 (42 pairs, no verdict) | sg-lc |
-| sg-bioeye-lc-permuted | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-bioeye-lc |
-| sg-bioeye-t4t5 | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-t4t5 |
+| sg-bioeye-lc | gain2.0-modulators | running | 56 | 0.2380 | 14 | partial: +0.0829 (56 pairs, no verdict) | sg-lc |
+| sg-bioeye-lc-permuted | gain2.0-modulators | running | 2 | 0.0291 | 1 | partial: -0.0133 (2 pairs, no verdict) | sg-bioeye-lc |
+| sg-bioeye-t4t5 | gain2.0-modulators | running | 2 | 0.0454 | 1 | partial: +0.0454 (2 pairs, no verdict) | sg-t4t5 |
 | real-signed | gain0.9-dead | complete | 125 | 0.1905 | 5 | +0.0000 [-0.571,+0.571] p=1.000 -> null | no-graph-bypass |
 | no-graph-bypass | gain0.9-dead | complete | 125 | 0.1905 | 5 | — | — |
 | null-degree-preserving | gain0.9-dead | complete | 125 | 0.0000 | 0 | -0.1905 [-0.571,+0.000] p=1.000 -> null | real-signed |
@@ -41,6 +41,10 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | click-coordhot | gain0.9-dead | complete | 18 | 0.0000 | 0 | -0.0101 [-0.030,+0.000] p=0.500 -> null | click-nocentroid |
 | click-nocentroid | gain0.9-dead | complete | 18 | 0.0101 | 3 | — | — |
 | full-nocentroid | gain0.9-dead | complete | 25 | 0.1954 | 2 | +0.0049 [+0.000,+0.015] p=1.000 -> null | real-signed-loop-escape |
+| sg-mbdr-nolearn | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-g2-nolearn |
+| sg-mbdr-learn | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-mbdr-nolearn |
+| sg-mbdr-learn-rewired | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-mbdr-learn |
+| sg-mbdr-learn-shuffled | gain2.0-modulators | missing | 0 | 0.0000 | 0 | — | sg-mbdr-learn |
 
 ## Hypotheses
 
@@ -54,5 +58,5 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | H-RETINOTOPY-COLOUR | open | An input that preserves both retinotopy and categorical colour lets the fly's visual hierarchy (T4/T5, LC) do work that the scrambled projection made impossible. |
 | H-COLOUR-MAP | open | The colour->type rule (c % 15) is harmless convention; only the categorical-plus-retinotopic structure matters, not which medulla type carries which colour. (Assumption A of the encoder.) |
 | H-PERCEPTION-READOUT | null | Reading high-signal perception populations (LC 16.1x, T4/T5 54.5x the DN activity) beats reading descending neurons -- under scrambled input. |
-| H-APL | open | Strengthening APL feedback inhibition -- the fly's own sparsification circuit -- restores biological KC sparsity (0.05-0.11) at a live operating point, where global gain provably cannot (KC->KC is 85.3% of KC input; the silent-to-latched transition is abrupt). |
+| H-APL | supported | Strengthening APL feedback inhibition -- the fly's own sparsification circuit -- restores biological KC sparsity (0.05-0.11) at a live operating point, where global gain provably cannot (KC->KC is 85.3% of KC input; the silent-to-latched transition is abrupt). |
 | H-MB-INPUT-BUS | open | Driving the mushroom body through its real input pathway (antennal-lobe projection neurons -> Kenyon cells, 2 hops, reaches 4,025/4,064 KCs) gives the learning circuit sensory content, making a fair retest of H-MB-LEARNING possible. ARC has no odours, so any PN drive is a declared invention (assumption G): the claim is about the MB as associative memory, never about olfaction. |

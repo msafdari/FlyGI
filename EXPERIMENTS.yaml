@@ -112,9 +112,23 @@ hypotheses:
       circuit -- restores biological KC sparsity (0.05-0.11) at a live
       operating point, where global gain provably cannot (KC->KC is 85.3% of
       KC input; the silent-to-latched transition is abrupt).
-    status: open
+    status: supported
     evidence:
-      - "Named as the principled fix in WORKLOG section 9; not yet built"
+      - >
+        Mechanism finding first: in a signed tanh network, inhibition cannot
+        sparsify |abs| activity -- it drives cells negative, and |-0.4| counts
+        as active. Measured: APL x4-x25 made |abs| sparsity WORSE (0.123 ->
+        0.166-0.177, latching at ~0.95).
+      - >
+        On the positive lobe (firing; rates are non-negative) APL works exactly
+        as the literature says: x1 0.123 (above band), x2 0.098, x4 0.078 (in
+        band), plateau 0.077 at x10-25 because feedback self-limits. DN stays
+        live. Scoping verified exact: sum|APL->KC| scales x4/x10/x25 to the
+        digit, nothing else touched.
+      - >
+        Corollary implemented: eligibility is rectified (positive lobe only) --
+        the previous |abs| eligibility counted an APL-inhibited KC as MORE
+        eligible the harder it was suppressed.
     updated: 2026-09-23
   H-MB-INPUT-BUS:
     statement: >
@@ -126,7 +140,13 @@ hypotheses:
       memory, never about olfaction.
     status: open
     evidence:
-      - "Pathway measured in WORKLOG section 12; encoder not yet built"
+      - >
+        Built and live-probed 2026-09-23: PN activity 2.5e-05 -> 2.3e-01 with
+        the bus on; KC patterns separate colour-9 from colour-3 screens by
+        23-78%; reinforcement moves |dW|=3.6 through rectified eligibility.
+        Input scale CALIBRATED to 0.003 at APL x4 (KC firing 0.091, in band);
+        every naive scale saturated the KC pool via its 85% recurrence.
+        Behavioural effect untested; awaiting the mb-done-right arms.
     updated: 2026-09-23
 
 experiments:
@@ -269,3 +289,29 @@ experiments:
   click-coordhot: {config: configs/literal_rate_signed_coordhot.yaml, regime: gain0.9-dead, baseline: click-nocentroid, tests: [], note: Coordinate-head diagnosis arm.}
   click-nocentroid: {config: configs/literal_rate_signed_nocentroid.yaml, regime: gain0.9-dead, baseline: null, tests: [], note: Centroid-off click baseline.}
   full-nocentroid: {config: configs/literal_rate_signed_nocentroid.yaml, regime: gain0.9-dead, baseline: real-signed-loop-escape, tests: [], note: Centroid-off full set; adopted default of the dead regime.}
+
+  # ---- built and calibrated, awaiting the bio-eye battery before launch ----
+  sg-mbdr-nolearn:
+    config: configs/literal_rate_mb_done_right.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-nolearn
+    tests: [H-MB-INPUT-BUS, H-APL]
+    note: Bus + APL x4 + rectified eligibility, learning off. Isolates the circuit changes.
+  sg-mbdr-learn:
+    config: configs/literal_rate_mb_done_right.yaml
+    regime: gain2.0-modulators
+    baseline: sg-mbdr-nolearn
+    tests: [H-MB-LEARNING]
+    note: The fair retest of mushroom-body learning, with sensory content and biological sparsity.
+  sg-mbdr-learn-rewired:
+    config: configs/literal_rate_mb_done_right.yaml
+    regime: gain2.0-modulators
+    baseline: sg-mbdr-learn
+    tests: [H-MB-LEARNING]
+    note: KC->MBON rewire control; run only if sg-mbdr-learn separates from its baseline.
+  sg-mbdr-learn-shuffled:
+    config: configs/literal_rate_mb_done_right.yaml
+    regime: gain2.0-modulators
+    baseline: sg-mbdr-learn
+    tests: [H-MB-LEARNING]
+    note: Credit-shuffle control; same gating.

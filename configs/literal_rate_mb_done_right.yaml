@@ -1,0 +1,127 @@
+# The mushroom body done right: input bus, biological sparsity, and learning.
+#
+# WORKLOG sections 11-12 established that the original learning test
+# (H-MB-LEARNING) was invalidated, not failed: the Kenyon cells received 0.00%
+# of their input from any driven population. This config is the fair retest,
+# built from three measured pieces:
+#
+# 1. encoder.mb_input_bus: the screen's colour histogram drives the 627
+#    uniglomerular projection neurons whose 22,581 direct synapses reach 94% of
+#    Kenyon cells (H-MB-INPUT-BUS; assumption G -- a declared invention, the MB
+#    as associative memory, no claim about olfaction).
+# 2. circuit.apl_to_kc_gain 4.0: the fly's own sparsification loop,
+#    strengthened. Measured: brings the KC positive-lobe firing fraction from
+#    0.123 into the biological band at 0.078, plateauing ~0.077 at higher gain
+#    because negative feedback self-limits; DN amplitude stays live (H-APL).
+#    In a signed tanh network inhibition cannot silence the |abs| activity --
+#    it drives cells negative -- which is also why eligibility is rectified
+#    (plasticity reads the positive lobe only; see MushroomBodyParameters).
+# 3. plasticity as in literal_rate_mb_learning: depression-only, floor 0.25,
+#    rate 0.06, eligibility decay 0.55, PAM reward / PPL1 punishment, the
+#    controller supplying reinforcement.
+#
+# mb_input_scale 0.003 is CALIBRATED, not assumed. Swept 2026-09-23 on the
+# 14-turn correlated protocol (KC firing = state > +0.1, target 0.05-0.11):
+#   scale 1.0->0.02 all saturate (0.77-0.33): KC->KC recurrence amplifies any
+#   excitation; 0.005 gives 0.148; 0.003 gives 0.091 (in band, |DN| 1.5e-04);
+#   0.002 gives 0.040 (below). Higher APL (x10-25) with low scale silences
+#   almost everything while separation soars (up to 227%) and DN dims -- a
+#   sparse-and-loud-but-starved regime deliberately not chosen.
+#
+# Run with --fly-learning. Controls: the same config with --fly-rewire-mb and
+# --fly-shuffle-credit, and this config with learning off as its own baseline.
+schema_version: 1
+seed: 20260919
+
+experiment:
+  name: literal-rate-mb-done-right
+  track: literal
+
+data:
+  release: male-cns:v1.0
+  weights_path: data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  annotations_path: data/raw/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  neurotransmitters_path: data/raw/body-neurotransmitters-male-cns-v1.0.feather
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  sources:
+    weights:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    annotations:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    neurotransmitters:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+      sha256: null
+
+graph:
+  matrix_convention: "W[post_index, pre_index]"
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  weight_transform: log1p
+  sign_mode: heuristic
+  modulator_treatment: positive
+  unknown_transmitter_treatment: zero
+  normalization: incoming_l1
+  spectral_radius: null
+  epsilon: 1.0e-8
+  allow_self_edges: false
+  node_filter_column: superclass
+  node_filter_values: null
+  body_id_dtype: uint64
+  weight_dtype: float32
+
+groups:
+  descending_neurons:
+    superclass: descending_neuron
+
+dynamics:
+  backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
+  internal_steps: 4
+  leak: 0.3
+  recurrent_gain: 2.0
+  bias: 0.0
+  frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
+
+encoder:
+  kind: sparse_projection
+  mb_input_bus: colour_histogram
+  mb_input_scale: 0.003
+  sensory_superclass: ol_sensory
+  connections_per_neuron: 64
+  input_scale: 1.0
+  trainable: false
+  per_game_rules: false
+
+decoder:
+  kind: literal
+  readout: descending_neurons
+  action_slots: 8
+  coordinate_head: literal_factorized_bins
+  sampling_method: zscore_softmax_categorical
+  action_temperature: 0.15
+  coordinate_temperature: 0.2
+  decision_seed_policy: explicit_per_policy_or_config_derived
+  coordinate_fallback: factorized
+  unchanged_click_exploration: seeded_untried_uniform
+  readout_normalization: adaptive
+  adaptation_rate: 0.1
+  clip: 10.0
+  loop_escape_enabled: true
+  loop_escape_exploration_bonus: 0.25
+  loop_escape_unchanged_failure_penalty: 0.50
+  loop_escape_state_hash: blake2b_128
+  loop_escape_coordinate_memory: per_observation
+  trainable: false
+
+state:
+  reset_on_new_environment: true
+  preserve_across_levels: true
+  preserve_across_actions: true
+  preserve_after_game_over_reset: true
+
+circuit:
+  apl_to_kc_gain: 4.0

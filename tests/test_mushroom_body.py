@@ -605,3 +605,25 @@ def test_reset_clears_the_trace_so_games_do_not_leak() -> None:
     body.reset(matrix)
     assert body.eligibility is None
     assert np.allclose(matrix.data, _graph().data)
+
+
+def test_rectified_eligibility_ignores_inhibited_kenyon_cells() -> None:
+    """An APL-inhibited (negative-state) KC is silent, not negatively eligible."""
+
+    matrix = _graph()
+    body = MushroomBody(matrix, _anatomy(matrix))
+    state = np.zeros(NODES, dtype=np.float32)
+    state[KC[:5]] = 0.8  # firing
+    state[KC[5:10]] = -0.8  # inhibited
+    body.accumulate(state)
+    trace = body.eligibility
+    assert np.all(trace[:5] > 0), "firing cells must be eligible"
+    assert np.all(trace[5:10] == 0), (
+        "inhibited cells were counted as eligible; the |abs| bug is back"
+    )
+
+    legacy = MushroomBody(
+        _graph(), _anatomy(_graph()), MushroomBodyParameters(eligibility_rectified=False)
+    )
+    legacy.accumulate(state)
+    assert np.all(legacy.eligibility[5:10] > 0), "the declared comparison mode must keep |abs|"

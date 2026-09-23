@@ -68,6 +68,17 @@ class MushroomBodyParameters:
     # synapses get depressed. If learning survives this, it is not associative.
     shuffle_credit: bool = False
     shuffle_seed: int = 20260923
+    # ASSUMPTION (declared 2026-09-23, with the APL measurement that exposed
+    # it): eligibility reads the POSITIVE lobe of Kenyon-cell state only.
+    # Firing rates are non-negative; in a signed tanh network, inhibition
+    # drives a unit negative rather than silent, and the previous |abs|
+    # eligibility counted an APL-inhibited Kenyon cell as *more* eligible the
+    # harder it was suppressed -- backwards from the biology the trace models.
+    # Measured: at APL gain 2-4 the positive lobe sits in the biological
+    # 0.05-0.11 band while the negative lobe grows to ~0.09; rectification is
+    # what makes the sparse code the trace sees the same one APL creates.
+    # False restores the |abs| behaviour for comparison.
+    eligibility_rectified: bool = True
 
     def __post_init__(self) -> None:
         if not np.isfinite(self.learning_rate) or self.learning_rate < 0:
@@ -238,7 +249,12 @@ class MushroomBody:
         """
 
         kenyon = np.asarray(state, dtype=np.float32)[self._anatomy.kenyon_cells]
-        pattern = self._unit_scale(np.abs(kenyon))
+        rates = (
+            np.maximum(kenyon, np.float32(0.0))
+            if self._parameters.eligibility_rectified
+            else np.abs(kenyon)
+        )
+        pattern = self._unit_scale(rates)
         decay = np.float32(self._parameters.eligibility_decay)
         if self._eligibility is None:
             self._eligibility = pattern.astype(np.float32)
