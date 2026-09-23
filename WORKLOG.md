@@ -10,6 +10,40 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Everything goes through the fly, or nothing goes at all
+
+This is the project's first principle and it outranks every other consideration
+in this repository, including the score.
+
+FlyGI exists to find out what the fly's innate wiring computes for free. A
+component that produces a result *without* the connectome carrying it is not a
+smaller version of that finding -- it is a different project wearing this one's
+name. So:
+
+1. **Every computation the agent depends on must be performed by fly neurons.**
+   If a capability can be obtained by writing Python instead, writing the Python
+   is a failure, not a shortcut. The controller diffing grids in Python while
+   13,585 T4/T5 motion detectors sit unread is the canonical example of the
+   mistake.
+2. **Encoders, decoders and transformations exist only to make fly modules
+   usable.** They are plumbing, and their job is to hand a fly circuit the kind
+   of input it evolved to read and to take from it the kind of output it evolved
+   to produce. They are not where the intelligence is allowed to live. Any
+   parameter in the plumbing that starts doing real work is a bug.
+3. **A circuit must be given input it can actually use before any claim is made
+   about it.** Measured on 2026-09-23: the mushroom body was taught while
+   receiving 0.00% of its input from any driven sensory population, and the
+   motion and object detectors were evaluated on spatially scrambled input. Both
+   produced nulls. Neither null was about the fly.
+4. **When a fly module cannot do the job, say so plainly and stop** -- do not
+   quietly substitute an engineered component and keep the name. A recorded
+   limit of the connectome is a real result. A scaffold that scores while the
+   connectome idles is not.
+
+The test to apply before adding anything: *if the connectome were replaced by a
+degree-preserving null tomorrow, would this component still work?* If yes, it is
+not part of this project.
+
 ## Why FlyGI exists
 
 FlyGI puts the complete MaleCNS v1.0 fruit-fly central-nervous-system graph into
@@ -986,6 +1020,78 @@ column, each encoding different visual features, so distributing ARC's sixteen
 categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
+
+### 12. Plan: give the fly's eye a real image (measured before designing)
+
+The first principle above says every computation must be carried by fly neurons.
+Section 11 established that no experiment has yet given a fly circuit input it
+could use. This is the fix, and per the user's instruction the assumptions were
+measured **before** the design rather than after.
+
+#### What was measured, including two assumptions that failed
+
+| # | Assumption | Measured | Verdict |
+| --- | --- | --- | --- |
+| A1 | The optic lobe can be addressed retinotopically | 23,720 `ol_intrinsic` neurons, 892 columns on a 36x39 lattice; `ol_sensory` photoreceptors carry **no** column assignment, 0 of 6,098 | holds -- inject at lamina/medulla, not photoreceptors |
+| A2 | A column has enough distinct cell types to carry 16 colours | **15** types, not 16: C2, C3, L1, L2, L3, L5, Mi1, Mi4, Mi9, T1, Tm1, Tm2, Tm20, Tm4, Tm9. 814 of 892 columns (91.3%) carry all 15 | **FAILED as stated** -- one collision is unavoidable |
+| A3 | ARC colour 0 is background, so 15 types suffice for colours 1-15 | Over 1,200 real frames across 4 games: colour 0 is **2.72%**, not background. Colour 9 dominates at 36.89%, then 12 at 17.18%, 4 at 15.37%, 5 at 13.03% | **FAILED** -- there is no free colour to drop |
+| A4 | The mushroom body's real input pathway could be driven | `cb_sensory` reaches **4,025 of 4,064** Kenyon cells in **2 hops**, inside the K=4 budget | holds, with a caveat below |
+
+A2 and A3 would each have forced a revert within two commits. They are recorded
+here because the design below is shaped by their failure, not by their success.
+
+#### The design
+
+**Injection site.** The 892 occupied columns, at the lamina and medulla
+interneurons, because photoreceptors carry no coordinates. The ARC 64x64 grid
+maps onto the hex lattice by the fixed affine assignment already compiled by
+`scripts/build_retinotopy.py`.
+
+**Colour.** Colour `c` drives medulla type index `c mod 15`. Fifteen channels,
+sixteen colours, so colours 0 and 15 share a channel. The rule is fixed and
+game-independent **on purpose**: choosing the collision from the measured
+frequencies above would tune the encoder to four games and is exactly the kind
+of engineering this project must not put in the plumbing. The collision is
+declared, not hidden, and 78 columns (8.7%) carrying fewer than 15 types lose
+their highest channels.
+
+This is the fix for the previous retinotopic encoder's 0.190476 -> 0.003156
+collapse. That encoder preserved space and destroyed colour, mapping sixteen
+categories onto a scalar luminance ramp `grid / 15.0`. ARC colours are
+categorical: colour 3 is not between 2 and 4.
+
+**Change detection is removed, deliberately.** The previous encoder spent T1, C2
+and C3 on an explicit changed-cell channel. Those channels are returned to
+colour, and **T4/T5 compute motion themselves** from the frame-to-frame sequence,
+which is what 13,585 direction-selective neurons are for and what the first
+principle demands. Network state already persists across actions, so the
+temporal structure the computation needs is present.
+
+**Non-visual features.** The legal-action mask and previous-action one-hot are
+not visual quantities and have no retinotopic home. They keep the existing sparse
+projection into a disjoint sensory subset, declared as plumbing.
+
+#### The mushroom body, and an honest caveat
+
+A4 holds structurally, but driving `cb_sensory` means piping ARC data into the
+fly's **olfactory** input. ARC has no odours, so this is not a more faithful use
+of the organ than the current one -- it is a different arbitrary mapping. The
+defensible framing, and the only one to be used: the mushroom body is an
+associative memory whose input bus is the projection-neuron pathway, and that bus
+is what gets driven. It is not being treated as an olfactory organ. This is a
+**separate change from the encoder** and must not be bundled with it, or the two
+confound.
+
+#### Order of work
+
+1. Compile `retinotopy.npz` into the `-modulators` bundle, which does not have it.
+2. Implement the colour-preserving retinotopic encoder.
+3. Verify before running anything: neighbouring ARC cells drive neighbouring
+   columns; distinct colours drive distinct types; T4/T5 respond to a moving
+   stimulus more than to a static one.
+4. Run it against the scrambled-retinotopy arms already in flight, which become
+   its matched control.
+5. Only afterwards, and separately, consider the mushroom-body input bus.
 
 ## Official submissions
 

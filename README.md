@@ -6,6 +6,41 @@ The scientific question is deliberately narrower than the joke: when the
 interface and compute budget are matched, does the biological wiring make useful
 closed-loop computations more accessible than rigorous null graphs?
 
+## Everything goes through the fly, or nothing goes at all
+
+This is the project's first principle and it outranks every other consideration
+in this repository, including the score.
+
+FlyGI exists to find out what the fly's innate wiring computes for free. A
+component that produces a result *without* the connectome carrying it is not a
+smaller version of that finding -- it is a different project wearing this one's
+name. So:
+
+1. **Every computation the agent depends on must be performed by fly neurons.**
+   If a capability can be obtained by writing Python instead, writing the Python
+   is a failure, not a shortcut. The controller diffing grids in Python while
+   13,585 T4/T5 motion detectors sit unread is the canonical example of the
+   mistake.
+2. **Encoders, decoders and transformations exist only to make fly modules
+   usable.** They are plumbing, and their job is to hand a fly circuit the kind
+   of input it evolved to read and to take from it the kind of output it evolved
+   to produce. They are not where the intelligence is allowed to live. Any
+   parameter in the plumbing that starts doing real work is a bug.
+3. **A circuit must be given input it can actually use before any claim is made
+   about it.** Measured on 2026-09-23: the mushroom body was taught while
+   receiving 0.00% of its input from any driven sensory population, and the
+   motion and object detectors were evaluated on spatially scrambled input. Both
+   produced nulls. Neither null was about the fly.
+4. **When a fly module cannot do the job, say so plainly and stop** -- do not
+   quietly substitute an engineered component and keep the name. A recorded
+   limit of the connectome is a real result. A scaffold that scores while the
+   connectome idles is not.
+
+The test to apply before adding anything: *if the connectome were replaced by a
+degree-preserving null tomorrow, would this component still work?* If yes, it is
+not part of this project.
+
+
 **The essence of the project, stated plainly: what computation does the fly's
 innate wiring give us for free?** Not a network trained on the fly's shape, not
 a network initialized from the connectome and then fitted -- the measured
