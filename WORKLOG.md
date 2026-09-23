@@ -1143,6 +1143,47 @@ another tool to consume.
 Secrets are never captured: environment recording is an explicit allowlist, and
 a test asserts a token in the environment does not reach the log.
 
+## Execution speed
+
+The agent is one sparse matvec in a loop, and SciPy's `csr_matvec` is a
+single-threaded C kernel that Apple's Accelerate does not touch. Measured on the
+deployed graph (166,700 nodes, 24,994,595 edges, float32) on an Apple M4: 54.0
+ms per matvec at 3.7 GB/s, against roughly 120 GB/s of machine bandwidth. The
+operation is bandwidth-bound and was using about 3% of the machine.
+
+| Implementation | ms | GB/s | Speedup | Bit-identical |
+| --- | ---: | ---: | ---: | --- |
+| SciPy CSR, single thread | 54.0 | 3.7 | 1.00x | reference |
+| Numba `njit(parallel=True)` | 18.7 | 10.7 | 2.88x | **no**, 1.19e-07 |
+| **SciPy + threaded row split** | **14.4** | **13.9** | **3.76x** | **yes** |
+
+End to end on a real 120-action game: 24.2 s at one thread, 10.5 s at four
+(2.31x), 10.2 s at six -- with **identical replay hashes at every thread count**,
+so no baseline in this worklog needs re-measuring. The end-to-end figure is
+below the matvec figure because encoding, decoding and the environment step are
+serial.
+
+**Why row splitting is exact.** Each output element is one row's dot product,
+computed by SciPy's own kernel in SciPy's own order. Float32 addition is not
+associative, so order is everything. Splitting *within* a row -- a GPU segmented
+reduction, or Numba's restructured reduction -- is not exact, which is why Numba
+was measured, found slower *and* inexact, and removed again rather than adopted.
+
+**The dangerous defect found on the way, and the reason to have written the
+test.** `csr_matrix((data, indices, indptr), copy=False)` **copies anyway**:
+measured, the block does not share memory with the parent even when every dtype
+already matches. That would double the 200 MB matrix and, far worse, silently
+sever in-place plasticity -- the mushroom body writes weights through the parent
+matrix, and a copied block would never see them, so section 9's learning would
+have appeared to run while changing nothing. Blocks are now built as empty
+shells with their arrays assigned afterwards, and `SpmvPlan.rebuild` raises if
+they ever stop sharing memory rather than degrading quietly.
+
+Defaults and gotchas are in `docs/performance.md`; the numbered pitfalls are in
+the `src/flygi/dynamics/spmv.py` docstring. Short version: default 4 threads,
+`FLYGI_SPMV_THREADS=6` for a machine to yourself, `=1` to reproduce a
+pre-optimisation measurement, and keep `arms x threads <= 10`.
+
 ## Assumptions register
 
 Every mapping from an ARC quantity onto a fly quantity is an invention until

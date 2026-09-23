@@ -10,6 +10,7 @@ from numpy.typing import NDArray
 from scipy import sparse
 
 from .base import DynamicsValidationError, FloatState
+from .spmv import SpmvPlan
 
 _NUMERIC_SCALARS = (int, float, np.integer, np.floating)
 _FLOAT32_MAX = float(np.finfo(np.float32).max)
@@ -101,6 +102,30 @@ class ScipyRateNetwork:
         self._parameters = parameters or RateParameters()
         self._zero_input = np.zeros(matrix.shape[0], dtype=np.float32)
         self._zero_input.flags.writeable = False
+        # The matvec is the entire cost of this agent. The plan splits it across
+        # threads by row, which SciPy's own kernel then computes in its own
+        # order, so results are bit-identical -- verified in tests, and required,
+        # because every baseline in the worklog was measured without it.
+        self._plan = SpmvPlan(matrix)
+        from flygi.telemetry import run_or_null
+
+        run_or_null().info("spmv.plan", **self._plan.describe())
+
+    def rebuild_plan(self) -> None:
+        """Re-partition after a structural change to the matrix.
+
+        The plan's blocks are views onto this matrix's ``data``, ``indices`` and
+        ``indptr``. A weight edit is visible through them, which is what
+        plasticity needs. A change to *topology* -- a rewire, a re-sort, a
+        different indptr -- invalidates them, and the caller that made that
+        change must say so by calling this.
+        """
+
+        self._plan.rebuild()
+
+    @property
+    def spmv(self) -> SpmvPlan:
+        return self._plan
 
     @property
     def allows_plasticity(self) -> bool:
@@ -200,7 +225,7 @@ class ScipyRateNetwork:
         bias = np.float32(self._parameters.bias)
 
         for _ in range(int(steps)):
-            activated = np.asarray(self._connectivity @ current, dtype=np.float32)
+            activated = self._plan.matvec(current)
             activated *= gain
             activated += injected
             if bias != 0.0:

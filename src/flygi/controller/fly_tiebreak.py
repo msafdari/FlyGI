@@ -248,6 +248,10 @@ class FlyTiebreaker:
             try:
                 self._rewire_report = _rewire(matrix, anatomy, seed=rewire_seed)
                 matrix.sort_indices()
+                # The threaded matvec plan holds views onto this matrix's index
+                # arrays. A rewire is a structural change, so the partition has
+                # to be rebuilt or the plan keeps a stale view of the topology.
+                self._network.rebuild_plan()
             finally:
                 matrix.indices.flags.writeable = False
         from flygi.plasticity.mushroom_body import MushroomBody
