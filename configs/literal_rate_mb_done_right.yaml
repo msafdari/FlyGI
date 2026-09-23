@@ -28,6 +28,13 @@
 #   almost everything while separation soars (up to 227%) and DN dims -- a
 #   sparse-and-loud-but-starved regime deliberately not chosen.
 #
+# efference_copy: the previous action delivered to Johnston's organ. This is
+# where the copy is load-bearing: without it the mushroom body cannot know
+# which action preceded a reward, and depression-only learning can only form
+# context->valence associations, never context->action ones. Measured at scale
+# 0.05: Kenyon-cell action separation 144.7%, LC perturbation 0.2%, and the
+# copy cancels exactly in the forward-model comparison.
+#
 # Run with --fly-learning. Controls: the same config with --fly-rewire-mb and
 # --fly-shuffle-credit, and this config with learning off as its own baseline.
 schema_version: 1
@@ -90,6 +97,8 @@ encoder:
   kind: sparse_projection
   mb_input_bus: colour_histogram
   mb_input_scale: 0.003
+  efference_copy: antennal_mechanosensory
+  efference_scale: 0.05
   sensory_superclass: ol_sensory
   connections_per_neuron: 64
   input_scale: 1.0

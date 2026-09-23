@@ -1021,6 +1021,45 @@ categorical colours across distinct medulla types within each column is
 anatomically defensible rather than invented. The currently running arms become
 the matched scrambled-retinotopy control for it rather than wasted work.
 
+### 17. The efference copy: the connectome learns what it just did
+
+Prompted by asking whether any non-visual sense exists for ARC. Two do, and one
+was mis-wired: reinforcement already reaches dopamine correctly, but the
+agent's knowledge of its own action -- proprioception -- was spliced into the
+VISUAL feature vector under the old encoder and lost entirely under the
+bio-eye one.
+
+**Precision, before anyone else has to burst this balloon.** Only the
+*connectome* was action-blind; the controller always knew its actions, and the
+fly speaks only at ties. And the old scrambled arms were *near*-blind rather
+than blind: the 16 action features were sampled into roughly 90 of 390,272
+projection connections -- present as noise. The section-16-adjacent claim
+"every bio-eye arm was action-blind" is correct only with "connectome" in
+front of it.
+
+**Built and measured.** `encoder.efference_copy: antennal_mechanosensory`
+delivers the previous action to Johnston's organ, the fly's own mechanosensory
+entry (672 neurons, 34 types, sorted round-robin over the 8 action slots --
+convention, declared). The chosen action rides from the controller into
+`fly.observe(previous_action_id=...)`, and the forward model's reference
+carries the same copy.
+
+| property | measured |
+| --- | --- |
+| KC action separation (scale 0.05) | **144.7%** -- the learning site knows the action |
+| LC (visual readout) perturbation | 0.2% |
+| surprise on action-only turns | **exactly 0.000** at every scale (the copy cancels) |
+| localization through the real path | 3.4 cells (surprise alone: 3.5) |
+
+**Honest expectation, preregistered.** `sg-bioeye-lc-efference` should be
+near-null on score BY CONSTRUCTION: the copy cancels out of the saliency map
+and barely moves the readout. Its load-bearing use is `sg-mbdr-learn` -- the
+mushroom body could not previously know which action preceded a reward, so
+depression-only learning could form context->valence associations but never
+context->action ones. The mbdr config now carries the copy at the calibrated
+scale. A null on the bio-eye arm does not falsify H-EFFERENCE; a null on the
+mbdr retest would.
+
 ### 16. The decoder was the scrambled half all along -- measured, then fixed
 
 Prompted by asking what perception work is *demonstrably* wrong after the

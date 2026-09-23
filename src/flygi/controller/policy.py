@@ -124,6 +124,7 @@ class StateGraphPolicy:
         # still decides first, so the fly can never override what the
         # controller has actually learned.
         self._fly = fly
+        self._last_action_id: int | None = None
         self._fly_ranked = 0
         self._fly_decisive = 0
         self._scene_tracker = SceneTracker(
@@ -185,8 +186,14 @@ class StateGraphPolicy:
         turn = observed.turn
         if self._fly is not None and observed.scene is not None:
             # Advance the connectome on this frame before ranking, so its
-            # preference reflects what the agent is currently looking at.
-            self._fly.observe(observed.scene.grid, turn.available_action_ids)
+            # preference reflects what the agent is currently looking at. The
+            # last executed action rides along as the efference copy; a fly
+            # without that sense ignores the extra argument.
+            self._fly.observe(
+                observed.scene.grid,
+                turn.available_action_ids,
+                previous_action_id=self._last_action_id,
+            )
         if turn.is_win:
             raise StateGraphPolicyError("cannot choose an action after WIN")
         if turn.needs_reset:
@@ -198,6 +205,7 @@ class StateGraphPolicy:
 
         self._choice_frame = latest_frame
         self._choice_action = action
+        self._last_action_id = getattr(action, "value", None)
         return action
 
     def describe(self) -> dict[str, object]:

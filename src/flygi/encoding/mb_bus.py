@@ -162,3 +162,99 @@ class CompositeProjection:
         for bus in self._buses:
             drive += bus.drive_features(features)
         return drive
+
+
+# ASSUMPTION: these substrings identify Johnston's-organ mechanosensory neurons
+# in MaleCNS v1.0 type names (JO-A1, JO-B2, ...). Verified by measurement: 672
+# neurons across 34 types, reaching 85% of LC and 41% of the retinotopic map
+# within the K=4 budget. The constructor fails loudly if the scheme changes.
+JO_TYPE_PREFIX = "JO"
+
+
+class EfferenceCopyBus:
+    """The agent's own last action, delivered as mechanosensation.
+
+    Measured 2026-09-23: under the bio-eye encoder the agent is completely
+    blind to its own actions -- the colour encoder reads only the grid, and the
+    action features of the old scrambled projection reach nothing any more. An
+    agent that cannot sense what it just did cannot tell self-caused change
+    from external change, and its forward model (the `surprise` decoder) can
+    only predict a static world.
+
+    Biology solves exactly this with the efference copy: a copy of the motor
+    command delivered to sensory circuits so self-caused input is predicted
+    away and only external surprise remains. This bus delivers the previous
+    action's identity to Johnston's organ -- the fly's antennal mechanosensory
+    entry point, 672 genuine sensory neurons across 34 types -- with types
+    assigned to the eight action slots round-robin in sorted order.
+
+    ASSUMPTION (declared, like every ARC-to-fly mapping): action identity as an
+    antennal mechanosensory pattern is an invention. The defensible claim is
+    that the fly's mechanosensory channel carries the agent's efference copy;
+    no claim that flies feel ARC actions is made or permitted.
+
+    HYPOTHESIS H-EFFERENCE, honest version: what the copy gives FOR FREE is
+    knowledge of self-action in the circuits that read state (including the
+    mushroom body, which until now could not know which action preceded a
+    reward). Whether the frozen dynamics convert that into consequence
+    prediction -- explaining away self-caused visual change -- is open, and the
+    frozen graph has never learned ARC's action->consequence mapping, so the
+    null expectation is real.
+    """
+
+    ACTION_SLOTS = 8
+
+    def __init__(
+        self,
+        types: NDArray[Any],
+        node_count: int,
+        *,
+        input_scale: float = 1.0,
+    ) -> None:
+        names = np.asarray(types).astype(str)
+        indices = np.flatnonzero(np.char.startswith(names, JO_TYPE_PREFIX))
+        if indices.size == 0:
+            raise MushroomBodyBusError(
+                "no Johnston's-organ neurons matched; the annotation scheme has "
+                f"changed or the wrong metadata was loaded (prefix: {JO_TYPE_PREFIX!r})"
+            )
+        self._node_count = int(node_count)
+        self._indices = indices.astype(np.int64)
+        self._scale = np.float32(input_scale)
+        type_names = sorted(set(names[indices].tolist()))
+        slot_of_type = {name: i % self.ACTION_SLOTS for i, name in enumerate(type_names)}
+        self._neuron_slot = np.asarray(
+            [slot_of_type[name] for name in names[indices]], dtype=np.int64
+        )
+        self._types = len(type_names)
+        self._slots_covered = int(np.unique(self._neuron_slot).size)
+
+    @property
+    def sensory_indices(self) -> NDArray[np.int64]:
+        return self._indices
+
+    def describe(self) -> dict[str, Any]:
+        return {
+            "kind": "efference_copy_johnstons_organ",
+            "neurons": int(self._indices.size),
+            "mechanosensory_types": self._types,
+            "action_slots_covered": self._slots_covered,
+            "assignment": "sorted JO types round-robin over 8 action slots (convention)",
+            "input_scale": float(self._scale),
+            "claim_boundary": (
+                "the mechanosensory channel carries the agent's efference copy; "
+                "no claim that flies feel ARC actions"
+            ),
+            "trainable": False,
+            "trainable_parameters": 0,
+        }
+
+    def drive_action(self, action_id: int | None) -> NDArray[np.float32]:
+        """Drive for one previous-action identity; zero drive when unknown."""
+
+        drive = np.zeros(self._node_count, dtype=np.float32)
+        if action_id is None:
+            return drive
+        slot = int(action_id) % self.ACTION_SLOTS
+        drive[self._indices[self._neuron_slot == slot]] = self._scale
+        return drive

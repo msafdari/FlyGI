@@ -87,3 +87,23 @@ def test_circuit_config_rejects_nonsense() -> None:
         CircuitConfig(apl_to_kc_gain=0.0)
     with pytest.raises(ConfigError):
         CircuitConfig(apl_to_kc_gain=float("nan"))
+
+
+def test_the_efference_bus_targets_johnstons_organ_only() -> None:
+    from flygi.encoding.mb_bus import EfferenceCopyBus
+
+    types = np.asarray(["JO-A1", "JO-B2", "DA1_lPN", "KCg-m", "Mi1", "JO-C1", "DNp01"])
+    bus = EfferenceCopyBus(types, node_count=7, input_scale=2.0)
+    drive = bus.drive_action(3)
+    assert set(np.flatnonzero(drive != 0).tolist()) <= {0, 1, 5}, "drive escaped Johnston's organ"
+    assert bus.drive_action(None).sum() == 0.0, "an unknown action must drive nothing"
+    a, b = bus.drive_action(1), bus.drive_action(2)
+    assert not np.array_equal(a, b), "distinct actions must be distinguishable"
+    assert np.array_equal(bus.drive_action(1), a), "the code must be deterministic"
+
+
+def test_the_efference_bus_fails_loudly_without_jo_neurons() -> None:
+    from flygi.encoding.mb_bus import EfferenceCopyBus, MushroomBodyBusError
+
+    with pytest.raises(MushroomBodyBusError, match="Johnston"):
+        EfferenceCopyBus(np.asarray(["KCg-m", "Mi1"]), node_count=2)

@@ -102,6 +102,13 @@ class EncoderConfig:
     # the mushroom body as associative memory, never a claim about olfaction.
     mb_input_bus: str | None = None
     mb_input_scale: float = 1.0
+    # HYPOTHESIS H-EFFERENCE: deliver the agent's previous action to Johnston's
+    # organ (672 antennal mechanosensory neurons) so the circuits that read
+    # state -- including the forward model and the mushroom body -- know what
+    # the agent just did. Measured: the bio-eye encoder reads only the grid,
+    # so without this the agent is blind to its own actions.
+    efference_copy: str | None = None
+    efference_scale: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -417,6 +424,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
                 else str(mb_bus_raw)
             ),
             mb_input_scale=float(encoder_raw.pop("mb_input_scale", 1.0)),
+            efference_copy=(
+                None
+                if (efference_raw := encoder_raw.pop("efference_copy", None)) is None
+                else str(efference_raw)
+            ),
+            efference_scale=float(encoder_raw.pop("efference_scale", 1.0)),
         )
         action_temperature_raw = decoder_raw.pop("action_temperature", 0.15)
         coordinate_temperature_raw = decoder_raw.pop("coordinate_temperature", 0.2)
@@ -625,6 +638,13 @@ def load_config(path: str | Path) -> FlyGIConfig:
         "retinotopic_surprise",
     ):
         raise ConfigError(f"unknown decoder.coordinate_source: {decoder.coordinate_source!r}")
+    if encoder.efference_copy is not None and encoder.efference_copy != "antennal_mechanosensory":
+        raise ConfigError(
+            f"unsupported encoder.efference_copy: {encoder.efference_copy!r} "
+            "(only 'antennal_mechanosensory' is implemented)"
+        )
+    if not math.isfinite(encoder.efference_scale) or encoder.efference_scale <= 0:
+        raise ConfigError("encoder.efference_scale must be finite and positive")
     if encoder.mb_input_bus is not None and encoder.mb_input_bus != "colour_histogram":
         raise ConfigError(
             f"unsupported encoder.mb_input_bus: {encoder.mb_input_bus!r} "

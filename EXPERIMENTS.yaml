@@ -171,6 +171,32 @@ hypotheses:
       - "Behavioural effect untested; three straight nulls counsel no confidence beyond the measurement"
     updated: 2026-09-23
 
+  H-EFFERENCE:
+    statement: >
+      Delivering the previous action to Johnston's organ (672 antennal
+      mechanosensory neurons) makes the connectome action-aware: the circuits
+      that read state, above all the mushroom body, know what the agent just
+      did, and the forward model's reference carries the same copy so
+      self-report cancels exactly in the surprise comparison.
+    status: open
+    evidence:
+      - >
+        Measured 2026-09-23: KC action separation 144.7% at scale 0.05 with LC
+        perturbed 0.2%; action-only turns produce exactly zero surprise at
+        every scale; localization through the real path unchanged (3.4 vs 3.5
+        cells). Precision on the prior claim: only the CONNECTOME was
+        action-blind -- the controller always knew its actions -- and the old
+        scrambled arms carried ~90 weak action connections, near-blind rather
+        than blind.
+      - >
+        Honest expectation, recorded before any arm runs: the score effect of
+        sg-bioeye-lc-efference should be near null BY CONSTRUCTION -- the copy
+        cancels out of the saliency map and moves the visual readout 0.2%. The
+        load-bearing use is sg-mbdr-learn, where the mushroom body can finally
+        associate action identity with reinforcement; a null on the bio-eye arm
+        does not falsify that.
+    updated: 2026-09-23
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
@@ -350,3 +376,15 @@ experiments:
     baseline: sg-bioeye-lc-retdec
     tests: [H-RETINO-DECODER]
     note: Prediction-error variant; costs one extra network advance per turn. 3.5 vs 12.1 cells through the real path.
+
+  sg-bioeye-lc-efference:
+    config: configs/literal_rate_bioeye_lc_efference.yaml
+    regime: gain2.0-modulators
+    baseline: sg-bioeye-lc-surprise
+    tests: [H-EFFERENCE]
+    status_override: not-run
+    note: >
+      Deliberately not run standalone: its score effect was preregistered as
+      null by construction, so running it would spend compute to confirm a
+      caveat. The efference copy is tested where it is load-bearing,
+      sg-mbdr-learn.

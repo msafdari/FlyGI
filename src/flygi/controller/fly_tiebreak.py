@@ -83,6 +83,21 @@ class FlyTiebreaker:
         self._graph_dir = config.graph.output_dir
         self._saliency = None
         self._last_drive = None
+        self._last_visual_drive = None
+        self._efference = None
+        if getattr(config.encoder, "efference_copy", None) == "antennal_mechanosensory":
+            from flygi.encoding.mb_bus import EfferenceCopyBus
+
+            metadata_path = (
+                Path(runtime_dir) if runtime_dir is not None else Path(self._graph_dir)
+            ) / "node_metadata.npz"
+            with np.load(metadata_path, allow_pickle=False) as archive:
+                efference_types = archive["type"]
+            self._efference = EfferenceCopyBus(
+                efference_types,
+                self._bundle.node_count,
+                input_scale=config.encoder.efference_scale,
+            )
         source = getattr(config.decoder, "coordinate_source", "readout_blocks")
         if source != "readout_blocks":
             from flygi.decoding.retinotopic_saliency import RetinotopicSaliency
@@ -134,6 +149,7 @@ class FlyTiebreaker:
             "internal_steps": self._policy.internal_steps,
             "trainable_parameters": 0,
             "turns_observed": self._turns,
+            "efference_copy": (None if self._efference is None else self._efference.describe()),
             "coordinate_source": (
                 "readout_blocks" if self._saliency is None else self._saliency.describe()
             ),
@@ -151,7 +167,12 @@ class FlyTiebreaker:
             ),
         }
 
-    def observe(self, grid: NDArray[np.integer], legal_action_ids: tuple[int, ...]) -> None:
+    def observe(
+        self,
+        grid: NDArray[np.integer],
+        legal_action_ids: tuple[int, ...],
+        previous_action_id: int | None = None,
+    ) -> None:
         """Advance the connectome on this turn's frame and cache its readout."""
 
         from flygi.encoding.features import encode_observation
@@ -166,15 +187,29 @@ class FlyTiebreaker:
             previous_action_id=None,
             available_action_ids=tuple(legal_action_ids),
         )
-        drive = self._projection.drive_features(features)
+        visual_drive = self._projection.drive_features(features)
+        drive = visual_drive
+        proprio_drive = None
+        if self._efference is not None:
+            # The efference copy: the action the agent just took, delivered as
+            # antennal mechanosensation. Added to the drive, and -- critically --
+            # added to the forward model's reference too, so self-report cancels
+            # in the surprise comparison and only external deviation remains.
+            proprio_drive = self._efference.drive_action(previous_action_id)
+            drive = visual_drive + proprio_drive
         previous_state = self._state
         expectation = None
         if self._saliency is not None and self._saliency.mode == "surprise":
             # The connectome's own one-step forward model: the network advanced
-            # as if the world had not changed (previous drive again). One extra
-            # advance per turn is the entire cost of the predictor; it has no
-            # trained parameters because it IS the frozen graph.
-            reference_drive = self._last_drive if self._last_drive is not None else drive
+            # as if the WORLD had not changed -- previous frame's visual drive --
+            # while knowing what the agent just did (current proprio). Zero
+            # trained parameters; the predictor is the frozen graph itself.
+            reference_visual = (
+                self._last_visual_drive if self._last_visual_drive is not None else visual_drive
+            )
+            reference_drive = (
+                reference_visual if proprio_drive is None else reference_visual + proprio_drive
+            )
             expectation = self._network.advance(
                 previous_state, reference_drive, internal_steps=self._policy.internal_steps
             )
@@ -182,6 +217,7 @@ class FlyTiebreaker:
             self._state, drive, internal_steps=self._policy.internal_steps
         )
         self._last_drive = drive
+        self._last_visual_drive = visual_drive
         self._previous_grid = features.grid
         raw = self._readout.raw(self._state)
         self._trace = (
@@ -313,6 +349,7 @@ class FlyTiebreaker:
         self._x_scores = None
         self._y_scores = None
         self._last_drive = None
+        self._last_visual_drive = None
         self._turns = 0
         if self._mushroom_body is not None:
             # A new environment restores the frozen baseline: what the fly
@@ -362,7 +399,12 @@ class GridHashTiebreaker:
             "turns_observed": self._turns,
         }
 
-    def observe(self, grid: NDArray[np.integer], legal_action_ids: tuple[int, ...]) -> None:
+    def observe(
+        self,
+        grid: NDArray[np.integer],
+        legal_action_ids: tuple[int, ...],
+        previous_action_id: int | None = None,
+    ) -> None:
         from hashlib import blake2b
 
         array = np.ascontiguousarray(np.asarray(grid, dtype=np.int8))
