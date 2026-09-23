@@ -1,0 +1,112 @@
+# Read the fly's object detectors instead of its motor output.
+#
+# Measured at gain 2.0 on the -modulators graph, mean absolute activity relative
+# to the descending neurons this project has always read:
+#
+#   T4/T5 motion detectors   13,585 neurons   54.5x
+#   LC lobula columnar        4,257 neurons   16.1x
+#   LPLC looming                417 neurons   11.0x
+#   descending neurons        1,314 neurons    1.0x   <- the deployed readout
+#
+# The LC neurons are the fly's evolved object vocabulary: 50 genetically
+# distinct types, each tuned to a visual feature, sitting one hop upstream of
+# the readout and carrying 16x its signal. ARC is a benchmark about objects --
+# where they are and what changed about them -- so reading the population that
+# already encodes objects is a more direct use of the connectome than reading
+# the motor commands at the far end of the chain.
+#
+# This changes only which population is decoded. Dynamics, encoder, graph and
+# learning site are identical to configs/literal_rate_mb_learning.yaml, so a
+# matched comparison against it isolates the readout.
+schema_version: 1
+seed: 20260919
+
+experiment:
+  name: literal-rate-lc-readout
+  track: literal
+
+data:
+  release: male-cns:v1.0
+  weights_path: data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  annotations_path: data/raw/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  neurotransmitters_path: data/raw/body-neurotransmitters-male-cns-v1.0.feather
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  sources:
+    weights:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    annotations:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    neurotransmitters:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+      sha256: null
+
+graph:
+  matrix_convention: "W[post_index, pre_index]"
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  weight_transform: log1p
+  sign_mode: heuristic
+  modulator_treatment: positive
+  unknown_transmitter_treatment: zero
+  normalization: incoming_l1
+  spectral_radius: null
+  epsilon: 1.0e-8
+  allow_self_edges: false
+  node_filter_column: superclass
+  node_filter_values: null
+  body_id_dtype: uint64
+  weight_dtype: float32
+
+groups:
+  descending_neurons:
+    superclass: descending_neuron
+  lc_object_detectors:
+    type_prefix: LC
+
+dynamics:
+  backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
+  internal_steps: 4
+  leak: 0.3
+  recurrent_gain: 2.0
+  bias: 0.0
+  frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
+
+encoder:
+  kind: sparse_projection
+  sensory_superclass: ol_sensory
+  connections_per_neuron: 64
+  input_scale: 1.0
+  trainable: false
+  per_game_rules: false
+
+decoder:
+  kind: literal
+  readout: lc_object_detectors
+  action_slots: 8
+  coordinate_head: literal_factorized_bins
+  sampling_method: zscore_softmax_categorical
+  action_temperature: 0.15
+  coordinate_temperature: 0.2
+  decision_seed_policy: explicit_per_policy_or_config_derived
+  coordinate_fallback: factorized
+  unchanged_click_exploration: seeded_untried_uniform
+  readout_normalization: adaptive
+  adaptation_rate: 0.1
+  clip: 10.0
+  loop_escape_enabled: true
+  loop_escape_exploration_bonus: 0.25
+  loop_escape_unchanged_failure_penalty: 0.50
+  loop_escape_state_hash: blake2b_128
+  loop_escape_coordinate_memory: per_observation
+  trainable: false
+
+state:
+  reset_on_new_environment: true
+  preserve_across_levels: true
+  preserve_across_actions: true
+  preserve_after_game_over_reset: true

@@ -10,6 +10,7 @@ rather than aspirational.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -67,6 +68,52 @@ def sensory_indices_for_superclass(runtime_dir: str | Path, superclass: str) -> 
         raise RuntimeAssemblyError(
             f"sensory superclass {superclass!r} matched no nodes; available: {available}"
         )
+    return selected
+
+
+def population_indices(
+    runtime_dir: str | Path, selector: Mapping[str, object]
+) -> NDArray[np.int64]:
+    """Resolve a declared population to sorted dense runtime indices.
+
+    ``groups.npz`` is written when the graph is compiled, so a readout
+    population that was not foreseen at build time would otherwise need a full
+    24.5M-edge rebuild to become addressable. This resolves the same kind of
+    declaration directly against ``node_metadata.npz`` instead, which makes a
+    new readout a configuration change rather than a recompilation.
+
+    Supported keys are exact column matches (``superclass: descending_neuron``)
+    and ``<column>_prefix`` for a prefix match against one or more prefixes
+    (``type_prefix: [T4, T5]``). Several keys are a conjunction.
+    """
+
+    path = Path(runtime_dir) / "node_metadata.npz"
+    with np.load(path, allow_pickle=False) as archive:
+        columns = {name: archive[name] for name in archive.files}
+    if not selector:
+        raise RuntimeAssemblyError("a population selector must declare at least one filter")
+
+    total = int(columns["body_ids"].size)
+    mask = np.ones(total, dtype=bool)
+    for key, expected in selector.items():
+        column = key[: -len("_prefix")] if key.endswith("_prefix") else key
+        if column not in columns:
+            raise RuntimeAssemblyError(
+                f"{path} has no {column!r} column; available: {sorted(columns)}"
+            )
+        labels = columns[column]
+        wanted = expected if isinstance(expected, (list, tuple, set)) else [expected]
+        matched = np.zeros(total, dtype=bool)
+        for value in wanted:
+            text = str(value)
+            matched |= (
+                np.char.startswith(labels, text) if key.endswith("_prefix") else labels == text
+            )
+        mask &= matched
+
+    selected = np.flatnonzero(mask).astype(np.int64)
+    if selected.size == 0:
+        raise RuntimeAssemblyError(f"population selector {dict(selector)!r} matched no nodes")
     return selected
 
 
@@ -167,9 +214,22 @@ def build_connectome_policy(
         )
     readout_group = config.decoder.readout
     directory = Path(runtime_dir) if runtime_dir is not None else Path(config.graph.output_dir)
-    loaded = bundle or load_runtime_connectome(directory, required_groups=(readout_group,))
-
-    readout_indices = np.asarray(loaded.groups[readout_group], dtype=np.int64)
+    # A group compiled into groups.npz is used as-is. One declared only in the
+    # config is resolved against node metadata, so a new readout population does
+    # not force a graph rebuild.
+    declared = dict(config.groups.get(readout_group) or {})
+    loaded = bundle or load_runtime_connectome(
+        directory, required_groups=() if declared else (readout_group,)
+    )
+    if readout_group in loaded.groups:
+        readout_indices = np.asarray(loaded.groups[readout_group], dtype=np.int64)
+    elif declared:
+        readout_indices = population_indices(directory, declared)
+    else:
+        raise RuntimeAssemblyError(
+            f"readout group {readout_group!r} is neither compiled into groups.npz nor "
+            "declared under 'groups:' in the configuration"
+        )
     sensory = sensory_indices_for_superclass(directory, config.encoder.sensory_superclass)
 
     # The preregistered no-recurrent-graph control keeps the interface budget

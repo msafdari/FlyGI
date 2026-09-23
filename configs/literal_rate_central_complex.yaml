@@ -1,0 +1,122 @@
+# Read the central complex: the fly's persistent spatial memory.
+#
+# The EPG/PEN/PEG ring attractor is a genuine working-memory circuit -- a bump of
+# activity that holds a heading and is updated by self-motion, with ER ring
+# neurons carrying landmark input, FC cells a goal, and PFL cells converting the
+# difference into steering. Persistent state is the thing this agent most
+# conspicuously lacks: it explores indefinitely and converts nothing.
+#
+# Measured at gain 2.0, this population is the weakest in the brain (0.5x the
+# descending neurons for EPG/PEN/PEG, 0.1x for PFL) but the most change-
+# responsive (14.4% and 23.7% against the readout's 8.9%). The ER ring neurons
+# are stronger, at 8.5x.
+#
+# The honest limitation, recorded before the run. A ring attractor integrates
+# ANGULAR VELOCITY. The fly updates its compass from its own turning; an ARC
+# agent does not turn, does not move, and has no heading. So this reads a circuit
+# that is not receiving the input it evolved to integrate, and a null result here
+# would be weak evidence about the circuit. Driving it properly would mean
+# synthesizing an angular-velocity signal from something in the ARC frame, which
+# is a separate piece of work with its own justification problem: an invented
+# heading is engineering, not anatomy.
+#
+# Run as the cheap version of the idea. Identical to
+# configs/literal_rate_mb_learning.yaml apart from the decoded population.
+schema_version: 1
+seed: 20260919
+
+experiment:
+  name: literal-rate-central-complex
+  track: literal
+
+data:
+  release: male-cns:v1.0
+  weights_path: data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  annotations_path: data/raw/body-annotations-male-cns-v1.0-minconf-0.5.feather
+  neurotransmitters_path: data/raw/body-neurotransmitters-male-cns-v1.0.feather
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  sources:
+    weights:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    annotations:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-annotations-male-cns-v1.0-minconf-0.5.feather
+      sha256: null
+    neurotransmitters:
+      url: https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather
+      sha256: null
+
+graph:
+  matrix_convention: "W[post_index, pre_index]"
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  weight_transform: log1p
+  sign_mode: heuristic
+  modulator_treatment: positive
+  unknown_transmitter_treatment: zero
+  normalization: incoming_l1
+  spectral_radius: null
+  epsilon: 1.0e-8
+  allow_self_edges: false
+  node_filter_column: superclass
+  node_filter_values: null
+  body_id_dtype: uint64
+  weight_dtype: float32
+
+groups:
+  descending_neurons:
+    superclass: descending_neuron
+  central_complex:
+    type_prefix:
+      - EPG
+      - PEN
+      - PEG
+      - ER
+      - FC
+      - PFL
+
+dynamics:
+  backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
+  internal_steps: 4
+  leak: 0.3
+  recurrent_gain: 2.0
+  bias: 0.0
+  frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
+
+encoder:
+  kind: sparse_projection
+  sensory_superclass: ol_sensory
+  connections_per_neuron: 64
+  input_scale: 1.0
+  trainable: false
+  per_game_rules: false
+
+decoder:
+  kind: literal
+  readout: central_complex
+  action_slots: 8
+  coordinate_head: literal_factorized_bins
+  sampling_method: zscore_softmax_categorical
+  action_temperature: 0.15
+  coordinate_temperature: 0.2
+  decision_seed_policy: explicit_per_policy_or_config_derived
+  coordinate_fallback: factorized
+  unchanged_click_exploration: seeded_untried_uniform
+  readout_normalization: adaptive
+  adaptation_rate: 0.1
+  clip: 10.0
+  loop_escape_enabled: true
+  loop_escape_exploration_bonus: 0.25
+  loop_escape_unchanged_failure_penalty: 0.50
+  loop_escape_state_hash: blake2b_128
+  loop_escape_coordinate_memory: per_observation
+  trainable: false
+
+state:
+  reset_on_new_environment: true
+  preserve_across_levels: true
+  preserve_across_actions: true
+  preserve_after_game_over_reset: true

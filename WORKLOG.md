@@ -868,6 +868,54 @@ this section was measured at gain 0.9 and describes a dead network, including
 the degree-preserving null arm that completed during this build. Those are
 retained as a record of the dead regime and are not comparable to what follows.
 
+### 10. Reading the fly's perception instead of its motor output
+
+Every intervention so far changed what the agent does with the signal. This one
+changes which signal is read. Measured at gain 2.0 on the `-modulators` graph,
+mean absolute activity relative to the descending neurons this project has
+always decoded, with each population's response to a changed scene:
+
+| Circuit | Neurons | Types | Activity vs DN | Change response |
+| --- | ---: | ---: | ---: | ---: |
+| T4/T5 motion detectors | 13,585 | 10 | **54.5x** | 4.0% |
+| LC lobula columnar | 4,257 | **50** | **16.1x** | 4.4% |
+| LPLC looming | 417 | 4 | 11.0x | 4.9% |
+| ER ring neurons | 282 | 26 | 8.5x | 4.5% |
+| **DN (deployed readout)** | 1,314 | -- | **1.0x** | 8.9% |
+| EPG/PEN/PEG compass | 110 | 5 | 0.5x | 14.4% |
+| PFL steering | 50 | 3 | 0.1x | 23.7% |
+
+In absolute discriminative signal -- activity times change response -- T4/T5
+carry roughly 25x what the descending neurons do. The project has been driving
+photoreceptors, passing the signal through 13,585 motion detectors and 4,257
+object detectors, and then reading the motor-output layer at the far end, which
+is close to the faintest thing in the chain.
+
+`population_indices` in `flygi.arc.factory` makes this a configuration change
+rather than a recompilation: a readout group compiled into `groups.npz` is used
+as-is, and one declared only under `groups:` is resolved against
+`node_metadata.npz` by exact or prefix match. Adding a readout no longer costs a
+24.5M-edge rebuild.
+
+Three arms, each identical to `configs/literal_rate_mb_learning.yaml` apart from
+the decoded population, learning off so the readout is isolated, matched against
+`sg-g2-nolearn` (0.203443, 21 levels):
+
+| Config | Readout | Size | Action spread (standardized) |
+| --- | --- | ---: | --- |
+| `literal_rate_lc_readout` | LC object detectors | 4,257 | 0.214-0.511 |
+| `literal_rate_t4t5_readout` | T4/T5 motion | 13,585 | 0.124-0.303 |
+| `literal_rate_central_complex` | EPG/PEN/PEG/ER/FC/PFL | 719 | 0.773-1.978 |
+
+**Limitation recorded before the runs.** The central-complex arm reads a circuit
+that is not receiving the input it evolved to integrate. A ring attractor
+integrates *angular velocity*: the fly updates its compass from its own turning.
+An ARC agent does not turn, does not move, and has no heading. A null result
+there is therefore weak evidence about the circuit rather than strong evidence
+against it. Driving it properly means synthesizing a heading from something in
+the ARC frame, which is engineering rather than anatomy and needs its own
+justification.
+
 ## Official submissions
 
 | Ref | Configuration | Status | Public score |
