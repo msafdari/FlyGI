@@ -21,6 +21,7 @@ dependencies = [
   "pandas>=2.2,<3",
   "pyarrow>=19,<24",
   "PyYAML>=6.0,<7",
+  "scikit-learn>=1.9.1",
   "scipy>=1.15,<2",
 ]
 

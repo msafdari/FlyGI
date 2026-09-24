@@ -290,6 +290,101 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-JEPA-SPONTANEOUS:
+    statement: >
+      The frozen connectome's neural state N_t, driven by real ARC observation
+      streams through the bio-eye encoder, spontaneously carries JEPA-like
+      predictive structure: a linear probe from N_t predicts the NEXT
+      observation's column representation better than (B1) the current
+      observation alone, (B2) a delay-embedded observation history of matched
+      dimension, (B3) the same probe on a degree-preserving null graph's state,
+      and (B4) a no-recurrence leaky-integrator bypass. B1 tests memory at all;
+      B2 tests nontrivial latent structure beyond raw history; B3/B4 test
+      whether the fly's WIRING (not generic recurrence) supplies it. Claim
+      tiers preregistered: beating only B1 = generic reservoir memory (weak);
+      beating B2 = latent predictive structure (medium); beating B3/B4 =
+      anatomy-specific predictive structure (the strong claim). Probes are
+      ridge regressions only -- nothing is trained in the network, so JEPA
+      collapse does not arise; this asks whether biology already did JEPA's
+      job.
+    status: open
+    evidence:
+      - >
+        ASSUMPTIONS registered before build: (a) streams from public ARC games
+        under random-legal policy (policy-independent primary; champion-policy
+        secondary); (b) prediction target is the encoder's own 892x15 column
+        representation of x_{t+k}, k=1..5; (c) state features are the measured
+        populations (retinotopy 23,720 + LC + DN subsample), not all 166,700;
+        (d) time-blocked train/test splits BY GAME (train games != test games)
+        so R^2 measures structure, not memorized episodes; (e) a shuffled-time
+        control must collapse toward the autocorrelation floor or the pipeline
+        is leaking.
+      - >
+        DESIGN REVIEW consumed 2026-09-24 ~12:00 PDT (3-agent adversarial
+        red-team, workflow wf_12527166-71f) BEFORE any probe ran. Blocking
+        finding: the equipped null bundle rewired the WRONG parent graph
+        (literal-rate-signed, 24,559,055 edges) while the bio-eye gain-2.0
+        config loads literal-rate-signed-modulators (24,994,595 edges); a
+        matched null is being rebuilt from the modulators graph and the
+        signed-parent null is SUPERSEDED for this test. Assumption (c) is
+        amended: full LC (type prefix "LC", 4,257) + full DN (superclass
+        descending_neuron, 1,314) + retinotopy node_indices (23,720) =
+        29,291 disjoint features, no subsample.
+    protocol_frozen_2026_09_24: >
+      Frozen before the first probe run; the tiers are decided by the cells
+      named here and nothing else. DATA: 25 public games x 401 frames, ONE
+      random-legal stream per game (seed 20260924, derived per-game seeds via
+      derived_run_seeds); single-seed limitation registered, contingency =
+      one extra seed per game if 5-fold spread cannot order the arms.
+      TIMELINE: N_t is the state after advancing on x_t (4 internal steps,
+      leak 0.3, gain 2.0, tanh, zeros initial state) and before a_t; pairs
+      (t, t+k) that cross a RESET action or a GAME_OVER/WIN frame are
+      excluded. TARGET: y_t = column_histogram(grid_t) restricted to the
+      occupied columns (assert exactly 892 x 15 = 13,380 dims); B1/B2 use the
+      same restriction. WASHOUT: W set by the ESP convergence test (two
+      initial states, zeros vs seeded random; criterion: normalized state
+      distance < 1e-3 sustained; if unconverged by frame 50, results are
+      per-trajectory and claim language weakens accordingly); perturbation
+      growth reported either way. ARMS: real N_t (29,291); B0a copy floor
+      (y_hat = y_t, zero parameters); B1 = y_t; B2-L = [y_t..y_{t-L+1}] for
+      L in {1,2,4,8}, medium tier scored against the BEST B2-L; B2' = fixed
+      random tanh expansion of the L=4 embedding to 29,291 dims, 3 R seeds;
+      history oracle = B2-L8 (leakage red flag if N_t beats it); B3 = same
+      probe on the degree-preserving null of the MODULATORS graph, seed
+      20260921, SINGLE null draw (registered as such); B4 = empty-CSR bypass,
+      same code path (caveat registered: LC/DN dims are structurally zero
+      without recurrence; B4 reported with and without them; beating one
+      leak constant supports "recurrent wiring adds predictive content", not
+      the full multi-timescale claim). PROBE: dual/Gram ridge; per-feature
+      z-score with 1e-8 floor and per-target centering fitted on train games
+      only; one lambda grid, 9 points log-spaced 1e-2..1e6, shared across
+      targets, selected per arm by inner game-level CV within the train
+      games; effective dof reported. SPLITS: 5-fold CV by game, partition
+      seeded 20260924, every game tested once. METRICS: primary =
+      change-masked pooled R^2 (entries where y_{t+k} != y_t, centered on
+      train mean) per test game; secondary = unmasked pooled, per-dim macro,
+      beat-the-floor fraction; horizon curves k=1..5 all reported. DECIDING
+      CELLS: k=1 change-masked pooled R^2, per-game paired delta of real
+      N_t vs each baseline arm; Wilcoxon signed-rank over the 25 games,
+      alpha 0.05, minimum effect = mean paired delta >= 0.01; weak tier =
+      beats B1, medium = beats best B2-L AND B2' (else wording downgrades to
+      "beyond linear functions of history"), strong = beats B3 AND B4 with
+      state-health gate passed. CONTROLS run before tiers are read:
+      horizon-0 decode (N_t -> y_t) must beat B0a's trivial equivalent or
+      forward numbers are uninterpretable; shuffled-time (targets permuted
+      within game, refit identically) must give change-masked R^2 whose CI
+      contains 0 (unmasked expected to stay high, registered as benign);
+      memory curve N_t -> y_{t-j}, j=1..8 reported for real/null/bypass as
+      characterization. STATE HEALTH gate for B3/B4: saturation fraction
+      (|h| > 0.99), participation ratio, per-population variance on the same
+      streams; a dead or saturated null voids the strong tier until a
+      gain-matched B3' is run. ACTION HANDLING: primary is action-marginal
+      for ALL arms (the hypothesis is spontaneous structure); an
+      action-conditioned variant (one-hot a_t..a_{t+k-1} appended to every
+      arm) is reported as secondary to bound the irreducible-randomness
+      share. Config sha256 and feature-index-list hashes recorded in the
+      result document; null bundle carries written provenance.
+    updated: 2026-09-24
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:

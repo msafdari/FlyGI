@@ -197,6 +197,30 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-JEPA-SPONTANEOUS: does the fly's state already do JEPA's job? — 2026-09-24
+
+Mustafa's question, made falsifiable: JEPA trains an encoder so latents carry
+predictive structure; the connectome's dynamics might supply it for free --
+`advance(N_t, drive)` is already a zero-trained latent predictor (the surprise
+decoder, 3.5-cell localization, is its error signal). Registered
+H-JEPA-SPONTANEOUS with preregistered claim tiers: N_t's linear-probe
+prediction of x_{t+k}'s column representation must beat (B1) the current
+observation, (B2) a capacity-matched observation HISTORY, (B3) a
+degree-preserving null's state, (B4) a no-recurrence bypass -- weak/medium/
+strong tiers respectively; game-disjoint splits; shuffled-time collapse
+control. Probes are ridge only: nothing trains in the network, so this asks
+whether biology already did the training.
+
+Assets equipped: sklearn added; retinotopy.npz copied into the null bundle
+(node ordering preserved across nulls by construction -- verified claim
+delegated to the design red-team). A 3-agent design review (methods norms,
+adversarial leakage/fairness attack, compute budget) runs before any pipeline
+code; its required_changes bind.
+
+Parallel context: the H-RECLICK-SEAT arms occupy 8 threads until ~14:10; the
+probe uses the remainder now and the full machine after. The 16:00 submission
+fork is unaffected.
+
 ### H-MB-LEARNING-DENSE: verdict — null, verified live, slot unspent — 2026-09-24
 
 The arm completed faster than projected (75/75, validation PASS, matched
