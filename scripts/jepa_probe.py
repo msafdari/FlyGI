@@ -78,9 +78,16 @@ def load_game_data() -> dict[str, dict[str, Any]]:
     """Targets, eligibility, and per-game arrays for every captured game."""
 
     projection, occupied = _build_projection()
-    washout = json.loads(ESP.read_text())["recommended_washout"]
+    esp = json.loads(ESP.read_text())
+    washout = esp["recommended_washout"]
     if washout is None:
-        raise RuntimeError("ESP test did not converge; probe may not run (registered fallback)")
+        # Registered fallback (protocol_frozen_2026_09_24): trajectories from
+        # different initial states did not merge, so every claim is
+        # per-trajectory -- specifically the zeros-init trajectory, which is
+        # what the deployed agent actually runs. W falls back to the
+        # criterion's frame-50 bound as a transient burn-in.
+        washout = esp["criterion"]["fallback_frame"]
+        print("ESP did not converge: claims are per-trajectory (zeros init)", flush=True)
     # Floor of 8: the deepest delay embedding needs t-7 and the memory curve
     # needs t-8; a smaller washout would wrap indices at the stream start.
     w_eff = max(int(washout), max(MEMORY_LAGS))
@@ -195,14 +202,23 @@ def _standardize_stats(x: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def _gram(a: np.ndarray, b: np.ndarray, mean: np.ndarray, std: np.ndarray) -> np.ndarray:
-    """(a-mean)/std @ ((b-mean)/std).T accumulated in feature blocks."""
+    """(a-mean)/std @ ((b-mean)/std).T, feature-blocked, float64-accumulated.
 
-    out = np.zeros((a.shape[0], b.shape[0]), dtype=np.float32)
+    Normalized by feature count so Gram entries are O(1) regardless of arm
+    dimensionality: the frozen protocol shares ONE lambda grid across arms
+    of 13,380..107,040 features, which is only a like-for-like penalty if
+    K does not scale with d. Float64 accumulation keeps rounding noise far
+    below the smallest grid lambda (float32 accumulation produced negative
+    eigenvalues bigger than 1e-2 and a potrf failure on the real data).
+    """
+
+    out = np.zeros((a.shape[0], b.shape[0]), dtype=np.float64)
     for start in range(0, a.shape[1], BLOCK):
         stop = min(start + BLOCK, a.shape[1])
         sa = (a[:, start:stop] - mean[start:stop]) / std[start:stop]
         sb = (b[:, start:stop] - mean[start:stop]) / std[start:stop]
-        out += sa @ sb.T
+        out += (sa @ sb.T).astype(np.float64)
+    out /= a.shape[1]
     return out
 
 
@@ -212,9 +228,14 @@ def _solve_dual(
     from scipy.linalg import cho_factor, cho_solve
 
     n = k_train.shape[0]
-    factor = cho_factor(
-        k_train.astype(np.float64) + lam * np.eye(n), lower=True, check_finite=False
-    )
+    kernel = (k_train + k_train.T) * 0.5 + lam * np.eye(n)
+    try:
+        factor = cho_factor(kernel, lower=True, check_finite=False)
+    except np.linalg.LinAlgError:
+        # Last-resort jitter, orders below any grid lambda; logged loudly.
+        jitter = 1e-8 * float(np.trace(k_train)) / n
+        print(f"cholesky jitter engaged: {jitter:.3e}", flush=True)
+        factor = cho_factor(kernel + jitter * np.eye(n), lower=True, check_finite=False)
     alpha = cho_solve(factor, y_train.astype(np.float64), check_finite=False)
     return factor, alpha.astype(np.float32)
 
@@ -345,14 +366,12 @@ def run_arm(
         del x_train, x_test
 
         # Effective degrees of freedom at the selected lambda, via a
-        # Rademacher stochastic trace estimate that reuses one Cholesky.
-        from scipy.linalg import cho_factor, cho_solve
+        # Rademacher stochastic trace estimate on the hardened solver.
+        from scipy.linalg import cho_solve
 
         n = k_train.shape[0]
-        factor = cho_factor(
-            k_train.astype(np.float64) + lam * np.eye(n), lower=True, check_finite=False
-        )
         probes = np.random.default_rng(FOLD_SEED + 11).choice([-1.0, 1.0], size=(n, 8))
+        factor, _ = _solve_dual(k_train, np.zeros((n, 1), dtype=np.float32), lam)
         trace_inv = float(
             np.mean(np.sum(probes * cho_solve(factor, probes, check_finite=False), axis=0))
         )

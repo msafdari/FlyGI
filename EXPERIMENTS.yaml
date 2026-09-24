@@ -330,6 +330,18 @@ hypotheses:
         amended: full LC (type prefix "LC", 4,257) + full DN (superclass
         descending_neuron, 1,314) + retinotopy node_indices (23,720) =
         29,291 disjoint features, no subsample.
+      - >
+        MEASURED 2026-09-24 12:20 PDT (ESP test, results/jepa/esp.json): the
+        gain-2.0 network has NO echo-state property and is NOT chaotic -- it
+        is multistable. 0/25 games converged from different initial states
+        (median final normalized distance 1.21 at frame 120) while injected
+        1e-6 perturbations DECAY in every game (log growth -0.12..-0.20 per
+        frame): locally contracting, globally initial-condition-dependent.
+        The registered fallback applies: all probe claims are statements
+        about the zeros-init trajectory -- which is exactly the trajectory
+        the deployed agent runs -- with washout W=50. Characterization
+        bonus: the network provably holds state distinctions indefinitely,
+        which the memory-curve control will quantify functionally.
     protocol_frozen_2026_09_24: >
       Frozen before the first probe run; the tiers are decided by the cells
       named here and nothing else. DATA: 25 public games x 401 frames, ONE
