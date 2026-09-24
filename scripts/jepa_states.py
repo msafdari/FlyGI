@@ -40,12 +40,15 @@ ROOT = Path(__file__).resolve().parents[1]
 STREAMS = ROOT / "results" / "jepa" / "streams"
 OUT = ROOT / "results" / "jepa" / "states"
 CONFIG = ROOT / "configs" / "literal_rate_bioeye_t4t5.yaml"
+# The design red-team's blocking find (2026-09-24): the bio-eye gain-2.0
+# config loads literal-rate-signed-MODULATORS, so B3 must rewire THAT graph.
+# The literal-rate-signed null (435,540 fewer edges) is superseded here.
 NULL_DIR = (
     ROOT
     / "data"
     / "processed"
     / "male-cns-v1.0"
-    / "literal-rate-signed"
+    / "literal-rate-signed-modulators"
     / "nulls"
     / "degree_preserving"
     / "seed-20260921"

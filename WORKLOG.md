@@ -197,6 +197,34 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-JEPA-SPONTANEOUS: the red-team's blocking find, and the frozen protocol -- 2026-09-24 ~12:15 PDT
+
+The 3-agent design review paid for itself before lunch. Its blocking find:
+the equipped null bundle rewired the WRONG parent graph. The bio-eye
+gain-2.0 config loads literal-rate-signed-MODULATORS (24,994,595 edges);
+the null was a rewire of literal-rate-signed (24,559,055). Any B3 gap would
+have confounded anatomy with the 435,540-edge modulator set. A matched null
+is rebuilding from the modulators graph; the old null is superseded for
+this test. Second trap caught: column_histogram returns the full 1,404-cell
+hex lattice but only 892 columns carry neurons -- an unmasked target would
+have scored the probes on screen regions the network physically cannot see.
+
+The amended protocol is FROZEN in EXPERIMENTS.yaml
+(protocol_frozen_2026_09_24) before any probe ran: change-masked pooled R^2
+as primary (ARC streams are persistence-dominated; unmasked R^2 rewards
+predicting "nothing changes"), an explicit copy floor B0a, best-of-L delay
+baselines, a random-nonlinear-expansion baseline B2' (without which
+"beats linear history" cannot support "latent structure"), a history oracle
+whose defeat by N_t is registered as a leakage red flag rather than a win,
+ESP-derived washout, game-level lambda CV, 5-fold CV by game, Wilcoxon over
+25 per-game paired deltas at the k=1 change-masked cell.
+
+Pipeline: capture (25 games x 401 frames, done) -> states (real/bypass
+collecting; matched null after rebuild) -> ESP test (running) -> probe
+(scripts/jepa_probe.py, machinery validated on a synthetic linear world:
+horizon-0 decode 0.999, shuffled-time control collapses to -0.92, copy
+floor arithmetic verified).
+
 ### H-JEPA-SPONTANEOUS: does the fly's state already do JEPA's job? — 2026-09-24
 
 Mustafa's question, made falsifiable: JEPA trains an encoder so latents carry
