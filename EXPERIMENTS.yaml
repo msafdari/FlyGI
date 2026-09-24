@@ -301,6 +301,52 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-CONSEQUENCE-COUPLING:
+    statement: >
+      The fly converts to ARC-AGI-3 score only if its output is coupled to
+      predicted consequences and seated in the PRIMARY ranking term. Verified
+      basis (deep-dive 2026-09-24, wf_11f084c0-be8, 6 agents, all verdicts
+      cross-checked): the tie seat is score-inert under every preference
+      source (CONFIRMED, 4 independent ways); the metric pays only completed
+      levels and squared action-efficiency (CONFIRMED); level 2 has never
+      been crossed in 825 rows (CONFIRMED); the literature's connectome
+      advantage exists only under a fitting process. Proposed mechanism:
+      an ONLINE per-game linear readout of connectome state predicting
+      action-consequence (frame change), feeding the primary exploration
+      term, StochasticGoose-style (12.58% in the preview with this signal
+      from a trained CNN). Fly is load-bearing iff the real connectome's
+      features beat BOTH a raw-observation head and the degree-preserving
+      null / bypass under identical training.
+    status: open
+    evidence:
+      - >
+        PREMISE-KILLER preregistered before any build (AGENTS.md rule 2):
+        offline, from the already-captured random-legal streams and states:
+        logistic readout per game, features [X_t, one-hot(a_t)], target
+        changed(t+1) = any cell differs; temporal split train-first-60%/
+        test-last-40% within game; identical protocol for X in {action-only,
+        raw-grid-4096, bio-eye y_t, N_t real, N_t null, N_t bypass}; metric
+        test AUC per game, median over 25. Trivial alternative NAMED:
+        action-one-hot alone (some actions are game-wide no-ops), and
+        raw-grid features (no fly). Kill condition: if real N_t's AUC gain
+        over action-only is not clearly above the raw-grid gain, the
+        reservoir readout premise is dead and the fix must come from the
+        encoder/decoder side instead.
+      - >
+        MEASURED 2026-09-24 ~14:15 PDT (scripts/consequence_premise.py,
+        results/jepa/consequence_premise.json; 14 non-degenerate games,
+        11 skipped as always-change): median test AUC -- action-only 0.749,
+        raw-grid+action 0.738, bio-eye+action 0.738, REAL N_t+action 0.548,
+        null 0.560, bypass 0.634. KILL CONDITION MET: the fly's recurrent
+        state is WORSE than action identity alone, indistinguishable from
+        the rewired null, and beaten by the no-recurrence bypass -- the
+        deep dynamics degrade the consequence information the observation
+        carries. Reservoir-readout premise DEAD. Surviving fly-load-bearing
+        path for the consequence head: bio-eye encoder features (parity
+        with raw grid at 0.738); load-bearing test for any built arm is
+        bio-eye vs PERMUTED bio-eye under identical training, since
+        raw-grid parity alone does not distinguish the retina from pixels.
+    updated: 2026-09-24
   H-JEPA-SPONTANEOUS:
     statement: >
       The frozen connectome's neural state N_t, driven by real ARC observation
@@ -353,6 +399,13 @@ hypotheses:
         the deployed agent runs -- with washout W=50. Characterization
         bonus: the network provably holds state distinctions indefinitely,
         which the memory-curve control will quantify functionally.
+    protocol_amendment_2026_09_24_b: >
+      Ladder TRUNCATED mid-run on the owner's stale-work directive after the
+      H-CONSEQUENCE-COUPLING premise-killer redirected the program: arms
+      run = real, B1, B3-null, B4-bypass plus controls (the weak/strong
+      deciding cells); B2-L ladder, B2' and the history oracle are marked
+      NOT-RUN, so no medium-tier claim will be made in either direction.
+      Decided before any baseline arm's results were read.
     protocol_frozen_2026_09_24: >
       Frozen before the first probe run; the tiers are decided by the cells
       named here and nothing else. DATA: 25 public games x 401 frames, ONE
