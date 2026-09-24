@@ -141,16 +141,55 @@ def build() -> dict[str, object]:
     run_cell = _code_cell(
         dedent(
             f"""\
-            import os
+            import json, os, subprocess, time
+
             if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
-                !curl --fail --retry 999 --retry-all-errors --retry-delay 5 --retry-max-time 600 http://gateway:8001/api/games
-                !cp -r /kaggle/input/competitions/arc-prize-2026-arc-agi-3/ARC-AGI-3-Agents /kaggle/working/ARC-AGI-3-Agents
-                !cp /tmp/my_agent.py /kaggle/working/ARC-AGI-3-Agents/agents/templates/my_agent.py
+                # Every step below previously ran through bare `!` shell lines,
+                # which swallow exit codes: a dead gateway or a crashed main.py
+                # still produced a "Succeeded" submission, making 0.00
+                # indistinguishable from "never played". Three submissions were
+                # ambiguous for exactly this reason. Now every failure raises,
+                # so the submission STATUS itself is the diagnostic: Error means
+                # infrastructure, Succeeded means the agent truly played.
+                t0 = time.time()
+                subprocess.run(
+                    ['curl', '--fail', '--retry', '999', '--retry-all-errors',
+                     '--retry-delay', '5', '--retry-max-time', '600',
+                     'http://gateway:8001/api/games'],
+                    check=True,
+                )
+                print(f'FLYGI_RERUN_GATEWAY_OK t={{time.time() - t0:.1f}}s', flush=True)
+                subprocess.run(['cp', '-r',
+                    '/kaggle/input/competitions/arc-prize-2026-arc-agi-3/ARC-AGI-3-Agents',
+                    '/kaggle/working/ARC-AGI-3-Agents'], check=True)
+                subprocess.run(['cp', '/tmp/my_agent.py',
+                    '/kaggle/working/ARC-AGI-3-Agents/agents/templates/my_agent.py'],
+                    check=True)
                 with open('/kaggle/working/ARC-AGI-3-Agents/agents/__init__.py', 'w') as handle:
                     handle.write({slim_registry!r})
                 with open('/kaggle/working/ARC-AGI-3-Agents/.env', 'w') as handle:
                     handle.write({gateway_environment!r})
-                !cd /kaggle/working/ARC-AGI-3-Agents && PYTHONPATH=/tmp/flygi_runtime.zip MPLBACKEND=agg python main.py --agent myagent
+                environment = dict(os.environ)
+                environment['PYTHONPATH'] = '/tmp/flygi_runtime.zip'
+                environment['MPLBACKEND'] = 'agg'
+                completed = subprocess.run(
+                    ['python', 'main.py', '--agent', 'myagent'],
+                    cwd='/kaggle/working/ARC-AGI-3-Agents',
+                    env=environment,
+                )
+                print(
+                    'FLYGI_RERUN_SUMMARY='
+                    + json.dumps({{
+                        'main_returncode': completed.returncode,
+                        'wall_s': round(time.time() - t0, 1),
+                    }}),
+                    flush=True,
+                )
+                if completed.returncode != 0:
+                    raise RuntimeError(
+                        f'main.py exited {{completed.returncode}}; failing the '
+                        'submission loudly instead of scoring a ghost'
+                    )
             """
         )
     )

@@ -40,7 +40,13 @@ def test_generated_notebook_is_offline_and_deterministic() -> None:
     assert "'/tmp/my_agent.py'" in preflight_source
     assert ".preflight_runtime()" in preflight_source
     assert "if not os.getenv('KAGGLE_IS_COMPETITION_RERUN')" in preflight_source
-    assert "PYTHONPATH=/tmp/flygi_runtime.zip" in run_source
+    # The rerun now sets PYTHONPATH through subprocess env rather than a shell
+    # prefix, and every step must fail loudly: `!` lines swallowed exit codes
+    # for three straight ambiguous submissions.
+    assert "environment['PYTHONPATH'] = '/tmp/flygi_runtime.zip'" in run_source
+    assert "check=True" in run_source
+    assert "main_returncode" in run_source
+    assert "raise RuntimeError" in run_source
 
 
 def test_preflight_cell_imports_adapter_and_runs_without_a_game(
