@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-24T04:14:54.689907+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-24T06:10:46.766641+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -41,8 +41,8 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | click-coordhot | gain0.9-dead | complete | 18 | 0.0000 | 0 | -0.0101 [-0.030,+0.000] p=0.500 -> null | click-nocentroid |
 | click-nocentroid | gain0.9-dead | complete | 18 | 0.0101 | 3 | — | — |
 | full-nocentroid | gain0.9-dead | complete | 25 | 0.1954 | 2 | +0.0049 [+0.000,+0.015] p=1.000 -> null | real-signed-loop-escape |
-| sg-mbdr-nolearn | gain2.0-modulators | deferred | 0 | 0.0000 | 0 | — | sg-g2-nolearn |
-| sg-mbdr-learn | gain2.0-modulators | deferred | 0 | 0.0000 | 0 | — | sg-mbdr-nolearn |
+| sg-mbdr-nolearn | gain2.0-modulators | complete | 75 | 0.2207 | 16 | +0.0173 [-0.077,+0.147] p=0.945 -> null | sg-g2-nolearn |
+| sg-mbdr-learn | gain2.0-modulators | complete | 75 | 0.2203 | 15 | -0.0004 [-0.001,+0.000] p=1.000 -> null | sg-mbdr-nolearn |
 | sg-mbdr-learn-rewired | gain2.0-modulators | deferred | 0 | 0.0000 | 0 | — | sg-mbdr-learn |
 | sg-mbdr-learn-shuffled | gain2.0-modulators | deferred | 0 | 0.0000 | 0 | — | sg-mbdr-learn |
 | sg-bioeye-lc-retdec | gain2.0-modulators | complete | 75 | 0.0915 | 21 | -0.1589 [-0.361,-0.003] p=0.132 -> HURTS | sg-bioeye-lc |
@@ -57,7 +57,7 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | H-ANATOMY-TIEBREAK | null | The connectome breaking the controller's ties beats the controller's own deterministic hash. |
 | H-STATE-DEPENDENCE | refuted | Any observation-dependent tiebreaker helps; the fly would be incidental. (The deflationary reading of the fly's early partial lead.) |
 | H-BUDGET | refuted | Score is limited by the 600-action budget. |
-| H-MB-LEARNING | invalidated | Controller-supplied reinforcement through KC->MBON depression improves score. |
+| H-MB-LEARNING | null | Controller-supplied reinforcement through KC->MBON depression improves score. |
 | H-OPERATING-POINT | null | Waking the network from the numerical floor (gain 0.9 -> 2.0 on the -modulators graph) improves score by itself. |
 | H-RETINOTOPY-COLOUR | null | An input that preserves both retinotopy and categorical colour lets the fly's visual hierarchy (T4/T5, LC) do work that the scrambled projection made impossible. |
 | H-COLOUR-MAP | supported | The colour->type rule (c % 15) is harmless convention; only the categorical-plus-retinotopic structure matters, not which medulla type carries which colour. (Assumption A of the encoder.) |

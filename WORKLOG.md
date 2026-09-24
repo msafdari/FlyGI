@@ -197,6 +197,26 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-MB-LEARNING: the fair test, and a fair null — 2026-09-24
+
+The revived battery ran clean (validation PASS, 75/75 both arms). Learning
+against its matched baseline: **-0.0004, CI [-0.001, +0.000], p=1.000** --
+levels 15 v 16, breadth 6/25 v 7/25. Null, with nothing left to blame: sensory
+content, biological sparsity, rectified credit, and action identity were all
+verified present before launch. Real weight moved at the real site and the
+controller's behaviour did not change. Per the preregistered gate the
+falsification controls stay unlaunched. Secondary observation: the mbdr
+circuit package itself costs local breadth against plain g2-nolearn (7/25 vs
+10/25).
+
+What remains honest for Experiment 002's score mandate after this: the
+depression-only rule under a 31:1 punishment-dominated signal is now fairly
+excluded on this scaffold. Generalization-changing candidates left standing:
+Experiment 000's mechanism (different dynamics, task, and nulls -- its gates
+remain open), or acceptance that 002's contribution is the audited T4/T5
+finding, the methodology, and a complete honest negative. Slots stay unspent
+until a local ledger win exists.
+
 ### Submission 4 resolved: the first informative 0.00 — 2026-09-24
 
 `56511405`: COMPLETE, 0.00, under the fail-loud notebook. Because every
