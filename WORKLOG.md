@@ -33,6 +33,41 @@ data work, close its four remaining specification items: recovery-only
 semantics, exact Curveball sweep/telemetry and fresh-replication wording, the
 remaining scalar/golden-test ledger, and a final clean contradiction audit.
 
+## Mainline integration checkpoint — 2026-09-23 19:56 PDT
+
+**Measured:** `main` accepted the documentation-only Experiment 000 checkpoint
+as merge commit `c9f6323`; the merge adds the three files under
+`experiments/000_mb_sanity/` and the 15:17 root-log entry, with no source,
+configuration, result, data, or generated-artifact changes.
+
+**Measured:** the previously untracked `CLAUDE_CODE_REFACTOR_HANDOFF.md` is now
+being tracked as a historical coordination record, with an explicit notice that
+its old queue-launch instructions are closed rather than current. The unrelated
+`.fly-or-fake-work/` tree remains untracked and untouched by this integration.
+
+**Measured:** a read-only review of the ARC closure found bounded record repairs
+still required before it is canonical: the stopped surprise checkpoint contains
+19 rows rather than the reported 18; completion episodes were described as
+distinct-game breadth; a null colour-map comparison was overread as equivalence;
+the T4/T5 hypothesis status is stale across the registry and league; statistical
+resample counts differ; and the validator/source-equivalence language exceeds
+the checks recorded by the tooling.
+
+**Inferred:** those closure repairs require a small documentation/registry and
+analysis-replay checkpoint, not another full ARC evaluation, assuming the
+existing immutable bundles remain unchanged. Claude Code may continue on
+ARC-specific surfaces after that repair; it must not move shared modules or edit
+Experiment 000 while the additive refactor boundary is being established.
+
+**Measured:** no `evaluate_state_graph` job was active at integration time, but
+obsolete watcher shells and orphaned multiprocessing workers from old ARC runs
+were still resident. They should be stopped before another queue is armed so an
+old condition cannot trigger unexpectedly.
+
+The next Codex action remains the four-item Experiment 000 specification audit
+listed above. Physical relocation of FlyARC remains deferred until additive
+Experiment 000 namespaces and compatibility goldens exist.
+
 ## Everything goes through the fly, or nothing goes at all
 
 This is the project's first principle and it outranks every other consideration
