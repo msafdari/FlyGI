@@ -441,3 +441,18 @@ experiments:
       null by construction, so running it would spend compute to confirm a
       caveat. The efference copy is tested where it is load-bearing,
       sg-mbdr-learn.
+
+  breadth-stack:
+    config: configs/breadth_stack.yaml
+    regime: gain2.0-modulators
+    baseline: sg-bioeye-t4t5
+    tests: [H-RETINOTOPY-COLOUR, H-RETINO-DECODER]
+    preregistered_endpoints:
+      primary: full_25
+      secondary: click_games_19
+      full_set: reported_alongside
+    note: >
+      P3 breadth stack: bio-eye + T4/T5 readout + retinotopic_state coordinates.
+      PRIMARY METRIC IS BREADTH (games with >=1 level), preregistered before the
+      arm ran; ships to Kaggle only if breadth exceeds the ledger's best 10/25.
+      Expected tier: stacking base rate is poor; that is what this measures.
