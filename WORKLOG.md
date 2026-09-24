@@ -197,6 +197,27 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### Experiment 002 reopened: P1 diagnosis + P3 verdict + submission 4 — 2026-09-23 night
+
+**P1 (rerun-log diagnosis), closed.** Via Chrome: all three submissions read
+Succeeded (rules out crash and hard timeout); the hidden rerun's logs are not
+participant-visible anywhere. Scaffold audit found the real defect: the rerun
+cell's bare `!` shell lines swallow exit codes, so a dead gateway or crashed
+main.py still yields Succeeded -- three submissions could not distinguish
+played-and-scored-zero from never-played. Fixed: subprocess with check=True
+everywhere, FLYGI_RERUN_SUMMARY, and a raise on nonzero main.py. From
+submission 4 onward the status channel is authoritative.
+
+**P3 (breadth stack), did not ship.** Breadth 8/25 against the preregistered
+>10/25 bar; 22 levels exactly tying bioeye-t4t5 alone; stacking did not
+compose. The preregistration held: no ship.
+
+**Submission 4** therefore carries the breadth champion instead: the
+g2-nolearn config (10/25 games, 21 levels; gain-2.0 modulators graph,
+controller + fly tie-break, never previously submitted) inside the hardened
+diagnostic notebook. Decision value regardless of score: Error status now
+means infrastructure, Succeeded means the agent truly played the hidden set.
+
 ### ARC queue closed — 2026-09-23 evening
 
 All four bio-eye/decoder arms are resolved: permuted (null, as preregistered),

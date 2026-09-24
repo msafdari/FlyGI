@@ -453,6 +453,7 @@ experiments:
       full_set: reported_alongside
     note: >
       P3 breadth stack: bio-eye + T4/T5 readout + retinotopic_state coordinates.
-      PRIMARY METRIC IS BREADTH (games with >=1 level), preregistered before the
-      arm ran; ships to Kaggle only if breadth exceeds the ledger's best 10/25.
-      Expected tier: stacking base rate is poor; that is what this measures.
+      RESULT 2026-09-23: breadth 8/25 -- below the 10/25 bar, DID NOT SHIP, per
+      preregistration. 22 levels (exactly tying bioeye-t4t5 alone), score drift
+      -0.141 [-0.353,+0.007] p=0.195. Stacking did not compose, as the expected
+      tier warned. Validation PASS, 75/75.

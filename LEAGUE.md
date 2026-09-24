@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-23T22:25:37.166448+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-24T04:14:54.689907+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -48,6 +48,7 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | sg-bioeye-lc-retdec | gain2.0-modulators | complete | 75 | 0.0915 | 21 | -0.1589 [-0.361,-0.003] p=0.132 -> HURTS | sg-bioeye-lc |
 | sg-bioeye-lc-surprise | gain2.0-modulators | killed | 19 | 0.4065 | 6 | partial: +0.3547 (19 pairs, no verdict) | sg-bioeye-lc-retdec |
 | sg-bioeye-lc-efference | gain2.0-modulators | not-run | 0 | 0.0000 | 0 | — | sg-bioeye-lc-surprise |
+| breadth-stack | gain2.0-modulators | complete | 75 | 0.1060 | 22 | -0.1411 [-0.353,+0.007] p=0.195 -> null | sg-bioeye-t4t5 |
 
 ## Hypotheses
 
