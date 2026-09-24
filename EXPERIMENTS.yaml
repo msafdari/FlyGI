@@ -285,8 +285,19 @@ hypotheses:
       sg-g2-nolearn on complete matched pairs; score CI not negative; ship
       tonight ONLY if fly arm complete, breadth bar met, score not harmed, and
       fly>griddiff attribution (or griddiff incomplete with the claim tiered).
-    status: open
+    status: null-fairly-tested
     evidence:
+      - >
+        VERDICT 2026-09-24 13:25 PDT (75 rows each, validation PASS): the
+        fly-surprise writer is outcome-INERT -- 75/75 rows byte-identical to
+        the champion (breadth 10/25, 21 levels, 0.2034; delta +0.0000, CI
+        zero-width). The griddiff control DIVERGED on 5 rows and HURT (19
+        levels, breadth 8/25, 0.1937). Attribution result inverted from the
+        registered hope: the seat demonstrably CAN change outcomes (the
+        trivial writer broke things through it), but the fly's deposits
+        never moved a single decision that mattered. Fourth consecutive
+        seat-mechanism null. Preregistered Branch A bar (breadth > 10/25
+        AND beats griddiff) failed; submission slot stays unspent.
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 

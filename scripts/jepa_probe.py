@@ -462,7 +462,11 @@ def main(argv: list[str] | None = None) -> int:
         ],
     )
     parser.add_argument("--skip-controls", action="store_true")
+    parser.add_argument("--out", type=str, default=None)
     args = parser.parse_args(argv)
+    global OUT
+    if args.out is not None:
+        OUT = Path(args.out)
 
     games = load_game_data()
     results: dict[str, Any] = {

@@ -197,6 +197,25 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-RECLICK-SEAT: the seat works; the fly's hand is too light -- 2026-09-24 13:25 PDT
+
+Verdict, 75 rows per arm, validation PASS: sg-reclick-fly is outcome-
+identical to the champion on all 75 rows -- breadth 10/25 on the same ten
+games, 21 levels, 0.2034, delta +0.0000 with a zero-width CI. The
+preregistered Branch A bar (breadth > 10/25 AND beats griddiff) fails;
+the submission slot stays unspent, per plan.
+
+The control is the informative half. sg-reclick-griddiff diverged from the
+champion on 5 rows and HURT: 19 levels, breadth 8/25, 0.1937. So the
+attribution question inverted: the reclick seat demonstrably CAN change
+outcomes -- the trivial writer broke two levels through it -- while the
+fly-surprise writer never moved one decision that mattered. The fly's
+deposits (surprise at the clicked coordinate, decayed, mass-capped) were
+apparently always below the threshold where the preference reranks a
+click that changes anything. Fourth consecutive null on a seat mechanism,
+and the sharpest: the lever works, the fly's signal through it is too
+faint.
+
 ### H-JEPA-SPONTANEOUS: the red-team's blocking find, and the frozen protocol -- 2026-09-24 ~12:15 PDT
 
 The 3-agent design review paid for itself before lunch. Its blocking find:
