@@ -201,6 +201,18 @@ class ControllerConfig:
     advancement_bonus: float = 0.6
     death_penalty: float = 0.4
     replan_cooldown: int = 3
+    # HYPOTHESIS H-MB-LEARNING-DENSE. The fair null was measured under a 31:1
+    # punishment-dominated, ~8-events-per-episode teaching signal. This routes
+    # the controller's per-turn outcomes to dopamine as well: a NOVEL
+    # destination (canonical graph novelty AND a changed frame) sends a small
+    # reward to PAM, a NOOP a small punishment to PPL1, familiar EFFECTs send
+    # nothing. MEASURED before implementation (2026-09-24): change-gated
+    # novelty is action-dependent at p<0.05 on 64/75 rows (binomial null 3.8).
+    # Dense drive is budgeted: dense_budget terminal-equivalents per game,
+    # split evenly between valences with hard per-side caps, so ~500 dense
+    # events cannot sweep weights to the clip band.
+    dense_reinforcement: bool = False
+    dense_budget: float = 2.0
 
 
 @dataclass(frozen=True)
@@ -557,6 +569,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
             advancement_bonus=controller_numbers["advancement_bonus"],
             death_penalty=controller_numbers["death_penalty"],
             replan_cooldown=controller_integers["replan_cooldown"],
+            dense_reinforcement=bool(controller_raw.pop("dense_reinforcement", False)),
+            dense_budget=float(controller_raw.pop("dense_budget", 2.0)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

@@ -235,6 +235,28 @@ hypotheses:
         does not falsify that.
     updated: 2026-09-23
 
+  H-MB-LEARNING-DENSE:
+    statement: >
+      The fair null of KC->MBON depression was measured under a 31:1,
+      ~8-events-per-episode teaching signal. Routing the controller's per-turn
+      outcomes to dopamine -- canonical-novel-and-changed destinations to PAM,
+      NOOPs to PPL1, familiar EFFECTs silent, budgeted at 2 terminal-equivalents
+      per game with hard per-side caps -- gives the 61k plastic synapses a
+      balanced, dense signal inside one episode for the first time. What it can
+      learn (which scene-x-action patterns produce change) is within-game
+      generalization, the breadth-era currency; measured support: 29/38
+      level-clearing clicks re-click a coordinate that previously changed
+      something.
+    status: open
+    evidence:
+      - >
+        Premise checks passed pre-implementation 2026-09-24: dense outcomes are
+        action-dependent (novelty p<0.05 on 70/75 rows sha-based, 64/75
+        change-gated; binomial null 3.8); saturation arithmetic fixes
+        eta_novel=1/513, eta_noop=1/14 of half-budget with per-side caps.
+      - "Kill panel verdict: survives all five refutation criteria."
+    updated: 2026-09-24
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
@@ -473,3 +495,20 @@ experiments:
       preregistration. 22 levels (exactly tying bioeye-t4t5 alone), score drift
       -0.141 [-0.353,+0.007] p=0.195. Stacking did not compose, as the expected
       tier warned. Validation PASS, 75/75.
+
+  sg-mbdr-learn-dense:
+    config: configs/literal_rate_mb_done_right.yaml
+    regime: gain2.0-modulators
+    baseline: sg-mbdr-nolearn
+    tests: [H-MB-LEARNING-DENSE]
+    note: >
+      PREREGISTERED before the arm ran (2026-09-24). Primary: breadth (games
+      with >=1 level) vs sg-mbdr-nolearn's 7/25, clustered CI, per-seed
+      decomposition alongside the union. Secondary: levels, score. LEDGER-WIN
+      bar: breadth >7/25 with CI excluding zero on complete pairs.
+      SLOT-RELEVANCE bar: local breadth >10/25 (the champion), because the mbdr
+      scaffold costs 3 games before learning switches on. Controls (rewired,
+      shuffle-credit, tuned-tabular trivial alternative) launch ONLY if the
+      main arm separates. Expected outcome recorded honestly: the slot is NOT
+      spent tonight unless all four ship-gate conditions hold, including a
+      mechanism-level account of the 10/25-to-0 hidden conversion.

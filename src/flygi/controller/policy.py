@@ -35,6 +35,12 @@ from .scene import (
 from .state_graph import ActionCandidate, EffectModel, ReplayStep, StateGraph
 
 _STATE_PREFIX = b"flygi.controller.state.v1\x00"
+
+# ASSUMPTION (measured priors, 2026-09-24, sg-mbdr-learn rows): per-row medians
+# of dense events, used only to size per-event eta. The per-side caps bound any
+# deviation from these priors; it cannot compound.
+_DENSE_PRIOR_NOVEL = 513.0
+_DENSE_PRIOR_NOOP = 14.0
 _TIE_PREFIX = b"flygi.controller.tie.v1\x00"
 _UINT64_MAX = (1 << 64) - 1
 _RESET_ACTION_ID = 0
@@ -125,6 +131,8 @@ class StateGraphPolicy:
         # controller has actually learned.
         self._fly = fly
         self._last_action_id: int | None = None
+        self._dense_spent_reward = 0.0
+        self._dense_spent_punish = 0.0
         self._fly_ranked = 0
         self._fly_decisive = 0
         self._scene_tracker = SceneTracker(
@@ -388,6 +396,22 @@ class StateGraphPolicy:
                     reinforce(1.0)
                 elif outcome == "DEATH":
                     reinforce(-1.0)
+                elif self._config.dense_reinforcement:
+                    # H-MB-LEARNING-DENSE: per-turn outcomes as dopamine. Etas
+                    # are sized from MEASURED per-row medians (~513 novel, ~14
+                    # NOOP) so each valence expects dense_budget/2 of drive per
+                    # game, and hard per-side caps turn that balance into a
+                    # worst-case guarantee. Familiar EFFECTs stay silent:
+                    # re-treading known ground is neither reward nor pain.
+                    half = self._config.dense_budget / 2.0
+                    if novel and changed and self._dense_spent_reward < half:
+                        eta = half / _DENSE_PRIOR_NOVEL
+                        self._dense_spent_reward += eta
+                        reinforce(eta)
+                    elif not changed and self._dense_spent_punish < half:
+                        eta = half / _DENSE_PRIOR_NOOP
+                        self._dense_spent_punish += eta
+                        reinforce(-eta)
 
         self._graph.record_transition(
             pending.source_key,

@@ -199,3 +199,62 @@ def test_a_tiebreaker_without_a_learning_site_is_unaffected() -> None:
     policy.choose_action(frames[0])
     frames[1].levels_completed = 1
     policy.choose_action(frames[1])  # must not raise
+
+
+def _dense_config() -> ControllerConfig:
+    return ControllerConfig(enabled=True, dense_reinforcement=True, dense_budget=2.0)
+
+
+def test_dense_novelty_rewards_and_noop_punishes() -> None:
+    """H-MB-LEARNING-DENSE: per-turn outcomes reach dopamine, tiny and signed."""
+
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _dense_config(), decision_seed=7, fly=fly)
+    frames = _frames(4)
+    policy.choose_action(frames[0])
+    policy.choose_action(frames[1])  # novel + changed destination -> small reward
+    assert fly.reinforcements, "a novel changed frame sent no dense reward"
+    assert 0 < fly.reinforcements[0] < 0.01, (
+        f"dense reward {fly.reinforcements[0]} is not a small positive eta"
+    )
+    # an unchanged frame -> NOOP -> small punishment. Must be a NEW object
+    # with the same grid: the policy caches decisions by frame identity.
+    same_grid_1 = FakeFrame(frame=[frames[1].frame[0].copy()])
+    same_grid_2 = FakeFrame(frame=[frames[1].frame[0].copy()])
+    policy.choose_action(same_grid_1)
+    policy.choose_action(same_grid_2)
+    negatives = [v for v in fly.reinforcements if v < 0]
+    assert negatives and all(-0.1 < v < 0 for v in negatives), (
+        f"NOOP produced no small punishment: {fly.reinforcements}"
+    )
+
+
+def test_dense_off_by_default_is_bit_identical_silence() -> None:
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _config(), decision_seed=7, fly=fly)
+    _drive(policy, _frames(5))
+    assert fly.reinforcements == [], "dense events fired with the flag off"
+
+
+def test_dense_per_side_caps_hold() -> None:
+    """~500 events per game must not sweep weights: each side stops at budget/2."""
+
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _dense_config(), decision_seed=7, fly=fly)
+    frames = _frames(40, seed=3)
+    for frame in frames:
+        policy.choose_action(frame)
+    rewards = sum(v for v in fly.reinforcements if v > 0)
+    punishments = -sum(v for v in fly.reinforcements if v < 0)
+    assert rewards <= 1.0 + 1e-9, f"reward side exceeded its cap: {rewards}"
+    assert punishments <= 1.0 + 1e-9, f"punish side exceeded its cap: {punishments}"
+
+
+def test_dense_terminal_events_keep_unit_magnitude() -> None:
+    fly = LearningStubFly()
+    policy = StateGraphPolicy(FakeAction, _dense_config(), decision_seed=7, fly=fly)
+    frames = _frames(3)
+    policy.choose_action(frames[0])
+    frames[1].levels_completed = 1
+    policy.choose_action(frames[1])
+    assert 1.0 in fly.reinforcements, "the terminal reward lost its unit magnitude"
