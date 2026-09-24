@@ -197,6 +197,38 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-MB-LEARNING-DENSE: today's candidate, measured into existence — 2026-09-24
+
+A 12-agent workflow (ground -> 4 proposal lenses -> adversarial kill panel ->
+synthesis) produced one survivor: **dense opponent dopamine**. The fair null's
+proven-dead entry is scoped to its 31:1, ~8-events-per-episode signal; this
+changes exactly that variable. Canonical-novel-and-changed destinations send a
+small reward to PAM, NOOPs a small punishment to PPL1, familiar EFFECTs stay
+silent; etas sized from measured medians (513 novel / 14 NOOP per row) with a
+2-terminal-equivalent budget and hard per-side caps.
+
+Measured before implementation: dense outcomes are action-dependent (novelty
+p<0.05 on 70/75 rows sha-based, 64/75 change-gated; null 3.8) -- the signal can
+carry credit. Supporting regularity from the evidence-mining lens: **29/38
+level-clearing clicks re-click a coordinate that previously changed
+something** (clicks advance at 1.79x the per-use rate of other actions) --
+precisely the scene-x-action pattern this signal lets the mushroom body learn
+within a game. Kill panel: survives all five refutation criteria.
+
+Implemented config-gated (`dense_reinforcement`, default false; 4 new tests;
+395 pass). `sg-mbdr-learn-dense` preregistered (breadth primary vs 7/25;
+LEDGER-WIN bar CI>0; SLOT-RELEVANCE bar >10/25; controls gated) and running.
+Honest expectation, recorded: the slot is NOT spent tonight unless every
+ship-gate condition holds, including a mechanism-level account of the
+10/25-to-0 hidden conversion.
+
+**Backup branch, measured and parked:** the candidate-admission caps
+(policy.py `_candidate_metadata`) were accused of index-order truncation.
+Measured on 3 click-heavy no-progress games, 400 click turns: the tier cap
+never binds (0%), the component cap binds on 18% of turns, median
+present==offered (62==62). Real but marginal; parked with its numbers, behind
+dense and hidden-forensics.
+
 ### H-MB-LEARNING: the fair test, and a fair null — 2026-09-24
 
 The revived battery ran clean (validation PASS, 75/75 both arms). Learning
