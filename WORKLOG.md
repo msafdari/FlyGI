@@ -10,6 +10,29 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Parallel Experiment 000 draft checkpoint — 2026-09-23 15:17 PDT
+
+Experiment 000 planning is paused at a clean documentation-only checkpoint on
+the isolated branch `codex/experiment-000`. No implementation code was added,
+no experiment was launched, and the shared FlyARC checkout was not edited.
+
+The checkpoint adds a detailed mushroom-body associative-learning protocol at
+`experiments/000_mb_sanity/SPEC.md`, a scope/resume guide at
+`experiments/000_mb_sanity/README.md`, and the experiment's durable record at
+`experiments/000_mb_sanity/WORKLOG.md`. The draft now freezes the intended
+MaleCNS populations and runtime blocks, trial state machine, paired-world task
+battery, conservative exact-degree Curveball null family, primary controls,
+statistical reductions, evidence labels, analytic kill tests, and additive
+migration boundary. Independent audits covered equations/state transitions,
+nulls/statistics, repository migration, biological sources, and internal
+contradictions.
+
+This is deliberately marked **PAUSED / DRAFT**, not preregistered or ready to
+run. Resume from the experiment worklog's pause checkpoint. Before any code or
+data work, close its four remaining specification items: recovery-only
+semantics, exact Curveball sweep/telemetry and fresh-replication wording, the
+remaining scalar/golden-test ledger, and a final clean contradiction audit.
+
 ## Everything goes through the fly, or nothing goes at all
 
 This is the project's first principle and it outranks every other consideration
