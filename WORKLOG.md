@@ -197,6 +197,32 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### Submission 4 resolved: the first informative 0.00 — 2026-09-24
+
+`56511405`: COMPLETE, 0.00, under the fail-loud notebook. Because every
+infrastructure failure now raises to Error status, COMPLETE is a measurement:
+the gateway was reached, main.py ran to exit 0, the fail-closed preflight
+passed (no fallback), the agent played the hidden games, and it cleared zero
+levels. Branch (c) is proven. Three prior ambiguous 0.00s are retroactively
+explained as most plausibly the same result.
+
+**What this establishes (measured):** the local-to-hidden generalization gap is
+total for this agent class. 10/25 breadth on public games converts to 0 on
+hidden ones. Novelty-driven state-graph exploration with fly tie-breaks does
+not transfer to unseen games, in any of the four configurations tried.
+
+**Consequence, committed to in advance:** no more submissions of this class.
+Configuration five would buy a fifth copy of a proven result. The next slot is
+spent only on a mechanism that changes GENERALIZATION -- realistically,
+within-game learning (H-MB-LEARNING, still open; the mbdr battery remains
+revivable under Experiment 002, and Experiment 000's validated mechanism
+supersedes it when its gates close). Until such a mechanism exists and beats
+the local ledger, the slots stay unspent.
+
+The ARC arm's standing results are unchanged: the T4/T5 HELPS, the mechanism
+findings, and a now-complete diagnosis chain from ambiguous zeros to a proven
+one.
+
 ### Experiment 002 reopened: P1 diagnosis + P3 verdict + submission 4 — 2026-09-23 night
 
 **P1 (rerun-log diagnosis), closed.** Via Chrome: all three submissions read
