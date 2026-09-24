@@ -197,6 +197,29 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-JEPA-SPONTANEOUS: closed null, and the control that earned its keep -- 2026-09-24 15:10 PDT
+
+The full preregistered record is in results/jepa/probe_results.json. No
+tier passes: at the k=1 change-masked deciding cell the fly's state loses
+to the current observation (-0.011 median, p=0.47), loses to the rewired
+null (-0.048, p=0.21), and only noise separates it from the no-recurrence
+bypass (+0.023, p=0.31). The decisive measurement is the shuffled-time
+control: +0.038 -- exactly the real arm's own number -- so what looked like
+25/25 games above the copy floor was static within-game structure passing
+the change mask, not prediction. Without that preregistered control the
+headline would have been wrong in the flattering direction.
+
+Answer to the day's founding question: no -- fly biology does not
+spontaneously give N_t JEPA-like predictive structure at this operating
+point, on this drive, read linearly. Same-day convergent evidence: the
+consequence premise-killer measured the recurrent state at 0.55 AUC on
+action-consequence -- below the raw action id -- while the observation
+sits at 0.74. The connectome's dynamics blur task information the
+observation already carries; the project's live positives remain the
+ENCODER side (bio-eye retinotopy), which is exactly where the click head
+now places its bet. State caches deleted per the registered disk plan
+(regenerable deterministically; 2.8 GiB free).
+
 ### H-CONSEQUENCE-COUPLING: the retinotopic click head, built and gated -- 2026-09-24 ~15:30 PDT
 
 The build the premise tests earned. src/flygi/controller/click_head.py: an

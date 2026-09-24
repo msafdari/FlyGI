@@ -397,7 +397,7 @@ hypotheses:
       ridge regressions only -- nothing is trained in the network, so JEPA
       collapse does not arise; this asks whether biology already did JEPA's
       job.
-    status: open
+    status: "null"
     evidence:
       - >
         ASSUMPTIONS registered before build: (a) streams from public ARC games
@@ -432,6 +432,23 @@ hypotheses:
         the deployed agent runs -- with washout W=50. Characterization
         bonus: the network provably holds state distinctions indefinitely,
         which the memory-curve control will quantify functionally.
+      - >
+        VERDICT 2026-09-24 15:06 PDT (results/jepa/probe_results.json, all
+        preregistered cells): NO TIER PASSES. At the deciding k=1
+        change-masked cell: real N_t vs B1 current-observation median delta
+        -0.011 (11/25 wins, p=0.47); vs B3 matched null -0.048 (10/25,
+        p=0.21); vs B4 bypass +0.023 (16/25, p=0.31). DECISIVE CONTROL
+        FINDING: the shuffled-time control scores +0.038 -- exactly the real
+        arm's own +0.038 -- so the apparent above-floor signal is static
+        within-game structure passing the change mask, not prediction of
+        the future. State-health gate passed (no saturation, participation
+        ratios 11-12 across real/null/bypass), so the null comparison was
+        regime-fair and failed anyway. Claim scope: the zeros-init
+        trajectory of the gain-2.0 signed operating point; medium tier
+        not-run per the registered truncation. Coheres with the
+        consequence premise-killer measured the same day: the recurrent
+        dynamics do not add task information to what the observation
+        carries -- they blur it.
     protocol_amendment_2026_09_24_b: >
       Ladder TRUNCATED mid-run on the owner's stale-work directive after the
       H-CONSEQUENCE-COUPLING premise-killer redirected the program: arms
