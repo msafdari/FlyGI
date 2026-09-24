@@ -197,6 +197,32 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-CONSEQUENCE-COUPLING day one: the map is load-bearing; the shape is not shippable -- 2026-09-24 17:05 PDT
+
+The full ladder, measured. The headline that HOLDS: the fly's retinotopic
+map is load-bearing -- real map completes level 1 at 2.59x human baseline,
+the scrambled-map twin at 11.59x, identical machinery otherwise. A 4.5x
+efficiency separation attributable to retinotopy itself, the first time in
+this project a fly-anatomy component beat its matched control on the
+metric the benchmark pays. Score 0.3064, the highest arm mean recorded
+(champion 0.2034), concentrated exactly where the offline premise said it
+would be (r11l completions at 0.27-0.68x baseline; lp85 1.12-1.94x).
+
+The headline that DOESN'T: both bonus shapes lose breadth (17 levels vs
+21; 6-7 games vs 10), so BAR A fails twice and nothing ships -- the slot
+is unspent, per the mechanical rule, despite the record score. And my
+registered inference about WHY -- suppression starves discovery -- was
+refuted by its own calibration arm: boost-only (negative_scale 0) still
+loses three of the four games. The redirect toward frame-changers is
+itself what starves the broad wander in those games. Chasing "make
+something happen" is not the same objective as "find the advance".
+
+Standing: mechanism real, fly-attributed, not yet shippable. Next
+registered candidate (not built tonight): a stall-gated head that stays
+silent while default exploration is still finding novelty. Base-rate
+discipline: this is inference-failure number twelve on score-adjacent
+bridges; the measurements, as usual, all held.
+
 ### H-JEPA-SPONTANEOUS: closed null, and the control that earned its keep -- 2026-09-24 15:10 PDT
 
 The full preregistered record is in results/jepa/probe_results.json. No
