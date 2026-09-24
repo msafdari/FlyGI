@@ -197,6 +197,30 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-MB-LEARNING-DENSE: verdict — null, verified live, slot unspent — 2026-09-24
+
+The arm completed faster than projected (75/75, validation PASS, matched
+coverage). Against sg-mbdr-nolearn: **-0.0004, CI [-0.001,+0.000], p=1.000;
+breadth 6/25 v 7/25; levels 15 v 16.** The suspicious four-decimal identity
+with the sparse arm was checked before recording: the bundle carries
+dense_reinforcement=true and only **5/75 replay hashes** match the sparse arm
+-- dense dopamine changed play on 70/75 games, and the outcomes converged to
+the same clears regardless. A genuine null, not a dead switch.
+
+Ship gate: failed at condition 1 (no separation). **The slot is not spent
+tonight**, exactly as the preregistered expected outcome said. Controls stay
+gated -- there is no effect to falsify.
+
+Standing conclusion, inferred tier: three learning nulls of increasing
+strength (invalid signal -> fair sparse -> dense balanced action-dependent)
+now bracket the mechanism. The learning WORKS -- weights move, behaviour
+changes -- and the tie-break seat does not convert changed behaviour into
+changed outcomes. The bottleneck has moved from signal to SEAT. Tomorrow's
+candidates by elimination: hidden-failure forensics (the workflow's own
+'missing' list, item 1), and the unanswered structural question of a larger
+safe seat for the fly -- noting honestly that a larger seat was never safely
+tested, only noise-in-the-same-seat (which hurt).
+
 ### H-MB-LEARNING-DENSE: today's candidate, measured into existence — 2026-09-24
 
 A 12-agent workflow (ground -> 4 proposal lenses -> adversarial kill panel ->

@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-24T06:10:46.766641+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-24T17:03:06.956190+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -49,6 +49,7 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | sg-bioeye-lc-surprise | gain2.0-modulators | killed | 19 | 0.4065 | 6 | partial: +0.3547 (19 pairs, no verdict) | sg-bioeye-lc-retdec |
 | sg-bioeye-lc-efference | gain2.0-modulators | not-run | 0 | 0.0000 | 0 | — | sg-bioeye-lc-surprise |
 | breadth-stack | gain2.0-modulators | complete | 75 | 0.1060 | 22 | -0.1411 [-0.353,+0.007] p=0.195 -> null | sg-bioeye-t4t5 |
+| sg-mbdr-learn-dense | gain2.0-modulators | complete | 75 | 0.2203 | 15 | -0.0004 [-0.001,+0.000] p=1.000 -> null | sg-mbdr-nolearn |
 
 ## Hypotheses
 
@@ -66,3 +67,4 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 | H-MB-INPUT-BUS | open | Driving the mushroom body through its real input pathway (antennal-lobe projection neurons -> Kenyon cells, 2 hops, reaches 4,025/4,064 KCs) gives the learning circuit sensory content, making a fair retest of H-MB-LEARNING possible. ARC has no odours, so any PN drive is a declared invention (assumption G): the claim is about the MB as associative memory, never about olfaction. |
 | H-RETINO-DECODER | refuted | Click coordinates read retinotopically from the optic-lobe state (the inverse of the encoder's column map) convert a measured 30x localization gap into behaviour: the state localizes a known change to 0.8 cells (joint readback) while the deployed body-id-block head reads the same state at 23.5 cells, chance 37.2. Surprise variant: the reference is the frozen connectome advanced on the previous frame -- its own forward model, zero trained parameters; through the real preference path it localizes at 3.5 cells vs state_change's 12.1, because the free-run reference cancels the network's own settling transients. |
 | H-EFFERENCE | open | Delivering the previous action to Johnston's organ (672 antennal mechanosensory neurons) makes the connectome action-aware: the circuits that read state, above all the mushroom body, know what the agent just did, and the forward model's reference carries the same copy so self-report cancels exactly in the surprise comparison. |
+| H-MB-LEARNING-DENSE | null | The fair null of KC->MBON depression was measured under a 31:1, ~8-events-per-episode teaching signal. Routing the controller's per-turn outcomes to dopamine -- canonical-novel-and-changed destinations to PAM, NOOPs to PPL1, familiar EFFECTs silent, budgeted at 2 terminal-equivalents per game with hard per-side caps -- gives the 61k plastic synapses a balanced, dense signal inside one episode for the first time. What it can learn (which scene-x-action patterns produce change) is within-game generalization, the breadth-era currency; measured support: 29/38 level-clearing clicks re-click a coordinate that previously changed something. |

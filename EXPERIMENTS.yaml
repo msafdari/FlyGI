@@ -247,7 +247,7 @@ hypotheses:
       generalization, the breadth-era currency; measured support: 29/38
       level-clearing clicks re-click a coordinate that previously changed
       something.
-    status: open
+    status: "null"
     evidence:
       - >
         Premise checks passed pre-implementation 2026-09-24: dense outcomes are
@@ -255,6 +255,16 @@ hypotheses:
         change-gated; binomial null 3.8); saturation arithmetic fixes
         eta_novel=1/513, eta_noop=1/14 of half-budget with per-side caps.
       - "Kill panel verdict: survives all five refutation criteria."
+      - >
+        RESULT 2026-09-24: null, and a verified one. vs sg-mbdr-nolearn:
+        -0.0004, CI [-0.001,+0.000], p=1.000; breadth 6/25 v 7/25; levels 15 v
+        16. Crucially the null is not a dead switch: the bundle records
+        dense_reinforcement=true and only 5/75 replay hashes match the sparse
+        arm -- behaviour changed on 70/75 games and outcomes converged to the
+        same clears anyway. Ship gate failed at condition 1; slot not spent;
+        controls stay gated. Third and strongest learning null: the signal was
+        dense, balanced, and action-dependent, the weights moved, the ties
+        broke differently, and none of it changed which levels get cleared.
     updated: 2026-09-24
 
 experiments:
