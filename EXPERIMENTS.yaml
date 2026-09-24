@@ -370,17 +370,23 @@ experiments:
   sg-mbdr-nolearn:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
-    status_override: deferred
     baseline: sg-g2-nolearn
     tests: [H-MB-INPUT-BUS, H-APL]
     note: Bus + APL x4 + rectified eligibility, learning off. Isolates the circuit changes.
   sg-mbdr-learn:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
-    status_override: deferred
     baseline: sg-mbdr-nolearn
     tests: [H-MB-LEARNING]
-    note: The fair retest of mushroom-body learning, with sensory content and biological sparsity.
+    note: >
+      The fair retest of mushroom-body learning: sensory content (PN bus),
+      biological sparsity (APL x4, rectified eligibility), and -- added since
+      deferral -- action identity via the efference copy, so context->action
+      associations are possible for the first time. REVIVED 2026-09-24 under
+      Experiment 002 authority on Mustafa's instruction; distinct from and not
+      claiming Experiment 000 validation (quarantine intact). Rationale:
+      submission 4 proved the frozen agent class plays hidden games and scores
+      zero, so only a generalization-changing mechanism earns a future slot.
   sg-mbdr-learn-rewired:
     config: configs/literal_rate_mb_done_right.yaml
     regime: gain2.0-modulators
