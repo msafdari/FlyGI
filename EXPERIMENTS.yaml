@@ -285,7 +285,7 @@ hypotheses:
       sg-g2-nolearn on complete matched pairs; score CI not negative; ship
       tonight ONLY if fly arm complete, breadth bar met, score not harmed, and
       fly>griddiff attribution (or griddiff incomplete with the claim tiered).
-    status: null-fairly-tested
+    status: "null"
     evidence:
       - >
         VERDICT 2026-09-24 13:25 PDT (75 rows each, validation PASS): the

@@ -236,8 +236,16 @@ def _solve_dual(
         jitter = 1e-8 * float(np.trace(k_train)) / n
         print(f"cholesky jitter engaged: {jitter:.3e}", flush=True)
         factor = cho_factor(kernel + jitter * np.eye(n), lower=True, check_finite=False)
-    alpha = cho_solve(factor, y_train.astype(np.float64), check_finite=False)
-    return factor, alpha.astype(np.float32)
+    # RHS solved in column chunks: a single float64 copy of all 13,380
+    # targets plus its solution cost ~1.4 GB and, run three-wide, took the
+    # whole machine down. Chunking bounds the transient to ~250 MB.
+    alpha = np.empty(y_train.shape, dtype=np.float32)
+    for start in range(0, y_train.shape[1], 2048):
+        stop = min(start + 2048, y_train.shape[1])
+        alpha[:, start:stop] = cho_solve(
+            factor, y_train[:, start:stop].astype(np.float64), check_finite=False
+        ).astype(np.float32)
+    return factor, alpha
 
 
 def _target_matrix(games: dict[str, dict[str, Any]], names: list[str], k: int) -> np.ndarray:

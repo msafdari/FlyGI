@@ -197,6 +197,36 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-CONSEQUENCE-COUPLING: the retinotopic click head, built and gated -- 2026-09-24 ~15:30 PDT
+
+The build the premise tests earned. src/flygi/controller/click_head.py: an
+online per-game logistic head (401 parameters, zero at start, deterministic
+SGD with running class-balance weights -- ft09's measured 5.8% positive
+rate drives an unbalanced learner to "always no") that reads the 5x5 patch
+at a candidate click through the fly's compiled cell->column map, each
+patch cell contributing its retinal column's colour histogram. Its signed
+prediction enters the PRIMARY ranking term scaled by the exploration
+term's own 1/sqrt(1+evidence) decay: a prior for untried candidates that
+measured effects replace. The first divergence gate caught the unscaled
+version overriding the controller on 88% of turns -- never the design --
+and the evidence scaling brought it to 69%, concentrated on the untried
+frontier.
+
+Gates, measured: knob-off replays the champion byte-for-byte (2 games,
+replay hashes MATCH at the champion's 600-action budget -- the first gate
+attempt failed on a wrong default budget, my command not the code); knob-on
+diverges and learns (588 updates in one game). Tests: 7 new, including the
+two comparison tests AGENTS.md requires in the same commit -- the head
+beats rote coordinate memory by >0.2 AUC at coordinates neither has
+clicked, and the permuted-map control destroys the locality signal.
+
+Arms launching (champion recipe + one knob, endpoint levels and per-level
+action cost first): sg-clickhead-retinotopic, then controls
+retinotopic_permuted / pixel_patch / rote. Load-bearing bar: retinotopic
+beats permuted; honesty bar: pixel_patch tells us what a fly-free patch
+does. EXPECTED tier reminder: the base rate for score predictions in this
+repository is eleven straight nulls.
+
 ### H-RECLICK-SEAT: the seat works; the fly's hand is too light -- 2026-09-24 13:25 PDT
 
 Verdict, 75 rows per arm, validation PASS: sg-reclick-fly is outcome-

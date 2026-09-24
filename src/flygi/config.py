@@ -220,6 +220,18 @@ class ControllerConfig:
     # events cannot sweep weights to the clip band.
     dense_reinforcement: bool = False
     dense_budget: float = 2.0
+    # HYPOTHESIS H-CONSEQUENCE-COUPLING (EXPERIMENTS.yaml, premise measured
+    # 2026-09-24): an online logistic head over LOCAL click-patch content,
+    # seated in the PRIMARY ranking term. "none" is byte-identical to the
+    # champion. "retinotopic" reads the patch through the fly's compiled
+    # cell->column map (the load-bearing element under test);
+    # "retinotopic_permuted", "pixel_patch" and "rote" are its preregistered
+    # controls. weight is in the priority+exploration scale; the bonus is
+    # weight*(2p-1), zero until the head has seen outcomes.
+    click_head: str = "none"
+    click_head_weight: float = 1.0
+    click_head_learning_rate: float = 0.3
+    click_head_seed: int = 20260924
 
 
 @dataclass(frozen=True)
@@ -579,6 +591,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
             replan_cooldown=controller_integers["replan_cooldown"],
             dense_reinforcement=bool(controller_raw.pop("dense_reinforcement", False)),
             dense_budget=float(controller_raw.pop("dense_budget", 2.0)),
+            click_head=str(controller_raw.pop("click_head", "none")),
+            click_head_weight=float(controller_raw.pop("click_head_weight", 1.0)),
+            click_head_learning_rate=float(
+                controller_raw.pop("click_head_learning_rate", 0.3)
+            ),
+            click_head_seed=int(controller_raw.pop("click_head_seed", 20260924)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

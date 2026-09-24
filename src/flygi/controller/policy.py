@@ -112,6 +112,7 @@ class StateGraphPolicy:
         controller_config: ControllerConfig,
         decision_seed: int,
         fly: object | None = None,
+        click_head: object | None = None,
     ) -> None:
         if not controller_config.enabled:
             raise StateGraphPolicyError("state-graph policy requires controller.enabled=true")
@@ -130,6 +131,12 @@ class StateGraphPolicy:
         # still decides first, so the fly can never override what the
         # controller has actually learned.
         self._fly = fly
+        # H-CONSEQUENCE-COUPLING: unlike the fly tiebreaker, the click head
+        # sits INSIDE the primary ranking term, so it can reorder candidates
+        # the controller does not consider tied. Injected prebuilt, like fly.
+        self._click_head = click_head
+        self._head_ranked = 0
+        self._head_decisive = 0
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
@@ -252,6 +259,9 @@ class StateGraphPolicy:
             "fly_present": self._fly is not None,
             "fly_ranked_turns": self._fly_ranked,
             "fly_decisive_turns": self._fly_decisive,
+            "head_ranked_turns": self._head_ranked,
+            "head_decisive_turns": self._head_decisive,
+            "head": (None if self._click_head is None else self._click_head.describe()),
             "fly_decisive_rate": (
                 0.0 if self._fly_ranked == 0 else self._fly_decisive / self._fly_ranked
             ),
@@ -364,6 +374,13 @@ class StateGraphPolicy:
         self._pending = None
 
         changed_cells = int(np.count_nonzero(pending.source_grid != destination_scene.grid))
+        if self._click_head is not None and pending.candidate.is_click:
+            self._click_head.update(
+                pending.source_grid,
+                pending.candidate.x,
+                pending.candidate.y,
+                bool(changed_cells),
+            )
         advanced_by = max(0, destination_levels - pending.source_levels)
         fatal = destination_turn.game_state == "GAME_OVER"
         won = destination_turn.game_state == "WIN"
@@ -648,12 +665,31 @@ class StateGraphPolicy:
                 family_attempts[known.action_id] += stats.attempts
 
         def rank(
-            candidate: ActionCandidate, *, use_fly: bool = True
+            candidate: ActionCandidate, *, use_fly: bool = True, use_head: bool = True
         ) -> tuple[float | int | bytes, ...]:
             metadata = observed.candidate_metadata.get(candidate)
             color = self._clicked_color(candidate, metadata, observed.scene)
             estimate = self._effects.estimate(candidate, clicked_color=color)
             exploration = self._config.effect_exploration_bonus / math.sqrt(1.0 + estimate.evidence)
+            consequence = 0.0
+            if (
+                use_head
+                and self._click_head is not None
+                and candidate.is_click
+                and observed.scene is not None
+            ):
+                # H-CONSEQUENCE-COUPLING: predicted click consequence enters
+                # the PRIMARY term, so a click the head has learned is a
+                # no-op sorts behind actions the controller would otherwise
+                # rank equal or better. Scaled by the same 1/sqrt(1+evidence)
+                # decay as the exploration bonus: the prediction is a PRIOR
+                # for untried candidates, and measured effects replace it as
+                # evidence arrives -- the first divergence gate measured an
+                # unscaled head overriding the controller on 88% of turns,
+                # which was never the registered mechanism.
+                consequence = float(
+                    self._click_head.bonus(observed.scene.grid, candidate.x, candidate.y)
+                ) / math.sqrt(1.0 + estimate.evidence)
             stats = self._graph.transition_stats(state_key, candidate)
             attempts = 0 if stats is None else stats.attempts
             retry_prefix = attempts if retries else family_attempts[candidate.action_id]
@@ -666,7 +702,7 @@ class StateGraphPolicy:
             return (
                 retry_prefix,
                 attempts,
-                -(estimate.priority + exploration),
+                -(estimate.priority + exploration + consequence),
                 fly_rank,
                 self._tie_digest(state_key, candidate),
                 candidate.to_bytes(),
@@ -683,6 +719,11 @@ class StateGraphPolicy:
             without = min(candidates, key=lambda c: rank(c, use_fly=False))
             if without != ordered[0]:
                 self._fly_decisive += 1
+        if self._click_head is not None and ordered:
+            self._head_ranked += 1
+            without_head = min(candidates, key=lambda c: rank(c, use_head=False))
+            if without_head != ordered[0]:
+                self._head_decisive += 1
         return ordered
 
     def _tie_digest(self, state_key: bytes, candidate: ActionCandidate) -> bytes:

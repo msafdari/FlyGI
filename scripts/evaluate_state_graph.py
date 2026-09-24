@@ -280,6 +280,36 @@ def main(argv: Sequence[str] | None = None) -> int:
             flush=True,
         )
 
+    # H-CONSEQUENCE-COUPLING: the cell->column map is compiled once; the
+    # online head itself is per-game state, so the factory builds it fresh.
+    head_cell_columns = None
+    head_column_count = 0
+    if config.controller.click_head.startswith("retinotopic"):
+        from flygi.controller.click_head import load_cell_columns
+
+        head_cell_columns, head_column_count = load_cell_columns(config.graph.output_dir)
+        print(
+            f"click_head={config.controller.click_head} "
+            f"columns={head_column_count} weight={config.controller.click_head_weight}",
+            flush=True,
+        )
+    elif config.controller.click_head != "none":
+        print(f"click_head={config.controller.click_head}", flush=True)
+
+    def _build_click_head():
+        if config.controller.click_head == "none":
+            return None
+        from flygi.controller.click_head import OnlineClickHead
+
+        return OnlineClickHead(
+            config.controller.click_head,
+            cell_columns=head_cell_columns,
+            column_count=head_column_count,
+            weight=config.controller.click_head_weight,
+            learning_rate=config.controller.click_head_learning_rate,
+            permutation_seed=config.controller.click_head_seed,
+        )
+
     def policy_factory(policy_seed: int) -> StateGraphPolicy:
         if fly_tiebreaker is not None:
             fly_tiebreaker.reset()
@@ -288,6 +318,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             config.controller,
             decision_seed=policy_seed,
             fly=fly_tiebreaker,
+            click_head=_build_click_head(),
         )
         policy_factory.current = policy  # type: ignore[attr-defined]
         return policy
