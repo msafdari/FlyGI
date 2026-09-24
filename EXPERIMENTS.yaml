@@ -346,6 +346,23 @@ hypotheses:
         with raw grid at 0.738); load-bearing test for any built arm is
         bio-eye vs PERMUTED bio-eye under identical training, since
         raw-grid parity alone does not distinguish the retina from pixels.
+      - >
+        MEASURED 2026-09-24 ~14:30 PDT (click-local extension, results/jepa/
+        consequence_click_local.json): a 5x5 patch at the CLICK COORDINATE
+        predicts whether the click changes the frame with AUC 0.998 (ft09,
+        400 clicks, 5.8% change rate), 0.820 (lp85 -- one of the three games
+        carrying 95% of all score, 4.0% change rate), 0.710 (sb26), 0.652
+        (sc25); median 0.581 over 10 click-heavy games (small-n high-change
+        games have little headroom). The consequence signal is LOCAL, which
+        is what every global-feature arm (including N_t) structurally
+        misses. Surviving fly-native mechanism: the retinotopic column
+        activations AT a candidate click location read by an online head
+        feeding the PRIMARY term -- the fly's contribution is retinotopy
+        itself, and the load-bearing control is the permuted-retinotopy
+        twin (breaks the spatial map, keeps everything else), plus a
+        raw-pixel-patch twin and per-coordinate rote memory as the named
+        trivial alternatives. Endpoint: levels and per-level action cost
+        first (the powered intermediate endpoint), score second.
     updated: 2026-09-24
   H-JEPA-SPONTANEOUS:
     statement: >
