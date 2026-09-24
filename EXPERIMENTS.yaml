@@ -364,6 +364,22 @@ hypotheses:
         trivial alternatives. Endpoint: levels and per-level action cost
         first (the powered intermediate endpoint), score second.
     updated: 2026-09-24
+    ship_decision_preregistered_2026_09_24: >
+      Standing user authorization 2026-09-24 ("do not wait for me"): the
+      click-head candidate is packaged and submitted to Kaggle when quota
+      allows IFF all three preregistered bars pass, decided mechanically
+      from the arms, no judgment at decision time. BAR A (no harm):
+      sg-clickhead-retinotopic >= the champion arm sg-g2-nolearn on BOTH
+      total levels and mean score. BAR B (fly load-bearing):
+      sg-clickhead-retinotopic beats sg-clickhead-retinotopic-permuted on
+      levels, or at equal levels on median per-completed-level action cost.
+      BAR C (packaging): the packaged Kaggle agent's local replay matches
+      the arm's behaviour (same config sha, nonzero head updates in the
+      rerun log). The pixel_patch and rote arms are reported for honesty
+      but do not gate: a pixel head matching the retinotopic one bounds the
+      claim wording ("fly-parity", not "fly-advantage"), it does not block
+      shipping a fly-load-bearing candidate that passed A and B. If any bar
+      fails, the slot is NOT spent and the failure is recorded.
   H-JEPA-SPONTANEOUS:
     statement: >
       The frozen connectome's neural state N_t, driven by real ARC observation
