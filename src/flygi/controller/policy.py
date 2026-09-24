@@ -133,6 +133,7 @@ class StateGraphPolicy:
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
+        self._pending_click_xy: tuple[int, int] | None = None
         self._fly_ranked = 0
         self._fly_decisive = 0
         self._scene_tracker = SceneTracker(
@@ -201,6 +202,7 @@ class StateGraphPolicy:
                 observed.scene.grid,
                 turn.available_action_ids,
                 previous_action_id=self._last_action_id,
+                previous_click=self._pending_click_xy,
             )
         if turn.is_win:
             raise StateGraphPolicyError("cannot choose an action after WIN")
@@ -516,6 +518,9 @@ class StateGraphPolicy:
         clicked_color = self._clicked_color(candidate, metadata, observed.scene)
         estimate = self._effects.estimate(candidate, clicked_color=clicked_color)
         action = self._resolve_action(candidate.action_id)
+        self._pending_click_xy = (
+            (int(candidate.x), int(candidate.y)) if candidate.is_click else None
+        )
         if candidate.is_click:
             setter = getattr(action, "set_data", None)
             if not callable(setter):

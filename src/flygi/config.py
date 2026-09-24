@@ -126,6 +126,13 @@ class DecoderConfig:
     # frame -- its own forward model, zero trained parameters, one extra
     # network advance per turn (H-RETINO-DECODER).
     coordinate_source: str = "readout_blocks"
+    # HYPOTHESIS H-RECLICK-SEAT (constants frozen in EXPERIMENTS.yaml before
+    # implementation): a per-game coordinate memory written after each click --
+    # "surprise" deposits the fly forward-model's surprise at the clicked
+    # coordinate, "griddiff" (the trivial-alternative writer) deposits the raw
+    # change-mask mass -- and preference() pays a bonus for returning there.
+    # Encodes the measured 29/38 re-click clearing regularity into the seat.
+    reclick_memory: str = "none"
     action_slots: int = 8
     coordinate_head: str = "literal_factorized_bins"
     sampling_method: str = "zscore_softmax_categorical"
@@ -469,6 +476,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
             kind=str(decoder_raw.pop("kind", "literal")),
             readout=str(decoder_raw.pop("readout", "descending_neurons")),
             coordinate_source=str(decoder_raw.pop("coordinate_source", "readout_blocks")),
+            reclick_memory=str(decoder_raw.pop("reclick_memory", "none")),
             action_slots=int(decoder_raw.pop("action_slots", 8)),
             coordinate_head=str(decoder_raw.pop("coordinate_head", "literal_factorized_bins")),
             sampling_method=str(decoder_raw.pop("sampling_method", "zscore_softmax_categorical")),
@@ -646,6 +654,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
     overlap = set(encoder.on_types) & set(encoder.off_types)
     if overlap:
         raise ConfigError(f"a cell type cannot be both ON and OFF: {sorted(overlap)}")
+    if decoder.reclick_memory not in ("none", "surprise", "griddiff"):
+        raise ConfigError(f"unknown decoder.reclick_memory: {decoder.reclick_memory!r}")
     if decoder.coordinate_source not in (
         "readout_blocks",
         "retinotopic_state",

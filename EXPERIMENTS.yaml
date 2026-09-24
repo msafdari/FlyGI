@@ -267,6 +267,29 @@ hypotheses:
         broke differently, and none of it changed which levels get cleared.
     updated: 2026-09-24
 
+  H-RECLICK-SEAT:
+    statement: >
+      The measured clearing regularity -- 29/38 level-clearing clicks re-click a
+      coordinate that previously produced change -- can be written INTO the
+      decisive seat itself: after each click, the fly's forward-model surprise at
+      the clicked coordinate is deposited into a per-game coordinate memory, and
+      preference() pays a bonus for returning there. Credit is coordinate-exact
+      (zero diffusion), within-game, game-agnostic, and fly-carried (the surprise
+      computation is the frozen connectome's own expectation). Attribution bar:
+      the fly-surprise writer must beat the grid-diff writer (same memory, raw
+      change-mask deposits) or the fly is decorative.
+      FROZEN CONSTANTS (preregistered before implementation, 2026-09-24 11:20
+      PDT): deposit radius +/-2 cells; memory decay 0.995 per turn; preference
+      beta 1.0; per-game deposited-mass cap 50; bonus normalized by running
+      median of nonzero memory. Endpoints: primary breadth >10/25 vs
+      sg-g2-nolearn on complete matched pairs; score CI not negative; ship
+      tonight ONLY if fly arm complete, breadth bar met, score not harmed, and
+      fly>griddiff attribution (or griddiff incomplete with the claim tiered).
+    status: open
+    evidence:
+      - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
+    updated: 2026-09-24
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
@@ -522,3 +545,16 @@ experiments:
       main arm separates. Expected outcome recorded honestly: the slot is NOT
       spent tonight unless all four ship-gate conditions hold, including a
       mechanism-level account of the 10/25-to-0 hidden conversion.
+
+  sg-reclick-fly:
+    config: configs/literal_rate_mb_learning.yaml
+    regime: gain2.0-modulators
+    baseline: sg-g2-nolearn
+    tests: [H-RECLICK-SEAT]
+    note: Surprise-writer re-click memory in the tie-break seat. Constants frozen in the hypothesis before code.
+  sg-reclick-griddiff:
+    config: configs/literal_rate_mb_learning.yaml
+    regime: gain2.0-modulators
+    baseline: sg-reclick-fly
+    tests: [H-RECLICK-SEAT]
+    note: Trivial-alternative writer (raw grid change mask). If it ties the fly writer, the fly is decorative.

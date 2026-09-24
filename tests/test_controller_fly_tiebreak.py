@@ -67,7 +67,7 @@ class StubFly:
         self._preferences = preferences
         self.observations = 0
 
-    def observe(self, grid, legal_action_ids, previous_action_id=None) -> None:
+    def observe(self, grid, legal_action_ids, previous_action_id=None, previous_click=None) -> None:
         self.observations += 1
 
     def preference(self, action_id: int, x, y) -> float:

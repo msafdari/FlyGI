@@ -83,6 +83,25 @@ class FlyTiebreaker:
         self._graph_dir = config.graph.output_dir
         self._saliency = None
         self._last_drive = None
+        # H-RECLICK-SEAT frozen constants (preregistered 2026-09-24 11:20 PDT
+        # in EXPERIMENTS.yaml, before implementation).
+        self._reclick = getattr(config.decoder, "reclick_memory", "none")
+        self._reclick_mem = None
+        self._reclick_saliency = None
+        self._reclick_mass = 0.0
+        self._RECLICK_RADIUS = 2
+        self._RECLICK_DECAY = np.float32(0.995)
+        self._RECLICK_BETA = 1.0
+        self._RECLICK_MASS_CAP = 50.0
+        if self._reclick != "none":
+            self._reclick_mem = np.zeros((64, 64), dtype=np.float32)
+            if self._reclick == "surprise":
+                from flygi.decoding.retinotopic_saliency import RetinotopicSaliency
+
+                self._reclick_saliency = RetinotopicSaliency(
+                    Path(runtime_dir) if runtime_dir is not None else Path(self._graph_dir),
+                    mode="surprise",
+                )
         self._last_visual_drive = None
         self._efference = None
         if getattr(config.encoder, "efference_copy", None) == "antennal_mechanosensory":
@@ -149,6 +168,7 @@ class FlyTiebreaker:
             "internal_steps": self._policy.internal_steps,
             "trainable_parameters": 0,
             "turns_observed": self._turns,
+            "reclick_memory": self._reclick,
             "efference_copy": (None if self._efference is None else self._efference.describe()),
             "coordinate_source": (
                 "readout_blocks" if self._saliency is None else self._saliency.describe()
@@ -172,6 +192,7 @@ class FlyTiebreaker:
         grid: NDArray[np.integer],
         legal_action_ids: tuple[int, ...],
         previous_action_id: int | None = None,
+        previous_click: tuple[int, int] | None = None,
     ) -> None:
         """Advance the connectome on this turn's frame and cache its readout."""
 
@@ -198,6 +219,7 @@ class FlyTiebreaker:
             proprio_drive = self._efference.drive_action(previous_action_id)
             drive = visual_drive + proprio_drive
         previous_state = self._state
+        grid_before = self._previous_grid
         expectation = None
         if self._saliency is not None and self._saliency.mode == "surprise":
             # The connectome's own one-step forward model: the network advanced
@@ -231,6 +253,56 @@ class FlyTiebreaker:
             self._x_scores, self._y_scores = self._saliency.axis_scores(self._state, reference)
         else:
             self._x_scores, self._y_scores = self._coordinates.axis_scores(self._trace)
+        if self._reclick_mem is not None:
+            self._reclick_mem *= self._RECLICK_DECAY
+            if previous_click is not None and self._reclick_mass < self._RECLICK_MASS_CAP:
+                cx, cy = int(previous_click[0]), int(previous_click[1])
+                if self._reclick == "surprise":
+                    # The fly's own consequence signal: forward-model surprise
+                    # at the clicked coordinate. Extra advance only when the
+                    # surprise decoder did not already produce an expectation.
+                    reference = expectation
+                    if reference is None:
+                        reference_visual = (
+                            self._last_visual_drive
+                            if self._last_visual_drive is not None
+                            else visual_drive
+                        )
+                        reference_drive = (
+                            reference_visual
+                            if proprio_drive is None
+                            else reference_visual + proprio_drive
+                        )
+                        reference = self._network.advance(
+                            previous_state,
+                            reference_drive,
+                            internal_steps=self._policy.internal_steps,
+                        )
+                    sx, sy = self._reclick_saliency.axis_scores(self._state, reference)
+                    deposit = float(sx[cx]) + float(sy[cy])
+                else:
+                    # Trivial-alternative writer: raw change-mask mass at the
+                    # clicked patch. If this ties the fly writer, the fly is
+                    # decorative and H-RECLICK-SEAT fails its attribution bar.
+                    if grid_before is None:
+                        deposit = 0.0
+                    else:
+                        radius = self._RECLICK_RADIUS
+                        after = np.asarray(features.grid, dtype=np.int16)
+                        before = np.asarray(grid_before, dtype=np.int16)
+                        x0, y0 = max(cx - radius, 0), max(cy - radius, 0)
+                        patch = (
+                            after[x0 : cx + radius + 1, y0 : cy + radius + 1]
+                            != before[x0 : cx + radius + 1, y0 : cy + radius + 1]
+                        )
+                        deposit = float(patch.mean()) if patch.size else 0.0
+                if deposit > 0:
+                    radius = self._RECLICK_RADIUS
+                    x0, y0 = max(cx - radius, 0), max(cy - radius, 0)
+                    self._reclick_mem[x0 : cx + radius + 1, y0 : cy + radius + 1] += np.float32(
+                        deposit
+                    )
+                    self._reclick_mass += deposit
         if self._mushroom_body is not None:
             # Every turn, rewarded or not. The trace is what lets reinforcement
             # that arrives later reach the Kenyon cells that earned it.
@@ -250,6 +322,14 @@ class FlyTiebreaker:
         if x is not None and y is not None:
             assert self._x_scores is not None and self._y_scores is not None
             score += float(self._x_scores[int(x)]) + float(self._y_scores[int(y)])
+            if self._reclick_mem is not None:
+                nonzero = self._reclick_mem[self._reclick_mem > 0]
+                if nonzero.size:
+                    score += (
+                        self._RECLICK_BETA
+                        * float(self._reclick_mem[int(x), int(y)])
+                        / float(np.median(nonzero))
+                    )
         return score
 
     def _build_mushroom_body(
@@ -350,6 +430,9 @@ class FlyTiebreaker:
         self._y_scores = None
         self._last_drive = None
         self._last_visual_drive = None
+        if self._reclick_mem is not None:
+            self._reclick_mem[:] = 0.0
+            self._reclick_mass = 0.0
         self._turns = 0
         if self._mushroom_body is not None:
             # A new environment restores the frozen baseline: what the fly
@@ -404,6 +487,7 @@ class GridHashTiebreaker:
         grid: NDArray[np.integer],
         legal_action_ids: tuple[int, ...],
         previous_action_id: int | None = None,
+        previous_click: tuple[int, int] | None = None,
     ) -> None:
         from hashlib import blake2b
 
