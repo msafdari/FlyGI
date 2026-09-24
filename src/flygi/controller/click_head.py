@@ -89,6 +89,7 @@ class OnlineClickHead:
         weight: float = 1.0,
         learning_rate: float = 0.3,
         permutation_seed: int = 20260924,
+        negative_scale: float = 1.0,
     ) -> None:
         if mode not in {"retinotopic", "retinotopic_permuted", "pixel_patch", "rote"}:
             raise ClickHeadError(f"unknown click head mode: {mode!r}")
@@ -115,6 +116,7 @@ class OnlineClickHead:
         self.mode = mode
         self.weight = float(weight)
         self.learning_rate = float(learning_rate)
+        self.negative_scale = float(negative_scale)
         self._weights = np.zeros(feature_dim + 1, dtype=np.float32) if feature_dim else None
         self._rote_counts: dict[tuple[int, int], tuple[int, int]] = {}
         self._updates = 0
@@ -173,9 +175,16 @@ class OnlineClickHead:
         return float(1.0 / (1.0 + np.exp(-np.clip(logit, -30.0, 30.0))))
 
     def bonus(self, grid: NDArray[np.int8], x: int, y: int) -> float:
-        """Signed primary-term bonus in the priority+exploration scale."""
+        """Signed primary-term bonus in the priority+exploration scale.
 
-        return self.weight * (2.0 * self.probability(grid, x, y) - 1.0)
+        The negative side is scaled by negative_scale: at 0.0 the head is
+        boost-only and cannot starve discovery of clicks it mispredicts as
+        no-ops (the first treatment arm's measured failure mode)."""
+
+        raw = 2.0 * self.probability(grid, x, y) - 1.0
+        if raw < 0.0:
+            raw *= self.negative_scale
+        return self.weight * raw
 
     def update(self, grid: NDArray[np.int8], x: int, y: int, changed: bool) -> None:
         """One online SGD step from an executed click's observed outcome."""
@@ -203,6 +212,7 @@ class OnlineClickHead:
             "mode": self.mode,
             "weight": self.weight,
             "learning_rate": self.learning_rate,
+            "negative_scale": self.negative_scale,
             "updates": self._updates,
             "parameters": 0 if self._weights is None else int(self._weights.size),
         }

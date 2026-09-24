@@ -308,6 +308,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             weight=config.controller.click_head_weight,
             learning_rate=config.controller.click_head_learning_rate,
             permutation_seed=config.controller.click_head_seed,
+            negative_scale=config.controller.click_head_negative_scale,
         )
 
     def policy_factory(policy_seed: int) -> StateGraphPolicy:

@@ -137,3 +137,21 @@ def test_boundary_coordinates_do_not_crash() -> None:
         for x, y in [(0, 0), (0, 63), (63, 0), (63, 63)]:
             head.update(grid, x, y, changed=True)
             assert 0.0 <= head.probability(grid, x, y) <= 1.0
+
+
+def test_boost_only_never_demotes() -> None:
+    """negative_scale=0: the head can promote predicted-changers but its
+    bonus is never negative, so an untried click keeps its exploration rank."""
+
+    grid = _planted_world(1)
+    columns, count = _identity_columns()
+    head = OnlineClickHead(
+        "retinotopic", cell_columns=columns, column_count=count, negative_scale=0.0
+    )
+    _train(head, grid, np.random.default_rng(2))
+    rng = np.random.default_rng(4)
+    bonuses = [
+        head.bonus(grid, int(rng.integers(0, GRID)), int(rng.integers(0, GRID))) for _ in range(200)
+    ]
+    assert min(bonuses) >= 0.0
+    assert max(bonuses) > 0.1  # still promotes confident positives

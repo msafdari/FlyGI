@@ -363,6 +363,29 @@ hypotheses:
         raw-pixel-patch twin and per-coordinate rote memory as the named
         trivial alternatives. Endpoint: levels and per-level action cost
         first (the powered intermediate endpoint), score second.
+      - >
+        TREATMENT MEASURED 2026-09-24 17:0x PDT (sg-clickhead-retinotopic,
+        75 rows): score 0.3064 vs champion 0.2034 (+0.103 paired, ~2.2x
+        seed SE -- the largest arm mean recorded) but levels 17 vs 21 and
+        breadth 6/25 vs 10/25. BAR A FAILS (levels harmed): NO SUBMISSION,
+        slot unspent, per the mechanical rule. Decomposition: the entire
+        gain is the premise-predicted games -- r11l L1 cost 1.77x -> 0.68x
+        baseline, lp85 1.88x -> 0.94x, the project's first sub-baseline
+        completions -- while the head's SUPPRESSION side (negative bonus on
+        predicted no-ops) starved discovery in ar25/cd82/lf52/s5i5.
+        Robustness: delta without r11l is +0.032, inside seed noise.
+        Mechanism readout, stated at tier: MEASURED that boost helped where
+        the premise AUC was high and breadth fell where it suppressed;
+        INFERRED (bridge: suppression causes the breadth loss) that a
+        boost-only bonus keeps the efficiency without the starvation.
+      - >
+        CALIBRATION PREREGISTERED before running: ONE amendment arm,
+        click_head_negative_scale 0.0 (boost-only: the bonus is
+        weight*max(2p-1, 0), so the head can promote predicted-changers
+        but never demote an untried click below its normal exploration
+        rank). Trivial alternative named but NOT run (slot economics):
+        halving click_head_weight. Ship bars A/B/C unchanged and still
+        binding; the permuted twin re-runs under the same amendment.
     updated: 2026-09-24
     ship_decision_preregistered_2026_09_24: >
       Standing user authorization 2026-09-24 ("do not wait for me"): the

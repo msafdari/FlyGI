@@ -232,6 +232,12 @@ class ControllerConfig:
     click_head_weight: float = 1.0
     click_head_learning_rate: float = 0.3
     click_head_seed: int = 20260924
+    # HYPOTHESIS (calibration, registered 2026-09-24): the first treatment
+    # arm's breadth loss came from the SUPPRESSION side of the bonus.
+    # negative_scale 1.0 keeps the symmetric bonus; 0.0 is boost-only --
+    # the head may promote predicted-changers, never demote an untried
+    # click below its normal exploration rank.
+    click_head_negative_scale: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -593,10 +599,9 @@ def load_config(path: str | Path) -> FlyGIConfig:
             dense_budget=float(controller_raw.pop("dense_budget", 2.0)),
             click_head=str(controller_raw.pop("click_head", "none")),
             click_head_weight=float(controller_raw.pop("click_head_weight", 1.0)),
-            click_head_learning_rate=float(
-                controller_raw.pop("click_head_learning_rate", 0.3)
-            ),
+            click_head_learning_rate=float(controller_raw.pop("click_head_learning_rate", 0.3)),
             click_head_seed=int(controller_raw.pop("click_head_seed", 20260924)),
+            click_head_negative_scale=float(controller_raw.pop("click_head_negative_scale", 1.0)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc
