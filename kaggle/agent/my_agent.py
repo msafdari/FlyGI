@@ -219,6 +219,9 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
         "click_head_deadline": (
             None if controller_config is None else controller_config.controller.click_head_deadline
         ),
+        "state_similarity": (
+            None if controller_config is None else controller_config.controller.state_similarity
+        ),
         "edges": int(bundle.edge_count),
         "internal_steps": int(interface["internal_steps"]),
         "mode": "controller-fly" if shared.get("controller_config") is not None else "connectome",
@@ -305,6 +308,15 @@ class MyAgent(Agent):
                 projection=shared["projection"],
             )
             controller = shared["controller_config"].controller
+            state_tags = None
+            if controller.state_similarity != "none":
+                from flygi.controller.state_tags import RetinoTagRegistry
+
+                state_tags = RetinoTagRegistry(
+                    shared["runtime_dir"],
+                    threshold=controller.state_similarity_threshold,
+                    permute_retinotopy=(controller.state_similarity == "retino_tags_permuted"),
+                )
             click_head = None
             if controller.click_head != "none":
                 from flygi.controller.click_head import OnlineClickHead
@@ -324,6 +336,7 @@ class MyAgent(Agent):
                 decision_seed=decision_seed,
                 fly=fly,
                 click_head=click_head,
+                state_tags=state_tags,
             )
             self._mode = "controller-fly"
             self._detail = (

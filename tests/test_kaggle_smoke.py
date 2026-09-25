@@ -262,6 +262,7 @@ def test_preflight_prints_machine_readable_verified_identity(
         "controller": None,
         "click_head": None,
         "click_head_deadline": None,
+        "state_similarity": None,
         "edges": 24_559_055,
         "internal_steps": 4,
         "mode": "connectome",
