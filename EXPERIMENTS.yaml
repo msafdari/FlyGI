@@ -548,6 +548,19 @@ hypotheses:
         the ship question changes accordingly; pixel clearly above fly is
         fly-DISADVANTAGE and the head thesis survives only as an
         engineering result outside this project's scope.
+      - >
+        PIXEL ARM MEASURED 2026-09-25 ~05:3x UTC: FLY-ADVANTAGE at the
+        frozen bar. Retinotopic-deadline 0.3058 / 14 levels vs
+        pixel-deadline 0.2361 / 16 levels; arm delta +0.0697 > the frozen
+        0.05 threshold, and the fly wins ALL THREE score-carrying games
+        (r11l +1.25, lp85 +0.42, tn36 +0.32 per-game means) while tying
+        the rest. Robustness stated per discipline: without r11l the
+        delta is +0.021 (inside noise), so the advantage is provisional
+        at 3 seeds, sign-consistent where score lives, magnitude
+        r11l-weighted. The shipped candidate's label is FLY-ADVANTAGE:
+        the retinal column representation beats raw pixels on the paying
+        metric. Note pixel kept two more levels -- the eye-map converts
+        better, the raw patch wanders slightly wider.
     updated: 2026-09-24
     ship_decision_preregistered_2026_09_24: >
       Standing user authorization 2026-09-24 ("do not wait for me"): the
