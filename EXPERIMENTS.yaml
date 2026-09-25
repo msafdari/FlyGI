@@ -403,6 +403,16 @@ hypotheses:
         Consequence: no budget re-evaluation until a mechanism shows any
         level-2 progress; the score frontier remains multi-step
         composition above candidate ordering.
+      - >
+        REOPENED FOR THE COMBO AND RE-CLOSED 2026-09-25 (sg-combo-1800,
+        15 rows, its five best games): the reopening condition (level-2
+        progress) was met, and tripling the budget changes almost
+        nothing -- 14/15 rows outcome-identical, one added vc33 level-2
+        at step 1041 worth +0.004 score (quadratic efficiency pays slow
+        completions nothing). The deployed 600-action self-cap is NOT
+        donating meaningful score; it stays. Level-2 remains
+        capability-bound even for the only stack that has ever crossed
+        it.
     updated: 2026-09-25
   H-CX-RING-ATTRACTOR:
     statement: >
