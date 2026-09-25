@@ -429,6 +429,24 @@ hypotheses:
         a bar change tonight: the "breadth" BAR A defends includes four
         1-2-seed completions at steps 288-577 -- seed-fluke territory the
         verifiers' n=3 resolution warning already covers.
+      - >
+        DEADLINE ARM MEASURED 2026-09-24 18:17 PDT: levels 14 / score
+        0.3058 / breadth 6 (lost sp80 as well); BAR A FAILS a third time.
+        BAR B PASSES again -- deadline 0.3058 vs its permuted twin 0.1875
+        at equal levels: the retinotopy attribution is now REPLICATED in
+        two independent pairs. The fallback inference is refuted: with the
+        head silent after turn 100, the champion wander does not recover
+        the late completions -- so what the three head shapes forfeit is
+        not exploration budget but PATH-DEPENDENT LUCK; any early
+        trajectory divergence re-rolls the knife-edge completions at
+        steps 288-577 (the griddiff control showed the same signature).
+        Efficiency wins are shape-robust (r11l and lp85 sub-baseline in
+        all three variants). CONSEQUENCE UNDER TEST: whether BAR A's
+        reference (champion 21 levels) is itself luck-inflated --
+        measuring now with 6 fresh seeds on the 7 contested games for
+        champion and deadline arm, paired. The bar itself is the user's
+        standing rule and is NOT amended tonight; the measurement decides
+        what to put in front of the user.
     updated: 2026-09-24
     ship_decision_preregistered_2026_09_24: >
       Standing user authorization 2026-09-24 ("do not wait for me"): the
