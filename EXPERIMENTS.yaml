@@ -301,6 +301,53 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-DEAD-GAMES-TAXONOMY:
+    statement: >
+      The 14 never-scoring games fail for heterogeneous reasons requiring
+      per-game mechanisms.
+    status: refuted
+    evidence:
+      - >
+        FORENSICS MEASURED 2026-09-25 (stage-1 uniform trace metrics + a
+        3-agent grid-rendering deep read, wf_71d9021e-8ae; every claim
+        grounded in rendered frames and trace diffs). The games are NOT
+        heterogeneous -- all 14 share one architecture: (1) an explicit
+        per-action TIMER/budget strip giving hard 35-130-action lives,
+        with every GAME_OVER restoring the initial frame at measured 100%
+        cell identity -- progress is erased, deaths are clocks, not
+        hazards; (2) level 1 is a SHORT EXACT PROGRAM (5-35 correct
+        actions; human baselines 18-71) whose goal specification is
+        DISPLAYED ON SCREEN -- a uniquely-coloured marker tile (ls20
+        tu93), same-colour dots for crosshairs (re86), a glyph legend
+        (tr87 sb26), the board's own miniature (ft09), a die-face
+        template (sc25), pads to mate (cn04), a slot to push a box into
+        (ka59), a delivery order (sk48), a dashed path (su15), recipe
+        cards (dc22), a corridor to climb (bp35); (3) churn is actively
+        poisoned: the timer pixels make EVERY action an observation
+        change, so the stage-1 86-100% change rates are partly the games
+        counting down -- the consequence head's teaching signal is
+        contaminated by the clock -- and toggles/undo/deselect unwrite
+        partial progress while resets wipe the rest. UNIFYING MISSING
+        CAPABILITY, one class, two flavours: VISUALLY-GUIDED TAXIS --
+        (a) spatial: reduce the distance between the controlled object
+        (identifiable as the efference-correlated moving sprite) and the
+        unique salient target (identifiable by the retinotopic saliency
+        machinery measured at 0.8-3.5-cell localization); (b) template:
+        make region A match displayed template B by exact clicks. Both
+        are fly-shaped at the component level (object fixation/taxis is
+        the fly's most basic visual behaviour; LC neurons encode object
+        position for orientation) and both seat in the PRIMARY term for
+        directional actions exactly as the click head does for clicks.
+        Registered premise-killers before any build: from captured
+        streams, (i) can the avatar be segmented as the action-correlated
+        moving component, (ii) can the goal be segmented as the unique
+        salient static object, (iii) in how many of the 14 games do (i)
+        and (ii) both succeed. Also MEASURED for the current candidate:
+        the timer contamination means the deployed consequence head
+        learns "everything works" in dead games -- a timer-mask (ignore
+        constant-location single-cell changes) is a registered head
+        improvement independent of taxis.
+    updated: 2026-09-25
   H-DEFRAG-NOVELTY:
     statement: >
       Similarity-aware novelty (locality-sensitive tags over bio-eye
