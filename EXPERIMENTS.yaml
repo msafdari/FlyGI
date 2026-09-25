@@ -347,6 +347,26 @@ hypotheses:
         learns "everything works" in dead games -- a timer-mask (ignore
         constant-location single-cell changes) is a registered head
         improvement independent of taxis.
+      - >
+        PREMISE-KILLERS RUN 2026-09-25, PREMISE SURVIVES (results/
+        taxis_premise_v2.json; corrected shift-matching detector after a
+        v1 whose failures were the detector's own): (i) AVATAR
+        segmentation by action-correlated translation PASSES in 11/14
+        games, recovering the forensics' measured motions exactly (ls20
+        +/-5px on actions 3/4; cn04 and re86 +/-3px on all four) -- the
+        fails are correct: ft09/sb26 are template-flavour with no avatar,
+        su15's avatar moves on clicks not arrows; (ii) GOAL segmentation
+        as unique-salient-static-object PASSES 10/14 with ALL FOUR
+        forensics-named targets HIT (ls20 glyph, tu93 e-tile, re86 dot,
+        su15 blob); (iii) BOTH pass in 10/14 overall, 7/9 on the
+        spatial-flavour games. The spatial-taxis build (greedy
+        distance-reduction between the efference-correlated sprite and
+        the segmented target, seated in the PRIMARY term for directional
+        actions with the same evidence decay as the click head) is
+        premise-backed on ~10 currently-dead games whose human baselines
+        are 18-71 actions. Trivial alternatives named for the build:
+        random-target attraction (same machinery, random stable component
+        as goal) and the no-taxis champion.
     updated: 2026-09-25
   H-DEFRAG-NOVELTY:
     statement: >
