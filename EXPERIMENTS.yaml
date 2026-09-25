@@ -333,6 +333,25 @@ hypotheses:
         downstream, untested by necessity. The persistence result stands
         as the one place the fly's specific wiring measurably matters
         dynamically in this compiled graph.
+      - >
+        SIGN HEURISTIC EXONERATED, REGIME CONVICTED 2026-09-25
+        (results/cx_ring_regime_sweep.json). The compiled signs already
+        match compass biology exactly (Delta7 100% inhibitory, EPG/PEN/PEG
+        100% excitatory) -- the heuristic does not break the ring. The
+        OPERATING POINT does: at gain 1.5 (leak 0.3 or 0.6) the ring
+        WORKS -- persistent bump, circvar 0.52, and OPPOSITE-SIGNED
+        rotation under PEN left/right drive (+0.07/-0.33, +0.34/-0.05
+        deg/step). At the deployed gain 2.0 steering is lost (same-sign),
+        at 0.9 activity dies, at 3.0 rotation is erratic. MEASURED
+        conclusion: the fly compass functions in our compiled anatomy in
+        a gain window (~1.5) BELOW the deployed operating point -- an
+        operating-point conflict between the visual pathway (needs 2.0 to
+        clear the numerical floor) and CX memory (needs ~1.5). The
+        sanctioned resolution exists in-repo: circuit-level calibration
+        (CircuitConfig, the H-APL pattern) -- scale CX-internal edges by
+        ~0.75 so the compass runs in its working regime inside the
+        deployed agent. Registered as the follow-up build; its ARC use
+        still requires an invented heading mapping, priced separately.
     updated: 2026-09-25
   H-FLYHASH-STATE-KEY:
     statement: >
