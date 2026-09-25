@@ -1,0 +1,66 @@
+# Phase 1 controller-only gate. The generic state/effect policy does not load
+# the connectome; the dynamics declaration remains explicit so this file obeys
+# the repository-wide configuration contract and can later become a hybrid
+# without silently inheriting K.
+schema_version: 1
+seed: 20260922
+
+experiment:
+  name: combo-defrag-clickhead
+  track: consequence-coupling
+
+dynamics:
+  backend: rate
+  execution_backend: scipy-csr-cpu
+  activation: tanh
+  internal_steps: 4
+  leak: 0.3
+  recurrent_gain: 0.9
+  bias: 0.0
+  frozen_graph: true
+  initial_state: zeros
+  state_dtype: float32
+
+controller:
+  enabled: true
+  kind: state_graph
+  state_hash: blake2b_128
+  mask_freeze_after: 8
+  volatile_threshold: 0.25
+  volatile_min_changes: 2
+  ui_border_width: 4
+  component_min_area: 1
+  component_limit: 64
+  coarse_cell_size: 8
+  max_candidate_tier: 2
+  max_clicks_per_tier: 64
+  effect_exploration_bonus: 1.5
+  advancement_bonus: 0.6
+  death_penalty: 0.4
+  replan_cooldown: 3
+
+  # HYPOTHESIS H-CONSEQUENCE-COUPLING (EXPERIMENTS.yaml): online local click
+  # consequence head in the PRIMARY ranking term. This file differs from
+  # state_graph_controller.yaml ONLY in the click_head block.
+  click_head: retinotopic
+  click_head_weight: 1.0
+  click_head_learning_rate: 0.3
+  click_head_seed: 20260924
+  # Deadline-fallback: head trusted for 100 turns after each level advance,
+  # then the champion wander resumes (D from measured payoff steps <=56).
+  click_head_deadline: 100
+  # H-DEFRAG-NOVELTY: similarity-aware novelty, stability-confirmed
+  # (19v12 levels on fresh seeds). Composition: breadth from defrag,
+  # fly-load-bearing efficiency from the retinotopic head.
+  state_similarity: retino_tags
+  state_similarity_threshold: 0.9
+
+# The click head's retinotopic map compiles from this runtime bundle -- the
+# same one the champion's fly loads, so provenance is shared.
+graph:
+  matrix_convention: "W[post_index, pre_index]"
+  output_dir: data/processed/male-cns-v1.0/literal-rate-signed-modulators
+  weight_transform: log1p
+  sign_mode: heuristic
+  modulator_treatment: positive
+  unknown_transmitter_treatment: zero

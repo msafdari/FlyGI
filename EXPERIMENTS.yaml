@@ -307,7 +307,7 @@ hypotheses:
       features dampening near-duplicate "novel" states) converts to the
       breadth endpoint the hidden set pays: more levels on more games than
       the champion, without the head arms' breadth harm.
-    status: open
+    status: supported
     evidence:
       - >
         TREATMENT MEASURED 2026-09-25 (sg-defrag-tags, 75 rows): levels 24
@@ -345,6 +345,18 @@ hypotheses:
         (fly-advantage measured): breadth from the first, fly-load-bearing
         efficiency from the second. Stability seeds in flight decide
         whether the breadth gain is real before any combination arm runs.
+      - >
+        STABILITY CONFIRMED 2026-09-25 (seeds 3-8, four moved games,
+        paired): defrag 19 levels vs champion 12 (+58%), winning g50t
+        (4v2), lf52 (6v2), ar25 (6v4); r11l "harm" was noise (score 13.21
+        vs 8.22, defrag WINS on fresh seeds). Score-sum 28.31 vs 8.57
+        (3.3x). FIRST mechanism in this project to replicate its gains on
+        fresh seeds. Status moves to supported AS ENGINEERING (fly-parity
+        recorded). The combination arm (combo_defrag_clickhead.yaml:
+        defrag tags + retinotopic deadline head) launches under the
+        ORIGINAL un-overridden ship bars: A no-harm vs champion on levels
+        AND score, B fly load-bearing via the head's already-measured
+        twin pair, C packaging replay.
     updated: 2026-09-25
   H-CX-CALIBRATION:
     statement: >
