@@ -367,6 +367,25 @@ hypotheses:
         are 18-71 actions. Trivial alternatives named for the build:
         random-target attraction (same machinery, random stable component
         as goal) and the no-taxis champion.
+      - >
+        TAXIS ARM MEASURED 2026-09-25 13:42 PDT (sg-taxis, 75 rows,
+        combo+taxis vs combo): NULL. Zero of the fourteen dead games
+        converted; the host combo was mildly harmed (22 levels / 0.2697
+        vs 24 / 0.3519; g50t traded for ar25 -- perturbation churn). The
+        MECHANISM is not in question -- gates measured exact per-game
+        movers learned live, the forensics-named target correctly
+        selected, the avatar pulled from distance 18 to 2, wall memory
+        working -- so the recorded conclusion is about the GAMES:
+        reaching/touching the displayed salient object is not the level-1
+        trigger; the short exact programs require interactions beyond
+        arrival (sequenced toggles in re86, whatever ls20's glyph
+        actually wants, sub-timer-life execution in tu93). Iterations
+        spent per discipline: shift-scorer fix, rank promotion, wall
+        memory, endgame tolerance -- four measured fixes, then the arm
+        decided. Random-target control cancelled as moot (no positive
+        effect to attribute). The taxis knob stays default-off; the
+        shipped combo candidate is untouched. Level-2 wall standing:
+        composition above arrival semantics remains the frontier.
     updated: 2026-09-25
   H-DEFRAG-NOVELTY:
     statement: >
