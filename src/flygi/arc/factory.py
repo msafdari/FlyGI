@@ -368,6 +368,44 @@ def build_connectome_policy(
             edges_scaled=edges,
             apl_neurons=int(apl.size),
         )
+    if config.circuit.cx_compass_gain != 1.0:
+        # HYPOTHESIS H-CX-CALIBRATION. Scale exactly the intra-compass
+        # synapses (both endpoints in EPG/PEN_a/PEN_b/Delta7/PEG) so the
+        # ring attractor runs at its measured working regime (~gain 1.5)
+        # inside the deployed operating point. Same shallow-copy pattern
+        # as H-APL: indices/indptr shared and frozen, weights private.
+        from scipy import sparse as _sparse
+
+        metadata_path = Path(directory) / "node_metadata.npz"
+        with np.load(metadata_path, allow_pickle=False) as archive:
+            type_names = archive["type"]
+        compass = np.zeros(connectivity.shape[0], dtype=bool)
+        for prefix in ("EPG", "PEN_a", "PEN_b", "Delta7", "PEG"):
+            compass[np.flatnonzero(np.char.startswith(type_names, prefix))] = True
+        if not compass.any():
+            raise RuntimeAssemblyError(
+                "circuit.cx_compass_gain is set but no compass neurons are present"
+            )
+        scaled = _sparse.csr_matrix(connectivity.shape, dtype=connectivity.dtype)
+        scaled.data = connectivity.data.copy()
+        scaled.indices = connectivity.indices
+        scaled.indptr = connectivity.indptr
+        row_of = np.repeat(np.arange(connectivity.shape[0]), np.diff(connectivity.indptr))
+        target = compass[row_of] & compass[connectivity.indices]
+        edges = int(target.sum())
+        if edges == 0:
+            raise RuntimeAssemblyError("no intra-compass edges found; wrong graph for H-CX")
+        scaled.data[target] *= np.float32(config.circuit.cx_compass_gain)
+        connectivity = scaled
+        from flygi.telemetry import run_or_null
+
+        run_or_null().decision(
+            "circuit.cx_compass_gain_applied",
+            reason="run the measured-functional ring regime inside the deployed gain",
+            gain=config.circuit.cx_compass_gain,
+            edges=edges,
+        )
+
     if config.encoder.mb_input_bus == "colour_histogram" and not caller_supplied_projection:
         # A caller-supplied projection (the Kaggle shared bundle, the
         # tiebreaker reusing an assembly) already carries the bus if its own

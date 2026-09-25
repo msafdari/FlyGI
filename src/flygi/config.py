@@ -272,9 +272,20 @@ class CircuitConfig:
     # discrimination of similar stimuli. 1.0 means anatomy as measured.
     apl_to_kc_gain: float = 1.0
 
+    # HYPOTHESIS H-CX-CALIBRATION (2026-09-25): the compass ring measured
+    # FUNCTIONAL at effective gain ~1.5 (tight bump, opposite-signed PEN
+    # steering) and broken at the deployed 2.0. Scaling the intra-compass
+    # edges (EPG/PEN_a/PEN_b/Delta7/PEG mutual synapses) by 0.75 runs the
+    # ring in its working regime inside the gain-2.0 agent -- the same
+    # sanctioned circuit-level pattern as H-APL. 1.0 means anatomy as
+    # measured; signs were verified to already match compass biology.
+    cx_compass_gain: float = 1.0
+
     def __post_init__(self) -> None:
         if not math.isfinite(self.apl_to_kc_gain) or self.apl_to_kc_gain <= 0:
             raise ConfigError("circuit.apl_to_kc_gain must be finite and positive")
+        if not math.isfinite(self.cx_compass_gain) or self.cx_compass_gain <= 0:
+            raise ConfigError("circuit.cx_compass_gain must be finite and positive")
 
 
 @dataclass(frozen=True)
@@ -449,6 +460,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
         circuit_raw = dict(root.pop("circuit", {}) or {})
         circuit = CircuitConfig(
             apl_to_kc_gain=float(circuit_raw.pop("apl_to_kc_gain", 1.0)),
+            cx_compass_gain=float(circuit_raw.pop("cx_compass_gain", 1.0)),
         )
         if circuit_raw:
             raise ConfigError(f"unknown circuit keys: {sorted(circuit_raw)}")

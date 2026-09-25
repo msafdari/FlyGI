@@ -301,6 +301,34 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-CX-CALIBRATION:
+    statement: >
+      Circuit-level calibration (the H-APL pattern) can transplant the
+      compass's measured working regime (~gain 1.5) into the deployed
+      gain-2.0 agent by scaling CX-internal edges, giving the deadline
+      agent a functioning steerable ring.
+    status: refuted
+    evidence:
+      - >
+        BUILT AND MEASURED 2026-09-25 (circuit.cx_compass_gain knob,
+        default 1.0 = identity, 406 tests pass; results/
+        cx_calibration_insitu.json, _sweep.json, _extended.json). The
+        causal chain, complete: (1) whole network at gain 1.5 -> ring
+        works (tight bump, opposite-signed steering); (2) intra-compass
+        edges scaled 0.4-0.75 inside the gain-2.0 network -> localization
+        improves monotonically (circvar 0.51-0.60) but steering stays
+        same-signed at every value; (3) intra PLUS all external->compass
+        input scaled 0.75 (29k edges) -> still same-signed. CONCLUSION:
+        the ring's STEERABILITY is a global-regime property of the
+        compiled dynamics -- the PEN velocity pathway functions only when
+        the surrounding network also runs near gain 1.5 -- and cannot be
+        transplanted by circuit-local calibration. Per AGENTS.md rule 4
+        this is recorded as a real limit and the attempt stops here; the
+        knob remains as the measuring instrument (default identity). The
+        deployed agent is unchanged. The compass's persistence (anatomy-
+        specific, H-CX-RING-ATTRACTOR) still stands; its steering exists
+        only in a whole-brain regime the visual pathway cannot occupy.
+    updated: 2026-09-25
   H-BUDGET-LIMITS-LEVEL2:
     statement: >
       The level-2 wall is partly budget-limited: with the ~490 spare
