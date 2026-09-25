@@ -301,6 +301,42 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-T4T5-CLICK-FEATURES:
+    statement: >
+      The fly's motion channels (T4/T5, fed by lamina change types) carry
+      click-consequence information beyond static patch content, making a
+      motion-augmented click head the next fly improvement.
+    status: refuted
+    evidence:
+      - >
+        PREMISE-KILLED OFFLINE 2026-09-25 before any build
+        (results/premise_killers_t4t5_transfer.json): raw frame-diff
+        patches -- which upper-bound every T4/T5-filtered feature, since
+        the motion circuit is a function of the same temporal difference
+        -- add median +0.000 AUC over static patches (1/10 games improve,
+        2 harmed); diff-only features are near-chance in all ten
+        click-heavy games. Click consequence is predicted by WHAT IS at a
+        location, not what recently moved there. The 13,585 T4/T5
+        detectors remain unread because motion is measurably not the
+        predictive quantity for this task.
+    updated: 2026-09-25
+  H-CROSS-GAME-PERSISTENCE:
+    statement: >
+      Click-consequence knowledge transfers across games, so an Agno-style
+      persistent head (weak-RSI layer 2) would compound across the
+      evaluation set.
+    status: refuted
+    evidence:
+      - >
+        PREMISE-KILLED OFFLINE 2026-09-25 (same record): pooled-24-game
+        training tested on the held-out game gives median transfer AUC
+        0.523 (chance); ft09, the strongest within-game signal (0.998),
+        transfers at 0.165 -- other games' knowledge is anti-predictive
+        there. Knowledge is game-specific, consistent with the repo's
+        prior 0.000-transfer measurement (Track B). Weak-RSI layer 2 is
+        closed for this deployment; layer 1 (within-game online learning)
+        remains the shipped mechanism.
+    updated: 2026-09-25
   H-MBON-DAN-METAPLASTICITY:
     statement: >
       The fly's one native second-order learning loop -- KC->MBON plasticity
