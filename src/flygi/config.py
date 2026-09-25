@@ -243,6 +243,13 @@ class ControllerConfig:
     # 0 = no deadline (always active; preserves every prior arm). D=100
     # preregistered from measured payoff steps (all head wins by step 56).
     click_head_deadline: int = 0
+    # HYPOTHESIS (defragmentation, registered 2026-09-25): similarity-aware
+    # novelty via locality-sensitive state tags. "none" is byte-identical.
+    # A new-but-tag-similar state reads as familiar for LEARNING signals
+    # (novelty posterior, dense reinforcement) while graph bookkeeping stays
+    # exact. "retino_tags_permuted" is the fly-attribution control.
+    state_similarity: str = "none"
+    state_similarity_threshold: float = 0.9
 
 
 @dataclass(frozen=True)
@@ -608,6 +615,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
             click_head_seed=int(controller_raw.pop("click_head_seed", 20260924)),
             click_head_negative_scale=float(controller_raw.pop("click_head_negative_scale", 1.0)),
             click_head_deadline=int(controller_raw.pop("click_head_deadline", 0)),
+            state_similarity=str(controller_raw.pop("state_similarity", "none")),
+            state_similarity_threshold=float(controller_raw.pop("state_similarity_threshold", 0.9)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

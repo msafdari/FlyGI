@@ -311,6 +311,17 @@ def main(argv: Sequence[str] | None = None) -> int:
             negative_scale=config.controller.click_head_negative_scale,
         )
 
+    def _build_state_tags():
+        if config.controller.state_similarity == "none":
+            return None
+        from flygi.controller.state_tags import RetinoTagRegistry
+
+        return RetinoTagRegistry(
+            config.graph.output_dir,
+            threshold=config.controller.state_similarity_threshold,
+            permute_retinotopy=(config.controller.state_similarity == "retino_tags_permuted"),
+        )
+
     def policy_factory(policy_seed: int) -> StateGraphPolicy:
         if fly_tiebreaker is not None:
             fly_tiebreaker.reset()
@@ -320,6 +331,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             decision_seed=policy_seed,
             fly=fly_tiebreaker,
             click_head=_build_click_head(),
+            state_tags=_build_state_tags(),
         )
         policy_factory.current = policy  # type: ignore[attr-defined]
         return policy

@@ -113,6 +113,7 @@ class StateGraphPolicy:
         decision_seed: int,
         fly: object | None = None,
         click_head: object | None = None,
+        state_tags: object | None = None,
     ) -> None:
         if not controller_config.enabled:
             raise StateGraphPolicyError("state-graph policy requires controller.enabled=true")
@@ -141,6 +142,9 @@ class StateGraphPolicy:
         # level advance; the head speaks only while this is under the
         # configured deadline (0 = no deadline).
         self._turns_since_advance = 0
+        # Defragmentation: similarity-aware novelty (injected, like fly/head).
+        self._state_tags = state_tags
+        self._tag_dampened = 0
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
@@ -264,6 +268,8 @@ class StateGraphPolicy:
             "fly_ranked_turns": self._fly_ranked,
             "fly_decisive_turns": self._fly_decisive,
             "head_ranked_turns": self._head_ranked,
+            "tag_dampened_states": self._tag_dampened,
+            "state_tags": (None if self._state_tags is None else self._state_tags.describe()),
             "head_decisive_turns": self._head_decisive,
             "head": (None if self._click_head is None else self._click_head.describe()),
             "fly_decisive_rate": (
@@ -319,6 +325,16 @@ class StateGraphPolicy:
         canonical = self._canonical_state(scene, turn.game_state, self._level_epoch)
         destination_key = self._graph.state_key(canonical)
         novel = destination_key not in self._graph.nodes
+        if novel and self._state_tags is not None:
+            # A brand-new exact state that is tag-similar to a seen one is
+            # NOT novel for learning purposes: the novelty posterior and
+            # dense reinforcement stop chasing near-duplicates. The graph
+            # node itself is still created; bookkeeping stays exact.
+            tag = self._state_tags.tag(scene.grid)
+            if self._state_tags.seen_similar(tag):
+                novel = False
+                self._tag_dampened += 1
+            self._state_tags.observe(tag)
         self._graph.upsert_state(destination_key, canonical, candidate_metadata)
 
         advanced_by = 0
