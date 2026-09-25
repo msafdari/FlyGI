@@ -197,6 +197,22 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### SHIPPED: submission 5, the retinotopic click head -- 2026-09-25 04:08 UTC
+
+Submission 56539536, PENDING: the clickhead-deadline candidate (retinotopic
+click head in the primary ranking term, deadline 100, fly tie-break intact,
+modulators graph). Shipped on the user's explicit Bar A override ("score is
+what counts"), with BAR B passed twice (retinotopy load-bearing, 0.306/
+0.3058 vs 0.1875 permuted) and BAR C verified two ways: locally through the
+official framework loop (80 head updates in 80 actions) and in the kernel
+log itself (FLYGI_PREFLIGHT names click_head retinotopic, deadline 100).
+The preflight instrumentation earned its keep: kernel v6 was caught running
+the PREVIOUS dataset version (click_head none) and was not submitted; v7
+verified before the slot was spent. Local reference: 0.3058 vs champion
+0.2034. All four prior submissions sit at 0.00 public score, so any
+nonzero result is a project first. Pixel-patch arm still running; its
+frozen interpretation applies to the claim wording, not to this ship.
+
 ### H-MBON-DAN-METAPLASTICITY: the fly's RSI loop, measured link by link -- 2026-09-24 ~21:45 PDT
 
 The RSI deep dive's verdict, converted from prediction to measurement. The
