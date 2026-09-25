@@ -197,6 +197,23 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### Submission 5 scored: 0.00 -- 2026-09-25 ~06:00 UTC
+
+The hidden set returned 0.00, the fifth consecutive zero, including the
+champion's own 0.00 (submission 4, local 0.2034). MEASURED lesson, stated
+plainly: the entire local score band -- champion 0.20 through click-head
+0.31 -- converts to zero on the hidden games. Our local score mass is
+three public games (tn36/lp85/r11l) whose level 1 falls to wandering and
+whose clicks the head reads well; the hidden set evidently contains no
+such freebies, so per-completion efficiency gains multiply zero
+completions. The leaderboard pays what BAR A was defending all along:
+P(complete anything on an UNSEEN game) -- breadth first, efficiency
+second. The user's score-first bet was worth taking and is now priced:
+the local-vs-hidden gap, not the local ranking, is the binding problem.
+Constructively, this re-points at the fragmentation attack (fly-hash
+state keys + MBON novelty): better exploration is the only lever that
+plausibly moves P(first level | unseen game).
+
 ### SHIPPED: submission 5, the retinotopic click head -- 2026-09-25 04:08 UTC
 
 Submission 56539536, PENDING: the clickhead-deadline candidate (retinotopic
