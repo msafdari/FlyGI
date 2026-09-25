@@ -159,18 +159,29 @@ def _shared_runtime() -> dict[str, Any]:
             )
         controller_path = _find_controller_config(runtime_dir, config_path)
         controller_config = None
+        head_cell_columns = None
+        head_column_count = 0
         if controller_path is not None:
             controller_config = load_config(controller_path)
             if not controller_config.controller.enabled:
                 raise ValueError(
                     f"{controller_path.name} is attached but controller.enabled is false"
                 )
+            # H-CONSEQUENCE-COUPLING: the click head's retinal map compiles
+            # once from the attached runtime; the online head itself is
+            # per-game state built at Agent construction.
+            if controller_config.controller.click_head.startswith("retinotopic"):
+                from flygi.controller.click_head import load_cell_columns
+
+                head_cell_columns, head_column_count = load_cell_columns(runtime_dir)
         _LOADED.update(
             {
                 "available": True,
                 "config": config,
                 "controller_config": controller_config,
                 "controller_path": controller_path,
+                "head_cell_columns": head_cell_columns,
+                "head_column_count": head_column_count,
                 "runtime_dir": runtime_dir,
                 "bundle": assembled.bundle,
                 "projection": assembled.projection,
@@ -197,9 +208,16 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
     verified_hashes = {
         Path(path).name: digest for path, digest in sorted(bundle.verified_hashes.items())
     }
+    controller_config = shared.get("controller_config")
     return {
         "controller": (
             None if shared.get("controller_path") is None else Path(shared["controller_path"]).name
+        ),
+        "click_head": (
+            None if controller_config is None else controller_config.controller.click_head
+        ),
+        "click_head_deadline": (
+            None if controller_config is None else controller_config.controller.click_head_deadline
         ),
         "edges": int(bundle.edge_count),
         "internal_steps": int(interface["internal_steps"]),
@@ -286,11 +304,26 @@ class MyAgent(Agent):
                 bundle=shared["bundle"],
                 projection=shared["projection"],
             )
+            controller = shared["controller_config"].controller
+            click_head = None
+            if controller.click_head != "none":
+                from flygi.controller.click_head import OnlineClickHead
+
+                click_head = OnlineClickHead(
+                    controller.click_head,
+                    cell_columns=shared.get("head_cell_columns"),
+                    column_count=int(shared.get("head_column_count") or 0),
+                    weight=controller.click_head_weight,
+                    learning_rate=controller.click_head_learning_rate,
+                    permutation_seed=controller.click_head_seed,
+                    negative_scale=controller.click_head_negative_scale,
+                )
             self._policy = StateGraphPolicy(
                 GameAction,
-                shared["controller_config"].controller,
+                controller,
                 decision_seed=decision_seed,
                 fly=fly,
+                click_head=click_head,
             )
             self._mode = "controller-fly"
             self._detail = (

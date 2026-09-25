@@ -260,6 +260,8 @@ def test_preflight_prints_machine_readable_verified_identity(
         # No controller.yaml is attached here, so the adapter must still build
         # the pure connectome policy and say so.
         "controller": None,
+        "click_head": None,
+        "click_head_deadline": None,
         "edges": 24_559_055,
         "internal_steps": 4,
         "mode": "connectome",
