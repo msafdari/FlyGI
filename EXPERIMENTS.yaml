@@ -346,7 +346,11 @@ hypotheses:
         the timer contamination means the deployed consequence head
         learns "everything works" in dead games -- a timer-mask (ignore
         constant-location single-cell changes) is a registered head
-        improvement independent of taxis.
+        improvement independent of taxis. TIMER-MASK ARM MEASURED
+        2026-09-25 ~14:50 PDT (sg-combo-tm vs sg-combo): MIXED -- score
+        0.3648 vs 0.3519 (inside seed noise), levels 23 vs 24. The
+        pre-stated both-clause rule holds: the shipped combo is
+        unchanged; the knob stays available, default-off.
       - >
         PREMISE-KILLERS RUN 2026-09-25, PREMISE SURVIVES (results/
         taxis_premise_v2.json; corrected shift-matching detector after a
