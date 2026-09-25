@@ -322,6 +322,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             permute_retinotopy=(config.controller.state_similarity == "retino_tags_permuted"),
         )
 
+    def _build_taxis(policy_seed: int):
+        if config.controller.taxis == "none":
+            return None
+        from flygi.controller.taxis import SpatialTaxis
+
+        return SpatialTaxis(
+            weight=config.controller.taxis_weight,
+            random_target_seed=(
+                policy_seed if config.controller.taxis == "spatial_random_target" else None
+            ),
+        )
+
     def policy_factory(policy_seed: int) -> StateGraphPolicy:
         if fly_tiebreaker is not None:
             fly_tiebreaker.reset()
@@ -332,6 +344,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             fly=fly_tiebreaker,
             click_head=_build_click_head(),
             state_tags=_build_state_tags(),
+            taxis=_build_taxis(policy_seed),
         )
         policy_factory.current = policy  # type: ignore[attr-defined]
         return policy

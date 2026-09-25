@@ -250,6 +250,12 @@ class ControllerConfig:
     # exact. "retino_tags_permuted" is the fly-attribution control.
     state_similarity: str = "none"
     state_similarity_threshold: float = 0.9
+    # HYPOTHESIS H-TAXIS (premise-killers passed 2026-09-25): spatial
+    # attraction of the action-correlated sprite toward the unique salient
+    # target, in the primary term for directional actions. "none" is
+    # byte-identical; "spatial_random_target" is the preregistered control.
+    taxis: str = "none"
+    taxis_weight: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -629,6 +635,8 @@ def load_config(path: str | Path) -> FlyGIConfig:
             click_head_deadline=int(controller_raw.pop("click_head_deadline", 0)),
             state_similarity=str(controller_raw.pop("state_similarity", "none")),
             state_similarity_threshold=float(controller_raw.pop("state_similarity_threshold", 0.9)),
+            taxis=str(controller_raw.pop("taxis", "none")),
+            taxis_weight=float(controller_raw.pop("taxis_weight", 1.0)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

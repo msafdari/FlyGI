@@ -114,6 +114,7 @@ class StateGraphPolicy:
         fly: object | None = None,
         click_head: object | None = None,
         state_tags: object | None = None,
+        taxis: object | None = None,
     ) -> None:
         if not controller_config.enabled:
             raise StateGraphPolicyError("state-graph policy requires controller.enabled=true")
@@ -145,6 +146,8 @@ class StateGraphPolicy:
         # Defragmentation: similarity-aware novelty (injected, like fly/head).
         self._state_tags = state_tags
         self._tag_dampened = 0
+        # H-TAXIS: sprite-to-target attraction, injected like fly/head/tags.
+        self._taxis = taxis
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
@@ -269,6 +272,7 @@ class StateGraphPolicy:
             "fly_decisive_turns": self._fly_decisive,
             "head_ranked_turns": self._head_ranked,
             "tag_dampened_states": self._tag_dampened,
+            "taxis": (None if self._taxis is None else self._taxis.describe()),
             "state_tags": (None if self._state_tags is None else self._state_tags.describe()),
             "head_decisive_turns": self._head_decisive,
             "head": (None if self._click_head is None else self._click_head.describe()),
@@ -394,6 +398,10 @@ class StateGraphPolicy:
         self._pending = None
 
         changed_cells = int(np.count_nonzero(pending.source_grid != destination_scene.grid))
+        if self._taxis is not None:
+            self._taxis.observe_transition(
+                pending.source_grid, pending.candidate.action_id, destination_scene.grid
+            )
         if self._click_head is not None and pending.candidate.is_click:
             self._click_head.update(
                 pending.source_grid,
@@ -696,6 +704,25 @@ class StateGraphPolicy:
             estimate = self._effects.estimate(candidate, clicked_color=color)
             exploration = self._config.effect_exploration_bonus / math.sqrt(1.0 + estimate.evidence)
             consequence = 0.0
+            taxis_rank = 0
+            if (
+                self._taxis is not None
+                and not candidate.is_click
+                and candidate.action_id in (1, 2, 3, 4)
+                and observed.scene is not None
+            ):
+                # H-TAXIS: when the sprite and the goal are both identified,
+                # the pull's SIGN outranks the attempts bookkeeping (next
+                # key below) -- the first divergence gate measured perfect
+                # mover learning with zero conversion because any untried
+                # action beat the already-tried goalward one on revisits;
+                # directed traversal requires persistence across revisits.
+                # Negated: goalward (-1) sorts before neutral before away.
+                pull = float(self._taxis.bonus(candidate.action_id, observed.scene.grid))
+                if pull > 0.25:
+                    taxis_rank = -1
+                elif pull < -0.25:
+                    taxis_rank = 1
             head_active = self._click_head is not None and (
                 self._config.click_head_deadline == 0
                 or self._turns_since_advance < self._config.click_head_deadline
@@ -724,6 +751,7 @@ class StateGraphPolicy:
                 )
             return (
                 retry_prefix,
+                taxis_rank,
                 attempts,
                 -(estimate.priority + exploration + consequence),
                 fly_rank,
