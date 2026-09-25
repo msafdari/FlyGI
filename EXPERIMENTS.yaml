@@ -301,6 +301,38 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-FLYHASH-STATE-KEY:
+    statement: >
+      The fly's olfactory hash (real PN->KC expansion + APL-style
+      winner-take-all, the Science-2017 FlyHash) gives ARC observations a
+      locality-sensitive state key that fixes the measured state-graph
+      fragmentation, with the anatomical wiring load-bearing; downstream,
+      MBON habituation over those tags gives a generalizing novelty signal
+      (the PNAS-2018 fly Bloom filter).
+    status: refuted
+    evidence:
+      - >
+        PREMISE-KILLED OFFLINE 2026-09-25 (results/flyhash_premise.json,
+        12 streams, 120-frame samples, near = Hamming<=8, far >= 128).
+        Killed twice over: (1) FLY-PARITY on the expansion -- real wiring
+        median near/far AUC 0.972 vs degree-preserving rewired 0.984; the
+        sparse-expansion motif does all the work, as the LSH literature
+        warned. (2) INPUT-SIDE BLINDNESS, the structural kill: through
+        the anatomical colour-histogram PN bus, same-palette
+        different-layout pairs (Hamming>=32; up to 99 per 120-frame
+        sample) receive IDENTICAL tags (Jaccard 1.0) in both real and
+        rewired variants -- the olfactory pathway is layout-blind by
+        construction, so the fly-hash would catastrophically merge
+        genuinely distinct ARC states. The recorded limit is the
+        non-retinotopic PN input pathway, not the mushroom-body motif.
+        The MBON novelty premise (Rank 2) dies downstream of the same
+        input. NOTED, not pursued: a retinotopic-input engineering
+        variant (bio-eye features through a seeded random expansion)
+        scores AUC 1.0 with over-merge 0.75 -- a workable ENGINEERED
+        defragmentation key whose only fly content is the already-shipped
+        eye-map; building it is a scope decision under the first
+        principle, not a fly finding.
+    updated: 2026-09-25
   H-T4T5-CLICK-FEATURES:
     statement: >
       The fly's motion channels (T4/T5, fed by lamina change types) carry
