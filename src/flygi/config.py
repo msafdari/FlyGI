@@ -256,6 +256,7 @@ class ControllerConfig:
     # byte-identical; "spatial_random_target" is the preregistered control.
     taxis: str = "none"
     taxis_weight: float = 1.0
+    click_head_timer_mask: bool = False
 
 
 @dataclass(frozen=True)
@@ -637,6 +638,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
             state_similarity_threshold=float(controller_raw.pop("state_similarity_threshold", 0.9)),
             taxis=str(controller_raw.pop("taxis", "none")),
             taxis_weight=float(controller_raw.pop("taxis_weight", 1.0)),
+            click_head_timer_mask=bool(controller_raw.pop("click_head_timer_mask", False)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

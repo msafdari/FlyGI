@@ -125,6 +125,15 @@ class OnlineClickHead:
         # is scaled by the sklearn-style balanced weight total/(2*n_class),
         # from running counts, capped so one early example cannot explode.
         self._class_counts = [0, 0]
+        # HYPOTHESIS (timer-mask, preregistered under H-DEAD-GAMES-TAXONOMY):
+        # clock strips make every action an observation change, saturating
+        # the head's labels toward "changed". When enabled, border-row cells
+        # changing in >2% of observed transitions are excluded from the
+        # change label. Off by default: prior arms stay byte-identical.
+        self.timer_mask_enabled = False
+        self._border_rows = (0, 1, 62, 63)
+        self._border_change = np.zeros((4, 64), dtype=np.int64)
+        self._observed = 0
         self._hist_grid_key: bytes | None = None
         self._hist: NDArray[np.float32] | None = None
 
@@ -186,6 +195,23 @@ class OnlineClickHead:
             raw *= self.negative_scale
         return self.weight * raw
 
+    def masked_changed(self, source: NDArray[np.int8], destination: NDArray[np.int8]) -> bool:
+        """Change label with hyper-frequent border (clock) cells excluded."""
+
+        src = np.asarray(source, dtype=np.int16)
+        dst = np.asarray(destination, dtype=np.int16)
+        diff = src != dst
+        self._observed += 1
+        for i, row in enumerate(self._border_rows):
+            self._border_change[i] += diff[row]
+        if not self.timer_mask_enabled:
+            return bool(diff.any())
+        if self._observed >= 10:
+            frac = self._border_change / self._observed
+            for i, row in enumerate(self._border_rows):
+                diff[row] &= ~(frac[i] > 0.02)
+        return bool(diff.any())
+
     def update(self, grid: NDArray[np.int8], x: int, y: int, changed: bool) -> None:
         """One online SGD step from an executed click's observed outcome."""
 
@@ -213,6 +239,7 @@ class OnlineClickHead:
             "weight": self.weight,
             "learning_rate": self.learning_rate,
             "negative_scale": self.negative_scale,
+            "timer_mask": self.timer_mask_enabled,
             "updates": self._updates,
             "parameters": 0 if self._weights is None else int(self._weights.size),
         }

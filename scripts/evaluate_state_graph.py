@@ -301,7 +301,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             return None
         from flygi.controller.click_head import OnlineClickHead
 
-        return OnlineClickHead(
+        head = OnlineClickHead(
             config.controller.click_head,
             cell_columns=head_cell_columns,
             column_count=head_column_count,
@@ -310,6 +310,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             permutation_seed=config.controller.click_head_seed,
             negative_scale=config.controller.click_head_negative_scale,
         )
+        head.timer_mask_enabled = config.controller.click_head_timer_mask
+        return head
 
     def _build_state_tags():
         if config.controller.state_similarity == "none":

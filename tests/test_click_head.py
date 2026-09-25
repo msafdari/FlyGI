@@ -155,3 +155,23 @@ def test_boost_only_never_demotes() -> None:
     ]
     assert min(bonuses) >= 0.0
     assert max(bonuses) > 0.1  # still promotes confident positives
+
+
+def test_timer_mask_relabels_clock_only_changes() -> None:
+    """A click whose only effect is a border clock tick must label unchanged
+    when the mask is on, and changed when it is off."""
+
+    columns, count = _identity_columns()
+    head = OnlineClickHead("retinotopic", cell_columns=columns, column_count=count)
+    head.timer_mask_enabled = True
+    base = _planted_world(1)
+    for t in range(30):  # teach the border frequency
+        after = base.copy()
+        after[63, t % 64] = 1
+        assert head.masked_changed(base, after) in (True, False)
+        base = after
+    after = base.copy()
+    after[63, 40] = 5  # clock tick only
+    assert head.masked_changed(base, after) is False
+    off = OnlineClickHead("retinotopic", cell_columns=columns, column_count=count)
+    assert off.masked_changed(base, after) is True

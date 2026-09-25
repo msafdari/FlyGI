@@ -403,11 +403,16 @@ class StateGraphPolicy:
                 pending.source_grid, pending.candidate.action_id, destination_scene.grid
             )
         if self._click_head is not None and pending.candidate.is_click:
+            label = (
+                self._click_head.masked_changed(pending.source_grid, destination_scene.grid)
+                if getattr(self._click_head, "timer_mask_enabled", False)
+                else bool(changed_cells)
+            )
             self._click_head.update(
                 pending.source_grid,
                 pending.candidate.x,
                 pending.candidate.y,
-                bool(changed_cells),
+                label,
             )
         advanced_by = max(0, destination_levels - pending.source_levels)
         if advanced_by > 0:
