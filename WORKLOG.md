@@ -197,6 +197,25 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### Submission 6 armed: the combo candidate, every bar passed -- 2026-09-25
+
+sg-combo (defrag similarity-novelty tags + retinotopic deadline click
+head) measured 24 levels / 0.3519 -- the highest arm score recorded,
+above both parents -- and produced the FIRST level-2 completion in the
+project's ~1,400 rows (vc33 seed 1, advance steps 64 and 596, official
+scorecard confirms). BAR A passes both clauses with no override; BAR B
+stands on the head's two replicated scrambled-map pairs; BAR C passed on
+the packaged agent (both mechanisms verified engaged through the official
+framework loop) and again in the kernel log itself (preflight names
+click_head retinotopic, deadline 100, state_similarity retino_tags; run
+clean). Kernel v8 built against the verified dataset version -- the
+stale-dataset race that caught v6 is structurally avoided this time by
+waiting on dataset readiness before pushing. Submission fires
+automatically when the quota opens (17:00 PDT), per the original
+preregistered mechanical rule. Claim discipline: the defrag mechanism is
+recorded as ENGINEERING (fly-parity measured); the fly is load-bearing
+in the head, where two twin pairs say so.
+
 ### Submission 5 scored: 0.00 -- 2026-09-25 ~06:00 UTC
 
 The hidden set returned 0.00, the fifth consecutive zero, including the
