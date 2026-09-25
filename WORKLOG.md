@@ -197,6 +197,28 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### H-MBON-DAN-METAPLASTICITY: the fly's RSI loop, measured link by link -- 2026-09-24 ~21:45 PDT
+
+The RSI deep dive's verdict, converted from prediction to measurement. The
+fly's one native second-order learning circuit -- learning changes MBONs,
+MBONs feed back onto dopamine neurons, dopamine gates future learning --
+exists in our graph (2,589 edges, 338/340 DANs fed), and it turned out to
+be already mechanically closed in the shipped machinery: the gate reads
+DAN activity from the very network the plastic synapses live in.
+
+The twin-trajectory experiment (learner vs weight-frozen twin on identical
+streams; the twin IS the severed-feedback ablation; the first attempt's
+read-only crash exposed that a shared bundle would have aliased the weight
+arrays and hollowed the comparison -- twins now load independently with a
+shares_memory assertion) measured every link: weights move (3.4-61 absolute
+change), MBON activity diverges hugely (up to 50%), and then the MBON->DAN
+stage crushes it ~250-500x: the gate the learner receives differs from the
+never-learned counterfactual by 4e-5 to 2e-3, rising briefly and then
+PLATEAUING in every game. Bounded convergence. No compounding. The fly's
+recursive loop is real anatomy, working mechanics, and negligible dynamics
+-- and it modulates a first-order mechanism already measured three times
+at zero score conversion.
+
 ### H-CONSEQUENCE-COUPLING day one: the map is load-bearing; the shape is not shippable -- 2026-09-24 17:05 PDT
 
 The full ladder, measured. The headline that HOLDS: the fly's retinotopic

@@ -301,6 +301,41 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-MBON-DAN-METAPLASTICITY:
+    statement: >
+      The fly's one native second-order learning loop -- KC->MBON plasticity
+      changing MBON activity, MBON->DAN feedback changing dopaminergic
+      drive, dopamine gating future plasticity -- functions in the compiled
+      MaleCNS graph strongly enough to matter for behaviour, i.e. the fly
+      can leverage recursive self-improvement through its own anatomy.
+      (RSI deep dive, user-directed 2026-09-24 evening.)
+    status: "null"
+    evidence:
+      - >
+        ANATOMY MEASURED: 2,589 MBON->DAN edges in the modulators graph,
+        338/340 DANs receive MBON input, net-inhibitory (weight sum -1.72),
+        MBON share of DAN total input 1.9% mean / 9.3% max. The loop is
+        present and mechanically CLOSED by construction in the existing
+        machinery: MushroomBody.gate() reads DAN activity from the network
+        state, and the plastic KC->MBON block lives inside that network.
+      - >
+        DYNAMICS MEASURED (scripts/mb_second_order.py, twin-trajectory
+        design where the weight-frozen twin IS the severed-feedback
+        ablation; independent graph loads, shares_memory asserted; 3 games
+        x 40 dense-schedule reinforcements): first-order learning is alive
+        (absolute weight change 3.4-61.2; MBON activity diverges 2.1%-50%
+        from the frozen twin), but the MBON->DAN stage attenuates it
+        ~250-500x, leaving a second-order gate component of 4.4e-5 (lp85,
+        sparse-change) to 1.8e-3 (cd82, dense-change) relative -- at most
+        0.2% of the teaching signal. Trajectories RISE THEN PLATEAU within
+        ~40 events in every game: bounded convergence, no compounding.
+        VERDICT: the loop is anatomically present, mechanically closed,
+        and dynamically inert for RSI purposes -- second-order modulation
+        saturates two to four orders below the valence scalar, and the
+        growth that "recursive" requires is measurably absent. Coheres
+        with the loop compounding a first-order mechanism that itself
+        converts to zero score (three prior nulls).
+    updated: 2026-09-24
   H-CONSEQUENCE-COUPLING:
     statement: >
       The fly converts to ARC-AGI-3 score only if its output is coupled to
