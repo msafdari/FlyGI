@@ -301,6 +301,33 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-DEFRAG-NOVELTY:
+    statement: >
+      Similarity-aware novelty (locality-sensitive tags over bio-eye
+      features dampening near-duplicate "novel" states) converts to the
+      breadth endpoint the hidden set pays: more levels on more games than
+      the champion, without the head arms' breadth harm.
+    status: open
+    evidence:
+      - >
+        TREATMENT MEASURED 2026-09-25 (sg-defrag-tags, 75 rows): levels 24
+        vs champion 21 -- the FIRST arm to exceed the champion's level
+        count (historical band 14-22); score 0.2733 vs 0.2034; breadth
+        10/25 (gained g50t, lost r11l). Mechanism engagement: median 329
+        of ~600 per-row "novel" states dampened as near-duplicates.
+        HONEST PAIRED READING at n=3 seeds: levels +8/-5/=62 rows; score
+        Wilcoxon p=0.097; the gain concentrates in g50t (+2.50/game) and
+        WITHOUT it the score delta is -0.03 -- fails the largest-game
+        robustness check; r11l HARMED (-1.60): dampened novelty removes
+        the exploration pressure that solved it. Verdict pending: the
+        permuted-retinotopy twin (fly attribution) and targeted stability
+        seeds (g50t/lf52/ar25/r11l x seeds 3-8, both arms) decide whether
+        this is the first real breadth mechanism or seed noise.
+        INTERACTION NOTED for a later arm: defrag's harm (r11l) is the
+        click head's biggest win and vice versa -- the mechanisms' costs
+        are disjoint, so the combination arm is the registered follow-up
+        if both survive attribution.
+    updated: 2026-09-25
   H-CX-CALIBRATION:
     statement: >
       Circuit-level calibration (the H-APL pattern) can transplant the
