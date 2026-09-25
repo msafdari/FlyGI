@@ -238,6 +238,11 @@ class ControllerConfig:
     # the head may promote predicted-changers, never demote an untried
     # click below its normal exploration rank.
     click_head_negative_scale: float = 1.0
+    # HYPOTHESIS (deadline-fallback, registered 2026-09-24 evening): head
+    # bonus active only while turns-since-last-level-advance < deadline.
+    # 0 = no deadline (always active; preserves every prior arm). D=100
+    # preregistered from measured payoff steps (all head wins by step 56).
+    click_head_deadline: int = 0
 
 
 @dataclass(frozen=True)
@@ -602,6 +607,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
             click_head_learning_rate=float(controller_raw.pop("click_head_learning_rate", 0.3)),
             click_head_seed=int(controller_raw.pop("click_head_seed", 20260924)),
             click_head_negative_scale=float(controller_raw.pop("click_head_negative_scale", 1.0)),
+            click_head_deadline=int(controller_raw.pop("click_head_deadline", 0)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

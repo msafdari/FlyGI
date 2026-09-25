@@ -407,6 +407,28 @@ hypotheses:
         next iteration, NOT built tonight: a stall-gated head (speaks only
         when frontier novelty stalls), preserving default exploration
         until the wander itself has stopped paying.
+      - >
+        STALL-GATE PREMISE TESTS 2026-09-24 evening, run BEFORE building
+        (two candidate gates killed offline, one design survived): (1)
+        novelty-stall gate REJECTED -- champion traces show pre-completion
+        play is novelty-rich even in the efficiency games (gate-open 0-1%
+        pre-L1), so it silences the head exactly where it earned; (2)
+        noop-rate gate REJECTED -- the controller already avoids no-op
+        clicks on-policy (r11l click-noop rate 0.00 vs 0.96 under random
+        play), so the signal never fires; this also reattributes the
+        head's measured gains to ORDERING OF FIRST VISITS, not noop
+        avoidance. (3) SURVIVING DESIGN, deadline-fallback: MEASURED that
+        every head win lands by step 56 (r11l 5/14/56, lp85 15/15/18)
+        while the lost games' champion completions are late 1-2-of-3-seed
+        events (steps 288-577). Head bonus active only while
+        turns-since-last-level-advance < deadline; D=100 preregistered
+        (~2x the slowest measured payoff); after the deadline the champion
+        wander resumes with the head-explored graph intact. Trivial
+        alternatives named: D=infinity (the measured symmetric arm) and
+        D=0 (the champion). ALSO RECORDED for future protocol design, not
+        a bar change tonight: the "breadth" BAR A defends includes four
+        1-2-seed completions at steps 288-577 -- seed-fluke territory the
+        verifiers' n=3 resolution warning already covers.
     updated: 2026-09-24
     ship_decision_preregistered_2026_09_24: >
       Standing user authorization 2026-09-24 ("do not wait for me"): the

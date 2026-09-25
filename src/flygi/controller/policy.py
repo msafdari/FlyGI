@@ -137,6 +137,10 @@ class StateGraphPolicy:
         self._click_head = click_head
         self._head_ranked = 0
         self._head_decisive = 0
+        # Deadline-fallback gate: counts reconciled turns since the last
+        # level advance; the head speaks only while this is under the
+        # configured deadline (0 = no deadline).
+        self._turns_since_advance = 0
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
@@ -382,6 +386,10 @@ class StateGraphPolicy:
                 bool(changed_cells),
             )
         advanced_by = max(0, destination_levels - pending.source_levels)
+        if advanced_by > 0:
+            self._turns_since_advance = 0
+        else:
+            self._turns_since_advance += 1
         fatal = destination_turn.game_state == "GAME_OVER"
         won = destination_turn.game_state == "WIN"
         changed = bool(
@@ -672,12 +680,11 @@ class StateGraphPolicy:
             estimate = self._effects.estimate(candidate, clicked_color=color)
             exploration = self._config.effect_exploration_bonus / math.sqrt(1.0 + estimate.evidence)
             consequence = 0.0
-            if (
-                use_head
-                and self._click_head is not None
-                and candidate.is_click
-                and observed.scene is not None
-            ):
+            head_active = self._click_head is not None and (
+                self._config.click_head_deadline == 0
+                or self._turns_since_advance < self._config.click_head_deadline
+            )
+            if use_head and head_active and candidate.is_click and observed.scene is not None:
                 # H-CONSEQUENCE-COUPLING: predicted click consequence enters
                 # the PRIMARY term, so a click the head has learned is a
                 # no-op sorts behind actions the controller would otherwise
@@ -719,7 +726,11 @@ class StateGraphPolicy:
             without = min(candidates, key=lambda c: rank(c, use_fly=False))
             if without != ordered[0]:
                 self._fly_decisive += 1
-        if self._click_head is not None and ordered:
+        head_gate_open = self._click_head is not None and (
+            self._config.click_head_deadline == 0
+            or self._turns_since_advance < self._config.click_head_deadline
+        )
+        if head_gate_open and ordered:
             self._head_ranked += 1
             without_head = min(candidates, key=lambda c: rank(c, use_head=False))
             if without_head != ordered[0]:
