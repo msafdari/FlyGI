@@ -301,6 +301,39 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-CX-RING-ATTRACTOR:
+    statement: >
+      The compiled MaleCNS central complex supports the compass computation
+      at the deployed operating point: a localized EPG bump that persists in
+      darkness, stays tight, and rotates under PEN drive -- the working
+      memory substrate scan Ranks 3-4 (subgoal pointer, vector memory)
+      would build on.
+    status: "null"
+    evidence:
+      - >
+        MEASURED 2026-09-25 (results/cx_ring_premise.json,
+        cx_ring_rotation.json; full network, gain 2.0, darkness after a
+        90-degree seeded arc). THE PROJECT'S FIRST ANATOMY-SPECIFIC
+        DYNAMICAL SEPARATION: the real graph sustains persistent,
+        angle-stable EPG activity for 120+ darkness steps (mass stable at
+        0.27, drift < 2 degrees after settling) while the
+        degree-preserving null DIES COMPLETELY by t=40 (mass 0.00). Every
+        prior real-vs-null comparison in this project was parity; CX
+        persistence is wiring-dependent. BUT the compass computation
+        fails on the other two counts: the bump is broad (circular
+        variance 0.83 vs ~0.2-0.4 for a functioning ring -- localization
+        weak), and the shift mechanism is absent -- PEN drive rotates the
+        bump in the SAME direction from both sides (+0.42 L vs +0.25 R
+        deg/step under the corrected left/right protocol; a compass
+        requires opposite signs). Candidate causes, unmeasured: heuristic
+        transmitter signs breaking the Delta7 inhibition motif; the
+        tanh/gain regime. CONSEQUENCE: Rank 3's ARC use (steerable
+        subgoal pointer) is blocked at the write mechanism; Rank 4 (FB
+        vector memory) consumes the heading signal and is blocked
+        downstream, untested by necessity. The persistence result stands
+        as the one place the fly's specific wiring measurably matters
+        dynamically in this compiled graph.
+    updated: 2026-09-25
   H-FLYHASH-STATE-KEY:
     statement: >
       The fly's olfactory hash (real PN->KC expansion + APL-style
