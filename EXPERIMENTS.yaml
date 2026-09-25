@@ -447,6 +447,22 @@ hypotheses:
         champion and deadline arm, paired. The bar itself is the user's
         standing rule and is NOT amended tonight; the measurement decides
         what to put in front of the user.
+      - >
+        NOISE-FLOOR MEASURED 2026-09-24 19:10 PDT (7 contested games x
+        seeds 3-8, paired champion vs deadline arm): BOTH effects are
+        real. Breadth harm is NOT seed luck -- on the five wander-games
+        the champion completes 10/30, the head 2/30. Score gain is real
+        and larger -- contested-game score-sum 31.70 (deadline) vs 17.66
+        (champion), +80%: the completions the head forfeits are worth
+        ~nothing under the quadratic efficiency metric (cd82's three slow
+        completions total 0.60 score; ar25's four total 0.08) while the
+        accelerated games nearly double (r11l 15.26 v 8.22, lp85 16.11 v
+        8.69). VERDICT: BAR A fails on a GENUINE trade-off, not noise --
+        the head trades many worthless-slow completions for fewer
+        near-baseline ones, which is precisely what the benchmark's
+        scoring pays. The ship decision on this trade belongs to the
+        user; the standing authorization is bound to bars this candidate
+        fails, so nothing ships tonight.
     updated: 2026-09-24
     ship_decision_preregistered_2026_09_24: >
       Standing user authorization 2026-09-24 ("do not wait for me"): the
