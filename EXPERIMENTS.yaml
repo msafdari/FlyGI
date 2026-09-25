@@ -301,6 +301,24 @@ hypotheses:
       - "29/38 re-click regularity and 1.79x click advance rate measured 2026-09-24 across three bundles."
     updated: 2026-09-24
 
+  H-BUDGET-LIMITS-LEVEL2:
+    statement: >
+      The level-2 wall is partly budget-limited: with the ~490 spare
+      actions tripled, the champion stack completes at least one level 2
+      on its scoring games.
+    status: refuted
+    evidence:
+      - >
+        MEASURED 2026-09-25 (sg-budget-probe-1800: champion recipe, 1800
+        actions, tn36/lp85/r11l x 3 seeds): 0/9 level-2 completions.
+        Every row completes level 1 by step 14-53 and then spends ~1,750
+        actions on level 2 without crossing it. The wall is CAPABILITY,
+        not budget -- confirming the deep-dive verifiers' caution against
+        re-running the league under official budgets before this probe.
+        Consequence: no budget re-evaluation until a mechanism shows any
+        level-2 progress; the score frontier remains multi-step
+        composition above candidate ordering.
+    updated: 2026-09-25
   H-CX-RING-ATTRACTOR:
     statement: >
       The compiled MaleCNS central complex supports the compass computation
