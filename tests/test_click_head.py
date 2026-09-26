@@ -12,7 +12,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from flygi.controller.click_head import OnlineClickHead
+from flygi.controller.click_head import OnlineClickHead, _patch_cells
 
 GRID = 64
 
@@ -30,6 +30,40 @@ def _identity_columns() -> tuple[np.ndarray, int]:
     """A synthetic one-cell-per-column map for tests without the runtime dir."""
 
     return np.arange(GRID * GRID, dtype=np.int64), GRID * GRID
+
+
+def test_coordinate_convention_ab_is_off_diagonal_and_explicit() -> None:
+    """Golden case: only (x != y) can expose the historical transpose."""
+
+    legacy, legacy_inside = _patch_cells(10, 20, "legacy_xy_flat")
+    corrected, corrected_inside = _patch_cells(10, 20, "arc_row_major")
+
+    assert legacy_inside[12] and corrected_inside[12]
+    assert int(legacy[12]) == 10 * GRID + 20
+    assert int(corrected[12]) == 20 * GRID + 10
+    assert int(legacy[12]) != int(corrected[12])
+
+
+def test_arc_row_major_head_reads_grid_y_x() -> None:
+    grid = np.zeros((GRID, GRID), dtype=np.int8)
+    grid[20, 10] = 7
+    columns, count = _identity_columns()
+    corrected = OnlineClickHead(
+        "pixel_patch",
+        cell_columns=columns,
+        column_count=count,
+        coordinate_convention="arc_row_major",
+    )
+    legacy = OnlineClickHead(
+        "pixel_patch",
+        cell_columns=columns,
+        column_count=count,
+        coordinate_convention="legacy_xy_flat",
+    )
+
+    center = 12 * 17
+    assert corrected._features(grid, 10, 20)[center + 7] == 1.0
+    assert legacy._features(grid, 10, 20)[center + 7] == 0.0
 
 
 def _train(head: OnlineClickHead, grid: np.ndarray, rng: np.random.Generator, n: int = 300):

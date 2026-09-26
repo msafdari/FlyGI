@@ -184,6 +184,115 @@ hypotheses:
         Behavioural effect untested; awaiting the mb-done-right arms.
     updated: 2026-09-23
 
+  H-COORDINATE-CONVENTION:
+    statement: >
+      Correcting the static online Python click head from its historical
+      x-major flattening (x*64+y) to ARC's public coordinate convention
+      (x=column, y=row; flat=y*64+x) improves prequential prediction robustly
+      across the six development games enough to earn a behavioral A/B.
+    status: refuted
+    assumptions:
+      - >
+        ESTABLISHED: ARC ACTION6 payloads use x as column and y as row; the
+        controller's scene code indexes the clicked cell as grid[y,x].
+      - >
+        MEASURED: every historical click-head arm used x*64+y, and the
+        retinotopic saliency and fly-tiebreak paths contain the same transpose.
+        The prior 0.551859 engineering baseline therefore belongs to the
+        legacy arm and must not be relabelled as corrected.
+      - >
+        ASSUMPTION: prequential prediction on the exact clicks executed by the
+        frozen sg-combo traces is a useful cheap gate for whether coordinate
+        correction can improve online ranking. This is only a bridge to score,
+        not a score result; a passing replay still requires a behavioral A/B.
+      - >
+        ASSUMPTION: cached public games replay the stored traces exactly under
+        their recorded environment seeds. The script must verify every stored
+        before/after observation SHA-256 and abort on the first mismatch.
+    preregistration_2026_09_26:
+      trivial_alternative: >
+        A = legacy_xy_flat, the exact historical x*64+y extraction. It remains
+        implemented and is never reconstructed by reverting source.
+      intervention: >
+        B = arc_row_major, changing only patch coordinate flattening to
+        y*64+x. Learning rate, class balancing, cell-to-column map, action
+        traces, labels, update order, seeds and all controller parameters stay
+        fixed.
+      development_slice: >
+        sg-combo seeds 0-2 for ft09, lp85, r11l, tn36, vc33 and sp80. These
+        six public games are deliberately score-bearing development endpoints,
+        not held-out evidence of transfer.
+      label: >
+        For each executed ACTION6, any difference between the policy's source
+        and destination 64x64 grids. Prediction is recorded before the online
+        update. Non-click actions are replayed only to reconstruct state.
+      primary_metric: >
+        Mean per-row prequential binary log loss, rows weighted equally;
+        corrected B must be lower than legacy A.
+      robustness_metrics: >
+        Median paired row delta must favor B; at least four of six game-level
+        mean deltas must be <=0; aggregate average precision for B must be no
+        worse than A. Degenerate single-class rows are excluded from average
+        precision only and remain in log loss.
+      kill_rule: >
+        If exact replay coverage is incomplete, any observation hash differs,
+        or any primary/robustness condition fails, stop this score branch. Keep
+        the coordinate audit and do not launch a game battery.
+      promotion_rule: >
+        A replay pass earns only a focused behavioral A/B of the same Python
+        click head: legacy sg-combo versus row-major sg-combo on these six
+        games, seeds 0-2, 600 actions. Promote the correction only with no loss
+        of total levels and improved paired first-level action cost, score, or
+        an added level. This remains an engineering result, not FlyGI
+        attribution. Correcting the neural retinotopic decoder and comparing
+        real anatomy with a matched null is a separate hypothesis and must not
+        be substituted for this intervention.
+      command: >
+        .venv/bin/python scripts/replay_click_coordinate_ab.py
+        --rows results/connectome_agent/sg-combo.rows.jsonl
+        --games ft09 lp85 r11l tn36 vc33 sp80
+        --seeds 0 1 2
+        --output results/connectome_agent/coordinate_convention_replay.json
+      output: results/connectome_agent/coordinate_convention_replay.json
+    evidence:
+      - >
+        MEASURED 2026-09-26 by the preregistered exact cached-trace replay:
+        18/18 rows and all 10,800 action-step before/after frame pairs
+        reproduced (21,600 individual hash comparisons); 9,422 executed clicks,
+        8,877 labelled changed. Corrected B improved mean row log loss 0.144710
+        -> 0.084567. Across the six nondegenerate rows (3,532 clicks), aggregate
+        average precision improved 0.974304 -> 0.974420. The gain was
+        concentrated in lp85 (game mean delta -0.354565) and ft09 (-0.033901).
+      - >
+        KILL RULE MET despite the aggregate gain: median paired row delta was
+        +0.002365 rather than <0, and only 2/6 game-level means were non-worse
+        rather than the preregistered >=4. The four all-positive games regressed
+        slightly: r11l +0.003224, sp80 +0.017843, tn36 +0.002089, vc33
+        +0.004450. No behavioral battery is launched and no promotion bar is
+        amended after seeing the result.
+      - >
+        Local ignored result artifact at closure:
+        results/connectome_agent/coordinate_convention_replay.json, SHA-256
+        8ce8ca457c1374bf7e9bb539f9365f0885739643a0fbde6d308a25fb7fb94044;
+        analyzer SHA-256
+        9bc9a3bc6e713f15cc3abb9b80dc4388c4c6e4874a16159a86131e59b316d2d2;
+        registry-at-run SHA-256
+        6e7bcd3965f39459a4cdc452da9d25ae33a592bb1e81209e62f8c9bd8c22f92f;
+        source sg-combo rows SHA-256
+        ae5de86c1f5d8abe8fa19a5e66acad6b87944a1ef6a3ffc2abe88255fa7161ad;
+        config SHA-256
+        a0c595da8c572caca0dc1a3ca99de70f6d32193c41403554b9fd3b6f0770c542.
+      - >
+        VALIDATION CORRECTION before commit: the first local result incorrectly
+        pooled 12 single-class rows into aggregate average precision despite
+        their preregistered exclusion. It is preserved as
+        coordinate_convention_replay.invalid-ap-v1.json (SHA-256
+        04f816f524a5b4020d43df4ee95218e5c54defe114de1d303cc9d2d1adf8f90d),
+        is invalid, and is not evidence. Row grouping plus a degenerate-row
+        regression test fixed the analyzer; exact replay left log loss, game
+        deltas, and the failed gate unchanged.
+    updated: 2026-09-26
+
   H-RETINO-DECODER:
     statement: >
       Click coordinates read retinotopically from the optic-lobe state (the
@@ -195,9 +304,16 @@ hypotheses:
       model, zero trained parameters; through the real preference path it
       localizes at 3.5 cells vs state_change's 12.1, because the free-run
       reference cancels the network's own settling transients.
-    status: refuted
+    status: invalidated
     evidence:
       - "Localization measured offline and through the wired path, 2026-09-23"
+      - >
+        AUDIT 2026-09-26: the decoder returns grid row/hex1 as x and
+        column/hex2 as y, while ACTION6 and scene extraction use x=column,
+        y=row. Its tests encoded the same swap. The measured legacy-transposed
+        behavior remains real, but it does not test the correctly registered
+        retinotopic decoder. A separate neural-decoder hypothesis must own that
+        recovery; H-COORDINATE-CONVENTION tests only the Python click head.
       - >
         sg-bioeye-lc-retdec vs sg-bioeye-lc, 75 matched rows, preregistered
         endpoints: score HURTS at every endpoint (full -0.159 [-0.364,-0.003]
@@ -205,9 +321,9 @@ hypotheses:
         everywhere (21v16, 20v15, 14v9). Measured localization converted to
         breadth, not score: better click targeting opened more first levels on
         more games and lost more points than it gained. The surprise variant was
-        killed at 18/75 as a priority decision (its primary contrast was vs
+        killed at 19/75 as a priority decision (its primary contrast was vs
         retdec; no decision hinged on it post-pivot) -- killed, not falsified.
-    updated: 2026-09-23
+    updated: 2026-09-26
 
   H-EFFERENCE:
     statement: >
@@ -848,7 +964,19 @@ hypotheses:
         the retinal column representation beats raw pixels on the paying
         metric. Note pixel kept two more levels -- the eye-map converts
         better, the raw patch wanders slightly wider.
-    updated: 2026-09-24
+      - >
+        AUDIT CORRECTION 2026-09-26: those score and level measurements remain
+        valid for the exact legacy implementation, but two attribution bridges
+        do not. First, the head uses a static cell-to-column metadata map plus
+        Python SGD and never advances neurons or synapses, so it is not
+        load-bearing fly computation under the now-binding repository thesis.
+        Second, it flattened ACTION6 (x,y) as x*64+y; the correct ARC interface
+        was never tested. Treat the old arms as engineering evidence for an
+        anatomy-derived, transposed spatial representation, not evidence that
+        the fly brain computed the decision. H-COORDINATE-CONVENTION owns only
+        the locked static-head recovery; a separately preregistered
+        real-vs-null neural decoder remains required for FlyGI attribution.
+    updated: 2026-09-26
     ship_decision_preregistered_2026_09_24: >
       Standing user authorization 2026-09-24 ("do not wait for me"): the
       click-head candidate is packaged and submitted to Kaggle when quota

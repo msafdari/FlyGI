@@ -262,6 +262,7 @@ def test_preflight_prints_machine_readable_verified_identity(
         "controller": None,
         "click_head": None,
         "click_head_deadline": None,
+        "click_head_coordinate_convention": None,
         "deploy_fly_tiebreak": None,
         "state_similarity": None,
         "edges": 24_559_055,
@@ -299,6 +300,7 @@ def test_preflight_reports_light_controller_without_neuronal_dynamics(
     controller = SimpleNamespace(
         click_head="retinotopic",
         click_head_deadline=100,
+        click_head_coordinate_convention="arc_row_major",
         state_similarity="retino_tags",
         deploy_fly_tiebreak=False,
     )
@@ -317,6 +319,7 @@ def test_preflight_reports_light_controller_without_neuronal_dynamics(
     identity = module.preflight_runtime(emit=False)
 
     assert identity["mode"] == "controller-light"
+    assert identity["click_head_coordinate_convention"] == "arc_row_major"
     assert identity["deploy_fly_tiebreak"] is False
     assert identity["neuronal_dynamics_active"] is False
 

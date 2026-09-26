@@ -65,10 +65,77 @@ nulls tested an internally transposed interface. The `0.551859` baseline also
 contains this defect, so it must be preserved as locked control A rather than
 silently corrected.
 
-**In progress:** none; the localhost gateway was stopped after the clean gate.
-The next checkpoint is a flagged coordinate-convention A/B, starting with an
-asymmetric-coordinate unit/golden probe and then the smallest public-game slice
-that can falsify a score benefit. No Kaggle submission is authorized or queued.
+**Measured coordinate gate (completed 2026-09-26 12:14 PDT):**
+H-COORDINATE-CONVENTION replayed the exact frozen `sg-combo` traces under both
+`legacy_xy_flat` and `arc_row_major`. All 18/18 rows and 10,800 action-step
+before/after frame pairs reproduced (21,600 individual hash comparisons); the
+comparison contained 9,422 clicks, of which 8,877 changed the frame. Corrected
+B lowered mean per-row prequential log loss from 0.144710 to 0.084567. Across
+the six nondegenerate rows (3,532 clicks), aggregate average precision rose
+from 0.974304 to 0.974420. Those aggregate improvements were concentrated in
+`lp85` and `ft09`.
+
+**Measured stop decision:** the preregistered robustness bar failed. Median
+paired row log-loss delta was +0.002365 rather than below zero, and only 2/6
+game means were non-worse rather than at least 4/6. Per-game corrected-minus-
+legacy deltas were `ft09 -0.033901`, `lp85 -0.354565`, `r11l +0.003224`,
+`sp80 +0.017843`, `tn36 +0.002089`, and `vc33 +0.004450`. The kill rule therefore
+stops this score branch despite the aggregate gain: no behavioral battery, no
+corrected `combo_light` candidate, and no post-result amendment of the bar.
+The retained convention switch and asymmetric golden tests make both historical
+and corrected semantics explicit; they do not promote the Python click head.
+
+**Measured provenance:** local ignored result artifact at closure
+`results/connectome_agent/coordinate_convention_replay.json` has SHA-256
+`8ce8ca457c1374bf7e9bb539f9365f0885739643a0fbde6d308a25fb7fb94044`.
+The artifact records analyzer SHA-256
+`9bc9a3bc6e713f15cc3abb9b80dc4388c4c6e4874a16159a86131e59b316d2d2`,
+registry-at-run SHA-256
+`6e7bcd3965f39459a4cdc452da9d25ae33a592bb1e81209e62f8c9bd8c22f92f`, and
+source rows SHA-256
+`ae5de86c1f5d8abe8fa19a5e66acad6b87944a1ef6a3ffc2abe88255fa7161ad` and the
+locked config has SHA-256
+`a0c595da8c572caca0dc1a3ca99de70f6d32193c41403554b9fd3b6f0770c542`.
+
+**Measured analyzer correction before commit:** review found that the first
+local artifact pooled 12 single-class rows into aggregate average precision,
+contrary to the preregistered exclusion. That result is preserved as
+`coordinate_convention_replay.invalid-ap-v1.json` with SHA-256
+`04f816f524a5b4020d43df4ee95218e5c54defe114de1d303cc9d2d1adf8f90d` and is
+explicitly invalid. The analyzer now groups by row before pooling and has a
+degenerate-row regression test. Direct old/new comparison found identical
+per-row summaries and all 9,422 example payloads; only AP-related aggregate
+fields plus creation time/hash changed. Log loss, all game deltas, and the
+failed promotion verdict are identical. A metric-correct intermediate artifact
+without analyzer provenance is preserved as
+`coordinate_convention_replay.valid-ap-no-analyzer-sha.json` (SHA-256
+`403e328844551841f0f482168276ed18b7e95a4b12750c5086c265a1db2fda86`) and is
+superseded, not contradictory; the final rerun added analyzer/registry hashes
+without changing any metric.
+
+**Measured documentation correction:** source and adapter comments now state
+that the static cell-to-column map is anatomy-derived plumbing, not neural
+computation. `configs/combo_light.yaml` remains byte-for-byte frozen at the
+result hash above, so its two historical “fly-load-bearing” comments are
+preserved only as artifact provenance and are superseded by this audit and the
+adapter's machine-readable `neuronal_dynamics_active: false` preflight.
+
+**Measured validation:** `.venv/bin/pytest -q` passes 422/422 in 26.73 s;
+Ruff check and format pass on every changed Python file; `EXPERIMENTS.yaml`
+parses with the coordinate hypothesis `refuted` and the unrelated MB-input-bus
+status restored to `open`; `scripts/league.py --hypotheses` renders cleanly and
+`LEAGUE.md` is regenerated from the registry. A deliberately broader Ruff run
+also surfaced two pre-existing HEAD findings outside this checkpoint
+(`SIM108` in `controller/taxis.py`, `RUF059` in `tests/test_taxis.py`); neither
+file was changed here and the focused changed-surface checks are green.
+
+**In progress:** no evaluator, replay, or queue waiter. Process audit at 12:02
+PDT found and stopped this session's stale completed-validation gateway on
+localhost port 8032. A separate pre-existing gateway on port 8031 belongs to
+another workflow and was left untouched. The next experiment must be separately
+preregistered and must exercise actual fly-neuron dynamics against a matched
+null; this static Python-head result cannot be used as evidence for it. No
+Kaggle submission is authorized or queued.
 
 **Scientifically grounded follow-on if the coordinate correction is not enough:**
 the strongest genuinely new fly program is the native visual-projection-neuron
@@ -669,7 +736,7 @@ All four bio-eye/decoder arms are resolved: permuted (null, as preregistered),
 bioeye-t4t5 (**the league's first HELPS**, +0.0717 CI [+0.005,+0.156] p=0.070,
 22 v 13 levels, survived the hash-grade source audit), retdec (HURTS on score
 at every preregistered endpoint while completing +5 levels everywhere — the
-breadth/depth trade at its sharpest), surprise (killed 18/75, priority).
+breadth/depth trade at its sharpest), surprise (killed 19/75, priority).
 Submission 3 scored 0.00, consistent with both priors. MBdr deferred, not
 falsified. Full detail, provenance, audit, and deviations:
 `docs/arc_agi/ARC_CLOSURE_2026-09-23.md`. Registry, league, and this log agree.
@@ -2351,29 +2418,25 @@ Slots reset 00:00 UTC, one per day.
 
 ## Ordered next actions
 
-1. Add a declared coordinate-convention switch so the known transposed head is
-   retained as control A and corrected row-major mapping is intervention B.
-   Freeze every other config value and prove the difference on asymmetric
-   coordinates before running either arm.
-2. Replay the recorded click transitions on the six score-bearing click games
-   (`ft09`, `lp85`, `r11l`, `tn36`, `vc33`, `sp80`) and compare prequential log
-   loss and AUPRC. Stop unless corrected B improves executed-click prediction.
-3. If the replay gate passes, run the corrected real neural decoder against a
-   degree-preserving null on the same six games at 600 actions and seeds 0-2.
-   Promotion requires no level regression, better paired action cost or another
-   level, and a real-over-null gap. The corrected Python head remains an
-   engineering-only baseline.
-4. Propagate the coordinate convention through saliency and fly-tiebreak code
-   only if earned, with off-diagonal golden tests; do not bundle other tuning.
-5. Complete remaining deployment gates: decision-critical asset hashes,
+1. **Completed and stopped:** the Python click-head coordinate switch, asymmetric
+   golden, and exact replay are recorded under H-COORDINATE-CONVENTION. The
+   aggregate primary moved, but the robustness gate failed; do not launch its
+   behavioral A/B or tune this branch further.
+2. Preregister a separate neural-retinotopic decoder recovery before editing it.
+   The cheapest premise killer must prove corrected off-diagonal localization
+   with actual neuron activity, then compare real anatomy with the existing
+   degree/sign/weight-matched null while the host Python click head is disabled.
+   Require a nonzero decision contribution and a real-over-null gap before any
+   score battery; do not inherit evidence or thresholds from the static head.
+3. Complete remaining deployment gates: decision-critical asset hashes,
    process-visible Swarm thread failures, mutable ACTION6 payload isolation, and
    a short multi-game RSS soak. Rebuild the notebook only after these settle.
-6. Do not submit `combo_light` as FlyGI. Require genuinely load-bearing neural
+4. Do not submit `combo_light` as FlyGI. Require genuinely load-bearing neural
    computation plus controller-only / real graph / degree-preserving-null
    comparisons before a FlyGI submission or attribution claim.
-7. In parallel, run the native visual-VP → visual-KC → MBON one-shot 2AFC
-   premise killer. Integrate it into ARC only if real anatomy beats chance,
-   no-plasticity, cue-shuffled, and matched-anatomy controls.
+5. In parallel, preregister and run the native visual-VP → visual-KC → MBON
+   one-shot 2AFC premise killer. Integrate it into ARC only if real anatomy
+   beats chance, no-plasticity, cue-shuffled, and matched-anatomy controls.
 
 ## Durable limitations and claim boundary
 

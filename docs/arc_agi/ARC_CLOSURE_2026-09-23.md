@@ -27,7 +27,7 @@ three. Localization is not what the score rewards.
 | sg-bioeye-lc-permuted | 21dc7bbc34d873a4 | f821144723d25b05 | 2cf2098 | yes |
 | sg-bioeye-t4t5 | 6d1a7f312b0e3914 | da338055dbe79249 | 2cf2098 | yes |
 | sg-bioeye-lc-retdec | eebb3c7d05ecd827 | 0cd91bd88485a047 | d28b789 | yes |
-| sg-bioeye-lc-surprise | none (killed 18/75) | 2efee81beec61660 | d28b789 | yes |
+| sg-bioeye-lc-surprise | none (killed 19/75) | 2efee81beec61660 | d28b789 | yes |
 
 Config SHA-256s matched the handoff's frozen table byte-for-byte at adoption
 and at each launch (telemetry-verified for the 2cf2098/d28b789 arms).
@@ -51,7 +51,7 @@ Launch order: sg-lc/sg-t4t5 (scrambled controls) → sg-bioeye-lc (restarted
 once at 15/75 onto the threaded build; resume verified) → permuted+t4t5
 (waiter-chained, fired once each) → retdec+surprise (waiter-chained, fired once
 each). One laptop sleep (~1 h) suspended and cleanly resumed the decoder arms.
-sg-bioeye-lc-surprise was **killed at 18/75** by Mustafa's priority decision to
+sg-bioeye-lc-surprise was **killed at 19/75** by Mustafa's priority decision to
 reach the refactor; killed, not falsified. No duplicate launches. No failed,
 duplicate, or invalid rows in any final bundle (12-point validation PASS,
 75/75 matched coverage each). `seed_diverse_traces=false` on all arms: some

@@ -309,6 +309,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             learning_rate=config.controller.click_head_learning_rate,
             permutation_seed=config.controller.click_head_seed,
             negative_scale=config.controller.click_head_negative_scale,
+            coordinate_convention=config.controller.click_head_coordinate_convention,
         )
         head.timer_mask_enabled = config.controller.click_head_timer_mask
         return head

@@ -71,6 +71,11 @@ def test_seed_derivation_does_not_use_salted_python_hash() -> None:
         ("enabled", "yes", "enabled must be a boolean"),
         ("kind", "oracle", "unsupported controller.kind"),
         ("state_hash", "python", "unsupported controller.state_hash"),
+        (
+            "click_head_coordinate_convention",
+            "diagonal_guess",
+            "unsupported controller.click_head_coordinate_convention",
+        ),
         ("mask_freeze_after", 0, "mask_freeze_after must be positive"),
         ("component_limit", True, "component_limit must be an integer"),
         ("volatile_threshold", 0.0, "volatile_threshold must lie"),

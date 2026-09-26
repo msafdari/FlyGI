@@ -232,6 +232,11 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
         "click_head_deadline": (
             None if controller_config is None else controller_config.controller.click_head_deadline
         ),
+        "click_head_coordinate_convention": (
+            None
+            if controller_config is None
+            else controller_config.controller.click_head_coordinate_convention
+        ),
         "deploy_fly_tiebreak": deploy_fly_tiebreak,
         "state_similarity": (
             None if controller_config is None else controller_config.controller.state_similarity
@@ -411,9 +416,9 @@ class MyAgent(Agent):
             # (four independent arms, exact nulls) and costs ~100x the
             # per-action latency of everything else combined -- under the
             # rerun's parallel-swarm regime that latency is the binding
-            # budget. deploy_fly_tiebreak=false keeps the measured
-            # load-bearing fly components (retinotopic click head, tags)
-            # and drops only the inert seat.
+            # budget. deploy_fly_tiebreak=false keeps the measured engineering
+            # controller (static retinotopic metadata, tags) and drops the only
+            # component that actually advances fly-neuron dynamics.
             fly = None
             if getattr(
                 shared["controller_config"].controller, "deploy_fly_tiebreak", True
@@ -448,6 +453,7 @@ class MyAgent(Agent):
                     learning_rate=controller.click_head_learning_rate,
                     permutation_seed=controller.click_head_seed,
                     negative_scale=controller.click_head_negative_scale,
+                    coordinate_convention=controller.click_head_coordinate_convention,
                 )
             self._policy = StateGraphPolicy(
                 GameAction,

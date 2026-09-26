@@ -1,9 +1,10 @@
-"""The spatial readback must localize, and must read back the encoder's own map.
+"""Regression tests for the explicitly legacy-transposed spatial readback.
 
-Grounding measurement (real graph, 16 trials): hex-map readback localizes a
-known 6x6 change to 0.8 cells median where the deployed head sits at 23.5
-(chance 37.2). These tests pin the mechanism on a synthetic map so the property
-is regression-guarded without loading 24.5M edges.
+Historical measurement (real graph, 16 trials): this mapping localized a known
+6x6 change to 0.8 cells under its own transposed coordinates. The 2026-09-26
+audit invalidated that as ARC-coordinate evidence. These tests preserve the
+legacy contract without loading 24.5M edges; a corrected convention needs
+separate off-diagonal goldens.
 """
 
 from __future__ import annotations
@@ -49,7 +50,7 @@ def _column_node(a: int, b: int) -> int:
     return 100 + (a - 1) * SPAN2 + (b - 1)
 
 
-def test_a_change_at_one_column_localizes_to_that_column(tmp_path: Path) -> None:
+def test_legacy_axis_ownership_is_regression_guarded(tmp_path: Path) -> None:
     saliency = RetinotopicSaliency(_write_map(tmp_path))
     before = np.zeros(NODES, dtype=np.float32)
     after = before.copy()
@@ -84,7 +85,11 @@ def test_magnitude_weights_the_estimate(tmp_path: Path) -> None:
 
 def test_modes_and_errors(tmp_path: Path) -> None:
     _write_map(tmp_path)
-    assert RetinotopicSaliency(tmp_path, mode="surprise").mode == "surprise"
+    surprise = RetinotopicSaliency(tmp_path, mode="surprise")
+    assert surprise.mode == "surprise"
+    description = surprise.describe()
+    assert description["measurement_coordinate_convention"] == "legacy_hex1_x_transposed"
+    assert description["measurement_valid_for_arc_coordinates"] is False
     with pytest.raises(RetinotopicSaliencyError, match="unknown saliency mode"):
         RetinotopicSaliency(tmp_path, mode="telepathy")
     with pytest.raises(RetinotopicSaliencyError, match="missing"):

@@ -120,8 +120,10 @@ class DecoderConfig:
     # Where click coordinates come from. "readout_blocks" is the deployed
     # head: axis scores from body-id-ordered blocks of the readout, measured
     # at 23.5-cell localization error (chance is 37.2). "retinotopic_state"
-    # reads |state change| back through the optic-lobe column map (measured
-    # 0.8 cells); "retinotopic_surprise" reads |state - expectation| where
+    # reads |state change| back through the optic-lobe column map (historical
+    # 0.8-cell measurement used a legacy-transposed x/y convention and is not
+    # evidence for ARC-correct localization); "retinotopic_surprise" reads
+    # |state - expectation| where
     # the expectation is the frozen connectome advanced on the previous
     # frame -- its own forward model, zero trained parameters, one extra
     # network advance per turn (H-RETINO-DECODER).
@@ -224,7 +226,8 @@ class ControllerConfig:
     # 2026-09-24): an online logistic head over LOCAL click-patch content,
     # seated in the PRIMARY ranking term. "none" is byte-identical to the
     # champion. "retinotopic" reads the patch through the fly's compiled
-    # cell->column map (the load-bearing element under test);
+    # cell->column map (an anatomy-derived static interface, not neural
+    # computation);
     # "retinotopic_permuted", "pixel_patch" and "rote" are its preregistered
     # controls. weight is in the priority+exploration scale; the bonus is
     # weight*(2p-1), zero until the head has seen outcomes.
@@ -232,6 +235,10 @@ class ControllerConfig:
     click_head_weight: float = 1.0
     click_head_learning_rate: float = 0.3
     click_head_seed: int = 20260924
+    # MEASURED 2026-09-26: every historical click-head arm flattened ARC
+    # (x=column, y=row) as x*64+y. Keep that bug as the explicit legacy A arm;
+    # "arc_row_major" is the single-change B arm using y*64+x.
+    click_head_coordinate_convention: str = "legacy_xy_flat"
     # HYPOTHESIS (calibration, registered 2026-09-24): the first treatment
     # arm's breadth loss came from the SUPPRESSION side of the bonus.
     # negative_scale 1.0 keeps the symmetric bonus; 0.0 is boost-only --
@@ -258,7 +265,8 @@ class ControllerConfig:
     taxis_weight: float = 1.0
     click_head_timer_mask: bool = False
     # Deploy switch: false drops the measured-inert full-graph tie seat at
-    # Kaggle deployment; the fly stays load-bearing via the retinotopic head.
+    # Kaggle deployment. The remaining retinotopic head uses anatomy metadata
+    # as plumbing but performs no neural/synaptic computation.
     deploy_fly_tiebreak: bool = True
 
 
@@ -635,6 +643,9 @@ def load_config(path: str | Path) -> FlyGIConfig:
             click_head_weight=float(controller_raw.pop("click_head_weight", 1.0)),
             click_head_learning_rate=float(controller_raw.pop("click_head_learning_rate", 0.3)),
             click_head_seed=int(controller_raw.pop("click_head_seed", 20260924)),
+            click_head_coordinate_convention=str(
+                controller_raw.pop("click_head_coordinate_convention", "legacy_xy_flat")
+            ),
             click_head_negative_scale=float(controller_raw.pop("click_head_negative_scale", 1.0)),
             click_head_deadline=int(controller_raw.pop("click_head_deadline", 0)),
             state_similarity=str(controller_raw.pop("state_similarity", "none")),
@@ -839,6 +850,14 @@ def load_config(path: str | Path) -> FlyGIConfig:
         raise ConfigError(f"unsupported controller.kind: {controller.kind}")
     if controller.state_hash != "blake2b_128":
         raise ConfigError(f"unsupported controller.state_hash: {controller.state_hash}")
+    if controller.click_head_coordinate_convention not in {
+        "legacy_xy_flat",
+        "arc_row_major",
+    }:
+        raise ConfigError(
+            "unsupported controller.click_head_coordinate_convention: "
+            f"{controller.click_head_coordinate_convention}"
+        )
     for field_name in (
         "mask_freeze_after",
         "volatile_min_changes",

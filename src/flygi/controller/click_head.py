@@ -9,11 +9,12 @@ click predicts consequence at AUC 0.998/0.820 in the sparse-change click
 games (ft09, lp85); every global feature set, including the connectome's
 recurrent state, fails the same test.
 
-The FLY-LOAD-BEARING element is retinotopy: in mode "retinotopic" the patch
-is read through the compiled optic-lobe cell->column map, so each patch cell
-contributes its retinal column's 15-channel colour histogram -- local content
-at the fly's own spatial granularity (~3.4 grid cells per medulla column).
-Controls, named before the build (AGENTS.md):
+In mode "retinotopic" the patch is read through the compiled optic-lobe
+cell->column map, so each patch cell contributes its retinal column's 16 raw
+ARC-colour occupancy values at the fly map's spatial granularity (~3.4 grid
+cells per medulla column). This is anatomy-derived plumbing, not neural or
+synaptic computation, and therefore is not load-bearing fly computation under
+the repository directive. Controls, named before the build (AGENTS.md):
 
   * "retinotopic_permuted" -- same machinery, seeded permutation of the
     cell->column map. If it matches "retinotopic", the fly's spatial map is
@@ -43,6 +44,9 @@ _PATCH_RADIUS = 2
 _PATCH_CELLS = (2 * _PATCH_RADIUS + 1) ** 2  # 5x5 = 25
 # One-hot depth: 16 colours plus one out-of-bounds channel.
 _PIXEL_CHANNELS = _COLOURS + 1
+_LEGACY_COORDINATES = "legacy_xy_flat"
+_ARC_COORDINATES = "arc_row_major"
+_COORDINATE_CONVENTIONS = frozenset({_LEGACY_COORDINATES, _ARC_COORDINATES})
 
 
 class ClickHeadError(RuntimeError):
@@ -66,14 +70,35 @@ def load_cell_columns(runtime_dir: str | Path) -> tuple[NDArray[np.int64], int]:
     return cell_columns, int(projection._column_count)
 
 
-def _patch_cells(x: int, y: int) -> tuple[NDArray[np.int64], NDArray[np.bool_]]:
-    """Flat cell indices of the 5x5 patch at (x, y) plus an in-bounds mask."""
+def _patch_cells(
+    x: int,
+    y: int,
+    coordinate_convention: str = _LEGACY_COORDINATES,
+) -> tuple[NDArray[np.int64], NDArray[np.bool_]]:
+    """Flat cells for the 5x5 patch at ARC coordinate ``(x, y)``.
+
+    ``legacy_xy_flat`` preserves every historical result, including the known
+    transpose defect ``x * 64 + y``. ``arc_row_major`` implements the public
+    ARC convention: x is column, y is row, and row-major flat index is
+    ``y * 64 + x``. Keeping both makes the defect a locked A/B rather than a
+    silent rewrite of the baseline.
+    """
+
+    if coordinate_convention not in _COORDINATE_CONVENTIONS:
+        raise ClickHeadError(f"unknown coordinate convention: {coordinate_convention!r}")
 
     offsets = np.arange(-_PATCH_RADIUS, _PATCH_RADIUS + 1)
-    xs = x + offsets[:, None]
-    ys = y + offsets[None, :]
+    if coordinate_convention == _LEGACY_COORDINATES:
+        xs = x + offsets[:, None]
+        ys = y + offsets[None, :]
+    else:
+        ys = y + offsets[:, None]
+        xs = x + offsets[None, :]
     inside = (xs >= 0) & (xs < _GRID) & (ys >= 0) & (ys < _GRID)
-    flat = np.clip(xs, 0, _GRID - 1) * _GRID + np.clip(ys, 0, _GRID - 1)
+    if coordinate_convention == _LEGACY_COORDINATES:
+        flat = np.clip(xs, 0, _GRID - 1) * _GRID + np.clip(ys, 0, _GRID - 1)
+    else:
+        flat = np.clip(ys, 0, _GRID - 1) * _GRID + np.clip(xs, 0, _GRID - 1)
     return flat.ravel(), inside.ravel()
 
 
@@ -90,6 +115,7 @@ class OnlineClickHead:
         learning_rate: float = 0.3,
         permutation_seed: int = 20260924,
         negative_scale: float = 1.0,
+        coordinate_convention: str = _LEGACY_COORDINATES,
     ) -> None:
         if mode not in {"retinotopic", "retinotopic_permuted", "pixel_patch", "rote"}:
             raise ClickHeadError(f"unknown click head mode: {mode!r}")
@@ -114,6 +140,9 @@ class OnlineClickHead:
             self._column_count = 0
             feature_dim = 0
         self.mode = mode
+        if coordinate_convention not in _COORDINATE_CONVENTIONS:
+            raise ClickHeadError(f"unknown coordinate convention: {coordinate_convention!r}")
+        self.coordinate_convention = coordinate_convention
         self.weight = float(weight)
         self.learning_rate = float(learning_rate)
         self.negative_scale = float(negative_scale)
@@ -158,7 +187,7 @@ class OnlineClickHead:
         return hist
 
     def _features(self, grid: NDArray[np.int8], x: int, y: int) -> NDArray[np.float32]:
-        cells, inside = _patch_cells(x, y)
+        cells, inside = _patch_cells(x, y, self.coordinate_convention)
         if self.mode == "pixel_patch":
             out = np.zeros((_PATCH_CELLS, _PIXEL_CHANNELS), dtype=np.float32)
             colours = grid.ravel()[cells]
@@ -236,6 +265,7 @@ class OnlineClickHead:
     def describe(self) -> dict[str, Any]:
         return {
             "mode": self.mode,
+            "coordinate_convention": self.coordinate_convention,
             "weight": self.weight,
             "learning_rate": self.learning_rate,
             "negative_scale": self.negative_scale,
