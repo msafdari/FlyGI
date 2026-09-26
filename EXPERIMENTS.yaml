@@ -60,10 +60,22 @@ hypotheses:
       by at least 0.10, exceeds chance at 12 of 16 target positions, and clears
       the specified numerical floor. This is a descriptive representation
       gate, not a learning, topology-superiority, or ARC-score claim.
-    status: open
+    status: refuted
     protocol: docs/experiments/visual_memory_entry.md
     evidence:
       - "Pre-outcome design: no neural responses inspected; static input coverage checked."
+      - >
+        Measured 2026-09-26 at source b718f03: contract-valid frozen v1 run,
+        32 scenes, full 166700-node signed-modulator graph, 32 steps per scene,
+        all 206 KCg-d cells. Native transfer accuracy 0.521875, sensory drive
+        0.55, type-mean 0.4979166667, graph-off 0.5. Native exceeds chance at
+        9/16 positions (required 12); absolute accuracy and both margin clauses
+        fail. Positive signal and same-position shape differences clear 1e-7.
+        Result SHA256 1241b74f3e1df5a8621cf0667d0318c5ae19ba125da226ef3fccf8a9c337ed83
+        at results/connectome_agent/visual_memory_entry_v1.json. This closes
+        this interface/model/readout branch before plasticity; it does not test
+        a living fly, arbitrary visual memory, or ARC performance. No tuning,
+        anatomy-null expansion, plasticity build, or ARC promotion follows.
     updated: 2026-09-26
   H-ANATOMY-TIEBREAK:
     statement: >

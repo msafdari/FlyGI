@@ -12,6 +12,57 @@ blocker, submission, or change in ordered next work. Never record secrets.
 
 ## Native visual-MB premise audit — 2026-09-26 13:26 PDT
 
+### Frozen representation gate closed — 2026-09-26 13:50 PDT
+
+**Measured:** H-VISUAL-MEMORY-ENTRY is **refuted under its frozen protocol**.
+The exact preregistered command completed in 21.213 seconds at pushed source
+`b718f03`, with a clean tracked tree, six sparse-matvec threads, 32 scenes per
+condition, 32 updates per scene, the full 166,700-node / 24,994,595-edge graph,
+and all 206 annotated KCg-d cells. All input/provenance/reset contracts passed.
+Exit code 2 means scientific failure, not a runtime error.
+
+| Representation | Position-transfer accuracy | Frozen requirement |
+| --- | ---: | --- |
+| Native positive KCg-d state | 0.521875 | >=0.75 and >=both input baselines +0.10 |
+| Unchanged sensory drive | 0.550000 | named identity/plumbing comparison |
+| Fifteen type-mean drives | 0.497917 | named input-mass/channel comparison |
+| Graph-off KC state | 0.500000 | exactly zero state, chance score |
+
+Native position means exceeded chance at 9/16 locations, short of 12. Minimum
+positive KC-vector RMS was 2.71927e-6; minimum same-position shape-difference
+RMS was 2.21036e-5. Both exceed the declared 1e-7 floor. **Measured:** this is
+not a silent-input or numerically sub-floor failure; the fixed readout failed
+the specified position-transfer comparisons. It does not establish which
+model assumption failed or what a living fly can recognize.
+
+**Decision:** stop this model/interface/readout branch before plasticity. No
+gain, timing, cell selector, normalization, stimulus, or threshold rescue; no
+anatomy-control expansion or ARC integration. No agent behavior, Kaggle assets,
+submission, or leaderboard score changed. The comparison saved us from building
+a memory layer on a representation that did not meet its entry requirement.
+
+**Evidence:** ignored immutable result
+`results/connectome_agent/visual_memory_entry_v1.json`, SHA-256
+`1241b74f3e1df5a8621cf0667d0318c5ae19ba125da226ef3fccf8a9c337ed83`.
+The `.json.events.jsonl` sidecar records all 64 scene completions. The artifact
+contains exact source/protocol/data hashes, raw KC readouts at steps 4/8/16/32,
+all 480 comparison margins per condition, selector IDs, and every gate clause.
+Final pre-run focused validation passed 89 tests with Ruff clean. Final
+`.venv/bin/pytest -q` passed **473 tests in 26.67 seconds**. Independent
+artifact-only recomputation rebuilt the sensory vectors/type means from saved
+sparse drives and reproduced every margin, decision, position mean, accuracy,
+signal floor, and gate verdict exactly. It also verified all 67 telemetry events,
+32 trials per condition, four snapshots per trial, reset flags, shared CSR,
+six-thread settings, drive hashes, and pinned provenance. No neural rerun.
+
+**Current stopping point:** evidence verification is complete; no experiment
+remains running or queued. No memory or ARC build is justified by this result.
+Before another such build, a new independent
+visual-model validity protocol must specify the biological response being
+reproduced, the literature-constrained input/dynamics, trivial alternatives,
+and a finite pass/kill rule. That is a separate model-validation decision, not
+permission to tune this failed developmental panel until it passes.
+
 ### Probe implementation checkpoint — 2026-09-26 13:46 PDT
 
 Implemented `scripts/probe_visual_memory_entry.py`, an external diagnostic only;
@@ -2767,10 +2818,12 @@ Slots reset 00:00 UTC, one per day.
    the coordinate repair passed, but the exact real-vs-controls conjunction
    failed. Keep the convention/goldens, but do not tune or run ARC behavior in
    this branch.
-3. **Next:** preregister the native visual-VP -> visual-KC -> MBON one-shot 2AFC
-   premise killer in full before implementation. Integrate it into ARC only if
-   real anatomy beats chance, no-plasticity, cue-shuffled, and locally matched
-   anatomy controls.
+3. **Completed and stopped:** H-VISUAL-MEMORY-ENTRY failed its preregistered
+   representation gate: native 0.521875 versus sensory 0.55, type-mean 0.497917,
+   graph-off 0.5. Do not build the proposed visual-MB memory/plasticity branch,
+   tune this panel, or promote it to ARC. Before any replacement, freeze an
+   independent biological visual-model validity test; a new design is required,
+   not another setting of this failed experiment. No such next run is queued.
 4. Defer remaining notebook/deployment gates until a genuinely load-bearing
    neural candidate earns deployment. The pending gates are decision-critical
    asset hashes, process-visible Swarm failures, mutable ACTION6 payload
