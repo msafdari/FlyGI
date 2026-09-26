@@ -10,6 +10,74 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Codex takeover: runtime bounded; score premise reopened — 2026-09-26 11:45 PDT
+
+**Measured:** the six public-leaderboard `0.00` submissions remain construction
+failures, not behavioral measurements: the agents took zero actions. The fixed
+25-game local competition-mode battery at `bcf18b2` remains a valid measurement
+of that engineering candidate only: score `0.551859`, 10 completed levels,
+80,941 actions, and no exceptions in 35 minutes. It is not evidence of hidden
+transfer and it is not a fly-attributed result.
+
+**Measured audit correction:** `configs/combo_light.yaml` sets
+`deploy_fly_tiebreak: false`. Its decisions therefore run through the Python
+state-graph controller, Python online click head, and static retinotopy metadata;
+the 166,700-neuron recurrent dynamics are not advanced. Replacing the graph by
+a degree-preserving null would leave those decisions unchanged. This candidate
+is an engineering baseline and fails the repository's load-bearing-fly gate.
+Preflight had incorrectly labelled it `controller-fly`; the adapter now reports
+`controller-light`, `deploy_fly_tiebreak: false`, and
+`neuronal_dynamics_active: false` explicitly.
+
+**Measured deployment blocker and repair:** the 25 files written by the
+35-minute gateway battery occupied 2,258,912,722 bytes (`2.104 GiB`), or about
+27.9 KB/action. At the same aggregate rate an 8.4-hour rerun projects to about
+30.3 GiB of redundant JSONL, while the vendor `Agent` also retained every full
+frame in RAM. FlyGI's `is_done` and `choose_action` discard the framework's
+history argument; policy memory lives in the per-agent policy. The adapter now
+overrides `append_frame` to retain one current frame and suppress local replay
+serialization. **ASSUMPTION:** this Markov adapter boundary is valid because no
+FlyGI decision reads `self.frames` history; it breaks if future policy code does.
+
+**Measured validation:** `.venv/bin/pytest -q tests/test_kaggle_smoke.py`
+passes 18/18 and explicit Ruff checks pass. A fresh official-framework,
+competition-mode localhost run on `lp85` reached level 1 on action 16 and score
+2.7777777778, exactly matching the prior battery's level-1 milestone. It then
+ended on the 30-second wall guard after 1,047 actions, closed the scorecard
+cleanly, and left `/private/tmp/flygi_bounded_recordings` at 0 bytes. This
+validates the scored milestone and O(1) framework frame history; it does not yet
+bound residual growth in `policy.records` or `RetinoTagRegistry._seen`.
+
+**Measured transport repair:** four consecutive empty/malformed gateway replies
+now mark the agent transport-dead and return the last valid frame so the next
+`is_done()` closes the game, instead of raising inside a Swarm thread. The log
+line is valid JSON. **ASSUMPTION:** a last valid frame always exists after agent
+construction in the official loop; if construction-time transport can fail
+before RESET returns, that separate path must still fail the notebook visibly.
+
+**Measured score-facing defect:** the click head uses `x * 64 + y` to flatten a
+candidate even though ARC payloads use `(x=column, y=row)` and grids are indexed
+`grid[y, x]`; its tests repeat the same swapped convention. The same row-to-x
+convention appears in `retinotopic_saliency.py` and raw-grid slices in
+`fly_tiebreak.py`. For `(x=10, y=20)`, the head reads flat index 660 rather than
+the row-major 1290. Thus the prior 0.8-cell localization and relevant decoder
+nulls tested an internally transposed interface. The `0.551859` baseline also
+contains this defect, so it must be preserved as locked control A rather than
+silently corrected.
+
+**In progress:** none; the localhost gateway was stopped after the clean gate.
+The next checkpoint is a flagged coordinate-convention A/B, starting with an
+asymmetric-coordinate unit/golden probe and then the smallest public-game slice
+that can falsify a score benefit. No Kaggle submission is authorized or queued.
+
+**Scientifically grounded follow-on if the coordinate correction is not enough:**
+the strongest genuinely new fly program is the native visual-projection-neuron
+→ visual-KC → MBON route. The graph contains 1,615 direct edges from 251 visual
+projection neurons into 332 KCs, unlike the prior MB assay's invented global
+colour-histogram → olfactory-PN bus. Its cheapest gate is a 32-episode one-shot
+2AFC delayed-match probe against chance, no-plasticity, cue-shuffled, and exact
+degree/sign/weight-matched local rewires before any ARC integration.
+
 ## Parallel Experiment 000 draft checkpoint — 2026-09-23 15:17 PDT
 
 Experiment 000 planning is paused at a clean documentation-only checkpoint on
@@ -234,7 +302,9 @@ score; scoring teams run 8h54m-9h11m; the official random sample scores
 budget. Now: MAX_ACTIONS 200k, deadline 8.4h, transport retries,
 random-legal fallback on policy errors (the uncapped regime reaches
 graph states the cap never saw), light deploy profile (tie seat off --
-measured inert four ways; fly load-bearing via the retinotopic head).
+measured inert four ways). Audit correction on 2026-09-26: the retinotopic
+head uses static anatomy metadata but no neuronal or synaptic computation, so
+this light profile is not load-bearing-fly under the repository directive.
 Replay-by-duplication measured dead at the gateway: duplicates share one
 server session.
 
@@ -2281,21 +2351,29 @@ Slots reset 00:00 UTC, one per day.
 
 ## Ordered next actions
 
-1. Finish the Phase 5 three-way ablation (controller alone / + real fly / +
-   degree-preserving null fly) and record all three rows before interpreting any
-   of them.
-2. If the real fly beats both the null fly and controller-alone, that is the
-   submission candidate and the headline claim. If it ties the null, report that
-   the controller scores and the fly does not, and say so in the social drafts.
-3. Treat submission 56459984's 0.00 as the stop result for budget/loop-escape
-   tuning; do not spend another slot on variants of the same capability.
-4. Audit and pin a permissively licensed state-graph donor; reproduce it
-   standalone before hybridizing it.
-5. Download and schema-audit the official human replay dataset for Phase 2;
-   keep it outside Git and commit only hashes/provenance.
-6. Build game-held-out evaluation before training the affordance/value model.
-7. Begin the retinotopic/module compiler as a parallel, separately gated fly
-   contribution; do not make it the critical path to the next score gain.
+1. Add a declared coordinate-convention switch so the known transposed head is
+   retained as control A and corrected row-major mapping is intervention B.
+   Freeze every other config value and prove the difference on asymmetric
+   coordinates before running either arm.
+2. Replay the recorded click transitions on the six score-bearing click games
+   (`ft09`, `lp85`, `r11l`, `tn36`, `vc33`, `sp80`) and compare prequential log
+   loss and AUPRC. Stop unless corrected B improves executed-click prediction.
+3. If the replay gate passes, run the corrected real neural decoder against a
+   degree-preserving null on the same six games at 600 actions and seeds 0-2.
+   Promotion requires no level regression, better paired action cost or another
+   level, and a real-over-null gap. The corrected Python head remains an
+   engineering-only baseline.
+4. Propagate the coordinate convention through saliency and fly-tiebreak code
+   only if earned, with off-diagonal golden tests; do not bundle other tuning.
+5. Complete remaining deployment gates: decision-critical asset hashes,
+   process-visible Swarm thread failures, mutable ACTION6 payload isolation, and
+   a short multi-game RSS soak. Rebuild the notebook only after these settle.
+6. Do not submit `combo_light` as FlyGI. Require genuinely load-bearing neural
+   computation plus controller-only / real graph / degree-preserving-null
+   comparisons before a FlyGI submission or attribution claim.
+7. In parallel, run the native visual-VP → visual-KC → MBON one-shot 2AFC
+   premise killer. Integrate it into ARC only if real anatomy beats chance,
+   no-plasticity, cue-shuffled, and matched-anatomy controls.
 
 ## Durable limitations and claim boundary
 

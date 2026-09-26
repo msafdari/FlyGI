@@ -262,10 +262,12 @@ def test_preflight_prints_machine_readable_verified_identity(
         "controller": None,
         "click_head": None,
         "click_head_deadline": None,
+        "deploy_fly_tiebreak": None,
         "state_similarity": None,
         "edges": 24_559_055,
         "internal_steps": 4,
         "mode": "connectome",
+        "neuronal_dynamics_active": True,
         "nodes": 166_700,
         "release": "male-cns:v1.0",
         "sign_mode": "heuristic",
@@ -276,6 +278,47 @@ def test_preflight_prints_machine_readable_verified_identity(
             "node_metadata.npz": "c" * 64,
         },
     }
+
+
+def test_preflight_reports_light_controller_without_neuronal_dynamics(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A controller config must not make an inactive graph look load-bearing."""
+
+    module = _load_adapter(monkeypatch)
+    bundle = SimpleNamespace(
+        node_count=166_700,
+        edge_count=24_559_055,
+        manifest={"release": "male-cns:v1.0", "preprocessing": {"sign_mode": "heuristic"}},
+        verified_hashes={
+            "/attached/runtime/graph.npz": "a" * 64,
+            "/attached/runtime/groups.npz": "b" * 64,
+            "/attached/runtime/node_metadata.npz": "c" * 64,
+        },
+    )
+    controller = SimpleNamespace(
+        click_head="retinotopic",
+        click_head_deadline=100,
+        state_similarity="retino_tags",
+        deploy_fly_tiebreak=False,
+    )
+    monkeypatch.setattr(
+        module,
+        "_shared_runtime",
+        lambda: {
+            "available": True,
+            "bundle": bundle,
+            "interface": {"internal_steps": 4},
+            "controller_config": SimpleNamespace(controller=controller),
+            "controller_path": "/attached/controller.yaml",
+        },
+    )
+
+    identity = module.preflight_runtime(emit=False)
+
+    assert identity["mode"] == "controller-light"
+    assert identity["deploy_fly_tiebreak"] is False
+    assert identity["neuronal_dynamics_active"] is False
 
 
 def test_preflight_fails_closed_without_runtime(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -436,3 +479,63 @@ def test_name_is_safe_during_base_construction(monkeypatch: pytest.MonkeyPatch) 
     agent.game_id = "tu93-test"
     # No __init__ has run: name must still evaluate (class-level defaults).
     assert "constructing" in agent.name or agent.name
+
+
+def test_adapter_bounds_frame_history_and_skips_per_turn_recording(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The official Swarm's record=True path must not grow for 8.4 hours.
+
+    The trivial alternative is the upstream append_frame implementation, which
+    retains and serializes every full grid. FlyGI's adapter methods ignore that
+    history, so one current frame is the required bound.
+    """
+
+    module = _load_adapter(monkeypatch)
+    agent = module.MyAgent.__new__(module.MyAgent)
+    agent.frames = [SimpleNamespace(guid="old-a"), SimpleNamespace(guid="old-b")]
+    recorded: list[object] = []
+    agent.recorder = SimpleNamespace(record=recorded.append)
+
+    for index in range(1_000):
+        agent.append_frame(SimpleNamespace(guid=f"guid-{index}"))
+
+    assert len(agent.frames) == 1
+    assert agent.frames[0].guid == "guid-999"
+    assert agent.guid == "guid-999"
+    assert recorded == []
+
+
+def test_persistent_transport_failure_ends_cleanly_on_the_last_frame(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Retry exhaustion must not kill a Swarm thread before cleanup."""
+
+    module = _load_adapter(monkeypatch)
+    attempts = 0
+
+    def always_fail(self: object, action: object) -> object:
+        del self, action
+        nonlocal attempts
+        attempts += 1
+        raise ValueError("gateway returned no frame")
+
+    monkeypatch.setattr(FakeAgent, "do_action_request", always_fail, raising=False)
+    monkeypatch.setattr(module.time, "sleep", lambda _: None)
+    agent = module.MyAgent.__new__(module.MyAgent)
+    agent.game_id = "transport-test"
+    last_frame = SimpleNamespace(guid="last-good")
+    agent.frames = [last_frame]
+
+    returned = agent.do_action_request(FakeGameAction.ACTION1)
+
+    assert attempts == agent._TRANSPORT_RETRIES
+    assert returned is last_frame
+    assert agent._transport_dead is True
+    line = capsys.readouterr().out.strip()
+    assert line.startswith("FLYGI_TRANSPORT_DEAD=")
+    assert json.loads(line.split("=", 1)[1]) == {
+        "error": "ValueError: gateway returned no frame",
+        "game_id": "transport-test",
+    }

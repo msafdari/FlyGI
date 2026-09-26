@@ -210,6 +210,18 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
         Path(path).name: digest for path, digest in sorted(bundle.verified_hashes.items())
     }
     controller_config = shared.get("controller_config")
+    deploy_fly_tiebreak = (
+        None
+        if controller_config is None
+        else bool(getattr(controller_config.controller, "deploy_fly_tiebreak", True))
+    )
+    neuronal_dynamics_active = controller_config is None or bool(deploy_fly_tiebreak)
+    if controller_config is None:
+        mode = "connectome"
+    elif neuronal_dynamics_active:
+        mode = "controller-fly"
+    else:
+        mode = "controller-light"
     return {
         "controller": (
             None if shared.get("controller_path") is None else Path(shared["controller_path"]).name
@@ -220,12 +232,14 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
         "click_head_deadline": (
             None if controller_config is None else controller_config.controller.click_head_deadline
         ),
+        "deploy_fly_tiebreak": deploy_fly_tiebreak,
         "state_similarity": (
             None if controller_config is None else controller_config.controller.state_similarity
         ),
         "edges": int(bundle.edge_count),
         "internal_steps": int(interface["internal_steps"]),
-        "mode": "controller-fly" if shared.get("controller_config") is not None else "connectome",
+        "mode": mode,
+        "neuronal_dynamics_active": neuronal_dynamics_active,
         "nodes": int(bundle.node_count),
         "release": str(bundle.manifest.get("release")),
         "sign_mode": str(bundle.manifest.get("preprocessing", {}).get("sign_mode")),
@@ -323,8 +337,57 @@ class MyAgent(Agent):
                 last_error = exc
                 time.sleep(min(2.0 * (attempt + 1), 8.0))
         self._transport_dead = True
-        print(f"FLYGI_TRANSPORT_DEAD={{'game': '{0}'}}".format(self.game_id), flush=True)
-        raise last_error
+        print(
+            "FLYGI_TRANSPORT_DEAD="
+            + json.dumps(
+                {
+                    "game_id": str(self.game_id),
+                    "error": (
+                        "persistent empty frame"
+                        if last_error is None
+                        else f"{type(last_error).__name__}: {last_error}"
+                    ),
+                },
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+            flush=True,
+        )
+        # ASSUMPTION: after persistent transport failure the server-side game
+        # cannot be advanced safely, but returning the last valid frame lets the
+        # official loop reach is_done() and cleanup() instead of losing this
+        # thread to an exception. Check with a gateway that drops four replies;
+        # if cleanup does not close the scorecard, this fallback is invalid.
+        frames = getattr(self, "frames", None)
+        if frames:
+            return frames[-1]
+        raise RuntimeError("transport failed before the agent received a frame") from last_error
+
+    def append_frame(self, frame: FrameData) -> None:
+        """Keep only the current frame and omit per-turn replay serialization.
+
+        Swarm forces ``record=True`` and the upstream implementation otherwise
+        stores every full frame twice: in ``self.frames`` and as JSONL. The
+        35-minute gateway battery measured 2.104 GiB across its 25 recording
+        files, so an 8.4-hour run projects to roughly 30.3 GiB of redundant
+        JSONL before accounting for the in-memory frame copies.
+
+        ASSUMPTION: FlyGI is Markov at the adapter boundary. Both methods the
+        framework calls discard the historical ``frames`` argument; all needed
+        memory lives inside ``self._policy``. The comparison gate requires the
+        deterministic short gateway run to preserve the prior level/action
+        milestone and score. If a future policy reads frame history, this
+        override must not ship.
+
+        The official gateway owns the scorecard; the local Recorder is only a
+        replay/debug copy. Suppressing it does not suppress scored actions or
+        final scorecard closure.
+        """
+
+        self.frames[:] = [frame]
+        guid = getattr(frame, "guid", None)
+        if guid:
+            self.guid = guid
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         # ``rng_seed`` is a FlyGI-only testing/replay override and must not be
