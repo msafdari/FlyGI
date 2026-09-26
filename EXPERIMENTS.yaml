@@ -52,6 +52,19 @@ endpoints:
             tu93, vc33, wa30]
 
 hypotheses:
+  H-VISUAL-MEMORY-ENTRY:
+    statement: >
+      On the frozen 32-scene rectangle panel, positive KCg-d activity in the
+      full MaleCNS rate model distinguishes orientation across positions with
+      accuracy at least 0.75, exceeds both sensory-drive and type-mean floors
+      by at least 0.10, exceeds chance at 12 of 16 target positions, and clears
+      the specified numerical floor. This is a descriptive representation
+      gate, not a learning, topology-superiority, or ARC-score claim.
+    status: open
+    protocol: docs/experiments/visual_memory_entry.md
+    evidence:
+      - "Pre-outcome design: no neural responses inspected; static input coverage checked."
+    updated: 2026-09-26
   H-ANATOMY-TIEBREAK:
     statement: >
       The connectome breaking the controller's ties beats the controller's own

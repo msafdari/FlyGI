@@ -12,6 +12,49 @@ blocker, submission, or change in ordered next work. Never record secrets.
 
 ## Native visual-MB premise audit — 2026-09-26 13:26 PDT
 
+### Execution resumed — 2026-09-26 13:36 PDT
+
+The user authorized proceeding. The next finite deliverable is
+H-VISUAL-MEMORY-ENTRY: a 32-scene position-transfer representation gate, fully
+specified in `docs/experiments/visual_memory_entry.md` before neural outcomes.
+It addresses the reviewed concern that arbitrary direct VP clamps bypass the
+upstream visual wiring. Stimuli enter through the existing retinotopic encoder;
+all 206 exact KCg-d cells are read after the frozen full-connectome dynamics.
+
+Trivial alternatives are the unchanged sensory drive, fifteen per-type mean
+drives, and graph-off. Assumptions A1-A5 freeze the sensory mapping, uniform
+rate model/32-step horizon, positive KC interpretation, external diagnostic,
+and engineering thresholds. The external nearest-exemplar computation is an
+evaluator only and never an agent component. No learning or score claim follows.
+
+Measured static coverage before freeze: `[14,26,38,50]^2` contains two invisible
+corners; the central `[20,28,36,44]^2` panel reaches 178-325 sensory neurons for
+every rectangle. Input energy varies by position/orientation, so the type-mean
+baseline is required. No neural state was advanced during this choice.
+
+Stages: finish compact protocol review -> implement standalone probe and
+synthetic comparison tests -> checkpoint/push -> run once -> record verdict.
+A failure closes this branch before plasticity. A pass requires a separately
+frozen locally matched anatomy test before plasticity, then an end-to-end
+cue-value and ARC test. This ordering prevents building a memory system before
+checking whether its input supports the intended generalization.
+
+**Pre-outcome review closed:** the method reviewer required an explicit total
+of 32 updates, identical positive rectification for both input baselines, defined
+zero vectors, and the exact 480-comparison reduction. These are now in the
+protocol. RMS floors remain the declared >1e-7 bars. No outcome was used.
+
+**Measured upstream anatomy:** the exact literature-prior MC62 alias is in
+`hemibrainType` (248 cells), and PLP251 is in `flywireType` (canonical LoVP97,
+two bodies 13707/15915). At raw weight>=5 the existing retinotopic population
+has 1,406 edges into MC62; MC62->PLP251 has 75 edges; PLP251->KCg-d has 17.
+All are ipsilateral. Only the first block admits substantial within-side
+degree-preserving rewiring (99.2% structurally switchable); the downstream
+blocks have one target/source per side and no such switches. This is useful
+anatomy for a later causal test, not a reason to alter the frozen all-206-KC
+representation endpoint after results. The exact LC15/PLP009 mapping from
+another connectome does not reproduce here at this threshold.
+
 **Process checkpoint:** no implementation or neural outcome has been run for
 the proposed visual-projection-neuron -> visual-KC -> MBON branch. The complete
 root WORKLOG and the complete 999-line Experiment 000 specification were read
