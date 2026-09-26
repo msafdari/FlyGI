@@ -20,7 +20,7 @@ with only the unrelated untracked `.fly-or-fake-work/` directory. The next
 branch remains design-only until its selectors, biology, controls, independent
 unit, metrics, thresholds, and kill rule are frozen outcome-blind.
 
-**Measured selector contradiction:** an independent streaming scan of all
+**Measured selector discrepancy (resolved below):** an independent streaming scan of all
 151,856,684 released MaleCNS weight rows does not reproduce the narrative
 `1,615 edges / 251 visual VPs / 332 KCs` claim under the most direct exact
 interpretation. With presynaptic `superclass == "visual_projection"` and
@@ -29,9 +29,35 @@ direct pair edges / 9,736 contacts from 221 VPs into 311 of 335 annotated visual
 KCs** at `weight >= 1`; at `weight >= 5`, they contain 595 edges / 8,236
 contacts from 82 VPs into 269 KCs. Target annotations are 206 KCg-d and 129
 KCab-p. This is a selector-definition discrepancy, not a biological result.
-The exact alternative selector that produced 1,615/251/332 must be recovered
-and justified before preregistration; no count will be chosen because it is
-larger or more convenient.
+
+**Measured resolution, static anatomy audit 2026-09-26:** the earlier selector
+was every `class == "Kenyon_Cell"` receiving a direct visual-projection edge,
+not the exact KCg-d/KCab-p type subset. That raw block has 1,616 pairs from
+252 VPs into 332 KCs, totaling 11,094 contacts. The signed runtime removes the
+one-contact edge from body 519323 (`aMe8`, unclear consensus transmitter) to
+body 105662 (`KCg-d`), yielding exactly 1,615/251/332. These counts are
+compatible; their populations and preprocessing differ. "Visual KC" must not
+silently mean any weak direct VP recipient: the relational pool includes 12
+KCg-m and nine cells of other types as well as 203 KCg-d and 108 KCab-p.
+
+**Measured anatomy constraints from the same read-only audit:** the 332 direct
+VP-recipient KCs contact 83 MBON bodies through 4,485 raw pairs / 42,762 contacts.
+APL feedback reaches 331/332. The VP sources also have direct shortcuts to MBON,
+DAN, and APL, so a whole-network response alone cannot establish mediation by
+VP->KC->MBON. Exact-degree source-sign/side and target-type/side strata leave
+86.4% of the runtime VP->KC edges structurally switchable; the proposed local
+KC->MBON strata leave only 30.5%. The earlier joint-null proposal is therefore
+not freeze-ready under the existing 80% switchability requirement. No null
+criterion has been relaxed and no neural outcome has been inspected.
+
+**Established and inferred design constraint:**
+[Ganguly et al. (2024)](https://www.nature.com/articles/s41467-024-49616-z)
+found structured VPN->LVIN connections but individual visual-KC input combinations consistent with biased
+random sampling in FlyWire. **Inferred:** arbitrary synthetic VP cues may test
+associative mechanics while missing the upstream visual structure whose value
+we want to test. Before freeze, specify what visual relationship the stimuli
+preserve and which exact anatomical block each null tests. This does not change
+the requirement to demonstrate anatomy-dependent benefit before ARC promotion.
 
 **Established versus assumed boundary:** primary literature supports direct
 visual input to segregated KCg-d and KCab-p populations and visual associative
@@ -41,13 +67,23 @@ rate equation, cue-to-VP clamp, readout scalar, plasticity magnitude, or pass
 threshold is physiological. Those remain explicit `MODEL_ASSUMPTION` or
 `ENGINEERING_CHOICE` items and must each have a named trivial alternative.
 
-**In progress, read-only:** one audit is independently reconstructing the exact
-MaleCNS local anatomy, including source/target definitions, transmitter/sign,
-KC->MBON reach, DAN/APL support, and a locally matched null. A second audit is
-checking only primary literature for what can legitimately be called
-established. No source edit or outcome run is authorized in either audit.
+**Literature-audit correction:** reset-separated cue-value recall with only
+synaptic weights retained tests associative memory; it does not establish
+abstract delayed matching or working memory. The proposed assay name is
+one-pairing visual associative recall with delayed two-choice testing. Direct
+KCg-d and predominantly indirect KCab-p pathways must be specified separately.
+Primary literature also does not license a universal depression-only rule:
+[Handler et al. (2019)](https://pmc.ncbi.nlm.nih.gov/articles/PMC9012144/)
+reports timing-dependent depression and potentiation. Exact simulation timing,
+learning equation, and magnitude remain declared assumptions.
 
-**Ordered next decision:** reconcile the direct-edge count and choose the
+**Audits received, read-only:** one audit independently reconstructed the exact
+MaleCNS local anatomy, including source/target definitions, transmitter/sign,
+KC->MBON reach, DAN/APL support, and local-null feasibility. A second audit
+checked primary literature for what can legitimately be called established.
+Neither audit edited source or ran neural outcomes.
+
+**Ordered next decision:** with the direct-edge count reconciled, choose the
 narrowest biologically defensible population rule; then write and red-team the
 entire synthetic premise-killer protocol before code. The smallest proposed
 falsifier remains a reset-separated, paired visual-cue assay with chance,
