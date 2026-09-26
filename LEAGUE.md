@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-26T20:20:32.917492+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-26T20:40:39.103328+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 
@@ -57,6 +57,7 @@ bootstrap CIs on complete matched pairs only; partial runs never get one.
 
 | id | status | statement |
 | --- | --- | --- |
+| H-VISUAL-MEMORY-ENTRY | open | On the frozen 32-scene rectangle panel, positive KCg-d activity in the full MaleCNS rate model distinguishes orientation across positions with accuracy at least 0.75, exceeds both sensory-drive and type-mean floors by at least 0.10, exceeds chance at 12 of 16 target positions, and clears the specified numerical floor. This is a descriptive representation gate, not a learning, topology-superiority, or ARC-score claim. |
 | H-ANATOMY-TIEBREAK | null | The connectome breaking the controller's ties beats the controller's own deterministic hash. |
 | H-STATE-DEPENDENCE | refuted | Any observation-dependent tiebreaker helps; the fly would be incidental. (The deflationary reading of the fly's early partial lead.) |
 | H-BUDGET | refuted | Score is limited by the 600-action budget. |

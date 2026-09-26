@@ -12,6 +12,39 @@ blocker, submission, or change in ordered next work. Never record secrets.
 
 ## Native visual-MB premise audit — 2026-09-26 13:26 PDT
 
+### Probe implementation checkpoint — 2026-09-26 13:46 PDT
+
+Implemented `scripts/probe_visual_memory_entry.py`, an external diagnostic only;
+no agent, policy, plasticity, or deployment path changes. The frozen protocol's
+SHA-256 is `220591b7b93734e90bdf4fe16123143c54222f4904ac9da21070b5f9827fcf08`
+and is enforced before runtime loading. The probe also verifies the four pinned
+data assets, exact 206-cell selector, stimulus visibility and uniqueness,
+sensory/KC disjointness, reset/chunk identity, graph-off silence, and unchanged
+drives. It saves all raw KC responses and 480 ordered comparison margins per
+condition; no-overwrite finite JSON and flushed progress events preserve the
+audit trail. Six existing sparse-matvec threads retain the reference operation
+order rather than substituting a different numerical backend.
+
+Measured pre-outcome validation: the initial focused command
+`.venv/bin/pytest -q tests/test_visual_memory_entry.py tests/test_rate_dynamics.py tests/test_dynamics_runtime.py tests/test_spmv.py tests/test_league.py`
+passed 82 tests; focused Ruff passed. Synthetic shape codes score 1.0;
+constant and location-only codes score .5. These validate the diagnostic, not
+the biological hypothesis. The full suite passed 466 tests before five extra
+artifact-publication tests were added; the expanded focused suite passed 87.
+
+Independent pre-outcome review found an exact-boundary arithmetic defect:
+subtracting rounded accuracies can reject a true .10 advantage. The two margin
+gates now compare exact half-credit sums against 48 credits out of 480; this
+changes no threshold. Exact-boundary and half-credit-below regressions now pass
+(29 probe tests total). The static
+178-325 sensory-support golden and graph-off score contract are also enforced.
+Six-thread execution is a recorded performance setting, not a scientific gate.
+No neural outcome has been inspected.
+
+Independent implementation review is complete. Next: checkpoint/push the exact source, run the single frozen
+command from the protocol, record pass/fail, and obey its stop condition. Do not
+start a memory implementation merely because the probe executes successfully.
+
 ### Execution resumed — 2026-09-26 13:36 PDT
 
 The user authorized proceeding. The next finite deliverable is
@@ -55,7 +88,7 @@ anatomy for a later causal test, not a reason to alter the frozen all-206-KC
 representation endpoint after results. The exact LC15/PLP009 mapping from
 another connectome does not reproduce here at this threshold.
 
-**Process checkpoint:** no implementation or neural outcome has been run for
+**Historical process checkpoint (before representation-gate freeze):** no implementation or neural outcome had been run for
 the proposed visual-projection-neuron -> visual-KC -> MBON branch. The complete
 root WORKLOG and the complete 999-line Experiment 000 specification were read
 before planning. `HEAD == origin/main == c008751`; the tracked tree was clean,
@@ -126,7 +159,7 @@ KC->MBON reach, DAN/APL support, and local-null feasibility. A second audit
 checked primary literature for what can legitimately be called established.
 Neither audit edited source or ran neural outcomes.
 
-**Ordered next decision:** with the direct-edge count reconciled, choose the
+**Earlier next-decision proposal (superseded by the representation gate above):** with the direct-edge count reconciled, choose the
 narrowest biologically defensible population rule; then write and red-team the
 entire synthetic premise-killer protocol before code. The smallest proposed
 falsifier remains a reset-separated, paired visual-cue assay with chance,
