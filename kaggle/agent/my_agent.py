@@ -18,6 +18,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -72,7 +73,7 @@ _LOADED: dict[str, Any] = {}
 # submission and the day's quota with it: past the deadline every agent reports
 # itself done, which ends its game cleanly and preserves the levels already
 # completed rather than failing the run.
-_WALL_CLOCK_DEADLINE_SECONDS = float(os.environ.get("FLYGI_DEADLINE_SECONDS", 7 * 3600))
+_WALL_CLOCK_DEADLINE_SECONDS = float(os.environ.get("FLYGI_DEADLINE_SECONDS", 8.4 * 3600))
 _PROCESS_STARTED = time.monotonic()
 
 
@@ -258,10 +259,24 @@ def _environment_opt_in(name: str) -> bool:
     return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
 
 
-def _seed_for_game(game_id: str) -> int:
-    """Create a process-independent replay seed from the framework game id."""
+_INSTANCE_COUNTER: dict[str, int] = {}
+_INSTANCE_LOCK = threading.Lock()
 
-    digest = hashlib.sha256(game_id.encode("utf-8")).digest()
+
+def _seed_for_game(game_id: str) -> int:
+    """Process-independent seed, distinct PER INSTANCE of the same game.
+
+    The environment score is the max over runs, so replaying a game is free
+    expected upside for a stochastic policy -- but only if replays actually
+    diverge. Mixing an instance counter into the digest makes the Nth replay
+    of a game a genuinely different rollout while staying deterministic for
+    a given (game, instance) pair.
+    """
+
+    with _INSTANCE_LOCK:
+        nonce = _INSTANCE_COUNTER.get(game_id, 0)
+        _INSTANCE_COUNTER[game_id] = nonce + 1
+    digest = hashlib.sha256(f"{game_id}#{nonce}".encode()).digest()
     return int.from_bytes(digest[:8], byteorder="big", signed=False)
 
 
@@ -276,7 +291,40 @@ class MyAgent(Agent):
     # only adds completion opportunities; it never slows a completion that would
     # have happened sooner. Competition notebooks may run nine hours, which at
     # the observed 136-164 ms per action leaves ample headroom here.
-    MAX_ACTIONS = 600
+    MAX_ACTIONS = 200_000
+
+    # THE SIX-ZEROS BUG (found 2026-09-25 by the local competition-mode
+    # gateway battery): the base Agent.__init__ calls start_recording()
+    # when record=True -- which Swarm ALWAYS passes at the Kaggle rerun --
+    # and start_recording reads self.name, whose override below used
+    # self._mode before our __init__ had set it. Every agent construction
+    # raised AttributeError inside the swarm thread; main.py's own thread
+    # exited 0; the notebook's return-code check passed; the pre-opened
+    # empty scorecard scored 0.00. Every local test had passed record=False,
+    # the one condition that differed from the rerun. Class-level defaults
+    # make construction-order safe forever.
+    _mode = "constructing"
+    _detail = "agent still constructing"
+
+    # Transport resilience: the framework's env.step returns None on ANY
+    # HTTP failure (10s timeout, no retry), do_action_request then raises,
+    # and the game's thread dies permanently while the notebook still exits
+    # 0 -- a silent per-game death measured as a community failure mode.
+    # Retry transient failures; after persistent failure, end the game
+    # cleanly instead of killing the thread.
+    _TRANSPORT_RETRIES = 4
+
+    def do_action_request(self, action):  # type: ignore[override]
+        last_error = None
+        for attempt in range(self._TRANSPORT_RETRIES):
+            try:
+                return super().do_action_request(action)
+            except ValueError as exc:
+                last_error = exc
+                time.sleep(min(2.0 * (attempt + 1), 8.0))
+        self._transport_dead = True
+        print(f"FLYGI_TRANSPORT_DEAD={{'game': '{0}'}}".format(self.game_id), flush=True)
+        raise last_error
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         # ``rng_seed`` is a FlyGI-only testing/replay override and must not be
@@ -295,18 +343,26 @@ class MyAgent(Agent):
         shared = _shared_runtime()
         if shared.get("available") and shared.get("controller_config") is not None:
             from flygi.controller import StateGraphPolicy
-            from flygi.controller.fly_tiebreak import FlyTiebreaker
 
-            # The connectome occupies the controller's tie position and nothing
-            # else: it cannot override legality, a known death state, a verified
-            # plan, or a learned effect estimate. The loaded bundle is shared, so
-            # this costs no second traversal of the graph.
-            fly = FlyTiebreaker(
-                shared["config"],
-                runtime_dir=shared["runtime_dir"],
-                bundle=shared["bundle"],
-                projection=shared["projection"],
-            )
+            # Deploy profile: the full-graph tie-break is measured score-inert
+            # (four independent arms, exact nulls) and costs ~100x the
+            # per-action latency of everything else combined -- under the
+            # rerun's parallel-swarm regime that latency is the binding
+            # budget. deploy_fly_tiebreak=false keeps the measured
+            # load-bearing fly components (retinotopic click head, tags)
+            # and drops only the inert seat.
+            fly = None
+            if getattr(
+                shared["controller_config"].controller, "deploy_fly_tiebreak", True
+            ) or not hasattr(shared["controller_config"].controller, "deploy_fly_tiebreak"):
+                from flygi.controller.fly_tiebreak import FlyTiebreaker
+
+                fly = FlyTiebreaker(
+                    shared["config"],
+                    runtime_dir=shared["runtime_dir"],
+                    bundle=shared["bundle"],
+                    projection=shared["projection"],
+                )
             controller = shared["controller_config"].controller
             state_tags = None
             if controller.state_similarity != "none":
@@ -338,10 +394,12 @@ class MyAgent(Agent):
                 click_head=click_head,
                 state_tags=state_tags,
             )
-            self._mode = "controller-fly"
+            self._mode = "controller-fly" if fly is not None else "controller-light"
             self._detail = (
                 f"{shared['bundle'].node_count} nodes / "
                 f"{shared['bundle'].edge_count} edges in the tie position"
+                if fly is not None
+                else "light profile: retinotopic head + tags, tie seat off"
             )
             # Kaggle debugging happens through stdout alone, so the exact agent
             # identity -- encoder kind, coordinate source, efference state,
@@ -349,7 +407,10 @@ class MyAgent(Agent):
             print(
                 "FLYGI_AGENT="
                 + json.dumps(
-                    {"game_id": str(self.game_id), **fly.describe()},
+                    {
+                        "game_id": str(self.game_id),
+                        **(fly.describe() if fly is not None else {"tie_seat": "off (light)"}),
+                    },
                     sort_keys=True,
                     separators=(",", ":"),
                     default=str,
@@ -398,6 +459,8 @@ class MyAgent(Agent):
 
     def is_done(self, frames: list[FrameData], latest_frame: FrameData) -> bool:
         del frames
+        if getattr(self, "_transport_dead", False):
+            return True
         if _deadline_exceeded():
             if not self._deadline_reported:
                 self._deadline_reported = True
@@ -414,8 +477,11 @@ class MyAgent(Agent):
         try:
             action = self._policy.choose_action(latest_frame)
         except Exception as exc:
-            # Fail visible, then fail closed: the notebook log must say where,
-            # on what turn, with what error, before the exception propagates.
+            # Fail visible, then DEGRADE, never die: a raised exception kills
+            # this game's Swarm thread permanently (measured: tu93 at turn
+            # 2,446 -- 'no legal nonfatal candidate' -- an edge only reachable
+            # past the old 600-action cap). A random legal action keeps the
+            # game alive; completed levels are already banked server-side.
             print(
                 "FLYGI_ERROR="
                 + json.dumps(
@@ -429,7 +495,15 @@ class MyAgent(Agent):
                 ),
                 flush=True,
             )
-            raise
+            from flygi.arc import RandomLegalPolicy
+
+            fallback = getattr(self, "_flygi_fallback", None)
+            if fallback is None:
+                fallback = RandomLegalPolicy(
+                    GameAction, seed=_seed_for_game(f"fallback:{self.game_id}")
+                )
+                self._flygi_fallback = fallback
+            action = fallback.choose_action(latest_frame)
         self._flygi_turns = getattr(self, "_flygi_turns", 0) + 1
         if self._flygi_turns % 100 == 0:
             diagnostics = getattr(self._policy, "diagnostics", None)

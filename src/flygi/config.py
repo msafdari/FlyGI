@@ -257,6 +257,9 @@ class ControllerConfig:
     taxis: str = "none"
     taxis_weight: float = 1.0
     click_head_timer_mask: bool = False
+    # Deploy switch: false drops the measured-inert full-graph tie seat at
+    # Kaggle deployment; the fly stays load-bearing via the retinotopic head.
+    deploy_fly_tiebreak: bool = True
 
 
 @dataclass(frozen=True)
@@ -639,6 +642,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
             taxis=str(controller_raw.pop("taxis", "none")),
             taxis_weight=float(controller_raw.pop("taxis_weight", 1.0)),
             click_head_timer_mask=bool(controller_raw.pop("click_head_timer_mask", False)),
+            deploy_fly_tiebreak=bool(controller_raw.pop("deploy_fly_tiebreak", True)),
         )
     except (TypeError, ValueError) as exc:
         raise ConfigError(f"invalid configuration value: {exc}") from exc

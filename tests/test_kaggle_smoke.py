@@ -422,3 +422,17 @@ def test_attached_controller_puts_the_connectome_in_the_tie_position(
     assert "bundle" in built["fly_kwargs"], (
         "the tiebreaker reloaded the graph instead of sharing it"
     )
+
+
+def test_name_is_safe_during_base_construction(monkeypatch: pytest.MonkeyPatch) -> None:
+    """The Kaggle rerun constructs agents with record=True, and the base
+    Agent.__init__ reads agent.name via start_recording BEFORE our __init__
+    body runs. Six submissions scored 0.00 because the name property read
+    self._mode there and raised AttributeError inside the swarm thread.
+    The property must be evaluable on a bare instance."""
+
+    module = _load_adapter(monkeypatch)
+    agent = module.MyAgent.__new__(module.MyAgent)
+    agent.game_id = "tu93-test"
+    # No __init__ has run: name must still evaluate (class-level defaults).
+    assert "constructing" in agent.name or agent.name
