@@ -16,16 +16,15 @@ still read that legacy assay at chance. Reference practice agrees: flyvis
 (Lappalainen et al., Nature 2024) decodes the optic lobe as instantaneous
 per-column, per-cell-type activity, never as unordered population statistics.
 
-Two scores, one mechanism:
+Two externally decoded scores, one binning mechanism:
 
-- ``state_change``: per column, mean |state_now - state_previous| over its
-  neurons -- where the eye registered change.
-- ``surprise``: per column, mean |state_now - state_expected| where the
-  expectation is the network advanced on the PREVIOUS frame again -- the
-  connectome free-running as its own one-step forward model, and the map is
-  the deviation of the world from that prediction. Predictive-coding in
-  spirit; every parameter of the predictor is the frozen connectome itself,
-  zero trained weights (the JEPA-adjacent idea, minus the training).
+- ``state_change``: an external, unnormalized bin sum of
+  |state_now - state_previous| over mapped neurons.
+- ``surprise``: an external, unnormalized bin sum of
+  |state_now - state_expected|, where ``state_expected`` is produced by a
+  counterfactual advance of the frozen rate network on the previous visual
+  drive. Calling that reference a living-fly forward model would exceed the
+  measurement: Python forms the absolute difference, bin sums, and argmax.
 
 ASSUMPTION (historical, falsified at the action boundary): screen position for
 a column was treated as the inverse of the encoder's affine cell->column
@@ -54,17 +53,23 @@ class RetinotopicSaliencyError(ValueError):
 
 
 class RetinotopicSaliency:
-    """Map optic-lobe differences through the legacy-transposed screen axes."""
+    """Externally bin optic-lobe differences under a declared axis convention."""
 
     def __init__(
         self,
         runtime_dir: str | Path,
         *,
         mode: str = "state_change",
+        coordinate_convention: str = "legacy_hex1_x",
     ) -> None:
         if mode not in ("state_change", "surprise"):
             raise RetinotopicSaliencyError(f"unknown saliency mode: {mode!r}")
+        if coordinate_convention not in ("legacy_hex1_x", "arc_x_hex2"):
+            raise RetinotopicSaliencyError(
+                f"unknown coordinate convention: {coordinate_convention!r}"
+            )
         self._mode = mode
+        self._coordinate_convention = coordinate_convention
         path = Path(runtime_dir) / "retinotopy.npz"
         if not path.is_file():
             raise RetinotopicSaliencyError(
@@ -90,17 +95,26 @@ class RetinotopicSaliency:
     def mode(self) -> str:
         return self._mode
 
+    @property
+    def coordinate_convention(self) -> str:
+        return self._coordinate_convention
+
     def describe(self) -> dict[str, Any]:
         return {
             "kind": "retinotopic_saliency",
             "mode": self._mode,
             "neurons": int(self._indices.size),
-            "measured_localization_cells": 0.8,
-            "measurement_coordinate_convention": "legacy_hex1_x_transposed",
-            "measurement_valid_for_arc_coordinates": False,
+            "coordinate_convention": self._coordinate_convention,
+            "aggregation": "external_unnormalized_axis_bin_sum_abs_state_difference",
+            "historical_measurement": {
+                "localization_cells": 0.8,
+                "coordinate_convention": "legacy_hex1_x",
+                "valid_for_arc_coordinates": False,
+            },
             "deployed_head_localization_cells": 23.5,
-            "expectation_model": (
-                "the frozen connectome advanced on the previous frame (zero trained parameters)"
+            "state_reference": (
+                "external counterfactual advance of the frozen rate network on the "
+                "previous visual drive"
                 if self._mode == "surprise"
                 else "previous network state"
             ),
@@ -113,11 +127,13 @@ class RetinotopicSaliency:
         state_now: NDArray[np.floating],
         state_reference: NDArray[np.floating],
     ) -> tuple[NDArray[np.float32], NDArray[np.float32]]:
-        """Legacy x(row), y(column) scores from |now-reference| on the map.
+        """Axis-bin sums from |now-reference| under the active convention.
 
         ``state_reference`` is the previous state for ``state_change`` and the
-        free-run expectation for ``surprise``; the caller owns producing it,
-        because only the caller can advance the network without committing.
+        counterfactual reference state for ``surprise``; the caller owns
+        producing it because only the caller can advance the network without
+        committing. This external decoder deliberately uses unnormalized sums,
+        not per-column means.
         """
 
         now = np.asarray(state_now, dtype=np.float64)
@@ -125,6 +141,8 @@ class RetinotopicSaliency:
         if now.shape != reference.shape:
             raise RetinotopicSaliencyError("state and reference shapes differ")
         weight = np.abs(now[self._indices] - reference[self._indices])
-        x = np.bincount(self._row_bin, weights=weight, minlength=GRID)
-        y = np.bincount(self._col_bin, weights=weight, minlength=GRID)
-        return x.astype(np.float32), y.astype(np.float32)
+        row_scores = np.bincount(self._row_bin, weights=weight, minlength=GRID).astype(np.float32)
+        col_scores = np.bincount(self._col_bin, weights=weight, minlength=GRID).astype(np.float32)
+        if self._coordinate_convention == "legacy_hex1_x":
+            return row_scores, col_scores
+        return col_scores, row_scores

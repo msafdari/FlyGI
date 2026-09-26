@@ -93,6 +93,11 @@ class FlyTiebreaker:
         self._RECLICK_DECAY = np.float32(0.995)
         self._RECLICK_BETA = 1.0
         self._RECLICK_MASS_CAP = 50.0
+        retinotopic_coordinate_convention = getattr(
+            config.decoder,
+            "retinotopic_coordinate_convention",
+            "legacy_hex1_x",
+        )
         if self._reclick != "none":
             self._reclick_mem = np.zeros((64, 64), dtype=np.float32)
             if self._reclick == "surprise":
@@ -101,6 +106,7 @@ class FlyTiebreaker:
                 self._reclick_saliency = RetinotopicSaliency(
                     Path(runtime_dir) if runtime_dir is not None else Path(self._graph_dir),
                     mode="surprise",
+                    coordinate_convention=retinotopic_coordinate_convention,
                 )
         self._last_visual_drive = None
         self._efference = None
@@ -125,6 +131,7 @@ class FlyTiebreaker:
             self._saliency = RetinotopicSaliency(
                 Path(runtime_dir) if runtime_dir is not None else Path(self._graph_dir),
                 mode=mode,
+                coordinate_convention=retinotopic_coordinate_convention,
             )
         self._network = self._policy._network
         self._readout = self._policy._readout
@@ -214,18 +221,20 @@ class FlyTiebreaker:
         if self._efference is not None:
             # The efference copy: the action the agent just took, delivered as
             # antennal mechanosensation. Added to the drive, and -- critically --
-            # added to the forward model's reference too, so self-report cancels
-            # in the surprise comparison and only external deviation remains.
+            # added to the external counterfactual reference too, so self-report
+            # cancels in the decoded difference and only external deviation
+            # remains. This does not assert a neural forward-model readout.
             proprio_drive = self._efference.drive_action(previous_action_id)
             drive = visual_drive + proprio_drive
         previous_state = self._state
         grid_before = self._previous_grid
         expectation = None
         if self._saliency is not None and self._saliency.mode == "surprise":
-            # The connectome's own one-step forward model: the network advanced
-            # as if the WORLD had not changed -- previous frame's visual drive --
-            # while knowing what the agent just did (current proprio). Zero
-            # trained parameters; the predictor is the frozen graph itself.
+            # External counterfactual reference: advance the same frozen rate
+            # network as if the WORLD had not changed (previous visual drive),
+            # while retaining the current proprioceptive drive. Python later
+            # forms |actual-reference|; this is not an established living-fly
+            # prediction-error circuit.
             reference_visual = (
                 self._last_visual_drive if self._last_visual_drive is not None else visual_drive
             )
@@ -258,9 +267,9 @@ class FlyTiebreaker:
             if previous_click is not None and self._reclick_mass < self._RECLICK_MASS_CAP:
                 cx, cy = int(previous_click[0]), int(previous_click[1])
                 if self._reclick == "surprise":
-                    # The fly's own consequence signal: forward-model surprise
-                    # at the clicked coordinate. Extra advance only when the
-                    # surprise decoder did not already produce an expectation.
+                    # External difference readback at the clicked coordinate,
+                    # using a frozen-network counterfactual reference. Extra
+                    # advance only when the decoder did not already produce one.
                     reference = expectation
                     if reference is None:
                         reference_visual = (

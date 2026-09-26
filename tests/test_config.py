@@ -134,6 +134,11 @@ def test_invalid_dynamics_config_fails_closed(
             "repeat",
             "unsupported decoder.unchanged_click_exploration",
         ),
+        (
+            "retinotopic_coordinate_convention",
+            "guess_from_scene",
+            "unsupported decoder.retinotopic_coordinate_convention",
+        ),
         ("loop_escape_enabled", "yes", "loop_escape_enabled must be a boolean"),
         (
             "loop_escape_exploration_bonus",
@@ -202,6 +207,39 @@ def test_graph_conditions_share_the_stochastic_decoder_contract() -> None:
     reservoir = load_config("configs/reservoir_rate.yaml").decoder
     assert signed == unsigned
     assert reservoir == unsigned
+
+
+def test_retinotopic_coordinate_convention_defaults_to_legacy() -> None:
+    """Omitting the new field must preserve every historical config."""
+
+    parent = load_config("configs/literal_rate_bioeye_lc_surprise.yaml")
+    assert parent.decoder.retinotopic_coordinate_convention == "legacy_hex1_x"
+
+
+def test_arcxy_surprise_config_is_an_exact_single_delta_child() -> None:
+    """The registered correction may change only its name and axis contract."""
+
+    parent = load_config("configs/literal_rate_bioeye_lc_surprise.yaml")
+    child = load_config("configs/literal_rate_bioeye_lc_surprise_arcxy.yaml")
+
+    for field_name in parent.__dataclass_fields__:
+        if field_name not in {"decoder", "future"}:
+            assert getattr(child, field_name) == getattr(parent, field_name), field_name
+
+    assert child.decoder.retinotopic_coordinate_convention == "arc_x_hex2"
+    for field_name in parent.decoder.__dataclass_fields__:
+        if field_name != "retinotopic_coordinate_convention":
+            assert getattr(child.decoder, field_name) == getattr(parent.decoder, field_name)
+
+    parent_future = dict(parent.future)
+    child_future = dict(child.future)
+    parent_experiment = dict(parent_future.pop("experiment"))
+    child_experiment = dict(child_future.pop("experiment"))
+    assert child_future == parent_future
+    assert child_experiment["name"] == "literal-rate-bioeye-lc-surprise-arcxy"
+    parent_experiment.pop("name")
+    child_experiment.pop("name")
+    assert child_experiment == parent_experiment
 
 
 def test_transmitter_treatments_are_declared_not_defaulted() -> None:

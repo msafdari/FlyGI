@@ -103,9 +103,9 @@ class EncoderConfig:
     mb_input_bus: str | None = None
     mb_input_scale: float = 1.0
     # HYPOTHESIS H-EFFERENCE: deliver the agent's previous action to Johnston's
-    # organ (672 antennal mechanosensory neurons) so the circuits that read
-    # state -- including the forward model and the mushroom body -- know what
-    # the agent just did. Measured: the bio-eye encoder reads only the grid,
+    # organ (672 antennal mechanosensory neurons) so circuits that read state
+    # and the external counterfactual-reference path receive what the agent
+    # just did. Measured: the bio-eye encoder reads only the grid,
     # so without this the agent is blind to its own actions.
     efference_copy: str | None = None
     efference_scale: float = 1.0
@@ -123,15 +123,23 @@ class DecoderConfig:
     # reads |state change| back through the optic-lobe column map (historical
     # 0.8-cell measurement used a legacy-transposed x/y convention and is not
     # evidence for ARC-correct localization); "retinotopic_surprise" reads
-    # |state - expectation| where
-    # the expectation is the frozen connectome advanced on the previous
-    # frame -- its own forward model, zero trained parameters, one extra
-    # network advance per turn (H-RETINO-DECODER).
+    # |state - reference| where Python obtains the reference by advancing the
+    # frozen rate network on the previous frame, then externally subtracts,
+    # bins, and decodes it. This is one extra network advance per turn; it is
+    # not evidence that fly neurons implement a forward-model readout
+    # (H-RETINO-DECODER audit; H-RETINO-SURPRISE-RECURRENCE).
     coordinate_source: str = "readout_blocks"
+    # ASSUMPTION H-RETINO-SURPRISE-RECURRENCE: historical retinotopic
+    # readout treated MaleCNS hex1 as ARC x even though the encoder maps ARC
+    # row -> hex1 and column -> hex2. Keep that transpose as the compatibility
+    # default; arc_x_hex2 is the explicit contract-correct inverse mapping.
+    # The field selects only which already-computed axis-score array is x/y.
+    retinotopic_coordinate_convention: str = "legacy_hex1_x"
     # HYPOTHESIS H-RECLICK-SEAT (constants frozen in EXPERIMENTS.yaml before
     # implementation): a per-game coordinate memory written after each click --
-    # "surprise" deposits the fly forward-model's surprise at the clicked
-    # coordinate, "griddiff" (the trivial-alternative writer) deposits the raw
+    # "surprise" deposits the externally decoded counterfactual-state
+    # difference at the clicked coordinate, while "griddiff" (the
+    # trivial-alternative writer) deposits the raw
     # change-mask mass -- and preference() pays a bonus for returning there.
     # Encodes the measured 29/38 re-click clearing regularity into the seat.
     reclick_memory: str = "none"
@@ -536,6 +544,12 @@ def load_config(path: str | Path) -> FlyGIConfig:
             kind=str(decoder_raw.pop("kind", "literal")),
             readout=str(decoder_raw.pop("readout", "descending_neurons")),
             coordinate_source=str(decoder_raw.pop("coordinate_source", "readout_blocks")),
+            retinotopic_coordinate_convention=str(
+                decoder_raw.pop(
+                    "retinotopic_coordinate_convention",
+                    "legacy_hex1_x",
+                )
+            ),
             reclick_memory=str(decoder_raw.pop("reclick_memory", "none")),
             action_slots=int(decoder_raw.pop("action_slots", 8)),
             coordinate_head=str(decoder_raw.pop("coordinate_head", "literal_factorized_bins")),
@@ -737,6 +751,14 @@ def load_config(path: str | Path) -> FlyGIConfig:
         "retinotopic_surprise",
     ):
         raise ConfigError(f"unknown decoder.coordinate_source: {decoder.coordinate_source!r}")
+    if decoder.retinotopic_coordinate_convention not in {
+        "legacy_hex1_x",
+        "arc_x_hex2",
+    }:
+        raise ConfigError(
+            "unsupported decoder.retinotopic_coordinate_convention: "
+            f"{decoder.retinotopic_coordinate_convention}"
+        )
     if encoder.efference_copy is not None and encoder.efference_copy != "antennal_mechanosensory":
         raise ConfigError(
             f"unsupported encoder.efference_copy: {encoder.efference_copy!r} "

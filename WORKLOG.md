@@ -210,6 +210,67 @@ freeze-ready. `EXPERIMENTS.yaml` still parses open with 9 assumption/limitation
 entries and 19 frozen fields, `git diff --check` passes, and `LEAGUE.md` was
 regenerated. No neural state or outcome was inspected.
 
+**Measured implementation checkpoint at 13:14 PDT; still outcome-blind:** the
+registered decoder convention is now an exact fail-closed enum. Every historical
+config defaults to `legacy_hex1_x`; the single-delta child explicitly selects
+`arc_x_hex2`; and both the primary FlyTiebreaker saliency path and the separate
+surprise-reclick construction receive the configured convention. The decoder
+still computes the same two unnormalized axis-bin sums and the correction only
+swaps those arrays byte-for-byte. Module and controller prose now keeps the
+claim at its measured tier: fly rate dynamics produce two states, while Python
+forms their absolute difference, bin sums, and argmax.
+
+**Measured production round-trip contract:** the actual categorical
+`ColumnarColourProjection`, not a duplicate formula alone, maps
+`grid[row=20,column=50]` to `(hex1=12,hex2=31)`. Changing only that grid cell
+changes exactly encoder histogram key 459. The real asset has 26 neurons at
+that occupied column (sorted-index SHA-256
+`9197bc795eb62a42e921c3745d63098b92c6d1e82c0fcada0cb7ad240644820c`), exactly
+the same set selected by the inverse decoder; legacy returns `(20,50)` and the
+corrected convention `(50,20)`. A synthetic swapped-row/column regression fails
+this contract. Static enumeration also reconfirmed that all eight frozen panel
+centers are occupied and each 5x5 patch reaches 6-12 occupied eye keys. None of
+these checks advances a neural state.
+
+**Measured probe implementation:** `scripts/probe_retinotopic_decoder.py`
+constructs no policy, controller, click head, action selection, or reclick
+path. It runs the exact 32 registered changed stimuli under real, the one frozen
+degree-preserving null, and gain-zero on the same live real CSR; legacy is only
+a re-decode of the real traces. It asserts the frozen asset/config/null/matrix
+contracts, declared and effective float32 gain-only real/off difference,
+six-thread execution, identical cross-condition drives, byte-identical h4
+forks, exact no-change states, finite positive changed saliency, reduction
+order, conjunctive gates, and immutable output refusal. Contract-valid failure
+returns 2 under `--require-promotion`; invalid/runtime failure returns 1 with a
+parseable diagnostic envelope. Result content remains ignored by Git.
+
+**Measured pre-outcome red team:** two failure-path blockers and one golden
+blocker were found and repaired before the frozen command was run. Nonfinite
+saliency could have made `allow_nan=False` truncate the invalid artifact;
+nonfinite trials now fail before raw arrays are recorded and residual diagnostics
+are JSON-sanitized. Real/off compared declared rates but not their effective
+float32 values; both representations are now independently load-bearing. The
+golden initially exercised only the decoder; it now exercises the production
+encoder and proves that its 26-neuron column is the decoder's column. Synthetic
+regressions kill all three defects. A final independent contradiction audit then
+reported no remaining freeze blocker. The known nonblocking durability limit is
+that a hard SIGKILL or power loss after exclusive path reservation but before
+final serialization can leave a zero-byte output that must be preserved and
+diagnosed rather than silently overwritten.
+
+**Measured validation:** focused config/saliency/FlyTiebreaker/probe tests pass
+83/83; the complete suite passes 444/444 in 27.79 seconds; focused Ruff check
+and format, Python compilation, YAML parse, and `git diff --check` pass. The
+child config SHA-256 is
+`cac389dfef042f6f8f26cd0dc17d514a101016ce3373e99ade48ac10866f03a1`; probe
+source SHA-256 is
+`7014495a3ae043dbe92bba40bf597af72704d701e984a2a291c980aa560012de`; its
+synthetic test SHA-256 is
+`53548e7802bb7ac8068d0dde0e54ed39656c0e94a9a1c3421afd2e40ab21f7c2`.
+The registered result path does not exist. No neural outcome has been run or
+inspected. The only allowed next action is to checkpoint and push this clean
+implementation, then run the exact frozen command once without tuning.
+
 Process audit at 12:02 PDT found and stopped this session's stale
 completed-validation gateway on localhost port 8032; a separate pre-existing
 gateway on port 8031 belongs to another workflow and remains untouched. No
@@ -2501,12 +2562,12 @@ Slots reset 00:00 UTC, one per day.
    golden, and exact replay are recorded under H-COORDINATE-CONVENTION. The
    aggregate primary moved, but the robustness gate failed; do not launch its
    behavioral A/B or tune this branch further.
-2. **Preregistered, implementation next:** H-RETINO-SURPRISE-RECURRENCE uses 32
-   fixed stimuli across three dynamics (96 changed condition-trials) as a
-   corrected neural-localization premise killer. Implement only the
-   decoder convention, off-diagonal goldens, one semantically single-delta
-   config, and the frozen real/null/recurrence-off probe. Stop before any ARC
-   replay or behavior battery unless every written gate passes.
+2. **Implemented and validated without observing a neural outcome:**
+   H-RETINO-SURPRISE-RECURRENCE uses 32 fixed stimuli across three dynamics
+   (96 changed condition-trials) as the corrected neural-localization premise
+   killer. Checkpoint and push the implementation, then run its exact frozen
+   command once. Stop before any ARC replay or behavior battery unless every
+   written contract and scientific gate passes; do not tune a failed gate.
 3. Complete remaining deployment gates: decision-critical asset hashes,
    process-visible Swarm thread failures, mutable ACTION6 payload isolation, and
    a short multi-game RSS soak. Rebuild the notebook only after these settle.
