@@ -1,6 +1,6 @@
 # Experiment league
 
-Generated 2026-09-26T19:41:33.636942+00:00 by `scripts/league.py`. Do not edit;
+Generated 2026-09-26T19:54:40.626590+00:00 by `scripts/league.py`. Do not edit;
 edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered
 bootstrap CIs on complete matched pairs only; partial runs never get one.
 

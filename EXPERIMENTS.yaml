@@ -481,18 +481,21 @@ hypotheses:
         constructed, so inherited loop-escape settings are inert.
       contract_gate: >
         An exactly round-trippable off-diagonal golden at
-        grid(row=13,column=50) must return legacy (x=13,y=50) and corrected
-        (x=50,y=13); grid(row=12,column=49) is forbidden as an exact golden
-        because the 64-to-eye affine quantization maps it to (13,50). The probe
-        must verify the config contract; real/null graph, manifest, and asset
-        hashes; null invariants; the byte-identical real CSR/hash in real and
-        recurrence-off; gain as the only effective difference between those two
-        networks; identical drive SHA-256 across real, null, and recurrence-off
-        for every trial; byte-identical h4 forks; exactly zero no-change state
-        difference and axis sums; every changed trial finite in both axes with
-        total saliency >0 in real/null/recurrence-off; reclick_memory=none; inert
-        action paths; and immutable-output refusal before graph loading or any
-        verdict. Null invariants are exactly 24,994,595 edges, 166,700 nodes,
+        grid(row=20,column=50) must return legacy (x=20,y=50) and corrected
+        (x=50,y=20). Under the real 36x39 affine eye spans it maps to occupied
+        (hex1=12,hex2=31), containing 26 annotated neurons. The initially
+        proposed row=13,column=50 is forbidden: its marginal bins exist, but
+        their joint pair (hex1=8,hex2=31) is unoccupied, so it cannot be a
+        real-asset golden. The probe must verify the config contract; real/null
+        graph, manifest, and asset hashes; null invariants; the byte-identical
+        real CSR/hash in real and recurrence-off; gain as the only effective
+        difference between those two networks; identical drive SHA-256 across
+        real, null, and recurrence-off for every trial; byte-identical h4 forks;
+        exactly zero no-change state difference and axis sums; every changed
+        trial finite in both axes with total saliency >0 in
+        real/null/recurrence-off; reclick_memory=none; inert action paths; and
+        immutable-output refusal before graph loading or any verdict. Null
+        invariants are exactly 24,994,595 edges, 166,700 nodes,
         zero duplicate/self edges, exact real/null in- and out-degree arrays,
         15,180,624 positive and 9,813,971 negative final weights in each,
         identical node IDs, valid/reached-target manifest flags, source-graph
@@ -590,6 +593,14 @@ hypotheses:
         in listed order, 9, 12, 12, 12, 6, 9, 6, and 6 distinct occupied
         column keys. No center or colour transition was selected from a neural
         response.
+      - >
+        MEASURED golden correction 2026-09-26 before neural outcomes: exhaustive
+        enumeration of the 64x64 encoder map found 873 occupied, exactly
+        round-trippable off-diagonal grid pairs. The frozen row=20,column=50
+        pair maps to occupied (hex1=12,hex2=31) with 26 annotated neurons and
+        decodes exactly. The earlier row=13,column=50 candidate had valid
+        marginal bins but an unoccupied joint pair and was replaced before the
+        probe or any neural state was run.
       - >
         MEASURED null-boundary audit 2026-09-26 before neural outcomes: sorted
         final real/null weights are unequal (standard deviation 0.0145400 versus

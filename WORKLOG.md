@@ -144,15 +144,20 @@ click head.
 **Measured preregistration audit:** three independent read-only reviews found
 and repaired the protocol before code was written. The original exact golden
 at grid row 12/column 49 was impossible because the 64-to-eye affine map
-quantizes it to row 13/column 50; the exact golden is now 13/50. The loaded null
-preserves its signed-weight multiset only before incoming-L1 re-normalization,
-not in the matrix the probe will run. Its final weight standard deviation is
-0.0199551 versus 0.0145400 in real, although node degrees, signed counts, and
-incoming-L1 normalization match. The eight mirrored fixed centers share h4
-baselines and are not independent replicates, so the invalid sign-test p-value
-was removed. Seven-of-eight remains only a preregistered descriptive
-consistency bar; null seeds are the replication units for graph-organization
-claims.
+quantizes its marginal axes to row 13/column 50. A later joint-occupancy check
+found that 13/50's corresponding (hex1=8,hex2=31) pair is unoccupied. Exhaustive
+enumeration found 873 occupied, exactly round-trippable off-diagonal grid pairs;
+the final golden is row 20/column 50, which maps to occupied
+(hex1=12,hex2=31) with 26 annotated neurons and returns legacy (20,50) versus
+corrected (50,20). This correction happened before the probe or any neural
+state was run. The loaded null preserves its signed-weight multiset only before
+incoming-L1 re-normalization, not in the matrix the probe will run. Its final
+weight standard deviation is 0.0199551 versus 0.0145400 in real, although node
+degrees, signed counts, and incoming-L1 normalization match. The eight mirrored
+fixed centers share h4 baselines and are not independent replicates, so the
+invalid sign-test p-value was removed. Seven-of-eight remains only a
+preregistered descriptive consistency bar; null seeds are the replication
+units for graph-organization claims.
 
 **Measured final contradiction audit before freeze:** the hypothesis is now the
 exact conjunction its verdict will test, rather than a broad “better than”
@@ -187,6 +192,23 @@ frozen protocol fields; `git diff --check` passes; `tests/test_league.py` passes
 read-only contradiction pass reported the protocol freeze-ready with no
 remaining checkpoint blocker. No neural outcome was inspected while selecting
 or auditing the protocol.
+
+**Measured pre-implementation correction after that review:** the first test
+fixture exposed that checking each decoded axis independently is insufficient;
+the joint eye column must also exist. The supposedly exact 13/50 golden had no
+mapped neuron in the real retinotopy asset and would have made the probe invalid
+by construction. The registry and implementation now require occupied 20/50.
+This is a contract correction from static anatomy metadata, not a post-result
+threshold or panel change; the 32 scientific stimuli and every outcome gate are
+unchanged.
+
+**Measured correction validation at 12:54 PDT:** an independent read-only audit
+recomputed the real retinotopy SHA, affine encoder/inverse decoder formulas,
+26 unique mapped indices, and all 4,096 grid pairs; it reproduced 873 occupied
+exact-roundtrip off-diagonal candidates and reported the corrected golden
+freeze-ready. `EXPERIMENTS.yaml` still parses open with 9 assumption/limitation
+entries and 19 frozen fields, `git diff --check` passes, and `LEAGUE.md` was
+regenerated. No neural state or outcome was inspected.
 
 Process audit at 12:02 PDT found and stopped this session's stale
 completed-validation gateway on localhost port 8032; a separate pre-existing
