@@ -295,15 +295,16 @@ hypotheses:
 
   H-RETINO-DECODER:
     statement: >
-      Click coordinates read retinotopically from the optic-lobe state (the
-      inverse of the encoder's column map) convert a measured 30x localization
-      gap into behaviour: the state localizes a known change to 0.8 cells
-      (joint readback) while the deployed body-id-block head reads the same
-      state at 23.5 cells, chance 37.2. Surprise variant: the reference is the
-      frozen connectome advanced on the previous frame -- its own forward
-      model, zero trained parameters; through the real preference path it
-      localizes at 3.5 cells vs state_change's 12.1, because the free-run
-      reference cancels the network's own settling transients.
+      HISTORICAL, INVALIDATED INTERFACE CLAIM: legacy-transposed click
+      coordinates read from optic-lobe state appeared to convert a measured
+      localization gap into behaviour. The joint state readback measured 0.8
+      cells versus 23.5 for the deployed body-id-block head and 37.2 for chance;
+      the wired surprise readback measured 3.5 cells versus 12.1 for
+      state_change. Python, not fly neurons, produced the surprise quantity by
+      differencing a frozen-reference trajectory from the actual trajectory.
+      These measurements remain historical facts under their protocol, but the
+      swapped ARC axes invalidate them as evidence for a correctly registered
+      decoder or a neural forward model.
     status: invalidated
     evidence:
       - "Localization measured offline and through the wired path, 2026-09-23"
@@ -323,6 +324,282 @@ hypotheses:
         more games and lost more points than it gained. The surprise variant was
         killed at 19/75 as a priority decision (its primary contrast was vs
         retdec; no decision hinged on it post-pivot) -- killed, not falsified.
+    updated: 2026-09-26
+
+  H-RETINO-SURPRISE-RECURRENCE:
+    statement: >
+      On the fixed registered panel, ARC-correct external decoding of the
+      difference between an unchanged-background counterfactual rate-state and
+      a local-change rate-state from the real MaleCNS runtime has global median
+      error <=4 ARC cells, is strictly better than the legacy transpose at all
+      8 paired centers, has global median error <=80% of both one registered
+      degree-preserving normalized rewire and recurrence-off, and is strictly
+      better than each control at >=7/8 paired centers.
+    status: open
+    assumptions:
+      - >
+        ESTABLISHED: ARC ACTION6 defines x as grid column and y as grid row.
+        The categorical retinotopic encoder maps grid row to MaleCNS hex1 and
+        grid column to hex2, so the inverse decoder must return x from hex2 and
+        y from hex1. This correction is a contract, not a fitted hypothesis.
+      - >
+        MEASURED before preregistration: the real and null runtimes each have
+        166,700 nodes and 24,994,595 nonzero edges. The null preserves every
+        in/out degree and the signed-weight multiset before required incoming-L1
+        re-normalization; after normalization, signed support/counts, degrees,
+        and the incoming-L1 contract match, but final weight magnitudes do not.
+        The loaded matrices share 0.561% of edges. Their retinotopy,
+        node-metadata, and group assets are byte-identical.
+      - >
+        ASSUMPTION AND CLAIM BOUNDARY: the encoder directly drives 23,720
+        ol_intrinsic neurons spanning 892 annotated eye columns and arbitrarily
+        repurposes 15 L/Mi/Tm/C/T cell-type identities as ARC categorical-colour
+        bins; the decoder reads those same driven neurons. A pass would show
+        that recurrence sharpens this engineered retinotopic code. It would not
+        establish natural fly colour physiology, vision, or perception.
+      - >
+        ASSUMPTIONS A-D, FROZEN ENCODER: cell-type channels are ordered by
+        sorted type name; ARC colour c selects channel c % 15; drive magnitude
+        is fractional colour occupancy within each affine-mapped eye column;
+        all drive is positive; input_scale=1.0; there is no changed-cell
+        channel and no colour permutation. These rules target exactly the
+        23,720 indices in the hashed retinotopy asset. They are engineered
+        choices, not measured fly feature semantics; if they are wrong, this
+        assay may reject useful biology presented through a bad interface.
+      - >
+        MODEL LIMITATION: the runtime uses heuristic transmitter signs,
+        modulators-as-positive, unknown transmitters as zero, incoming-L1
+        normalized weights, synchronous tanh rates, and no cell-type-specific
+        kinetics or delays. A result applies to this MaleCNS-derived rate model,
+        not to the living CNS.
+      - >
+        ASSUMPTION: four repeated background observations (each K=4 internal
+        updates) establish enough state for a one-step no-world-change
+        expectation. This is frozen rather than calibrated; if it is too short
+        or too long, the probe may miss a usable circuit regime.
+      - >
+        ASSUMPTION: the existing untrained sum-pooling of per-neuron absolute
+        surprise into hex-axis bins is adequate plumbing. It is held identical
+        across graph conditions. If neuron-count imbalance dominates it, the
+        absolute-localization gate should fail and no alternative pooling is
+        tried in this branch.
+      - >
+        ASSUMPTION: synthetic local-change localization is a useful prerequisite
+        for score-facing click selection. It is not itself ARC behavior or a
+        score result; even a pass earns only a separately preregistered
+        score-adjacent gate.
+      - >
+        LIMITATION: the one registered null seed is sufficient only for this
+        cheap premise killer. Null seeds, not centers or colour trials, are the
+        replication units for a graph-organization inference. This null keeps
+        node degrees but not cell-type, neuropil, or eye-column blocks, and the
+        final rowwise rescaling differs. A pass cannot isolate predictive coding
+        or retinotopic microcircuitry and cannot support a robust anatomy claim.
+    preregistration_2026_09_26:
+      trivial_alternatives: >
+        Legacy-real keeps the historical hex1->x, hex2->y transpose as a
+        mechanical defect reference; it decodes the same real neural traces,
+        rather than rerunning a fourth dynamical condition.
+        Corrected-recurrence-off directly instantiates the real matrix and
+        identical sensory/readout plumbing with recurrent gain 0, so sensory
+        drive and leak remain but W contributes zero. Corrected-null uses the
+        existing directed-degree-preserving normalized rewire, seed 20260921.
+        Only corrected-real may earn promotion.
+      frozen_physiology: >
+        Float32 synchronous rate updates use
+        h <- (1-a)h + a*tanh(g*W*h + u + b), with W[post,pre], a=0.3, b=0,
+        deterministic all-zero h0, and the same input u held fixed for each of
+        K=4 internal steps. Gain g=2.0 for real/null and 0.0 for
+        recurrence-off. The off condition must use the byte-identical real CSR
+        and differ from corrected-real only in effective gain. No learning,
+        efference, reclick memory, controller, click head, state tags, taxis,
+        or loop escape. The standalone probe never constructs or calls
+        action/controller paths, so inherited action-layer fields such as
+        loop_escape_enabled are inert and must be recorded as such rather than
+        changed in the single-delta config.
+      stimulus_panel: >
+        Eight off-diagonal ARC (x,y) centers selected from the retinotopy asset
+        without neural-outcome inspection: (12,32), (32,12), (22,44), (44,22),
+        (20,49), (49,20), (13,42), (42,13). Every stimulus is a 64x64 grid whose
+        background is entirely from_colour. The inclusive 5x5 changed patch is
+        written exactly as grid[y-2:y+3, x-2:x+3] = to_colour. Every center maps
+        to an occupied fly-eye column and its patch spans 6-12 occupied keys.
+        At each center, run ordered categorical changes 1->7, 7->1, 3->12, and
+        12->3. The same 32 deterministic changed stimuli run under each of three
+        dynamical conditions, for 96 changed condition-trials. Legacy is only a
+        second decode of the 32 real traces, not a fourth neural run. These four
+        colours address distinct declared encoder channels. Run exactly three
+        no-change condition-trials: one all-colour-1 check under each of real,
+        null, and recurrence-off.
+      state_protocol: >
+        For each from-colour and condition, start h0=0 and advance four
+        identical uniform-background observations. Reuse that exact h4 across
+        centers with the same from-colour. Expected and actual must each start
+        from byte-identical copies of h4. From those copies, compute expected by
+        one advance on the unchanged background drive and actual by one advance
+        on the registered changed grid. Python then computes
+        abs(actual-expected) on retinotopically annotated neurons only. The two
+        states are produced through fly dynamics; the subtraction, pooling, and
+        coordinate argmax are external assay plumbing, not fly-neuron
+        computation or evidence of a biological forward model.
+      decoder_contract: >
+        The new fail-closed enum has exactly legacy_hex1_x and arc_x_hex2.
+        Historical configs default to legacy_hex1_x. Existing per-axis bin sums
+        remain unchanged. Legacy-real returns (hex1 scores, hex2 scores);
+        corrected conditions return (hex2 scores as ARC x, hex1 scores as ARC
+        y). Prediction is NumPy argmax on each axis, whose tie rule is the
+        lowest index. Error is Euclidean distance in ARC cells to the declared
+        (x,y) center.
+      reduction: >
+        Within each condition and center, reduce the four colour-transition
+        errors to their standard median, the average of the middle two after
+        sorting four values. For every reported global median, take the same
+        standard median of the eight center-level medians. All gates use raw
+        unrounded values. The eight centers are fixed paired deterministic
+        evaluation cases, not independent samples; the four mirrored pairs and
+        shared from-colour h4 states forbid a binomial or sign-test
+        interpretation. Per-transition summaries are reported for diagnosis
+        but are not separate confirmatory endpoints.
+      threshold_provenance: >
+        ASSUMED: <=4.0 ARC cells is a prior-calibrated usefulness bar based on
+        the historical approximately 3.5-cell legacy assay; <=80% of a control
+        is an assumed minimum meaningful effect. Strict improvement over legacy
+        at all 8 centers allows zero exceptions because a coordinate-contract
+        repair should consistently correct every registered off-diagonal case;
+        strict improvement over each neural control at >=7/8 allows one
+        center-specific exception while demanding broad descriptive
+        consistency. Both counts are assumed robustness bars, not calibrated
+        probabilities. The historical trial coordinates and colours were not
+        durably recorded, so panel disjointness cannot be certified. This is a
+        preregistered developmental retest, not an independent replication or
+        confirmation.
+      config_contract: >
+        The corrected config's parsed dataclass values differ from its parent
+        exactly at future.experiment.name and
+        decoder.retinotopic_coordinate_convention. Historical default is
+        legacy_hex1_x. The probe asserts action/controller paths are not
+        constructed, so inherited loop-escape settings are inert.
+      contract_gate: >
+        An exactly round-trippable off-diagonal golden at
+        grid(row=13,column=50) must return legacy (x=13,y=50) and corrected
+        (x=50,y=13); grid(row=12,column=49) is forbidden as an exact golden
+        because the 64-to-eye affine quantization maps it to (13,50). The probe
+        must verify the config contract; real/null graph, manifest, and asset
+        hashes; null invariants; the byte-identical real CSR/hash in real and
+        recurrence-off; gain as the only effective difference between those two
+        networks; identical drive SHA-256 across real, null, and recurrence-off
+        for every trial; byte-identical h4 forks; exactly zero no-change state
+        difference and axis sums; every changed trial finite in both axes with
+        total saliency >0 in real/null/recurrence-off; reclick_memory=none; inert
+        action paths; and immutable-output refusal before graph loading or any
+        verdict. Null invariants are exactly 24,994,595 edges, 166,700 nodes,
+        zero duplicate/self edges, exact real/null in- and out-degree arrays,
+        15,180,624 positive and 9,813,971 negative final weights in each,
+        identical node IDs, valid/reached-target manifest flags, source-graph
+        SHA matching real, and 389 zero-incoming rows plus maximum nonzero-row
+        |L1-1| <=3e-4 after normalization.
+      coordinate_repair_gate: >
+        Corrected-real global median center error must be <=4.0 ARC cells and
+        corrected-real must be strictly lower than legacy-real at all 8 paired
+        centers.
+      single_null_dependency_gate: >
+        Corrected-real must independently beat corrected-null and
+        corrected-recurrence-off: its global median center error must be <=80%
+        of each control's global median, and it must have strictly lower center
+        error at >=7/8 paired centers against each. Ties are not wins. Seven of
+        eight is a frozen descriptive consistency bar, not a p-value.
+      outcome_mapping: >
+        Contract failure makes the experiment invalid and yields no scientific
+        verdict. If every contract check passes but either scientific gate
+        fails, the fixed-panel hypothesis fails and this branch stops. A full
+        pass supports the claim only on this fixed panel and single normalized
+        rewire; it is not a general anatomy or biology result.
+      implementation_contract: >
+        The convention value must reach every RetinotopicSaliency construction
+        path in FlyTiebreaker, including the primary coordinate source and the
+        surprise-reclick helper. describe() must report the active convention
+        separately from the historical measurement convention. Module prose
+        must say unnormalized bin sums, not means, and a regression test must
+        prove that switching convention only swaps the two existing score
+        arrays byte-for-byte. The registered child uses reclick_memory=none;
+        unrelated legacy griddiff-memory indexing is outside this branch.
+      kill_rule: >
+        Every contract, coordinate-repair, and single-null-dependency check is
+        conjunctive. If any check fails, record the result, keep the explicit
+        compatibility flag/goldens, and stop: no threshold change, alternative
+        pooling, state_change substitution, new stimulus locations,
+        score-facing replay, or ARC behavior battery in this branch.
+      promotion_rule: >
+        A full pass establishes only the registered synthetic single-null
+        recurrence premise. It earns
+        a new preregistration for the smallest frozen ARC click-transition
+        assay with the Python click head and controller disabled. It does not
+        earn a score claim, an anatomy headline, or a Kaggle submission.
+      expected_outcome: >
+        EXPECTED before running: the mechanical axis correction should pass,
+        but recurrence-off may match real because the decoder directly reads
+        driven optic-lobe neurons. Score-adjacent predictions in this repository
+        are 0-for-12, so no positive score outcome is forecast.
+      command: >
+        FLYGI_SPMV_THREADS=6 .venv/bin/python
+        scripts/probe_retinotopic_decoder.py
+        --config configs/literal_rate_bioeye_lc_surprise_arcxy.yaml
+        --real-runtime data/processed/male-cns-v1.0/literal-rate-signed-modulators
+        --null-runtime
+        data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921
+        --output results/connectome_agent/retino_surprise_arcxy_probe.json
+        --require-promotion
+      output: results/connectome_agent/retino_surprise_arcxy_probe.json
+      artifact_contract: >
+        After reserving a new output path, always write an immutable result
+        envelope before returning, including invalid contract outcomes. Record
+        every per-trial value, center/transition/global reduction, and gate
+        boolean; probe and EXPERIMENTS-at-run SHA-256; parent and child config
+        SHA-256; real/null manifest, graph, retinotopy, node-metadata, and group
+        hashes; effective rate parameters and equation; thread count;
+        Python/NumPy/SciPy versions; Git commit and dirty state; active decoder
+        convention; and whether action paths were constructed. Refuse an
+        existing output before graph load and never overwrite it. With
+        --require-promotion, return 0 only for a full pass, 2 for a
+        contract-valid scientific failure, and 1 for an invalid contract or
+        runtime failure. Focused tests must cover unknown-enum rejection,
+        historical default compatibility, both FlyTiebreaker construction
+        paths, semantic config diff, argmax ties, 7/8 counting, invalid-contract
+        artifacts/exit status, and pre-load output refusal.
+    evidence:
+      - >
+        MEASURED asset audit 2026-09-26 before implementation: real graph
+        SHA-256 f5553b59d4efaab36600cee5c319d524e3023b27906642720c634f3a000babb9;
+        null graph SHA-256
+        b832cbbcc31d55b5d91ed14f6c32713d1fd69ae8b7c47a053af79fd28850a39b;
+        shared retinotopy SHA-256
+        ebc2b699e541330097a257003c2346f367d4beda1f04e88b2aaa1e1542db1a8d;
+        shared node-metadata SHA-256
+        2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c;
+        shared groups SHA-256
+        09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d;
+        real manifest SHA-256
+        0286615f7cac594afea986742ed0113112e2d7322c853d4352e26eb8c16671e1;
+        null manifest SHA-256
+        5ac5e0dd233fa828260842fffa8e27286493fde0bff399b20e0d039c4355e082;
+        frozen parent config SHA-256
+        99417e77f0528540be64b2d86dc64d6713805f83f231313fb0f7fe7190c16833.
+      - >
+        MEASURED panel audit 2026-09-26 before neural outcomes: all eight
+        declared centers map to occupied eye columns. Their 5x5 patches span,
+        in listed order, 9, 12, 12, 12, 6, 9, 6, and 6 distinct occupied
+        column keys. No center or colour transition was selected from a neural
+        response.
+      - >
+        MEASURED null-boundary audit 2026-09-26 before neural outcomes: sorted
+        final real/null weights are unequal (standard deviation 0.0145400 versus
+        0.0199551). The real runtime has 264,564 retinotopic-to-retinotopic edges
+        and within-retinotopic absolute-weight mass 7474.97, versus 92,829 and
+        3493.08 in the normalized rewire. Both have 389 zero-incoming rows and
+        identical final signed counts; maximum nonzero-row |L1-1| is
+        4.7684e-7 real and 2.7752e-4 null. Therefore this is not a pure
+        final-weight-matched topology contrast, and 3e-4 is the frozen
+        validation tolerance rather than a post-outcome choice.
     updated: 2026-09-26
 
   H-EFFERENCE:

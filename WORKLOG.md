@@ -129,13 +129,70 @@ also surfaced two pre-existing HEAD findings outside this checkpoint
 (`SIM108` in `controller/taxis.py`, `RUF059` in `tests/test_taxis.py`); neither
 file was changed here and the focused changed-surface checks are green.
 
-**In progress:** no evaluator, replay, or queue waiter. Process audit at 12:02
-PDT found and stopped this session's stale completed-validation gateway on
-localhost port 8032. A separate pre-existing gateway on port 8031 belongs to
-another workflow and was left untouched. The next experiment must be separately
-preregistered and must exercise actual fly-neuron dynamics against a matched
-null; this static Python-head result cannot be used as evidence for it. No
-Kaggle submission is authorized or queued.
+**In progress (preregistered and red-teamed 2026-09-26 12:26 PDT; no neural
+outcome inspected):** H-RETINO-SURPRISE-RECURRENCE is the separate next
+experiment. It is a 32-stimulus synthetic premise killer for the corrected neural
+surprise decoder: 32 fixed changed stimuli are each run under real, one
+degree-preserving normalized rewire, and recurrent gain zero, yielding 96
+changed condition-trials plus three no-change controls. Legacy is only a second
+decode of the real traces. The trivial alternatives, stimulus, float32 update,
+encoder mapping, state fork, reduction, thresholds, contracts, outcome mapping,
+stop rule, artifact provenance, exact command, and expected failure are frozen
+in `EXPERIMENTS.yaml` before implementation. It uses no Python controller or
+click head.
+
+**Measured preregistration audit:** three independent read-only reviews found
+and repaired the protocol before code was written. The original exact golden
+at grid row 12/column 49 was impossible because the 64-to-eye affine map
+quantizes it to row 13/column 50; the exact golden is now 13/50. The loaded null
+preserves its signed-weight multiset only before incoming-L1 re-normalization,
+not in the matrix the probe will run. Its final weight standard deviation is
+0.0199551 versus 0.0145400 in real, although node degrees, signed counts, and
+incoming-L1 normalization match. The eight mirrored fixed centers share h4
+baselines and are not independent replicates, so the invalid sign-test p-value
+was removed. Seven-of-eight remains only a preregistered descriptive
+consistency bar; null seeds are the replication units for graph-organization
+claims.
+
+**Measured final contradiction audit before freeze:** the hypothesis is now the
+exact conjunction its verdict will test, rather than a broad “better than”
+sentence with narrower hidden gates. The protocol freezes
+`h <- (1-a)h + a*tanh(g*W*h + u + b)` in float32 with `W[post,pre]`, fixed input
+for K=4 synchronous steps, the literal colour-to-type projection, and
+recurrence-off using the byte-identical real CSR with gain as its only effective
+difference. All three conditions must hash to identical drives. The probe must
+check explicit degree/sign/normalization invariants, including 389 zero-input
+rows and nonzero-row L1 error <=3e-4; the frozen real/null manifest hashes are
+now in the registry. Both FlyTiebreaker saliency construction paths and active
+convention reporting are required so a standalone probe cannot pass while
+deployment remains transposed.
+
+**Claim boundary fixed before observation:** fly dynamics produce the expected
+and actual rate states; Python computes their absolute difference, bin sums,
+and argmax. The experiment therefore tests whether real recurrence sharpens an
+engineered retinotopic code under this MaleCNS-derived rate model, not whether
+the living fly computes prediction error. ARC colours are arbitrarily assigned
+to 15 visual cell-type channels, the same 23,720 directly driven neurons are
+decoded, and the null does not preserve cell-type/column blocks. The <=4-cell
+bar is prior-calibrated, the 20% control margin is assumed, prior-panel overlap
+cannot be certified, and this is a developmental retest rather than independent
+confirmation. Contract failure is invalid; a contract-valid scientific gate
+failure stops the branch; a full pass earns only a separately preregistered
+score-adjacent assay.
+
+**Measured preregistration validation at 12:39 PDT:** `EXPERIMENTS.yaml` parses
+with the hypothesis open, 9 explicit assumption/limitation entries, and 19
+frozen protocol fields; `git diff --check` passes; `tests/test_league.py` passes
+4/4; and the regenerated `LEAGUE.md` reflects the narrowed claim. A final
+read-only contradiction pass reported the protocol freeze-ready with no
+remaining checkpoint blocker. No neural outcome was inspected while selecting
+or auditing the protocol.
+
+Process audit at 12:02 PDT found and stopped this session's stale
+completed-validation gateway on localhost port 8032; a separate pre-existing
+gateway on port 8031 belongs to another workflow and remains untouched. No
+evaluator or queue waiter is active, and no Kaggle submission is authorized or
+queued.
 
 **Scientifically grounded follow-on if the coordinate correction is not enough:**
 the strongest genuinely new fly program is the native visual-projection-neuron
@@ -2422,12 +2479,12 @@ Slots reset 00:00 UTC, one per day.
    golden, and exact replay are recorded under H-COORDINATE-CONVENTION. The
    aggregate primary moved, but the robustness gate failed; do not launch its
    behavioral A/B or tune this branch further.
-2. Preregister a separate neural-retinotopic decoder recovery before editing it.
-   The cheapest premise killer must prove corrected off-diagonal localization
-   with actual neuron activity, then compare real anatomy with the existing
-   degree/sign/weight-matched null while the host Python click head is disabled.
-   Require a nonzero decision contribution and a real-over-null gap before any
-   score battery; do not inherit evidence or thresholds from the static head.
+2. **Preregistered, implementation next:** H-RETINO-SURPRISE-RECURRENCE uses 32
+   fixed stimuli across three dynamics (96 changed condition-trials) as a
+   corrected neural-localization premise killer. Implement only the
+   decoder convention, off-diagonal goldens, one semantically single-delta
+   config, and the frozen real/null/recurrence-off probe. Stop before any ARC
+   replay or behavior battery unless every written gate passes.
 3. Complete remaining deployment gates: decision-critical asset hashes,
    process-visible Swarm thread failures, mutable ACTION6 payload isolation, and
    a short multi-game RSS soak. Rebuild the notebook only after these settle.
