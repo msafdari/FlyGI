@@ -197,6 +197,19 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### Battery verdict: 0.5519 under real rerun semantics -- 2026-09-26
+
+The full 25-game local gateway battery (competition mode, record=True,
+uncapped actions, 35-minute deadline = 1/14th of the real budget):
+scorecard 0.5519 -- above the old capped-offline combo (0.3519), above
+the official random-sample LB bar (0.18-0.25), with ft09 (a dead-
+taxonomy game) completing level 1, ten games scoring, 80,941 actions and
+zero thread exceptions. The fixed+uncapped+light candidate is packaged;
+kernel verification in flight; submission awaits the user's explicit go
+(they killed the auto-submitter). Expected-tier statement with the
+project's 0-for-12 base rate on score predictions: with a 2-5x hidden
+shrink, the first nonzero leaderboard score is plausible, not promised.
+
 ### The six zeros explained: a construction crash invisible to exit codes -- 2026-09-26
 
 The user-directed deep dive (forum mining + harness source + a local
