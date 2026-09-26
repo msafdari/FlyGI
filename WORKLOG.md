@@ -10,6 +10,53 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Native visual-MB premise audit — 2026-09-26 13:26 PDT
+
+**Process checkpoint:** no implementation or neural outcome has been run for
+the proposed visual-projection-neuron -> visual-KC -> MBON branch. The complete
+root WORKLOG and the complete 999-line Experiment 000 specification were read
+before planning. `HEAD == origin/main == c008751`; the tracked tree was clean,
+with only the unrelated untracked `.fly-or-fake-work/` directory. The next
+branch remains design-only until its selectors, biology, controls, independent
+unit, metrics, thresholds, and kill rule are frozen outcome-blind.
+
+**Measured selector contradiction:** an independent streaming scan of all
+151,856,684 released MaleCNS weight rows does not reproduce the narrative
+`1,615 edges / 251 visual VPs / 332 KCs` claim under the most direct exact
+interpretation. With presynaptic `superclass == "visual_projection"` and
+postsynaptic `type in {"KCg-d", "KCab-p"}`, the pinned files contain **1,435
+direct pair edges / 9,736 contacts from 221 VPs into 311 of 335 annotated visual
+KCs** at `weight >= 1`; at `weight >= 5`, they contain 595 edges / 8,236
+contacts from 82 VPs into 269 KCs. Target annotations are 206 KCg-d and 129
+KCab-p. This is a selector-definition discrepancy, not a biological result.
+The exact alternative selector that produced 1,615/251/332 must be recovered
+and justified before preregistration; no count will be chosen because it is
+larger or more convenient.
+
+**Established versus assumed boundary:** primary literature supports direct
+visual input to segregated KCg-d and KCab-p populations and visual associative
+memory through shared mushroom-body output/modulatory circuitry. It does not
+establish that FlyGI's proposed one-presentation, 32-world delayed-match assay,
+rate equation, cue-to-VP clamp, readout scalar, plasticity magnitude, or pass
+threshold is physiological. Those remain explicit `MODEL_ASSUMPTION` or
+`ENGINEERING_CHOICE` items and must each have a named trivial alternative.
+
+**In progress, read-only:** one audit is independently reconstructing the exact
+MaleCNS local anatomy, including source/target definitions, transmitter/sign,
+KC->MBON reach, DAN/APL support, and a locally matched null. A second audit is
+checking only primary literature for what can legitimately be called
+established. No source edit or outcome run is authorized in either audit.
+
+**Ordered next decision:** reconcile the direct-edge count and choose the
+narrowest biologically defensible population rule; then write and red-team the
+entire synthetic premise-killer protocol before code. The smallest proposed
+falsifier remains a reset-separated, paired visual-cue assay with chance,
+no-plasticity, cue/credit-shuffle, and locally degree/sign/weight-matched anatomy
+controls. It may earn an end-to-end retinotopic/ARC assay only if the native
+circuit beats every frozen control. A contract-valid failure stops the branch;
+no post-result selector, threshold, pooling, stimulus-panel, or readout change
+is permitted.
+
 ## Codex takeover: runtime bounded; score premise reopened — 2026-09-26 11:45 PDT
 
 **Measured:** the six public-leaderboard `0.00` submissions remain construction
