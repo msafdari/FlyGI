@@ -197,6 +197,42 @@ could destroy real in-progress work. Recurrence prevented: `.fly-or-fake-work`
 is now in ruff's `extend-exclude`, and repo-wide format invocations are
 avoided in favour of explicit paths. Disclosed to Mustafa immediately.
 
+### The six zeros explained: a construction crash invisible to exit codes -- 2026-09-26
+
+The user-directed deep dive (forum mining + harness source + a local
+competition-mode gateway) produced the full answer in three layers.
+
+LAYER 1, THE BUG (measured): every Kaggle submission's agents crashed at
+CONSTRUCTION. Swarm passes record=True; the base Agent.__init__ calls
+start_recording(), which reads agent.name; our name override read
+self._mode, set only after super().__init__ returns. AttributeError in
+the swarm thread; main.py exits 0; the return-code check passes; the
+pre-opened empty scorecard scores 0.00. Six submissions, zero actions
+ever played. Every local test had passed record=False -- the single
+condition that differed. The fix is two class attributes and a
+regression test; the lesson is the new mandatory pre-submission gate:
+the local gateway battery (arc_agi competition mode + vendor main.py,
+record=True) that found this in two minutes.
+
+LAYER 2, THE BUDGET (measured from forum + harness source): no server
+action caps, no rate limits; extra actions can never lower a level's
+score; scoring teams run 8h54m-9h11m; the official random sample scores
+0.18-0.25 LB. Our 600-action self-cap used <1% of the interaction
+budget. Now: MAX_ACTIONS 200k, deadline 8.4h, transport retries,
+random-legal fallback on policy errors (the uncapped regime reaches
+graph states the cap never saw), light deploy profile (tie seat off --
+measured inert four ways; fly load-bearing via the retinotopic head).
+Replay-by-duplication measured dead at the gateway: duplicates share one
+server session.
+
+LAYER 3, THE FIELD (sourced): the public set is officially easier than
+the hidden set (~2-5x community shrink); every >10-scoring team is a
+Duck-harness LLM-REPL lineage; 0.35 local was never going to display.
+With the bug fixed and the budget used, the honest target is beating
+the 0.18-0.25 random-sample baseline -- a bar our uncapped lp85 result
+(level 1 at 112.89/115, better than human baseline, in the real online
+flow) suggests is now reachable.
+
 ### Submission 6 armed: the combo candidate, every bar passed -- 2026-09-25
 
 sg-combo (defrag similarity-novelty tags + retinotopic deadline click
