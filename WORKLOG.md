@@ -271,6 +271,48 @@ The registered result path does not exist. No neural outcome has been run or
 inspected. The only allowed next action is to checkpoint and push this clean
 implementation, then run the exact frozen command once without tuning.
 
+**Measured frozen result at 13:16 PDT:** the implementation was committed and
+pushed first as `7a1b104`, with no tracked dirtiness at run time. The exact
+registered command completed in 14.44 seconds and wrote the ignored 594,452-byte
+artifact at `results/connectome_agent/retino_surprise_arcxy_probe.json`
+(SHA-256
+`5de6f8d465b48cace3bd0a360c5adc8c50a2671e670c0d7d838ab271a2f9b58e`).
+The artifact is contract-valid: all frozen config, asset, graph, null, matrix,
+thread, panel, drive, fork, no-change, finiteness, real/off, and action-path
+checks pass; it contains 96 changed condition-trials, 32 legacy re-decodes and
+three exact no-change trials. Its Git record shows commit `7a1b104`, branch
+`main`, tracked clean, with only the disclosed unrelated untracked
+`.fly-or-fake-work/`. EXPERIMENTS-at-run SHA-256 is
+`a28daa5ead3f88171f52f960dc2d94dd40f56ba6260196e63c32793f0aabbb27`.
+
+**Measured coordinate result:** the mechanical repair passes completely.
+Corrected-real global median error is 1.310660 ARC cells versus 35.009019 under
+the legacy transpose; corrected is strictly better at all 8 paired centers and
+comfortably passes the <=4-cell absolute gate. This supports only the corrected
+axis contract and fixed-panel localization measurement.
+
+**Measured dependency result and preregistered stop:** real recurrence does not
+pass the anatomy/control conjunction. The degree-preserving null median is
+1.560660, so real/null is 0.839811 rather than <=0.8, and real is strictly
+better at only 3/8 centers rather than >=7/8. Recurrence-off median is 2.118034,
+so real/off is 0.618810 and passes the global 20% margin, but real again wins
+only 3/8 centers. The exact H-RETINO-SURPRISE-RECURRENCE conjunction is therefore
+**refuted** on this fixed panel; it is not a claim that living-fly vision lacks
+the capability. Per the frozen kill rule, this branch ends here: no threshold
+change, alternative pooling, substitute decoder, new panel, ARC replay,
+behavior battery, or Kaggle submission. The explicit convention and goldens
+stay as correctness repairs.
+
+**Next scientific branch, not yet preregistered:** the native visual-projection-
+neuron -> visual-KC -> MBON route remains the smallest genuinely different fly
+mechanism with a plausible path to within-game generalization. Before code, its
+32-episode one-shot delayed-match 2AFC premise killer must freeze exact MaleCNS
+population extraction, sensory placement, state/reset timing, plasticity
+equation and site, chance/no-plasticity/cue-shuffled controls, a locally matched
+degree/sign/weight-preserving anatomy null, metrics, thresholds, artifact
+contract, and kill rule. No ARC integration is earned unless real anatomy beats
+every trivial and matched control.
+
 Process audit at 12:02 PDT found and stopped this session's stale
 completed-validation gateway on localhost port 8032; a separate pre-existing
 gateway on port 8031 belongs to another workflow and remains untouched. No
@@ -2562,21 +2604,21 @@ Slots reset 00:00 UTC, one per day.
    golden, and exact replay are recorded under H-COORDINATE-CONVENTION. The
    aggregate primary moved, but the robustness gate failed; do not launch its
    behavioral A/B or tune this branch further.
-2. **Implemented and validated without observing a neural outcome:**
-   H-RETINO-SURPRISE-RECURRENCE uses 32 fixed stimuli across three dynamics
-   (96 changed condition-trials) as the corrected neural-localization premise
-   killer. Checkpoint and push the implementation, then run its exact frozen
-   command once. Stop before any ARC replay or behavior battery unless every
-   written contract and scientific gate passes; do not tune a failed gate.
-3. Complete remaining deployment gates: decision-critical asset hashes,
-   process-visible Swarm thread failures, mutable ACTION6 payload isolation, and
-   a short multi-game RSS soak. Rebuild the notebook only after these settle.
-4. Do not submit `combo_light` as FlyGI. Require genuinely load-bearing neural
-   computation plus controller-only / real graph / degree-preserving-null
-   comparisons before a FlyGI submission or attribution claim.
-5. In parallel, preregister and run the native visual-VP → visual-KC → MBON
-   one-shot 2AFC premise killer. Integrate it into ARC only if real anatomy
-   beats chance, no-plasticity, cue-shuffled, and matched-anatomy controls.
+2. **Completed and stopped:** H-RETINO-SURPRISE-RECURRENCE is contract-valid;
+   the coordinate repair passed, but the exact real-vs-controls conjunction
+   failed. Keep the convention/goldens, but do not tune or run ARC behavior in
+   this branch.
+3. **Next:** preregister the native visual-VP -> visual-KC -> MBON one-shot 2AFC
+   premise killer in full before implementation. Integrate it into ARC only if
+   real anatomy beats chance, no-plasticity, cue-shuffled, and locally matched
+   anatomy controls.
+4. Defer remaining notebook/deployment gates until a genuinely load-bearing
+   neural candidate earns deployment. The pending gates are decision-critical
+   asset hashes, process-visible Swarm failures, mutable ACTION6 payload
+   isolation, and a short multi-game RSS soak.
+5. Do not submit `combo_light` as FlyGI. Require controller-only / real graph /
+   degree-preserving-null evidence before a FlyGI submission or attribution
+   claim.
 
 ## Durable limitations and claim boundary
 

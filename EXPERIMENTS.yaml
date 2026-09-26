@@ -335,7 +335,7 @@ hypotheses:
       8 paired centers, has global median error <=80% of both one registered
       degree-preserving normalized rewire and recurrence-off, and is strictly
       better than each control at >=7/8 paired centers.
-    status: open
+    status: refuted
     assumptions:
       - >
         ESTABLISHED: ARC ACTION6 defines x as grid column and y as grid row.
@@ -611,6 +611,28 @@ hypotheses:
         4.7684e-7 real and 2.7752e-4 null. Therefore this is not a pure
         final-weight-matched topology contrast, and 3e-4 is the frozen
         validation tolerance rather than a post-outcome choice.
+      - >
+        MEASURED frozen probe 2026-09-26, commit 7a1b104: the artifact was
+        contract-valid with all 96 changed condition-trials, 32 legacy
+        re-decodes, three exact no-change controls, identical cross-condition
+        drive hashes, the same live real CSR for gain 2 and gain 0, and no
+        action/controller path. Corrected-real median error was 1.310660 cells
+        versus 35.009019 for legacy, and corrected-real was strictly better at
+        all 8 centers, so the coordinate-repair gate passed.
+      - >
+        MEASURED preregistered stop: the single-null dependency gate failed.
+        Corrected-null median error was 1.560660, making real/null 0.839811
+        rather than <=0.8, and real was strictly better at only 3/8 centers
+        rather than >=7/8. Recurrence-off median error was 2.118034, so the
+        global 20% margin passed there (real/off 0.618810), but real again won
+        only 3/8 centers. Because every gate was conjunctive, the exact fixed-
+        panel hypothesis is refuted and this branch is closed without ARC
+        replay, behavior evaluation, threshold changes, or alternative pooling.
+        This does not refute natural fly vision or make a robust anatomy claim.
+        Ignored artifact SHA-256:
+        5de6f8d465b48cace3bd0a360c5adc8c50a2671e670c0d7d838ab271a2f9b58e;
+        EXPERIMENTS-at-run SHA-256:
+        a28daa5ead3f88171f52f960dc2d94dd40f56ba6260196e63c32793f0aabbb27.
     updated: 2026-09-26
 
   H-EFFERENCE:
