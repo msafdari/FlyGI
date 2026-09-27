@@ -73,8 +73,13 @@ class RetinoTagRegistry:
             self._permutation = rng.permutation(feature_dim)
         self.threshold = float(threshold)
         self._k = max(1, int(_TOP_FRAC * _TAG_DIM))
-        self._seen = np.zeros((0, _TAG_DIM), dtype=bool)
+        # REFLEX SPRINT: tags stored bit-packed (64 uint64 words instead of
+        # 4096 bools); Jaccard via popcount is integer-exact, so behaviour
+        # is identical while the per-turn registry scan shrinks ~60x --
+        # it grows with every discovered state and dominates long games.
+        self._seen = np.zeros((0, _TAG_DIM // 64), dtype=np.uint64)
         self._seen_count = 0
+        self._tag_size = max(1, int(0.05 * _TAG_DIM))
 
     def tag(self, grid: NDArray[np.int8]) -> NDArray[np.bool_]:
         features = (
@@ -90,20 +95,26 @@ class RetinoTagRegistry:
         out[top] = True
         return out
 
+    @staticmethod
+    def _pack(tag: NDArray[np.bool_]) -> NDArray[np.uint64]:
+        return np.packbits(tag).view(np.uint64)
+
     def seen_similar(self, tag: NDArray[np.bool_]) -> bool:
         if self._seen_count == 0:
             return False
-        inter = (self._seen[: self._seen_count] & tag).sum(axis=1)
-        union = (self._seen[: self._seen_count] | tag).sum(axis=1)
+        packed = self._pack(tag)
+        seen = self._seen[: self._seen_count]
+        inter = np.bitwise_count(seen & packed).sum(axis=1)
+        union = np.bitwise_count(seen | packed).sum(axis=1)
         jaccard = inter / np.maximum(union, 1)
         return bool(jaccard.max() >= self.threshold)
 
     def observe(self, tag: NDArray[np.bool_]) -> None:
         if self._seen_count == len(self._seen):
-            grown = np.zeros((max(64, 2 * len(self._seen)), _TAG_DIM), dtype=bool)
+            grown = np.zeros((max(64, 2 * len(self._seen)), _TAG_DIM // 64), dtype=np.uint64)
             grown[: self._seen_count] = self._seen[: self._seen_count]
             self._seen = grown
-        self._seen[self._seen_count] = tag
+        self._seen[self._seen_count] = self._pack(tag)
         self._seen_count += 1
 
     def describe(self) -> dict[str, object]:
