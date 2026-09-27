@@ -10,6 +10,77 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Best-existing engineering submission — 2026-09-27 15:10 PDT
+
+**Submitted:** Kaggle accepted competition submission **56620463** at
+`2026-09-27 22:09:56.043 UTC` (15:09:56 PDT), notebook
+`megusalexandrus/flygi-arc-agi-3` **version 10**, output `submission.parquet`.
+Independent submission-history query confirms `SubmissionStatus.PENDING`,
+with no public score yet. The CLI reports **0 submissions remaining today**;
+that message followed acceptance, not rejection. Exactly one submission was
+made. Do not repeat it when resuming this log.
+
+Submission description explicitly identifies `combo_light` as an engineering
+baseline with neuronal dynamics OFF, source `8021d5c`, construction-crash and
+bounded-recording fixes, local public score 0.551859, and unvalidated hidden
+performance. A leaderboard result would not establish fly computation.
+
+**Authorization:** after being told there was no candidate meeting the
+load-bearing-fly gate, the user explicitly instructed: "Submit whatever is the
+best candidate we have." This authorizes one submission of `combo_light` as an
+engineering baseline despite that unmet attribution gate. It does not establish
+fly computation, change the scientific first principle, or reopen failed
+research branches. No new score prediction is made.
+
+**Measured selection:** the locked `combo_light` configuration remains the
+highest recorded full local competition-mode engineering result: 0.551859,
+10 levels across 25 public games. The neuronal dynamics are disabled. Preserve
+the measured legacy coordinate convention; no policy tuning for this upload.
+
+**Measured preflight:** at source `8021d5c`, 21 Kaggle smoke/notebook tests pass.
+Local adapter preflight reports verified `controller-light`, retinotopic click
+head, deadline 100, `legacy_xy_flat`, `retino_tags`, 166,700 nodes, 24,994,595
+edges, K=4, and `neuronal_dynamics_active=false`. Independent package audit
+finds no immediate packaging blocker. Known unclosed risks are Swarm
+thread-failure visibility, mutable ACTION6 payload isolation, and a long
+memory-growth soak; this is not a claim of completing those gates. The previous
+official-framework 30-second gateway smoke after the recording fix passed.
+
+**Measured remote state before upload:** Kaggle still reports exactly the six
+recorded 0.00 submissions, latest ID 56563583. Dataset
+`megusalexandrus/flygi-malecns-runtime` is ready at version 7. Downloaded hosted
+config/controller/provenance files match the staged copies byte-for-byte:
+controller SHA-256 `a0c595da8c572caca0dc1a3ca99de70f6d32193c41403554b9fd3b6f0770c542`,
+config `3d5d17bfcdfeaba40437d899a5ef7149f7ca9aeaef7aca609eb1563fb46a9d38`,
+dataset provenance `dbce4fa8c0d2f64fe6bbf357c377271dca6507ed7eeed19c8cbcd07adcd41c00`.
+No dataset re-upload was needed. The old dataset provenance's `controller-fly`
+label is stale; the actual config and current adapter explicitly say otherwise.
+
+**Notebook upload:** rebuilt current source with
+`.venv/bin/python scripts/build_notebook.py`; generated notebook SHA-256
+`e7aacbc231f172d84a7bc75f32a0d67b6bf806e156775d7807c687efbb2c01af`.
+`kaggle kernels push -p notebooks/` successfully created private CPU,
+internet-disabled notebook **version 10**. Its ordinary preflight completed;
+downloaded log identity matches every field above. The one-row placeholder
+parquet has the expected schema; this ordinary-run file is not a hidden-game
+measurement. Log SHA-256
+`cdbb53a2431a2a288783f6a9603670b2dcf4c63ca2476309265b955ed8904ba1`;
+placeholder SHA-256
+`71bfd543030e339d87bd9ff744d466218398a1259650b2c255626d27049c88bb`.
+Local read-only evidence is in `/private/tmp/flygi-submit-20260927.PjQ5hp/`;
+Kaggle version 10 remains the hosted evidence source if temporary files expire.
+
+**Executed submission command** (credentials supplied privately from the
+existing token file, never printed):
+`kaggle competitions submit arc-prize-2026-arc-agi-3 -k megusalexandrus/flygi-arc-agi-3 -v 10 -f submission.parquet -m '<engineering-baseline description above>'`.
+
+**Next:** when the user requests status, query submission 56620463's state and
+score before drawing any conclusion. No local experiment remains running; no
+automatic monitoring or second submission was scheduled. No dataset recreation,
+science change, or tuning was needed. Checkpoint this record to the private
+remote; retain existing failed-branch stop rules and the default fly-attribution
+gate for future work unless the user explicitly changes them again.
+
 ## Native visual-MB premise audit — 2026-09-26 13:26 PDT
 
 ### Frozen representation gate closed — 2026-09-26 13:50 PDT
