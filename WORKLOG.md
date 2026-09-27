@@ -10,6 +10,24 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Reflex sprint: 3.1x faster, byte-identical, same local score -- 2026-09-27
+
+**Measured:** per-action latency 12.9 -> 4.20 ms (profile-driven: grouped
+component extraction, vectorized tie-exact pixel selection, pure extraction
+cache + trusted construction, bit-packed tag Jaccard). Byte-identity proven
+twice by replay hash against a recorded arm trace plus a 120-grid
+randomized equivalence test against the reference implementations kept
+in-test; 474 tests pass. Gateway battery at the same 35-minute deadline:
+0.5519 -- identical to pre-sprint -- with 135,394 actions (was 80,941),
+the same ten games, levels, and scores. **Measured conclusion:** on the
+public set volume is not the binding constraint; completions happen early
+and the fifteen zero games are capability-bound interaction programs. The
+sprint's value is deployment-side: a 3.1x cheaper agent under the Kaggle
+rerun's 110-parallel-games shared CPU budget, with provably identical
+behavior. It costs nothing and hedges slow hardware; it does not raise the
+local score. Speed lever: now measured and closed alongside the budget
+lever. What remains for score is capability above candidate ordering.
+
 ## Best-existing engineering submission — 2026-09-27 15:10 PDT
 
 **Submitted:** Kaggle accepted competition submission **56620463** at
