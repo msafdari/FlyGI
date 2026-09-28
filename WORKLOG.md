@@ -57,9 +57,12 @@ src/flygi/controller/fap_library.py (engineered scaffold end to end, labelled;
 H-LC-RECOGNIZER's refutation closed the fly seat for recognition). Solver-only
 offline play (scripts/fap_solver_eval.py): ft09 completes levels 1-2
 autonomously -- the glyph parser generalizes across marked colours -- and
-sc25 completes level 1. Level boundaries, recorded not tuned: ft09 level 3
+sc25 completes levels 1-2 (the roll seeks the detected dock, and the archetype
+remembers its last known-good direction for the merge-at-arrival endgame that
+level 2 measured). Level boundaries, recorded not tuned: ft09 level 3
 satisfies the measured rule completely (four glyphs, every prescription met)
-yet does not fall, so it encodes an additional rule; sc25 level 2 stalls.
+yet does not fall, so it encodes an additional rule; sc25 level 3 introduces
+a door/key element beyond the archetype.
 ABSTENTION AUDIT across all 25 games at budget 300: zero actions emitted and
 zero matches on the other 23 games, no crashes -- seating the library costs
 the champion nothing by construction. Random play's all-time record on these

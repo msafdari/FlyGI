@@ -900,12 +900,18 @@ hypotheses:
         four glyphs on a 7x5 cross lattice, every prescription met, no
         win -- so level 3 encodes an additional rule, recorded as the
         entry's current boundary, NOT tuned blind. SC25 completes
-        level 1 autonomously (punch pips, roll home) and stalls on
-        level 2. ABSTENTION AUDIT, all 25 games at budget 300: the
-        library emitted ZERO actions and matched nothing on the other
-        23 games, no crashes -- seating it costs the champion nothing
-        by construction. Trivial-alternative comparison: random play's
-        all-time record on ft09/sc25 is 0 levels; the solver's is 3.
+        levels 1-2 autonomously (punch pips, then roll toward the
+        detected dock -- level 2's track is vertical; at arrival the
+        marker merges with the dock and one more roll in the
+        remembered direction finishes, so the archetype keeps the last
+        known-good direction); level 3 introduces a door/key element
+        ('d' block gating the dock, a keyed display) beyond the
+        archetype -- recorded boundary. ABSTENTION AUDIT, all 25 games
+        at budget 300: the library emitted ZERO actions and matched
+        nothing on the other 23 games, no crashes -- seating it costs
+        the champion nothing by construction. Trivial-alternative
+        comparison: random play's all-time record on ft09/sc25 is 0
+        levels; the solver's is 3 + 2.
     updated: 2026-09-27
 
   H-LC-RECOGNIZER:

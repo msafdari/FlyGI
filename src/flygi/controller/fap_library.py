@@ -219,9 +219,19 @@ class PipBoardParse:
 
 
 class PipPunchRollArchetype:
-    """sc25's measured rule: punch the 0-marked pips, then roll left home."""
+    """sc25's measured rule: punch the 0-marked pips, then roll home.
+
+    Per-game state: the last roll direction chosen while the marker and dock
+    were still separable. Measured on level 2: at arrival the marker merges
+    with the dock into one component, and one more roll in the same
+    direction completes the level -- so a failed detection repeats the last
+    known-good direction instead of guessing.
+    """
 
     name = "pip_punch_roll"
+
+    def __init__(self) -> None:
+        self._last_roll: Step | None = None
 
     def match(self, grid: NDArray[np.int16]) -> PipBoardParse | None:
         # The board: colour-3 bordered box holding 3x3 cells of 3x3 pixels
@@ -268,15 +278,62 @@ class PipPunchRollArchetype:
                 zeros.append(key)
         return PipBoardParse(cell_centres=centres, zero_cells=zeros)
 
+    def _roll_direction(self, grid: NDArray[np.int16]) -> list[Step]:
+        """Roll the 9/a marker toward the 9/a dock (measured on levels 1-2:
+        the track is colour 2, the dock sits on background, and the four
+        directional actions roll up/down/left/right)."""
+
+        from scipy import ndimage
+
+        marker_dock = np.isin(grid, (9, 10))
+        labels, count = ndimage.label(marker_dock)
+        marker = dock = None
+        height, width = grid.shape
+        for index in range(1, count + 1):
+            ys, xs = np.nonzero(labels == index)
+            if ys.size < 4 or ys.size > 40:
+                continue
+            y0, y1 = max(ys.min() - 1, 0), min(ys.max() + 1, height - 1)
+            x0, x1 = max(xs.min() - 1, 0), min(xs.max() + 1, width - 1)
+            ring = np.concatenate(
+                [
+                    grid[y0, x0 : x1 + 1],
+                    grid[y1, x0 : x1 + 1],
+                    grid[y0 : y1 + 1, x0],
+                    grid[y0 : y1 + 1, x1],
+                ]
+            )
+            centre = (float(ys.mean()), float(xs.mean()))
+            on_track = float((ring == 2).mean())
+            if on_track >= 0.5:
+                marker = centre
+            elif (ring == 5).mean() >= 0.5 or (ring == grid[0, 0]).mean() >= 0.5:
+                dock = centre
+        if marker is None or dock is None:
+            if self._last_roll is not None:
+                return [self._last_roll]
+            return [Step(action=3)]  # level-1 fallback, measured to work there
+        dy, dx = dock[0] - marker[0], dock[1] - marker[1]
+        vertical = Step(action=1) if dy < 0 else Step(action=2)
+        horizontal = Step(action=3) if dx < 0 else Step(action=4)
+        # Dominant axis first; the secondary queues behind it so a walled
+        # dominant roll (frame unchanged, executor re-parses) still makes
+        # progress on the next proposal.
+        if abs(dy) >= abs(dx):
+            self._last_roll = vertical
+            return [vertical, horizontal] if abs(dx) > 1 else [vertical]
+        self._last_roll = horizontal
+        return [horizontal, vertical] if abs(dy) > 1 else [horizontal]
+
     def next_actions(self, parse: PipBoardParse, grid: NDArray[np.int16]) -> list[Step]:
         if parse.zero_cells:
             return [
                 Step(action=6, x=parse.cell_centres[cell][1], y=parse.cell_centres[cell][0])
                 for cell in parse.zero_cells
             ]
-        # No pips left: roll the marker home. The executor repeats this while
-        # the frame keeps changing and re-parses when it stops.
-        return [Step(action=3)]
+        # No pips left: roll the marker toward the dock. The executor repeats
+        # this while the frame keeps changing and re-parses when it stops.
+        return self._roll_direction(grid)
 
 
 # ----------------------------------------------------------------- executor
