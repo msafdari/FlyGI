@@ -96,13 +96,41 @@ class TestPipPunchRoll:
         clicked = {(step.y, step.x) for step in steps}
         assert (49 + 1, 29 + 1) in clicked  # a punched pip's centre
 
-    def test_rolls_when_no_pips_remain(self) -> None:
+    def test_no_pips_no_marker_abstains(self) -> None:
+        # Tightened 2026-09-28: with neither a detectable marker/dock nor a
+        # within-life roll memory, a blind roll is a false-activation risk
+        # on hidden games -- the archetype must abstain.
         archetype = PipPunchRollArchetype()
         grid = self._board()
         grid[grid == 0] = 2
         parse = archetype.match(grid)
         assert parse is not None
-        assert archetype.next_actions(parse, grid) == [Step(action=3)]
+        assert archetype.next_actions(parse, grid) == []
+
+    def test_rolls_toward_detected_dock(self) -> None:
+        archetype = PipPunchRollArchetype()
+        grid = self._board()
+        grid[grid == 0] = 2
+        # A marker (9/a block ringed by track colour 2) below a dock (9/a
+        # block ringed by background 5): the roll must head up.
+        grid[8:16, 30:38] = 2  # vertical track
+        grid[12:14, 32:34] = 9
+        grid[12:14, 34:36] = 10  # marker on the track
+        grid[2:4, 32:36] = 9
+        grid[4:6, 32:36] = 10  # dock on background
+        parse = archetype.match(grid)
+        assert parse is not None
+        steps = archetype.next_actions(parse, grid)
+        assert steps and steps[0] == Step(action=1)
+
+    def test_incomplete_lattice_abstains(self) -> None:
+        # Four isolated boxes no longer satisfy the parser: the grammar is a
+        # complete, evenly spaced r x c board.
+        grid = np.full((64, 64), 5, dtype=np.int16)
+        for row, col in ((5, 5), (5, 40), (40, 5), (48, 52)):
+            grid[row - 1 : row + 4, col - 1 : col + 4] = 3
+            grid[row : row + 3, col : col + 3] = 0
+        assert PipPunchRollArchetype().match(grid) is None
 
 
 class TestExecutor:

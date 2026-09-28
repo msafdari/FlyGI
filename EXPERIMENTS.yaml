@@ -688,12 +688,19 @@ hypotheses:
         STANDALONE ARM RUN 2026-09-27 at the user's direction ("do em
         all"; results/connectome_agent/sg-bioeye-lc-efference.json, 75
         rows, seeds 0-2, budget 600, contract PASS): mean score 0.2409
-        vs baseline sg-bioeye-lc 0.2504, paired diff -0.0095 with only
-        21/75 rows differing at all; levels 18 vs 16 (gained lf52,
-        lost cd82 -- seed churn). The preregistered
-        null-by-construction, confirmed by measurement. With
+        vs sg-bioeye-lc 0.2504, paired diff -0.0095 with only 21/75
+        rows differing at all; levels 18 vs 16 (seed churn). SCOPE
+        CORRECTION 2026-09-28 (collaborator review): that comparison
+        spans TWO changes -- the config is the SURPRISE decoder plus
+        the efference copy -- so it cannot isolate efference. The
+        single-change pairing against the registered baseline
+        (sg-bioeye-lc-surprise, killed after 19 rows) exists on those
+        19 matched rows: 0.4335 vs 0.4065, paired diff +0.0271, 3/19
+        rows differing -- no separation there either. Both readings
+        agree with the preregistered null-by-construction; the
+        isolation caveat is now recorded with the number. With
         sg-mbdr-learn already null, every registered use of the
-        efference copy is now measured; the entry closes.
+        efference copy is measured; the entry closes.
     updated: 2026-09-27
 
   H-MB-LEARNING-DENSE:
@@ -1900,6 +1907,16 @@ experiments:
     baseline: sg-reclick-fly
     tests: [H-RECLICK-SEAT]
     note: Trivial-alternative writer (raw grid change mask). If it ties the fly writer, the fly is decorative.
+  sg-combo:
+    config: configs/combo_defrag_clickhead.yaml
+    regime: gain2.0-modulators
+    baseline: sg-controller-only
+    tests: [H-CONSEQUENCE-COUPLING, H-DEFRAG-NOVELTY]
+    note: >
+      The composed champion (retinotopic click head + defrag tags + fly tie
+      seat), previously recorded only inside hypothesis evidence; registered
+      here 2026-09-28 when it became a baseline. Measured 2026-09-25:
+      0.3519, 24 levels, 9/25 games (75 rows, seeds 0-2, budget 600).
   sg-combo-fap:
     config: configs/combo_fap.yaml
     regime: gain2.0-modulators
@@ -1919,6 +1936,11 @@ experiments:
       2.9343 (recorded as sg-combo-fap-pilot). CLAIM BOUNDARY: local
       measurement on the 2 public template games; hidden-set transfer
       requires hidden games sharing these archetypes and is UNKNOWN
-      (the expected-tier base rate stands); the fly's load-bearing
-      seat remains the retinotopic click head, and the library is
-      engineered scaffold per H-LC-RECOGNIZER.
+      (the expected-tier base rate stands); the library is engineered
+      scaffold, and the agent's remaining fly content is the click
+      head's compiled eye-map -- static anatomical metadata, measured
+      load-bearing vs scrambled-map controls, NOT live neuronal
+      computation (none runs in the light deploy profile). Precision
+      per the 2026-09-28 collaborator review: H-LC-RECOGNIZER killed
+      only the dead-vs-live recognizer role it tested; fly recognition
+      of these specific archetypes was never tested.

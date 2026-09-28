@@ -3,10 +3,16 @@
 REGISTERED under H-FAP-PROGRAMS (supported 2026-09-27): both template-flavour
 dead games fall to short exact programs derivable from the displayed goal
 (ft09 level 1 in four clicks, level 2 in seven; sc25 level 1 in ~17 actions).
-H-LC-RECOGNIZER (refuted the same day) closed the fly seat for recognition,
-so this module is ENGINEERED SCAFFOLD end to end, recorded as such per the
-first principle -- the fly earns no credit for anything here, and the agent's
-fly-load-bearing component remains the retinotopic click head.
+This module is ENGINEERED SCAFFOLD end to end, recorded as such per the
+first principle -- the fly earns no credit for anything here. Precision on
+the fly ledger (2026-09-28 collaborator review): H-LC-RECOGNIZER found no
+fly signal in the ONE recognizer role it tested (held-out dead-vs-live game
+class from single frames); fly-based recognition of these specific
+archetypes was never tested and remains open, it simply is not built here.
+The agent's remaining fly content is the retinotopic click head's compiled
+eye-map -- static anatomical metadata, measured load-bearing against
+scrambled-map controls -- not live neuronal computation; in the deployed
+light profile no fly neuron dynamics run at all.
 
 Design contract:
   * Each archetype exposes ``match(grid) -> parse | None`` and
@@ -205,6 +211,9 @@ class GlyphMiniatureArchetype:
 
     name = "glyph_miniature"
 
+    def reset(self) -> None:
+        pass  # the glyph archetype keeps no cross-frame state
+
     def match(self, grid: NDArray[np.int16]) -> list[GlyphGridParse] | None:
         background = int(np.bincount(grid.ravel(), minlength=16).argmax())
         parses = [p for p in _find_tile_lattice(grid, background) if p.glyphs]
@@ -269,6 +278,12 @@ class PipPunchRollArchetype:
     def __init__(self) -> None:
         self._last_roll: Step | None = None
 
+    def reset(self) -> None:
+        # 2026-09-28 collaborator review: the remembered roll direction was
+        # surviving resets and level advances, aiming the merge-endgame
+        # fallback with a stale direction from the previous board.
+        self._last_roll = None
+
     def match(self, grid: NDArray[np.int16]) -> PipBoardParse | None:
         # The board: colour-3 bordered box holding 3x3 cells of 3x3 pixels
         # whose values are 0 (pip to punch) or 2 (leave alone), separated by
@@ -311,6 +326,22 @@ class PipPunchRollArchetype:
             return None
         rows = sorted({r for r, _, _ in cells})
         cols = sorted({c for _, c, _ in cells})
+        # 2026-09-28 collaborator review: four ISOLATED matching boxes used
+        # to satisfy this parser -- an unmeasured false-activation risk on
+        # hidden games. The measured sc25 grammar is a COMPLETE r x c board
+        # (every row/col intersection occupied, at least 2x2) with uniform
+        # spacing; anything looser abstains.
+        if len(rows) < 2 or len(cols) < 2:
+            return None
+        if len(cells) != len(rows) * len(cols):
+            return None
+        occupied = {(r, c) for r, c, _ in cells}
+        if any((r, c) not in occupied for r in rows for c in cols):
+            return None
+        row_gaps = {b - a for a, b in zip(rows, rows[1:])}
+        col_gaps = {b - a for a, b in zip(cols, cols[1:])}
+        if len(row_gaps) > 1 or len(col_gaps) > 1:
+            return None
         centres: dict[tuple[int, int], tuple[int, int]] = {}
         zeros: list[tuple[int, int]] = []
         for r, c, value in cells:
@@ -354,7 +385,10 @@ class PipPunchRollArchetype:
         if marker is None or dock is None:
             if self._last_roll is not None:
                 return [self._last_roll]
-            return [Step(action=3)]  # level-1 fallback, measured to work there
+            # 2026-09-28 collaborator review: with neither a marker/dock
+            # detection nor a within-life roll memory, a blind roll is a
+            # false-activation risk on hidden games; abstain instead.
+            return []
         dy, dx = dock[0] - marker[0], dock[1] - marker[1]
         vertical = Step(action=1) if dy < 0 else Step(action=2)
         horizontal = Step(action=3) if dx < 0 else Step(action=4)
@@ -413,14 +447,20 @@ class FapExecutor:
     _frame_emissions: dict[bytes, int] = field(default_factory=dict)
     _match_failures: int = 0
     _turn_index: int = 0
+    _queue_expected_key: bytes | None = None
 
     def _clear_program_state(self) -> None:
         self._queue.clear()
         self._last_emitted = None
         self._last_grid_bytes = None
+        self._queue_expected_key = None
         self._retried_swallow = False
         self._stall_count = 0
         self._frame_emissions.clear()
+        for archetype in self.archetypes:
+            reset = getattr(archetype, "reset", None)
+            if callable(reset):
+                reset()
 
     def notify_reset(self) -> None:
         """A RESET ran (forced or otherwise): the board the program was
@@ -448,6 +488,15 @@ class FapExecutor:
 
     def observe(self, grid: NDArray[np.integer]) -> None:
         key = np.asarray(grid, dtype=np.int16).tobytes()
+        if self._last_emitted is not None:
+            # Whatever the board looks like after OUR step is the state the
+            # rest of the program expects to continue from.
+            self._queue_expected_key = key
+        elif self._queue and key != self._queue_expected_key:
+            # 2026-09-28 collaborator review: the board changed WITHOUT us
+            # acting (host action, animation, external change), so every
+            # queued step was parsed from a board that no longer exists.
+            self._queue.clear()
         if key != self._last_grid_bytes:
             self._stall_count = 0
         elif self._last_emitted is not None:
@@ -479,6 +528,12 @@ class FapExecutor:
             # Four EMISSIONS on one frame within a life/level means the
             # solver is cycling; abstain here and let the host break it.
             return None
+        if (
+            self._queue
+            and self._queue_expected_key is not None
+            and key != self._queue_expected_key
+        ):
+            self._queue.clear()  # belt to observe()'s braces: never emit stale steps
         if not self._queue:
             if (
                 self._matched is None
@@ -506,6 +561,7 @@ class FapExecutor:
         step = self._queue.pop(0)
         self._last_emitted = step
         self._last_grid_bytes = key
+        self._queue_expected_key = key
         if len(self._frame_emissions) > 512:
             self._frame_emissions.clear()
         self._frame_emissions[key] = self._frame_emissions.get(key, 0) + 1
