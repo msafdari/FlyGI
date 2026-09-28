@@ -2,18 +2,18 @@
   "budget": 400,
   "games": {
     "ft09": {
-      "levels": 3,
+      "levels": 4,
       "win_levels": 6,
-      "fap_actions": 155,
-      "random_actions": 245,
-      "matched": null,
+      "fap_actions": 398,
+      "random_actions": 2,
+      "matched": "glyph_miniature",
       "final_state": "GameState.NOT_FINISHED"
     },
     "sc25": {
-      "levels": 2,
+      "levels": 3,
       "win_levels": 6,
-      "fap_actions": 393,
-      "random_actions": 7,
+      "fap_actions": 345,
+      "random_actions": 55,
       "matched": "pip_punch_roll",
       "final_state": "GameState.NOT_FINISHED"
     }

@@ -173,10 +173,15 @@ def _find_tile_lattice(
 class GlyphMiniatureArchetype:
     """ft09's measured rule: a glyph is a miniature of its 3x3 neighbourhood.
 
-    Glyph sub-block 0 marks a neighbourhood tile that must take the glyph's
-    CENTRE colour; any other sub-block colour maps to the lattice's dominant
-    plain-tile colour. Clicking a marked tile paints it (measured on levels
-    1 and 2). The program is every marked tile whose current colour is wrong.
+    The lattice's plain tiles use a two-colour palette. Each glyph's centre
+    sub-block carries its MARKED colour; sub-block 0 prescribes the marked
+    colour for that neighbourhood tile, and any other sub-block value
+    prescribes the OTHER palette colour. (Levels 1-2 were solved with the
+    0-side alone because "other" coincided with the dominant colour there;
+    level 3 is where the 2-side becomes load-bearing -- measured violation
+    at a 2-prescribed tile sitting at the marked colour.) Clicking a tile
+    toggles it between the palette colours; the program is every tile whose
+    current colour mismatches its prescription.
     """
 
     name = "glyph_miniature"
@@ -190,9 +195,19 @@ class GlyphMiniatureArchetype:
         self, parses: list[GlyphGridParse], grid: NDArray[np.int16]
     ) -> list[Step]:
         steps: list[Step] = []
+        seen: set[tuple[int, int]] = set()
         for parse in parses:
+            census: dict[int, int] = {}
+            for colour in parse.tile_colour.values():
+                census[colour] = census.get(colour, 0) + 1
+            for blocks in parse.glyphs.values():
+                census.setdefault(int(blocks[1, 1]), 0)
+            palette = sorted(census, key=lambda k: -census[k])[:2]
             for (gi, gj), blocks in parse.glyphs.items():
                 marked_colour = int(blocks[1, 1])
+                other = next(
+                    (c for c in palette if c != marked_colour), parse.dominant
+                )
                 for dr in (-1, 0, 1):
                     for dc in (-1, 0, 1):
                         if dr == 0 and dc == 0:
@@ -202,7 +217,9 @@ class GlyphMiniatureArchetype:
                         current = parse.tile_colour.get((ti, tj))
                         if current is None:
                             continue
-                        if prescription == 0 and current != marked_colour:
+                        target = marked_colour if prescription == 0 else other
+                        if current != target and (ti, tj) not in seen:
+                            seen.add((ti, tj))
                             row = parse.rows[ti] + _TILE // 2
                             col = parse.cols[tj] + _TILE // 2
                             steps.append(Step(action=6, x=col, y=row))
@@ -359,27 +376,43 @@ class FapExecutor:
     _last_grid_bytes: bytes | None = None
     _retried_swallow: bool = False
     _stall_count: int = 0
+    _frame_visits: dict[bytes, int] = field(default_factory=dict)
 
     def observe(self, grid: NDArray[np.integer]) -> None:
         key = np.asarray(grid, dtype=np.int16).tobytes()
-        if self._last_emitted is not None:
-            if key == self._last_grid_bytes:
-                self._stall_count += 1
-                if not self._retried_swallow:
-                    # Measured engine quirk: the first post-reset action is
-                    # swallowed in some games; retry exactly once.
-                    self._queue.insert(0, self._last_emitted)
-                    self._retried_swallow = True
-                elif self._stall_count >= 3:
-                    self._queue.clear()  # stuck: force a re-parse
-                    self._stall_count = 0
-            else:
-                self._stall_count = 0
+        if key != self._last_grid_bytes:
+            self._stall_count = 0
+        elif self._last_emitted is not None:
+            self._stall_count += 1
+            if not self._retried_swallow:
+                # Measured engine quirk: the first post-reset action is
+                # swallowed in some games; retry exactly once.
+                self._queue.insert(0, self._last_emitted)
+                self._retried_swallow = True
+            elif self._stall_count % 3 == 0:
+                self._queue.clear()  # stuck: force a re-parse
         self._last_grid_bytes = key
         self._last_emitted = None
 
     def propose(self, grid: NDArray[np.integer]) -> Step | None:
         frame = np.asarray(grid, dtype=np.int16)
+        if self._stall_count >= 8:
+            # Measured on ft09 level 5: a level beyond the parsed rule loops
+            # the solver until the timer kills the life. Abstain while stuck;
+            # observe() resets the counter as soon as the frame changes, so
+            # the solver resumes when the host policy moves the game.
+            return None
+        key = frame.tobytes()
+        visits = self._frame_visits.get(key, 0) + 1
+        if len(self._frame_visits) > 512:
+            self._frame_visits.clear()
+        self._frame_visits[key] = visits
+        if visits >= 4:
+            # The other measured failure mode: a mis-prescribed rule TOGGLES
+            # tiles, so frames keep changing while the same states recur.
+            # Four visits to one frame means the solver is cycling; abstain
+            # on this frame and let the host policy break the loop.
+            return None
         if not self._queue:
             for archetype in self.archetypes:
                 parse = archetype.match(frame)

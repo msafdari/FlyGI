@@ -59,10 +59,14 @@ offline play (scripts/fap_solver_eval.py): ft09 completes levels 1-2
 autonomously -- the glyph parser generalizes across marked colours -- and
 sc25 completes levels 1-2 (the roll seeks the detected dock, and the archetype
 remembers its last known-good direction for the merge-at-arrival endgame that
-level 2 measured). Level boundaries, recorded not tuned: ft09 level 3
-satisfies the measured rule completely (four glyphs, every prescription met)
-yet does not fall, so it encodes an additional rule; sc25 level 3 introduces
-a door/key element beyond the archetype.
+level 2 measured). SAME-DAY EXTENSIONS: ft09 level 3's "extra rule" was the
+glyph rule's other half -- 2-cells prescribe the OTHER palette colour, not
+just 0-cells the marked one -- and the two-sided rule completes ft09 LEVELS
+1-4 in 46 solver actions; stall and frame-revisit guards make a stuck solver
+abstain instead of burning the timer life (ft09 level 5's measured failure
+mode), and with the guards the sc25 stack reaches LEVEL 3. Standing totals:
+ft09 4 levels, sc25 3, against an all-time random record of 0 on both.
+Boundaries: ft09 level 5 (rule unknown), sc25 level 4+.
 ABSTENTION AUDIT across all 25 games at budget 300: zero actions emitted and
 zero matches on the other 23 games, no crashes -- seating the library costs
 the champion nothing by construction. Random play's all-time record on these

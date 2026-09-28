@@ -909,9 +909,17 @@ hypotheses:
         archetype -- recorded boundary. ABSTENTION AUDIT, all 25 games
         at budget 300: the library emitted ZERO actions and matched
         nothing on the other 23 games, no crashes -- seating it costs
-        the champion nothing by construction. Trivial-alternative
-        comparison: random play's all-time record on ft09/sc25 is 0
-        levels; the solver's is 3 + 2.
+        the champion nothing by construction. EXTENDED SAME DAY: the
+        glyph rule's full two-sided form (0-cells take the glyph's
+        marked colour, 2-cells take the OTHER palette colour) was
+        measured on level 3's violation and completes ft09 LEVELS 1-4
+        in 46 solver actions; stall and frame-revisit guards make a
+        stuck solver abstain instead of burning the timer life
+        (measured failure mode on ft09 level 5), and with the guards
+        the sc25 stack reaches LEVEL 3 (solver + random fallback
+        breaking the door impasse). Trivial-alternative comparison:
+        random play's all-time record on ft09/sc25 is 0 levels; the
+        stack's is 4 + 3.
     updated: 2026-09-27
 
   H-LC-RECOGNIZER:

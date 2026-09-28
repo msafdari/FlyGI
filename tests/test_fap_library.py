@@ -29,21 +29,22 @@ def _paint_tile(grid: np.ndarray, row: int, col: int, blocks: np.ndarray) -> Non
 
 
 def _glyph_frame() -> np.ndarray:
-    """One 3x3 lattice: dominant tiles 9, one 8-tile, a mismatching glyph."""
+    """One 3x3 lattice: palette {9, 8}, a glyph with one unsatisfied cell.
+
+    The glyph prescribes tile (0,0) to be the marked colour 8 (sub-block 0)
+    and every other neighbourhood tile to be the OTHER palette colour 9
+    (sub-block 2) -- the full two-sided rule measured on ft09 level 3. Only
+    tile (0,0) starts unsatisfied.
+    """
 
     grid = np.full((64, 64), 5, dtype=np.int16)
     plain9 = np.full((3, 3), 9, dtype=np.int16)
-    plain8 = np.full((3, 3), 8, dtype=np.int16)
-    # Glyph prescribes tile (0,0) of its neighbourhood to be 8 (cell 0) and
-    # the rest to stay 9 (cell 2); centre carries the marked colour 8.
     glyph = np.array([[0, 2, 2], [2, 8, 2], [2, 2, 2]], dtype=np.int16)
     rows, cols = [2, 10, 18], [4, 12, 20]
     for i, r in enumerate(rows):
         for j, c in enumerate(cols):
             if (i, j) == (1, 1):
                 _paint_tile(grid, r, c, glyph)
-            elif (i, j) == (2, 2):
-                _paint_tile(grid, r, c, plain8)
             else:
                 _paint_tile(grid, r, c, plain9)
     return grid
