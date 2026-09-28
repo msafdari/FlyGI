@@ -51,6 +51,26 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## H-EFFERENCE closed by measurement: the preregistered null, confirmed -- 2026-09-27
+
+The registry's last open module ran as a standard battery arm at the user's
+direction (sg-bioeye-lc-efference, 75 rows, seeds 0-2, budget 600, contract
+PASS). Mean score 0.2409 vs baseline sg-bioeye-lc 0.2504, paired diff -0.0095
+with only 21/75 rows differing at all; levels 18 vs 16 (gained lf52, lost
+cd82 -- seed churn). Exactly the null the 2026-09-23 registration predicted
+by construction (the copy cancels out of the saliency comparison), and with
+sg-mbdr-learn already null, every registered use of the efference copy is
+now measured. H-EFFERENCE: open -> null. This was the last fly-inventory
+item; the full inventory sweep ("do em all") is complete -- see the four
+entries below and the registry.
+
+T4/T5's native role closed by reasoning, recorded here rather than run: its
+only unclaimed native use, motion-localizing the moving avatar, feeds the
+taxis mechanism whose measured bottleneck is arrival semantics, not
+segmentation (the engineered shift matcher already recovers 11/14 games'
+motions exactly and the taxis arm was null anyway). A run could only improve
+a component upstream of a measured-dead endpoint.
+
 ## FAP library entries 1-2: ft09 solved through level 2, sc25 level 1 -- 2026-09-27
 
 src/flygi/controller/fap_library.py (engineered scaffold end to end, labelled;

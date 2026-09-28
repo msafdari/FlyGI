@@ -667,7 +667,7 @@ hypotheses:
       that read state, above all the mushroom body, know what the agent just
       did, and the forward model's reference carries the same copy so
       self-report cancels exactly in the surprise comparison.
-    status: open
+    status: "null"
     evidence:
       - >
         Measured 2026-09-23: KC action separation 144.7% at scale 0.05 with LC
@@ -684,7 +684,17 @@ hypotheses:
         load-bearing use is sg-mbdr-learn, where the mushroom body can finally
         associate action identity with reinforcement; a null on the bio-eye arm
         does not falsify that.
-    updated: 2026-09-23
+      - >
+        STANDALONE ARM RUN 2026-09-27 at the user's direction ("do em
+        all"; results/connectome_agent/sg-bioeye-lc-efference.json, 75
+        rows, seeds 0-2, budget 600, contract PASS): mean score 0.2409
+        vs baseline sg-bioeye-lc 0.2504, paired diff -0.0095 with only
+        21/75 rows differing at all; levels 18 vs 16 (gained lf52,
+        lost cd82 -- seed churn). The preregistered
+        null-by-construction, confirmed by measurement. With
+        sg-mbdr-learn already null, every registered use of the
+        efference copy is now measured; the entry closes.
+    updated: 2026-09-27
 
   H-MB-LEARNING-DENSE:
     statement: >
@@ -1839,12 +1849,11 @@ experiments:
     regime: gain2.0-modulators
     baseline: sg-bioeye-lc-surprise
     tests: [H-EFFERENCE]
-    status_override: not-run
     note: >
-      Deliberately not run standalone: its score effect was preregistered as
-      null by construction, so running it would spend compute to confirm a
-      caveat. The efference copy is tested where it is load-bearing,
-      sg-mbdr-learn.
+      Originally deliberately not run standalone (score effect preregistered
+      null by construction); RUN 2026-09-27 at the user's direction. Result:
+      0.2409 vs baseline 0.2504, 21/75 rows differing, levels 18 vs 16 --
+      the preregistered null, confirmed. See H-EFFERENCE.
 
   breadth-stack:
     config: configs/breadth_stack.yaml
