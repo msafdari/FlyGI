@@ -115,6 +115,7 @@ class StateGraphPolicy:
         click_head: object | None = None,
         state_tags: object | None = None,
         taxis: object | None = None,
+        fap: object | None = None,
     ) -> None:
         if not controller_config.enabled:
             raise StateGraphPolicyError("state-graph policy requires controller.enabled=true")
@@ -148,6 +149,15 @@ class StateGraphPolicy:
         self._tag_dampened = 0
         # H-TAXIS: sprite-to-target attraction, injected like fly/head/tags.
         self._taxis = taxis
+        # H-FAP-PROGRAMS: the fixed-action-pattern executor. Unlike every
+        # other injected component it does not score candidates -- when a
+        # known archetype matches it OVERRIDES the ranking with the next step
+        # of an exact program, and when it abstains (propose() returns None)
+        # this turn is byte-identical to a policy built without it.
+        self._fap = fap
+        self._fap_fired = 0
+        self._fap_errors = 0
+        self._fap_banned = 0
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
@@ -273,6 +283,10 @@ class StateGraphPolicy:
             "head_ranked_turns": self._head_ranked,
             "tag_dampened_states": self._tag_dampened,
             "taxis": (None if self._taxis is None else self._taxis.describe()),
+            "fap": (None if self._fap is None else self._fap.describe()),
+            "fap_fired_turns": self._fap_fired,
+            "fap_errors": self._fap_errors,
+            "fap_banned": self._fap_banned,
             "state_tags": (None if self._state_tags is None else self._state_tags.describe()),
             "head_decisive_turns": self._head_decisive,
             "head": (None if self._click_head is None else self._click_head.describe()),
@@ -417,6 +431,11 @@ class StateGraphPolicy:
         advanced_by = max(0, destination_levels - pending.source_levels)
         if advanced_by > 0:
             self._turns_since_advance = 0
+            if self._fap is not None:
+                # The level fell: every program step and frame guard the
+                # executor derived from the previous board is stale.
+                with suppress(Exception):
+                    self._fap.notify_level_advance()
         else:
             self._turns_since_advance += 1
         fatal = destination_turn.game_state == "GAME_OVER"
@@ -532,7 +551,59 @@ class StateGraphPolicy:
         mode = "frontier"
         expected_destination: bytes | None = None
 
-        if self._replay_queue and self._replay_cooldown == 0:
+        if self._fap is not None:
+            # H-FAP-PROGRAMS: exact-program override. The executor watches
+            # every active frame (stall/revisit guards need the history) and
+            # proposes the next program step only while a known archetype
+            # matches; None leaves this turn byte-identical to fap=None.
+            # Hardening per the 2026-09-27 adversarial seating review: any
+            # executor exception degrades to ABSTENTION (never to random
+            # play or a dead row), a hard-banned candidate is refused (three
+            # deaths were measured re-executing a graph-proven-fatal click),
+            # and a refused step is reported back so the program pointer and
+            # swallow-retry budget stay in sync.
+            step = None
+            try:
+                self._fap.observe(observed.scene.grid)
+                step = self._fap.propose(observed.scene.grid)
+            except Exception:
+                self._fap_errors += 1
+                step = None
+            if step is not None:
+                identifier = int(step.action)
+                legal = identifier in observed.turn.available_action_ids
+                if identifier == _CLICK_ACTION_ID:
+                    legal = (
+                        legal
+                        and step.x is not None
+                        and step.y is not None
+                        and 0 <= int(step.x) <= 63
+                        and 0 <= int(step.y) <= 63
+                    )
+                proposed: ActionCandidate | None = None
+                if legal:
+                    if identifier == _CLICK_ACTION_ID:
+                        proposed = ActionCandidate(
+                            identifier, x=int(step.x), y=int(step.y)
+                        )
+                    else:
+                        proposed = ActionCandidate(identifier)
+                    if proposed in node.hard_bans:
+                        self._fap_banned += 1
+                        proposed = None
+                if proposed is None:
+                    with suppress(Exception):
+                        self._fap.reject_last()
+                else:
+                    candidate = proposed
+                    mode = "fap"
+                    self._fap_fired += 1
+                    if self._replay_queue:
+                        # The program preempts any queued replay; its source
+                        # expectations no longer hold.
+                        self._abort_replay()
+
+        if candidate is None and self._replay_queue and self._replay_cooldown == 0:
             step = self._replay_queue[0]
             if (
                 step.expected_source == state_key
@@ -633,6 +704,11 @@ class StateGraphPolicy:
         return action
 
     def _forced_reset(self, observed: _ObservedFrame) -> ActionLike:
+        if self._fap is not None:
+            # A reset restores the initial board: the executor's program,
+            # frame guards, and per-life swallow-retry budget all restart.
+            with suppress(Exception):
+                self._fap.notify_reset()
         action = self._resolve_action(_RESET_ACTION_ID)
         reasoning = {
             "policy": "state-graph-controller",

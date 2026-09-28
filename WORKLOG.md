@@ -51,6 +51,56 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## FAP seated in the deployed policy; adversarial review; 8.3x pilot -- 2026-09-27
+
+At the user's direction the library was wired into StateGraphPolicy behind a
+new default-off knob (controller.fap_library). Seating design: unlike
+fly/head/tags/taxis it does not score candidates -- when an archetype matches
+it OVERRIDES the ranking with the program's next step, committed through the
+same path as a ranked candidate (mode "fap"); when it abstains the turn is
+byte-identical to fap=None. Wired identically in the local harness and the
+Kaggle adapter; configs/combo_fap.yaml differs from the combo champion in
+exactly one line.
+
+**Pilot battery (75 rows, protocol matched to sg-combo exactly), measured:**
+mean score 2.9343 vs champion 0.3519 -- 8.3x, the largest local jump in
+project history. Levels 45 vs 24, breadth 11 vs 9. ft09 0 -> 47.62 per seed
+(3/3 seeds identical, 4 levels each), sc25 0 -> 16.94 per seed (3 levels
+each). The other 23 games: EXACTLY zero delta on every row -- system-level
+confirmation of abstention byte-identity. Recorded as
+sg-combo-fap-pilot; superseded by the post-hardening arm below.
+
+**Adversarial review (39-agent workflow, 3 lenses, 2 refuters per finding)
+confirmed real defects, all fixed the same day:**
+- CRITICAL hard-ban bypass: the fired path never consulted node.hard_bans and
+  measurably re-executed a graph-proven-fatal click for 3 deaths. Now
+  refused, counted (fap_banned), and reported to the executor.
+- CRITICAL version skew: the config loader rejects unknown controller keys,
+  so a controller.yaml carrying fap_library crashes any OLDER embedded flygi
+  -- the six-zeros pattern. The packaging script now validates the staged
+  controller.yaml against the staged code, and the operational rule (dataset
+  version and notebook re-save travel together) is recorded there.
+- Executor lifecycle: stale program queues survived forced resets and level
+  advances (replaying pre-death coordinates); the revisit guard counted
+  abstaining visits and was never cleared, permanently muting a game from
+  its 4th life; the swallow retry armed once per game instead of per life; a
+  rejected (illegal/banned) proposal desynced the program pointer. Fixed via
+  notify_reset/notify_level_advance/reject_last hooks called from the
+  policy, and the guard now counts EMISSIONS per frame.
+- No exception containment at the seam: an executor bug degraded to random
+  play (Kaggle) or a dead row (harness). Now degrades to abstention with a
+  fap_errors diagnostic.
+- Abstain cost measured 17-65 ms/turn (Python window scan) -- a Kaggle
+  wall-clock leak. The lattice scan is vectorized and never-matched games
+  back off; measured post-fix cost 0.15-0.19 ms/turn (~300x).
+- Deploy visibility: fap_library now appears in FLYGI_PREFLIGHT identity and
+  fap_fired/fap_errors in the FLYGI_DIAG line.
+491 tests pass (6 new lifecycle/seam tests). Offline solver totals unchanged
+after hardening (ft09 4 levels, sc25 3). The hardened battery re-run
+(sg-combo-fap) was in flight when this entry was written; its paired result
+supersedes the pilot's number. Known parity gap recorded, not fixed: the
+adapter never wires taxis (default-off everywhere, score-inert arm).
+
 ## H-EFFERENCE closed by measurement: the preregistered null, confirmed -- 2026-09-27
 
 The registry's last open module ran as a standard battery arm at the user's

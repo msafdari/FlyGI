@@ -229,6 +229,11 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
         "click_head": (
             None if controller_config is None else controller_config.controller.click_head
         ),
+        "fap_library": (
+            None
+            if controller_config is None
+            else bool(getattr(controller_config.controller, "fap_library", False))
+        ),
         "click_head_deadline": (
             None if controller_config is None else controller_config.controller.click_head_deadline
         ),
@@ -455,6 +460,11 @@ class MyAgent(Agent):
                     negative_scale=controller.click_head_negative_scale,
                     coordinate_convention=controller.click_head_coordinate_convention,
                 )
+            fap = None
+            if getattr(controller, "fap_library", False):
+                from flygi.controller.fap_library import FapExecutor
+
+                fap = FapExecutor()
             self._policy = StateGraphPolicy(
                 GameAction,
                 controller,
@@ -462,6 +472,7 @@ class MyAgent(Agent):
                 fly=fly,
                 click_head=click_head,
                 state_tags=state_tags,
+                fap=fap,
             )
             self._mode = "controller-fly" if fly is not None else "controller-light"
             self._detail = (
@@ -587,6 +598,8 @@ class MyAgent(Agent):
                             "fly_decisive_rate": snapshot.get("fly_decisive_rate"),
                             "states": snapshot.get("states_discovered"),
                             "outcomes": snapshot.get("outcomes"),
+                            "fap_fired": snapshot.get("fap_fired_turns"),
+                            "fap_errors": snapshot.get("fap_errors"),
                         },
                         sort_keys=True,
                         separators=(",", ":"),

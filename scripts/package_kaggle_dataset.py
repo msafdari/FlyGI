@@ -97,6 +97,18 @@ def _stage(
     # the submission gate requires the fly to stay load-bearing.
     if controller_path is not None:
         shutil.copyfile(controller_path, stage / "controller.yaml")
+        # VERSION-SKEW GUARD (2026-09-27 seating review, critical finding):
+        # the loader REJECTS unknown controller keys, so a controller.yaml
+        # carrying a newer knob (e.g. fap_library) crashes any OLDER flygi
+        # that reads it -- the six-zeros construction-crash pattern. The
+        # staged config must load with the flygi packaged IN THIS BUNDLE
+        # (validated below via load_config), and a dataset version carrying
+        # new knobs must never be pushed without re-saving the notebook that
+        # embeds the matching flygi. Kaggle pins dataset versions per saved
+        # notebook, so paired pushes keep old submissions safe.
+        from flygi.config import load_config as _validate_controller_config
+
+        _validate_controller_config(stage / "controller.yaml")
         records.append(
             {
                 "path": "controller.yaml",

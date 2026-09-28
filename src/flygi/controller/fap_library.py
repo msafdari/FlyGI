@@ -76,36 +76,55 @@ def _find_tile_lattice(
     """Find groups of 6x6 sub-block tiles on a shared 8-pixel pitch."""
 
     height, width = grid.shape
-    tiles: dict[tuple[int, int], NDArray[np.int16]] = {}
-    for r in range(0, height - _TILE + 1):
-        for c in range(0, width - _TILE + 1):
-            window = grid[r : r + _TILE, c : c + _TILE]
-            if (window == background).any():
-                continue
-            blocks = _subblocks(window)
-            if blocks is None:
-                continue
-            # A true tile is set off by a separator: the 1-pixel ring around
-            # it (clipped at the frame edge) must be one uniform colour that
-            # the tile itself does not use. This rejects impostor windows
-            # straddling a tile and its border.
-            ring = np.concatenate(
-                [
-                    grid[max(r - 1, 0), max(c - 1, 0) : min(c + _TILE + 1, width)],
-                    grid[
-                        min(r + _TILE, height - 1),
-                        max(c - 1, 0) : min(c + _TILE + 1, width),
-                    ],
-                    grid[max(r - 1, 0) : min(r + _TILE + 1, height), max(c - 1, 0)],
-                    grid[
-                        max(r - 1, 0) : min(r + _TILE + 1, height),
-                        min(c + _TILE, width - 1),
-                    ],
-                ]
+    if height < _TILE or width < _TILE:
+        return []
+    # Vectorized candidate scan (the 2026-09-27 review measured the Python
+    # window loop at 17-65 ms per abstaining turn, a Kaggle wall-clock leak):
+    # uniform[r, c] marks a uniform 2x2 block; a 6x6 window is a tile
+    # candidate iff its nine 2x2 sub-blocks are all uniform and none carries
+    # the background colour.
+    uniform = (
+        (grid[:-1, :-1] == grid[:-1, 1:])
+        & (grid[:-1, :-1] == grid[1:, :-1])
+        & (grid[:-1, :-1] == grid[1:, 1:])
+    )
+    rows_span = height - _TILE + 1
+    cols_span = width - _TILE + 1
+    valid = np.ones((rows_span, cols_span), dtype=bool)
+    has_background = np.zeros((rows_span, cols_span), dtype=bool)
+    for i in range(0, _TILE, _SUB):
+        for j in range(0, _TILE, _SUB):
+            valid &= uniform[i : i + rows_span, j : j + cols_span]
+            has_background |= (
+                grid[i : i + rows_span, j : j + cols_span] == background
             )
-            if not (ring == ring[0]).all() or ring[0] in blocks:
-                continue
-            tiles[(r, c)] = blocks
+    tiles: dict[tuple[int, int], NDArray[np.int16]] = {}
+    for r, c in zip(*np.nonzero(valid & ~has_background)):
+        r, c = int(r), int(c)
+        window = grid[r : r + _TILE, c : c + _TILE]
+        blocks = _subblocks(window)
+        assert blocks is not None  # guaranteed by the vectorized scan
+        # A true tile is set off by a separator: the 1-pixel ring around
+        # it (clipped at the frame edge) must be one uniform colour that
+        # the tile itself does not use. This rejects impostor windows
+        # straddling a tile and its border.
+        ring = np.concatenate(
+            [
+                grid[max(r - 1, 0), max(c - 1, 0) : min(c + _TILE + 1, width)],
+                grid[
+                    min(r + _TILE, height - 1),
+                    max(c - 1, 0) : min(c + _TILE + 1, width),
+                ],
+                grid[max(r - 1, 0) : min(r + _TILE + 1, height), max(c - 1, 0)],
+                grid[
+                    max(r - 1, 0) : min(r + _TILE + 1, height),
+                    min(c + _TILE, width - 1),
+                ],
+            ]
+        )
+        if not (ring == ring[0]).all() or ring[0] in blocks:
+            continue
+        tiles[(r, c)] = blocks
     # Keep lattice-aligned representatives: prefer positions whose neighbours
     # at +-8 pixels are also tiles, then greedily drop overlaps.
     def support(position: tuple[int, int]) -> int:
@@ -260,12 +279,18 @@ class PipPunchRollArchetype:
         board = np.isin(grid, (0, 2))
         labels, count = ndimage.label(board)
         cells: list[tuple[int, int, int]] = []  # (row, col, value)
-        for index in range(1, count + 1):
-            ys, xs = np.nonzero(labels == index)
-            if ys.size != 9:  # exactly 3x3 pixels
+        # find_objects keeps the per-component cost bounded on busy frames
+        # (the full-grid labels==index scan was O(count x 4096)).
+        for index, slices in enumerate(ndimage.find_objects(labels), start=1):
+            if slices is None:
                 continue
-            if ys.max() - ys.min() != 2 or xs.max() - xs.min() != 2:
+            sy, sx = slices
+            if sy.stop - sy.start != 3 or sx.stop - sx.start != 3:
                 continue
+            if int((labels[sy, sx] == index).sum()) != 9:
+                continue
+            ys = np.array([sy.start, sy.stop - 1])
+            xs = np.array([sx.start, sx.stop - 1])
             # Enclosed by colour 3 on all sides (board wall), not background.
             y0, y1, x0, x1 = ys.min() - 1, ys.max() + 1, xs.min() - 1, xs.max() + 1
             if y0 < 0 or x0 < 0 or y1 >= grid.shape[0] or x1 >= grid.shape[1]:
@@ -356,15 +381,24 @@ class PipPunchRollArchetype:
 # ----------------------------------------------------------------- executor
 
 
+_MATCH_BACKOFF_AFTER = 32
+_MATCH_BACKOFF_STRIDE = 4
+
+
 @dataclass
 class FapExecutor:
     """Per-game program executor: parse, emit, verify, re-derive.
 
-    ``propose`` returns the next Step or None (abstain). The caller reports
-    frames back through ``observe`` so the executor can verify progress: a
-    step whose frame did not change is retried once (the measured sc25
-    post-reset swallow), then the executor re-parses; a game whose archetypes
-    all abstain stays abstained -- zero cost to the host policy.
+    ``propose`` returns the next Step or None (abstain). The host reports
+    frames back through ``observe``, tells the executor when it REJECTED a
+    proposed step (``reject_last``: hard-banned or illegal, so the step never
+    ran), and notifies life/level boundaries (``notify_reset``,
+    ``notify_level_advance``) so no program state survives a board it was
+    parsed from. All of this hardening follows the 2026-09-27 adversarial
+    seating review: stale queues replayed pre-death coordinates, the revisit
+    guard counted abstentions and was never cleared (permanently muting the
+    4th life), the swallow retry armed once per game instead of once per
+    life, and a rejected step desynced the program pointer.
     """
 
     archetypes: list[Any] = field(
@@ -376,7 +410,41 @@ class FapExecutor:
     _last_grid_bytes: bytes | None = None
     _retried_swallow: bool = False
     _stall_count: int = 0
-    _frame_visits: dict[bytes, int] = field(default_factory=dict)
+    _frame_emissions: dict[bytes, int] = field(default_factory=dict)
+    _match_failures: int = 0
+    _turn_index: int = 0
+
+    def _clear_program_state(self) -> None:
+        self._queue.clear()
+        self._last_emitted = None
+        self._last_grid_bytes = None
+        self._retried_swallow = False
+        self._stall_count = 0
+        self._frame_emissions.clear()
+
+    def notify_reset(self) -> None:
+        """A RESET ran (forced or otherwise): the board the program was
+        parsed from is gone, and the engine's post-reset swallow (measured,
+        per reset) gets a fresh retry budget."""
+
+        self._clear_program_state()
+
+    def notify_level_advance(self) -> None:
+        """The level fell: everything parsed from the previous board is
+        stale, including the roll-direction memory's frame guards."""
+
+        self._clear_program_state()
+
+    def reject_last(self) -> None:
+        """The host refused the last proposed step (illegal or hard-banned),
+        so it never executed: it must not arm the swallow retry, and the
+        emission it recorded on this frame is rolled back."""
+
+        if self._last_emitted is not None and self._last_grid_bytes is not None:
+            count = self._frame_emissions.get(self._last_grid_bytes, 0)
+            if count > 0:
+                self._frame_emissions[self._last_grid_bytes] = count - 1
+        self._last_emitted = None
 
     def observe(self, grid: NDArray[np.integer]) -> None:
         key = np.asarray(grid, dtype=np.int16).tobytes()
@@ -385,8 +453,9 @@ class FapExecutor:
         elif self._last_emitted is not None:
             self._stall_count += 1
             if not self._retried_swallow:
-                # Measured engine quirk: the first post-reset action is
-                # swallowed in some games; retry exactly once.
+                # Measured engine quirk: the first action after a reset is
+                # swallowed in some games; retry exactly once per life
+                # (notify_reset re-arms this).
                 self._queue.insert(0, self._last_emitted)
                 self._retried_swallow = True
             elif self._stall_count % 3 == 0:
@@ -395,25 +464,31 @@ class FapExecutor:
         self._last_emitted = None
 
     def propose(self, grid: NDArray[np.integer]) -> Step | None:
-        frame = np.asarray(grid, dtype=np.int16)
+        self._turn_index += 1
         if self._stall_count >= 8:
             # Measured on ft09 level 5: a level beyond the parsed rule loops
             # the solver until the timer kills the life. Abstain while stuck;
             # observe() resets the counter as soon as the frame changes, so
             # the solver resumes when the host policy moves the game.
             return None
+        frame = np.asarray(grid, dtype=np.int16)
         key = frame.tobytes()
-        visits = self._frame_visits.get(key, 0) + 1
-        if len(self._frame_visits) > 512:
-            self._frame_visits.clear()
-        self._frame_visits[key] = visits
-        if visits >= 4:
+        if self._frame_emissions.get(key, 0) >= 4:
             # The other measured failure mode: a mis-prescribed rule TOGGLES
             # tiles, so frames keep changing while the same states recur.
-            # Four visits to one frame means the solver is cycling; abstain
-            # on this frame and let the host policy break the loop.
+            # Four EMISSIONS on one frame within a life/level means the
+            # solver is cycling; abstain here and let the host break it.
             return None
         if not self._queue:
+            if (
+                self._matched is None
+                and self._match_failures >= _MATCH_BACKOFF_AFTER
+                and self._turn_index % _MATCH_BACKOFF_STRIDE != 0
+            ):
+                # A game that has never matched pays the parse only every
+                # few turns after a grace period; a later level that starts
+                # matching is still caught within the stride.
+                return None
             for archetype in self.archetypes:
                 parse = archetype.match(frame)
                 if parse is not None:
@@ -421,14 +496,19 @@ class FapExecutor:
                     if steps:
                         self._queue = list(steps)
                         self._matched = archetype.name
+                        self._match_failures = 0
                         break
             else:
-                self._matched = None
+                if self._matched is None:
+                    self._match_failures += 1
         if not self._queue:
             return None
         step = self._queue.pop(0)
         self._last_emitted = step
-        self._last_grid_bytes = frame.tobytes()
+        self._last_grid_bytes = key
+        if len(self._frame_emissions) > 512:
+            self._frame_emissions.clear()
+        self._frame_emissions[key] = self._frame_emissions.get(key, 0) + 1
         return step
 
     def describe(self) -> dict[str, Any]:

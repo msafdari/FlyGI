@@ -337,6 +337,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             ),
         )
 
+    def _build_fap():
+        if not config.controller.fap_library:
+            return None
+        from flygi.controller.fap_library import FapExecutor
+
+        return FapExecutor()
+
     def policy_factory(policy_seed: int) -> StateGraphPolicy:
         if fly_tiebreaker is not None:
             fly_tiebreaker.reset()
@@ -348,6 +355,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             click_head=_build_click_head(),
             state_tags=_build_state_tags(),
             taxis=_build_taxis(policy_seed),
+            fap=_build_fap(),
         )
         policy_factory.current = policy  # type: ignore[attr-defined]
         return policy
