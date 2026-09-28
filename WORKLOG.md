@@ -10,6 +10,66 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Dead games fall to hand-derived programs: H-FAP-PROGRAMS PASSED -- 2026-09-27
+
+The user directed running every open fly-inventory item ("Do em all"). First
+result, and the largest score-relevant finding since the six-zeros fix: the
+forensics' "short exact program" claim is now MEASURED TRUE on both
+template-flavour dead games, with the actual programs recorded.
+
+**ft09, solved through level 2.** The screen is four 3x3 tile grids; each
+grid's centre glyph is a miniature of its own grid (glyph colour 2 = tile 9,
+glyph 0 = tile 8/the glyph-centre colour; verified exactly on all three
+reference grids). The bordered grid's glyph mismatches its own all-9 surround:
+it is the goal, and clicking the four tiles its 0-cells prescribe completes
+level 1 in FOUR actions (score 0->1). Level 2 states the same rule with two
+glyphs and marked colour c; seven more clicks complete it (score 1->2, eleven
+actions cumulative). Every 600-action battery row ever run on ft09 scored 0.
+
+**sc25, solved through level 1.** Punch the die's displayed pip pattern into
+the 3x3 board (0-cells mark the pips; clicking a 2-cell costs a timer tick, a
+0-cell does not), the oversized track marker then shrinks to 2x2, passes the
+track notch, and rolling it left (action 3) into the docking box completes
+level 1 (~17 actions, score 0->1).
+
+**Engine quirk, measured (sc25 only; absent in ft09):** the first action after
+every RESET -- including episode start -- is swallowed completely; identical
+frames regardless of which action wakes it. Deployed agents burn one action
+per sc25 life and the consequence head records that action as effect-free.
+
+**Blind search does not replace goal reading.** BFS over the offline arcade
+(scripts/fap_bfs_probe.py): sc25's directional-only space is 19 states,
+exhausted, no win; with 15 salient click targets the space exceeds 5,031
+states with no win by the 3,000-node cap. The programs must be DERIVED from
+the displayed goal -- the recognize-then-release shape the FAP library plans.
+
+**Scope, per the first principle:** these programs are engineered scaffold,
+recorded as such (like taxis). The registered fly seat was RECOGNITION
+(H-LC-RECOGNIZER): whether LC/LPLC or lateral-horn population codes identify
+a never-seen game's class. Instruments: scripts/fap_program_premise.py
+(scripted execution + frame dumps), scripts/fap_bfs_probe.py (program
+search); programs recorded in results/diagnostics/fap_programs.json and the
+registry entry.
+
+## H-LC-RECOGNIZER: killed by its own preregistered condition -- 2026-09-27
+
+Same day, the recognizer seat was premise-killed before any build. Protocol:
+40 random-play frames per game x 25 games, stateless gain-2.0 advance, LC
+family (4,674 neurons) and lateral horn (2,028) population vectors; real
+bio-eye vs the established scrambled-encoder twin; trivial alternative a raw
+grid-block histogram. Seen-game identity saturates for EVERY reader (1.0 --
+frames are individually distinctive), but the FAP-relevant endpoint,
+held-out-GAME dead-vs-live, carries no signal for anyone: nearest-centroid
+put all readers at or below chance, and the final preregistered escalation (a
+leave-one-game-out linear probe, identical pipeline for all arms) measured
+real LC 0.438 / real LH 0.520 vs scrambled 0.510/0.579, raw baseline 0.415,
+chance 0.5. The real arms beat neither their controls nor chance;
+kill_condition_met true; no further decoder shopping per the escalation's
+own registration. A game's CLASS is behavioural, not visual, at frame level.
+Consequence: a FAP library's recognition stage would be engineered parsing
+and earns the fly nothing; the fly's load-bearing seat remains the
+retinotopic click head.
+
 ## Reflex sprint: 3.1x faster, byte-identical, same local score -- 2026-09-27
 
 **Measured:** per-action latency 12.9 -> 4.20 ms (profile-driven: grouped

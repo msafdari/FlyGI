@@ -1,0 +1,39 @@
+{
+  "registered": "H-FAP-PROGRAMS",
+  "date": "2026-09-27",
+  "note": "Hand-derived exact programs measured to complete levels via scripts/fap_program_premise.py against the strict-offline arcade, seed 0. Coordinates are x=column, y=row. sc25 requires one wake action first (the engine swallows the first post-reset action in that game only).",
+  "ft09": {
+    "rule": "Each 3x3 tile grid's centre glyph is a miniature of its own grid (glyph 2 <-> tile 9, glyph 0 <-> tile 8/marked colour = glyph centre colour). Click the tiles whose glyph cell is 0, in the grid(s) whose glyph mismatches its surround.",
+    "level1_program": [
+      {"action": 6, "x": 38, "y": 38},
+      {"action": 6, "x": 38, "y": 46},
+      {"action": 6, "x": 54, "y": 46},
+      {"action": 6, "x": 38, "y": 54}
+    ],
+    "level1_result": "score 0->1 in 4 actions",
+    "level2_program": [
+      {"action": 6, "x": 22, "y": 16},
+      {"action": 6, "x": 22, "y": 24},
+      {"action": 6, "x": 38, "y": 24},
+      {"action": 6, "x": 22, "y": 32},
+      {"action": 6, "x": 38, "y": 32},
+      {"action": 6, "x": 22, "y": 48},
+      {"action": 6, "x": 30, "y": 48}
+    ],
+    "level2_result": "score 1->2 in 7 actions (11 cumulative)"
+  },
+  "sc25": {
+    "rule": "Punch the die's pip pattern into the 3x3 board (0-cells mark pips; clicking a 2-cell costs a timer tick), then roll the shrunken track marker left (action 3) to the docking box.",
+    "level1_program": [
+      {"action": 1, "comment": "wake; swallowed by the engine"},
+      {"action": 6, "x": 30, "y": 50},
+      {"action": 6, "x": 25, "y": 55},
+      {"action": 6, "x": 35, "y": 55},
+      {"action": 6, "x": 30, "y": 60},
+      {"action": 3}, {"action": 3}, {"action": 3}, {"action": 3},
+      {"action": 3}, {"action": 3}, {"action": 3}, {"action": 3},
+      {"action": 3}, {"action": 3}, {"action": 3}, {"action": 3}, {"action": 3}
+    ],
+    "level1_result": "score 0->1; the win landed within the 13 rolls (trailing rolls harmless)"
+  }
+}

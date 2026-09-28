@@ -842,6 +842,98 @@ hypotheses:
         shipped combo candidate is untouched. Level-2 wall standing:
         composition above arrival semantics remains the frontier.
     updated: 2026-09-25
+  H-FAP-PROGRAMS:
+    statement: >
+      The dead games' level 1 really is a short exact program derivable
+      from the displayed goal -- so a fixed-action-pattern library
+      (recognize the archetype, release the program) can convert games
+      that every battery arm has scored 0.00 on.
+    status: supported
+    evidence:
+      - >
+        PREMISE-KILLER PASSED 2026-09-27, BOTH TEMPLATE-FLAVOUR GAMES
+        (scripts/fap_program_premise.py, hand-derived programs executed
+        against the strict-offline arcade; trivial alternative random
+        play, measured 0 levels on these games in every 600-action row
+        ever run). FT09: the screen is four 3x3 tile grids whose centre
+        glyph is a MINIATURE OF ITS OWN GRID (glyph colour 2 = tile 9,
+        glyph 0 = tile 8; verified exactly on all three reference
+        grids); the bordered grid's glyph mismatches its own all-9
+        surround and is the goal -- clicking the four tiles its 0-cells
+        prescribe completes level 1 in FOUR actions (score 0->1), and
+        the same rule read off level 2's two glyphs (marked colour c)
+        completes level 2 in seven more (score 1->2). SC25: punch the
+        die's pip pattern into the 3x3 board (0-cells mark the pips;
+        clicking a 2-cell costs a timer tick, a 0-cell does not), the
+        oversized track marker then SHRINKS to 2x2 and can pass the
+        track notch, and rolling it left to the docking box completes
+        level 1 in ~17 actions (score 0->1). Programs recorded in this
+        entry; instruments committed.
+      - >
+        MEASURED ENGINE QUIRK, sc25 only (verified absent in ft09): the
+        first action after every RESET -- including episode start -- is
+        swallowed completely, identical frames regardless of which
+        action wakes it. Every deployed agent burns one action per sc25
+        life, and the consequence head's teaching signal records that
+        action as effect-free. scripts/fap_bfs_probe.py carries a --wake
+        flag for it.
+      - >
+        SCOPE, stated at registration: the programs are ENGINEERED
+        scaffold, like the taxis machinery before them -- the fly
+        earns no credit for executing them. The registered fly seat is
+        RECOGNITION (H-LC-RECOGNIZER): which archetype a never-seen
+        game belongs to. BFS over the offline arcade
+        (scripts/fap_bfs_probe.py) measured sc25's directional-only
+        state space at 19 states (exhausted, no win) and the click
+        space at 5,031+ states (3,000-node cap, no win at depth <=4),
+        so blind search does NOT replace goal reading: the programs
+        must be derived from the displayed goal, which is exactly the
+        recognizer-plus-program shape the library plans.
+    updated: 2026-09-27
+
+  H-LC-RECOGNIZER:
+    statement: >
+      The fly's releaser circuits -- LC/LPLC visual projection neurons
+      (4,674 in the compiled graph) and the lateral horn (2,028), the
+      populations that in the animal recognize a visual context and
+      trigger the matching stereotyped program -- can serve as the
+      fixed-action-pattern library's RECOGNIZER: their population codes
+      identify a never-seen game's class from frames, with the eye map
+      load-bearing (real retinotopy beats the scrambled-encoder twin).
+    status: refuted
+    evidence:
+      - >
+        KILLED BY ITS PREREGISTERED CONDITION 2026-09-27
+        (scripts/lc_recognizer_premise.py, scripts/lc_recognizer_linear.py;
+        results/recognizer_premise.json, recognizer_premise_linear.json).
+        Protocol: 40 random-play frames x 25 games, stateless gain-2.0
+        advance, LC-family and LH population vectors; arms real bio-eye
+        vs the established scrambled sparse-projection twin (identical
+        readout and graph); trivial alternative a 1,024-dim raw-grid
+        block histogram. Endpoint 1, 25-way game ID: CEILING for every
+        reader including the trivial baseline (1.0 everywhere) --
+        discriminates nothing. Endpoint 2 (preregistered replacement,
+        declared before any verdict): held-out-GAME dead-vs-live.
+        Nearest centroid: every reader at or below chance (real LC
+        0.367, real LH 0.320, scrambled LC 0.546, raw 0.520). Final
+        preregistered escalation, an L2 logistic probe, leave-one-game
+        out, identical pipeline for all arms: real LC 0.438, real LH
+        0.520, scrambled LC 0.510, scrambled LH 0.579, raw baseline
+        0.415, chance 0.5 -- the real arms beat NEITHER their scrambled
+        controls NOR chance. SCOPE, stated precisely: under this
+        protocol (single frames, training-free or linear decoders,
+        dead-vs-live class of a held-out game) no reader carries the
+        class, and the eye map contributes nothing detectable; the kill
+        is for THIS recognizer role. Game IDENTITY (seen games) is at
+        ceiling for everyone -- frames are individually distinctive but
+        their class is behavioural, not visual. No further decoder
+        shopping on this question, per the escalation's registration.
+        CONSEQUENCE: if the FAP library is built, its recognition stage
+        is engineered parsing (like the programs and the taxis machinery
+        before it) and earns the fly no credit; the fly's load-bearing
+        seat remains the retinotopic click head.
+    updated: 2026-09-27
+
   H-DEFRAG-NOVELTY:
     statement: >
       Similarity-aware novelty (locality-sensitive tags over bio-eye
