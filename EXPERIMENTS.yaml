@@ -889,6 +889,23 @@ hypotheses:
         so blind search does NOT replace goal reading: the programs
         must be derived from the displayed goal, which is exactly the
         recognizer-plus-program shape the library plans.
+      - >
+        FIRST TWO LIBRARY ENTRIES BUILT AND MEASURED 2026-09-27
+        (src/flygi/controller/fap_library.py; scripts/fap_solver_eval.py,
+        results/fap_solver_eval.json; parser unit tests in
+        tests/test_fap_library.py). Solver-driven offline play, no
+        agent: FT09 completes levels 1-2 autonomously (the glyph
+        parser generalizes across marked colours 8 and c); level 3
+        satisfies the measured rule completely yet does not fall --
+        four glyphs on a 7x5 cross lattice, every prescription met, no
+        win -- so level 3 encodes an additional rule, recorded as the
+        entry's current boundary, NOT tuned blind. SC25 completes
+        level 1 autonomously (punch pips, roll home) and stalls on
+        level 2. ABSTENTION AUDIT, all 25 games at budget 300: the
+        library emitted ZERO actions and matched nothing on the other
+        23 games, no crashes -- seating it costs the champion nothing
+        by construction. Trivial-alternative comparison: random play's
+        all-time record on ft09/sc25 is 0 levels; the solver's is 3.
     updated: 2026-09-27
 
   H-LC-RECOGNIZER:
@@ -1098,7 +1115,48 @@ hypotheses:
         ~0.75 so the compass runs in its working regime inside the
         deployed agent. Registered as the follow-up build; its ARC use
         still requires an invented heading mapping, priced separately.
-    updated: 2026-09-25
+      - >
+        REINTERPRETED 2026-09-27 by the H-CX-SCRATCHPAD settle map: at
+        gain 2.0 the persistence is FIXED-POINT attraction, not a ring
+        continuum -- two attractors (one robust ~222 deg mass ~0.21, one
+        vestigial ~90 deg mass 4e-4), half of write angles die outright.
+        Activity endures; position is not stored. The anatomy-specific
+        separation from the degree-preserving null stands unchanged.
+    updated: 2026-09-27
+  H-CX-SCRATCHPAD:
+    statement: >
+      The compiled central complex's measured persistence (the project's
+      one anatomy-specific dynamical asset) can store one bit of context
+      for the deployed agent: a bump written at angle A vs B survives
+      ongoing bio-eye visual drive at the deployed gain 2.0 and reads
+      back above chance.
+    status: refuted
+    evidence:
+      - >
+        REFUTED STRUCTURALLY 2026-09-27 (scripts/cx_scratchpad_premise.py;
+        results/cx_scratchpad_premise.json and the settle-map probe).
+        The prior question -- does the settled bump angle depend on the
+        write angle at all -- answers NO: eight write angles under two
+        write styles (sustained wedge drive, and direct state injection;
+        bit-identical outcomes at write scales 3 and 8, tanh-saturated)
+        settle onto TWO fixed points, one robust near 222 degrees (EPG
+        mass ~0.21, the band the original persistence measurement saw)
+        and one vestigial near 90 degrees (mass 4e-4), while writes on
+        half the ring die outright (mass 0.0). The A-vs-B decode runs
+        confirm it: darkness accuracy is EXACTLY 0.5 because every
+        strong-basin write reads back and every opposite write dies --
+        the bit is half-writable -- and the visual condition's nominal
+        0.75-0.85 is the visual stream occasionally reviving dead
+        trials toward the vestigial attractor, not memory. SCOPE: at
+        the deployed operating point (gain 2.0), with wedge-labelled
+        EPG writes. REINTERPRETATION recorded on H-CX-RING-ATTRACTOR:
+        the measured "persistence" is fixed-point attraction, not a
+        ring continuum -- activity endures, position is not stored, so
+        there is no memory substrate for the agent. The gain-1.5 regime
+        (where steering worked) remains untested for positional memory
+        and undeployable per H-CX-CALIBRATION.
+    updated: 2026-09-27
+
   H-FLYHASH-STATE-KEY:
     statement: >
       The fly's olfactory hash (real PN->KC expansion + APL-style

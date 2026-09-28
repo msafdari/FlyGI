@@ -51,6 +51,41 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## FAP library entries 1-2: ft09 solved through level 2, sc25 level 1 -- 2026-09-27
+
+src/flygi/controller/fap_library.py (engineered scaffold end to end, labelled;
+H-LC-RECOGNIZER's refutation closed the fly seat for recognition). Solver-only
+offline play (scripts/fap_solver_eval.py): ft09 completes levels 1-2
+autonomously -- the glyph parser generalizes across marked colours -- and
+sc25 completes level 1. Level boundaries, recorded not tuned: ft09 level 3
+satisfies the measured rule completely (four glyphs, every prescription met)
+yet does not fall, so it encodes an additional rule; sc25 level 2 stalls.
+ABSTENTION AUDIT across all 25 games at budget 300: zero actions emitted and
+zero matches on the other 23 games, no crashes -- seating the library costs
+the champion nothing by construction. Random play's all-time record on these
+two games is 0 levels; the solver's is 3. Parser rules pinned by
+tests/test_fap_library.py (7 tests). NOT yet seated in the deployed policy
+and NOT a submission; both are separate decisions.
+
+## H-CX-SCRATCHPAD refuted: the ring holds activity, not position -- 2026-09-27
+
+The last untested use of the compass -- a one-bit context scratchpad -- is
+structurally dead at the deployed operating point, and the probe sharpened
+what "persistence" meant. Settle map (8 write angles x 2 write styles, 50
+darkness steps, gain 2.0): the compiled CX has TWO fixed points, one robust
+near 222 degrees (EPG mass ~0.21 -- the band the original persistence
+measurement saw) and one vestigial near 90 degrees (mass 4e-4); writes on
+half the ring die completely; write scales 3 and 8 are bit-identical (tanh
+saturation). The A-vs-B decode explains itself: darkness accuracy is EXACTLY
+0.5 because strong-basin writes always read back and opposite writes always
+die -- a half-writable bit -- and the visual condition's nominal 0.75-0.85 is
+the visual stream reviving dead trials toward the vestigial attractor, not
+memory. Recorded on the registry as H-CX-SCRATCHPAD (refuted) plus a
+reinterpretation on H-CX-RING-ATTRACTOR: fixed-point attraction, not a ring
+continuum; activity endures, position is not stored. The anatomy-specific
+real-vs-null separation stands. Instrument: scripts/cx_scratchpad_premise.py
+(--settle-map for the structural probe).
+
 ## H-LC-RECOGNIZER: killed by its own preregistered condition -- 2026-09-27
 
 Same day, the recognizer seat was premise-killed before any build. Protocol:

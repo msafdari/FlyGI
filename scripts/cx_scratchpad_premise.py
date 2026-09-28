@@ -49,7 +49,7 @@ if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
 
 WRITE_STEPS = 20
-WRITE_SCALE = 1.0
+WRITE_SCALE = 1.0  # defaults; overridable while validating the write against the measured darkness baseline
 WEDGE_SPAN_DEG = 90.0
 
 
@@ -57,6 +57,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="configs/literal_rate_bioeye_lc.yaml")
     parser.add_argument("--trials", type=int, default=20)
+    parser.add_argument("--write-steps", type=int, default=WRITE_STEPS)
+    parser.add_argument("--write-scale", type=float, default=WRITE_SCALE)
+    parser.add_argument("--settle-map", action="store_true")
     parser.add_argument("--holds", default="10,50,120")
     parser.add_argument(
         "--capture-file",
@@ -131,9 +134,9 @@ def main() -> int:
     def write_bump(target_deg: float) -> Any:
         drive = np.zeros(node_count, dtype=np.float32)
         distance = np.abs((angles - target_deg + 180.0) % 360.0 - 180.0)
-        drive[epg[distance <= WEDGE_SPAN_DEG / 2.0]] = WRITE_SCALE
+        drive[epg[distance <= WEDGE_SPAN_DEG / 2.0]] = np.float32(args.write_scale)
         state = network.initial_state()
-        for _ in range(WRITE_STEPS):
+        for _ in range(args.write_steps):
             state = network.advance(state, drive, internal_steps=internal_steps)
         return state
 
@@ -145,9 +148,44 @@ def main() -> int:
         vector = np.sum(activity * np.exp(1j * radians))
         return float(np.rad2deg(np.angle(vector)) % 360.0), mass
 
+    if args.settle_map:
+        # STRUCTURAL PROBE, registered 2026-09-27 after the first runs: write
+        # scale 3 and 8 produced bit-identical outcomes (tanh saturation) and
+        # darkness readback sat at exactly chance, so before any scratchpad
+        # verdict the prior question is whether the settled bump angle DEPENDS
+        # on the write angle at all. Eight write angles, two write styles
+        # (sustained drive, and direct state injection then release), settled
+        # angle read after 50 darkness steps. If the settled angle is
+        # independent of the write angle, the compiled ring sustains ACTIVITY
+        # but not POSITION -- a single fixed attractor, no memory substrate --
+        # and H-CX-SCRATCHPAD is refuted structurally, visual drive unneeded.
+        table: dict[str, dict[str, Any]] = {}
+        zero = np.zeros(node_count, dtype=np.float32)
+        for style in ("drive", "inject"):
+            rows: dict[str, Any] = {}
+            for write_deg in np.arange(0.0, 360.0, 45.0):
+                if style == "drive":
+                    state = write_bump(float(write_deg))
+                else:
+                    state = network.initial_state().copy()
+                    distance = np.abs((angles - write_deg + 180.0) % 360.0 - 180.0)
+                    state[epg[distance <= WEDGE_SPAN_DEG / 2.0]] = 1.0
+                for _ in range(50):
+                    state = network.advance(state, zero, internal_steps=internal_steps)
+                settled, mass = read_angle(state)
+                rows[str(write_deg)] = {"settled": settled, "mass": mass}
+                print(f"{style} write {write_deg:5.1f} -> settled {settled:7.2f} mass {mass:.4f}", flush=True)
+            table[style] = rows
+        args.output.write_text(json.dumps({"settle_map": table}, indent=2))
+        return 0
+
     holds = [int(v) for v in args.holds.split(",")]
     rng = np.random.default_rng(20260927)
-    results: dict[str, Any] = {"write_steps": WRITE_STEPS, "conditions": {}}
+    results: dict[str, Any] = {
+        "write_steps": args.write_steps,
+        "write_scale": args.write_scale,
+        "conditions": {},
+    }
     for condition in ("darkness", "visual"):
         per_hold: dict[str, Any] = {}
         for hold in holds:
