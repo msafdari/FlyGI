@@ -51,6 +51,46 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## A/B gate passed; FAP candidate submitted: 56650224 -- 2026-09-28
+
+The bounded candidate-validation session the collaborator review recommended,
+run end to end, then the user-authorized submission ("if A/B test passes, go
+submit").
+
+**Review response first (commit 8f38c58):** every verifiable claim checked;
+real defects fixed -- sg-combo registered (the coherence test genuinely
+failed at 490+1), the efference entry now carries its isolation caveat (the
+config is surprise+efference; the 19-row single-change pairing vs the killed
+registered baseline shows +0.0271, 3/19 rows differing -- no separation
+either way), archetype reset hooks clear the pip roll memory on resets and
+level advances, a queue-divergence guard drops program steps whenever the
+board changes without our action, the pip grammar requires a complete evenly
+spaced board and never emits a blind roll, and the wording now states
+precisely that H-LC-RECOGNIZER killed only the dead-vs-live role it tested
+and that the deployed fly content is the compiled eye-map (static anatomical
+metadata), not live neuronal computation. Dataset-version pinning verified:
+Kaggle resolves dataset versions at notebook save time, so old submissions
+cannot skew; the paired-push rule covers re-saves.
+
+**The A/B, official competition-mode gateway, matched 35-minute windows
+ended by SIGINT (the protocol that produced the recorded 0.551859):**
+- Arm OFF (combo_light, the exact 0.15 agent's config): 0.551859, 10 levels
+  -- replicates the recorded reference EXACTLY.
+- Arm ON (combo_light_fap): 3.044167, 16 levels. ft09 47.619/4 levels,
+  sc25 16.979/3 levels; the other 23 games' scores identical to four
+  decimals; fap_errors 0 everywhere; all 25 games played; the only
+  tracebacks are post-SIGINT shutdown races, same as arm OFF.
+Preregistered gate: PASSED on all three criteria.
+
+**Submission:** dataset v8 pushed (hosted controller.yaml byte-compared to
+configs/combo_light_fap.yaml), notebook v11 pushed, kernel COMPLETE with
+FLYGI_PREFLIGHT showing fap_library true / verified true / controller-light,
+then `kaggle competitions submit ... -v 11` accepted as submission
+**56650224** at 2026-09-28 19:08:50 UTC (PENDING). Claim boundary, stated in
+the submission description itself: hidden-set transfer of the two archetype
+parsers is unknown; abstention makes the prior submitted behavior (LB 0.15)
+the floor. Slots now exhausted for the day.
+
 ## FAP seated in the deployed policy; adversarial review; 8.3x pilot -- 2026-09-27
 
 At the user's direction the library was wired into StateGraphPolicy behind a
