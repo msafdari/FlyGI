@@ -1900,3 +1900,25 @@ experiments:
     baseline: sg-reclick-fly
     tests: [H-RECLICK-SEAT]
     note: Trivial-alternative writer (raw grid change mask). If it ties the fly writer, the fly is decorative.
+  sg-combo-fap:
+    config: configs/combo_fap.yaml
+    regime: gain2.0-modulators
+    baseline: sg-combo
+    tests: [H-FAP-PROGRAMS]
+    note: >
+      MEASURED 2026-09-27/28 (75 rows, seeds 0-2, budget 600, protocol
+      matched to sg-combo exactly; post-hardening re-run after the
+      39-agent adversarial seating review): mean score 2.9358 vs
+      champion 0.3519 -- 8.3x, the largest local jump in project
+      history. Levels 45 vs 24, breadth 11 vs 9 (ft09 0 -> 47.62/seed,
+      4 levels x 3 identical seeds; sc25 0 -> 16.98/seed, 3 levels x
+      3). The other 23 games: EXACTLY zero delta on every row --
+      system-level abstention byte-identity. fap_errors 0; the
+      hard-ban gate refused 60 proposals (the review had measured 3
+      deaths through that hole). A pre-hardening pilot measured
+      2.9343 (recorded as sg-combo-fap-pilot). CLAIM BOUNDARY: local
+      measurement on the 2 public template games; hidden-set transfer
+      requires hidden games sharing these archetypes and is UNKNOWN
+      (the expected-tier base rate stands); the fly's load-bearing
+      seat remains the retinotopic click head, and the library is
+      engineered scaffold per H-LC-RECOGNIZER.

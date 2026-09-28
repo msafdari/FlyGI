@@ -96,10 +96,22 @@ confirmed real defects, all fixed the same day:**
 - Deploy visibility: fap_library now appears in FLYGI_PREFLIGHT identity and
   fap_fired/fap_errors in the FLYGI_DIAG line.
 491 tests pass (6 new lifecycle/seam tests). Offline solver totals unchanged
-after hardening (ft09 4 levels, sc25 3). The hardened battery re-run
-(sg-combo-fap) was in flight when this entry was written; its paired result
-supersedes the pilot's number. Known parity gap recorded, not fixed: the
-adapter never wires taxis (default-off everywhere, score-inert arm).
+after hardening (ft09 4 levels, sc25 3). Known parity gap recorded, not
+fixed: the adapter never wires taxis (default-off everywhere, score-inert).
+
+**Hardened battery, measured 2026-09-28 (sg-combo-fap, 75 rows):** mean
+score 2.9358 vs champion 0.3519, levels 45 vs 24, breadth 11 vs 9 --
+confirming the pilot and a touch above it (sc25 50.94 vs 50.82 total).
+fap_errors 0; the hard-ban gate refused 60 proposals across the battery
+(the hole the review measured 3 deaths through). Seed replication perfect
+(fired turns 590x3 on ft09, 574x3 on sc25); the other 23 games again show
+exactly zero delta on every row. Claim boundary: this is a LOCAL number on
+the two public template games; hidden-set transfer requires hidden games
+sharing these archetypes and is unknown. Next decisions, both the user's:
+(a) whether to package sg-combo-fap (on combo or combo_light base) as the
+submission candidate -- the mandatory local competition-mode gateway battery
+gate applies first; (b) whether to extend the library (ft09 level 5, sc25
+level 4, and the other nine dead games' archetypes) before or after that.
 
 ## H-EFFERENCE closed by measurement: the preregistered null, confirmed -- 2026-09-27
 
