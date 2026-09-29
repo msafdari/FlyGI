@@ -1917,6 +1917,27 @@ experiments:
       seat), previously recorded only inside hypothesis evidence; registered
       here 2026-09-28 when it became a baseline. Measured 2026-09-25:
       0.3519, 24 levels, 9/25 games (75 rows, seeds 0-2, budget 600).
+  sg-combo-fap11:
+    config: configs/combo_fap.yaml
+    regime: gain2.0-modulators
+    baseline: sg-combo-fap
+    tests: [H-FAP-PROGRAMS]
+    note: >
+      MEASURED 2026-09-29 (75 rows, seeds 0-2, budget 600, protocol
+      matched to sg-combo/sg-combo-fap exactly; the same config -- the
+      library itself grew to 13 archetypes): mean score 28.6339 vs
+      sg-combo-fap 2.9358 vs champion 0.3519 -- 81x the champion.
+      Levels 216 vs 45 vs 24; breadth 20/25 vs 11 vs 9; fap_errors 0;
+      perfect three-seed replication on every converted game, and each
+      per-game level count equals its integration agent's
+      executor-verified target (ft09 6/6 WIN, tu93 9/9 WIN, ka59 7/7
+      WIN, sb26 8/8 WIN, su15 7, re86 6, bp35 6, ls20 5, sc25 4, dc22
+      3, wa30 3 per seed). The 14 non-matching games are byte-identical
+      to the previous arm. CLAIM BOUNDARY unchanged: local numbers on
+      public games; hidden transfer requires hidden games sharing these
+      grammars (LB measured the 2-archetype floor at exactly 0.15);
+      the library is engineered scaffold; the deployed fly content is
+      the click head's compiled eye-map.
   sg-combo-fap:
     config: configs/combo_fap.yaml
     regime: gain2.0-modulators
