@@ -162,12 +162,34 @@ as such).
   persistence + opposite-signed PEN rotation (Seelig 2015, Turner-Evans
   2017), KC sparseness 5-10% with APL (Turner 2008, Lin 2014), PN gain
   normalization (Olsen-Wilson 2010), LC object-position tuning (Wu 2016).
-  - [in progress] VISUAL group (V1 T4/T5 DSI, Maisak 2013; V2 LC
-    object-position RSA, Wu 2016): scripts/benchmarks/visual_motion.py.
-    Bands preregistered in the file header and committed BEFORE the sweep
-    runs; 21-point gain x leak grid (7 gains x 3 leaks, internal_steps=4,
-    bias 0), sequential, one graph load; partial results saved per point
-    to results/benchmarks/visual_motion.json (gitignored).
+  - [done] VISUAL group (V1 T4/T5 DSI, Maisak 2013; V2 LC
+    object-position RSA, Wu 2016): scripts/benchmarks/visual_motion.py,
+    bands preregistered and committed (303b035) BEFORE the sweep; full
+    21-point grid MEASURED 2026-09-29 (506s total, ~24s/point), results
+    in results/benchmarks/visual_motion.json (gitignored). VERDICT: ZERO
+    pass points on either benchmark -- on this grid both published
+    visual results are UNVALIDATABLE-AT-THIS-FIDELITY.
+    - V1 measured: best pooled per-cell median DSI 0.2878 at gain 0.8 /
+      leak 0.1 (band >= 0.30; leak 0.1 column ranges 0.175-0.288 and
+      falls with gain; leak 0.3/0.6 collapse to 0.004-0.034). The
+      structure criterion fails everywhere: subtype-level DSI only
+      0.011-0.049, within-subtype preferred-direction consistency
+      0.23-0.28 (chance 0.25), and subtypes do not tile directions (at
+      the best point T4a/c/d and T5a/c/d all prefer "up"; T4 never
+      exceeds 2 distinct directions at any grid point). So the moderate
+      per-cell DSIs are idiosyncratic per-cell asymmetries, not
+      subtype-organized direction selectivity. This converts the
+      header's expected-tier prediction (frozen rate model, no delay
+      lines -> no DS) into a measurement. Secondary, for precision:
+      T5-only median DSI on the OFF bar reached 0.33 at the best point
+      while T4-only was 0.238; the preregistered pooled band misses.
+    - V2 measured: Spearman rho NEGATIVE at all 21 points (-0.203 best,
+      at gain 0.8 / leak 0.1, to -0.314; band >= +0.50) -- nearby object
+      positions give slightly LESS similar LC/LPLC population vectors
+      than distant ones, the opposite sign of retinotopic position
+      coding. Valid-pair fraction 1.00 everywhere, so the miss is real,
+      not degeneracy. Best single-type rho anywhere: LC11 0.243 (gain
+      2.5 / leak 0.6); no type reaches 0.5 at any point.
   - [in progress] MB+AL group (M1 KC sparse coding, Turner 2008 /
     Honegger 2011, APL direction Lin 2014; M2 PN sublinear gain, Olsen &
     Wilson 2008 / Olsen, Bhandawat & Wilson 2010 -- the program note's
