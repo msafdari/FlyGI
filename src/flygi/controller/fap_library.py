@@ -415,6 +415,47 @@ class PipPunchRollArchetype:
 # ----------------------------------------------------------------- executor
 
 
+def _default_archetypes() -> list[Any]:
+    """The registered library, most-specific first.
+
+    ORDER IS LOAD-BEARING, measured 2026-09-29 during integration: the
+    specialized archetypes must precede their general siblings or the general
+    one mis-claims the specialized board and the run stalls -- GlyphToggle
+    before GlyphMiniature (ft09 6/6 vs 4/6) and PipDoor before PipPunchRoll
+    (sc25 4+ vs 2). Each addition passed its own negative-match audit over
+    all 25 public games' frames before registration. Imports are lazy to
+    avoid a circular import (the modules import Step from this file).
+    """
+
+    from flygi.controller.fap_archetypes.balloon_climb import BalloonClimbArchetype
+    from flygi.controller.fap_archetypes.card_climb import CardClimbArchetype
+    from flygi.controller.fap_archetypes.crosshair_parking import CrosshairParkingArchetype
+    from flygi.controller.fap_archetypes.flatten_builder import FlattenBuilderArchetype
+    from flygi.controller.fap_archetypes.glyph_toggle import GlyphToggleArchetype
+    from flygi.controller.fap_archetypes.lockstep_maze import LockstepMazeArchetype
+    from flygi.controller.fap_archetypes.merge_deliver import MergeDeliverArchetype
+    from flygi.controller.fap_archetypes.pattern_key import PatternKeyArchetype
+    from flygi.controller.fap_archetypes.pip_door import PipDoorArchetype
+    from flygi.controller.fap_archetypes.porter_ferry import PorterFerryArchetype
+    from flygi.controller.fap_archetypes.slot_dock import SlotDockArchetype
+
+    return [
+        GlyphToggleArchetype(),
+        GlyphMiniatureArchetype(),
+        PipDoorArchetype(),
+        PipPunchRollArchetype(),
+        BalloonClimbArchetype(),
+        CardClimbArchetype(),
+        CrosshairParkingArchetype(),
+        FlattenBuilderArchetype(),
+        LockstepMazeArchetype(),
+        MergeDeliverArchetype(),
+        PatternKeyArchetype(),
+        PorterFerryArchetype(),
+        SlotDockArchetype(),
+    ]
+
+
 _MATCH_BACKOFF_AFTER = 32
 _MATCH_BACKOFF_STRIDE = 4
 
@@ -435,9 +476,7 @@ class FapExecutor:
     life, and a rejected step desynced the program pointer.
     """
 
-    archetypes: list[Any] = field(
-        default_factory=lambda: [GlyphMiniatureArchetype(), PipPunchRollArchetype()]
-    )
+    archetypes: list[Any] = field(default_factory=lambda: _default_archetypes())
     _queue: list[Step] = field(default_factory=list)
     _matched: str | None = None
     _last_emitted: Step | None = None
