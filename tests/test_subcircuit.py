@@ -24,7 +24,6 @@ class TestSelection:
             select_nodes(RUNTIME, type_patterns=("NOPE_NO_SUCH_TYPE",))
 
 
-@pytest.mark.slow
 class TestRealRing:
     def test_ring_signs_follow_nt_convention(self) -> None:
         ring = select_nodes(
