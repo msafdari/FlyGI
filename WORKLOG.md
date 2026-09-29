@@ -177,11 +177,43 @@ per-type TEMPORAL dynamics on the same anatomy.
   procedure with the WTA-is-correct-physiology trap documented.
 - [done] Engine: subcircuit extraction (signed raw counts, memory-mapped
   scan; ring anatomy verified) + per-type LIF with graded units; 12 tests.
-- [in progress] Class-2 benchmark sweeps (3-agent fan-out, the SAME
-  class-1 bands, trivial alternatives named: uniform-tau for DS, and the
-  class-1 fixed-point failure as the anti-target for the ring).
-- [planned] Verdict update; requirement-3 ARC tests for any module that
-  newly validates.
+- [done] Class-2 benchmark sweeps -- THE SPLIT VERDICT, 2026-09-29:
+  * KC SPARSE CODING: PASSED WITH ATTRIBUTION -- the program's first
+    dynamical validation. MaleCNS MB subcircuit (627 PN / 4,064 KC / 2
+    graded APL / 97 MBON, 770,711 signed-count edges), Litwin-Kumar
+    threshold calibration declared on a calibration odor set, SCORED
+    HELD-OUT: median active fraction 0.0741 in the [0.03, 0.15] band;
+    Lin/APL densification control passes (+0.0098, APL load-bearing
+    exactly on the dense stimuli); both trivial alternatives sit at
+    1.0000 dense (the class-1 phenotype reproduced and cured by
+    threshold + claw coincidence + graded APL); 10/12 configs pass, the
+    two failures being the doc's predicted weak-APL corner.
+  * T4/T5 DIRECTION SELECTIVITY: FAILED at class-2-frozen -- pooled
+    median DSI 0.042 vs the 0.30 band, and the uniform-tau trivial
+    alternative MATCHES the heterogeneous model: with frozen
+    (untrained) per-pair strengths and resting potentials, per-type
+    time constants alone do not produce the correlator on raw MaleCNS
+    counts (consistent with flyvis needing TRAINED parameters and with
+    Borst 2025). Recorded as a limit of the frozen-parameter recipe;
+    the located next lever is the released trained flyvis ensemble
+    (class 2.5). One readout-instrument repair fully recorded (DC-
+    dominated whole-sweep integral replaced by a crossing-locked
+    window BEFORE its numbers were seen; both readouts saved).
+  * EB MOVABLE BUMP: FAILED decisively -- 210 configurations (Shiu-
+    canonical LIF; per-sign-class scaling incl. the effective-I/E~6.4
+    anchor; tonic-drive knob), 155 alive and EVERY one delocalized
+    (min circvar 0.853 vs band 0.6), all four seed angles settling at
+    ONE fixed point (~192 deg): the class-1 position-independence is
+    REPRODUCED at spiking fidelity. The shuffled ring behaves
+    comparably. Measured at two fidelity classes: this compiled ring
+    holds activity, not position.
+- [up next] Requirement 2+3 for the newly validated MB: input gates,
+  then the native-function ARC test (few-shot association with
+  reinforcement) at the validated class-2 configuration, vs the three
+  controls. This is the one module with a live path to a fly verdict.
+- [planned] Class 2.5 for T4/T5 (trained flyvis ensemble parameters);
+  ring verdict stands unless a physiological ingredient outside the
+  swept space is identified.
 
 ## PROGRAM: the fly-module verdict (four requirements) -- opened 2026-09-29
 

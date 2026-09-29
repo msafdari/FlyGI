@@ -918,7 +918,23 @@ hypotheses:
         unassignable to any module; UNVALIDATABLE-AT-THIS-FIDELITY =
         all compiled dynamics, as a measured model-class limit. A
         stronger verdict requires the next fidelity class.
-    status_note: closed-supported
+      - >
+        CLASS 2 MEASURED 2026-09-29 (scripts/benchmarks/fc2_*,
+        results/benchmarks/fc2_*, same bands, trivial alternatives
+        run): KC SPARSE CODING VALIDATES -- held-out median active
+        fraction 0.0741 in band with the Lin/APL control passing and
+        both trivial alternatives at 1.0000 dense; the MB re-enters
+        the verdict pipeline (input gates + ARC association test at
+        the validated configuration are now owed). T4/T5 DS fails at
+        class-2-frozen (DSI 0.042 vs 0.30; uniform-tau control MATCHES
+        heterogeneous-tau: frozen per-pair strengths are the located
+        blocker; class 2.5 = trained flyvis ensemble parameters). EB
+        ring fails decisively (210 configs, every live one delocalized
+        at one ~192-deg fixed point; position-independence now
+        measured at TWO fidelity classes). The definitive answer's
+        boundary moves accordingly: the MB is no longer unvalidatable;
+        its fly verdict awaits the requirement-3 run.
+    status_note: reopened-for-mb
     updated: 2026-09-29
 
   H-FAP-PROGRAMS:
