@@ -15,6 +15,59 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Authorized thirteen-archetype submission in progress — 2026-09-29 17:24 UTC
+
+The user explicitly requested submission of the current COMPLETE candidate,
+while Claude Code continues independent work. The submission snapshot is
+`ec014da3db77f19e5a9d4787fd2e6926a91217e1`, exported with `git archive` to
+`/private/tmp/flygi-submit-20260929.TryXTD/`. Build, test, and upload from
+that isolated snapshot only; do not capture subsequent edits, touch Claude's
+processes, or include `.fly-or-fake-work/`. No policy/config tuning is part
+of this operation. The completed gate is the recorded 35-minute official
+competition-mode result 28.742259837750854, 73 levels, four full wins.
+
+Measured remote checks: submissions 56620463 and 56650224 are both COMPLETE
+at 0.15. The private runtime dataset is still version 8. Its downloaded
+`controller.yaml` is byte-identical to the frozen `combo_light_fap.yaml`
+(SHA-256 `639f94494cfca094181cbbeef19916baa52f5643a394767b5d7568f01096672d`),
+and its config SHA-256 is
+`3d5d17bfcdfeaba40437d899a5ef7149f7ca9aeaef7aca609eb1563fb46a9d38`.
+No dataset re-upload is needed if the hosted notebook preflight verifies
+these assets. The first unversioned provenance download returned 404; the
+explicit version-8 request succeeded. Credentials were not logged.
+
+In progress: frozen-source tests, embedded-source/asset verification, then
+one private notebook upload and exactly one competition submission after
+the ordinary hosted preflight passes. The archive excludes ignored fixtures;
+its first suite run had seven missing-fixture failures and seven skips.
+The existing recognizer-frame and retinotopy NPZ fixtures were copied into
+the temporary snapshot for a rerun; no source changes were made. The rerun
+passed **672 tests in 47.58 seconds** (`PYTHONPATH=<snapshot>/src
+<repo>/.venv/bin/python -m pytest -q --tb=short`, in the snapshot).
+
+Measured package audit: all 73 embedded Python files match the frozen
+source and embedded manifest hashes; all thirteen archetypes instantiate
+from the extracted embedded source with the downloaded hosted controller.
+Every hosted dataset provenance digest matches the corresponding local
+runtime/config. Notebook SHA-256:
+`4e2ca946ea5f2cd685af2209b0340a900b94c673ba117c8ccddd4fd116860756`;
+embedded zip SHA-256:
+`3ffcb05533f76aeaad632dfb09f970524a12c1fa3efe2f6672e2a3297991b3ae`.
+The existing notebook in the shared checkout is stale (two-archetype
+source); it is deliberately untouched and MUST NOT be used for this upload.
+
+Kaggle accepted the isolated notebook upload as private CPU,
+internet-disabled **version 12**, with no invalid sources or upload error.
+Dataset version 8 was reused; no dataset was changed. This is a notebook
+upload, NOT yet a competition submission. Next: verify hosted v12 source
+and ordinary preflight, then submit v12 exactly once.
+
+Claim boundary: this is the explicitly authorized ENGINEERING candidate
+(thirteen Python archetype parsers/planners plus controller-light, neuronal
+dynamics OFF), not evidence of connectome computation. Hidden transfer and
+a new leaderboard score are unknown. Record the accepted submission ID and
+notebook version here before any retry; do not spend a duplicate submission.
+
 ## Dead games fall to hand-derived programs: H-FAP-PROGRAMS PASSED -- 2026-09-27
 
 The user directed running every open fly-inventory item ("Do em all"). First
