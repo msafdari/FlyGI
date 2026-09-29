@@ -190,22 +190,52 @@ as such).
       coding. Valid-pair fraction 1.00 everywhere, so the miss is real,
       not degeneracy. Best single-type rho anywhere: LC11 0.243 (gain
       2.5 / leak 0.6); no type reaches 0.5 at any point.
-  - [in progress] MB+AL group (M1 KC sparse coding, Turner 2008 /
-    Honegger 2011, APL direction Lin 2014; M2 PN sublinear gain, Olsen &
-    Wilson 2008 / Olsen, Bhandawat & Wilson 2010 -- the program note's
+  - [done] MB+AL group (M1 KC sparse coding, Turner 2008 / Honegger
+    2011, APL direction Lin 2014; M2 PN sublinear gain, Olsen & Wilson
+    2008 / Olsen, Bhandawat & Wilson 2010 -- the program note's
     "Olsen-Wilson 2010, Nature" conflates these two, recorded as such):
-    scripts/benchmarks/mb_al.py. Bands preregistered in the file header
-    and committed BEFORE the sweep runs: M1 pass iff median KC active
-    fraction (positive lobe, > max(baseline mean + 2 sigma, 1e-4)) lands
-    in [0.03, 0.15] at >= 1 amplitude of a fixed 5-step stimulus ladder;
-    M1b pass iff APL->KC x4 never RAISES that median where KCs respond
-    (tolerance +0.005); M2 pass iff cognate-PN response satisfies
-    R(8x)/R(1x) < 4.0 with R(1x) > 1e-4 and R(8x) > 1.01 R(1x) at >= 1
-    of three fixed base intensities. Same 21-point grid, sequential, one
-    graph load; partials to results/benchmarks/mb_al.json (gitignored).
-    Populations measured before preregistration: 627 PNs (162 glomerular
-    types), 4,064 KCs, 2 APL, 2,635 ORNs (53 types); ORN->PN 31,640
-    edges (all +), PN->KC 22,581, APL->KC 4,633 (all -).
+    scripts/benchmarks/mb_al.py, bands preregistered and committed
+    (ef3ec87) BEFORE the sweep; full 21-point grid MEASURED 2026-09-29
+    (1290.7s total, ~60s/point), results in
+    results/benchmarks/mb_al.json (gitignored). Populations measured
+    before preregistration: 627 PNs (162 glomerular types), 4,064 KCs,
+    2 APL, 2,635 ORNs (53 types); ORN->PN 31,640 edges (all +), PN->KC
+    22,581, APL->KC 4,633 (all -).
+    - M1 measured: ZERO pass points of 21 (band: median KC active
+      fraction in [0.03, 0.15], positive lobe, > max(baseline mean +
+      2 sigma, 1e-4), 7 seeded odors, amplitude ladder {0.02..0.5}).
+      The KC code is BIMODAL everywhere on the grid: for gain <= 2.0
+      with a quiet spontaneous baseline the median fraction is
+      0.178-1.0 (nearly every reachable KC weakly active); at gain >=
+      2.0 with leak >= 0.3 spontaneous activity saturates (baseline
+      threshold 0.97-1.00) and the median is exactly 0. Closest
+      approaches to the band from either side: 0.0022 (gain 2.5, leak
+      0.1, amp 0.02) and 0.178 (gain 2.0, leak 0.1, amp 0.02); the
+      silent-to-dense transition skips the sparse regime entirely,
+      consistent with the measured anatomy (KC->KC recurrence 85.3% of
+      KC input vs 2.4% APL; H-APL section). On this grid KC sparse
+      coding is UNVALIDATABLE-AT-THIS-FIDELITY.
+    - M1b measured: APL->KC x4 direction is Lin-consistent at 18/21
+      points (every point where KCs responded at all; the x4 median
+      never exceeded x1 + 0.005 at any evaluable amplitude); best mean
+      sparsification 0.132 at gain 2.0 / leak 0.3. 3 points not
+      evaluable (x1 medians all < 0.01). Caveat recorded: at gain 2.5
+      / leak 0.3 the x4 network's own quieter baseline yields NONZERO
+      x4 medians (up to 0.999) where x1 is 0 -- outside the
+      preregistered evaluable set, reported, not scored.
+    - M2 measured: 21/21 pass (cognate-PN response over 48 PNs of 10
+      driven glomeruli, 492 ORNs): at base intensity 0.2 every grid
+      point satisfies R(8x)/R(1x) < 4 with detectable rising response;
+      best ratio 1.133 at gain 2.5 / leak 0.3; gains >= 1.5 also pass
+      at base 0.05. ATTRIBUTION LIMIT, stated plainly: at base 0.01
+      the response is near-linear (ratios 7.4-8.3), so the compression
+      that passes the band appears where tanh saturation is active; a
+      lone tanh unit -- the named trivial alternative -- would also
+      pass. This benchmark validates sublinearity as preregistered but
+      does NOT establish AL lateral-inhibition normalization; an
+      Olsen-2010-style two-odor mixture test (cognate response with vs
+      without co-driving other glomeruli) is the discriminating
+      follow-up if M2 ever needs to carry weight.
 - [up next] OPERATING-POINT SWEEP: gain x leak grid, every benchmark at
   every point; pass regions and their intersection. The CX record
   predicts the intersection may be empty -- that outcome is itself a
