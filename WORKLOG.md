@@ -163,13 +163,23 @@ per-type TEMPORAL dynamics on the same anatomy.
   UNVALIDATABLE with the wall moved one class deeper.
 
 ### Statuses
-- [in progress] Research pass: parameter provenance from Shiu 2024 /
-  Lappalainen 2024 / ring-attractor and KC-sparseness literature (3-agent
-  fan-out, WebSearch-verified citations).
-- [in progress] Engine: src/flygi/dynamics/spiking.py (vectorized LIF on
-  CSR subgraphs) + subcircuit extraction + parameter registry with
-  provenance labels; unit tests.
-- [up next] Class-2 benchmark sweeps (3-agent fan-out, same bands).
+- [done] Research pass (docs/fidelity2/): Shiu 2024 canonical LIF verified
+  against paper AND code (v_rest=v_reset=-52mV, v_th=-45mV, tau_m=20ms,
+  tau_syn=5ms, delay 1.8ms, refractory 2.2ms, w_syn=0.275mV the only free
+  parameter -- to be REFIT on MaleCNS, not copied; zero-baseline silence
+  is structural and flagged for the bump/APL); Lappalainen 2024 verified:
+  the DS-sufficient model is a GRADED per-type leaky integrator with
+  relu-at-synapse, fast/slow type classification anchored to Behnia 2014
+  filter peaks, ranked blockers led by CT1-as-point-neuron; Kakaria & de
+  Bivort 2017 ring regime (Delta7 inhibition ~75% of excitation is
+  load-bearing; the working regime is narrow, calibration of one scalar
+  per sign class mandatory) and the Litwin-Kumar 2017 KC threshold
+  procedure with the WTA-is-correct-physiology trap documented.
+- [done] Engine: subcircuit extraction (signed raw counts, memory-mapped
+  scan; ring anatomy verified) + per-type LIF with graded units; 12 tests.
+- [in progress] Class-2 benchmark sweeps (3-agent fan-out, the SAME
+  class-1 bands, trivial alternatives named: uniform-tau for DS, and the
+  class-1 fixed-point failure as the anti-target for the ring).
 - [planned] Verdict update; requirement-3 ARC tests for any module that
   newly validates.
 
