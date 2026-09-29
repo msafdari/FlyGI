@@ -162,6 +162,28 @@ as such).
   persistence + opposite-signed PEN rotation (Seelig 2015, Turner-Evans
   2017), KC sparseness 5-10% with APL (Turner 2008, Lin 2014), PN gain
   normalization (Olsen-Wilson 2010), LC object-position tuning (Wu 2016).
+  - [in progress] VISUAL group (V1 T4/T5 DSI, Maisak 2013; V2 LC
+    object-position RSA, Wu 2016): scripts/benchmarks/visual_motion.py.
+    Bands preregistered in the file header and committed BEFORE the sweep
+    runs; 21-point gain x leak grid (7 gains x 3 leaks, internal_steps=4,
+    bias 0), sequential, one graph load; partial results saved per point
+    to results/benchmarks/visual_motion.json (gitignored).
+  - [in progress] MB+AL group (M1 KC sparse coding, Turner 2008 /
+    Honegger 2011, APL direction Lin 2014; M2 PN sublinear gain, Olsen &
+    Wilson 2008 / Olsen, Bhandawat & Wilson 2010 -- the program note's
+    "Olsen-Wilson 2010, Nature" conflates these two, recorded as such):
+    scripts/benchmarks/mb_al.py. Bands preregistered in the file header
+    and committed BEFORE the sweep runs: M1 pass iff median KC active
+    fraction (positive lobe, > max(baseline mean + 2 sigma, 1e-4)) lands
+    in [0.03, 0.15] at >= 1 amplitude of a fixed 5-step stimulus ladder;
+    M1b pass iff APL->KC x4 never RAISES that median where KCs respond
+    (tolerance +0.005); M2 pass iff cognate-PN response satisfies
+    R(8x)/R(1x) < 4.0 with R(1x) > 1e-4 and R(8x) > 1.01 R(1x) at >= 1
+    of three fixed base intensities. Same 21-point grid, sequential, one
+    graph load; partials to results/benchmarks/mb_al.json (gitignored).
+    Populations measured before preregistration: 627 PNs (162 glomerular
+    types), 4,064 KCs, 2 APL, 2,635 ORNs (53 types); ORN->PN 31,640
+    edges (all +), PN->KC 22,581, APL->KC 4,633 (all -).
 - [up next] OPERATING-POINT SWEEP: gain x leak grid, every benchmark at
   every point; pass regions and their intersection. The CX record
   predicts the intersection may be empty -- that outcome is itself a
