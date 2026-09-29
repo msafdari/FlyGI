@@ -15,7 +15,7 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
-## Authorized thirteen-archetype submission in progress — 2026-09-29 17:24 UTC
+## Thirteen-archetype candidate SUBMITTED: 56683298 — 2026-09-29 17:28 UTC
 
 The user explicitly requested submission of the current COMPLETE candidate,
 while Claude Code continues independent work. The submission snapshot is
@@ -32,13 +32,13 @@ at 0.15. The private runtime dataset is still version 8. Its downloaded
 (SHA-256 `639f94494cfca094181cbbeef19916baa52f5643a394767b5d7568f01096672d`),
 and its config SHA-256 is
 `3d5d17bfcdfeaba40437d899a5ef7149f7ca9aeaef7aca609eb1563fb46a9d38`.
-No dataset re-upload is needed if the hosted notebook preflight verifies
+No dataset re-upload was needed; the hosted notebook preflight verified
 these assets. The first unversioned provenance download returned 404; the
 explicit version-8 request succeeded. Credentials were not logged.
 
-In progress: frozen-source tests, embedded-source/asset verification, then
-one private notebook upload and exactly one competition submission after
-the ordinary hosted preflight passes. The archive excludes ignored fixtures;
+Validation before submission: frozen-source tests, embedded-source/asset
+verification, then a private notebook upload and the ordinary hosted
+preflight. The archive excludes ignored fixtures;
 its first suite run had seven missing-fixture failures and seven skips.
 The existing recognizer-frame and retinotopy NPZ fixtures were copied into
 the temporary snapshot for a rerun; no source changes were made. The rerun
@@ -58,15 +58,41 @@ source); it is deliberately untouched and MUST NOT be used for this upload.
 
 Kaggle accepted the isolated notebook upload as private CPU,
 internet-disabled **version 12**, with no invalid sources or upload error.
-Dataset version 8 was reused; no dataset was changed. This is a notebook
-upload, NOT yet a competition submission. Next: verify hosted v12 source
-and ordinary preflight, then submit v12 exactly once.
+Dataset version 8 was reused; no dataset was changed. The hosted ordinary
+run completed successfully. Downloaded notebook cell sources match the
+frozen notebook exactly; `FLYGI_PREFLIGHT` reports verified=true,
+mode=controller-light, fap_library=true, deploy_fly_tiebreak=false,
+neuronal_dynamics_active=false, 166,700 nodes, 24,994,595 edges, K=4,
+deadline 100, legacy_xy_flat, and retino_tags. Verified array hashes match
+the hosted dataset provenance. The ordinary output is the expected 1x4
+placeholder parquet, NOT a hidden-game score.
+
+Hosted log SHA-256:
+`d8bce9baeee9af7654f763d2b540a86d300dc570679e66c1a2118f46f280fc94`;
+placeholder SHA-256:
+`71bfd543030e339d87bd9ff744d466218398a1259650b2c255626d27049c88bb`.
+Evidence downloads remain under the temporary snapshot's `hosted-assets/`,
+`hosted-v12/`, and `hosted-output/`; Kaggle v12 is the durable hosted source.
+
+**Submitted exactly once:** Kaggle returned submission **56683298** for
+notebook v12 at `2026-09-29 17:28:21.193 UTC`. An independent status query
+confirms `SubmissionStatus.PENDING`, empty public score, and no error.
+Executed the authenticated Python
+API equivalent of `kaggle competitions submit arc-prize-2026-arc-agi-3
+-k megusalexandrus/flygi-arc-agi-3 -v 12 -f submission.parquet -m <description>`
+via `api.competition_submit_code(...)`. The description explicitly names
+the thirteen Python archetypes, neuronal dynamics OFF, source ec014da,
+672 tests, local gateway 28.742260, dataset v8, and unknown hidden transfer.
+DO NOT retry this submission. No subsequent Claude source changes or
+untracked files entered the uploaded snapshot.
 
 Claim boundary: this is the explicitly authorized ENGINEERING candidate
 (thirteen Python archetype parsers/planners plus controller-light, neuronal
 dynamics OFF), not evidence of connectome computation. Hidden transfer and
-a new leaderboard score are unknown. Record the accepted submission ID and
-notebook version here before any retry; do not spend a duplicate submission.
+a new leaderboard score are unknown. Next: check submission 56683298 on a
+future status request, report the hidden score separately from the local
+28.7423, and leave Claude's ongoing experiments untouched. No automatic
+monitor or additional submission is scheduled.
 
 ## Dead games fall to hand-derived programs: H-FAP-PROGRAMS PASSED -- 2026-09-27
 
@@ -198,8 +224,8 @@ exactly 0.15 -- the abstention floor held perfectly and neither template
 grammar matched a hidden game. The thirteen-grammar candidate carries the
 same measured floor with eleven times the net. Hidden transfer remains
 unknown; the claim boundary is unchanged (engineered scaffold; deployed
-fly content = the click head's compiled eye-map). Submission of this
-candidate awaits explicit user authorization, per the standing rule.
+fly content = the click head's compiled eye-map). The user authorized this
+candidate on 2026-09-29; submitted as 56683298, notebook v12 (record above).
 
 ## Completion sweep: ALL ELEVEN dead games decoded; ft09 COMPLETE 6/6 -- 2026-09-28
 
