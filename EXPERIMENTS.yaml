@@ -859,6 +859,57 @@ hypotheses:
         shipped combo candidate is untouched. Level-2 wall standing:
         composition above arrival semantics remains the frontier.
     updated: 2026-09-25
+  H-MB-CLASS2-ASSOCIATION:
+    statement: >
+      The class-2-validated mushroom body (real MaleCNS PN/KC/APL/MBON
+      subcircuit, LIF KCs at a KC-sparseness-passing configuration,
+      graded APL, biological DAN-gated KC->MBON depression) performs
+      one-shot visual association on real ARC game states well enough
+      to beat all three controls on HELD-OUT games -- the native
+      function (Aso 2014, Hige 2015: reinforcement-coincident KC
+      activity depresses KC->MBON of the opposing valence) doing real
+      work on this task's stimuli.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-09-29 BEFORE IMPLEMENTATION, including one
+        declared AMENDMENT to H-MODULE-VERDICT's requirement-3
+        endpoint: the full agent-battery endpoint is infeasible for a
+        spiking MB in the action loop (milliseconds-of-simulation per
+        frame times 45,000 battery actions), so the test is STAGED --
+        stage A, component-level: one-shot conditioning on real game
+        frames, scored as held-out discrimination; stage B, agent
+        seating with the battery endpoint, runs ONLY if stage A
+        passes, with a rate-model or cached-readout port whose
+        equivalence to the spiking component must itself be measured.
+        This amendment is declared before any stage-A code exists.
+        STAGE-A PROTOCOL, fixed now: input = bio-eye column features
+        through a seeded sparse projection onto the 627 PNs
+        (ENGINEERED retinotopy-preserving plumbing, labelled; the
+        anatomical colour-histogram bus is measured layout-blind and
+        would confound the motif); per trial, present state A with
+        punishment-DAN coincidence and state B with reward-DAN
+        coincidence (one shot each, biological depression rule on the
+        REAL KC->MBON mask only); test = valence readout
+        discrimination on near-variants of A and B (the game's own
+        subsequent frames within the same level) and on unrelated
+        states; pairs drawn from 5 train games, EVALUATED on 5
+        disjoint held-out games x 3 seeds. CONTROLS, all three
+        mandatory: degree-preserving rewired PN->KC and KC->MBON;
+        shuffled-credit (eligibility permuted before each update); and
+        an engineered equivalent (one-shot perceptron on the same PN
+        input vector, matched update count). PASS BANDS, fixed now:
+        held-out discrimination accuracy > 0.5 (binomial p < 0.05)
+        AND real > each control by a paired margin > 0 across the 15
+        game x seed cells (sign test p < 0.05). The MB configuration
+        is one of fc2_kc_sparse.json's pass_configs (tau_m_kc 20 ms,
+        tau_syn 5 ms, beta 1.0 -- the centre of the pass region),
+        fixed here, not tuned during the arm. Expected tier, base
+        rate stated: expected-tier predictions are ~1 for 13; the
+        prior MB-learning nulls at class 1 do not predict this arm
+        (they were run on a code that never validated).
+    updated: 2026-09-29
+
   H-MODULE-VERDICT:
     statement: >
       The four-requirement program (user-directed 2026-09-29) can assign
