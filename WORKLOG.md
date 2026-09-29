@@ -243,16 +243,45 @@ as such).
 - [planned] Per-type parameters where literature provides them; labelled
   assumptions elsewhere.
 
-### Requirement 2 -- input-validity gates [in progress: preregistered]
-Gates and thresholds fixed 2026-09-29 in H-MODULE-VERDICT (EXPERIMENTS.
-yaml) BEFORE any measurement; the measurement runs after requirement 1
-fixes the validated operating points. [up next once benchmarks land]
+### Requirement 1 -- RESULT [done 2026-09-29]
+The full 21-point gain x leak grid, three groups, bands preregistered and
+never adjusted. Pass map: T4/T5 direction selectivity 0/21 (subtypes
+never tile directions -- the frozen rate model has no delay lines; the
+moderate per-cell DSIs are idiosyncratic wiring asymmetries); LC
+object-position code 0/21 with the SIGN INVERTED at every point; KC
+sparse coding 0/21 (dense-or-silent bimodal transition skips the sparse
+regime entirely; KC->KC recurrence 85.3% of KC input dominates the
+model); EB localized persistent bump 0/21 (fixed-point attractor near
+222 deg everywhere alive); opposite-signed PEN rotation 7/21 nominal, 4
+with a live bump (1.8/0.3, 1.8/0.6, 2.0/0.3, 2.5/0.3); bump survival
+under real bio-eye drive 0/21. The two broad passes are generic
+dynamics, stated with their attribution limits in the results: APL
+inhibition direction 18/21 (Lin-consistent) and PN sublinearity 21/21
+(tanh saturation; the named trivial alternative also passes).
 
-### Requirement 3 -- native-function tests with full controls [in progress: preregistered]
-Protocol fixed in H-MODULE-VERDICT: native-function mapping per module,
-three controls, held-out breadth endpoint, three seeds, run at every
-operating point that passed the module's benchmark; prior gain-2.0 nulls
-count only where gain 2.0 passes that module's benchmark. [planned]
+### Requirements 2 and 3 -- CLOSED BY THE PREREGISTERED ORDER [done]
+The registration fixed the order benchmark -> gate -> test, with
+UNVALIDATABLE terminating at step 1. Measured consequence: T4/T5, LC,
+the whole MB stack, and LH (whose substrate is the never-validating
+PN->KC code) terminate at step 1 at every operating point. CX passes
+only the rotation benchmark at 4 points, but its input gate has no
+honest ARC mapping (no heading exists) and its bump dies under the
+drive a deployed agent actually receives at all 21 points -- closed as
+NO-NATIVE-MAPPING. Efference has no validated consumer. SEZ/VNC motor:
+NO-NATIVE-MAPPING as preregistered. No requirement-3 ARC re-run is owed
+under the preregistered rules: no module reached step 3.
+
+### Verdict [done 2026-09-29]
+USEFUL: the eye's anatomical map, used statically (exempt from dynamics
+validation; measured load-bearing twice, deployed). NOT USEFUL: NONE --
+no prior null may be stated as a fact about the fly, because the model
+never passed the fly's own physiology for those modules. UNVALIDATABLE-
+AT-THIS-FIDELITY: every dynamical module, now as a measured theorem
+about the model class (frozen uniform tanh rate dynamics on the
+anatomical graph), located precisely: no delay lines, no sparse-coding
+regime, no movable bump, anywhere in the swept operating space. The
+next fidelity class (per-type conductance/spiking with temporal
+dynamics) is where a per-module fly verdict becomes possible.
 Per module at its validated operating point(s): preregistered ARC-mapped
 test vs degree-preserving null vs shuffled control vs engineered
 equivalent, matched budgets, held-out games. Prior nulls (MB, hash, CX

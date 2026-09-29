@@ -869,7 +869,7 @@ hypotheses:
       gate, and (3) a native-function test beating degree-preserving
       null, shuffled, and engineered-equivalent controls on held-out
       games at a validated operating point.
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-09-29 BEFORE ANY PROGRAM RUN. Requirement-1
@@ -901,6 +901,24 @@ hypotheses:
         benchmark; otherwise the verdict awaits the re-run. Expected
         tier, base rate stated: this repository's expected-tier score
         predictions are ~1 for 13.
+      - >
+        MEASURED 2026-09-29, program complete (scripts/benchmarks/,
+        results/benchmarks/, bands preregistered in committed code
+        before every sweep). The 21-point grid assigns: T4/T5 0/21
+        (no direction tiling; no delay lines in the model class), LC
+        position code 0/21 (sign inverted everywhere), KC sparseness
+        0/21 (dense-or-silent, skips the sparse regime; KC->KC
+        recurrence dominates), EB persistent localized bump 0/21
+        (fixed point, not a bump), PEN opposite rotation 4/21 live,
+        bump-under-visual-drive 0/21; APL direction 18/21 and PN
+        sublinearity 21/21 pass but are generic (tanh passes the
+        latter). Under the preregistered order every dynamical module
+        terminates before an ARC verdict: the definitive per-module
+        answer is USEFUL = the static eye-map only; NOT-USEFUL =
+        unassignable to any module; UNVALIDATABLE-AT-THIS-FIDELITY =
+        all compiled dynamics, as a measured model-class limit. A
+        stronger verdict requires the next fidelity class.
+    status_note: closed-supported
     updated: 2026-09-29
 
   H-FAP-PROGRAMS:
