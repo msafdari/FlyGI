@@ -1,0 +1,10 @@
+init state GameState.NOT_FINISHED score 0 timer 0
+SWALLOW: first-episode-action a1 changed 8 non-timer cells; reset restores playfield identically: True; first-post-RESET a1 changed 8 cells
+TIMER: after RESET timer=0; after 12.0s sleep + one action timer=1
+TIMER: after 10 rapid alternating actions timer=6 (wall 12.1s)
+  main-run transition at step 20: 0 -> 1
+  main-run transition at step 74: 1 -> 2
+  main-run transition at step 123: 2 -> 3
+reached score 3 GameState.NOT_FINISHED
+IDLE: after 192 idle actions (0.5s) state=GameState.GAME_OVER score=3 timer=64
+RESTORE: after GAME_OVER, RESET -> state=GameState.NOT_FINISHED score=3 playfield identical to L4 start: True timer=0

@@ -1,0 +1,10 @@
+after 15 steps (no recall): score 0 GameState.NOT_FINISHED
+player at [(24, 20), (24, 21), (25, 20), (25, 21)]
+a1: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+a4: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+a4: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+a1: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+extra a1: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+extra a1: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+extra a4: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]
+extra a1: score 0 GameState.NOT_FINISHED player [(24, 20), (24, 21)]

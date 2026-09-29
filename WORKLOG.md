@@ -51,6 +51,45 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## Completion sweep: ALL ELEVEN dead games decoded; ft09 COMPLETE 6/6 -- 2026-09-28
+
+The five-target completion workflow returned 5/5 with structured reports
+(docs/fap_extension_20260928/completion_reports.json; artifacts preserved
+beside the first sweep's). Every one execution-verified by the agent in its
+own offline runs:
+
+- **ft09: GAME COMPLETE, 6/6 levels, GameState.WIN.** Levels 5-6's missing
+  rule: the two-sided glyph rule stands, but the PALETTE comes from the
+  top-right indicator pair {e,f} (not the tile census), and a second
+  mechanic stacks on top (tile state interacts with click count). The two
+  residual unknowns (click-order commutativity, timer-death restore) are
+  labelled inferred, non-blocking.
+- **sc25: 4/6.** The door rule, measured on levels 3-4: the d-door
+  dissolves the instant the colour-6 display pattern is completed on the
+  pip board AND the die has line-of-sight to the level's key box. Level 5
+  (a stateful multi-key chain, two stacked doors) is mapped but unsolved.
+- **bp35: 4/10 verified.** Balloon-corridor climber: lateral moves then
+  rise-until-blocked; toggle-open '2' cells, flood surfaces, action 7 =
+  undo. Levels 5-10's maps are fully transcribed and mechanics decoded;
+  unattempted for timebox only.
+- **wa30: 3/9.** Warehouse-ferry on a 16x16 block grid with autonomous
+  porter NPCs: bump marks a box, action 5 picks/drops, porters ferry.
+  Level 4's sealed-room layout is mapped, unsolved.
+- **dc22: 3/6.** Card-climbing puzzle: right-band colour cards teleport
+  matching field items between a stack-staircase and a drop point above
+  the 2x2 player; level completes stepping onto the carrier. Level 4's
+  card vocabulary diverges (phase-flip / slide / transmute), measured but
+  unplanned.
+
+Standing total across both sweeps: all 11 never-scoring games are decoded;
+four are COMPLETE wins offline (ft09 6/6, tu93 9/9, ka59 7/7, sb26 8/8);
+the other seven have 3-7 verified levels each. Integration order (parsers
+and planners, never replay scripts): ft09's L5-6 palette rule into the
+existing glyph archetype, sc25's door rule into the pip archetype, then
+new archetypes by cleanliness -- sb26 flatten builder, tu93 maze BFS, ka59
+sokoban planner, re86 parking, su15 merge, ls20 pattern-key, bp35 climber,
+dc22 cards, wa30 ferry.
+
 ## Extension sweep: six games decoded, three full WINs; recovered from a dead run -- 2026-09-28
 
 The 11-target extension fan-out (9 remaining dead games + the ft09-L5 and

@@ -1,0 +1,2102 @@
+[
+ {
+  "game": "dc22 (dc22-fdcac232), win_levels=6, available_actions [1,2,3,4,6] throughout (no action 5, no action 7/UNDO)",
+  "swallow_quirk": false,
+  "timer": "Row 63 fills left-to-right with colour 3, one cell at a time. MEASURED action-driven, not wall-clock: after RESET, 12.0 s idle followed by one action advanced it exactly 1 cell; 10 rapid actions advanced it 5 more. Tick rate is level-dependent (bar = level action budget mapped onto 64 cells): L1 ~1 cell/2 actions, L2 repeating interval pattern 2,3,3,3 (~1/2.75, budget ~176), L3 ~1/2.6, L4 exactly 1/3 (MEASURED: 192 idle actions filled all 64 cells and produced GAME_OVER, score kept at 3). Timer resets to 0 on level completion. After GAME_OVER, RESET restores the level start with 100% playfield identity (rows 0-62 compared cell-for-cell at L4) and timer cleared \u2014 deaths are clocks, cost is one RESET. Evidence: /tmp/fap_ext/dc22/probe_quirks_out.txt.",
+  "goal_display": "Right band (colour-5 background, right of a 00-dashed divider column: cols 32-33 on L1-3, cols 38-39 on L4) holds display boxes (\"cards\"), one per special colour, each showing a blob drawn in that colour. MEASURED: each card is clickable and controls exactly the field object of its own colour; untouched cards carry a 0-outline that disappears on the first card interaction of the level (L1: first click turned all 80 outline cells 0->5). The destination is in the playfield itself: a 2x2 colour-b \"carrier\" creature inside a 2-bordered box. INFERRED (bridge untested): the blob shapes may just depict the controllable items, i.e. the card band is an ability legend rather than an ordering recipe \u2014 the forensics \"assemble in displayed order\" reading did not survive contact; order is dictated by climbing geometry, not display order.",
+  "measured_rule": "MEASURED (frame-diffed per step in my runs): The playfield (colour-4 background, left of the divider) is a climbing puzzle. The player is a 2x2 colour-e block inside a 2-bordered box at level start; arrows move it in 2-cell steps. Illegal moves are refused and freeze the entire world (probe_delivery_out.txt: 8 consecutive refused moves, zero cells changed). Clicking a card (action 6 on its blob) teleports the matching-colour item between two states: FIELD (item materializes at/directly above the player's current position, usable as a platform \u2014 L1 card9 click dropped the 9-block at rows 34-37 cols 8-11 above the player box) and STACK (item flies from anywhere on the field to its home slot in the column attached to the carrier box \u2014 L1 card8 recalled the 8-segment out of the middle of the d-bar from cols 12-17 to the stack at cols 18-21, leaving a gap; L1 card9 recall worked from 10+ cells away). Card clicks are involutive toggles on L1-3 (re-click restores, MEASURED in probe_l3-style diffs). The stack column doubles as the staircase to the carrier: recalling items extends it. Level completes on the arrow move that steps the e-avatar onto the b-carrier (MEASURED in all three completions: e was 2-cell adjacent to b one step before each score transition; final actions a1/a1/a2). Necessity control (MEASURED): skipping only the final card9 recall in L1 leaves the player frozen below the carrier and the level does not complete \u2014 the recall is load-bearing as the last stair. Per-level card vocabulary grows: L3 adds a player-teleport card (6-card) and a two-click invisible card at (52,45); L4 diverges further (see blockers).",
+  "programs": [
+   {
+    "level": 1,
+    "steps": [
+     {
+      "action": 6,
+      "x": 48,
+      "y": 36
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 48,
+      "y": 19
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 6,
+      "x": 48,
+      "y": 36
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 1
+     }
+    ],
+    "verified": true,
+    "result": "score 0->1 on step 20 (a1), state NOT_FINISHED; observed in my fap_program_premise.py run (verify_l123_stdout.txt line [020-a1]) and again in my interactive probe session"
+   },
+   {
+    "level": 2,
+    "steps": [
+     {
+      "action": 6,
+      "x": 52,
+      "y": 40
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 22
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 22
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 40
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 31
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     }
+    ],
+    "verified": true,
+    "result": "score 1->2 on its step 54 (cumulative step 74, a1); observed in both of my runs"
+   },
+   {
+    "level": 3,
+    "steps": [
+     {
+      "action": 6,
+      "x": 52,
+      "y": 27
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 18
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 18
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 27
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 27
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 36
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 45
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 6,
+      "x": 52,
+      "y": 18
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     }
+    ],
+    "verified": true,
+    "result": "score 2->3 on its step 49 (cumulative step 123, a2), final state NOT_FINISHED at level 4 of 6; observed in both of my runs"
+   }
+  ],
+  "levels_completed_best": 3,
+  "parser_sketch": "DETECT: 64x64 with colour-3 frame bands (rows 0-7 and 54-62 on L1-3) and an all-0 row 63 that fills with colour 3 (timer); a 00-dashed vertical divider column splitting a colour-4 playfield (left) from a colour-5 card band (right); a 2x2 colour-e block (player) and a 2x2 colour-b block (carrier), each inside a colour-2 box; card band contains 0-outlined single-colour blobs. This signature (e-block + b-block + colour-partitioned halves + clickable colour cards) separates dc22 from the six sibling archetypes. DERIVE: (1) enumerate cards = connected blobs in the band, one click point each (blob centroid); colour c of blob = colour of the controlled field item. (2) Model state as (player 2x2 position, per-card boolean FIELD/STACK); transition model: arrows = 2-cell steps validated by support/collision (refused move = frozen frame, detectable and free to probe); card click = involutive teleport of item c between the carrier-stack slot and the drop point above the player. (3) Plan with BFS/A* over that product space to the cell adjacent to the carrier plus one final step onto it \u2014 item placements are the only way to extend reachability, so branching is small (4 moves + ~3 cards). (4) Because refused moves freeze the world and RESET-after-GAME_OVER restores the level exactly, an executor can probe legality online at zero risk; budget check: keep plan length under the level's action budget (64 x per-level actions-per-tick, ~128-192). Card semantics must be re-fingerprinted per level by one click+re-click diff pair (cheap, reversible on L1-3) before planning, since the vocabulary grows (teleport, phase-flip, slide, transmute).",
+  "blockers": "Level 4 (playfield widens to cols 0-37, player starts top-left, carrier bottom-centre) breaks the L1-3 card model \u2014 MEASURED via click+re-click diffs at level 4: the 6-card phase-flips the two 6/7 checker tiles in place (involutive); the b-card slides the two colour-1 bars 6 columns right (re-click slides again, 16 cells); the 2-card transmutes the in-field 5-strip (rows 20-21 cols 8-23) and part of the c-bar (rows 40-41) into colour 1/5 and is NOT involutive (first click 40 cells, re-click 16); click at (52,45) is dead. A colour-5 strip inside the playfield (background colour used as terrain) also breaks the naive colour partition. Deriving L4 needs a fresh session; not attempted further, timebox (solve 1+2 levels) already met. Remaining unknowns at lower tiers: whether completion also checks the delivered ingredient set (untestable separately in L1 because the last recall is geometrically load-bearing); exact per-level timer budget law; L3 6-card teleport and (52,45) card semantics are inherited from the first investigator's annotated solve (verified only end-to-end through the program run). Artifacts unchanged in the repo: none (no repo edits, no git).",
+  "artifacts": "/tmp/fap_ext/dc22/verify_l123_stdout.txt (canonical re-execution, per-step state), /tmp/fap_ext/dc22/verify_l123/dc22-fdcac232/ (124 frame renders), /tmp/fap_ext/dc22/probe_quirks.py + probe_quirks_out.txt (swallow/timer/timeout/restore measurements), /tmp/fap_ext/dc22/probe_l4.py + probe_l4_out.txt (L4 card fingerprints), /tmp/fap_ext/dc22/probe_delivery_out.txt (recall-necessity control), /tmp/fap_ext/dc22/l4_initial.txt (L4 start render), /tmp/fap_ext/dc22/prog_l1.json, prog_l2.json, prog_l3.json, prog_l123.json (verified programs); inherited first-investigator probes preserved alongside (drive.py, session.py, session2.py, probe_cards.py, probe_clicks.py, probe_l2.py, probe_l3.py, solve_l2.py, solve_l3.py, solve_l3b.py, seq1-7.py, run_l1/, run_l123/, after_*.txt, l2_*.txt, l3_*.txt, bfs.json)"
+ },
+ {
+  "game": "wa30 (wa30-ee6fef47), win_levels=9, available_actions always [1,2,3,4,5] (no click 6, no UNDO 7)",
+  "swallow_quirk": false,
+  "timer": "Row 63: 64 sevens at level start; each tick turns one 7 into 4 right-to-left. Ticks accrue fractionally per action at a PER-LEVEL rate (measured from run_l123 dumps: L1 = 1/3 per action, L2 = 11/12 per action, L3 = ~0.65 per action). Timer 0 = GAME_OVER, terminal, score retained (measured in probe17: idle to exhaustion, GAME_OVER at tick 0, score stayed 2). Action 0 (RESET) restarts the CURRENT level: score preserved, timer refilled to 64, layout back to level start (measured in probe21) \u2014 so RESET is a safe timer-refill/recovery move. Level completion also refills the timer.",
+  "goal_display": "None (no legend/header band). The board geometry itself declares the goal: 9-bordered rectangles with 2-interior are docks; the level completes the moment every box (4x4 block, 4-border/9-interior) on the board sits inside a dock slot. Entity palette: player = solid 14 (e) with a 4-cell 0-strip on its FACING edge; rival porter(s) = solid 12 (c); box marked by player bump = 3-border; box held by player = 0-border; box dragged by rival = 5-border; walls = {1,2}-speckle blocks (accept box insertion) or solid-5 blocks.",
+  "measured_rule": "Warehouse-ferry with autonomous porter NPCs, on a 16x16 block grid (4x4 cells per block). Measured mechanics: (1) moving into an adjacent box marks it (border 4\u21923) without displacing the player; 5 then picks it (border\u21920) and the box stays glued at its pick-time offset (player\u2192box direction) through all subsequent moves, so to push a box east you must pick it from its west side; 5 drops it in place (border\u21923) and the player must STEP AWAY one block to release it (border 3\u21924) \u2014 a rival will never take a border-3 box (measured in probe16: rival walked to the planted box and waited indefinitely until release). (2) Rivals advance exactly 1 block per player action of any kind (lockstep world tick, including on interact/idles); they autonomously target the nearest reachable released box, drag it trailing behind them, deposit it into a free dock slot, then seek the next target, parking when none remains; a new released box wakes a parked rival instantly. (3) {1,2}-speckle walls block the player even through an open gap (measured: move into open socket = no-op except timer), but a carried box CAN be pushed into a speckle-wall block ('planted'), where a rival on the far side can fetch it \u2014 this is the only way to move boxes across walls. (4) Score increments exactly when the last box on the board is docked (L3: 5th box docked \u2192 score 2\u21923 with 24 idle actions of rival ferry time). Level designs: L1 = 3 boxes, player alone docks them into a 3-slot dock. L2 = 5 boxes, 6-slot dock, one rival competes/helps (player docks 2, rival docks 3 in the verified program). L3 = wall splits the board; player side has 3 boxes, rival side has the 12-slot-approach dock; wall has two plug boxes the rival first extracts and docks, opening sockets; player feeds its 3 boxes through the sockets (plant + release), rival ferries all 5 to the dock. L4 (recon only) = same loop generalized: player sealed in a speckle-walled room with 6 boxes, 3 rivals and ~7 scattered dock slots outside; measured that planting into an arbitrary wall block works and a rival fetched and docked it.",
+  "programs": [
+   {
+    "level": 1,
+    "steps": [
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 5
+     }
+    ],
+    "verified": true,
+    "result": "score 0->1 at step 28 (frame 028-a5 in run_l123 and run_l1 dumps); timer 55 remaining"
+   },
+   {
+    "level": 2,
+    "steps": [
+     {
+      "action": 3
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 5
+     }
+    ],
+    "verified": true,
+    "result": "score 1->2 at step 89 of the combined program (frame 089-a5); rival docked the other 3 boxes concurrently; timer reached 9 - tight, L2 ticks at 11/12 per action"
+   },
+   {
+    "level": 3,
+    "steps": [
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 1
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     },
+     {
+      "action": 5
+     }
+    ],
+    "verified": true,
+    "result": "score 2->3 at step 169 of the combined program (frame 169-a5): planted box(5,5) into north socket (3,8), box(4,2) then box(11,3) into south socket (8,8), each drop followed by a step-away release; rival ferried all 5 boxes; final 24 idles are rival ferry time; timer reached 13. Full combined 169-step run via scripts/fap_program_premise.py: steps_executed=169, score_before=0, score_after=3, final NOT_FINISHED on level 4"
+   }
+  ],
+  "levels_completed_best": 3,
+  "parser_sketch": "DETECT: 64x64 grid, background 1, row 63 all 7s at level start (countdown bar), all entities 4x4-block-aligned: player block = solid 14 with a 0-strip on one edge (the strip edge = facing); boxes = 4-border/9-interior; docks = 9-border rectangles with 2-interior; porters = solid 12; walls = {1,2}-speckle or solid-5 blocks. This signature (14-block + 4/9 boxes + 9/2 dock + 7-row) identifies the archetype from the raw grid. DERIVE: (a) segment the 16x16 block map and classify blocks by their color multiset; (b) partition floor into regions by wall connectivity from the player block; (c) goal = every box inside a dock slot; (d) for each box in the player's region choose a target cell: a dock slot in the player's region if one exists, else any speckle-wall block on the boundary to a porter-reachable region; (e) emit per box: BFS walk to the block on the OPPOSITE side of the box from the push direction (carry offset is fixed at pick), one bump move into the box (mark), 5 (pick), BFS the player so the glued box lands on the target cell (box leads when moving toward it), 5 (drop), one step away (release - mandatory, porters ignore border-3 boxes); (f) if the target cell is currently occupied (socket still plugged / dock contested), wait by shuffling between two free cells while carrying (never idle with 5 next to a box - it picks/drops); porters advance 1 block per player action, so waiting is just extra actions; (g) after the last plant, idle with 5 (player parked away from boxes) until score increments while porters finish ferrying; (h) budget: 64 ticks at a per-level rate (1/3 to 11/12 per action); if the timer will expire, RESET(0) restarts the level with score kept and timer refilled, and replan.",
+  "blockers": "Level 4 not solved (timebox): player starts sealed in a speckle-walled room (block rows 5-11, cols 5-10) with 6 boxes; outside are 3 porters, 1 free box, and ~7 scattered dock slots (two 2-slot docks, three-plus 1-slot docks); a solid-5 wall column also bisects the top. Measured on L4: planting into an arbitrary speckle-wall block works ((10,6) box pushed into wall (10,5)), release works, and a porter fetched it from outside and docked it at (9,2) - so the archetype and the parser rule carry over; remaining work is pure routing/scheduling of 6 plants across 2-3 usable walls within the timer (L4 tick rate unmeasured). Unknowns: whether solid-5 blocks accept plants (untested), porter dock-slot choice rule (nearest-free observed, unconfirmed), and whether porters can deadlock when multiple target the same box. Artifacts: /tmp/fap_ext/wa30/prog_l1_l2_l3.json (169-step verified program), prog_l1.json, prog_l2_only.json, prog_l3_only.json, l3_attempt2.json (raw 80-action L3 list), run_l123/wa30-ee6fef47/ (per-step renders of the verified 0->3 run), probes 15-21 (this session: rival cycle, wake-on-release, socket impassability, timer death, L4 recon, swallow/RESET semantics), probes 1-14 + run_l1/ + run_full/ (previous investigator).",
+  "artifacts": "/tmp/fap_ext/wa30/prog_l1_l2_l3.json (169-step combined program, verified 0->3 via scripts/fap_program_premise.py); /tmp/fap_ext/wa30/run_l123/wa30-ee6fef47/ (per-step text renders + state of the verified run; score transitions at frames 028, 089, 169); /tmp/fap_ext/wa30/prog_l1.json, prog_l1_l2.json, prog_l2_only.json, prog_l3_only.json, l3_attempt2.json; /tmp/fap_ext/wa30/probe15.py-probe21.py (this session's measurements); /tmp/fap_ext/wa30/probe1.py-probe14.py, drive.py, l3_recorded.json, run_l1/, run_full/ (previous investigator, l3_recorded.json was a FAILED L3 attempt - its boxes were never released after drop)"
+ },
+ {
+  "game": "bp35",
+  "swallow_quirk": false,
+  "timer": "Two timers, both measured. (1) Action budget: row 63 fills one pixel per action (any action, including UNDO); at 64 actions on levels 1-6 the level is lost mid-run \u2014 measured: a run died on exactly the 64th level-2 action; source shows the limit is 128 for levels 7-9 and 192 for level 10. RESET (0) restarts the level and refunds the budget; action 7 is a one-step UNDO that does NOT refund budget. (2) Levels 1-3 only: a flood rises from the bottom. A parity counter increments on EVERY move and click, but the flood advances one cell only on lateral moves that end with zero rise (including bumps) when post-increment parity is even; death when the player's row equals the flood row at that check. Clicks and height-gaining moves never advance the flood, so it is easily starved. GAME_OVER freezes the game (subsequent actions return empty frames, displayed score 0) until RESET.",
+  "goal_display": "None \u2014 no legend/header band. The goal is a gem sprite ('+') somewhere in a scrolling vertical maze; the 64x64 frame is a camera window onto an 11-column-wide world of 6x6px cells (camera x fixed at 0, scrolls vertically). The balloon avatar (colours 9/11) renders at screen rows 36-41 with gravity up, rows 26-31 with gravity down; its world column is avatar_screen_x//6. Row 63 is the action-budget bar.",
+  "measured_rule": "Balloon-corridor climber (\"rise-until-blocked\" maze). Actions available: 3=left, 4=right, 6=click, 7=undo, 0=reset (no up/down/interact). Moving laterally into a passable cell (empty, toggle-open '2', or flood-surface 'm') makes the balloon then rise (or fall, when gravity is flipped) until blocked; moving into anything else is a bump. Rising/falling onto a spike ('v'/'u') = death; reaching the gem '+' laterally or by rise = level complete. Clicks: a door 'x' is removed; toggle '1'<->'2' flips per-cell (solid<->open); a gravity button 'g' clicked anywhere on screen flips the global rise/fall direction, is consumed, and immediately re-floats/drops the player; a spread 'y' is removed and spawns blockers in its 4 empty neighbours; clicks on anything else are no-ops that still burn budget and parity (useful for flood-parity control). Measured quirk: clicking the cell directly above (grav-up) / below (grav-down) the player launches the player through that cell, with the traverse path evaluated BEFORE the clicked cell's new state \u2014 so clicking a door or even a toggle directly above both actuates it and moves you through it; used in every verified program. Click coordinates map as cell=(x//6,(y+camera_y)//6) with camera_y=py*6-36 (up) / py*6-26 (down); reachable click band is roughly cy-py in [-6..4] (up) / [-4..5] (down). All four programs below were executed in one 123-step run (offline env, seed derived_run_seeds(0)) with each score transition observed.",
+  "programs": [
+   {
+    "level": 1,
+    "verified": true,
+    "result": "score 0->1 observed at step index 19 of the verified run (20 actions)",
+    "steps": [
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 45,
+      "y": 33
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 33
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 39
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 39
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 33
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     }
+    ]
+   },
+   {
+    "level": 2,
+    "verified": true,
+    "result": "score 1->2 observed at step index 63 (44 actions; route climbs right shaft, crosses row-16 door corridor eastward, ascends col 8, traverses row 10 west, launches up col 4 to the gem \u2014 avoids the col-3 spike at (3,12) that killed the previous investigator's program)",
+    "steps": [
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 27
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 39
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 27
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 15
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 9
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 45,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 51,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 51,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 51,
+      "y": 27
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 51,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 45,
+      "y": 39
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 33
+     },
+     {
+      "action": 4
+     }
+    ]
+   },
+   {
+    "level": 3,
+    "verified": true,
+    "result": "score 2->3 observed at step index 97 (34 actions; toggle level \u2014 flips '2'->'1' cells to make safe ceilings over spike shafts, then launches through the '1' directly above via the click-above quirk)",
+    "steps": [
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 39
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 33
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 39
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 33
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 33
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 39
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     }
+    ]
+   },
+   {
+    "level": 4,
+    "verified": true,
+    "result": "score 3->4 observed at step index 122 (25 actions; gravity level \u2014 three single-use 'g' buttons flip fall direction: up-stairs right, flip down, fall through opened door, flip up to clear a wall pocket, flip down into the gem chamber, final flip rises onto the gem)",
+    "steps": [
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 27
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 35
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 41
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 21,
+      "y": 57
+     },
+     {
+      "action": 6,
+      "x": 51,
+      "y": 35
+     },
+     {
+      "action": 6,
+      "x": 51,
+      "y": 35
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 27,
+      "y": 41
+     }
+    ]
+   }
+  ],
+  "levels_completed_best": 4,
+  "parser_sketch": "DETECT: 64x64 frame whose bottom row (63) is a two-colour progress bar that gains exactly one pixel per action; a 5x6 avatar block (colours 9/11) pinned at screen rows 36-41 (or 26-31 after a gravity flip) whose x only changes in multiples of 6; whole-frame vertical scrolls in multiples of 6 after some moves; available_actions == [3,4,6,7]. These four signatures identify the balloon-climber archetype from raw grids alone. DERIVE: (1) Rebuild the world map on a 6px cell lattice \u2014 offline, parse the level grids from the game file (rows list is applied [::-1]; world row 0 = top = last written line); online, stitch scrolled frames using the scroll offset, classifying cells by colour into {wall, door, spike, toggle-solid, toggle-open, gravity, spread, gem, flood}. (2) Plan on the cell graph with state = (player cell, removed doors, toggle flips, gravity dir, flood row, parity): transitions are L/R (enter passable cell then rise/fall-to-rest via ray-cast through {empty,'2','m'}; spike-landing = dead; gem = win) and clicks (remove door / flip toggle / consume 'g' + global flip + immediate refloat / spread-explode; click on the cell adjacent in the rise direction additionally launches the player through it, path evaluated pre-actuation). Constraints: click band cy-py in [-5..4] (safe subset), action budget 63/127/191 per level, and flood advance = even-parity zero-rise lateral moves only (levels 1-3). BFS/A* or manual routing on this graph; emit screen coords x=cx*6+3, y=(cy-py)*6+39 (grav up) or +29 (grav down), tracking py through predicted rests. The model above reproduced the real environment exactly for 123 consecutive actions across four levels (one planning error, a forgotten door removal, was visible as a bump signature nchanged==1 and fixed in one iteration).",
+  "blockers": "None for levels 1-4. Levels 5-10 unattempted (timebox): maps are fully transcribed (grids.txt) and all remaining mechanics ('u' up-spikes, 'y' spread blockers, multi-'g' levels, 128/192 action budgets, level-10 'g' rows) are decoded from source, so route derivation is mechanical but time-consuming by hand; a corrected cell-level solver (the old solver.py needs the parity fix \u2014 it only ticked parity on non-rising moves \u2014 plus the eager click-above path rule) would automate them. The previous investigator's BFS also state-explodes on door subsets; restrict door-removal state to the player's reachable component to make it tractable. Post-GAME_OVER, only RESET recovers (other actions return empty frames).",
+  "artifacts": "/tmp/fap_ext/bp35/prog_l1234.json (full 123-step verified run, levels 1-4); /tmp/fap_ext/bp35/prog_level1_verified.json, prog_level2_verified.json, prog_level3_verified.json, prog_level4_verified.json (per-level splits); /tmp/fap_ext/bp35/bp35_mechanics_verified.json (machine-usable mechanics summary); /tmp/fap_ext/bp35/grids.txt (all 10 level maps, listed bottom-up \u2014 flip vertically for world orientation); /tmp/fap_ext/bp35/solver.py (previous investigator's cell simulator \u2014 semantics header correct except flood parity and click-above eager-path rules, documented in the mechanics JSON); /tmp/fap_ext/bp35/drive.py (replay/probe harness); /tmp/fap_ext/bp35/live_last.txt (final frame render, score 4). Source of truth: /Users/mustafasafdari/Documents/ChatGPT/FlyGI/environment_files/bp35/0a0ad940/bp35.py (click handler gwfodrkvzx at line 4289, move/rise pywlvyklps/fsvnqdbzrp at 4086/4211, flood mylefxfaev at 4052, action budget in qmjscfjptx.render_interface at 4410)."
+ },
+ {
+  "game": "ft09",
+  "swallow_quirk": false,
+  "timer": "Row 63: 64 colour-c pixels per level; pixels flip c->b right-to-left on effective actions n=2,3 (mod 4) within the level (measured across two independent click sequences). Refused clicks (background/glyph/indicator) freeze the world completely - no tick, free probing. RESET (action 0) restores the level start at 100% identity including the timer. Timer death not reached this session (81-action win); prior ft09 record: timer kills the life, GAME_OVER restarts level.",
+  "goal_display": "Two parts: (1) glyph tiles embedded in the lattice, each a 3x3 sub-block miniature of its own 3x3 tile neighbourhood (0-cell = marked/centre colour, 2-cell = other palette colour, 3-cell = position not prescribable: absent or another glyph - new in L5/L6, verified consistent across all 12 glyphs incl. overlaps); (2) an off-lattice pair of stacked 4x4 blocks at the top-right = the level's two palette colours (L5 e-over-f, L6 b-over-e; top block = the colour all board tiles start at).",
+  "measured_rule": "Level 5-6 rule (MEASURED, protocol: per-click frame diffs on the offline arcade, seed_index 0): the two-sided glyph rule is unchanged but the palette is the indicator pair {e,f} (not tile-census), and a second mechanic stacks on top - a board tile's interior colour-6 sub-cells are a FLIP MASK: clicking it toggles its own palette phase plus the phase of each orthogonal neighbour board tile its 6-cells point at (edge-centre sub-cell (0,1)=N,(1,0)=W,(1,2)=E,(2,1)=S); flips aimed at glyphs/absent cells are dropped. L5: plain tiles (no 6s) toggle self only; three checkered tiles (all four edge 6s) toggle self + 4 orthogonal neighbours; a masked tile satisfies a prescription with its non-6 phase colour. L6: every tile carries a north dot -> self+north (direction discriminated: clicking (2,3) flipped (2,3)+(1,3), not (3,3)). Clicks on glyphs/background/indicator are refused with the world frozen (not even a timer tick). Win fires immediately on the click that satisfies every glyph prescription; unprescribed tiles are free. Why the executor looped on L5 (measured mechanism): it parses 6-masked tiles as glyphs, poisoning the program and never clicking them, so f-phase-required checkered positions are unsatisfiable.",
+  "programs": [
+   {
+    "level": 1,
+    "steps": [
+     {
+      "action": 0
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 47
+     },
+     {
+      "action": 6,
+      "x": 55,
+      "y": 47
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 55
+     }
+    ],
+    "verified": true,
+    "result": "score 0->1 at action 5 (initial RESET + 4 FapExecutor clicks)"
+   },
+   {
+    "level": 2,
+    "steps": [
+     {
+      "action": 6,
+      "x": 23,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 49
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 49
+     }
+    ],
+    "verified": true,
+    "result": "score 1->2 at action 12"
+   },
+   {
+    "level": 3,
+    "steps": [
+     {
+      "action": 6,
+      "x": 23,
+      "y": 7
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 7
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 7
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 15
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 23
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 23
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 31
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 47,
+      "y": 31
+     },
+     {
+      "action": 6,
+      "x": 47,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 47
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 55
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 55
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 55
+     }
+    ],
+    "verified": true,
+    "result": "score 2->3 at action 26"
+   },
+   {
+    "level": 4,
+    "steps": [
+     {
+      "action": 6,
+      "x": 23,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 47,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 47,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 49
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 49
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 49
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 41
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 41
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 49
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 49
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 49
+     }
+    ],
+    "verified": true,
+    "result": "score 3->4 at action 47"
+   },
+   {
+    "level": 5,
+    "steps": [
+     {
+      "action": 6,
+      "x": 25,
+      "y": 15
+     },
+     {
+      "action": 6,
+      "x": 25,
+      "y": 31
+     },
+     {
+      "action": 6,
+      "x": 41,
+      "y": 47
+     },
+     {
+      "action": 6,
+      "x": 25,
+      "y": 7
+     },
+     {
+      "action": 6,
+      "x": 17,
+      "y": 15
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 15
+     },
+     {
+      "action": 6,
+      "x": 17,
+      "y": 31
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 31
+     },
+     {
+      "action": 6,
+      "x": 41,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 47
+     },
+     {
+      "action": 6,
+      "x": 49,
+      "y": 47
+     },
+     {
+      "action": 6,
+      "x": 41,
+      "y": 55
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 7
+     },
+     {
+      "action": 6,
+      "x": 17,
+      "y": 23
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 23
+     },
+     {
+      "action": 6,
+      "x": 49,
+      "y": 23
+     },
+     {
+      "action": 6,
+      "x": 17,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 49,
+      "y": 39
+     },
+     {
+      "action": 6,
+      "x": 17,
+      "y": 55
+     },
+     {
+      "action": 6,
+      "x": 33,
+      "y": 55
+     }
+    ],
+    "verified": true,
+    "result": "score 4->5 at action 68 (21 clicks from level-5 start: 3 checkered tiles once each, 9 repairs back to e, 9 sets to f)"
+   },
+   {
+    "level": 6,
+    "steps": [
+     {
+      "action": 6,
+      "x": 7,
+      "y": 9
+     },
+     {
+      "action": 6,
+      "x": 7,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 15,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 25
+     },
+     {
+      "action": 6,
+      "x": 23,
+      "y": 41
+     },
+     {
+      "action": 6,
+      "x": 31,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 17
+     },
+     {
+      "action": 6,
+      "x": 39,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 47,
+      "y": 33
+     },
+     {
+      "action": 6,
+      "x": 47,
+      "y": 41
+     },
+     {
+      "action": 6,
+      "x": 55,
+      "y": 41
+     }
+    ],
+    "verified": true,
+    "result": "score 5->6 at action 81, GameState.WIN (13 clicks: per-column triangular lights-out back-substitution over the north-dot chains)"
+   }
+  ],
+  "levels_completed_best": 6,
+  "parser_sketch": "DETECT: find the 8-pitch lattice of 6x6 tiles whose 2x2 sub-blocks are uniform, separator-ring-delimited (lattice offsets differ per level - L5 rows 4+8k/cols 6+8k, L6 rows 6+8k/cols 4+8k - detect from data). Classify each tile: all-uniform -> plain board tile; sub-cells within {0,2,3}+palette-colour centre -> GLYPH; two colours with colour-6 cells at edge-centre positions -> board tile with a flip mask (6 positions map to N/W/E/S neighbours; its phase = its non-6 colour). Palette = the two stacked 4x4 off-lattice blocks (top-right so far; top = starting colour); fallback = plain-tile colours + glyph centres. DERIVE: per glyph, marked=centre, other=palette\\{marked}; 0-cell -> neighbour must show marked, 2-cell -> other, 3-cell -> skip and VALIDATE it points at an absent/glyph position (abstain on violation - held 12/12 glyphs here). PLAN: needed(t) = current phase != prescribed (unprescribed tiles free); solve A.c = needed over GF(2) where clicking t toggles t plus its mask-directed present board neighbours; toggles are involutions and commute (inferred), so any solution order works. L5 degenerates to: click each phase-wrong masked tile once, then repair plain tiles; L6 to per-column back-substitution c(bottom)=needed(bottom), c(i)=needed(i) XOR c(i+1) with chains broken at glyphs/gaps. Win needs no submit - score increments on the completing click. Library note: the current GlyphMiniatureArchetype must stop treating 6-masked tiles as glyphs and read the indicator palette; that single mis-classification is the measured L5 failure.",
+  "blockers": "None - game complete (6/6, WIN). Two residual unknowns, both non-blocking: (a) click-order commutativity is inferred (involution + statelessness), not exhaustively tested; (b) timer death/GAME_OVER was never reached this session (prior record: restores level start). No repo edits made per discipline; integrating the flip-mask parser + GF(2) planner into fap_library.py is the follow-up for the completion sweep.",
+  "artifacts": "/tmp/fap_ext/ft09/NOTES.md (full dossier); /tmp/fap_ext/ft09/programs.json (verified per-level programs + score transitions, seed_index 0); /tmp/fap_ext/ft09/final_run.py (clean end-to-end verification, 0->6 WIN in 81 actions); /tmp/fap_ext/ft09/drive.py, solve5.py (session drivers); /tmp/fap_ext/ft09/probe1.py + probe1_out.txt (click semantics), probe2.py (L5 solve), probe4.py (L6 dot-direction discriminator + solve); /tmp/fap_ext/ft09/level5_start.txt/.npy, level6_start.txt/.npy, probe1_final.txt, probe2_final.txt, probe4_final.txt (frame renders)"
+ },
+ {
+  "game": "sc25",
+  "swallow_quirk": true,
+  "timer": "Right border cols 62-63, colour 14 (e), 32 blocks of 2x2, drained top-down and FULLY RESET at each level entry. Measured over run1's 10 actions: drain matches cumulative floor(5*i/8) blocks (visible ticks on actions 2,4,5,7,8,10), i.e. ~51 actions per level. Blocked rolls sometimes tick; off-board no-op clicks never tick and never change the frame (free probing). GAME_OVER by exhaustion not reached this session. Swallow quirk scope (measured): NO first-action swallow at level entry (first click after entering levels 3, 4, 5 took effect immediately); the known sc25 swallow is per-RESET/episode-start only (FapExecutor's one-shot retry absorbed it during L1-2 auto-play).",
+  "goal_display": "Left-edge 3-framed 10x10 display boxes, one per required pattern, each showing pips of a SIGNIFYING COLOUR on 3x3 cell positions that map 1:1 onto the pip board (board cell centres x in {25,30,35}, y in {50,55,60}). Colour 6 pips = the DOOR pattern; colour f(15) diamond {N,W,E,S} = the SHRINK pattern (L4+); colour b = a third pattern on L5 (role undecoded). Small legend/key boxes elsewhere on the board: a 6-framed 4x4 box holding a 2x2 colour-d block is the KEY BOX the die must face when the door pattern completes. Level 3 additionally PRE-MARKS the door pattern as 0-cells on the board; levels 4-5 boards start blank (all colour 2).",
+  "measured_rule": "DOOR RULE (the assigned question), measured on levels 3 and 4: the d-coloured door dissolves at the instant the colour-6 display pattern is COMPLETED on the pip board, and only if the die then has line-of-sight to the level's key box along the direction of its LAST SUCCESSFUL ROLL. Isolation, level 3 (key room due EAST): completion with no prior roll, or with last roll LEFT/UP/DOWN -> pattern consumed, door stays (runs 2,6,8,9,10); last roll RIGHT -> door + key box dissolve to track (runs 5,7,11). Level 4 splits orientation from line-of-sight: its key box hangs WEST on a 2-tall corridor at rows 29-30; right- and left-arming both FAIL while the die is off that corridor (runs 13,14), and left-arming succeeds after rolling the shrunken die down onto rows 29-30 (run 15). Rolls toward the key AFTER acceptance do not open the door (run 2). Supporting mechanics, all measured: board clicks TOGGLE cells (0<->e, 2<->e); acceptance fires when the punched set equals a displayed pattern, consumes it (cells->2), and is re-armable; f-diamond completion shrinks the die 4x4->2x2 with no arming needed (run12); the die rolls by its own size (4px at 4x4, 2px at 2x2) and re-orients faces to the last roll; a blocked roll can rotate it in place once; ramming the door does nothing; clicks on door/key/gate/die/dock are total no-ops; level completes on the roll that puts the die inside the dock's colour-a interior.",
+  "programs": [
+   {
+    "level": 3,
+    "steps": [
+     {
+      "action": 6,
+      "x": 30,
+      "y": 50
+     },
+     {
+      "action": 6,
+      "x": 30,
+      "y": 55
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 6,
+      "x": 30,
+      "y": 60
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 3
+     }
+    ],
+    "verified": true,
+    "result": "levels_completed 2->3 observed on step 12 (run11); identical prefix re-executed with the same transition in runs 12-17. 684-cell frame swap to the level-4 board on the completing roll."
+   },
+   {
+    "level": 4,
+    "steps": [
+     {
+      "action": 6,
+      "x": 30,
+      "y": 50
+     },
+     {
+      "action": 6,
+      "x": 25,
+      "y": 55
+     },
+     {
+      "action": 6,
+      "x": 35,
+      "y": 55
+     },
+     {
+      "action": 6,
+      "x": 30,
+      "y": 60
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 6,
+      "x": 30,
+      "y": 50
+     },
+     {
+      "action": 6,
+      "x": 30,
+      "y": 55
+     },
+     {
+      "action": 3
+     },
+     {
+      "action": 6,
+      "x": 30,
+      "y": 60
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 2
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     },
+     {
+      "action": 4
+     }
+    ],
+    "verified": true,
+    "result": "levels_completed 3->4 observed on the 25th step (run16 global step 37); re-executed verbatim with the same transition in run17. 1114-cell frame swap to the level-5 board on the completing roll."
+   }
+  ],
+  "levels_completed_best": 4,
+  "parser_sketch": "DETECT: 64x64, background 5, colour-e timer strip cols 62-63; a colour-3-framed board of 3x3 cells (3px cells, 2px walls) whose cells are in {0,2,e}; one or more colour-3-framed 10x10 displays on the left edge whose pips (any colour) occupy 3x3 cell positions; a two-tone 9/a die (4x4 or 2x2) on a colour-2 track; a 9-framed dock with colour-a interior; optionally colour-d doors and small key boxes (6-frame holding d). DERIVE: (1) map each display pattern cell (i,j) to board click (x,y)=(25+5j,50+5i); (2) if an f-coloured diamond display exists, punch it first (any order; click toggles blank<->punched) -> die shrinks to 2x2; (3) for the 6-coloured pattern, punch all but one cell, then roll the die (BFS on the track with roll-step = die size) to a spot with an unobstructed straight ray along some direction D to the key box, roll once along D (last successful roll), then punch the final cell -> door and key box dissolve; on level-3-style boards the required pattern is pre-marked as 0-cells; (4) BFS-roll the die into the dock interior; the level completes on the entering roll. Costing: ~51 actions per level (timer); avoid wasted clicks (toggles are reversible but rolls both cost time and change facing). Executor notes: no swallow at level entry; per-reset swallow retry still wanted after RESET; parse-abstain semantics carry over from the existing PipPunchRollArchetype, which this generalizes (it currently knows only pre-marked 0-cells and dock-seeking rolls -- it needs the toggle, shrink-pattern, and look-at-key-then-complete phases to extend past level 2).",
+  "blockers": "Level 5 (reached, mapped, unsolved -- timebox): a stateful multi-key chain. New colour-b pattern display {(0,0),(0,1),(1,1)}; TWO doors stacked in the right shaft (d rows 16-17, c rows 20-22, cols 51-54) gating the top-right dock; two 6-framed key boxes (one holding d at rows 11-14 cols 15-18, one holding c at rows 43-46 cols 3-6 behind colour-4 corner marks); a b-marked gadget holding f pips (rows 38-41 cols 28-31). Measured: f-diamond completion still shrinks the die AND mutates the apparatus (two b marks vanish b->5 near the shaft, four new f cells appear 5->f by the gadget, run17 p041) -- state I did not decode. Expected (untested, 11-nulls base rate): one 6-pattern completion per key box with line-of-sight to each opens the two doors in sequence; b-pattern role unknown. Also untested: RESET-mid-level swallow on levels 3+, GAME_OVER restore identity, and whether the ray direction can be armed by a blocked roll's in-place rotation.",
+  "artifacts": "/tmp/fap_ext/sc25/NOTES.md (full dossier); /tmp/fap_ext/sc25/L3_program.json and /tmp/fap_ext/sc25/L4_program.json (verified programs, from level entry); /tmp/fap_ext/sc25/drive.py (driver: FapExecutor auto-play of L1-2 in 22 actions, then JSON program with per-step dumps); /tmp/fap_ext/sc25/prog_v1.json..prog_v17.json and /tmp/fap_ext/sc25/run0/../run17/ (all probe programs and per-step 64x64 frame dumps; run11 = level-3 win, run16 = level-4 win, run17 = re-verification + level-5 probe)."
+ }
+]

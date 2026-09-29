@@ -1,0 +1,40 @@
+{
+ "game": "bp35",
+ "verified_run": "prog_l1234.json (123 steps, seed derived_run_seeds(0), score 0->4)",
+ "score_transitions": {
+  "level1": "step 019 (0->1)",
+  "level2": "step 063 (1->2)",
+  "level3": "step 097 (2->3)",
+  "level4": "step 122 (3->4)"
+ },
+ "mechanics": {
+  "actions": {
+   "3": "move left",
+   "4": "move right",
+   "6": "click",
+   "7": "UNDO one action (no budget refund)",
+   "0": "RESET level (budget refunded)"
+  },
+  "cell_grid": "world is 11 cols x H rows of 6x6px cells; camera x=0 fixed, scrolls vertically; player world col = avatar_screen_x//6",
+  "camera": "player renders at screen rows 36-41 while gravity is up, rows 26-31 while gravity is down",
+  "click_mapping": "screen (x,y) -> cell (x//6, (y + camera_y)//6); camera_y = py*6-36 (grav up) or py*6-26 (grav down); click cell (cx,cy): x=cx*6+3, y=(cy-py)*6+39 (up) / +29 (down)",
+  "balloon": "after every lateral move into a passable cell the balloon rises (or falls, if gravity flipped) until blocked; passable = empty, toggle-open '2', flood row 'm'",
+  "cells": {
+   "o": "wall",
+   "x": "door: click removes it",
+   "v/u": "spike: landing on it = death",
+   "+": "gem = level goal",
+   "1": "toggle-solid: click flips to '2' (passable)",
+   "2": "toggle-open: click flips to '1'",
+   "g": "gravity button: click (anywhere on screen) toggles global rise/fall, single use, player immediately rises/falls",
+   "y": "spread: click removes it and spawns blockers in its 4 empty neighbours",
+   "m/w": "flood surface/body (levels 1-3): rises 1 cell per 2 flood-ticking actions"
+  },
+  "click_above_quirk": "clicking the cell directly above (grav up) / below (grav down) the player launches the player through that cell; the traverse path is computed BEFORE the clicked cell's new state, so even flipping '2'->'1' above you still launches you through it",
+  "flood": "parity counter increments on EVERY move and click; the flood advances only on lateral moves that end with zero rise (incl. bumps) when the post-increment parity is even; death when player row == flood row at that check; clicks and rising moves never advance the flood",
+  "action_budget": "row 63 fills one pixel per action; at 64 actions (levels 1-6) the level is lost mid-run [measured: death on the 64th level-2 action]; source shows 128 for levels 7-9, 192 for level 10",
+  "game_over": "GAME_OVER freezes everything; only RESET (0) recovers, restarting the current level with a fresh budget",
+  "no_first_action_swallow": "measured: first action after init and after each level transition takes full effect"
+ },
+ "remaining_levels": "5-10 unattempted (timebox); all maps transcribed in grids.txt, semantics in solver.py header + this file"
+}

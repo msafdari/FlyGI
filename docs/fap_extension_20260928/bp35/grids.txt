@@ -1,0 +1,422 @@
+== grid1 (36 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 wwwwwwwwwww
+  1 wwwwwwwwwww
+  2 wwwwwwwwwww
+  3 wwwwwwwwwww
+  4 wwwwwwwwwww
+  5 mmmmmmmmmmm
+  6 oo       oo
+  7 oo       oo
+  8 oo       oo
+  9 oo       oo
+ 10 oo       oo
+ 11 oo       oo
+ 12 oo n     oo
+ 13 ooooooo ooo
+ 14 oo       oo
+ 15 oo       oo
+ 16 oooooxxxxoo
+ 17 ooooo    oo
+ 18 ooxxx    oo
+ 19 ooxxx    oo
+ 20 ooxxxoooooo
+ 21 oo       oo
+ 22 oo       oo
+ 23 oo  xxx  oo
+ 24 oo       oo
+ 25 oo       oo
+ 26 oooooxxxooo
+ 27 oo       oo
+ 28 oo +     oo
+ 29 ooooooooooo
+ 30 ooooooooooo
+ 31 ooooooooooo
+ 32 ooooooooooo
+ 33 ooooooooooo
+ 34 ooooooooooo
+ 35 ooooooooooo
+
+== grid2 (50 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 wwwwwwwwwww
+  1 wwwwwwwwwww
+  2 wwwwwwwwwww
+  3 wwwwwwwwwww
+  4 wwwwwwwwwww
+  5 mmmmmmmmmmm
+  6 oo       oo
+  7 oo       oo
+  8 oo       oo
+  9 oo       oo
+ 10 oo       oo
+ 11 oo       oo
+ 12 oo n     oo
+ 13 ooxxxxxxxoo
+ 14 ooxxxxxxxoo
+ 15 oo   o   oo
+ 16 oo   o   oo
+ 17 oovvvo   oo
+ 18 oooooo   oo
+ 19 ooxxxx   oo
+ 20 ooxxxx   oo
+ 21 ooxoooxxxoo
+ 22 oo       oo
+ 23 oo       oo
+ 24 oo    vvvoo
+ 25 oooooxooooo
+ 26 oooooxooooo
+ 27 oo       oo
+ 28 oo      voo
+ 29 ooxxxoooooo
+ 30 oo       oo
+ 31 oov vvvvvoo
+ 32 oooxooooooo
+ 33 oooxxxxxxoo
+ 34 oooxooooxoo
+ 35 oooxooooxoo
+ 36 oo       oo
+ 37 oovvv    oo
+ 38 ooooo    oo
+ 39 oo     xxoo
+ 40 ooxxxxxxxoo
+ 41 oo       oo
+ 42 oo   +vvvoo
+ 43 ooooooooooo
+ 44 ooooooooooo
+ 45 ooooooooooo
+ 46 ooooooooooo
+ 47 ooooooooooo
+ 48 ooooooooooo
+ 49 ooooooooooo
+
+== grid3 (41 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 wwwwwwwwwww
+  1 wwwwwwwwwww
+  2 wwwwwwwwwww
+  3 wwwwwwwwwww
+  4 wwwwwwwwwww
+  5 mmmmmmmmmmm
+  6 oo       oo
+  7 oo       oo
+  8 oo       oo
+  9 oo       oo
+ 10 oo       oo
+ 11 oo   1   oo
+ 12 oo n 1   oo
+ 13 ooooooxxxoo
+ 14 oo       oo
+ 15 oo       oo
+ 16 oo       oo
+ 17 oo 222ooooo
+ 18 oo       oo
+ 19 oo vvvv  oo
+ 20 oo oooo  oo
+ 21 oo       oo
+ 22 ooo  11  oo
+ 23 ooooo22  oo
+ 24 ooooovv  oo
+ 25 ooooooo  oo
+ 26 oo       oo
+ 27 oo       oo
+ 28 oo11222oooo
+ 29 oo     oooo
+ 30 oo  vvvoooo
+ 31 oo  ooooooo
+ 32 oo   1   oo
+ 33 oo   1 + oo
+ 34 oo1111111oo
+ 35 oo       oo
+ 36 oovvvvvvvoo
+ 37 ooooooooooo
+ 38 ooooooooooo
+ 39 ooooooooooo
+ 40 ooooooooooo
+
+== grid4 (39 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ooooooooooo
+  4 ooooooooooo
+  5 ooooooooooo
+  6 ooooooooooo
+  7 oooogoooooo
+  8 ooooooooooo
+  9 oo       oo
+ 10 oo       oo
+ 11 oo  +    oo
+ 12 oo       oo
+ 13 oovv vv  oo
+ 14 oooooooxxoo
+ 15 ooogogoxxoo
+ 16 ooooooo  oo
+ 17 oo    o  oo
+ 18 oo       oo
+ 19 oo   xxxxoo
+ 20 oo       oo
+ 21 ooxxooooooo
+ 22 oo       oo
+ 23 oo       oo
+ 24 oovvn    oo
+ 25 oooooo   oo
+ 26 ooooooo  oo
+ 27 oooooooo oo
+ 28 oo       oo
+ 29 oo       oo
+ 30 ooooooooooo
+ 31 ooooogooooo
+ 32 ooooooooooo
+ 33 ooooooooooo
+ 34 ooooooooooo
+ 35 ooooooooooo
+ 36 ooooooooooo
+ 37 ooooooooooo
+ 38 ooooooooooo
+
+== grid5 (39 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ooooooooooo
+  4 ooooooooooo
+  5 ooooooooooo
+  6 ooooooooooo
+  7 ooooooooooo
+  8 ooooooooooo
+  9 oooooooogoo
+ 10 ooouuoooooo
+ 11 ooo  oooooo
+ 12 oooxxoooooo
+ 13 ooo  oooooo
+ 14 ooo     ooo
+ 15 oo        o
+ 16 oo        o
+ 17 oo 22oooxxo
+ 18 oo vvoxx  o
+ 19 oo ooo    o
+ 20 oo ooo  vvo
+ 21 oo      ooo
+ 22 ooooooxxooo
+ 23 oooooo  ooo
+ 24 oouuuu  ooo
+ 25 oo      ooo
+ 26 oo n    g o
+ 27 ooooooooo o
+ 28 ooooooooo o
+ 29 oooo   xxxo
+ 30 oooo   xxxo
+ 31 oooo + vvvo
+ 32 ooooooooooo
+ 33 ooooooooooo
+ 34 ooooooooooo
+ 35 ooooooooooo
+ 36 ooooooooooo
+ 37 ooooooooooo
+ 38 ooooooooooo
+
+== grid6 (39 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ooooooooooo
+  4 ooooooooooo
+  5 ooooooooooo
+  6 ooooooooooo
+  7 o + g    oo
+  8 o   o    oo
+  9 oooooooo oo
+ 10 oooooooo oo
+ 11 oooooooo oo
+ 12 oouuuuuu oo
+ 13 oo    22 oo
+ 14 oo       oo
+ 15 oo n     oo
+ 16 oooooogoooo
+ 17 oo       oo
+ 18 oo222ooo oo
+ 19 oo     o oo
+ 20 oovvv    oo
+ 21 oooooo oooo
+ 22 oooooo oooo
+ 23 oouuuu   oo
+ 24 oo       oo
+ 25 oo2222122oo
+ 26 oo       oo
+ 27 oo       oo
+ 28 oooo vvvvoo
+ 29 oooo oooooo
+ 30 oooo     oo
+ 31 ooooooo  oo
+ 32 ooooooooooo
+ 33 ooooooooooo
+ 34 ooooooooooo
+ 35 ooooooooooo
+ 36 ooooooooooo
+ 37 oooooooogoo
+ 38 ooooooooooo
+
+== grid7 (32 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ooooooooooo
+  4 go   oooooo
+  5 go   oo   o
+  6 go + oo o o
+  7 go      u o
+  8 go        o
+  9 gooooooo  o
+ 10 go    2o  o
+ 11 go        o
+ 12 go n  2o  o
+ 13 gooooooo  o
+ 14 go u222u  o
+ 15 go  222   o
+ 16 go  222   o
+ 17 go o222 o o
+ 18 go o222 o o
+ 19 go oooooo o
+ 20 go 2 u uo o
+ 21 go 2 1 2o o
+ 22 go 22 12o o
+ 23 go 2v v2o o
+ 24 goooooo2  o
+ 25 goooooo2  o
+ 26 goooooo2o o
+ 27 ooooooo2ovo
+ 28 ooooooooooo
+ 29 ooooooooooo
+ 30 ooooooooooo
+ 31 ooooooooooo
+
+== grid8 (39 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ooooooooooo
+  4 o         o
+  5 o         o
+  6 o  n      o
+  7 ooooo   ooo
+  8 o         o
+  9 o y       o
+ 10 o         o
+ 11 ovvvvvvv  o
+ 12 oooooooo  o
+ 13 o      1  o
+ 14 o      oooo
+ 15 o         o
+ 16 o111111111o
+ 17 o         o
+ 18 o      oooo
+ 19 o      o +o
+ 20 o  y   o1oo
+ 21 o         o
+ 22 o         o
+ 23 o         o
+ 24 o         o
+ 25 o         o
+ 26 o         o
+ 27 o         o
+ 28 ov       vo
+ 29 oov     voo
+ 30 ooov   vooo
+ 31 oooo   oooo
+ 32 oooovvvoooo
+ 33 ooooooooooo
+ 34 ooooooooooo
+ 35 ooooooooooo
+ 36 ooooogooooo
+ 37 ooooooooooo
+ 38 ooooooooooo
+
+== grid9 (46 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ooooooooooo
+  4 ooooooooooo
+  5   + ooooooo
+  6     ooooooo
+  7  oooooooooo
+  8  o        o
+  9  o        o
+ 10 go n      o
+ 11  oooo   ooo
+ 12 go        o
+ 13  o        o
+ 14  o    y   o
+ 15  o        o
+ 16  o        o
+ 17  o        o
+ 18  o   vvvvvo
+ 19  oxxxoooooo
+ 20 go   ouuuuo
+ 21  o   o    o
+ 22  o   o    o
+ 23  o   o  o o
+ 24 go      o o
+ 25  o      o o
+ 26 govvvvvvo o
+ 27  oooooooo o
+ 28  ouuuuuuu o
+ 29  o        o
+ 30 go11111111o
+ 31  o        o
+ 32  o  x     o
+ 33  o        o
+ 34  o        o
+ 35  o        o
+ 36  o        o
+ 37  x     y  o
+ 38  o        o
+ 39 oovvvvvvvvo
+ 40 ooooooooooo
+ 41 ooooooooooo
+ 42 ooooooooooo
+ 43 ooooooooooo
+ 44 ogggggggggo
+ 45 ooooooooooo
+
+== grid10 (42 rows as written, index 0 = TOP of sky; maps are used reversed so LAST line = bottom)
+  0 ooooooooooo
+  1 ooooooooooo
+  2 ooooooooooo
+  3 ogggggggggo
+  4 ooooooooooo
+  5 ooooogooooo
+  6 ooooooooooo
+  7           o
+  8 n o       o
+  9 o o       o
+ 10   ovv   vvo
+ 11   ooo   ooo
+ 12  oo       o
+ 13   o       o
+ 14   o  vvv  o
+ 15 o o  ooo  o
+ 16   o       o
+ 17   o       o
+ 18  oo       o
+ 19   o       o
+ 20   ovvvvv  o
+ 21 o oooooo  o
+ 22   ouuuuu  o
+ 23   o       o
+ 24  oo       o
+ 25   o   vvvvo
+ 26   o   ooooo
+ 27 o o   uuuuo
+ 28   o       o
+ 29   o       o
+ 30  oo    y  o
+ 31   o       o
+ 32 ooovvvv vvo
+ 33 ooooooo1ooo
+ 34 oooo    ooo
+ 35 oooo +  ooo
+ 36 ooooooooooo
+ 37 ogggggggggo
+ 38 ooooooooooo
+ 39 ooooooooooo
+ 40 ooooooooooo
+ 41 ooooooooooo

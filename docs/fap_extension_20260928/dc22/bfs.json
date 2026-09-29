@@ -1,0 +1,20 @@
+{
+  "game_id": "dc22-fdcac232",
+  "distinct_states": 97,
+  "nodes_expanded": 92,
+  "env_steps": 4507,
+  "depth_limit": 12,
+  "click_cells": [
+    [
+      48,
+      19
+    ],
+    [
+      48,
+      36
+    ]
+  ],
+  "program_found": false,
+  "program": [],
+  "program_length": null
+}
