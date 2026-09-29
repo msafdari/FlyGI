@@ -207,13 +207,31 @@ per-type TEMPORAL dynamics on the same anatomy.
     REPRODUCED at spiking fidelity. The shuffled ring behaves
     comparably. Measured at two fidelity classes: this compiled ring
     holds activity, not position.
-- [in progress] Requirement 2+3 for the newly validated MB:
-  H-MB-CLASS2-ASSOCIATION preregistered (protocol, three controls, pass
-  bands, fixed configuration, and the staged-endpoint amendment all
-  recorded before implementation) and the stage-A arm is running --
-  one-shot conditioning on real game frames, held-out discrimination
-  across 5 disjoint games x 3 seeds. This is the one module with a live
-  path to a fly verdict.
+- [done] Requirement 2+3 for the MB -- THE PROGRAM'S FINAL VERDICT,
+  2026-09-29 (H-MB-CLASS2-ASSOCIATION: refuted). Input gates PASSED
+  (PN share of KC drive 62-87% vs the 5% bar). Held-out one-shot
+  association: real MB 0.600 (misses the band, p=0.0775);
+  degree-preserving rewired 0.800 -- HIGHER than real, so the specific
+  wiring adds nothing beyond degree sequences; shuffled-credit 0.400 --
+  real beats it (p=0.019), the depression mechanism genuinely carries
+  credit; matched one-shot perceptron 0.917 -- dominates. This is the
+  project's FIRST true fly-negative: stated with validated code
+  underneath, passing gates, and a working mechanism. Stage B gated
+  off per the preregistered staging.
+
+### PROGRAM CLOSED -- the definitive per-module answer [done]
+USEFUL: the eye's anatomical map, static (measured, replicated,
+deployed). NOT USEFUL, now earned rather than assumed: the mushroom
+body for one-shot visual association on ARC at class-2 fidelity -- the
+one module whose code validated, whose gates passed, and whose real
+wiring then measurably failed to beat its degree-preserving null while
+an engineered equivalent dominated. UNVALIDATABLE-AT-THIS-FIDELITY:
+T4/T5 (wall at frozen per-pair parameters; class-2.5 lever = trained
+flyvis ensemble), the CX ring (position-independent at two fidelity
+classes, 210-config sweep), LC coding (sign-inverted at class 1,
+untested at class 2), LH (substrate gates), efference (no validated
+consumer), SEZ/VNC (no native mapping). Every verdict carries its
+protocol; every null its mechanism; every wall its located next lever.
 - [planned] Class 2.5 for T4/T5 (trained flyvis ensemble parameters);
   ring verdict stands unless a physiological ingredient outside the
   swept space is identified.

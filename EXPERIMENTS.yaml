@@ -908,6 +908,30 @@ hypotheses:
         rate stated: expected-tier predictions are ~1 for 13; the
         prior MB-learning nulls at class 1 do not predict this arm
         (they were run on a code that never validated).
+      - >
+        MEASURED 2026-09-29 (scripts/benchmarks/mb_association.py,
+        results/benchmarks/mb_association.json; protocol executed in
+        full, 450 presentations, input gates PASSED at 62-87% PN share
+        vs the 5% requirement): FAIL against the preregistered bands,
+        with the cleanest attribution decomposition in the project's
+        record. Held-out accuracy: real MB 0.600 (binomial p=0.0775,
+        misses band 1); degree-preserving rewired control 0.800 --
+        HIGHER than real (sign test p=0.996), so the specific MaleCNS
+        PN->KC/KC->MBON wiring contributes NOTHING beyond its degree
+        sequences on this task; shuffled-credit 0.400 -- real beats it
+        (p=0.019), so the DAN-gated depression MECHANISM genuinely
+        carries stimulus-specific credit; engineered one-shot
+        perceptron on the same input 0.917 -- dominates everything:
+        the KC expansion loses information relative to direct template
+        comparison on ARC's highly similar frames. VERDICT: the
+        mushroom body earns the program's first true fly-negative --
+        NOT USEFUL for one-shot visual state association on ARC at
+        class-2 fidelity, stated with validated code underneath it,
+        passing input gates, and a working mechanism; what fails is
+        the specific wiring's contribution and the expansion's fit to
+        this stimulus statistics. Stage B does not run, per the
+        staging. This closes the last live module path.
+    status: refuted
     updated: 2026-09-29
 
   H-MODULE-VERDICT:
