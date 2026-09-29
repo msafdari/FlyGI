@@ -135,6 +135,44 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## PROGRAM: fidelity class 2 -- temporal/spiking dynamics -- opened 2026-09-29
+
+User directive: research and implement the next fidelity class. The class-1
+verdict located the wall exactly: no delay lines (kills T4/T5 direction
+selectivity), no sparse-coding regime (kills the KC code), no movable bump
+(kills the compass). Class 2 supplies precisely the missing physics:
+per-type TEMPORAL dynamics on the same anatomy.
+
+**Design (registered before implementation):**
+- Engine: leaky-integrate-and-fire on extracted SUBCIRCUITS of the compiled
+  graph (optic-lobe patch, MB, CX ring) -- the field's standard practice
+  (whole-brain LIF: Shiu et al. 2024 Nature; optic lobe with per-type time
+  constants reproducing T4/T5 DS: Lappalainen et al. 2024 Nature; spiking
+  EB ring from anatomy: Kakaria & de Bivort 2017). Subcircuits make spiking
+  tractable: MB ~2e4 nodes, CX ~1e3, an optic-lobe column patch ~1e4.
+- Parameters: per-type membrane/synaptic time constants and thresholds,
+  each labelled ESTABLISHED (with source) or ASSUMED (with sweep range).
+  Signs stay the measured-NT convention.
+- Benchmarks: THE SAME preregistered bands as class 1 (they are the
+  published biology; nothing gets re-tuned) -- T4/T5 direction tiling, KC
+  sparse fraction 3-15%, EB movable persistent bump -- now swept over the
+  assumed-parameter space instead of gain x leak.
+- Verdict rule unchanged: a module that passes its benchmark at class 2
+  re-enters requirement 2/3 (input gates, ARC native-function tests with
+  controls); a module that fails across the assumed-parameter sweep stays
+  UNVALIDATABLE with the wall moved one class deeper.
+
+### Statuses
+- [in progress] Research pass: parameter provenance from Shiu 2024 /
+  Lappalainen 2024 / ring-attractor and KC-sparseness literature (3-agent
+  fan-out, WebSearch-verified citations).
+- [in progress] Engine: src/flygi/dynamics/spiking.py (vectorized LIF on
+  CSR subgraphs) + subcircuit extraction + parameter registry with
+  provenance labels; unit tests.
+- [up next] Class-2 benchmark sweeps (3-agent fan-out, same bands).
+- [planned] Verdict update; requirement-3 ARC tests for any module that
+  newly validates.
+
 ## PROGRAM: the fly-module verdict (four requirements) -- opened 2026-09-29
 
 User directive: implement the four requirements for a definitive per-module
