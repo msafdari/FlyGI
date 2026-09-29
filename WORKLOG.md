@@ -51,6 +51,50 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## Extension sweep: six games decoded, three full WINs; recovered from a dead run -- 2026-09-28
+
+The 11-target extension fan-out (9 remaining dead games + the ft09-L5 and
+sc25-door boundaries, batches of 3 per the standing parallelism rule) died
+mid-run when the previous session ended: the journal shows six completed
+agents whose RETURNS were all null. Their WORK survived in /tmp/fap_ext --
+per-game NOTES, verified program JSONs, and solver scripts -- and is now
+preserved under docs/fap_extension_20260928/ (this is the recovery pattern
+the working agreement mandates: read the journal, then salvage artifacts in
+the same turn).
+
+**Recovered, all execution-verified by the agents in their own runs:**
+- tu93: FULL WIN, 9/9 levels in 187 actions. Lockstep maze: rooms on a
+  6px pitch, open doors colour 2, e-tile goal; enemies advance only on the
+  avatar's successful moves (blocked moves freeze the world); sentinel /
+  patroller / chaser types decoded, timer row 63.
+- ka59: FULL WIN, 7/7 levels in 321 actions. Multi-body sokoban-with-
+  launchers: click selects an e-ring object, arrows drive it on a 3px
+  lattice, contact-push launches; slot geometry IS the goal display.
+- sb26: FULL WIN, 8/8 levels in 124 steps. Recursive sequence builder:
+  legend = flatten(root box) with cycle-cut references; fill slots so the
+  flatten matches, press action 5 to submit.
+- re86: 6/8 levels in 335 actions. "Crosshair parking": action 5 cycles the
+  active avatar, park each shape so all same-colour dots lie on its
+  outline; palette tiles recolour on touch; L6+ adds a deformable squeeze
+  object and independently-blocking plus-bars.
+- su15: 7/9 levels in 97 actions. Merge-and-deliver: clicking near >=2
+  same-stage creatures fuses them up a size ladder; the header shows the
+  target shape multiset; action 7 is a full-world UNDO (search-with-
+  rollback is legal); refused clicks freeze the world.
+- ls20: 5/7 levels in 226 actions. Pattern-key transport: a 5x5 two-tone
+  key carries a hidden 3x3 pattern+ink shown in a display box; devices
+  transform it (rotator = rot90 CW, shifter = fixed bijection); the goal
+  box accepts the key only when pattern AND ink match.
+
+Batch 3 (dc22, bp35, wa30) died mid-investigation (partial probes on disk);
+batch 4 (ft09 level 5, sc25 door) never started. A completion sweep for
+those five is the next action, feeding the recovered patterns in as
+established context. INTEGRATION NOTE, per the first principle and the
+hidden-set lesson: the verified programs are seed-specific evidence that
+the RULES are right; what enters the library is per-archetype PARSERS and
+PLANNERS derived from the rules (maze BFS, sokoban planner, parking
+derivation, flatten matcher), never replayed coordinate scripts.
+
 ## A/B gate passed; FAP candidate submitted: 56650224 -- 2026-09-28
 
 The bounded candidate-validation session the collaborator review recommended,

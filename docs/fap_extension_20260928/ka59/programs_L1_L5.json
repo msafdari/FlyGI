@@ -1,0 +1,34 @@
+{
+  "game_id": "ka59-38d34dbb",
+  "seed_protocol": "offline arcade, derived_run_seeds(0, game_id), same harness as scripts/fap_program_premise.py",
+  "verified": "each level's transition observed in-run via env.observation_space.levels_completed increments (0->1->2->3->4->5)",
+  "action_key": "1=up 2=down 3=left 4=right 6=click(x=col,y=row); programs are concatenated in order from level start",
+  "level1": {
+    "actions": ["4","4","4","c43:31","1","4","c25:31","3","3","3","3","2"],
+    "count": 12,
+    "result": "levels 0->1 on the final down (P enters left slot interior (34,13)); box was launched right through the f gate (5-tile launch), then click-selected and driven into the right slot"
+  },
+  "level2": {
+    "actions": ["1","1","1","3","1","c19:44","1","1","1","1","c44:47","3","3","3","3","c37:43","2","3","c17:47","1","1","1","1","2","2","3","3","3","c19:17","1","1","3","3","3","c41:34","4","4","4","4","4","2","2","c37:46","2","2","4","4","4","4","4"],
+    "count": 50,
+    "result": "levels 1->2 on P's final right into slot D (52,52); Q (1x2) and R (2x2) were launched across the vertical f band, R launched Q up across the horizontal band, each then click-driven into shape-matched slots"
+  },
+  "level3": {
+    "actions": ["3","3","3","3","3","3","3","3","3","2","2","2","2","2","2","2","2","4","1","1","1","1","1","1","1","4","4","4","4","4","4","4","4","4","4","4","4","4","2","3","2","3","3","3","3","3","2","2","3","3","3"],
+    "count": 51,
+    "result": "levels 2->3 on P's final left into slot (30,36); plus-boulder b2 launched right exactly 5 tiles into plus-slot C, b1 launched left twice (notch-push trick for the border-adjacent arm) into plus-slot A"
+  },
+  "level4": {
+    "actions": ["4","4","4","2","c30:48","2","2","2","3","1","c30:30","2","2","3","1","3","3","3","1","1","1","1","4","2","2","4","4","4","4","4","4","4","1","4","4","4","4","c27:57","1","4","4","4","4"],
+    "count": 43,
+    "result": "levels 3->4 on E's final right into bottom slot (54,39); E (second selectable e-object) was launched through the horizontal membrane to serve as the bottom-room pusher; boulder b docked in the top plus-slot via a 3-tile stop-before-border launch and a 4-tile stop-before-border launch"
+  },
+  "level5": {
+    "actions": ["1","1","1","1","1","1","1","1","1","1","1","1","4","4","4","4","4","4","4","2"],
+    "count": 20,
+    "result": "levels 4->5 on P's final down into slot (28,49); the 12 ups pump/launch the c-d material stack out of the tube (it lands atop the overhead f block, membrane-clear rule), P exits the tube mouth and walks right into the slot"
+  },
+  "level6": {
+    "status": "UNSOLVED - see notes; BFS over move actions to depth 44 (9182 unique clock-normalized states) found no score; deeper BFS pending"
+  }
+}
