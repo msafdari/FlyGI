@@ -90,12 +90,16 @@ as such).
 - [planned] Per-type parameters where literature provides them; labelled
   assumptions elsewhere.
 
-### Requirement 2 -- input-validity gates [planned]
-Per module, measured statistics of the input actually delivered vs what
-the circuit evolved for, as a preregistered gate that must pass before
-any verdict run.
+### Requirement 2 -- input-validity gates [in progress: preregistered]
+Gates and thresholds fixed 2026-09-29 in H-MODULE-VERDICT (EXPERIMENTS.
+yaml) BEFORE any measurement; the measurement runs after requirement 1
+fixes the validated operating points. [up next once benchmarks land]
 
-### Requirement 3 -- native-function tests with full controls [planned]
+### Requirement 3 -- native-function tests with full controls [in progress: preregistered]
+Protocol fixed in H-MODULE-VERDICT: native-function mapping per module,
+three controls, held-out breadth endpoint, three seeds, run at every
+operating point that passed the module's benchmark; prior gain-2.0 nulls
+count only where gain 2.0 passes that module's benchmark. [planned]
 Per module at its validated operating point(s): preregistered ARC-mapped
 test vs degree-preserving null vs shuffled control vs engineered
 equivalent, matched budgets, held-out games. Prior nulls (MB, hash, CX

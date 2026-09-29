@@ -859,6 +859,50 @@ hypotheses:
         shipped combo candidate is untouched. Level-2 wall standing:
         composition above arrival semantics remains the frontier.
     updated: 2026-09-25
+  H-MODULE-VERDICT:
+    statement: >
+      The four-requirement program (user-directed 2026-09-29) can assign
+      every fly module one of three verdicts for ARC-AGI-3 -- USEFUL,
+      NOT USEFUL, or UNVALIDATABLE-AT-THIS-FIDELITY -- each earned, in
+      that order, by (1) a published-result benchmark passing somewhere
+      on the gain x leak operating grid, (2) a measured input-validity
+      gate, and (3) a native-function test beating degree-preserving
+      null, shuffled, and engineered-equivalent controls on held-out
+      games at a validated operating point.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-09-29 BEFORE ANY PROGRAM RUN. Requirement-1
+        benchmarks and bands are registered in scripts/benchmarks/
+        (in-code, cited, bands fixed before sweeps). Requirement-2
+        input gates, fixed now: MB -- driven-sensory share of total KC
+        input drive >= 5% and PN drive distributed (no single PN > 50%
+        of drive mass; the 2026-09-23 failure measured 0.00% share);
+        LC/T4T5 -- retinotopic coherence of delivered drive (adjacent
+        screen regions drive overlapping columns; already measured
+        pass, to be re-confirmed at validated points); CX -- input must
+        be heading-like (ring-ordered azimuthal drive); if no honest
+        ARC mapping produces one, the verdict is NO-NATIVE-MAPPING,
+        recorded as such rather than as a module null; LH -- PN-relayed
+        share of LH input >= 5% when PNs are driven; JO/efference --
+        action-copy delivered (prior measured pass, 144.7% KC
+        separation, re-confirmed at validated points); DN -- readout
+        alive (nonzero variance across candidate actions).
+        Requirement-3 protocol, fixed now: per module, the test is its
+        NATIVE function mapped to ARC (T4/T5 motion features; LC
+        object/archetype features; MB few-shot association with
+        reinforcement; LH innate valence prior; CX 1-bit context hold;
+        efference self/other separation), run at every operating point
+        that passed the module's requirement-1 benchmark, against
+        THREE controls (degree-preserving null graph, shuffled/permuted
+        variant, engineered equivalent) with matched budgets, primary
+        endpoint held-out-game breadth/levels, three seeds. A prior
+        null at gain 2.0 counts only if gain 2.0 passed that module's
+        benchmark; otherwise the verdict awaits the re-run. Expected
+        tier, base rate stated: this repository's expected-tier score
+        predictions are ~1 for 13.
+    updated: 2026-09-29
+
   H-FAP-PROGRAMS:
     statement: >
       The dead games' level 1 really is a short exact program derivable
