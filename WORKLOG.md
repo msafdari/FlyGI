@@ -56,6 +56,66 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## PROGRAM: the fly-module verdict (four requirements) -- opened 2026-09-29
+
+User directive: implement the four requirements for a definitive per-module
+answer, keep this section's statuses current, commit periodically. Status
+legend: [done] [in progress] [planned] [up next].
+
+**Scope honesty, recorded at registration:** this is the strongest
+COMPUTATIONAL version of the program. The transmitter->sign convention
+(ACh+, GABA/Glu/His- via GluCl/HisCl) is ESTABLISHED from literature and
+already what the compiled graph uses (measured 2026-09-29: consensus_nt
+covers 99.9% of nodes; "heuristic" in old labels means this convention,
+not guessed signs). What no computational program can supply: wet-lab
+physiology beyond published benchmarks. Verdicts will therefore carry one
+of three values per module: USEFUL (beat all controls at a validated
+operating point), NOT USEFUL (failed controls despite passing validation
+and input gates), or UNVALIDATABLE-AT-THIS-FIDELITY (no operating point
+passes the module's biological benchmark -- a model-class limit, recorded
+as such).
+
+### Requirement 1 -- physiology and validation [in progress]
+- [done] Signs from measured NT annotations (pre-existing; provenance now
+  recorded precisely).
+- [up next] BENCHMARK SUITE: preregistered pass bands from published fly
+  results -- T4/T5 direction selectivity (Maisak 2013), EB bump
+  persistence + opposite-signed PEN rotation (Seelig 2015, Turner-Evans
+  2017), KC sparseness 5-10% with APL (Turner 2008, Lin 2014), PN gain
+  normalization (Olsen-Wilson 2010), LC object-position tuning (Wu 2016).
+- [up next] OPERATING-POINT SWEEP: gain x leak grid, every benchmark at
+  every point; pass regions and their intersection. The CX record
+  predicts the intersection may be empty -- that outcome is itself a
+  primary result.
+- [planned] Per-type parameters where literature provides them; labelled
+  assumptions elsewhere.
+
+### Requirement 2 -- input-validity gates [planned]
+Per module, measured statistics of the input actually delivered vs what
+the circuit evolved for, as a preregistered gate that must pass before
+any verdict run.
+
+### Requirement 3 -- native-function tests with full controls [planned]
+Per module at its validated operating point(s): preregistered ARC-mapped
+test vs degree-preserving null vs shuffled control vs engineered
+equivalent, matched budgets, held-out games. Prior nulls (MB, hash, CX
+steering, LC features, T4/T5, efference) must be RE-RUN under validated
+regimes to count.
+
+### Requirement 4 -- the module inventory [done]
+Measured from the node table (2026-09-29): optic-lobe encoding stack
+(lamina/medulla, 89,403 ol_intrinsic + 6,098 ol_sensory), T4/T5 motion
+(13,585), LC/LPLC/visual projection (9,201), visual centrifugal (563),
+mushroom body (KC/MBON/DAN/APL), lateral horn (~2,028 typed), central
+complex (EPG/PEN/Delta7/PEG/FB), antennal lobe (ORN/PN), JO/efference
+(672), ascending (1,846), descending readout (1,314), SEZ/motor
+(vnc_* and cb_motor -- flagged: may have no honest ARC mapping; if so
+the verdict for them is "no native-function mapping", not a null).
+
+### Verdict [planned]
+The per-module matrix with tiers, then the definitive answer with its
+stated boundary.
+
 ## Thirteen-archetype library: battery 28.63 (81x), gateway 28.74 -- 2026-09-29
 
 Integration complete and every gate passed. The 11-agent integration
