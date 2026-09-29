@@ -207,10 +207,13 @@ per-type TEMPORAL dynamics on the same anatomy.
     REPRODUCED at spiking fidelity. The shuffled ring behaves
     comparably. Measured at two fidelity classes: this compiled ring
     holds activity, not position.
-- [up next] Requirement 2+3 for the newly validated MB: input gates,
-  then the native-function ARC test (few-shot association with
-  reinforcement) at the validated class-2 configuration, vs the three
-  controls. This is the one module with a live path to a fly verdict.
+- [in progress] Requirement 2+3 for the newly validated MB:
+  H-MB-CLASS2-ASSOCIATION preregistered (protocol, three controls, pass
+  bands, fixed configuration, and the staged-endpoint amendment all
+  recorded before implementation) and the stage-A arm is running --
+  one-shot conditioning on real game frames, held-out discrimination
+  across 5 disjoint games x 3 seeds. This is the one module with a live
+  path to a fly verdict.
 - [planned] Class 2.5 for T4/T5 (trained flyvis ensemble parameters);
   ring verdict stands unless a physiological ingredient outside the
   swept space is identified.
