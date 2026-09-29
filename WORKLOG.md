@@ -56,6 +56,34 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## Thirteen-archetype library: battery 28.63 (81x), gateway 28.74 -- 2026-09-29
+
+Integration complete and every gate passed. The 11-agent integration
+fan-out delivered all modules at or above their dossier targets with clean
+per-archetype negative audits; registration order is measured load-bearing
+(specialized before general: glyph_toggle before glyph_miniature 6/6 vs
+4/6, pip_door before pip_punch_roll 4 vs 2); 672 tests pass.
+
+**Battery (sg-combo-fap11, 75 rows, matched protocol):** mean 28.6339 vs
+2.9358 (two archetypes) vs 0.3519 (champion) -- 81x. Levels 216, breadth
+20/25, fap_errors 0, three-seed replication exact, and each converted
+game's level count equals its integration agent's executor-verified
+target. The 14 non-matching games are byte-identical to the prior arm.
+
+**Gateway (official competition-mode, matched 35-minute window):**
+28.742260 -- vs references 0.551859 (the LB-0.15 agent) and 3.044167 (the
+submitted two-archetype candidate) on the identical protocol. 73 levels,
+20 scoring games, FOUR completed outright at the 100-point cap (tu93 9/9
+in 185 actions, ft09 6/6 in 80, ka59 7/7 in 275, sb26 8/8 in 124).
+
+**LB calibration fact:** submission 56650224 (two archetypes) scored
+exactly 0.15 -- the abstention floor held perfectly and neither template
+grammar matched a hidden game. The thirteen-grammar candidate carries the
+same measured floor with eleven times the net. Hidden transfer remains
+unknown; the claim boundary is unchanged (engineered scaffold; deployed
+fly content = the click head's compiled eye-map). Submission of this
+candidate awaits explicit user authorization, per the standing rule.
+
 ## Completion sweep: ALL ELEVEN dead games decoded; ft09 COMPLETE 6/6 -- 2026-09-28
 
 The five-target completion workflow returned 5/5 with structured reports
