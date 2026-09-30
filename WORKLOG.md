@@ -15,6 +15,45 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Fly-limit question answered; external survey recorded -- 2026-09-30
+
+The user asked whether anything else is extractable from the fly and, if the
+limit is reached, which other challenges/benchmarks the fly could enter. Full
+answer with tiers and links: docs/next_arenas_survey_20260930.md. Compressed:
+
+- ON ARC, THE LIMIT IS MEASURED, NOT ASSUMED. Two earned fly-negatives (MB
+  association, T4/T5 motion decode -- both validated, both lost to their
+  degree-preserving rewires), the rest of the inventory closed by benchmark
+  failure or no-native-mapping, and the score track's non-LLM levers
+  exhausted by preregistered gates. Remaining fly-side levers are science,
+  not score: class-3 ingredients (see FlyBench below) and LC at class 2.
+- SOURCED (two-agent web survey, 2026-09-30): a Sept-2026 viral wave of
+  ~50+ "MaleCNS plays Doom/Mario/Beat Saber" projects commoditized the game
+  demo; NOBODY is on ARC (FlyGI appears unique); nobody anywhere holds a
+  control-backed "untrained innate wiring does useful task work" claim, and
+  three published lines cut against it (digital sphinx, fly-hero's
+  random-network readout, connectome-reservoir nulls). Our audited record --
+  positives AND negatives -- is therefore the asset.
+- FLYBENCH (github.com/brandoncho369/flybench, VERIFIED by local clone):
+  36 pre-registered reflex tasks on FlyWire+MaleCNS with shuffled-wiring
+  controls, same epistemics as this repo, aimed at biology not tasks. Its
+  no-free-parameter mechanisms (terminal-aware synapses: MaleCNS core tier
+  0.57->0.90; spike-frequency adaptation) are exactly "physiological
+  ingredients outside the swept space" -- the registered reopen condition
+  for our ring verdict. Its PN-broadcast finding predicts plain LIF cannot
+  sparse-code the AL; our Litwin-Kumar-calibrated pass is the counterpoint.
+- RANKED NEXT ARENAS (top of eight; details+kill tests in the doc):
+  1) ARC Prize 2026 Paper Track (sourced deadline 2026-11-09, re-verify) --
+  near-zero build, the record is the paper; 2) DSEC-Flow event-camera
+  optical flow (standing; T4/T5's native input; claim must be tiered
+  "connectome-constrained, physiology-fitted", frozen counts are DSI 0.042);
+  3) submit to FlyBench; 4) NeuroBench; 5) Brain-Score oddball; 6) e-nose /
+  gas-sensor drift for AL+MB. Not worth doing: more game demos, robotics
+  stacks, LLM leaderboards.
+
+Arena choice and any LLM-hybrid scope decision remain the user's. No code,
+config, or experiment changed in this checkpoint.
+
 ## Search layer: gated and NOT shipped; queue complete -- 2026-09-30
 
 The full gate sequence ran: gate (a) FAILED at 600-action rows (six
