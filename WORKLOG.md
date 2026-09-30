@@ -15,6 +15,29 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Search layer: gated and NOT shipped; queue complete -- 2026-09-30
+
+The full gate sequence ran: gate (a) FAILED at 600-action rows (six
+measured losses -- the layer burned budget on unfinishable searches),
+one mechanism-targeted amendment was registered and implemented
+(budget-aware engagement, immutable numbers untouched), the battery
+byte-identity re-run PASSED perfectly (75/75 rows identical to fap11,
+zero engagements), and the GATEWAY GATE FAILED at 28.459550 vs the
+28.742260 bar (engaged searches cost more than they won in the
+35-minute window). Per the registration -- no further amendments --
+the layer does not ship. It stays in the tree, default-off, as a
+measured component: real mechanism, harmless idle, unprofitable in the
+measurable window; the uncapped-rerun upside is expected-tier only.
+With this, the score track's non-LLM levers are exhausted by
+measurement: three 0.15 submissions killed grammar transfer, and the
+one transferable mechanism failed its own preregistered gate. What
+remains score-side is the LLM-hybrid scope decision (the user's) or
+banking 0.15. En route, two harness repairs: the macOS tmp reaper had
+gutted /tmp/flygi_rerun (rebuilt from vendor + slim registration), and
+an adapter NameError in the budget wiring that 708 tests missed
+because no smoke test drives choose_action's turn path with a live
+policy (fixed, noted as a coverage gap).
+
 ## H-ONLINE-SEARCH layer BUILT; cd82 and sp80 convert offline -- 2026-09-30
 
 The preregistered consequence of the 11/25 premise result is implemented:
