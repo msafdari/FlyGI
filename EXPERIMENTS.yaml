@@ -869,7 +869,7 @@ hypotheses:
       hidden-set upside after three submissions measured that
       game-specific grammars transfer zero (LB 0.15 = the generic
       floor, three times).
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-09-29/30 BEFORE THE SWEEP. Premise-killer:
@@ -888,6 +888,22 @@ hypotheses:
         reported alongside: distinct-state counts and depth-to-first-
         score distributions (the hidden-set feasibility proxy).
         Expected tier, base rate stated: ~1 for 14.
+      - >
+        MEASURED 2026-09-30 (scripts/online_search_premise.py,
+        results/online_search_premise.json; budget applied exactly,
+        zero errors, ~38 min): ELEVEN of 25 games fall to bounded
+        blind search -- the bar (>=5) is met decisively. Program
+        lengths 3-15. Instrument findings: the auto wake probe
+        rediscovered sc25's post-reset swallow unprompted and found
+        the SAME quirk in g50t (new); the auto timer rule
+        rediscovered sc25's strip; ft09's null under the click cap is
+        a candidate-RANKING null (the winning clicks sit at ranks
+        24-31 of the champion ordering, cap 12); lf52/su15/tn36
+        collapse to 1-2 states under the declared mask (flagged for a
+        manual glance); seven games exhaust the node budget at
+        6.3k-8.8k states (the unfavorable side of the proxy).
+        PREREGISTERED CONSEQUENCE NOW DUE: build the online layer and
+        take it through the battery + gateway gates.
     updated: 2026-09-30
 
   H-MB-CLASS2-ASSOCIATION:
@@ -1040,7 +1056,26 @@ hypotheses:
         measured at TWO fidelity classes). The definitive answer's
         boundary moves accordingly: the MB is no longer unvalidatable;
         its fly verdict awaits the requirement-3 run.
-    status_note: reopened-for-mb
+      - >
+        CLASS 2.5 MEASURED 2026-09-30 (scripts/benchmarks/
+        fc25_visual_ds.py; flyvis 1.2.0 released ensemble, task-
+        optimal cluster n=31, provenance and unit mapping verified
+        against the package source): T4/T5 DIRECTION SELECTIVITY
+        PASSES ITS BAND on the MaleCNS patch -- pooled median DSI
+        0.3216 (band 0.30), T4 four distinct preferred directions,
+        T5 three. ATTRIBUTION NUANCE, measured two-sided: trained
+        per-pair strengths + resting potentials move DSI 0.04 -> 0.33
+        at the matched instrument, while type-MEAN time constants add
+        nothing (uniform-tau with trained strengths scores 0.3365;
+        ensemble-mean aggregation likely cancels heterogeneous
+        per-model temporal solutions -- untested here). Dossier
+        corrections recorded: flyvis alpha init is 0.01/<N> not
+        0.01*<N>; measured trained taus contradict the assumed slow
+        arms (Mi4 22ms, Mi9 23ms vs assumed ~150). CONSEQUENCE: T4/T5
+        is VALIDATED at class 2.5 and re-enters the pipeline; its
+        requirement-2 gate and requirement-3 native-function ARC test
+        at this configuration are now owed.
+    status_note: reopened-for-mb-then-t4t5
     updated: 2026-09-29
 
   H-FAP-PROGRAMS:

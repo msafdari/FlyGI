@@ -137,15 +137,22 @@ registry entry.
 
 ## Tracks 1-4-5 (user-approved order) -- 2026-09-30
 
-- [in progress] Track 1, H-ONLINE-SEARCH premise sweep: preregistered
-  decision bar (>= 5/25 public games fall to bounded blind search =>
-  build the online layer; else the score track has no remaining non-LLM
-  lever). Instrument extends fap_bfs_probe with scene-component click
-  branching and auto wake/timer detection.
-- [in progress] Track 4, class 2.5: trained flyvis ensemble parameters
-  (per-type tau, V_rest, per-pair alpha) on the same MaleCNS patch and
-  the same immutable band; isolates whether trained strengths recover
-  the correlator the frozen recipe could not.
+- [done] Track 1, H-ONLINE-SEARCH: BAR MET DECISIVELY -- 11 of 25
+  games fall to bounded blind search (bar >=5), program lengths 3-15,
+  zero errors. Bonus instrument findings: g50t shares sc25's
+  post-reset swallow (new); ft09's null under the click cap is a
+  candidate-RANKING null (winning clicks at ranks 24-31, cap 12);
+  lf52/su15/tn36 collapse under the declared timer mask (manual glance
+  owed); seven games exhaust the budget at 6.3k-8.8k states. The
+  preregistered consequence is now due: BUILD the online layer and
+  gate it through battery + gateway. [up next]
+- [done] Track 4, class 2.5: T4/T5 DS PASSES ITS BAND -- DSI 0.3216,
+  T4 tiles four directions, T5 three, on trained flyvis ensemble
+  parameters with verified provenance. Attribution, two-sided: trained
+  per-pair strengths carry the pass (0.04 -> 0.33); type-mean taus add
+  nothing (uniform-tau at trained strengths: 0.3365). T4/T5 is
+  VALIDATED and re-enters the pipeline; its requirement-2/3 ARC run is
+  owed. Dossier corrections recorded in the registry.
 - [done] Track 5, the program write-up, published (private artifact):
   https://claude.ai/artifact/QoUf16jCT2R1offKQLx9Zp -- the four
   requirements, both fidelity classes' pass maps, the MB decomposition,
