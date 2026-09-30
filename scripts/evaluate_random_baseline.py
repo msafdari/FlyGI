@@ -489,6 +489,11 @@ def evaluate_one(
         # This range is the budget authority; unlike the upstream loop, it can
         # never execute budget + 1 actions.
         for step_index in range(action_budget):
+            # Registered gate-(a) amendment: policies that budget their own
+            # exploration receive the remaining row budget each turn.
+            budget_setter = getattr(policy, "set_remaining_action_budget", None)
+            if callable(budget_setter):
+                budget_setter(action_budget - step_index)
             if policy.is_done(latest_frame):
                 row["termination_reason"] = "win"
                 break

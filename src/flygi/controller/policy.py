@@ -165,6 +165,7 @@ class StateGraphPolicy:
         # ENGAGED (preregistered 75-turn stuck signal) it overrides with the
         # next search step, including voluntary RESETs for program replay.
         self._search = search
+        self._search_remaining_budget: int | None = None
         self._search_errors = 0
         self._search_banned = 0
         self._search_engaged_turns = 0
@@ -275,6 +276,11 @@ class StateGraphPolicy:
             "max_candidate_tier": self._config.max_candidate_tier,
             "max_clicks_per_tier": self._config.max_clicks_per_tier,
         }
+
+    def set_remaining_action_budget(self, remaining: int | None) -> None:
+        """Forwarded to the search layer (registered gate-(a) amendment)."""
+
+        self._search_remaining_budget = None if remaining is None else int(remaining)
 
     def diagnostics(self) -> dict[str, object]:
         """Return current online-learning and replay diagnostics."""
@@ -636,6 +642,9 @@ class StateGraphPolicy:
             # reported back through reject_last so the layer's budget and
             # traversal stay in sync.
             try:
+                setter = getattr(self._search, "set_remaining_budget", None)
+                if callable(setter):
+                    setter(self._search_remaining_budget)
                 self._search.observe(
                     observed.scene.grid, observed.turn.available_action_ids
                 )

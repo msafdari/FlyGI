@@ -69,6 +69,13 @@ from flygi.controller.scene import (
 # --- Preregistered numbers (EXPERIMENTS.yaml H-ONLINE-SEARCH; immutable) ----
 STUCK_OBSERVE_TURNS = 75
 LEVEL_ACTION_BUDGET = 1500
+# GATE-(a) AMENDMENT, registered 2026-09-30 before any re-run: engagement
+# additionally requires the remaining host action budget (when known) to
+# cover the full immutable search plus margin. At 600-action battery rows
+# the layer therefore never engages (measured: engaging there burned the
+# row on unfinishable searches and erased wandering progress); the gateway
+# and the uncapped rerun are where it works.
+ENGAGEMENT_MIN_REMAINING_BUDGET = 1600
 CLICK_CAP = 12
 
 # --- Instrument constants (ported from scripts/online_search_premise.py) ----
@@ -116,6 +123,7 @@ class OnlineSearchLayer:
     """
 
     # -- idle / engagement bookkeeping --------------------------------------
+    _remaining_budget: int | None = None
     _observes_since_boundary: int = 0
     _engaged: bool = False
     _level_abstain: bool = False
@@ -199,6 +207,11 @@ class OnlineSearchLayer:
         self._last_grid16 = grid16
         self._last_fp = fp
 
+    def set_remaining_budget(self, remaining: int | None) -> None:
+        """Host-supplied remaining action budget; None means uncapped."""
+
+        self._remaining_budget = None if remaining is None else int(remaining)
+
     def propose(self, grid: NDArray[np.integer]) -> Step | None:
         """Return the next search step, or None to leave the champion alone.
 
@@ -216,6 +229,13 @@ class OnlineSearchLayer:
             # see reconciliation); the counter restarts on level advances
             # only, because a forced reset is not an advance.
             if self._observes_since_boundary < STUCK_OBSERVE_TURNS:
+                return None
+            if (
+                self._remaining_budget is not None
+                and self._remaining_budget < ENGAGEMENT_MIN_REMAINING_BUDGET
+            ):
+                # Registered amendment: never start a search the host budget
+                # cannot finish. Unknown budget (deployment) means uncapped.
                 return None
             self._engage()
         if self._actions_emitted >= LEVEL_ACTION_BUDGET:

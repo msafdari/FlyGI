@@ -596,6 +596,12 @@ class MyAgent(Agent):
                 self._flygi_fallback = fallback
             action = fallback.choose_action(latest_frame)
         self._flygi_turns = getattr(self, "_flygi_turns", 0) + 1
+        budget_setter = getattr(self._policy, "set_remaining_action_budget", None)
+        if callable(budget_setter):
+            # Registered gate-(a) amendment: the rerun's budget is MAX_ACTIONS
+            # minus turns taken -- effectively uncapped, so the search layer
+            # engages there while short local rows keep it idle.
+            budget_setter(MAX_ACTIONS - self._flygi_turns)
         if self._flygi_turns % 100 == 0:
             diagnostics = getattr(self._policy, "diagnostics", None)
             if callable(diagnostics):

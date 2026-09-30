@@ -499,3 +499,47 @@ class TestPolicySeating:
         action = policy.choose_action(frame)
         assert action.value == 0
         assert "notify_reset" in search.calls
+
+
+class TestBudgetAwareEngagement:
+    """Registered gate-(a) amendment: engage only with budget to finish."""
+
+    def test_short_budget_blocks_engagement(self) -> None:
+        import numpy as np
+        from flygi.controller.search_layer import OnlineSearchLayer
+
+        layer = OnlineSearchLayer()
+        layer.set_remaining_budget(500)
+        grid = np.random.default_rng(0).integers(0, 16, (64, 64), dtype=np.int16)
+        for _ in range(120):
+            layer.observe(grid, (1, 2, 3, 4, 6))
+            assert layer.propose(grid) is None
+        assert not layer.engaged
+
+    def test_unknown_budget_engages(self) -> None:
+        import numpy as np
+        from flygi.controller.search_layer import OnlineSearchLayer
+
+        layer = OnlineSearchLayer()
+        layer.set_remaining_budget(None)
+        grid = np.random.default_rng(0).integers(0, 16, (64, 64), dtype=np.int16)
+        engaged = False
+        for _ in range(120):
+            layer.observe(grid, (1, 2, 3, 4, 6))
+            layer.propose(grid)
+            engaged = engaged or layer.engaged
+        assert engaged
+
+    def test_ample_budget_engages(self) -> None:
+        import numpy as np
+        from flygi.controller.search_layer import OnlineSearchLayer
+
+        layer = OnlineSearchLayer()
+        layer.set_remaining_budget(5000)
+        grid = np.random.default_rng(0).integers(0, 16, (64, 64), dtype=np.int16)
+        engaged = False
+        for _ in range(120):
+            layer.observe(grid, (1, 2, 3, 4, 6))
+            layer.propose(grid)
+            engaged = engaged or layer.engaged
+        assert engaged
