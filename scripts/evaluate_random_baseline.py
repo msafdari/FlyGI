@@ -508,10 +508,19 @@ def evaluate_one(
             row["actions_attempted"] += 1
 
             available_action_ids = list(turn.available_action_ids)
+            # GATE-0 LEGALITY AMENDMENT, declared 2026-09-30 (H-ONLINE-SEARCH
+            # build): a voluntary RESET on an ACTIVE frame is protocol-legal.
+            # MEASURED: the engine accepts action 0 on active frames while
+            # never listing it in available_actions, and the search layer's
+            # program replay depends on it. On a needs-reset frame, RESET
+            # remains the only legal action, exactly as before.
             protocol_legal = (
                 action_identifier == reset_id
                 if turn.needs_reset
-                else action_identifier in turn.available_action_ids
+                else (
+                    action_identifier == reset_id
+                    or action_identifier in turn.available_action_ids
+                )
             )
             if not protocol_legal:
                 illegal_action_count += 1

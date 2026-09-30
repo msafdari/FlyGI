@@ -116,6 +116,7 @@ class StateGraphPolicy:
         state_tags: object | None = None,
         taxis: object | None = None,
         fap: object | None = None,
+        search: object | None = None,
     ) -> None:
         if not controller_config.enabled:
             raise StateGraphPolicyError("state-graph policy requires controller.enabled=true")
@@ -158,6 +159,15 @@ class StateGraphPolicy:
         self._fap_fired = 0
         self._fap_errors = 0
         self._fap_banned = 0
+        # H-ONLINE-SEARCH: the budgeted online program search, seated AFTER
+        # the FAP override with the same contract -- while IDLE it abstains
+        # and the turn is byte-identical to a policy built without it; while
+        # ENGAGED (preregistered 75-turn stuck signal) it overrides with the
+        # next search step, including voluntary RESETs for program replay.
+        self._search = search
+        self._search_errors = 0
+        self._search_banned = 0
+        self._search_engaged_turns = 0
         self._last_action_id: int | None = None
         self._dense_spent_reward = 0.0
         self._dense_spent_punish = 0.0
@@ -287,6 +297,13 @@ class StateGraphPolicy:
             "fap_fired_turns": self._fap_fired,
             "fap_errors": self._fap_errors,
             "fap_banned": self._fap_banned,
+            "search": (None if self._search is None else self._search.describe()),
+            "search_engaged_turns": self._search_engaged_turns,
+            "search_programs_found": (
+                0 if self._search is None else int(getattr(self._search, "programs_found", 0))
+            ),
+            "search_errors": self._search_errors,
+            "search_banned": self._search_banned,
             "state_tags": (None if self._state_tags is None else self._state_tags.describe()),
             "head_decisive_turns": self._head_decisive,
             "head": (None if self._click_head is None else self._click_head.describe()),
@@ -436,6 +453,11 @@ class StateGraphPolicy:
                 # executor derived from the previous board is stale.
                 with suppress(Exception):
                     self._fap.notify_level_advance()
+            if self._search is not None:
+                # The search layer banks a program it just completed, then
+                # disengages and resets its per-level budget and tree.
+                with suppress(Exception):
+                    self._search.notify_level_advance()
         else:
             self._turns_since_advance += 1
         fatal = destination_turn.game_state == "GAME_OVER"
@@ -603,6 +625,73 @@ class StateGraphPolicy:
                         # expectations no longer hold.
                         self._abort_replay()
 
+        if self._search is not None:
+            # H-ONLINE-SEARCH: the budgeted incremental BFS layer, consulted
+            # only AFTER the FAP override abstains. It observes every active
+            # frame (the stuck counter and passive timer-mask learning need
+            # the full history) and abstains by default, so an idle layer
+            # leaves this turn byte-identical to search=None. The hardening
+            # mirrors the FAP seat: any layer exception degrades to
+            # ABSTENTION, a hard-banned or illegal step is refused and
+            # reported back through reject_last so the layer's budget and
+            # traversal stay in sync.
+            try:
+                self._search.observe(
+                    observed.scene.grid, observed.turn.available_action_ids
+                )
+            except Exception:
+                self._search_errors += 1
+            if candidate is None:
+                step = None
+                try:
+                    step = self._search.propose(observed.scene.grid)
+                except Exception:
+                    self._search_errors += 1
+                    step = None
+                if bool(getattr(self._search, "engaged", False)):
+                    self._search_engaged_turns += 1
+                if step is not None and int(step.action) == _RESET_ACTION_ID:
+                    # Program replay requires voluntary RESETs. MEASURED
+                    # 2026-09-30 (offline arcade probe, cd82): active frames
+                    # accept action 0 while never listing it in
+                    # available_actions, so the mask check the other actions
+                    # get cannot apply here.
+                    if self._replay_queue:
+                        self._abort_replay()
+                    return self._search_reset(observed)
+                if step is not None:
+                    identifier = int(step.action)
+                    legal = identifier in observed.turn.available_action_ids
+                    if identifier == _CLICK_ACTION_ID:
+                        legal = (
+                            legal
+                            and step.x is not None
+                            and step.y is not None
+                            and 0 <= int(step.x) <= 63
+                            and 0 <= int(step.y) <= 63
+                        )
+                    proposed = None
+                    if legal:
+                        if identifier == _CLICK_ACTION_ID:
+                            proposed = ActionCandidate(
+                                identifier, x=int(step.x), y=int(step.y)
+                            )
+                        else:
+                            proposed = ActionCandidate(identifier)
+                        if proposed in node.hard_bans:
+                            self._search_banned += 1
+                            proposed = None
+                    if proposed is None:
+                        with suppress(Exception):
+                            self._search.reject_last()
+                    else:
+                        candidate = proposed
+                        mode = "search"
+                        if self._replay_queue:
+                            # The search step preempts any queued replay; its
+                            # source expectations no longer hold.
+                            self._abort_replay()
+
         if candidate is None and self._replay_queue and self._replay_cooldown == 0:
             step = self._replay_queue[0]
             if (
@@ -709,6 +798,11 @@ class StateGraphPolicy:
             # frame guards, and per-life swallow-retry budget all restart.
             with suppress(Exception):
                 self._fap.notify_reset()
+        if self._search is not None:
+            # The search layer treats a forced reset as an arrival at the
+            # level-start board (and restarts its pre-engagement counter).
+            with suppress(Exception):
+                self._search.notify_reset()
         action = self._resolve_action(_RESET_ACTION_ID)
         reasoning = {
             "policy": "state-graph-controller",
@@ -724,6 +818,39 @@ class StateGraphPolicy:
             source_key=None if observed.state_key is None else observed.state_key.hex(),
             mode="forced-reset",
             forced_reset=True,
+        )
+        self.records.append(record)
+        self._pending_reset = _PendingReset(record=record)
+        self._replay_queue.clear()
+        self._decision_index += 1
+        return action
+
+    def _search_reset(self, observed: _ObservedFrame) -> ActionLike:
+        """Voluntary RESET emitted by the search layer for program replay.
+
+        The FAP executor is notified (the board it parsed is gone); the
+        search layer itself is NOT -- it emitted this reset deliberately and
+        its notify_reset contract is reserved for forced resets.
+        """
+
+        if self._fap is not None:
+            with suppress(Exception):
+                self._fap.notify_reset()
+        action = self._resolve_action(_RESET_ACTION_ID)
+        reasoning = {
+            "policy": "state-graph-controller",
+            "step": self._decision_index,
+            "mode": "search-reset",
+            "state": observed.turn.game_state,
+        }
+        self._annotate(action, reasoning)
+        record = ControllerTurnRecord(
+            step=self._decision_index,
+            action_id=_RESET_ACTION_ID,
+            source_state=observed.turn.game_state,
+            source_key=None if observed.state_key is None else observed.state_key.hex(),
+            mode="search-reset",
+            forced_reset=False,
         )
         self.records.append(record)
         self._pending_reset = _PendingReset(record=record)

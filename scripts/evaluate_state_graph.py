@@ -344,6 +344,13 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         return FapExecutor()
 
+    def _build_search():
+        if not config.controller.search_layer:
+            return None
+        from flygi.controller.search_layer import OnlineSearchLayer
+
+        return OnlineSearchLayer()
+
     def policy_factory(policy_seed: int) -> StateGraphPolicy:
         if fly_tiebreaker is not None:
             fly_tiebreaker.reset()
@@ -356,6 +363,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             state_tags=_build_state_tags(),
             taxis=_build_taxis(policy_seed),
             fap=_build_fap(),
+            search=_build_search(),
         )
         policy_factory.current = policy  # type: ignore[attr-defined]
         return policy

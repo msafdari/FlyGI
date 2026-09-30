@@ -15,6 +15,70 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## H-ONLINE-SEARCH layer BUILT; cd82 and sp80 convert offline -- 2026-09-30
+
+The preregistered consequence of the 11/25 premise result is implemented:
+`src/flygi/controller/search_layer.py` (OnlineSearchLayer, the FAP executor's
+seating protocol, consulted by `policy.py` only AFTER the FAP override
+abstains; engineered scaffold, no fly content). Knob `controller.search_layer`
+(default false, byte-identical off and while idle -- unit-measured) is wired
+through the config loader, `scripts/evaluate_state_graph.py`,
+`kaggle/agent/my_agent.py` (FLYGI_PREFLIGHT `search_layer` field, FLYGI_DIAG
+counters) and policy diagnostics (`search_engaged_turns`,
+`search_programs_found`, `search_errors`, `search_banned`). New configs:
+`configs/combo_fap_search.yaml`, `configs/combo_light_fap_search.yaml`
+(one-line deltas). Tests: `tests/test_search_layer.py` (21); full suite 705
+passed.
+
+Preregistered numbers implemented as immutable: engage after 75 observed
+turns without a level advance, <= 1,500 emitted actions per level then
+permanent abstention for that level, click cap 12. Mechanism notes, all
+labelled at the code site:
+
+- ASSUMPTION: observe() calls approximate reconciled turns; the stuck counter
+  restarts on level advances ONLY. The build directive's suggested
+  approximation (also restart on forced resets) was tried first and REFUTED
+  by measurement: sp80's champion dies every ~31 turns, so that counter never
+  reached 75 in 2,600 actions; the preregistered signal is "no level advance
+  for 75 reconciled turns" and a forced reset is not an advance.
+- Replay is skipped whenever the live state's fingerprint equals the next
+  target's (same state identity as the instrument). This is what fits the
+  budget: offline cd82 needed 2,411 env steps under replay-per-branch;
+  online conversion took ~1,151 emitted actions.
+- ASSUMPTION: the timer border-line rule is learned passively from the
+  champion's own pre-engagement transitions instead of the instrument's
+  24-step seeded walk. Check: learned masks matched the instrument's on all
+  four probed games (cd82 rows [63], sp80 rows [0], lp85 cols [0], s5i5
+  rows [63]).
+- Wake handling: the first post-reset step is re-emitted once when the
+  masked state did not change (the instrument's probe-once wake, expressed
+  under the search's state identity).
+- MEASURED: the engine accepts a voluntary RESET on active frames while
+  never listing action 0 in available_actions (offline arcade probe).
+
+MEASURED (scratch policy-style loop, minimal ControllerConfig + the layer
+only -- no click head, tags, FAP or fly -- seed 0, 2,600-action budget):
+
+- cd82: level 1 at action 1,226 (engaged at 75; program found and banked;
+  0 errors, 0 drifts). The known-findable 5-step program converts ONLINE.
+- sp80: level 1 at action 727 (13 deaths absorbed mid-search).
+- vc33, lp85: level 1 fell to the bare champion before engagement mattered;
+  on lp85 level 2 the layer engaged, spent exactly 1,500, abstained
+  permanently, zero errors.
+- s5i5: budget-exhausted without a find (offline needed 11,993 env steps;
+  unreachable at 1,500). Of the gate's currently-dead candidates: cd82
+  converts, sp80 converted here, s5i5 does not, and sk48 (121,981 offline
+  steps) will not.
+
+BLOCKER for gate (a): `evaluate_random_baseline.evaluate_one` treats a
+voluntary RESET as protocol-illegal and fails the row (measured: the engine
+itself accepts it), so the 75-row battery cannot run with search_layer=true
+until that Gate-0 legality contract is amended (one declared change, outside
+this build's allowed edit surface). Verification above therefore used a
+scratch policy-style loop (env.step directly), not evaluate_one. Next:
+amend the harness rule, then run the preregistered battery + gateway gates
+vs sg-combo-fap11.
+
 ## Thirteen-archetype candidate SUBMITTED: 56683298 — 2026-09-29 17:28 UTC
 
 The user explicitly requested submission of the current COMPLETE candidate,

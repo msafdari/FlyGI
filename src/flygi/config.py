@@ -278,6 +278,12 @@ class ControllerConfig:
     # byte-identical to the champion; abstention makes True measured-zero-cost
     # on non-matching games (25-game audit).
     fap_library: bool = False
+    # H-ONLINE-SEARCH (premise supported 2026-09-30, 11 of 25 games): the
+    # budgeted online program search -- incremental BFS through the live game,
+    # engaging only after the preregistered 75-turn stuck signal and spending
+    # at most 1,500 emitted actions per level. False is byte-identical to the
+    # champion; an idle (never-engaged) layer abstains on every turn.
+    search_layer: bool = False
     # Deploy switch: false drops the measured-inert full-graph tie seat at
     # Kaggle deployment. The remaining retinotopic head uses anatomy metadata
     # as plumbing but performs no neural/synaptic computation.
@@ -674,6 +680,7 @@ def load_config(path: str | Path) -> FlyGIConfig:
             taxis_weight=float(controller_raw.pop("taxis_weight", 1.0)),
             click_head_timer_mask=bool(controller_raw.pop("click_head_timer_mask", False)),
             fap_library=bool(controller_raw.pop("fap_library", False)),
+            search_layer=bool(controller_raw.pop("search_layer", False)),
             deploy_fly_tiebreak=bool(controller_raw.pop("deploy_fly_tiebreak", True)),
         )
     except (TypeError, ValueError) as exc:

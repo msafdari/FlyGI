@@ -262,6 +262,7 @@ def test_preflight_prints_machine_readable_verified_identity(
         "controller": None,
         "click_head": None,
         "fap_library": None,
+        "search_layer": None,
         "click_head_deadline": None,
         "click_head_coordinate_convention": None,
         "deploy_fly_tiebreak": None,

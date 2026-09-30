@@ -234,6 +234,11 @@ def _runtime_identity(shared: dict[str, Any]) -> dict[str, Any]:
             if controller_config is None
             else bool(getattr(controller_config.controller, "fap_library", False))
         ),
+        "search_layer": (
+            None
+            if controller_config is None
+            else bool(getattr(controller_config.controller, "search_layer", False))
+        ),
         "click_head_deadline": (
             None if controller_config is None else controller_config.controller.click_head_deadline
         ),
@@ -465,6 +470,11 @@ class MyAgent(Agent):
                 from flygi.controller.fap_library import FapExecutor
 
                 fap = FapExecutor()
+            search = None
+            if getattr(controller, "search_layer", False):
+                from flygi.controller.search_layer import OnlineSearchLayer
+
+                search = OnlineSearchLayer()
             self._policy = StateGraphPolicy(
                 GameAction,
                 controller,
@@ -473,6 +483,7 @@ class MyAgent(Agent):
                 click_head=click_head,
                 state_tags=state_tags,
                 fap=fap,
+                search=search,
             )
             self._mode = "controller-fly" if fly is not None else "controller-light"
             self._detail = (
@@ -600,6 +611,8 @@ class MyAgent(Agent):
                             "outcomes": snapshot.get("outcomes"),
                             "fap_fired": snapshot.get("fap_fired_turns"),
                             "fap_errors": snapshot.get("fap_errors"),
+                            "search_engaged": snapshot.get("search_engaged_turns"),
+                            "search_found": snapshot.get("search_programs_found"),
                         },
                         sort_keys=True,
                         separators=(",", ":"),
