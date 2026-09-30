@@ -50,10 +50,11 @@ date):
   status), now annotated in place. No repo doc carries a "106-neuron ring"
   claim elsewhere (grepped 106 / Delta7 / PEN_a across md/yaml/docs).
 
-NOT re-run here: this session's container has no data/processed runtime,
-so the edited test was validated by import/collection only. Execute
-`.venv/bin/python -m pytest tests/test_subcircuit.py -q` locally (~8 s
-extraction, ~1.2 GB peak RSS) to run the real-data assertions.
+Executed locally 2026-09-30 (user-run, reported back to the session; the
+cloud container itself has no data/processed runtime): the fixed test file
+from this branch, run from the repo root against the local runtime, passed
+all 3 tests -- the 148-neuron selection, the non-empty cholinergic PEN
+populations, and the sign conventions all hold on the real data.
 
 ## Thirteen-archetype candidate SUBMITTED: 56683298 — 2026-09-29 17:28 UTC
 
