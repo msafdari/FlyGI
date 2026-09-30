@@ -868,7 +868,7 @@ hypotheses:
       beating the uniform-tau control, the degree-preserving null, and
       the engineered block-matching equivalent -- the motion detector's
       native function doing real work on this task's actual dynamics.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-09-30 BEFORE IMPLEMENTATION. Protocol:
@@ -895,6 +895,24 @@ hypotheses:
         across game x seed cells). The engineered matcher's accuracy
         is reported alongside as the ceiling context. Expected tier,
         base rate stated: ~2 for 15 now.
+      - >
+        MEASURED 2026-09-30 (scripts/benchmarks/t4t5_motion_arm.py,
+        results/benchmarks/t4t5_motion_arm.json; 660 verified
+        displacement events across 11 qualifying games, 4 held-out
+        games x 3 seeds, protocol executed in full): FAIL against
+        bands 2-3, the second attributed fly-negative, with the same
+        decomposition as the MB arm. Real 0.3875 held-out 4-way
+        accuracy -- above chance in every seed (band 1 holds), so the
+        validated patch DOES carry direction signal on real frames.
+        But the uniform-tau twin matches it (0.3917, p=0.94) and the
+        degree-preserving rewire EXCEEDS it (0.4306, p=0.97): neither
+        the temporal heterogeneity nor the specific wiring is
+        load-bearing for the signal a linear probe can use on ARC's
+        displacement statistics. The engineered block-matcher is a
+        perfect 1.0000 ceiling, as stated at registration. VERDICT:
+        T4/T5 is NOT USEFUL for ARC motion decoding at validated
+        class-2.5 fidelity -- the native function runs, the task
+        does not need what the wiring specifically adds.
     updated: 2026-09-30
 
   H-ONLINE-SEARCH:

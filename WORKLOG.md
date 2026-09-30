@@ -210,6 +210,14 @@ registry entry.
   owed); seven games exhaust the budget at 6.3k-8.8k states. The
   preregistered consequence is now due: BUILD the online layer and
   gate it through battery + gateway. [up next]
+- [done 2026-09-30] H-T4T5-CLASS25-MOTION: REFUTED -- the second
+  attributed fly-negative, same decomposition as the MB. Real 0.3875
+  held-out (above chance every seed: the validated patch carries real
+  direction signal) but uniform-tau matches (0.3917) and the
+  degree-preserving rewire exceeds it (0.4306); engineered matcher
+  1.0000 ceiling. T4/T5: NOT USEFUL for ARC motion decoding at
+  validated fidelity. The definitive answer now has TWO earned
+  not-useful verdicts (MB, T4/T5) and one useful component (eye-map).
 - [done] Track 4, class 2.5: T4/T5 DS PASSES ITS BAND -- DSI 0.3216,
   T4 tiles four directions, T5 three, on trained flyvis ensemble
   parameters with verified provenance. Attribution, two-sided: trained
