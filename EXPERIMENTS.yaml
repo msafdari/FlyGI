@@ -859,6 +859,44 @@ hypotheses:
         shipped combo candidate is untouched. Level-2 wall standing:
         composition above arrival semantics remains the frontier.
     updated: 2026-09-25
+  H-T4T5-CLASS25-MOTION:
+    statement: >
+      The class-2.5-validated T4/T5 population (trained flyvis ensemble
+      parameters on the MaleCNS patch, DSI band passed) computes motion
+      direction on real ARC frame pairs well enough that its population
+      response decodes sprite displacement direction on HELD-OUT games,
+      beating the uniform-tau control, the degree-preserving null, and
+      the engineered block-matching equivalent -- the motion detector's
+      native function doing real work on this task's actual dynamics.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-09-30 BEFORE IMPLEMENTATION. Protocol:
+        ground-truth sprite displacements come from the taxis premise
+        machinery's measured exact movers (results/taxis_premise_v2
+        protocol; the 11 games where action-correlated translation was
+        recovered exactly); stimuli are real consecutive frame pairs
+        around a measured displacement, presented retinotopically to
+        the class-2.5 patch at its PASSING configuration (verbatim
+        from fc25_visual_ds.json, no re-tuning); features = T4a-d/
+        T5a-d population responses in the crossing-window readout;
+        decoder = one linear probe per arm, trained on displacement
+        events from TRAIN games, scored 4-way direction accuracy on
+        HELD-OUT games x 3 seeds. CONTROLS, all mandatory, same probe:
+        uniform-tau-with-trained-strengths features (the class-2.5
+        attribution twin); degree-preserving rewired patch; engineered
+        equivalent = the taxis shift-matcher's own direction estimate
+        (the repo's existing trivial alternative, which is ~exact on
+        these games -- stated openly: beating it is NOT required for
+        validation of the fly claim, matching the preregistered bands
+        below is). PASS BANDS, fixed now: held-out 4-way accuracy >
+        0.25 chance (binomial p < 0.05) AND real > uniform-tau twin
+        AND real > degree-preserving null (paired sign tests p < 0.05
+        across game x seed cells). The engineered matcher's accuracy
+        is reported alongside as the ceiling context. Expected tier,
+        base rate stated: ~2 for 15 now.
+    updated: 2026-09-30
+
   H-ONLINE-SEARCH:
     statement: >
       A budgeted online breadth-first program search -- simple actions
@@ -904,6 +942,26 @@ hypotheses:
         6.3k-8.8k states (the unfavorable side of the proxy).
         PREREGISTERED CONSEQUENCE NOW DUE: build the online layer and
         take it through the battery + gateway gates.
+      - >
+        BUILD SHIP BARS, PREREGISTERED 2026-09-30 BEFORE THE LAYER
+        EXISTS. Seating: a budgeted incremental BFS layer consulted by
+        the policy (like the FAP seat: abstains by default), engaging
+        only after a preregistered stuck signal (no level advance for
+        75 reconciled turns), spending a bounded exploration budget
+        (<= 1,500 emitted actions per level including RESET replays,
+        then permanent abstention for that level), banking and
+        executing any found program, and re-engaging per level. Wake
+        and timer handling reuse the measured auto-detection. GATES,
+        all required before any submission claim: (a) 75-row battery
+        vs sg-combo-fap11 -- zero score losses on the 20 currently
+        scoring games and at least THREE new game conversions among
+        the search-found set (cd82, s5i5, sk48 are the currently-dead
+        candidates); (b) matched 35-minute gateway window -- composite
+        >= the fap11 reference 28.742260 (the search must not trade
+        away banked wins for exploration in the short window; the
+        uncapped Kaggle budget is MORE favorable to it, so the short
+        window is the conservative gate); (c) abstention byte-identity
+        on games where the layer never engages; (d) 672+ tests green.
     updated: 2026-09-30
 
   H-MB-CLASS2-ASSOCIATION:
