@@ -79,6 +79,47 @@ scratch policy-style loop (env.step directly), not evaluate_one. Next:
 amend the harness rule, then run the preregistered battery + gateway gates
 vs sg-combo-fap11.
 
+## Ring-test PEN pattern bug fixed — 2026-09-30
+
+`tests/test_subcircuit.py` (TestRealRing) selected the EB-PB ring with exact
+patterns `("EPG", "PEN_a", "PEN_b", "Delta7", "PEG")`. `select_nodes` matches
+with `fnmatch.fnmatchcase` and the MaleCNS type names are `PEN_a(PEN1)` /
+`PEN_b(PEN2)`, so both PEN patterns matched ZERO nodes: the "ring" the test
+verified was 106 neurons (46 EPG + 42 Delta7 + 18 PEG) with no PEN cells,
+and it passed anyway because it only asserted node-count consistency,
+nnz > 1000, and the sign conventions. MEASURED 2026-09-29 (recorded in the
+scripts/benchmarks/fc2_eb_ring.py registration header, which flagged the
+discrepancy): corrected patterns `("EPG", "PEN_a*", "PEN_b*", "Delta7",
+"PEG")` select 148 neurons, adding 20 PEN_a(PEN1) + 22 PEN_b(PEN2), all
+acetylcholine/excitatory.
+
+Fixed 2026-09-30: the test now uses the wildcard patterns, asserts
+130 <= node_count <= 170 (148 in this compilation), and asserts both PEN
+populations are non-empty and 100% acetylcholine, so a regression to the
+PEN-less selection fails loudly. Blast-radius audit (code reading, this
+date):
+
+- scripts/benchmarks/fc2_eb_ring.py used the corrected patterns from
+  registration onward — the class-2 EB verdict (FAILED, 148-neuron ring)
+  is unaffected.
+- Class-1 scripts/benchmarks/cx_ring.py matches exact full type names
+  (`types == "PEN_a(PEN1)"`) on the full graph — unaffected.
+- src/flygi/arc/factory.py compass gain (H-CX-CALIBRATION) uses
+  `np.char.startswith`, and the prefix "PEN_a" DOES match "PEN_a(PEN1)" —
+  unaffected. (Noted while auditing: its "EPG" prefix also catches the 4
+  EPGt cells, a known difference from the fc2 registered member list; left
+  as-is.)
+- The only artifacts resting on the PEN-less selection were the test
+  itself and this file's "ring anatomy verified" phrase (2026-09-29 Engine
+  status), now annotated in place. No repo doc carries a "106-neuron ring"
+  claim elsewhere (grepped 106 / Delta7 / PEN_a across md/yaml/docs).
+
+Executed locally 2026-09-30 (user-run, reported back to the session; the
+cloud container itself has no data/processed runtime): the fixed test file
+from this branch, run from the repo root against the local runtime, passed
+all 3 tests -- the 148-neuron selection, the non-empty cholinergic PEN
+populations, and the sign conventions all hold on the real data.
+
 ## Thirteen-archetype candidate SUBMITTED: 56683298 — 2026-09-29 17:28 UTC
 
 The user explicitly requested submission of the current COMPLETE candidate,
@@ -276,6 +317,13 @@ per-type TEMPORAL dynamics on the same anatomy.
   procedure with the WTA-is-correct-physiology trap documented.
 - [done] Engine: subcircuit extraction (signed raw counts, memory-mapped
   scan; ring anatomy verified) + per-type LIF with graded units; 12 tests.
+  [CORRECTED 2026-09-30: "ring anatomy verified" overstated. The ring
+  test's exact patterns "PEN_a"/"PEN_b" matched ZERO nodes (the MaleCNS
+  types are "PEN_a(PEN1)"/"PEN_b(PEN2)"), so the selection the test
+  verified was 106 EPG+Delta7+PEG cells with NO PEN population. The
+  fc2_eb_ring.py benchmark used corrected wildcard patterns from
+  registration (148 neurons), so the class-2 EB verdict below is
+  unaffected. Test fixed; see the 2026-09-30 entry.]
 - [done] Class-2 benchmark sweeps -- THE SPLIT VERDICT, 2026-09-29:
   * KC SPARSE CODING: PASSED WITH ATTRIBUTION -- the program's first
     dynamical validation. MaleCNS MB subcircuit (627 PN / 4,064 KC / 2
