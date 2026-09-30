@@ -980,6 +980,29 @@ hypotheses:
         uncapped Kaggle budget is MORE favorable to it, so the short
         window is the conservative gate); (c) abstention byte-identity
         on games where the layer never engages; (d) 672+ tests green.
+      - >
+        GATE (a) MEASURED 2026-09-30: FAIL -- mean 28.3423 vs the
+        28.6339 reference, SIX games lost score (cd82 0.32->0, g50t
+        7.50->7.14, lf52 0.02->0, m0r0 1.55->0.83, sp80 0.45->0, wa30
+        40->20), zero new conversions, zero layer errors. MECHANISM,
+        measured: at 600-action rows the layer engages and then burns
+        the remaining budget on RESET replays it can never finish (its
+        immutable 1,500-action search does not fit), and every
+        voluntary RESET erases the champion's wandering progress; cd82
+        converts offline at ~1,226 actions -- more than a whole row.
+        The layer as-built is sized for the uncapped rerun regime.
+        ONE AMENDMENT, REGISTERED NOW BEFORE ANY RE-RUN, mechanism-
+        targeted, the immutable numbers untouched: BUDGET-AWARE
+        ENGAGEMENT -- the host passes the remaining action budget and
+        the layer engages only when remaining >= 1,600 actions (its
+        full search plus margin), else it stays idle (byte-identical).
+        Consequence accepted openly: the 600-action battery can then
+        exercise only idle byte-identity (gate (a) becomes gate (c));
+        the 35-minute gateway window (~2-9k actions/game) becomes the
+        sole performance gate at the unchanged bar >= 28.742260; the
+        uncapped Kaggle regime is where the layer's upside lives. No
+        further amendments: if the gateway gate fails, the layer does
+        not ship.
     updated: 2026-09-30
 
   H-MB-CLASS2-ASSOCIATION:
