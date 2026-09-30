@@ -135,6 +135,26 @@ a never-seen game's class. Instruments: scripts/fap_program_premise.py
 search); programs recorded in results/diagnostics/fap_programs.json and the
 registry entry.
 
+## Tracks 1-4-5 (user-approved order) -- 2026-09-30
+
+- [in progress] Track 1, H-ONLINE-SEARCH premise sweep: preregistered
+  decision bar (>= 5/25 public games fall to bounded blind search =>
+  build the online layer; else the score track has no remaining non-LLM
+  lever). Instrument extends fap_bfs_probe with scene-component click
+  branching and auto wake/timer detection.
+- [in progress] Track 4, class 2.5: trained flyvis ensemble parameters
+  (per-type tau, V_rest, per-pair alpha) on the same MaleCNS patch and
+  the same immutable band; isolates whether trained strengths recover
+  the correlator the frozen recipe could not.
+- [done] Track 5, the program write-up, published (private artifact):
+  https://claude.ai/artifact/QoUf16jCT2R1offKQLx9Zp -- the four
+  requirements, both fidelity classes' pass maps, the MB decomposition,
+  the boundary, and the two live levers. To be updated in place when
+  tracks 1 and 4 land.
+- Context fact recorded: submission 56683298 (thirteen archetypes)
+  scored 0.15 -- the third consecutive floor; game-specific grammars
+  transfer zero to the hidden set, measured three times.
+
 ## PROGRAM: fidelity class 2 -- temporal/spiking dynamics -- opened 2026-09-29
 
 User directive: research and implement the next fidelity class. The class-1
