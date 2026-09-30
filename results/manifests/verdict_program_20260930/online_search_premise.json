@@ -1,0 +1,1059 @@
+{
+  "experiment": "H-ONLINE-SEARCH",
+  "preregistered_budget": {
+    "max_nodes": 4000,
+    "depth": 16,
+    "decision_bar": ">= 5 of 25 games with a level-1-completing program found within budget"
+  },
+  "run_budget": {
+    "max_nodes": 4000,
+    "depth": 16
+  },
+  "instrument": {
+    "click_cap": 12,
+    "click_ranking": "tier asc, component area desc, emission order (stable)",
+    "champion_scene_caps": {
+      "component_limit": 64,
+      "max_candidate_tier": 2,
+      "max_clicks_per_tier": 64
+    },
+    "timer_rule": "border lines (outer 4) changing in >= 60% of effective random-walk transitions (min 4) over 24 sampled steps",
+    "state_identity": "blake2b-128(masked grid bytes + legal-action mask)",
+    "wall_seconds_per_game": 1500.0
+  },
+  "seed": 0,
+  "ram_at_start": "free=0.08GiB inactive(reclaimable)=4.25GiB",
+  "games": {
+    "ar25-0c556536": {
+      "game_id": "ar25-0c556536",
+      "distinct_states": 283,
+      "nodes_expanded": 263,
+      "env_steps": 45983,
+      "env_steps_total": 46010,
+      "depth_limit": 16,
+      "max_depth_expanded": 14,
+      "max_depth_generated": 15,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [
+        63
+      ],
+      "timer_effective_transitions": 7,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        }
+      ],
+      "program_length": 15,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 21.6
+    },
+    "bp35-0a0ad940": {
+      "game_id": "bp35-0a0ad940",
+      "distinct_states": 8816,
+      "nodes_expanded": 4000,
+      "env_steps": 574071,
+      "env_steps_total": 574098,
+      "depth_limit": 16,
+      "max_depth_expanded": 10,
+      "max_depth_generated": 11,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (3, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "node-budget-exhausted",
+      "wall_seconds": 1248.9
+    },
+    "cd82-fb555c5d": {
+      "game_id": "cd82-fb555c5d",
+      "distinct_states": 67,
+      "nodes_expanded": 33,
+      "env_steps": 2411,
+      "env_steps_total": 2444,
+      "depth_limit": 16,
+      "max_depth_expanded": 4,
+      "max_depth_generated": 5,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 18,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (3, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 3
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 5
+        }
+      ],
+      "program_length": 5,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 1.2
+    },
+    "cn04-2fe56bfb": {
+      "game_id": "cn04-2fe56bfb",
+      "distinct_states": 8624,
+      "nodes_expanded": 4000,
+      "env_steps": 505598,
+      "env_steps_total": 505625,
+      "depth_limit": 16,
+      "max_depth_expanded": 6,
+      "max_depth_generated": 7,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 20,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "node-budget-exhausted",
+      "wall_seconds": 152.7
+    },
+    "dc22-fdcac232": {
+      "game_id": "dc22-fdcac232",
+      "distinct_states": 110,
+      "nodes_expanded": 108,
+      "env_steps": 14433,
+      "env_steps_total": 14460,
+      "depth_limit": 16,
+      "max_depth_expanded": 15,
+      "max_depth_generated": 16,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 15,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 8.5
+    },
+    "ft09-0d8bbf25": {
+      "game_id": "ft09-0d8bbf25",
+      "distinct_states": 1,
+      "nodes_expanded": 1,
+      "env_steps": 25,
+      "env_steps_total": 59,
+      "depth_limit": 16,
+      "max_depth_expanded": 0,
+      "max_depth_generated": 1,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 0,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 0.1
+    },
+    "g50t-5849a774": {
+      "game_id": "g50t-5849a774",
+      "distinct_states": 176,
+      "nodes_expanded": 169,
+      "env_steps": 10082,
+      "env_steps_total": 10110,
+      "depth_limit": 16,
+      "max_depth_expanded": 15,
+      "max_depth_generated": 16,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 21,
+      "wake_swallow_detected": true,
+      "wake_action": {
+        "action": 1
+      },
+      "wake_evidence": "probe (1, {}): step 1 left the masked grid identical, the identical step 2 changed it -- post-reset swallow detected",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 7.4
+    },
+    "ka59-38d34dbb": {
+      "game_id": "ka59-38d34dbb",
+      "distinct_states": 2303,
+      "nodes_expanded": 1753,
+      "env_steps": 274881,
+      "env_steps_total": 274908,
+      "depth_limit": 16,
+      "max_depth_expanded": 10,
+      "max_depth_generated": 11,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 16,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 6,
+          "x": 43,
+          "y": 30
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 4
+        }
+      ],
+      "program_length": 11,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 109.7
+    },
+    "lf52-271a04aa": {
+      "game_id": "lf52-271a04aa",
+      "distinct_states": 1,
+      "nodes_expanded": 1,
+      "env_steps": 33,
+      "env_steps_total": 67,
+      "depth_limit": 16,
+      "max_depth_expanded": 0,
+      "max_depth_generated": 1,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        0
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 0.2
+    },
+    "lp85-305b61c3": {
+      "game_id": "lp85-305b61c3",
+      "distinct_states": 9,
+      "nodes_expanded": 8,
+      "env_steps": 337,
+      "env_steps_total": 371,
+      "depth_limit": 16,
+      "max_depth_expanded": 4,
+      "max_depth_generated": 5,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [
+        0
+      ],
+      "timer_effective_transitions": 8,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 6,
+          "x": 5,
+          "y": 32
+        },
+        {
+          "action": 6,
+          "x": 5,
+          "y": 32
+        },
+        {
+          "action": 6,
+          "x": 5,
+          "y": 32
+        },
+        {
+          "action": 6,
+          "x": 5,
+          "y": 32
+        },
+        {
+          "action": 6,
+          "x": 5,
+          "y": 32
+        }
+      ],
+      "program_length": 5,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 0.3
+    },
+    "ls20-9607627b": {
+      "game_id": "ls20-9607627b",
+      "distinct_states": 89,
+      "nodes_expanded": 79,
+      "env_steps": 2919,
+      "env_steps_total": 2946,
+      "depth_limit": 16,
+      "max_depth_expanded": 12,
+      "max_depth_generated": 13,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        61,
+        62
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        }
+      ],
+      "program_length": 13,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 2.8
+    },
+    "m0r0-492f87ba": {
+      "game_id": "m0r0-492f87ba",
+      "distinct_states": 596,
+      "nodes_expanded": 521,
+      "env_steps": 104394,
+      "env_steps_total": 104421,
+      "depth_limit": 16,
+      "max_depth_expanded": 14,
+      "max_depth_generated": 15,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        0,
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 13,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        }
+      ],
+      "program_length": 15,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 36.6
+    },
+    "r11l-495a7899": {
+      "game_id": "r11l-495a7899",
+      "distinct_states": 374,
+      "nodes_expanded": 114,
+      "env_steps": 6358,
+      "env_steps_total": 6385,
+      "depth_limit": 16,
+      "max_depth_expanded": 3,
+      "max_depth_generated": 4,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [
+        0
+      ],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (6, {'x': 31, 'y': 32}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 6,
+          "x": 20,
+          "y": 50
+        },
+        {
+          "action": 6,
+          "x": 38,
+          "y": 18
+        },
+        {
+          "action": 6,
+          "x": 27,
+          "y": 58
+        },
+        {
+          "action": 6,
+          "x": 34,
+          "y": 31
+        }
+      ],
+      "program_length": 4,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 5.0
+    },
+    "re86-8af5384d": {
+      "game_id": "re86-8af5384d",
+      "distinct_states": 6638,
+      "nodes_expanded": 4000,
+      "env_steps": 182826,
+      "env_steps_total": 182853,
+      "depth_limit": 16,
+      "max_depth_expanded": 9,
+      "max_depth_generated": 10,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "node-budget-exhausted",
+      "wall_seconds": 59.1
+    },
+    "s5i5-18d95033": {
+      "game_id": "s5i5-18d95033",
+      "distinct_states": 119,
+      "nodes_expanded": 112,
+      "env_steps": 11993,
+      "env_steps_total": 12027,
+      "depth_limit": 16,
+      "max_depth_expanded": 12,
+      "max_depth_generated": 13,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 45,
+          "y": 21
+        },
+        {
+          "action": 6,
+          "x": 24,
+          "y": 44
+        },
+        {
+          "action": 6,
+          "x": 24,
+          "y": 44
+        },
+        {
+          "action": 6,
+          "x": 24,
+          "y": 44
+        },
+        {
+          "action": 6,
+          "x": 24,
+          "y": 44
+        },
+        {
+          "action": 6,
+          "x": 24,
+          "y": 44
+        },
+        {
+          "action": 6,
+          "x": 24,
+          "y": 44
+        }
+      ],
+      "program_length": 13,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 3.7
+    },
+    "sb26-7fbdac44": {
+      "game_id": "sb26-7fbdac44",
+      "distinct_states": 33,
+      "nodes_expanded": 31,
+      "env_steps": 3927,
+      "env_steps_total": 3954,
+      "depth_limit": 16,
+      "max_depth_expanded": 15,
+      "max_depth_generated": 16,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 4,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (5, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 7.6
+    },
+    "sc25-635fd71a": {
+      "game_id": "sc25-635fd71a",
+      "distinct_states": 6315,
+      "nodes_expanded": 4000,
+      "env_steps": 547090,
+      "env_steps_total": 547118,
+      "depth_limit": 16,
+      "max_depth_expanded": 7,
+      "max_depth_generated": 8,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [
+        62,
+        63
+      ],
+      "timer_effective_transitions": 15,
+      "wake_swallow_detected": true,
+      "wake_action": {
+        "action": 1
+      },
+      "wake_evidence": "probe (1, {}): step 1 left the masked grid identical, the identical step 2 changed it -- post-reset swallow detected",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "node-budget-exhausted",
+      "wall_seconds": 390.8
+    },
+    "sk48-d8078629": {
+      "game_id": "sk48-d8078629",
+      "distinct_states": 1031,
+      "nodes_expanded": 622,
+      "env_steps": 121981,
+      "env_steps_total": 122008,
+      "depth_limit": 16,
+      "max_depth_expanded": 13,
+      "max_depth_generated": 14,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 5,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 2
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 3
+        },
+        {
+          "action": 1
+        },
+        {
+          "action": 4
+        }
+      ],
+      "program_length": 14,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 62.9
+    },
+    "sp80-589a99af": {
+      "game_id": "sp80-589a99af",
+      "distinct_states": 31,
+      "nodes_expanded": 21,
+      "env_steps": 1420,
+      "env_steps_total": 1447,
+      "depth_limit": 16,
+      "max_depth_expanded": 3,
+      "max_depth_generated": 4,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        0
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 4
+        },
+        {
+          "action": 5
+        }
+      ],
+      "program_length": 4,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 0.6
+    },
+    "su15-1944f8ab": {
+      "game_id": "su15-1944f8ab",
+      "distinct_states": 2,
+      "nodes_expanded": 2,
+      "env_steps": 61,
+      "env_steps_total": 95,
+      "depth_limit": 16,
+      "max_depth_expanded": 1,
+      "max_depth_generated": 2,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 18,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 0.2
+    },
+    "tn36-ef4dde99": {
+      "game_id": "tn36-ef4dde99",
+      "distinct_states": 2,
+      "nodes_expanded": 2,
+      "env_steps": 61,
+      "env_steps_total": 88,
+      "depth_limit": 16,
+      "max_depth_expanded": 1,
+      "max_depth_generated": 2,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        1
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (6, {'x': 32, 'y': 41}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 0.2
+    },
+    "tr87-cd924810": {
+      "game_id": "tr87-cd924810",
+      "distinct_states": 8345,
+      "nodes_expanded": 4000,
+      "env_steps": 143681,
+      "env_steps_total": 143708,
+      "depth_limit": 16,
+      "max_depth_expanded": 8,
+      "max_depth_generated": 9,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "node-budget-exhausted",
+      "wall_seconds": 85.4
+    },
+    "tu93-0768757b": {
+      "game_id": "tu93-0768757b",
+      "distinct_states": 60,
+      "nodes_expanded": 58,
+      "env_steps": 2549,
+      "env_steps_total": 2583,
+      "depth_limit": 16,
+      "max_depth_expanded": 15,
+      "max_depth_generated": 16,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        63
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "state-space-exhausted",
+      "wall_seconds": 1.1
+    },
+    "vc33-5430563c": {
+      "game_id": "vc33-5430563c",
+      "distinct_states": 6,
+      "nodes_expanded": 5,
+      "env_steps": 173,
+      "env_steps_total": 207,
+      "depth_limit": 16,
+      "max_depth_expanded": 2,
+      "max_depth_generated": 3,
+      "click_cap": 12,
+      "timer_mask_rows": [
+        0
+      ],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 24,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled",
+      "base_score": 0,
+      "program_found": true,
+      "program": [
+        {
+          "action": 6,
+          "x": 61,
+          "y": 33
+        },
+        {
+          "action": 6,
+          "x": 61,
+          "y": 33
+        },
+        {
+          "action": 6,
+          "x": 61,
+          "y": 33
+        }
+      ],
+      "program_length": 3,
+      "partial": false,
+      "outcome": "program-found",
+      "wall_seconds": 0.2
+    },
+    "wa30-ee6fef47": {
+      "game_id": "wa30-ee6fef47",
+      "distinct_states": 8332,
+      "nodes_expanded": 4000,
+      "env_steps": 220226,
+      "env_steps_total": 220253,
+      "depth_limit": 16,
+      "max_depth_expanded": 11,
+      "max_depth_generated": 12,
+      "click_cap": 12,
+      "timer_mask_rows": [],
+      "timer_mask_cols": [],
+      "timer_effective_transitions": 19,
+      "wake_swallow_detected": false,
+      "wake_action": null,
+      "wake_evidence": "probe (1, {}) changed the masked grid on step 1",
+      "base_score": 0,
+      "program_found": false,
+      "program": [],
+      "program_length": null,
+      "partial": false,
+      "outcome": "node-budget-exhausted",
+      "wall_seconds": 53.7
+    }
+  },
+  "summary": {
+    "games_completed": 25,
+    "games_with_level1_program": 11,
+    "games_found": [
+      "ar25-0c556536",
+      "cd82-fb555c5d",
+      "ka59-38d34dbb",
+      "lp85-305b61c3",
+      "ls20-9607627b",
+      "m0r0-492f87ba",
+      "r11l-495a7899",
+      "s5i5-18d95033",
+      "sk48-d8078629",
+      "sp80-589a99af",
+      "vc33-5430563c"
+    ],
+    "decision_bar": ">= 5 of 25 games with a level-1-completing program found within budget",
+    "bar_met_so_far": true
+  }
+}

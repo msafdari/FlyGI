@@ -1,0 +1,2233 @@
+{
+  "benchmark": "FC2.5 V1 rerun -- T4/T5 direction selectivity: fc2 patch/protocol with TRAINED flyvis ensemble parameters (per-type tau, per-type V_rest, per-pair alpha)",
+  "band": "PASS iff pooled per-cell median DSI >= 0.3 (T4 on ON bar, T5 on OFF bar) AND T4a-d distinct preferred directions >= 3 AND T5a-d distinct >= 3 AND defined-DSI fraction >= 0.5; preregistered before the sweep",
+  "citation": "Maisak et al. 2013, Nature 500:212-216",
+  "fc2_result": "all 8 frozen-parameter configs failed (best v2 median DSI 0.042; uniform-tau control 0.045 -- matched); results/benchmarks/fc2_visual_ds.json",
+  "trained_params": "docs/fidelity2/flyvis_trained_params.json",
+  "params_provenance": {
+    "source": "flyvis 1.2.0 (pip), released pretrained ensemble flow/0000, Lappalainen et al. 2024 Nature 634:1132",
+    "download": "flyvis download-pretrained (package's public Google Drive distribution; SHA256 checksums verified by the downloader: results_pretrained_models.zip 71c78d40..., results_umap_and_clustering.zip 6300ec1e...)",
+    "checkpoint": "chkpts/chkpt_00000 per model (sole released checkpoint; verified identical to what NetworkView.init_network() recovers)",
+    "ensemble_ids": [
+      "000",
+      "001",
+      "002",
+      "003",
+      "004",
+      "005",
+      "006",
+      "007",
+      "008",
+      "009",
+      "010",
+      "011",
+      "012",
+      "013",
+      "014",
+      "015",
+      "016",
+      "017",
+      "018",
+      "019",
+      "020",
+      "021",
+      "022",
+      "023",
+      "024",
+      "025",
+      "026",
+      "027",
+      "028",
+      "029",
+      "030",
+      "031",
+      "032",
+      "033",
+      "034",
+      "035",
+      "036",
+      "037",
+      "038",
+      "039",
+      "040",
+      "041",
+      "042",
+      "043",
+      "044",
+      "045",
+      "046",
+      "047",
+      "048",
+      "049"
+    ],
+    "min_validation_losses": [
+      5.1366,
+      5.191,
+      5.2201,
+      5.2472,
+      5.2513,
+      5.2599,
+      5.2604,
+      5.2625,
+      5.27,
+      5.2704,
+      5.2719,
+      5.2775,
+      5.2779,
+      5.2812,
+      5.2831,
+      5.2852,
+      5.2897,
+      5.2919,
+      5.2922,
+      5.2955,
+      5.2956,
+      5.2969,
+      5.298,
+      5.2989,
+      5.2994,
+      5.3009,
+      5.3035,
+      5.307,
+      5.3082,
+      5.3188,
+      5.3195,
+      5.3196,
+      5.3244,
+      5.329,
+      5.331,
+      5.3316,
+      5.3321,
+      5.3327,
+      5.3358,
+      5.3554,
+      5.3597,
+      5.3597,
+      5.3664,
+      5.3716,
+      5.3786,
+      5.3839,
+      5.418,
+      5.4183,
+      5.4278,
+      5.6779
+    ],
+    "task_optimal_subset": {
+      "definition": "cluster 0 of Ensemble.cluster_indices('T4c') on the RELEASED precomputed UMAP+GMM clustering; flyvis relabels clusters by ascending task error, so cluster 0 is the paper's task-optimal T4c-tuning cluster (Lappalainen 2024 Fig. 4)",
+      "clusters": {
+        "0": [
+          0,
+          1,
+          2,
+          3,
+          6,
+          7,
+          9,
+          11,
+          12,
+          13,
+          14,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          27,
+          29,
+          30,
+          31,
+          35,
+          36,
+          37,
+          42,
+          44,
+          47,
+          48
+        ],
+        "1": [
+          4,
+          5,
+          26,
+          33,
+          38,
+          40,
+          43
+        ],
+        "2": [
+          8,
+          10,
+          15,
+          25,
+          28,
+          32,
+          34,
+          39,
+          41,
+          45,
+          46,
+          49
+        ]
+      },
+      "cluster_mean_task_error": {
+        "0": 5.2974,
+        "1": 5.3158,
+        "2": 5.3572
+      },
+      "subset_model_ids": [
+        "000",
+        "001",
+        "002",
+        "003",
+        "006",
+        "007",
+        "009",
+        "011",
+        "012",
+        "013",
+        "014",
+        "016",
+        "017",
+        "018",
+        "019",
+        "020",
+        "021",
+        "022",
+        "023",
+        "024",
+        "027",
+        "029",
+        "030",
+        "031",
+        "035",
+        "036",
+        "037",
+        "042",
+        "044",
+        "047",
+        "048"
+      ],
+      "n": 31,
+      "caveat": "sklearn emitted InconsistentVersionWarning unpickling the stored clustering (built with 1.1.1, read with the installed version); labels and mask are stored values, not refit, and the ensemble-consistency check in cluster_indices passed"
+    },
+    "aggregation": "arithmetic mean (and std) over models of raw checkpoint values; alpha clamped >=0 per model before averaging (flyvis clamps at use); negative raw alphas encountered: 0",
+    "alpha_semantics": "weight_ij = sign_pair * syn_count_ij * alpha_pair (VERIFIED, flyvis/network/dynamics.py PPNeuronIGRSynapses.write_derived_params); alpha is the per-type-pair unitary strength multiplying the synapse count, units a.u. per synapse; flyvis init was rho/<N>_pair, rho=0.01 (VERIFIED, flyvis/network/initialization.py SynapseCountScaling)",
+    "units": "tau in ms (checkpoint stores seconds); v_rest and alpha in flyvis a.u.",
+    "tau_raw_range_ms": [
+      18.78,
+      543.08
+    ],
+    "extracted_by": "scripts/benchmarks/fc25_visual_ds.py --extract, 2026-09-29"
+  },
+  "alpha_mapping": "W_ij = curated_sign(pre) * alpha_trained(pair) * N_ij(MaleCNS); flyvis alpha multiplies counts (does NOT absorb them; verified in dynamics.py). ASSUMPTION: MaleCNS counts comparable per-pair to flyvis's FIB25-derived counts; global scale absorbed by gain calibration, relative per-pair scale uncorrected (header)",
+  "calibration_declared": "fc2 procedure unchanged (held-out +45deg diagonal, 5 col/s, both polarities, argmin |log(median peak evoked/0.5)|, stability-gated); grid EXTENDED before any run by continuing the {1,3}x10^k pattern to 3e3 (unit analysis, header); identical grid for every config including the control",
+  "gain_grid": [
+    1e-05,
+    3e-05,
+    0.0001,
+    0.0003,
+    0.001,
+    0.003,
+    0.01,
+    0.03,
+    0.1,
+    0.3,
+    1.0,
+    3.0,
+    10.0,
+    30.0,
+    100.0,
+    300.0,
+    1000.0,
+    3000.0
+  ],
+  "expected_tier_note": "repo base rate for expected-to-help changes is 0/12; pass/fail open until run",
+  "configs": [
+    {
+      "label": "trained_subset",
+      "aggregate": "subset",
+      "uniform_tau_ms": null,
+      "alpha_coverage": {
+        "pairs_total": 320,
+        "pairs_trained": 132,
+        "pairs_fallback": [
+          "L1->L1",
+          "L1->L2",
+          "L1->L3",
+          "L1->L4",
+          "L1->Mi4",
+          "L1->Mi9",
+          "L1->Tm1",
+          "L1->Tm2",
+          "L1->Tm4",
+          "L1->Tm9",
+          "L2->L2",
+          "L2->L3",
+          "L2->Tm3",
+          "L2->Tm9",
+          "L3->L1",
+          "L3->L2",
+          "L3->L3",
+          "L3->L4",
+          "L3->L5",
+          "L3->Mi4",
+          "L3->Tm1",
+          "L3->Tm2",
+          "L3->Tm4",
+          "L4->L1",
+          "L4->Mi1",
+          "L4->Mi4",
+          "L4->Tm1",
+          "L4->Tm3",
+          "L5->L3",
+          "L5->L4",
+          "L5->Mi9",
+          "L5->Tm1",
+          "L5->Tm2",
+          "L5->Tm4",
+          "L5->Tm9",
+          "Mi1->L2",
+          "Mi1->L3",
+          "Mi1->L4",
+          "Mi1->Mi1",
+          "Mi1->Tm2",
+          "Mi1->Tm4",
+          "Mi1->Tm9",
+          "Mi4->L1",
+          "Mi4->L3",
+          "Mi4->L4",
+          "Mi4->L5",
+          "Mi4->Tm3",
+          "Mi4->Tm4",
+          "Mi9->L1",
+          "Mi9->L2",
+          "Mi9->L4",
+          "Mi9->L5",
+          "Mi9->Mi9",
+          "Mi9->Tm3",
+          "Mi9->Tm9",
+          "T4a->Mi1",
+          "T4a->Mi4",
+          "T4a->T4b",
+          "T4a->T4d",
+          "T4a->T5b",
+          "T4a->T5c",
+          "T4a->T5d",
+          "T4a->Tm2",
+          "T4a->Tm3",
+          "T4a->Tm9",
+          "T4b->Mi1",
+          "T4b->Mi4",
+          "T4b->T4a",
+          "T4b->T4d",
+          "T4b->T5a",
+          "T4b->T5c",
+          "T4b->T5d",
+          "T4b->Tm1",
+          "T4b->Tm2",
+          "T4b->Tm3",
+          "T4b->Tm4",
+          "T4b->Tm9",
+          "T4c->Mi1",
+          "T4c->Mi4",
+          "T4c->T4a",
+          "T4c->T4b",
+          "T4c->T4d",
+          "T4c->T5a",
+          "T4c->T5b",
+          "T4c->T5d",
+          "T4c->Tm2",
+          "T4c->Tm3",
+          "T4d->Mi1",
+          "T4d->Mi4",
+          "T4d->Mi9",
+          "T4d->T4b",
+          "T4d->T4c",
+          "T4d->T5a",
+          "T4d->T5b",
+          "T4d->T5c",
+          "T4d->Tm3",
+          "T4d->Tm4",
+          "T5a->T4b",
+          "T5a->T4c",
+          "T5a->T4d",
+          "T5a->T5c",
+          "T5a->T5d",
+          "T5a->Tm1",
+          "T5a->Tm2",
+          "T5a->Tm3",
+          "T5a->Tm4",
+          "T5a->Tm9",
+          "T5b->T4a",
+          "T5b->T4c",
+          "T5b->T4d",
+          "T5b->T5a",
+          "T5b->T5c",
+          "T5b->Tm1",
+          "T5b->Tm3",
+          "T5b->Tm4",
+          "T5b->Tm9",
+          "T5c->T4a",
+          "T5c->T4b",
+          "T5c->T4d",
+          "T5c->T5a",
+          "T5c->T5b",
+          "T5c->T5d",
+          "T5c->Tm1",
+          "T5c->Tm3",
+          "T5c->Tm4",
+          "T5c->Tm9",
+          "T5d->T4a",
+          "T5d->T4b",
+          "T5d->T4c",
+          "T5d->T5a",
+          "T5d->T5b",
+          "T5d->T5c",
+          "T5d->Tm1",
+          "T5d->Tm2",
+          "T5d->Tm3",
+          "T5d->Tm4",
+          "T5d->Tm9",
+          "Tm1->L1",
+          "Tm1->L3",
+          "Tm1->L4",
+          "Tm1->T4a",
+          "Tm1->T4d",
+          "Tm1->Tm1",
+          "Tm1->Tm3",
+          "Tm2->L1",
+          "Tm2->L3",
+          "Tm2->L4",
+          "Tm2->Mi1",
+          "Tm2->T4a",
+          "Tm2->T4b",
+          "Tm2->T4c",
+          "Tm2->T4d",
+          "Tm2->Tm2",
+          "Tm2->Tm3",
+          "Tm3->L2",
+          "Tm3->L3",
+          "Tm3->L4",
+          "Tm3->L5",
+          "Tm3->Mi4",
+          "Tm3->Mi9",
+          "Tm3->T5a",
+          "Tm3->T5b",
+          "Tm3->T5c",
+          "Tm3->T5d",
+          "Tm3->Tm1",
+          "Tm3->Tm2",
+          "Tm3->Tm9",
+          "Tm4->L2",
+          "Tm4->L3",
+          "Tm4->L4",
+          "Tm4->L5",
+          "Tm4->Mi1",
+          "Tm4->Mi9",
+          "Tm4->T4a",
+          "Tm4->T4b",
+          "Tm4->T4c",
+          "Tm4->T4d",
+          "Tm4->Tm1",
+          "Tm4->Tm2",
+          "Tm4->Tm9",
+          "Tm9->L3",
+          "Tm9->L5",
+          "Tm9->Mi1",
+          "Tm9->Mi4",
+          "Tm9->T4c",
+          "Tm9->Tm3",
+          "Tm9->Tm4",
+          "Tm9->Tm9"
+        ],
+        "edges_trained_fraction": 0.8847058823529412,
+        "synapse_mass_trained_fraction": 0.9785861968994141,
+        "fallback_rule": "alpha = 0.01 / mean_nonzero_patch_count(pair) (flyvis init formula; declared, header)"
+      },
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvis init 50 ms / 0.5 (should never fire; all patch types carry trained rules)"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: tau 24.03 ms, V_rest 1.7542 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: tau 45.10 ms, V_rest -0.2349 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: tau 37.51 ms, V_rest 0.5233 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: tau 44.58 ms, V_rest 0.0841 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: tau 26.58 ms, V_rest 0.0699 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: tau 19.80 ms, V_rest 0.2821 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: tau 22.09 ms, V_rest 0.1090 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: tau 23.16 ms, V_rest 0.5400 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: tau 80.01 ms, V_rest 0.5139 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: tau 133.18 ms, V_rest 0.3622 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: tau 19.79 ms, V_rest 0.6173 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: tau 41.25 ms, V_rest 0.5115 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: tau 46.71 ms, V_rest 0.6560 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "CT1(M10)",
+          "provenance": "CT1(M10): tau 61.13 ms, V_rest 0.5007 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "CT1(Lo1)",
+          "provenance": "CT1(Lo1): tau 79.64 ms, V_rest 0.4116 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: tau 22.76 ms, V_rest 0.5289 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: tau 20.03 ms, V_rest 0.4545 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: tau 19.77 ms, V_rest 0.5565 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: tau 35.54 ms, V_rest 0.6217 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: tau 19.80 ms, V_rest 0.6458 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: tau 37.73 ms, V_rest 0.5542 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: tau 55.44 ms, V_rest 0.6030 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: tau 30.81 ms, V_rest 0.6747 -- MEASURED(model-derived): flyvis flow/0000 subset mean"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 9.376066589794618e-11
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 8.438172938163291e-10
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 9.37463295880292e-09
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 8.434279685776147e-08
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 9.360190723617379e-07
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 8.395385630299845e-06
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 9.216136454054391e-05
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.0007953150770312334
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 0.00834661776728124
+          },
+          {
+            "gain": 0.3,
+            "stable": true,
+            "median_peak_evoked": 0.04975448369016422
+          },
+          {
+            "gain": 1.0,
+            "stable": false
+          },
+          {
+            "gain": 3.0,
+            "stable": false
+          },
+          {
+            "gain": 10.0,
+            "stable": false
+          },
+          {
+            "gain": 30.0,
+            "stable": false
+          },
+          {
+            "gain": 100.0,
+            "stable": false
+          },
+          {
+            "gain": 300.0,
+            "stable": false
+          },
+          {
+            "gain": 1000.0,
+            "stable": false
+          },
+          {
+            "gain": 3000.0,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.3,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "gain_at_grid_edge": false,
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 1.7542633157783756,
+            "L2": 0.0,
+            "L3": 0.523889574737646,
+            "L4": 0.08904166653543504,
+            "L5": 0.0,
+            "Mi1": 0.0,
+            "Mi4": 0.07595037304704645,
+            "Mi9": 1.017141711134649,
+            "Tm1": 0.48852445075037154,
+            "Tm2": 0.34303712396986674,
+            "Tm3": 0.0,
+            "Tm4": 0.6176446168846765,
+            "Tm9": 0.8341515352902101,
+            "T4a": 0.39584130450951605,
+            "T4b": 0.34484744503661285,
+            "T4c": 0.49208607076761096,
+            "T4d": 0.6283238676831687,
+            "T5a": 1.0585582646456004,
+            "T5b": 1.1298459851349665,
+            "T5c": 1.561040538348724,
+            "T5d": 1.335474565520745,
+            "settle_residual": 8.624267966439447e-12
+          },
+          "off": {
+            "L1": 0.7542823149613367,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.08892885638245913,
+            "L5": 0.0,
+            "Mi1": 0.0,
+            "Mi4": 0.13754913833186713,
+            "Mi9": 0.6496365043321434,
+            "Tm1": 0.5036890733323766,
+            "Tm2": 0.35857950982184755,
+            "Tm3": 0.001217641907800884,
+            "Tm4": 0.6821122936458215,
+            "Tm9": 0.6535138487969745,
+            "T4a": 0.4582985088972502,
+            "T4b": 0.41898185474822197,
+            "T4c": 0.5796071045941631,
+            "T4d": 0.7254380218631409,
+            "T5a": 1.0496156641471859,
+            "T5b": 1.1076435634755764,
+            "T5c": 1.5183723661653967,
+            "T5d": 1.3275737709966384,
+            "settle_residual": 9.314271576243982e-12
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.3215706817029622,
+          "median_dsi_t4_on": 0.3277716486491736,
+          "median_dsi_t5_off": 0.3175242398434709,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 4,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.22190004930335652,
+              "direction_totals": {
+                "+x": 7.869269766244522,
+                "-x": 8.58237645490587,
+                "+y": 10.073362801151196,
+                "-y": 6.414667961912175
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.1826618312521435,
+              "direction_totals": {
+                "+x": 9.66559783482594,
+                "-x": 8.66657224560769,
+                "+y": 7.481698906098218,
+                "-y": 10.825775752915959
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "+x",
+              "subtype_dsi": 0.4591092324987886,
+              "direction_totals": {
+                "+x": 16.735248057425625,
+                "-x": 6.203744698813438,
+                "+y": 14.046548989810436,
+                "-y": 8.161908598474373
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.4389273196630883,
+              "direction_totals": {
+                "+x": 7.135998345370637,
+                "-x": 18.300985473145097,
+                "+y": 8.717704911368882,
+                "-y": 16.260348026615258
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.18819151859056205,
+              "direction_totals": {
+                "+x": 0.966568586328717,
+                "-x": 1.4147038651504524,
+                "+y": 1.4140043755002274,
+                "-y": 0.9580393673266279
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.19591859258389513,
+              "direction_totals": {
+                "+x": 2.5010667029202596,
+                "-x": 2.7406229522862287,
+                "+y": 2.0992595387360384,
+                "-y": 3.1222504212615583
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "+x",
+              "subtype_dsi": 0.3034642961339821,
+              "direction_totals": {
+                "+x": 6.836784661993928,
+                "-x": 3.6533909143859256,
+                "+y": 6.108905898367519,
+                "-y": 4.2476511892408935
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "-x",
+              "subtype_dsi": 0.4286811690086582,
+              "direction_totals": {
+                "+x": 0.8052496872794425,
+                "-x": 2.0136655789378053,
+                "+y": 0.9877782273925756,
+                "-y": 1.7653483828938386
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.5239951537506548,
+            "5.0": 0.28489313366901137,
+            "10.0": 0.14903162248096408
+          },
+          "pass": true
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.0965784967932562,
+          "median_dsi_t4_on": 0.09170238368982868,
+          "median_dsi_t5_off": 0.1053155917010003,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.028191966719078212,
+              "direction_totals": {
+                "+x": 40.65652346745964,
+                "-x": 43.4608943317006,
+                "+y": 54.04127141448562,
+                "-y": 51.07775920180927
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.01634019425384041,
+              "direction_totals": {
+                "+x": 47.67123324699882,
+                "-x": 45.864432252514646,
+                "+y": 57.46311221083615,
+                "-y": 59.372224305221344
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "+y",
+              "subtype_dsi": 0.03893891525946585,
+              "direction_totals": {
+                "+x": 62.225956771472376,
+                "-x": 51.00270855860624,
+                "+y": 72.9720369134608,
+                "-y": 67.5021254105805
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.03327497899196343,
+              "direction_totals": {
+                "+x": 61.77590171881326,
+                "-x": 68.71470532314392,
+                "+y": 78.6515921623691,
+                "-y": 84.06601719537039
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.028032677527373397,
+              "direction_totals": {
+                "+x": 5.767879674068843,
+                "-x": 6.263815370995486,
+                "+y": 7.688825812728067,
+                "-y": 7.2695037828276865
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.018879010145454792,
+              "direction_totals": {
+                "+x": 14.43403274796378,
+                "-x": 14.235963961389293,
+                "+y": 17.585629407265206,
+                "-y": 18.262404808927315
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "+y",
+              "subtype_dsi": 0.028506761902875377,
+              "direction_totals": {
+                "+x": 30.704169652151965,
+                "-x": 28.285098086974834,
+                "+y": 37.962111315269134,
+                "-y": 35.8577462130064
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "-y",
+              "subtype_dsi": 0.054503505344969026,
+              "direction_totals": {
+                "+x": 5.990831338992968,
+                "-x": 7.204044572821593,
+                "+y": 7.686671010950775,
+                "-y": 8.57287316378526
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.103526805399831,
+            "5.0": 0.0938022691655829,
+            "10.0": 0.07960841988600952
+          },
+          "pass": false
+        },
+        "pass": true,
+        "median_dsi_pooled": 0.3215706817029622
+      },
+      "elapsed_s": 11.4
+    },
+    {
+      "label": "trained_all50",
+      "aggregate": "all50",
+      "uniform_tau_ms": null,
+      "alpha_coverage": {
+        "pairs_total": 320,
+        "pairs_trained": 132,
+        "pairs_fallback": [
+          "L1->L1",
+          "L1->L2",
+          "L1->L3",
+          "L1->L4",
+          "L1->Mi4",
+          "L1->Mi9",
+          "L1->Tm1",
+          "L1->Tm2",
+          "L1->Tm4",
+          "L1->Tm9",
+          "L2->L2",
+          "L2->L3",
+          "L2->Tm3",
+          "L2->Tm9",
+          "L3->L1",
+          "L3->L2",
+          "L3->L3",
+          "L3->L4",
+          "L3->L5",
+          "L3->Mi4",
+          "L3->Tm1",
+          "L3->Tm2",
+          "L3->Tm4",
+          "L4->L1",
+          "L4->Mi1",
+          "L4->Mi4",
+          "L4->Tm1",
+          "L4->Tm3",
+          "L5->L3",
+          "L5->L4",
+          "L5->Mi9",
+          "L5->Tm1",
+          "L5->Tm2",
+          "L5->Tm4",
+          "L5->Tm9",
+          "Mi1->L2",
+          "Mi1->L3",
+          "Mi1->L4",
+          "Mi1->Mi1",
+          "Mi1->Tm2",
+          "Mi1->Tm4",
+          "Mi1->Tm9",
+          "Mi4->L1",
+          "Mi4->L3",
+          "Mi4->L4",
+          "Mi4->L5",
+          "Mi4->Tm3",
+          "Mi4->Tm4",
+          "Mi9->L1",
+          "Mi9->L2",
+          "Mi9->L4",
+          "Mi9->L5",
+          "Mi9->Mi9",
+          "Mi9->Tm3",
+          "Mi9->Tm9",
+          "T4a->Mi1",
+          "T4a->Mi4",
+          "T4a->T4b",
+          "T4a->T4d",
+          "T4a->T5b",
+          "T4a->T5c",
+          "T4a->T5d",
+          "T4a->Tm2",
+          "T4a->Tm3",
+          "T4a->Tm9",
+          "T4b->Mi1",
+          "T4b->Mi4",
+          "T4b->T4a",
+          "T4b->T4d",
+          "T4b->T5a",
+          "T4b->T5c",
+          "T4b->T5d",
+          "T4b->Tm1",
+          "T4b->Tm2",
+          "T4b->Tm3",
+          "T4b->Tm4",
+          "T4b->Tm9",
+          "T4c->Mi1",
+          "T4c->Mi4",
+          "T4c->T4a",
+          "T4c->T4b",
+          "T4c->T4d",
+          "T4c->T5a",
+          "T4c->T5b",
+          "T4c->T5d",
+          "T4c->Tm2",
+          "T4c->Tm3",
+          "T4d->Mi1",
+          "T4d->Mi4",
+          "T4d->Mi9",
+          "T4d->T4b",
+          "T4d->T4c",
+          "T4d->T5a",
+          "T4d->T5b",
+          "T4d->T5c",
+          "T4d->Tm3",
+          "T4d->Tm4",
+          "T5a->T4b",
+          "T5a->T4c",
+          "T5a->T4d",
+          "T5a->T5c",
+          "T5a->T5d",
+          "T5a->Tm1",
+          "T5a->Tm2",
+          "T5a->Tm3",
+          "T5a->Tm4",
+          "T5a->Tm9",
+          "T5b->T4a",
+          "T5b->T4c",
+          "T5b->T4d",
+          "T5b->T5a",
+          "T5b->T5c",
+          "T5b->Tm1",
+          "T5b->Tm3",
+          "T5b->Tm4",
+          "T5b->Tm9",
+          "T5c->T4a",
+          "T5c->T4b",
+          "T5c->T4d",
+          "T5c->T5a",
+          "T5c->T5b",
+          "T5c->T5d",
+          "T5c->Tm1",
+          "T5c->Tm3",
+          "T5c->Tm4",
+          "T5c->Tm9",
+          "T5d->T4a",
+          "T5d->T4b",
+          "T5d->T4c",
+          "T5d->T5a",
+          "T5d->T5b",
+          "T5d->T5c",
+          "T5d->Tm1",
+          "T5d->Tm2",
+          "T5d->Tm3",
+          "T5d->Tm4",
+          "T5d->Tm9",
+          "Tm1->L1",
+          "Tm1->L3",
+          "Tm1->L4",
+          "Tm1->T4a",
+          "Tm1->T4d",
+          "Tm1->Tm1",
+          "Tm1->Tm3",
+          "Tm2->L1",
+          "Tm2->L3",
+          "Tm2->L4",
+          "Tm2->Mi1",
+          "Tm2->T4a",
+          "Tm2->T4b",
+          "Tm2->T4c",
+          "Tm2->T4d",
+          "Tm2->Tm2",
+          "Tm2->Tm3",
+          "Tm3->L2",
+          "Tm3->L3",
+          "Tm3->L4",
+          "Tm3->L5",
+          "Tm3->Mi4",
+          "Tm3->Mi9",
+          "Tm3->T5a",
+          "Tm3->T5b",
+          "Tm3->T5c",
+          "Tm3->T5d",
+          "Tm3->Tm1",
+          "Tm3->Tm2",
+          "Tm3->Tm9",
+          "Tm4->L2",
+          "Tm4->L3",
+          "Tm4->L4",
+          "Tm4->L5",
+          "Tm4->Mi1",
+          "Tm4->Mi9",
+          "Tm4->T4a",
+          "Tm4->T4b",
+          "Tm4->T4c",
+          "Tm4->T4d",
+          "Tm4->Tm1",
+          "Tm4->Tm2",
+          "Tm4->Tm9",
+          "Tm9->L3",
+          "Tm9->L5",
+          "Tm9->Mi1",
+          "Tm9->Mi4",
+          "Tm9->T4c",
+          "Tm9->Tm3",
+          "Tm9->Tm4",
+          "Tm9->Tm9"
+        ],
+        "edges_trained_fraction": 0.8847058823529412,
+        "synapse_mass_trained_fraction": 0.9785861968994141,
+        "fallback_rule": "alpha = 0.01 / mean_nonzero_patch_count(pair) (flyvis init formula; declared, header)"
+      },
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvis init 50 ms / 0.5 (should never fire; all patch types carry trained rules)"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: tau 24.05 ms, V_rest 1.7905 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: tau 49.89 ms, V_rest -0.2219 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: tau 48.56 ms, V_rest 0.4912 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: tau 38.15 ms, V_rest 0.0627 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: tau 27.43 ms, V_rest 0.0557 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: tau 19.80 ms, V_rest 0.2312 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: tau 23.74 ms, V_rest 0.1569 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: tau 24.86 ms, V_rest 0.5203 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: tau 69.63 ms, V_rest 0.5025 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: tau 137.32 ms, V_rest 0.3534 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: tau 20.25 ms, V_rest 0.5560 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: tau 51.53 ms, V_rest 0.4932 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: tau 43.58 ms, V_rest 0.6240 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "CT1(M10)",
+          "provenance": "CT1(M10): tau 84.57 ms, V_rest 0.5173 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "CT1(Lo1)",
+          "provenance": "CT1(Lo1): tau 70.71 ms, V_rest 0.4240 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: tau 23.80 ms, V_rest 0.5371 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: tau 20.57 ms, V_rest 0.4617 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: tau 21.48 ms, V_rest 0.5489 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: tau 29.89 ms, V_rest 0.6271 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: tau 19.88 ms, V_rest 0.6385 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: tau 40.60 ms, V_rest 0.5651 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: tau 57.22 ms, V_rest 0.5992 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: tau 30.64 ms, V_rest 0.6701 -- MEASURED(model-derived): flyvis flow/0000 all50 mean"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 8.827533148902944e-11
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 7.944545576954454e-10
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 8.826365582859097e-09
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 7.941362462071666e-08
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 8.814530583212132e-07
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 7.909424236951512e-06
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 8.68413074038843e-05
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.0007447444229068401
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 0.007544552519306358
+          },
+          {
+            "gain": 0.3,
+            "stable": true,
+            "median_peak_evoked": 0.04550588429241709
+          },
+          {
+            "gain": 1.0,
+            "stable": false
+          },
+          {
+            "gain": 3.0,
+            "stable": false
+          },
+          {
+            "gain": 10.0,
+            "stable": false
+          },
+          {
+            "gain": 30.0,
+            "stable": false
+          },
+          {
+            "gain": 100.0,
+            "stable": false
+          },
+          {
+            "gain": 300.0,
+            "stable": false
+          },
+          {
+            "gain": 1000.0,
+            "stable": false
+          },
+          {
+            "gain": 3000.0,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.3,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "gain_at_grid_edge": false,
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 1.7906048406681823,
+            "L2": 0.0,
+            "L3": 0.4913836019097044,
+            "L4": 0.06640521530729593,
+            "L5": 0.0,
+            "Mi1": 0.0,
+            "Mi4": 0.12423081019923912,
+            "Mi9": 0.8758040612258855,
+            "Tm1": 0.489155033392821,
+            "Tm2": 0.32753181532086334,
+            "Tm3": 0.0,
+            "Tm4": 0.5961922573746279,
+            "Tm9": 0.7799029895115493,
+            "T4a": 0.42102635672615113,
+            "T4b": 0.33990483306092806,
+            "T4c": 0.4688114140989225,
+            "T4d": 0.6835920810972925,
+            "T5a": 1.0283814834676217,
+            "T5b": 1.1335624538359135,
+            "T5c": 1.5195287761028118,
+            "T5d": 1.3154455728790564,
+            "settle_residual": 1.2449097308575574e-11
+          },
+          "off": {
+            "L1": 0.7905726384800891,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.06615394035039256,
+            "L5": 0.0,
+            "Mi1": 0.0,
+            "Mi4": 0.16916456753999498,
+            "Mi9": 0.6093241541955433,
+            "Tm1": 0.4977084638743041,
+            "Tm2": 0.3407122833343277,
+            "Tm3": 0.0,
+            "Tm4": 0.6413159631045544,
+            "Tm9": 0.6182734292259334,
+            "T4a": 0.4693066681884884,
+            "T4b": 0.40209303219039527,
+            "T4c": 0.5401092566316522,
+            "T4d": 0.7483524756663796,
+            "T5a": 1.016537297355969,
+            "T5b": 1.1030690520911577,
+            "T5c": 1.467352337807521,
+            "T5d": 1.2915171105001058,
+            "settle_residual": 1.3189727088303016e-11
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.26795735129469844,
+          "median_dsi_t4_on": 0.3080804715893736,
+          "median_dsi_t5_off": 0.252622522116692,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 4,
+          "t5_distinct_preferred": 4,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.21937032247538854,
+              "direction_totals": {
+                "+x": 6.0289993284540495,
+                "-x": 6.596637953822137,
+                "+y": 7.707995482247513,
+                "-y": 4.934587890783676
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.18450867384553152,
+              "direction_totals": {
+                "+x": 8.052141191606022,
+                "-x": 7.258004524870327,
+                "+y": 6.237072289654671,
+                "-y": 9.059405035410732
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "+x",
+              "subtype_dsi": 0.42311268949331704,
+              "direction_totals": {
+                "+x": 12.99059604932595,
+                "-x": 5.265999011956375,
+                "+y": 11.054307356607037,
+                "-y": 6.810026429061979
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.4380911438635263,
+              "direction_totals": {
+                "+x": 4.786253875025591,
+                "-x": 12.249440874242175,
+                "+y": 5.856383956042728,
+                "-y": 10.893050618734733
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.1520250847993431,
+              "direction_totals": {
+                "+x": 1.2278048619456117,
+                "-x": 1.632040576342387,
+                "+y": 1.647203197886736,
+                "-y": 1.2124623070074423
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.1608221094214078,
+              "direction_totals": {
+                "+x": 3.264421487889427,
+                "-x": 3.467922719440313,
+                "+y": 2.8131584265235077,
+                "-y": 3.8913995893791875
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "+x",
+              "subtype_dsi": 0.26218789713195656,
+              "direction_totals": {
+                "+x": 7.610509722977638,
+                "-x": 4.44872446912774,
+                "+y": 6.9074242851516034,
+                "-y": 5.039284118721808
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "-x",
+              "subtype_dsi": 0.307482300337992,
+              "direction_totals": {
+                "+x": 2.0482288893047347,
+                "-x": 3.867082416974942,
+                "+y": 2.3989046912492618,
+                "-y": 3.4902343078966016
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.4426606761483988,
+            "5.0": 0.23592775591513204,
+            "10.0": 0.11934490095172434
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09145978254007746,
+          "median_dsi_t4_on": 0.09131827149597492,
+          "median_dsi_t5_off": 0.09178756221508848,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.027534284360161032,
+              "direction_totals": {
+                "+x": 31.37802476550306,
+                "-x": 33.55250085419032,
+                "+y": 41.69508471873973,
+                "-y": 39.4605231346819
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.017209677626737106,
+              "direction_totals": {
+                "+x": 39.9348853126748,
+                "-x": 38.463416136935585,
+                "+y": 48.132050145737594,
+                "-y": 49.817734360701785
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "+y",
+              "subtype_dsi": 0.03550264351198412,
+              "direction_totals": {
+                "+x": 50.10579833275002,
+                "-x": 41.69426914406393,
+                "+y": 59.134425294400785,
+                "-y": 55.07952802558687
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.0338555060411263,
+              "direction_totals": {
+                "+x": 41.21869429737404,
+                "-x": 45.887644418417366,
+                "+y": 52.46609589495861,
+                "-y": 56.143115714732474
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.02603383899582093,
+              "direction_totals": {
+                "+x": 7.474544389699831,
+                "-x": 7.84693475161376,
+                "+y": 9.822352385095362,
+                "-y": 9.323901884078637
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006965413184461717,
+              "direction_totals": {
+                "+x": 19.589434662870442,
+                "-x": 19.148234823760095,
+                "+y": 24.139094496132675,
+                "-y": 24.47773077184089
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "+y",
+              "subtype_dsi": 0.02548967829900396,
+              "direction_totals": {
+                "+x": 36.89680764483769,
+                "-x": 34.33867933989509,
+                "+y": 45.89437920214342,
+                "-y": 43.612868258931286
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "-y",
+              "subtype_dsi": 0.01212737108609115,
+              "direction_totals": {
+                "+x": 15.811017403290718,
+                "-x": 16.952947926812033,
+                "+y": 20.267672896607394,
+                "-y": 20.76529492413315
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.09769147553984994,
+            "5.0": 0.08898736768658942,
+            "10.0": 0.07561570687650224
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.26795735129469844
+      },
+      "elapsed_s": 11.4
+    }
+  ],
+  "trivial_alternative": {
+    "label": "uniform_tau_50ms_trained_alpha_vrest",
+    "aggregate": "subset",
+    "uniform_tau_ms": 50.0,
+    "alpha_coverage": {
+      "pairs_total": 320,
+      "pairs_trained": 132,
+      "pairs_fallback": [
+        "L1->L1",
+        "L1->L2",
+        "L1->L3",
+        "L1->L4",
+        "L1->Mi4",
+        "L1->Mi9",
+        "L1->Tm1",
+        "L1->Tm2",
+        "L1->Tm4",
+        "L1->Tm9",
+        "L2->L2",
+        "L2->L3",
+        "L2->Tm3",
+        "L2->Tm9",
+        "L3->L1",
+        "L3->L2",
+        "L3->L3",
+        "L3->L4",
+        "L3->L5",
+        "L3->Mi4",
+        "L3->Tm1",
+        "L3->Tm2",
+        "L3->Tm4",
+        "L4->L1",
+        "L4->Mi1",
+        "L4->Mi4",
+        "L4->Tm1",
+        "L4->Tm3",
+        "L5->L3",
+        "L5->L4",
+        "L5->Mi9",
+        "L5->Tm1",
+        "L5->Tm2",
+        "L5->Tm4",
+        "L5->Tm9",
+        "Mi1->L2",
+        "Mi1->L3",
+        "Mi1->L4",
+        "Mi1->Mi1",
+        "Mi1->Tm2",
+        "Mi1->Tm4",
+        "Mi1->Tm9",
+        "Mi4->L1",
+        "Mi4->L3",
+        "Mi4->L4",
+        "Mi4->L5",
+        "Mi4->Tm3",
+        "Mi4->Tm4",
+        "Mi9->L1",
+        "Mi9->L2",
+        "Mi9->L4",
+        "Mi9->L5",
+        "Mi9->Mi9",
+        "Mi9->Tm3",
+        "Mi9->Tm9",
+        "T4a->Mi1",
+        "T4a->Mi4",
+        "T4a->T4b",
+        "T4a->T4d",
+        "T4a->T5b",
+        "T4a->T5c",
+        "T4a->T5d",
+        "T4a->Tm2",
+        "T4a->Tm3",
+        "T4a->Tm9",
+        "T4b->Mi1",
+        "T4b->Mi4",
+        "T4b->T4a",
+        "T4b->T4d",
+        "T4b->T5a",
+        "T4b->T5c",
+        "T4b->T5d",
+        "T4b->Tm1",
+        "T4b->Tm2",
+        "T4b->Tm3",
+        "T4b->Tm4",
+        "T4b->Tm9",
+        "T4c->Mi1",
+        "T4c->Mi4",
+        "T4c->T4a",
+        "T4c->T4b",
+        "T4c->T4d",
+        "T4c->T5a",
+        "T4c->T5b",
+        "T4c->T5d",
+        "T4c->Tm2",
+        "T4c->Tm3",
+        "T4d->Mi1",
+        "T4d->Mi4",
+        "T4d->Mi9",
+        "T4d->T4b",
+        "T4d->T4c",
+        "T4d->T5a",
+        "T4d->T5b",
+        "T4d->T5c",
+        "T4d->Tm3",
+        "T4d->Tm4",
+        "T5a->T4b",
+        "T5a->T4c",
+        "T5a->T4d",
+        "T5a->T5c",
+        "T5a->T5d",
+        "T5a->Tm1",
+        "T5a->Tm2",
+        "T5a->Tm3",
+        "T5a->Tm4",
+        "T5a->Tm9",
+        "T5b->T4a",
+        "T5b->T4c",
+        "T5b->T4d",
+        "T5b->T5a",
+        "T5b->T5c",
+        "T5b->Tm1",
+        "T5b->Tm3",
+        "T5b->Tm4",
+        "T5b->Tm9",
+        "T5c->T4a",
+        "T5c->T4b",
+        "T5c->T4d",
+        "T5c->T5a",
+        "T5c->T5b",
+        "T5c->T5d",
+        "T5c->Tm1",
+        "T5c->Tm3",
+        "T5c->Tm4",
+        "T5c->Tm9",
+        "T5d->T4a",
+        "T5d->T4b",
+        "T5d->T4c",
+        "T5d->T5a",
+        "T5d->T5b",
+        "T5d->T5c",
+        "T5d->Tm1",
+        "T5d->Tm2",
+        "T5d->Tm3",
+        "T5d->Tm4",
+        "T5d->Tm9",
+        "Tm1->L1",
+        "Tm1->L3",
+        "Tm1->L4",
+        "Tm1->T4a",
+        "Tm1->T4d",
+        "Tm1->Tm1",
+        "Tm1->Tm3",
+        "Tm2->L1",
+        "Tm2->L3",
+        "Tm2->L4",
+        "Tm2->Mi1",
+        "Tm2->T4a",
+        "Tm2->T4b",
+        "Tm2->T4c",
+        "Tm2->T4d",
+        "Tm2->Tm2",
+        "Tm2->Tm3",
+        "Tm3->L2",
+        "Tm3->L3",
+        "Tm3->L4",
+        "Tm3->L5",
+        "Tm3->Mi4",
+        "Tm3->Mi9",
+        "Tm3->T5a",
+        "Tm3->T5b",
+        "Tm3->T5c",
+        "Tm3->T5d",
+        "Tm3->Tm1",
+        "Tm3->Tm2",
+        "Tm3->Tm9",
+        "Tm4->L2",
+        "Tm4->L3",
+        "Tm4->L4",
+        "Tm4->L5",
+        "Tm4->Mi1",
+        "Tm4->Mi9",
+        "Tm4->T4a",
+        "Tm4->T4b",
+        "Tm4->T4c",
+        "Tm4->T4d",
+        "Tm4->Tm1",
+        "Tm4->Tm2",
+        "Tm4->Tm9",
+        "Tm9->L3",
+        "Tm9->L5",
+        "Tm9->Mi1",
+        "Tm9->Mi4",
+        "Tm9->T4c",
+        "Tm9->Tm3",
+        "Tm9->Tm4",
+        "Tm9->Tm9"
+      ],
+      "edges_trained_fraction": 0.8847058823529412,
+      "synapse_mass_trained_fraction": 0.9785861968994141,
+      "fallback_rule": "alpha = 0.01 / mean_nonzero_patch_count(pair) (flyvis init formula; declared, header)"
+    },
+    "parameter_provenance": [
+      {
+        "pattern": "<default>",
+        "provenance": "unmatched type: flyvis init 50 ms / 0.5 (should never fire; all patch types carry trained rules)"
+      },
+      {
+        "pattern": "L1",
+        "provenance": "L1: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 1.7542 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "L2",
+        "provenance": "L2: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest -0.2349 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "L3",
+        "provenance": "L3: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5233 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "L4",
+        "provenance": "L4: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.0841 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "L5",
+        "provenance": "L5: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.0699 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Mi1",
+        "provenance": "Mi1: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.2821 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Mi4",
+        "provenance": "Mi4: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.1090 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Mi9",
+        "provenance": "Mi9: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5400 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Tm1",
+        "provenance": "Tm1: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5139 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Tm2",
+        "provenance": "Tm2: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.3622 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Tm3",
+        "provenance": "Tm3: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.6173 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Tm4",
+        "provenance": "Tm4: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5115 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "Tm9",
+        "provenance": "Tm9: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.6560 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "CT1(M10)",
+        "provenance": "CT1(M10): TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5007 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "CT1(Lo1)",
+        "provenance": "CT1(Lo1): TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.4116 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T4a",
+        "provenance": "T4a: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5289 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T4b",
+        "provenance": "T4b: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.4545 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T4c",
+        "provenance": "T4c: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5565 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T4d",
+        "provenance": "T4d: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.6217 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T5a",
+        "provenance": "T5a: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.6458 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T5b",
+        "provenance": "T5b: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.5542 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T5c",
+        "provenance": "T5c: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.6030 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      },
+      {
+        "pattern": "T5d",
+        "provenance": "T5d: TRIVIAL CONTROL uniform tau 50 ms (flyvis init); V_rest 0.6747 TRAINED (subset mean) -- heterogeneity ablated, strengths kept"
+      }
+    ],
+    "calibration": {
+      "curve": [
+        {
+          "gain": 1e-05,
+          "stable": true,
+          "median_peak_evoked": 9.376077692024865e-11
+        },
+        {
+          "gain": 3e-05,
+          "stable": true,
+          "median_peak_evoked": 8.438182930170512e-10
+        },
+        {
+          "gain": 0.0001,
+          "stable": true,
+          "median_peak_evoked": 9.374634402092852e-09
+        },
+        {
+          "gain": 0.0003,
+          "stable": true,
+          "median_peak_evoked": 8.434279780145104e-08
+        },
+        {
+          "gain": 0.001,
+          "stable": true,
+          "median_peak_evoked": 9.36019057373727e-07
+        },
+        {
+          "gain": 0.003,
+          "stable": true,
+          "median_peak_evoked": 8.395385067583305e-06
+        },
+        {
+          "gain": 0.01,
+          "stable": true,
+          "median_peak_evoked": 9.222627055632815e-05
+        },
+        {
+          "gain": 0.03,
+          "stable": true,
+          "median_peak_evoked": 0.0007963454126596603
+        },
+        {
+          "gain": 0.1,
+          "stable": true,
+          "median_peak_evoked": 0.00834932699387464
+        },
+        {
+          "gain": 0.3,
+          "stable": true,
+          "median_peak_evoked": 0.04995262690845911
+        },
+        {
+          "gain": 1.0,
+          "stable": false
+        },
+        {
+          "gain": 3.0,
+          "stable": false
+        },
+        {
+          "gain": 10.0,
+          "stable": false
+        },
+        {
+          "gain": 30.0,
+          "stable": false
+        },
+        {
+          "gain": 100.0,
+          "stable": false
+        },
+        {
+          "gain": 300.0,
+          "stable": false
+        },
+        {
+          "gain": 1000.0,
+          "stable": false
+        },
+        {
+          "gain": 3000.0,
+          "stable": false
+        }
+      ],
+      "chosen_gain": 0.3,
+      "target_median_peak": 0.5,
+      "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+    },
+    "gain_at_grid_edge": false,
+    "result": {
+      "baseline_mean_output": {
+        "on": {
+          "L1": 1.754263315778379,
+          "L2": 0.0,
+          "L3": 0.5238895747377538,
+          "L4": 0.08904166653531619,
+          "L5": 0.0,
+          "Mi1": 0.0,
+          "Mi4": 0.07595037304740314,
+          "Mi9": 1.0171417111094536,
+          "Tm1": 0.4885244507448579,
+          "Tm2": 0.3430371238654073,
+          "Tm3": 0.0,
+          "Tm4": 0.6176446168732294,
+          "Tm9": 0.8341515352893134,
+          "T4a": 0.3958413045136204,
+          "T4b": 0.3448474450403471,
+          "T4c": 0.49208607077255045,
+          "T4d": 0.6283238676877971,
+          "T5a": 1.0585582646357181,
+          "T5b": 1.1298459851210212,
+          "T5c": 1.5610405383079091,
+          "T5d": 1.3354745655027627,
+          "settle_residual": 6.938893903907228e-18
+        },
+        "off": {
+          "L1": 0.7542823149613397,
+          "L2": 0.0,
+          "L3": 0.0,
+          "L4": 0.08892885638257791,
+          "L5": 0.0,
+          "Mi1": 0.0,
+          "Mi4": 0.13754913833194446,
+          "Mi9": 0.6496365043341538,
+          "Tm1": 0.5036890733347658,
+          "Tm2": 0.35857950982636905,
+          "Tm3": 0.001217641907794178,
+          "Tm4": 0.6821122936469322,
+          "Tm9": 0.6535138487971924,
+          "T4a": 0.4582985088948985,
+          "T4b": 0.4189818547457245,
+          "T4c": 0.5796071045915012,
+          "T4d": 0.7254380218573943,
+          "T5a": 1.049615664153624,
+          "T5b": 1.1076435634845259,
+          "T5c": 1.5183723661952475,
+          "T5d": 1.3275737710067577,
+          "settle_residual": 2.220446049250313e-16
+        }
+      },
+      "all_sweeps_stable": true,
+      "readout_v2_crossing_window": {
+        "median_dsi_pooled": 0.33648775084837274,
+        "median_dsi_t4_on": 0.35648474540297825,
+        "median_dsi_t5_off": 0.3321597792049799,
+        "defined_fraction": 1.0,
+        "t4_distinct_preferred": 4,
+        "t5_distinct_preferred": 4,
+        "per_subtype": {
+          "T4a": {
+            "cells": 63,
+            "preferred": "+y",
+            "subtype_dsi": 0.24267644898740318,
+            "direction_totals": {
+              "+x": 7.200323275507118,
+              "-x": 7.916787357740957,
+              "+y": 9.38155832113894,
+              "-y": 5.717397370478966
+            }
+          },
+          "T4b": {
+            "cells": 59,
+            "preferred": "-y",
+            "subtype_dsi": 0.2007332493224314,
+            "direction_totals": {
+              "+x": 8.847106831171267,
+              "-x": 7.846541087177953,
+              "+y": 6.638768488734345,
+              "-y": 9.973378790272095
+            }
+          },
+          "T4c": {
+            "cells": 60,
+            "preferred": "+x",
+            "subtype_dsi": 0.5037394131730983,
+            "direction_totals": {
+              "+x": 15.729314960498458,
+              "-x": 5.190951972330582,
+              "+y": 12.989326719614159,
+              "-y": 7.103126301242579
+            }
+          },
+          "T4d": {
+            "cells": 63,
+            "preferred": "-x",
+            "subtype_dsi": 0.46905984764972947,
+            "direction_totals": {
+              "+x": 6.30781792280614,
+              "-x": 17.45311970786212,
+              "+y": 7.832027612335547,
+              "-y": 15.375583876262162
+            }
+          },
+          "T5a": {
+            "cells": 61,
+            "preferred": "+y",
+            "subtype_dsi": 0.20594596926166833,
+            "direction_totals": {
+              "+x": 0.903988455258096,
+              "-x": 1.3588409767446348,
+              "+y": 1.3698534707520318,
+              "-y": 0.9019787765761211
+            }
+          },
+          "T5b": {
+            "cells": 61,
+            "preferred": "-y",
+            "subtype_dsi": 0.2022793745327456,
+            "direction_totals": {
+              "+x": 2.4388761115767363,
+              "-x": 2.682998075061699,
+              "+y": 2.0427950159796557,
+              "-y": 3.0787850228544045
+            }
+          },
+          "T5c": {
+            "cells": 66,
+            "preferred": "+x",
+            "subtype_dsi": 0.307840511083822,
+            "direction_totals": {
+              "+x": 6.805229016729012,
+              "-x": 3.601588877433699,
+              "+y": 6.095677214590511,
+              "-y": 4.221226975244883
+            }
+          },
+          "T5d": {
+            "cells": 65,
+            "preferred": "-x",
+            "subtype_dsi": 0.44539985290480466,
+            "direction_totals": {
+              "+x": 0.7823314245045828,
+              "-x": 2.038913497993781,
+              "+y": 0.98353479051322,
+              "-y": 1.7920996997355823
+            }
+          }
+        },
+        "per_speed_median_dsi": {
+          "2.5": 0.547243030722663,
+          "5.0": 0.301819589606122,
+          "10.0": 0.15544659322736754
+        },
+        "pass": true
+      },
+      "readout_v1_wholesweep": {
+        "median_dsi_pooled": 0.09758230363725484,
+        "median_dsi_t4_on": 0.09348556648508521,
+        "median_dsi_t5_off": 0.10448415899065386,
+        "defined_fraction": 1.0,
+        "t4_distinct_preferred": 2,
+        "t5_distinct_preferred": 2,
+        "per_subtype": {
+          "T4a": {
+            "cells": 63,
+            "preferred": "+y",
+            "subtype_dsi": 0.028813324988600817,
+            "direction_totals": {
+              "+x": 39.96013837448122,
+              "-x": 42.76543993456714,
+              "+y": 53.34649612742815,
+              "-y": 50.358412881247894
+            }
+          },
+          "T4b": {
+            "cells": 59,
+            "preferred": "-y",
+            "subtype_dsi": 0.016700261617872702,
+            "direction_totals": {
+              "+x": 46.81478136544481,
+              "-x": 45.00733375950763,
+              "+y": 56.593273768937735,
+              "-y": 58.5156224503443
+            }
+          },
+          "T4c": {
+            "cells": 60,
+            "preferred": "+y",
+            "subtype_dsi": 0.04001833643016724,
+            "direction_totals": {
+              "+x": 61.15608921138327,
+              "-x": 49.79962597050731,
+              "+y": 71.90220339159366,
+              "-y": 66.368826787347
+            }
+          },
+          "T4d": {
+            "cells": 63,
+            "preferred": "-y",
+            "subtype_dsi": 0.034079944895796487,
+            "direction_totals": {
+              "+x": 60.7957039280021,
+              "-x": 67.82563327100237,
+              "+y": 77.69467824831632,
+              "-y": 83.17718239430097
+            }
+          },
+          "T5a": {
+            "cells": 61,
+            "preferred": "+y",
+            "subtype_dsi": 0.02914901601361091,
+            "direction_totals": {
+              "+x": 5.709921420468762,
+              "-x": 6.2185949674949335,
+              "+y": 7.6495080505805895,
+              "-y": 7.2161876485919425
+            }
+          },
+          "T5b": {
+            "cells": 61,
+            "preferred": "-y",
+            "subtype_dsi": 0.019232645530776336,
+            "direction_totals": {
+              "+x": 14.382341849762758,
+              "-x": 14.196593516129553,
+              "+y": 17.539048369828613,
+              "-y": 18.226922611781962
+            }
+          },
+          "T5c": {
+            "cells": 66,
+            "preferred": "+y",
+            "subtype_dsi": 0.0285013304925595,
+            "direction_totals": {
+              "+x": 30.68121798643802,
+              "-x": 28.261736295116478,
+              "+y": 37.95184864679049,
+              "-y": 35.84844216783582
+            }
+          },
+          "T5d": {
+            "cells": 65,
+            "preferred": "-y",
+            "subtype_dsi": 0.05549707835507434,
+            "direction_totals": {
+              "+x": 5.9908160886714095,
+              "-x": 7.239166241711524,
+              "+y": 7.702003243197264,
+              "-y": 8.607111459769717
+            }
+          }
+        },
+        "per_speed_median_dsi": {
+          "2.5": 0.10411948662756758,
+          "5.0": 0.09499489840803493,
+          "10.0": 0.0809253605843781
+        },
+        "pass": false
+      },
+      "pass": true,
+      "median_dsi_pooled": 0.33648775084837274
+    },
+    "elapsed_s": 11.5
+  },
+  "summary": {
+    "total_elapsed_s": 46.0,
+    "readout_v2_crossing_window": {
+      "pass_configs": [
+        "trained_subset"
+      ],
+      "best_config": "trained_subset",
+      "best_gain": 0.3,
+      "best_median_dsi": 0.3215706817029622,
+      "trivial_uniform_tau_median_dsi": 0.33648775084837274,
+      "attribution_holds": false
+    },
+    "readout_v1_wholesweep": {
+      "pass_configs": [],
+      "best_config": "trained_subset",
+      "best_gain": 0.3,
+      "best_median_dsi": 0.0965784967932562,
+      "trivial_uniform_tau_median_dsi": 0.09758230363725484,
+      "attribution_holds": false
+    }
+  }
+}

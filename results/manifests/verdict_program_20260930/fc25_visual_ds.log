@@ -1,0 +1,35 @@
+free RAM at start: 4.28 GiB (resource rule: single process, class-2 run was ~3 min; this adds ~1 config-worth)
+patch: 2701 cells, raw edges 47175, 498 scored T4/T5 cells, built in 11.6s
+sign audit: {'curated_edges': 35041, 'edges_flipped_by_curation': 0, 'note': '0 expected: measured MaleCNS consensus NT agrees with the curated table for every patch type'}
+[config trained_subset]
+  alpha coverage: 132/320 pairs trained, synapse mass 0.9786
+  calibration: chosen gain 0.3 (median peak 0.0498)
+  scored v2(window): median DSI 0.3216 (T4 0.3278 / T5 0.3175), defined 1.00, distinct T4 4 T5 3, stable True -> pass=True | v1(wholesweep) median 0.0966 pass=False
+[config trained_all50]
+  alpha coverage: 132/320 pairs trained, synapse mass 0.9786
+  calibration: chosen gain 0.3 (median peak 0.0455)
+  scored v2(window): median DSI 0.2680 (T4 0.3081 / T5 0.2526), defined 1.00, distinct T4 4 T5 4, stable True -> pass=False | v1(wholesweep) median 0.0915 pass=False
+[config uniform_tau_50ms_trained_alpha_vrest]
+  calibration: chosen gain 0.3 (median peak 0.0500)
+  scored v2(window): median DSI 0.3365 (T4 0.3565 / T5 0.3322), defined 1.00, distinct T4 4 T5 4, stable True -> pass=True | v1(wholesweep) median 0.0976 pass=False
+{
+  "total_elapsed_s": 46.0,
+  "readout_v2_crossing_window": {
+    "pass_configs": [
+      "trained_subset"
+    ],
+    "best_config": "trained_subset",
+    "best_gain": 0.3,
+    "best_median_dsi": 0.3215706817029622,
+    "trivial_uniform_tau_median_dsi": 0.33648775084837274,
+    "attribution_holds": false
+  },
+  "readout_v1_wholesweep": {
+    "pass_configs": [],
+    "best_config": "trained_subset",
+    "best_gain": 0.3,
+    "best_median_dsi": 0.0965784967932562,
+    "trivial_uniform_tau_median_dsi": 0.09758230363725484,
+    "attribution_holds": false
+  }
+}

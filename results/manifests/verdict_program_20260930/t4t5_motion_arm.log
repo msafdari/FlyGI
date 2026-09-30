@@ -1,0 +1,56 @@
+RAM at start: free=0.08GiB inactive(reclaimable)=3.88GiB (single process; fc25-scale run)
+fc25 passing configuration: trained_subset gain=0.3; uniform-tau twin gain=0.3 (both verbatim from fc25_visual_ds.json)
+[bp35] ground truth (bp35-0a0ad940)
+  captured 571 directional transitions (29 resets)
+  movers {'3': [0, -6], '4': [0, 6]} -> 60 verified events {'right': 34, 'left': 26} (cap 60)
+[cn04] ground truth (cn04-2fe56bfb)
+  captured 593 directional transitions (7 resets)
+  movers {'2': [3, 0], '3': [0, -3], '1': [-3, 0], '4': [0, 3]} -> 60 verified events {'down': 19, 'left': 11, 'right': 10, 'up': 20} (cap 60)
+[dc22] ground truth (dc22-fdcac232)
+  captured 596 directional transitions (4 resets)
+  movers {'1': [-2, 0], '2': [2, 0], '3': [0, -2], '4': [0, 2]} -> 60 verified events {'down': 16, 'left': 14, 'right': 14, 'up': 16} (cap 60)
+[ft09] ground truth (ft09-0d8bbf25)
+  captured 0 directional transitions (600 resets)
+  no stable movers recovered -- game does not qualify
+[ka59] ground truth (ka59-38d34dbb)
+  captured 595 directional transitions (5 resets)
+  movers {'3': [0, -3], '4': [0, 3], '1': [-3, 0], '2': [3, 0]} -> 60 verified events {'left': 18, 'down': 10, 'right': 17, 'up': 15} (cap 60)
+[ls20] ground truth (ls20-9607627b)
+  captured 596 directional transitions (4 resets)
+  movers {'4': [0, 5], '2': [5, 0], '1': [-5, 0], '3': [0, -5]} -> 60 verified events {'right': 16, 'left': 11, 'up': 18, 'down': 15} (cap 60)
+[re86] ground truth (re86-8af5384d)
+  captured 595 directional transitions (5 resets)
+  movers {'2': [3, 0], '4': [0, 3], '1': [-3, 0], '3': [0, -3]} -> 60 verified events {'down': 16, 'up': 15, 'right': 16, 'left': 13} (cap 60)
+[sb26] ground truth (sb26-7fbdac44)
+  captured 0 directional transitions (600 resets)
+  no stable movers recovered -- game does not qualify
+[sc25] ground truth (sc25-635fd71a)
+  captured 589 directional transitions (11 resets)
+  movers {'4': [0, 4], '1': [2, 0], '3': [0, -4], '2': [2, 0]} -> 60 verified events {'down': 31, 'left': 14, 'right': 15} (cap 60)
+[sk48] ground truth (sk48-d8078629)
+  captured 597 directional transitions (3 resets)
+  movers {'1': [-6, 0], '4': [0, 6], '3': [-2, 0], '2': [6, 0]} -> 60 verified events {'up': 33, 'down': 16, 'right': 11} (cap 60)
+[su15] ground truth (su15-1944f8ab)
+  captured 0 directional transitions (600 resets)
+  no stable movers recovered -- game does not qualify
+[tr87] ground truth (tr87-cd924810)
+  captured 596 directional transitions (4 resets)
+  movers {'4': [0, 7], '3': [0, -7]} -> 60 verified events {'right': 29, 'left': 31} (cap 60)
+[tu93] ground truth (tu93-0768757b)
+  captured 589 directional transitions (11 resets)
+  movers {'3': [0, -6], '1': [-6, 0], '2': [6, 0], '4': [0, 6]} -> 60 verified events {'up': 26, 'left': 17, 'down': 13, 'right': 4} (cap 60)
+[wa30] ground truth (wa30-ee6fef47)
+  captured 598 directional transitions (2 resets)
+  movers {'4': [0, 4], '1': [-4, 0], '3': [0, -4], '2': [4, 0]} -> 60 verified events {'up': 9, 'right': 13, 'down': 14, 'left': 24} (cap 60)
+qualifying games: 11/14 (bp35, cn04, dc22, ka59, ls20, re86, sc25, sk48, tr87, tu93, wa30); events total 660
+building fc2 patch (verbatim machinery)...
+patch: 2701 cells, 498 scored T4/T5 cells
+  [real] simulated 660 events in 31.6s, unstable 0, settle residual 9.92e-12
+  [uniform_tau] simulated 660 events in 40.7s, unstable 0, settle residual 2.22e-16
+  [rewired_0] simulated 660 events in 63.7s, unstable 0, settle residual 3.55e-10
+  [rewired_1] simulated 660 events in 39.9s, unstable 0, settle residual 2.03e-10
+  [rewired_2] simulated 660 events in 47.1s, unstable 0, settle residual 2.76e-10
+[seed 0] held [np.str_('dc22'), np.str_('ls20'), np.str_('sc25'), np.str_('sk48')] | real=0.367(p=0.0000,C=0.01) uniform_tau=0.362(p=0.0001,C=0.01) rewired=0.442(p=0.0000,C=0.01) eng=1.000
+[seed 1] held [np.str_('ls20'), np.str_('re86'), np.str_('sk48'), np.str_('wa30')] | real=0.454(p=0.0000,C=0.01) uniform_tau=0.467(p=0.0000,C=0.01) rewired=0.483(p=0.0000,C=0.1) eng=1.000
+[seed 2] held [np.str_('bp35'), np.str_('dc22'), np.str_('sk48'), np.str_('tu93')] | real=0.342(p=0.0009,C=0.01) uniform_tau=0.346(p=0.0006,C=0.01) rewired=0.367(p=0.0000,C=0.01) eng=1.000
+RESULT: passed=False | real=0.3875 uniform_tau=0.3917 rewired=0.4306 engineered=1.0000 | binomial all-seeds=True vs_twin p=0.9375 vs_rewired p=0.9673 | peak RSS 1.19 GiB, 276.0s total

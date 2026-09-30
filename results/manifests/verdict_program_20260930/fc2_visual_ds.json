@@ -1,0 +1,3744 @@
+{
+  "benchmark": "FC2 V1 rerun -- T4/T5 direction selectivity, class-2 graded per-type temporal dynamics on a right-eye patch",
+  "band": "PASS iff pooled per-cell median DSI >= 0.3 (T4 on ON bar, T5 on OFF bar) AND T4a-d distinct preferred directions >= 3 AND T5a-d distinct >= 3 AND defined-DSI fraction >= 0.5; preregistered before the sweep",
+  "citation": "Maisak et al. 2013, Nature 500:212-216",
+  "class1_result": "FAILED at all 21 operating points (best pooled median DSI 0.288 at gain 0.8/leak 0.1); results/benchmarks/visual_motion.json",
+  "model": "graded leaky integrator, flyvision form (doc section 1); signed raw MaleCNS counts; alpha=0.01*mean pair count; Vrest=0.5; relu at synapse; forward Euler dt=2ms",
+  "ct1": "EXCLUDED (2 point cells in MaleCNS; unsplit CT1 sums the visual field, doc R1/I4). T5 therefore has no CT1(Lo1) trailing inhibition; its DS must come from slow-Tm9 leading excitation vs fast center.",
+  "patch": {
+    "node_count": 2701,
+    "nnz": 47175,
+    "per_type": {
+      "L1": 169,
+      "L2": 169,
+      "L3": 169,
+      "L4": 146,
+      "L5": 170,
+      "Mi1": 169,
+      "Mi4": 169,
+      "Mi9": 169,
+      "Tm1": 169,
+      "Tm2": 169,
+      "Tm3": 198,
+      "Tm4": 168,
+      "Tm9": 169,
+      "T4a": 63,
+      "T4b": 59,
+      "T4c": 60,
+      "T4d": 63,
+      "T5a": 61,
+      "T5b": 61,
+      "T5c": 66,
+      "T5d": 65
+    },
+    "sign_audit": {
+      "curated_edges": 35041,
+      "edges_flipped_by_curation": 0,
+      "note": "0 expected: measured MaleCNS consensus NT agrees with the curated table for every patch type"
+    },
+    "dropped_modulatory_edges": 0,
+    "unsigned_edges": 0
+  },
+  "patch_geometry": {
+    "center_hex": [
+      19.0,
+      20.0
+    ],
+    "input_half": 6,
+    "score_half": 4,
+    "column_source": "assignedOlHex1/2 (raw annotations feather); Tm3/L4/T4/T5 by connectivity centroid (validated: median err 0.06 col)"
+  },
+  "stimulus": {
+    "speeds_col_per_s": [
+      2.5,
+      5.0,
+      10.0
+    ],
+    "directions": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+    ],
+    "dt_ms": 2.0,
+    "settle_ms": 2500.0,
+    "tail_ms": 800.0,
+    "drive": "luminance -> L1/L2/L3 with sign -1 (histamine)"
+  },
+  "calibration_declared": "one global gain per configuration, chosen on a held-out edge moving along the +45deg diagonal (not among the 4 scored directions) at 5 col/s in both polarities; log-grid argmin |log(median peak evoked over T4-on-ON u T5-on-OFF / 0.5)| subject to stability; scored on the 4 cardinal directions x 2 polarities x 3 speeds",
+  "expected_tier_note": "repo base rate for expected-to-help changes is 0/11; pass/fail here is open until run",
+  "readout_instrument_history": {
+    "v1_wholesweep": "first preregistered readout: evoked integrated over the whole sweep. MEASURED artifact (run 1, 2026-09-29): all 8 heterogeneous configs 0.104-0.107 median DSI AND uniform-tau control 0.1072 -- statistic is tau-independent, not the correlator. Trace probe measured median 84.6% of the evoked integral is standing post-transient DC (edge = permanent luminance step; DC gain is 1 at every tau).",
+    "v2_crossing_window": "corrected instrument, adopted before any v2 number was seen: evoked integrated only in the per-cell stimulus-locked window [front 2 columns before cell, 0.75 s after front passes cell] (sizes ASSUMED); direction-symmetric by construction. Band and calibration unchanged. Both readouts scored from the same simulations."
+  },
+  "configs": [
+    {
+      "tau_slow_ms": 100.0,
+      "fast_scale": 1.0,
+      "tm9_tau_ms": 133.33333333333334,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 100 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 100 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 100 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 25 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.5216701721463295e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.170365073246195e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.5240002835834616e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.1768757391748004e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.00035596651528013723
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.0032728679094382596
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.03829675622286671
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.26234752271712913
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.105351821402673
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810411808472995,
+            "L2": 0.5251811506206795,
+            "L3": 0.5007048425004206,
+            "L4": 0.5124223730490133,
+            "L5": 0.5345736042459833,
+            "Mi1": 0.0,
+            "Mi4": 0.5323666410732878,
+            "Mi9": 0.768129345283988,
+            "Tm1": 3.6025543730218934,
+            "Tm2": 3.0043135599825708,
+            "Tm3": 0.34697963423345923,
+            "Tm4": 1.1399111353819706,
+            "Tm9": 0.582190135996907,
+            "T4a": 0.4841193266064019,
+            "T4b": 0.46813680906001653,
+            "T4c": 0.46933832664715264,
+            "T4d": 0.4748964924001827,
+            "T5a": 1.0326417683323637,
+            "T5b": 1.0297511905343546,
+            "T5c": 1.0773903081108775,
+            "T5d": 0.9761389600450399,
+            "settle_residual": 6.824363296686897e-11
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009315332654795,
+            "L5": 0.6495387566824413,
+            "Mi1": 0.6364016388443511,
+            "Mi4": 0.6141495338900883,
+            "Mi9": 0.24899497016932376,
+            "Tm1": 0.4806145780267927,
+            "Tm2": 0.5192242492837992,
+            "Tm3": 0.7437936688112178,
+            "Tm4": 0.556964991606235,
+            "Tm9": 0.46998323808721637,
+            "T4a": 0.6850956034416754,
+            "T4b": 0.6519840750354953,
+            "T4c": 0.6805147131989344,
+            "T4d": 0.6386790480979596,
+            "T5a": 0.6323822577627218,
+            "T5b": 0.6448979645279949,
+            "T5c": 0.6630060326959009,
+            "T5d": 0.6283184859007994,
+            "settle_residual": 1.9818385821324114e-10
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.03813289423756084,
+          "median_dsi_t4_on": 0.01907755941088495,
+          "median_dsi_t5_off": 0.06948022421603217,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.002702553086021113,
+              "direction_totals": {
+                "+x": 25.76604793911509,
+                "-x": 25.905693563573266,
+                "+y": 25.80395151537988,
+                "-y": 25.743049225392994
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.013092860849221725,
+              "direction_totals": {
+                "+x": 21.887341167518066,
+                "-x": 21.977242465026354,
+                "+y": 21.591525434390114,
+                "-y": 22.16441588541706
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 6.414453484089579e-05,
+              "direction_totals": {
+                "+x": 25.66784536055645,
+                "-x": 25.671138475793835,
+                "+y": 25.619863136898953,
+                "-y": 25.589891503020947
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.02509801891783707,
+              "direction_totals": {
+                "+x": 20.358539668900622,
+                "-x": 21.406766103280063,
+                "+y": 20.543622042162404,
+                "-y": 21.11109272993395
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.05480978580328015,
+              "direction_totals": {
+                "+x": 49.53797123010474,
+                "-x": 51.49661032876496,
+                "+y": 47.63087974033232,
+                "-y": 53.15492829051349
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04290817976656417,
+              "direction_totals": {
+                "+x": 46.34911749538909,
+                "-x": 50.504949200290085,
+                "+y": 49.91837758032537,
+                "-y": 46.73347370368831
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.1464126283606266,
+              "direction_totals": {
+                "+x": 48.032808124682774,
+                "-x": 64.51058162212769,
+                "+y": 51.992809390174415,
+                "-y": 60.300414535332145
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.057783328411435964,
+              "direction_totals": {
+                "+x": 49.28294583173666,
+                "-x": 43.89860564109491,
+                "+y": 48.64784130657022,
+                "-y": 44.33932542423292
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.0643474723812068,
+            "5.0": 0.033506742802172154,
+            "10.0": 0.016742332936376995
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09253873596092374,
+          "median_dsi_t4_on": 0.09247696180659451,
+          "median_dsi_t5_off": 0.09268196380121142,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.00977166598127495,
+              "direction_totals": {
+                "+x": 130.70597674842278,
+                "-x": 138.67525071631025,
+                "+y": 166.7324180932149,
+                "-y": 170.0230803412745
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.0013611352733889992,
+              "direction_totals": {
+                "+x": 115.75772940752537,
+                "-x": 114.62026579659099,
+                "+y": 144.24195330539018,
+                "-y": 143.8498214288262
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.0026583076370024954,
+              "direction_totals": {
+                "+x": 135.10711272500657,
+                "-x": 134.09500608932808,
+                "+y": 167.86333137648495,
+                "-y": 168.75817489739208
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0038241545043628247,
+              "direction_totals": {
+                "+x": 112.22900715655503,
+                "-x": 106.95093601469036,
+                "+y": 137.56482818295868,
+                "-y": 136.51669807973855
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.00665754987265147,
+              "direction_totals": {
+                "+x": 259.5906222844407,
+                "-x": 261.32540255820123,
+                "+y": 323.2279725318237,
+                "-y": 327.5606301104679
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.0217878544876021,
+              "direction_totals": {
+                "+x": 250.4638174951233,
+                "-x": 250.13252003231864,
+                "+y": 319.5490585124401,
+                "-y": 305.92139919364604
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.01309534153782649,
+              "direction_totals": {
+                "+x": 279.81408456115406,
+                "-x": 303.0713392792556,
+                "+y": 359.4117099573828,
+                "-y": 368.94985339247444
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021130581616310352,
+              "direction_totals": {
+                "+x": 249.6195368962414,
+                "-x": 232.38218545817486,
+                "+y": 307.49371963038783,
+                "-y": 294.7675879169138
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.09931950446867281,
+            "5.0": 0.09003518160487448,
+            "10.0": 0.07592756134116348
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.03813289423756084
+      },
+      "elapsed_s": 21.3
+    },
+    {
+      "tau_slow_ms": 100.0,
+      "fast_scale": 2.0,
+      "tm9_tau_ms": 133.33333333333334,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 100 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 100 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 100 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 50 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.521670061124027e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.170365062143965e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.524000281529549e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.176875738059026e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.00035596651434588455
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.003272867892807063
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.03829675622286721
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.2623170964356468
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.0969728234388
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810411808482182,
+            "L2": 0.5251811506207436,
+            "L3": 0.5007048425004593,
+            "L4": 0.5124223730490485,
+            "L5": 0.5345736042474392,
+            "Mi1": 0.0,
+            "Mi4": 0.5323666410841262,
+            "Mi9": 0.7681293452624747,
+            "Tm1": 3.6025543730364546,
+            "Tm2": 3.0043135599867625,
+            "Tm3": 0.346979634233735,
+            "Tm4": 1.1399111353866995,
+            "Tm9": 0.5821901359856125,
+            "T4a": 0.4841193266133144,
+            "T4b": 0.4681368090672945,
+            "T4c": 0.4693383266575938,
+            "T4d": 0.47489649240838877,
+            "T5a": 1.0326417683212725,
+            "T5b": 1.029751190518934,
+            "T5c": 1.07739030808865,
+            "T5d": 0.9761389600302766,
+            "settle_residual": 7.387235267941605e-11
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009315332652626,
+            "L5": 0.6495387566558231,
+            "Mi1": 0.6364016388339085,
+            "Mi4": 0.6141495337744624,
+            "Mi9": 0.24899497040887197,
+            "Tm1": 0.4806145779573234,
+            "Tm2": 0.5192242492603817,
+            "Tm3": 0.7437936687998657,
+            "Tm4": 0.5569649915844105,
+            "Tm9": 0.4699832381857331,
+            "T4a": 0.6850956034029834,
+            "T4b": 0.6519840749931168,
+            "T4c": 0.6805147131414078,
+            "T4d": 0.6386790480591806,
+            "T5a": 0.6323822577832721,
+            "T5b": 0.6448979645561986,
+            "T5c": 0.663006032739438,
+            "T5d": 0.6283184859280425,
+            "settle_residual": 2.1572613140286023e-10
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.04205238566254947,
+          "median_dsi_t4_on": 0.020852774775041577,
+          "median_dsi_t5_off": 0.07573609371312075,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.002105510932653629,
+              "direction_totals": {
+                "+x": 23.50436870809203,
+                "-x": 23.603554956382194,
+                "+y": 23.47395094161082,
+                "-y": 23.41787784465483
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.014204021192203611,
+              "direction_totals": {
+                "+x": 20.02199764795523,
+                "-x": 20.113783595824003,
+                "+y": 19.70338367204882,
+                "-y": 20.271183268014642
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.00023443737469611362,
+              "direction_totals": {
+                "+x": 23.435685971168553,
+                "-x": 23.446676949251167,
+                "+y": 23.370205081056383,
+                "-y": 23.345747044715075
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.027237522717742102,
+              "direction_totals": {
+                "+x": 18.562154123341518,
+                "-x": 19.601641370089098,
+                "+y": 18.731314058136416,
+                "-y": 19.29381830060593
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.06010736293072854,
+              "direction_totals": {
+                "+x": 45.17950091556484,
+                "-x": 47.06609035221903,
+                "+y": 43.169067145733884,
+                "-y": 48.69050370980897
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04675773398534073,
+              "direction_totals": {
+                "+x": 42.156346858052345,
+                "-x": 46.29199069689206,
+                "+y": 45.65023482759425,
+                "-y": 42.46308425695277
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.1600866164955804,
+              "direction_totals": {
+                "+x": 43.127298657622596,
+                "-x": 59.56733510968339,
+                "+y": 47.02956349796504,
+                "-y": 55.334462278435076
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.06326782448145442,
+              "direction_totals": {
+                "+x": 45.15982511233488,
+                "-x": 39.78551805058627,
+                "+y": 44.51247324408849,
+                "-y": 40.204081372958385
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.0698852415627863,
+            "5.0": 0.03684789002202697,
+            "10.0": 0.01837624114860371
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09381053717532185,
+          "median_dsi_t4_on": 0.09373940122938015,
+          "median_dsi_t5_off": 0.0939621515465692,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.009911028911805914,
+              "direction_totals": {
+                "+x": 128.3708021946202,
+                "-x": 136.34049236176935,
+                "+y": 164.39839153068925,
+                "-y": 167.6897264694559
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.0013765916026463188,
+              "direction_totals": {
+                "+x": 113.86043624776282,
+                "-x": 112.72332881707025,
+                "+y": 142.34539168575694,
+                "-y": 141.95402749267868
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.0026963034352114165,
+              "direction_totals": {
+                "+x": 132.85384779319364,
+                "-x": 131.84218405287163,
+                "+y": 165.61115131989598,
+                "-y": 166.50664166601874
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0038730236619346544,
+              "direction_totals": {
+                "+x": 110.40825007014793,
+                "-x": 105.13058531815388,
+                "+y": 135.7447807551715,
+                "-y": 134.6973519759199
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006750055764271573,
+              "direction_totals": {
+                "+x": 255.12123354488725,
+                "-x": 256.85563365788033,
+                "+y": 318.757831434884,
+                "-y": 323.0903424004685
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.022090134857616905,
+              "direction_totals": {
+                "+x": 246.18671981554039,
+                "-x": 245.85509343660092,
+                "+y": 315.27113797451057,
+                "-y": 301.643412361952
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.013276596184497043,
+              "direction_totals": {
+                "+x": 274.8413594906832,
+                "-x": 298.09839387074055,
+                "+y": 354.4382177545761,
+                "-y": 363.9763174313123
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021425562396763066,
+              "direction_totals": {
+                "+x": 245.47695341694228,
+                "-x": 228.23922173334788,
+                "+y": 303.35035851517904,
+                "-y": 290.6241212371604
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.10016842598642181,
+            "5.0": 0.09144200177412501,
+            "10.0": 0.0779560566910969
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.04205238566254947
+      },
+      "elapsed_s": 20.5
+    },
+    {
+      "tau_slow_ms": 150.0,
+      "fast_scale": 1.0,
+      "tm9_tau_ms": 200.0,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 150 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 150 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 150 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 25 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.521670066675142e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.170364969995454e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.523998171328646e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.176873939203517e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.0003559658556054335
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.003272860200353611
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.038296756230212115
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.26229937861532526
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.122485407846961
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810411818332541,
+            "L2": 0.5251811506360246,
+            "L3": 0.5007048428674974,
+            "L4": 0.5124223731227315,
+            "L5": 0.5345736069106986,
+            "Mi1": 0.0,
+            "Mi4": 0.5323667662284712,
+            "Mi9": 0.7681290649043273,
+            "Tm1": 3.6025544000141414,
+            "Tm2": 3.004313572911859,
+            "Tm3": 0.3469796356180928,
+            "Tm4": 1.139911141497672,
+            "Tm9": 0.5821897813477372,
+            "T4a": 0.48411933974082483,
+            "T4b": 0.46813682548753227,
+            "T4c": 0.4693383476460378,
+            "T4d": 0.47489650903565267,
+            "T5a": 1.0326417429744539,
+            "T5b": 1.0297511558524115,
+            "T5c": 1.0773902601769103,
+            "T5d": 0.9761389268890234,
+            "settle_residual": 1.655153070156956e-08
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009315329768772,
+            "L5": 0.6495387389643137,
+            "Mi1": 0.6364016339368141,
+            "Mi4": 0.6141491124890207,
+            "Mi9": 0.24899593604257478,
+            "Tm1": 0.4806144860260942,
+            "Tm2": 0.5192242034384128,
+            "Tm3": 0.7437936604814444,
+            "Tm4": 0.5569649701471727,
+            "Tm9": 0.4699837284030448,
+            "T4a": 0.6850955574469211,
+            "T4b": 0.6519840187297308,
+            "T4c": 0.6805146416977313,
+            "T4d": 0.638678997526701,
+            "T5a": 0.6323822893681895,
+            "T5b": 0.6448980073770225,
+            "T5c": 0.6630060939436717,
+            "T5d": 0.6283185274539801,
+            "settle_residual": 3.7831292848400366e-08
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.03824184032232328,
+          "median_dsi_t4_on": 0.018720212347467062,
+          "median_dsi_t5_off": 0.06999985388482427,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.002658558538911667,
+              "direction_totals": {
+                "+x": 25.565800834406865,
+                "-x": 25.70209954874256,
+                "+y": 25.58003293891306,
+                "-y": 25.55261839920054
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.012413458922570841,
+              "direction_totals": {
+                "+x": 21.56881409836836,
+                "-x": 21.66970571413172,
+                "+y": 21.28982893890053,
+                "-y": 21.825033512898226
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.0018251649419438918,
+              "direction_totals": {
+                "+x": 25.307832281368565,
+                "-x": 25.400383138421304,
+                "+y": 25.266358518820635,
+                "-y": 25.277234049134755
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.023538747982117966,
+              "direction_totals": {
+                "+x": 20.124233028233146,
+                "-x": 21.094469683514824,
+                "+y": 20.27838047609558,
+                "-y": 20.801985522297834
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.055114514181938565,
+              "direction_totals": {
+                "+x": 49.4461901183425,
+                "-x": 51.386480457881724,
+                "+y": 47.51693405658169,
+                "-y": 53.06019358432509
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04301649507626738,
+              "direction_totals": {
+                "+x": 46.1926198363532,
+                "-x": 50.345344713066176,
+                "+y": 49.77371282795277,
+                "-y": 46.55598943616908
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.14769262220259236,
+              "direction_totals": {
+                "+x": 47.751869695908375,
+                "-x": 64.3012954880235,
+                "+y": 51.71749703641722,
+                "-y": 60.06712416386033
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.05865918264712579,
+              "direction_totals": {
+                "+x": 49.159805094642785,
+                "-x": 43.712019757848616,
+                "+y": 48.50357932396981,
+                "-y": 44.15702264597071
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.0647748363817239,
+            "5.0": 0.03367312703362167,
+            "10.0": 0.01693347604829179
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09271185379203309,
+          "median_dsi_t4_on": 0.09267574747424277,
+          "median_dsi_t5_off": 0.0927479601098234,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.009787889981412168,
+              "direction_totals": {
+                "+x": 130.4747191400517,
+                "-x": 138.44462783210025,
+                "+y": 166.50091310551613,
+                "-y": 169.79251619296144
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.0013621704804020443,
+              "direction_totals": {
+                "+x": 115.40732560866707,
+                "-x": 114.27032616638843,
+                "+y": 143.89135395785547,
+                "-y": 143.4998781052128
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.0026664248291016755,
+              "direction_totals": {
+                "+x": 134.74014713082948,
+                "-x": 133.7284960020151,
+                "+y": 167.49615116599324,
+                "-y": 168.3917710616163
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0038307228248090287,
+              "direction_totals": {
+                "+x": 111.91221443804523,
+                "-x": 106.63454523929398,
+                "+y": 137.2478975138567,
+                "-y": 136.20039290633906
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006660341864532902,
+              "direction_totals": {
+                "+x": 259.45407684889494,
+                "-x": 261.1888269231771,
+                "+y": 323.09136477966507,
+                "-y": 327.4240196279579
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.021802405781045548,
+              "direction_totals": {
+                "+x": 250.25526208035075,
+                "-x": 249.92396153795022,
+                "+y": 319.3404335937158,
+                "-y": 305.7127700139196
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.01310702242604235,
+              "direction_totals": {
+                "+x": 279.4896349462126,
+                "-x": 302.74696560845007,
+                "+y": 359.08718121297153,
+                "-y": 368.6253253562863
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021145477345223138,
+              "direction_totals": {
+                "+x": 249.40772708951437,
+                "-x": 232.17032176250993,
+                "+y": 307.28181019779373,
+                "-y": 294.55566940729807
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.0994510363904241,
+            "5.0": 0.09020273965669726,
+            "10.0": 0.0760205502007846
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.03824184032232328
+      },
+      "elapsed_s": 14.8
+    },
+    {
+      "tau_slow_ms": 150.0,
+      "fast_scale": 2.0,
+      "tm9_tau_ms": 200.0,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 150 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 150 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 150 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 50 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.52166995565284e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.1703649477909934e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.5239979083168116e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.1768737149939774e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.00035596577372160043
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.003272859255556204
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.03829675622739581
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.2622987432597127
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.119981638107778
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810411821150232,
+            "L2": 0.5251811506552657,
+            "L3": 0.5007048428861741,
+            "L4": 0.5124223731350767,
+            "L5": 0.5345736074004863,
+            "Mi1": 0.0,
+            "Mi4": 0.5323667709294438,
+            "Mi9": 0.7681290550473359,
+            "Tm1": 3.602554404627441,
+            "Tm2": 3.0043135743694975,
+            "Tm3": 0.3469796357423152,
+            "Tm4": 1.139911142883556,
+            "Tm9": 0.5821897777427553,
+            "T4a": 0.4841193419013337,
+            "T4b": 0.4681368280727874,
+            "T4c": 0.46933835095379883,
+            "T4d": 0.47489651175724845,
+            "T5a": 1.0326417400240517,
+            "T5b": 1.0297511516396176,
+            "T5c": 1.0773902541953453,
+            "T5d": 0.9761389228956049,
+            "settle_residual": 1.7443667510441685e-08
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.500931532918547,
+            "L5": 0.6495387325805945,
+            "Mi1": 0.6364016316080071,
+            "Mi4": 0.6141490835318382,
+            "Mi9": 0.2489959966156159,
+            "Tm1": 0.4806144680642156,
+            "Tm2": 0.519224197232718,
+            "Tm3": 0.7437936578317587,
+            "Tm4": 0.556964964734434,
+            "Tm9": 0.46998374787016683,
+            "T4a": 0.6850955476248839,
+            "T4b": 0.651984006713018,
+            "T4c": 0.6805146267412338,
+            "T4d": 0.6386789868074692,
+            "T5a": 0.6323822931010219,
+            "T5b": 0.6448980129135341,
+            "T5c": 0.6630061025280073,
+            "T5d": 0.6283185327991658,
+            "settle_residual": 3.9547260605177215e-08
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.04189459829149221,
+          "median_dsi_t4_on": 0.020270851082200916,
+          "median_dsi_t5_off": 0.07647700038768405,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.002028447618929164,
+              "direction_totals": {
+                "+x": 23.302154652452046,
+                "-x": 23.396881200534324,
+                "+y": 23.245402046988605,
+                "-y": 23.226906877914146
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.013352504713929531,
+              "direction_totals": {
+                "+x": 19.70237008196536,
+                "-x": 19.80692731907497,
+                "+y": 19.403917345240664,
+                "-y": 19.929111802346956
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.0023761838474788692,
+              "direction_totals": {
+                "+x": 23.070979135953966,
+                "-x": 23.180882061447065,
+                "+y": 23.013334770685102,
+                "-y": 23.0351174615446
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.0253242142184183,
+              "direction_totals": {
+                "+x": 18.33255816927738,
+                "-x": 19.285198292327348,
+                "+y": 18.46883275312095,
+                "-y": 18.981495851551173
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.06046888426039967,
+              "direction_totals": {
+                "+x": 45.08936257181008,
+                "-x": 46.95670110727533,
+                "+y": 43.05568048853011,
+                "-y": 48.5978683237125
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04688818296137755,
+              "direction_totals": {
+                "+x": 42.00241587284331,
+                "-x": 46.13502009631175,
+                "+y": 45.5093512838677,
+                "-y": 42.28706494151052
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.16159374925207992,
+              "direction_totals": {
+                "+x": 42.84802167851359,
+                "-x": 59.36500843735208,
+                "+y": 46.757107566612206,
+                "-y": 55.107417033567465
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.06429118978269097,
+              "direction_totals": {
+                "+x": 45.04115129758626,
+                "-x": 39.59950293310948,
+                "+y": 44.37235482929619,
+                "-y": 40.023000277892905
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.07026049243101118,
+            "5.0": 0.036906781466920786,
+            "10.0": 0.018477899628578615
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09398888324049182,
+          "median_dsi_t4_on": 0.09394777661937483,
+          "median_dsi_t5_off": 0.09402998986160879,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.009928064865340437,
+              "direction_totals": {
+                "+x": 128.13327662236838,
+                "-x": 136.10362348781925,
+                "+y": 164.1606338887819,
+                "-y": 167.45291470949127
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.001377708623550961,
+              "direction_totals": {
+                "+x": 113.50513280406402,
+                "-x": 112.36851011088018,
+                "+y": 141.9899143323646,
+                "-y": 141.59921114864414
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.0027047512512106135,
+              "direction_totals": {
+                "+x": 132.4809708763342,
+                "-x": 131.46978387389245,
+                "+y": 165.23806047256934,
+                "-y": 166.13434038841476
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.003879945637182876,
+              "direction_totals": {
+                "+x": 110.08656211256404,
+                "-x": 104.80936098975415,
+                "+y": 135.4229852512202,
+                "-y": 134.37617916034597
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.0067529227099905635,
+              "direction_totals": {
+                "+x": 254.98470272182456,
+                "-x": 256.7190686962145,
+                "+y": 318.6212303857382,
+                "-y": 322.9537365501208
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.02210509504166143,
+              "direction_totals": {
+                "+x": 245.978176954408,
+                "-x": 245.64654792962835,
+                "+y": 315.06251737281406,
+                "-y": 301.4347858912343
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.013288595579735827,
+              "direction_totals": {
+                "+x": 274.5169335737823,
+                "-x": 297.77404326019644,
+                "+y": 354.113696752731,
+                "-y": 363.6517920545828
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021440878456070178,
+              "direction_totals": {
+                "+x": 245.26516118811222,
+                "-x": 228.0273689043591,
+                "+y": 303.13845392810845,
+                "-y": 290.4122063632806
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.10030483429975973,
+            "5.0": 0.09161606409147632,
+            "10.0": 0.07805408427940563
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.04189459829149221
+      },
+      "elapsed_s": 14.2
+    },
+    {
+      "tau_slow_ms": 200.0,
+      "fast_scale": 1.0,
+      "tm9_tau_ms": 266.6666666666667,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 200 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 200 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 200 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 25 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.521667391037653e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.1703625291701343e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.5239583232038463e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.176840296270633e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.0003559600789331818
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.0032727904384888262
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.03829675622037915
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.26229340189295525
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.147654090108087
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810412032053381,
+            "L2": 0.5251811510741208,
+            "L3": 0.5007048505140239,
+            "L4": 0.512422374801972,
+            "L5": 0.5345736657490415,
+            "Mi1": 0.0,
+            "Mi4": 0.5323695605378799,
+            "Mi9": 0.7681227067107819,
+            "Tm1": 3.6025549944443385,
+            "Tm2": 3.0043138594572705,
+            "Tm3": 0.34697966751837894,
+            "Tm4": 1.139911273476373,
+            "Tm9": 0.582182333431211,
+            "T4a": 0.48411962488701266,
+            "T4b": 0.4681372004031933,
+            "T4c": 0.469338806516188,
+            "T4d": 0.4748968811900879,
+            "T5a": 1.0326412326732664,
+            "T5b": 1.0297504524870067,
+            "T5c": 1.0773892913966028,
+            "T5d": 0.9761382571364914,
+            "settle_residual": 2.3378125124651206e-07
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009315266697761,
+            "L5": 0.6495383665168858,
+            "Mi1": 0.6364015330851042,
+            "Mi4": 0.6141398659187919,
+            "Mi9": 0.24901729920424537,
+            "Tm1": 0.48061251459353854,
+            "Tm2": 0.5192232130194167,
+            "Tm3": 0.7437934833693431,
+            "Tm4": 0.5569645177813717,
+            "Tm9": 0.46999294877371245,
+            "T4a": 0.6850945770834205,
+            "T4b": 0.65198274667849,
+            "T4c": 0.6805130987672718,
+            "T4d": 0.6386778721860268,
+            "T5a": 0.632382832730809,
+            "T5b": 0.6448987641095667,
+            "T5c": 0.6630071785139218,
+            "T5d": 0.6283192606781451,
+            "settle_residual": 5.009332602196048e-07
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.03773846927704745,
+          "median_dsi_t4_on": 0.018519264013371266,
+          "median_dsi_t5_off": 0.07069697089400863,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.002553716704396941,
+              "direction_totals": {
+                "+x": 25.392086611635474,
+                "-x": 25.5221070384506,
+                "+y": 25.37490297294601,
+                "-y": 25.395454673892313
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.011253353956782213,
+              "direction_totals": {
+                "+x": 21.281840136025224,
+                "-x": 21.398682766504834,
+                "+y": 21.032454087528095,
+                "-y": 21.511213032246435
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.004258850408082646,
+              "direction_totals": {
+                "+x": 24.96932459691957,
+                "-x": 25.182915485058963,
+                "+y": 24.94153267307746,
+                "-y": 25.013824920543694
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.02121463429828036,
+              "direction_totals": {
+                "+x": 19.93544997058991,
+                "-x": 20.799629790839926,
+                "+y": 20.05762165460481,
+                "-y": 20.51438919858403
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.055436870818954535,
+              "direction_totals": {
+                "+x": 49.382922912970166,
+                "-x": 51.30303943460332,
+                "+y": 47.4303377405327,
+                "-y": 52.99775705850042
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.043081178938591,
+              "direction_totals": {
+                "+x": 46.078006121823115,
+                "-x": 50.22693659152774,
+                "+y": 49.67643804988131,
+                "-y": 46.4180201954843
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.1489606987925572,
+              "direction_totals": {
+                "+x": 47.52524226708703,
+                "-x": 64.16229601618349,
+                "+y": 51.503994885399905,
+                "-y": 59.90689094002358
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.059623296044028634,
+              "direction_totals": {
+                "+x": 49.08230368394458,
+                "-x": 43.55873934934326,
+                "+y": 48.40835228530613,
+                "-y": 44.0135618593686
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.06318364257346029,
+            "5.0": 0.03342295551048986,
+            "10.0": 0.016719820946743128
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09283093154229538,
+          "median_dsi_t4_on": 0.09287451215539284,
+          "median_dsi_t5_off": 0.09281382404279807,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.009803969858286014,
+              "direction_totals": {
+                "+x": 130.24456913833467,
+                "-x": 138.21489209995013,
+                "+y": 166.27024839596822,
+                "-y": 169.56274494005254
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.0013634556617427094,
+              "direction_totals": {
+                "+x": 115.05770888498336,
+                "-x": 113.92112066589141,
+                "+y": 143.54133340428874,
+                "-y": 143.15044188010216
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.002674564527097074,
+              "direction_totals": {
+                "+x": 134.37404385118705,
+                "-x": 133.3630012585558,
+                "+y": 167.1296204557265,
+                "-y": 168.02601583159722
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0038376190482777937,
+              "direction_totals": {
+                "+x": 111.59629446172136,
+                "-x": 106.31877029942166,
+                "+y": 136.93153888052916,
+                "-y": 135.88457456688624
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006663218191338515,
+              "direction_totals": {
+                "+x": 259.31766858439386,
+                "-x": 261.05231422857,
+                "+y": 322.9543847476624,
+                "-y": 327.2870855412542
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.021816955645328266,
+              "direction_totals": {
+                "+x": 250.0467640959644,
+                "-x": 249.71558291687816,
+                "+y": 319.1313019667412,
+                "-y": 305.5036685210873
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.013118865308803908,
+              "direction_totals": {
+                "+x": 279.1653287114292,
+                "-x": 302.4230798878306,
+                "+y": 358.7618627502096,
+                "-y": 368.30009058719895
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021160413485514857,
+              "direction_totals": {
+                "+x": 249.19617425290778,
+                "-x": 231.95853683035148,
+                "+y": 307.0693892600862,
+                "-y": 294.3432491557918
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.09958253044126528,
+            "5.0": 0.09029288283298997,
+            "10.0": 0.07629275666298413
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.03773846927704745
+      },
+      "elapsed_s": 15.5
+    },
+    {
+      "tau_slow_ms": 200.0,
+      "fast_scale": 2.0,
+      "tm9_tau_ms": 266.6666666666667,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 200 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 200 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 200 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 50 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.5216670579707454e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.1703622976886336e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.523954681783348e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.17683721739459e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.00035596007612526126
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.003272783949564928
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.03829675607882321
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.26229293954065147
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.1445694561283695
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810412078752618,
+            "L2": 0.525181151396372,
+            "L3": 0.5007048508712437,
+            "L4": 0.5124223750195906,
+            "L5": 0.5345736742223821,
+            "Mi1": 0.0,
+            "Mi4": 0.5323696477665991,
+            "Mi9": 0.7681225134802931,
+            "Tm1": 3.602555072178861,
+            "Tm2": 3.0043138850369764,
+            "Tm3": 0.3469796699209957,
+            "Tm4": 1.1399112959962334,
+            "Tm9": 0.5821822805544281,
+            "T4a": 0.48411966092976,
+            "T4b": 0.4681372462853905,
+            "T4c": 0.46933886205520065,
+            "T4d": 0.47489692795784333,
+            "T5a": 1.0326411898319643,
+            "T5b": 1.029750390256581,
+            "T5c": 1.0773892034558115,
+            "T5d": 0.976138198458065,
+            "settle_residual": 2.431331487251498e-07
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009315257619373,
+            "L5": 0.6495382718502714,
+            "Mi1": 0.6364014997154022,
+            "Mi4": 0.6141394280296474,
+            "Mi9": 0.24901821802472915,
+            "Tm1": 0.48061223954622767,
+            "Tm2": 0.5192231166708271,
+            "Tm3": 0.7437934445495314,
+            "Tm4": 0.5569644366092558,
+            "Tm9": 0.46999318692965797,
+            "T4a": 0.6850944284565015,
+            "T4b": 0.65198255496282,
+            "T4c": 0.6805128697276659,
+            "T4d": 0.6386777031436519,
+            "T5a": 0.6323828736913617,
+            "T5b": 0.6448988295390843,
+            "T5c": 0.6630072820365227,
+            "T5d": 0.6283193238385048,
+            "settle_residual": 5.221271845018416e-07
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.04123869807540075,
+          "median_dsi_t4_on": 0.020277545801580192,
+          "median_dsi_t5_off": 0.0772297407606506,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.0018861930340301745,
+              "direction_totals": {
+                "+x": 23.13058515279872,
+                "-x": 23.21800754548332,
+                "+y": 23.040239829434906,
+                "-y": 23.073465397825952
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.011969802583948646,
+              "direction_totals": {
+                "+x": 19.418692577271056,
+                "-x": 19.540694105323773,
+                "+y": 19.153173814376434,
+                "-y": 19.61724811091861
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.005239946971886425,
+              "direction_totals": {
+                "+x": 22.732671713662842,
+                "-x": 22.972162621940257,
+                "+y": 22.690334662112253,
+                "-y": 22.77869025058611
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.022587902054648754,
+              "direction_totals": {
+                "+x": 18.151534110825615,
+                "-x": 18.99049461786012,
+                "+y": 18.254958593193873,
+                "-y": 18.695037324934372
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.06083996403915939,
+              "direction_totals": {
+                "+x": 45.027321615853246,
+                "-x": 46.874200200425165,
+                "+y": 42.969833596612894,
+                "-y": 48.537112932795374
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04696688797444683,
+              "direction_totals": {
+                "+x": 41.890433066077904,
+                "-x": 46.01927864801985,
+                "+y": 45.41546086606666,
+                "-y": 42.15117100677702
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.16304974530285374,
+              "direction_totals": {
+                "+x": 42.624375826138895,
+                "-x": 59.232038188724374,
+                "+y": 46.54756571821547,
+                "-y": 54.95314598200749
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.06538566238591421,
+              "direction_totals": {
+                "+x": 44.96700806469218,
+                "-x": 39.447508954411084,
+                "+y": 44.28071225074709,
+                "-y": 39.88143123373869
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.06893612652716394,
+            "5.0": 0.03659815837289068,
+            "10.0": 0.018356677532008286
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09411432212241572,
+          "median_dsi_t4_on": 0.09415395074501254,
+          "median_dsi_t5_off": 0.09409765622018143,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.00994485255315883,
+              "direction_totals": {
+                "+x": 127.89977633007653,
+                "-x": 135.8705768267902,
+                "+y": 163.92659594884503,
+                "-y": 167.21979801027877
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.001379022007656335,
+              "direction_totals": {
+                "+x": 113.15289565815755,
+                "-x": 112.01671992482692,
+                "+y": 141.63725798341042,
+                "-y": 141.24715415345077
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.002713228554738691,
+              "direction_totals": {
+                "+x": 132.11169411302987,
+                "-x": 131.10120189119593,
+                "+y": 164.86833259839366,
+                "-y": 165.76541753040345
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0038870981823911125,
+              "direction_totals": {
+                "+x": 109.76803306553626,
+                "-x": 104.49103646874782,
+                "+y": 135.10399390924428,
+                "-y": 134.05773583877152
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006755881891006988,
+              "direction_totals": {
+                "+x": 254.84831853346367,
+                "-x": 256.58256941547404,
+                "+y": 318.4842344254694,
+                "-y": 322.8167883922076
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.0221200548463441,
+              "direction_totals": {
+                "+x": 245.76969639722054,
+                "-x": 245.43819335866297,
+                "+y": 314.8533559121013,
+                "-y": 301.2256544140064
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.01330077441006713,
+              "direction_totals": {
+                "+x": 274.192648889568,
+                "-x": 297.4502082001546,
+                "+y": 353.78832223533857,
+                "-y": 363.32650477552437
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021456237732849878,
+              "direction_totals": {
+                "+x": 245.0536455931863,
+                "-x": 227.81559402835904,
+                "+y": 302.9260022505723,
+                "-y": 290.19975499757936
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.10043991574329657,
+            "5.0": 0.09171295790374556,
+            "10.0": 0.07835299358650756
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.04123869807540075
+      },
+      "elapsed_s": 13.9
+    },
+    {
+      "tau_slow_ms": 300.0,
+      "fast_scale": 1.0,
+      "tm9_tau_ms": 400.0,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 300 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 300 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 300 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 15 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 25 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 12 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 20 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.5215835136881424e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.1702217134776944e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.5231660961421163e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.176184370839996e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.00035595840435964643
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.003272107798842183
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.03829672135350681
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.2622163916677699
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.195151815530346
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810417132364933,
+            "L2": 0.5251811672883557,
+            "L3": 0.500704944894843,
+            "L4": 0.5124224166509479,
+            "L5": 0.5345750943025497,
+            "Mi1": 0.0,
+            "Mi4": 0.5324334477930446,
+            "Mi9": 0.7679656837190286,
+            "Tm1": 3.6025692915103256,
+            "Tm2": 3.0043208017101404,
+            "Tm3": 0.3469804797327381,
+            "Tm4": 1.1399143902268984,
+            "Tm9": 0.5820206072563725,
+            "T4a": 0.4841264397466939,
+            "T4b": 0.46814661680880587,
+            "T4c": 0.46934976728629246,
+            "T4d": 0.4749059917446903,
+            "T5a": 1.0326306709397488,
+            "T5b": 1.0297357611935305,
+            "T5c": 1.0773690971658947,
+            "T5d": 0.9761243206363945,
+            "settle_residual": 2.9228289765148574e-06
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009313809894438,
+            "L5": 0.649530038557551,
+            "Mi1": 0.6363993260284189,
+            "Mi4": 0.6139253862689714,
+            "Mi9": 0.2495184696458119,
+            "Tm1": 0.48056767648008525,
+            "Tm2": 0.519200489967317,
+            "Tm3": 0.7437894786571373,
+            "Tm4": 0.556954391441205,
+            "Tm9": 0.4701686451204141,
+            "T4a": 0.6850724489901898,
+            "T4b": 0.6519524755290913,
+            "T4c": 0.6804778703011694,
+            "T4d": 0.6386514324001635,
+            "T5a": 0.6323919868157699,
+            "T5b": 0.6449120080487515,
+            "T5c": 0.663026335821417,
+            "T5d": 0.6283320875752527,
+            "settle_residual": 6.368250595412128e-06
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.03837045745692187,
+          "median_dsi_t4_on": 0.018249822101162154,
+          "median_dsi_t5_off": 0.07155095828418967,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.0022570945832514986,
+              "direction_totals": {
+                "+x": 25.122566794873308,
+                "-x": 25.23623136541996,
+                "+y": 25.03621727692506,
+                "-y": 25.169287877404532
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-y",
+              "subtype_dsi": 0.008241223081668731,
+              "direction_totals": {
+                "+x": 20.810790868747468,
+                "-x": 20.964746677371583,
+                "+y": 20.639693082288865,
+                "-y": 20.98271261281796
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.00998682126487187,
+              "direction_totals": {
+                "+x": 24.38388569151245,
+                "-x": 24.875833704679966,
+                "+y": 24.399045323681996,
+                "-y": 24.619624392129897
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.01551441142580473,
+              "direction_totals": {
+                "+x": 19.667251533516836,
+                "-x": 20.287120093193113,
+                "+y": 19.73187738168055,
+                "-y": 20.026074256747197
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.055966615930736874,
+              "direction_totals": {
+                "+x": 49.313783655345304,
+                "-x": 51.19952019381531,
+                "+y": 47.32397827164183,
+                "-y": 52.93514194644084
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04313778695192004,
+              "direction_totals": {
+                "+x": 45.94025631945297,
+                "-x": 50.082463969836134,
+                "+y": 49.573606817855385,
+                "-y": 46.24232101629643
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.15098282492262827,
+              "direction_totals": {
+                "+x": 47.22030301825349,
+                "-x": 64.0149096591585,
+                "+y": 51.232452838042896,
+                "-y": 59.73134364119197
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.06126382147290866,
+              "direction_totals": {
+                "+x": 49.00603752720651,
+                "-x": 43.34807185756819,
+                "+y": 48.309836055245796,
+                "-y": 43.82820291268466
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.06459723589090734,
+            "5.0": 0.03324002563145036,
+            "10.0": 0.016728736332965503
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.09294628290486324,
+          "median_dsi_t4_on": 0.09326922513711852,
+          "median_dsi_t5_off": 0.09294222206567274,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.009836812144642491,
+              "direction_totals": {
+                "+x": 129.7838957785685,
+                "-x": 137.75349455591706,
+                "+y": 165.805187569128,
+                "-y": 169.09958288240435
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.0013675576914975428,
+              "direction_totals": {
+                "+x": 114.35648072864626,
+                "-x": 113.22056282018222,
+                "+y": 142.836182967053,
+                "-y": 142.44604306459587
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.0026927724450747726,
+              "direction_totals": {
+                "+x": 133.63870572074123,
+                "-x": 132.63100073791549,
+                "+y": 166.39014517438474,
+                "-y": 167.28866628338352
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0038531005772252484,
+              "direction_totals": {
+                "+x": 110.96293074818547,
+                "-x": 105.68419690610892,
+                "+y": 136.29343074639746,
+                "-y": 135.24715754889678
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006670020042906168,
+              "direction_totals": {
+                "+x": 259.0452977469122,
+                "-x": 260.77905400727,
+                "+y": 322.6755993865923,
+                "-y": 327.0090087443936
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.021845984173672513,
+              "direction_totals": {
+                "+x": 249.62905560731068,
+                "-x": 249.29912922997062,
+                "+y": 318.7061273497457,
+                "-y": 305.0789288835008
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.013144410990971201,
+              "direction_totals": {
+                "+x": 278.5158173090207,
+                "-x": 301.7766117309606,
+                "+y": 358.1001646244287,
+                "-y": 367.63958618150696
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021190660366291574,
+              "direction_totals": {
+                "+x": 248.77387150417601,
+                "-x": 231.53428334511412,
+                "+y": 306.6374921471893,
+                "-y": 293.91146320107305
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.09977446773486381,
+            "5.0": 0.09050657346705532,
+            "10.0": 0.07678239306473883
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.03837045745692187
+      },
+      "elapsed_s": 13.8
+    },
+    {
+      "tau_slow_ms": 300.0,
+      "fast_scale": 2.0,
+      "tm9_tau_ms": 400.0,
+      "parameter_provenance": [
+        {
+          "pattern": "<default>",
+          "provenance": "unmatched type: flyvision init 50 ms (ASSUMED)"
+        },
+        {
+          "pattern": "L3",
+          "provenance": "L3: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 300 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi4",
+          "provenance": "Mi4: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 300 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Mi9",
+          "provenance": "Mi9: slow class ESTABLISHED (Arenz 2017; Borst 2025); tau 300 ms ASSUMED, swept 100-300"
+        },
+        {
+          "pattern": "Tm9",
+          "provenance": "Tm9: slow class ESTABLISHED; tau = (4/3)*tau_slow ASSUMED (doc 200:150 ratio), swept"
+        },
+        {
+          "pattern": "L1",
+          "provenance": "L1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L2",
+          "provenance": "L2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 30 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L4",
+          "provenance": "L4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "L5",
+          "provenance": "L5: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 50 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Mi1",
+          "provenance": "Mi1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm3",
+          "provenance": "Tm3: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm1",
+          "provenance": "Tm1: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm2",
+          "provenance": "Tm2: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 24 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "Tm4",
+          "provenance": "Tm4: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4a",
+          "provenance": "T4a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4b",
+          "provenance": "T4b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4c",
+          "provenance": "T4c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T4d",
+          "provenance": "T4d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5a",
+          "provenance": "T5a: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5b",
+          "provenance": "T5b: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5c",
+          "provenance": "T5c: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        },
+        {
+          "pattern": "T5d",
+          "provenance": "T5d: fast class ESTABLISHED (Behnia 2014 anchors; Arenz 2017); tau 40 ms ASSUMED, fast_scale swept 1-2 within doc ranges"
+        }
+      ],
+      "calibration": {
+        "curve": [
+          {
+            "gain": 1e-05,
+            "stable": true,
+            "median_peak_evoked": 3.521578523235647e-08
+          },
+          {
+            "gain": 3e-05,
+            "stable": true,
+            "median_peak_evoked": 3.1701817981844016e-07
+          },
+          {
+            "gain": 0.0001,
+            "stable": true,
+            "median_peak_evoked": 3.523121744342106e-06
+          },
+          {
+            "gain": 0.0003,
+            "stable": true,
+            "median_peak_evoked": 3.176147478173297e-05
+          },
+          {
+            "gain": 0.001,
+            "stable": true,
+            "median_peak_evoked": 0.00035595826584366996
+          },
+          {
+            "gain": 0.003,
+            "stable": true,
+            "median_peak_evoked": 0.0032720694615354096
+          },
+          {
+            "gain": 0.01,
+            "stable": true,
+            "median_peak_evoked": 0.038296158535772507
+          },
+          {
+            "gain": 0.03,
+            "stable": true,
+            "median_peak_evoked": 0.2622123421215417
+          },
+          {
+            "gain": 0.1,
+            "stable": true,
+            "median_peak_evoked": 4.190380232405301
+          },
+          {
+            "gain": 0.3,
+            "stable": false
+          }
+        ],
+        "chosen_gain": 0.03,
+        "target_median_peak": 0.5,
+        "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+      },
+      "result": {
+        "baseline_mean_output": {
+          "on": {
+            "L1": 0.6810417884596963,
+            "L2": 0.5251811730139688,
+            "L3": 0.5007049503392029,
+            "L4": 0.5124224203822579,
+            "L5": 0.5345752372022384,
+            "Mi1": 0.0,
+            "Mi4": 0.5324347514579562,
+            "Mi9": 0.7679620003275434,
+            "Tm1": 3.6025705549197116,
+            "Tm2": 3.004321237422746,
+            "Tm3": 0.3469805251880193,
+            "Tm4": 1.1399147437839527,
+            "Tm9": 0.5820199782200971,
+            "T4a": 0.48412703093291093,
+            "T4b": 0.46814742205103965,
+            "T4c": 0.46935067476343517,
+            "T4d": 0.47490677446546464,
+            "T5a": 1.0326301446949584,
+            "T5b": 1.0297349732721763,
+            "T5c": 1.0773679832309462,
+            "T5d": 0.9761235815974273,
+            "settle_residual": 3.0007760449812793e-06
+          },
+          "off": {
+            "L1": 0.0,
+            "L2": 0.0,
+            "L3": 0.0,
+            "L4": 0.5009313682017184,
+            "L5": 0.6495287587421984,
+            "Mi1": 0.6363988894232429,
+            "Mi4": 0.613919315878785,
+            "Mi9": 0.24953105774240703,
+            "Tm1": 0.48056385191709217,
+            "Tm2": 0.5191991321102055,
+            "Tm3": 0.7437889600499605,
+            "Tm4": 0.556953285325551,
+            "Tm9": 0.47017103402533317,
+            "T4a": 0.6850704115633176,
+            "T4b": 0.6519497120001277,
+            "T4c": 0.6804746936591346,
+            "T4d": 0.6386490203298305,
+            "T5a": 0.6323923074379845,
+            "T5b": 0.644912611578734,
+            "T5c": 0.6630273423257829,
+            "T5d": 0.6283326706039246,
+            "settle_residual": 6.524554067979804e-06
+          }
+        },
+        "all_sweeps_stable": true,
+        "readout_v2_crossing_window": {
+          "median_dsi_pooled": 0.041733841607121513,
+          "median_dsi_t4_on": 0.01969935932282405,
+          "median_dsi_t5_off": 0.07833748757308862,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 1,
+          "t5_distinct_preferred": 3,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.001510893038937597,
+              "direction_totals": {
+                "+x": 22.86958860493558,
+                "-x": 22.938800180676708,
+                "+y": 22.707549284831977,
+                "-y": 22.858349408499837
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "-x",
+              "subtype_dsi": 0.004228700771112342,
+              "direction_totals": {
+                "+x": 18.95938549969412,
+                "-x": 19.1204135754068,
+                "+y": 18.777313201261993,
+                "-y": 19.09925198968513
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-x",
+              "subtype_dsi": 0.011798185417192068,
+              "direction_totals": {
+                "+x": 22.15484808546733,
+                "-x": 22.683863518842983,
+                "+y": 22.158631494098362,
+                "-y": 22.402305620630244
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "-x",
+              "subtype_dsi": 0.01607294619439313,
+              "direction_totals": {
+                "+x": 17.899838900356844,
+                "-x": 18.48464474835334,
+                "+y": 17.94574064219816,
+                "-y": 18.21533098199118
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.061433418106579964,
+              "direction_totals": {
+                "+x": 44.9590208981945,
+                "-x": 46.771812055412006,
+                "+y": 42.86440326185964,
+                "-y": 48.47574050372599
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "-x",
+              "subtype_dsi": 0.04703897674016218,
+              "direction_totals": {
+                "+x": 41.756168957722934,
+                "-x": 45.878409872974,
+                "+y": 45.31637791577132,
+                "-y": 41.97901032855605
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-x",
+              "subtype_dsi": 0.16531694235161162,
+              "direction_totals": {
+                "+x": 42.32558447314923,
+                "-x": 59.09155604578281,
+                "+y": 46.28299831090976,
+                "-y": 54.78509755814539
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+x",
+              "subtype_dsi": 0.0672030379333172,
+              "direction_totals": {
+                "+x": 44.89372190947171,
+                "-x": 39.23970034241816,
+                "+y": 44.186017241113845,
+                "-y": 39.6995172612104
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.07087858984650554,
+            "5.0": 0.03657021499781381,
+            "10.0": 0.018497454247757103
+          },
+          "pass": false
+        },
+        "readout_v1_wholesweep": {
+          "median_dsi_pooled": 0.0942360086746864,
+          "median_dsi_t4_on": 0.0945614508382742,
+          "median_dsi_t5_off": 0.09422922564430003,
+          "defined_fraction": 1.0,
+          "t4_distinct_preferred": 2,
+          "t5_distinct_preferred": 2,
+          "per_subtype": {
+            "T4a": {
+              "cells": 63,
+              "preferred": "-y",
+              "subtype_dsi": 0.009978960349309495,
+              "direction_totals": {
+                "+x": 127.43554863354852,
+                "-x": 135.4055486566642,
+                "+y": 163.45767469654646,
+                "-y": 166.75283225231453
+              }
+            },
+            "T4b": {
+              "cells": 59,
+              "preferred": "+y",
+              "subtype_dsi": 0.0013833043681157025,
+              "direction_totals": {
+                "+x": 112.44879606141899,
+                "-x": 111.31330196986498,
+                "+y": 140.92893695490417,
+                "-y": 140.5395803254632
+              }
+            },
+            "T4c": {
+              "cells": 60,
+              "preferred": "-y",
+              "subtype_dsi": 0.002732173460908568,
+              "direction_totals": {
+                "+x": 131.37281069211775,
+                "-x": 130.36589138026574,
+                "+y": 164.12500559206356,
+                "-y": 165.02429858561433
+              }
+            },
+            "T4d": {
+              "cells": 63,
+              "preferred": "+y",
+              "subtype_dsi": 0.0039031261777935523,
+              "direction_totals": {
+                "+x": 109.13184783514026,
+                "-x": 103.85354930364167,
+                "+y": 134.4626860893559,
+                "-y": 133.41711741579277
+              }
+            },
+            "T5a": {
+              "cells": 61,
+              "preferred": "-y",
+              "subtype_dsi": 0.006762875715996836,
+              "direction_totals": {
+                "+x": 254.57612163102763,
+                "-x": 256.3094238763187,
+                "+y": 318.2053764257121,
+                "-y": 322.5386486329514
+              }
+            },
+            "T5b": {
+              "cells": 61,
+              "preferred": "+y",
+              "subtype_dsi": 0.02214990865057336,
+              "direction_totals": {
+                "+x": 245.35209363003497,
+                "-x": 245.0218922844707,
+                "+y": 314.4279756473531,
+                "-y": 300.8007163210414
+              }
+            },
+            "T5c": {
+              "cells": 66,
+              "preferred": "-y",
+              "subtype_dsi": 0.013327045886733793,
+              "direction_totals": {
+                "+x": 273.5432505339799,
+                "-x": 296.8039661987287,
+                "+y": 353.126183992353,
+                "-y": 362.66557359101233
+              }
+            },
+            "T5d": {
+              "cells": 65,
+              "preferred": "+y",
+              "subtype_dsi": 0.021487358488406733,
+              "direction_totals": {
+                "+x": 244.63155886992558,
+                "-x": 227.39141498082017,
+                "+y": 302.4938871358486,
+                "-y": 289.7677490403992
+              }
+            }
+          },
+          "per_speed_median_dsi": {
+            "2.5": 0.10063352798669656,
+            "5.0": 0.09193724868088457,
+            "10.0": 0.07886930201487556
+          },
+          "pass": false
+        },
+        "pass": false,
+        "median_dsi_pooled": 0.041733841607121513
+      },
+      "elapsed_s": 14.1
+    }
+  ],
+  "trivial_alternative": {
+    "uniform_tau_ms": 50.0,
+    "calibration": {
+      "curve": [
+        {
+          "gain": 1e-05,
+          "stable": true,
+          "median_peak_evoked": 3.521670277617517e-08
+        },
+        {
+          "gain": 3e-05,
+          "stable": true,
+          "median_peak_evoked": 3.1703650832382024e-07
+        },
+        {
+          "gain": 0.0001,
+          "stable": true,
+          "median_peak_evoked": 3.524000289967244e-06
+        },
+        {
+          "gain": 0.0003,
+          "stable": true,
+          "median_peak_evoked": 3.176875744131946e-05
+        },
+        {
+          "gain": 0.001,
+          "stable": true,
+          "median_peak_evoked": 0.00035596651965047466
+        },
+        {
+          "gain": 0.003,
+          "stable": true,
+          "median_peak_evoked": 0.003272867987949568
+        },
+        {
+          "gain": 0.01,
+          "stable": true,
+          "median_peak_evoked": 0.038296756222856165
+        },
+        {
+          "gain": 0.03,
+          "stable": true,
+          "median_peak_evoked": 0.2623002649274635
+        },
+        {
+          "gain": 0.1,
+          "stable": true,
+          "median_peak_evoked": 4.0698744769197654
+        },
+        {
+          "gain": 0.3,
+          "stable": false
+        }
+      ],
+      "chosen_gain": 0.03,
+      "target_median_peak": 0.5,
+      "held_out_stimulus": "edge along +45deg diagonal, 5 col/s, both polarities (direction not among the 4 scored); metric = median peak evoked over T4-on-ON u T5-on-OFF"
+    },
+    "result": {
+      "baseline_mean_output": {
+        "on": {
+          "L1": 0.6810411808452801,
+          "L2": 0.5251811506206656,
+          "L3": 0.5007048424998242,
+          "L4": 0.5124223730488766,
+          "L5": 0.534573604240719,
+          "Mi1": 0.0,
+          "Mi4": 0.5323666408360295,
+          "Mi9": 0.7681293458100681,
+          "Tm1": 3.602554372968396,
+          "Tm2": 3.0043135599572666,
+          "Tm3": 0.3469796342309406,
+          "Tm4": 1.1399111353693756,
+          "Tm9": 0.5821901367126885,
+          "T4a": 0.48411932657992235,
+          "T4b": 0.46813680903006805,
+          "T4c": 0.4693383266053842,
+          "T4d": 0.4748964923685788,
+          "T5a": 1.032641768387591,
+          "T5b": 1.0297511906087677,
+          "T5c": 1.0773903082146274,
+          "T5d": 0.9761389601166968,
+          "settle_residual": 0.0
+        },
+        "off": {
+          "L1": 0.0,
+          "L2": 0.0,
+          "L3": 0.0,
+          "L4": 0.5009315332660528,
+          "L5": 0.6495387567209315,
+          "Mi1": 0.636401638855473,
+          "Mi4": 0.6141495347285151,
+          "Mi9": 0.24899496827260706,
+          "Tm1": 0.4806145782183497,
+          "Tm2": 0.5192242493780668,
+          "Tm3": 0.743793668828895,
+          "Tm4": 0.5569649916522851,
+          "Tm9": 0.46998323691093236,
+          "T4a": 0.6850956035375214,
+          "T4b": 0.6519840751395688,
+          "T4c": 0.680514713344504,
+          "T4d": 0.6386790481946938,
+          "T5a": 0.632382257677167,
+          "T5b": 0.6448979644162502,
+          "T5c": 0.6630060325354616,
+          "T5d": 0.6283184857922469,
+          "settle_residual": 0.0
+        }
+      },
+      "all_sweeps_stable": true,
+      "readout_v2_crossing_window": {
+        "median_dsi_pooled": 0.04488434014128179,
+        "median_dsi_t4_on": 0.021221030690788997,
+        "median_dsi_t5_off": 0.08327148885103587,
+        "defined_fraction": 1.0,
+        "t4_distinct_preferred": 3,
+        "t5_distinct_preferred": 3,
+        "per_subtype": {
+          "T4a": {
+            "cells": 63,
+            "preferred": "-x",
+            "subtype_dsi": 0.0016835077319104796,
+            "direction_totals": {
+              "+x": 22.315309611064254,
+              "-x": 22.390572308938456,
+              "+y": 22.250999752420203,
+              "-y": 22.177461199328054
+            }
+          },
+          "T4b": {
+            "cells": 59,
+            "preferred": "-y",
+            "subtype_dsi": 0.015270976524645605,
+            "direction_totals": {
+              "+x": 19.1549849506186,
+              "-x": 19.237373202358658,
+              "+y": 18.804570777879213,
+              "-y": 19.38780566191169
+            }
+          },
+          "T4c": {
+            "cells": 60,
+            "preferred": "+x",
+            "subtype_dsi": 0.0010380664301088826,
+            "direction_totals": {
+              "+x": 22.38875501224211,
+              "-x": 22.342321183660502,
+              "+y": 22.303967520295544,
+              "-y": 22.261570688905383
+            }
+          },
+          "T4d": {
+            "cells": 63,
+            "preferred": "-x",
+            "subtype_dsi": 0.029736634417356647,
+            "direction_totals": {
+              "+x": 17.67572590492593,
+              "-x": 18.759177301610478,
+              "+y": 17.857021108386856,
+              "-y": 18.438249455550046
+            }
+          },
+          "T5a": {
+            "cells": 61,
+            "preferred": "-y",
+            "subtype_dsi": 0.06623252042600909,
+            "direction_totals": {
+              "+x": 40.79427007433653,
+              "-x": 42.62395342052885,
+              "+y": 38.679665478106045,
+              "-y": 44.166795389759514
+            }
+          },
+          "T5b": {
+            "cells": 61,
+            "preferred": "-x",
+            "subtype_dsi": 0.050832242040691256,
+            "direction_totals": {
+              "+x": 38.05546703913435,
+              "-x": 42.1315530529784,
+              "+y": 41.39421148818054,
+              "-y": 38.235616885363605
+            }
+          },
+          "T5c": {
+            "cells": 66,
+            "preferred": "-x",
+            "subtype_dsi": 0.17472744505659313,
+            "direction_totals": {
+              "+x": 38.46092498659473,
+              "-x": 54.74688801097234,
+              "+y": 42.25823412910824,
+              "-y": 50.519838231348665
+            }
+          },
+          "T5d": {
+            "cells": 65,
+            "preferred": "+x",
+            "subtype_dsi": 0.06894371281678607,
+            "direction_totals": {
+              "+x": 41.143812847681815,
+              "-x": 35.836503991009856,
+              "+y": 40.503553505919335,
+              "-y": 36.22789955514395
+            }
+          }
+        },
+        "per_speed_median_dsi": {
+          "2.5": 0.07511888343063548,
+          "5.0": 0.039446509707867436,
+          "10.0": 0.019888948320140952
+        },
+        "pass": false
+      },
+      "readout_v1_wholesweep": {
+        "median_dsi_pooled": 0.09479264277650522,
+        "median_dsi_t4_on": 0.09435463454097773,
+        "median_dsi_t5_off": 0.0952630646438215,
+        "defined_fraction": 1.0,
+        "t4_distinct_preferred": 2,
+        "t5_distinct_preferred": 2,
+        "per_subtype": {
+          "T4a": {
+            "cells": 63,
+            "preferred": "-y",
+            "subtype_dsi": 0.009981144334497628,
+            "direction_totals": {
+              "+x": 127.14137803776015,
+              "-x": 135.1100853810902,
+              "+y": 163.17091102643576,
+              "-y": 166.46101485592604
+            }
+          },
+          "T4b": {
+            "cells": 59,
+            "preferred": "+y",
+            "subtype_dsi": 0.0013868030911893855,
+            "direction_totals": {
+              "+x": 112.97451201331347,
+              "-x": 111.83689791055133,
+              "+y": 141.46071656319063,
+              "-y": 141.0689036125783
+            }
+          },
+          "T4c": {
+            "cells": 60,
+            "preferred": "-y",
+            "subtype_dsi": 0.0027115524406797517,
+            "direction_totals": {
+              "+x": 131.7852219847723,
+              "-x": 130.77322683011963,
+              "+y": 164.54430802033028,
+              "-y": 165.43907526867133
+            }
+          },
+          "T4d": {
+            "cells": 63,
+            "preferred": "+y",
+            "subtype_dsi": 0.0038991558759353074,
+            "direction_totals": {
+              "+x": 109.54961308635905,
+              "-x": 104.27073215526072,
+              "+y": 134.88688105099595,
+              "-y": 133.8390766539942
+            }
+          },
+          "T5a": {
+            "cells": 61,
+            "preferred": "-y",
+            "subtype_dsi": 0.006846237856577694,
+            "direction_totals": {
+              "+x": 250.6030297866339,
+              "-x": 252.33709007671175,
+              "+y": 314.2389519700796,
+              "-y": 318.5713216211713
+            }
+          },
+          "T5b": {
+            "cells": 61,
+            "preferred": "+y",
+            "subtype_dsi": 0.022398780640811276,
+            "direction_totals": {
+              "+x": 241.9389262975223,
+              "-x": 241.6069920145466,
+              "+y": 311.0226102844491,
+              "-y": 297.39480212582146
+            }
+          },
+          "T5c": {
+            "cells": 66,
+            "preferred": "-y",
+            "subtype_dsi": 0.013456064055265914,
+            "direction_totals": {
+              "+x": 270.0492194746272,
+              "-x": 293.30603602708277,
+              "+y": 349.6453669564919,
+              "-y": 359.18341241594334
+            }
+          },
+          "T5d": {
+            "cells": 65,
+            "preferred": "+y",
+            "subtype_dsi": 0.021717931344807286,
+            "direction_totals": {
+              "+x": 241.4818546993786,
+              "-x": 224.24380687065607,
+              "+y": 299.35457217183057,
+              "-y": 286.62823773699347
+            }
+          }
+        },
+        "per_speed_median_dsi": {
+          "2.5": 0.10078990133183163,
+          "5.0": 0.09254393216033169,
+          "10.0": 0.07969273024956028
+        },
+        "pass": false
+      },
+      "pass": false,
+      "median_dsi_pooled": 0.04488434014128179
+    },
+    "elapsed_s": 13.4
+  },
+  "summary": {
+    "total_elapsed_s": 165.3,
+    "readout_v2_crossing_window": {
+      "pass_configs": [],
+      "best_config": {
+        "tau_slow_ms": 100.0,
+        "fast_scale": 2.0,
+        "gain": 0.03
+      },
+      "best_median_dsi": 0.04205238566254947,
+      "trivial_uniform_tau_median_dsi": 0.04488434014128179,
+      "attribution_holds": false
+    },
+    "readout_v1_wholesweep": {
+      "pass_configs": [],
+      "best_config": {
+        "tau_slow_ms": 300.0,
+        "fast_scale": 2.0,
+        "gain": 0.03
+      },
+      "best_median_dsi": 0.0942360086746864,
+      "trivial_uniform_tau_median_dsi": 0.09479264277650522,
+      "attribution_holds": false
+    }
+  }
+}

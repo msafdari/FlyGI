@@ -1,0 +1,54 @@
+patch: 2701 cells, 47175 signed edges, 498 scored T4/T5 cells, built in 23.9s
+sign audit: {'curated_edges': 35041, 'edges_flipped_by_curation': 0, 'note': '0 expected: measured MaleCNS consensus NT agrees with the curated table for every patch type'}
+[config tau_slow=100ms fast_scale=1.0]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0381 (T4 0.0191 / T5 0.0695), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0925 pass=False
+[config tau_slow=100ms fast_scale=2.0]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0421 (T4 0.0209 / T5 0.0757), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0938 pass=False
+[config tau_slow=150ms fast_scale=1.0]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0382 (T4 0.0187 / T5 0.0700), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0927 pass=False
+[config tau_slow=150ms fast_scale=2.0]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0419 (T4 0.0203 / T5 0.0765), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0940 pass=False
+[config tau_slow=200ms fast_scale=1.0]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0377 (T4 0.0185 / T5 0.0707), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0928 pass=False
+[config tau_slow=200ms fast_scale=2.0]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0412 (T4 0.0203 / T5 0.0772), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0941 pass=False
+[config tau_slow=300ms fast_scale=1.0]
+  calibration: chosen gain 0.03 (median peak 0.2622)
+  scored v2(window): median DSI 0.0384 (T4 0.0182 / T5 0.0716), defined 1.00, distinct T4 2 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0929 pass=False
+[config tau_slow=300ms fast_scale=2.0]
+  calibration: chosen gain 0.03 (median peak 0.2622)
+  scored v2(window): median DSI 0.0417 (T4 0.0197 / T5 0.0783), defined 1.00, distinct T4 1 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0942 pass=False
+[trivial control: uniform tau 50ms]
+  calibration: chosen gain 0.03 (median peak 0.2623)
+  scored v2(window): median DSI 0.0449 (T4 0.0212 / T5 0.0833), defined 1.00, distinct T4 3 T5 3, stable True -> pass=False | v1(wholesweep) median 0.0948 pass=False
+{
+  "total_elapsed_s": 165.3,
+  "readout_v2_crossing_window": {
+    "pass_configs": [],
+    "best_config": {
+      "tau_slow_ms": 100.0,
+      "fast_scale": 2.0,
+      "gain": 0.03
+    },
+    "best_median_dsi": 0.04205238566254947,
+    "trivial_uniform_tau_median_dsi": 0.04488434014128179,
+    "attribution_holds": false
+  },
+  "readout_v1_wholesweep": {
+    "pass_configs": [],
+    "best_config": {
+      "tau_slow_ms": 300.0,
+      "fast_scale": 2.0,
+      "gain": 0.03
+    },
+    "best_median_dsi": 0.0942360086746864,
+    "trivial_uniform_tau_median_dsi": 0.09479264277650522,
+    "attribution_holds": false
+  }
+}

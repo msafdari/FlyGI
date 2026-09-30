@@ -1,0 +1,45 @@
+graph + encoder loaded in 1.4s
+ON bar colours [2, 6, 7] -> ['L1', 'Mi1', 'Mi4']; OFF bar colours [3, 10, 11, 14] -> ['L2', 'Tm1', 'Tm2', 'Tm9']
+T4/T5 cells 13580, LC family 4674, LC types >= 100 cells: 18
+precomputed 128 V1 drives (16 frames/sweep) and 25 V2 drives
+gain 0.8 leak 0.1: V1 median DSI 0.2878 (defined 1.00, T4 distinct 2, T5 distinct 2) pass=False | V2 rho -0.2034 (valid 1.00) pass=False | 18.6s
+gain 0.8 leak 0.3: V1 median DSI 0.0081 (defined 1.00, T4 distinct 3, T5 distinct 3) pass=False | V2 rho -0.2328 (valid 1.00) pass=False | 17.7s
+gain 0.8 leak 0.6: V1 median DSI 0.0039 (defined 1.00, T4 distinct 2, T5 distinct 1) pass=False | V2 rho -0.2651 (valid 1.00) pass=False | 17.7s
+gain 1.0 leak 0.1: V1 median DSI 0.2692 (defined 1.00, T4 distinct 2, T5 distinct 2) pass=False | V2 rho -0.2034 (valid 1.00) pass=False | 18.0s
+gain 1.0 leak 0.3: V1 median DSI 0.0090 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2458 (valid 1.00) pass=False | 25.2s
+gain 1.0 leak 0.6: V1 median DSI 0.0060 (defined 1.00, T4 distinct 2, T5 distinct 1) pass=False | V2 rho -0.2658 (valid 1.00) pass=False | 24.2s
+gain 1.2 leak 0.1: V1 median DSI 0.2480 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2057 (valid 1.00) pass=False | 23.9s
+gain 1.2 leak 0.3: V1 median DSI 0.0103 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2567 (valid 1.00) pass=False | 23.2s
+gain 1.2 leak 0.6: V1 median DSI 0.0084 (defined 1.00, T4 distinct 2, T5 distinct 1) pass=False | V2 rho -0.2664 (valid 1.00) pass=False | 24.6s
+gain 1.5 leak 0.1: V1 median DSI 0.2191 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2109 (valid 1.00) pass=False | 28.8s
+gain 1.5 leak 0.3: V1 median DSI 0.0133 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2689 (valid 1.00) pass=False | 23.6s
+gain 1.5 leak 0.6: V1 median DSI 0.0126 (defined 1.00, T4 distinct 1, T5 distinct 1) pass=False | V2 rho -0.2926 (valid 1.00) pass=False | 24.2s
+gain 1.8 leak 0.1: V1 median DSI 0.1995 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2161 (valid 1.00) pass=False | 23.6s
+gain 1.8 leak 0.3: V1 median DSI 0.0172 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2702 (valid 1.00) pass=False | 22.7s
+gain 1.8 leak 0.6: V1 median DSI 0.0181 (defined 1.00, T4 distinct 2, T5 distinct 1) pass=False | V2 rho -0.3108 (valid 1.00) pass=False | 28.7s
+gain 2.0 leak 0.1: V1 median DSI 0.1903 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2206 (valid 1.00) pass=False | 29.7s
+gain 2.0 leak 0.3: V1 median DSI 0.0204 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2759 (valid 1.00) pass=False | 26.3s
+gain 2.0 leak 0.6: V1 median DSI 0.0221 (defined 1.00, T4 distinct 2, T5 distinct 2) pass=False | V2 rho -0.3131 (valid 1.00) pass=False | 25.0s
+gain 2.5 leak 0.1: V1 median DSI 0.1750 (defined 0.99, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.2346 (valid 1.00) pass=False | 25.1s
+gain 2.5 leak 0.3: V1 median DSI 0.0313 (defined 1.00, T4 distinct 2, T5 distinct 3) pass=False | V2 rho -0.3143 (valid 1.00) pass=False | 27.5s
+gain 2.5 leak 0.6: V1 median DSI 0.0341 (defined 1.00, T4 distinct 2, T5 distinct 2) pass=False | V2 rho -0.3072 (valid 1.00) pass=False | 25.6s
+{
+  "v1": {
+    "pass_points": [],
+    "best_point": [
+      0.8,
+      0.1
+    ],
+    "best_value": 0.2878135140085981
+  },
+  "v2": {
+    "pass_points": [],
+    "best_point": [
+      0.8,
+      0.1
+    ],
+    "best_value": -0.2034199248561826
+  },
+  "grid_complete": true,
+  "total_elapsed_s": 505.8
+}

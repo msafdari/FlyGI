@@ -1,0 +1,331 @@
+19:48:04 H-ONLINE-SEARCH sweep: 25 games, budget 4000 nodes x depth 16 (preregistered 4000 x 16), click cap 12, wall 1500s/game, seed 0; RAM free=0.08GiB inactive(reclaimable)=4.25GiB
+19:48:04 [ar25-0c556536] starting (1/25)
+19:48:04 [ar25-0c556536] timer mask: rows=[] cols=[63] (7 effective transitions)
+19:48:04 [ar25-0c556536] wake=off: probe (1, {}) changed the masked grid on step 1
+19:48:04 [ar25-0c556536] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+19:48:04 [ar25-0c556536] depth 1: 5 states, 2 nodes, 62 env steps, 0s
+19:48:04 [ar25-0c556536] depth 2: 13 states, 6 nodes, 266 env steps, 0s
+19:48:04 [ar25-0c556536] depth 3: 25 states, 14 nodes, 810 env steps, 1s
+19:48:05 [ar25-0c556536] depth 4: 41 states, 26 nodes, 1830 env steps, 1s
+19:48:05 [ar25-0c556536] depth 5: 61 states, 42 nodes, 3462 env steps, 2s
+19:48:07 [ar25-0c556536] depth 6: 84 states, 62 nodes, 5842 env steps, 3s
+19:48:08 [ar25-0c556536] depth 7: 108 states, 85 nodes, 8970 env steps, 5s
+19:48:10 [ar25-0c556536] depth 8: 132 states, 109 nodes, 12642 env steps, 6s
+19:48:12 [ar25-0c556536] depth 9: 156 states, 133 nodes, 16722 env steps, 8s
+19:48:14 [ar25-0c556536] depth 10: 180 states, 157 nodes, 21210 env steps, 10s
+19:48:16 [ar25-0c556536] depth 11: 204 states, 181 nodes, 26106 env steps, 13s
+19:48:19 [ar25-0c556536] depth 12: 228 states, 205 nodes, 31410 env steps, 15s
+19:48:21 [ar25-0c556536] depth 13: 252 states, 229 nodes, 37122 env steps, 18s
+19:48:24 [ar25-0c556536] depth 14: 274 states, 253 nodes, 43242 env steps, 20s
+19:48:25 [ar25-0c556536] done: outcome=program-found states=283 nodes=263 found=True len=15 partial=False wall=21.6s | running tally 1/1 found
+19:48:25 [bp35-0a0ad940] starting (2/25)
+19:48:26 [bp35-0a0ad940] timer mask: rows=[63] cols=[] (24 effective transitions)
+19:48:26 [bp35-0a0ad940] wake=off: probe (3, {}) changed the masked grid on step 1
+19:48:26 [bp35-0a0ad940] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+19:48:26 [bp35-0a0ad940] depth 1: 9 states, 2 nodes, 56 env steps, 0s
+19:48:27 [bp35-0a0ad940] depth 2: 39 states, 10 nodes, 392 env steps, 2s
+19:48:31 [bp35-0a0ad940] depth 3: 110 states, 40 nodes, 2072 env steps, 6s
+19:48:43 [bp35-0a0ad940] depth 4: 231 states, 111 nodes, 7042 env steps, 17s
+19:49:04 [bp35-0a0ad940] depth 5: 396 states, 232 nodes, 17206 env steps, 39s
+19:49:37 [bp35-0a0ad940] depth 6: 609 states, 397 nodes, 33376 env steps, 72s
+19:50:26 [bp35-0a0ad940] depth 7: 939 states, 610 nodes, 57232 env steps, 121s
+19:51:55 [bp35-0a0ad940] depth 8: 1591 states, 940 nodes, 98812 env steps, 210s
+19:55:17 [bp35-0a0ad940] depth 9: 3070 states, 1592 nodes, 190092 env steps, 412s
+20:03:43 [bp35-0a0ad940] depth 10: 6495 states, 3071 nodes, 417858 env steps, 918s
+20:09:14 [bp35-0a0ad940] done: outcome=node-budget-exhausted states=8816 nodes=4000 found=False len=None partial=False wall=1248.9s | running tally 1/2 found
+20:09:14 [cd82-fb555c5d] starting (3/25)
+20:09:14 [cd82-fb555c5d] timer mask: rows=[63] cols=[] (18 effective transitions)
+20:09:14 [cd82-fb555c5d] wake=off: probe (3, {}) changed the masked grid on step 1
+20:09:14 [cd82-fb555c5d] depth 0: 1 states, 1 nodes, 34 env steps, 0s
+20:09:14 [cd82-fb555c5d] depth 1: 5 states, 2 nodes, 68 env steps, 0s
+20:09:14 [cd82-fb555c5d] depth 2: 14 states, 6 nodes, 272 env steps, 0s
+20:09:15 [cd82-fb555c5d] depth 3: 32 states, 15 nodes, 884 env steps, 0s
+20:09:15 [cd82-fb555c5d] depth 4: 67 states, 33 nodes, 2414 env steps, 1s
+20:09:16 [cd82-fb555c5d] done: outcome=program-found states=67 nodes=33 found=True len=5 partial=False wall=1.2s | running tally 2/3 found
+20:09:16 [cn04-2fe56bfb] starting (4/25)
+20:09:16 [cn04-2fe56bfb] timer mask: rows=[] cols=[] (20 effective transitions)
+20:09:16 [cn04-2fe56bfb] wake=off: probe (1, {}) changed the masked grid on step 1
+20:09:16 [cn04-2fe56bfb] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:09:16 [cn04-2fe56bfb] depth 1: 8 states, 2 nodes, 62 env steps, 0s
+20:09:16 [cn04-2fe56bfb] depth 2: 44 states, 9 nodes, 419 env steps, 0s
+20:09:17 [cn04-2fe56bfb] depth 3: 143 states, 45 nodes, 2867 env steps, 1s
+20:09:20 [cn04-2fe56bfb] depth 4: 584 states, 144 nodes, 11282 env steps, 4s
+20:09:33 [cn04-2fe56bfb] depth 5: 1479 states, 585 nodes, 56264 env steps, 18s
+20:10:08 [cn04-2fe56bfb] depth 6: 4766 states, 1480 nodes, 162769 env steps, 52s
+20:11:48 [cn04-2fe56bfb] done: outcome=node-budget-exhausted states=8624 nodes=4000 found=False len=None partial=False wall=152.7s | running tally 2/4 found
+20:11:48 [dc22-fdcac232] starting (5/25)
+20:11:49 [dc22-fdcac232] timer mask: rows=[63] cols=[] (15 effective transitions)
+20:11:49 [dc22-fdcac232] wake=off: probe (1, {}) changed the masked grid on step 1
+20:11:49 [dc22-fdcac232] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:11:49 [dc22-fdcac232] depth 1: 7 states, 2 nodes, 60 env steps, 0s
+20:11:49 [dc22-fdcac232] depth 2: 21 states, 8 nodes, 348 env steps, 1s
+20:11:50 [dc22-fdcac232] depth 3: 38 states, 22 nodes, 1244 env steps, 1s
+20:11:50 [dc22-fdcac232] depth 4: 49 states, 39 nodes, 2604 env steps, 2s
+20:11:51 [dc22-fdcac232] depth 5: 53 states, 50 nodes, 3660 env steps, 3s
+20:11:51 [dc22-fdcac232] depth 6: 59 states, 54 nodes, 4108 env steps, 3s
+20:11:52 [dc22-fdcac232] depth 7: 68 states, 60 nodes, 4876 env steps, 3s
+20:11:52 [dc22-fdcac232] depth 8: 76 states, 69 nodes, 6172 env steps, 4s
+20:11:53 [dc22-fdcac232] depth 9: 81 states, 77 nodes, 7452 env steps, 5s
+20:11:54 [dc22-fdcac232] depth 10: 86 states, 82 nodes, 8332 env steps, 5s
+20:11:54 [dc22-fdcac232] depth 11: 92 states, 87 nodes, 9292 env steps, 6s
+20:11:55 [dc22-fdcac232] depth 12: 97 states, 93 nodes, 10540 env steps, 6s
+20:11:55 [dc22-fdcac232] depth 13: 101 states, 98 nodes, 11660 env steps, 7s
+20:11:56 [dc22-fdcac232] depth 14: 105 states, 102 nodes, 12620 env steps, 8s
+20:11:56 [dc22-fdcac232] depth 15: 108 states, 106 nodes, 13644 env steps, 8s
+20:11:57 [dc22-fdcac232] done: outcome=state-space-exhausted states=110 nodes=108 found=False len=None partial=False wall=8.5s | running tally 2/5 found
+20:11:57 [ft09-0d8bbf25] starting (6/25)
+20:11:57 [ft09-0d8bbf25] timer mask: rows=[] cols=[] (0 effective transitions)
+20:11:57 [ft09-0d8bbf25] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:11:57 [ft09-0d8bbf25] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:11:57 [ft09-0d8bbf25] done: outcome=state-space-exhausted states=1 nodes=1 found=False len=None partial=False wall=0.1s | running tally 2/6 found
+20:11:57 [g50t-5849a774] starting (7/25)
+20:11:57 [g50t-5849a774] timer mask: rows=[] cols=[] (21 effective transitions)
+20:11:57 [g50t-5849a774] wake=ON (1, {}): probe (1, {}): step 1 left the masked grid identical, the identical step 2 changed it -- post-reset swallow detected
+20:11:57 [g50t-5849a774] depth 0: 1 states, 1 nodes, 30 env steps, 0s
+20:11:57 [g50t-5849a774] depth 1: 4 states, 2 nodes, 45 env steps, 0s
+20:11:57 [g50t-5849a774] depth 2: 7 states, 5 nodes, 105 env steps, 0s
+20:11:57 [g50t-5849a774] depth 3: 18 states, 8 nodes, 180 env steps, 0s
+20:11:58 [g50t-5849a774] depth 4: 25 states, 19 nodes, 510 env steps, 0s
+20:11:58 [g50t-5849a774] depth 5: 45 states, 26 nodes, 755 env steps, 1s
+20:11:58 [g50t-5849a774] depth 6: 50 states, 46 nodes, 1555 env steps, 1s
+20:11:58 [g50t-5849a774] depth 7: 67 states, 51 nodes, 1780 env steps, 1s
+20:11:59 [g50t-5849a774] depth 8: 74 states, 68 nodes, 2630 env steps, 2s
+20:11:59 [g50t-5849a774] depth 9: 94 states, 75 nodes, 3015 env steps, 2s
+20:12:00 [g50t-5849a774] depth 10: 101 states, 95 nodes, 4215 env steps, 3s
+20:12:01 [g50t-5849a774] depth 11: 118 states, 102 nodes, 4670 env steps, 3s
+20:12:01 [g50t-5849a774] depth 12: 125 states, 119 nodes, 5860 env steps, 4s
+20:12:02 [g50t-5849a774] depth 13: 145 states, 126 nodes, 6385 env steps, 5s
+20:12:03 [g50t-5849a774] depth 14: 152 states, 146 nodes, 7985 env steps, 6s
+20:12:03 [g50t-5849a774] depth 15: 169 states, 153 nodes, 8580 env steps, 6s
+20:12:05 [g50t-5849a774] done: outcome=state-space-exhausted states=176 nodes=169 found=False len=None partial=False wall=7.4s | running tally 2/7 found
+20:12:05 [ka59-38d34dbb] starting (8/25)
+20:12:05 [ka59-38d34dbb] timer mask: rows=[63] cols=[] (16 effective transitions)
+20:12:05 [ka59-38d34dbb] wake=off: probe (1, {}) changed the masked grid on step 1
+20:12:05 [ka59-38d34dbb] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:12:05 [ka59-38d34dbb] depth 1: 6 states, 2 nodes, 60 env steps, 0s
+20:12:05 [ka59-38d34dbb] depth 2: 21 states, 7 nodes, 300 env steps, 0s
+20:12:05 [ka59-38d34dbb] depth 3: 54 states, 22 nodes, 1260 env steps, 1s
+20:12:06 [ka59-38d34dbb] depth 4: 113 states, 55 nodes, 3900 env steps, 2s
+20:12:09 [ka59-38d34dbb] depth 5: 209 states, 114 nodes, 9564 env steps, 4s
+20:12:13 [ka59-38d34dbb] depth 6: 372 states, 210 nodes, 20316 env steps, 8s
+20:12:21 [ka59-38d34dbb] depth 7: 629 states, 373 nodes, 41180 env steps, 17s
+20:12:36 [ka59-38d34dbb] depth 8: 991 states, 630 nodes, 78188 env steps, 32s
+20:12:59 [ka59-38d34dbb] depth 9: 1451 states, 992 nodes, 136108 env steps, 55s
+20:13:32 [ka59-38d34dbb] depth 10: 1975 states, 1452 nodes, 217068 env steps, 87s
+20:13:54 [ka59-38d34dbb] done: outcome=program-found states=2303 nodes=1753 found=True len=11 partial=False wall=109.7s | running tally 3/8 found
+20:13:54 [lf52-271a04aa] starting (9/25)
+20:13:55 [lf52-271a04aa] timer mask: rows=[0] cols=[] (24 effective transitions)
+20:13:55 [lf52-271a04aa] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:13:55 [lf52-271a04aa] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:13:55 [lf52-271a04aa] done: outcome=state-space-exhausted states=1 nodes=1 found=False len=None partial=False wall=0.2s | running tally 3/9 found
+20:13:55 [lp85-305b61c3] starting (10/25)
+20:13:55 [lp85-305b61c3] timer mask: rows=[] cols=[0] (8 effective transitions)
+20:13:55 [lp85-305b61c3] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:13:55 [lp85-305b61c3] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:13:55 [lp85-305b61c3] depth 1: 3 states, 2 nodes, 59 env steps, 0s
+20:13:55 [lp85-305b61c3] depth 2: 5 states, 4 nodes, 131 env steps, 0s
+20:13:55 [lp85-305b61c3] depth 3: 7 states, 6 nodes, 227 env steps, 0s
+20:13:55 [lp85-305b61c3] depth 4: 9 states, 8 nodes, 347 env steps, 0s
+20:13:55 [lp85-305b61c3] done: outcome=program-found states=9 nodes=8 found=True len=5 partial=False wall=0.3s | running tally 4/10 found
+20:13:55 [ls20-9607627b] starting (11/25)
+20:13:55 [ls20-9607627b] timer mask: rows=[61, 62] cols=[] (24 effective transitions)
+20:13:55 [ls20-9607627b] wake=off: probe (1, {}) changed the masked grid on step 1
+20:13:55 [ls20-9607627b] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:13:55 [ls20-9607627b] depth 1: 4 states, 2 nodes, 36 env steps, 0s
+20:13:55 [ls20-9607627b] depth 2: 8 states, 5 nodes, 72 env steps, 0s
+20:13:55 [ls20-9607627b] depth 3: 13 states, 9 nodes, 136 env steps, 0s
+20:13:55 [ls20-9607627b] depth 4: 18 states, 14 nodes, 236 env steps, 0s
+20:13:56 [ls20-9607627b] depth 5: 24 states, 19 nodes, 356 env steps, 0s
+20:13:56 [ls20-9607627b] depth 6: 31 states, 25 nodes, 524 env steps, 1s
+20:13:56 [ls20-9607627b] depth 7: 39 states, 32 nodes, 748 env steps, 1s
+20:13:56 [ls20-9607627b] depth 8: 46 states, 40 nodes, 1036 env steps, 1s
+20:13:56 [ls20-9607627b] depth 9: 52 states, 47 nodes, 1316 env steps, 1s
+20:13:57 [ls20-9607627b] depth 10: 60 states, 53 nodes, 1580 env steps, 2s
+20:13:57 [ls20-9607627b] depth 11: 70 states, 61 nodes, 1964 env steps, 2s
+20:13:58 [ls20-9607627b] depth 12: 83 states, 71 nodes, 2484 env steps, 2s
+20:13:58 [ls20-9607627b] done: outcome=program-found states=89 nodes=79 found=True len=13 partial=False wall=2.8s | running tally 5/11 found
+20:13:58 [m0r0-492f87ba] starting (12/25)
+20:13:58 [m0r0-492f87ba] timer mask: rows=[0, 63] cols=[] (13 effective transitions)
+20:13:58 [m0r0-492f87ba] wake=off: probe (1, {}) changed the masked grid on step 1
+20:13:58 [m0r0-492f87ba] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:13:58 [m0r0-492f87ba] depth 1: 5 states, 2 nodes, 62 env steps, 0s
+20:13:58 [m0r0-492f87ba] depth 2: 11 states, 6 nodes, 266 env steps, 0s
+20:13:58 [m0r0-492f87ba] depth 3: 18 states, 12 nodes, 674 env steps, 0s
+20:13:59 [m0r0-492f87ba] depth 4: 31 states, 19 nodes, 1269 env steps, 1s
+20:13:59 [m0r0-492f87ba] depth 5: 49 states, 32 nodes, 2595 env steps, 1s
+20:14:00 [m0r0-492f87ba] depth 6: 72 states, 50 nodes, 4737 env steps, 2s
+20:14:01 [m0r0-492f87ba] depth 7: 101 states, 73 nodes, 7865 env steps, 3s
+20:14:03 [m0r0-492f87ba] depth 8: 143 states, 102 nodes, 12302 env steps, 5s
+20:14:05 [m0r0-492f87ba] depth 9: 205 states, 144 nodes, 19442 env steps, 7s
+20:14:10 [m0r0-492f87ba] depth 10: 275 states, 206 nodes, 31036 env steps, 11s
+20:14:15 [m0r0-492f87ba] depth 11: 350 states, 276 nodes, 45316 env steps, 16s
+20:14:20 [m0r0-492f87ba] depth 12: 423 states, 351 nodes, 61891 env steps, 22s
+20:14:26 [m0r0-492f87ba] depth 13: 499 states, 424 nodes, 79265 env steps, 28s
+20:14:33 [m0r0-492f87ba] depth 14: 566 states, 500 nodes, 98645 env steps, 35s
+20:14:35 [m0r0-492f87ba] done: outcome=program-found states=596 nodes=521 found=True len=15 partial=False wall=36.6s | running tally 6/12 found
+20:14:35 [r11l-495a7899] starting (13/25)
+20:14:35 [r11l-495a7899] timer mask: rows=[] cols=[0] (24 effective transitions)
+20:14:35 [r11l-495a7899] wake=off: probe (6, {'x': 31, 'y': 32}) changed the masked grid on step 1
+20:14:35 [r11l-495a7899] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:14:35 [r11l-495a7899] depth 1: 7 states, 2 nodes, 52 env steps, 0s
+20:14:35 [r11l-495a7899] depth 2: 31 states, 8 nodes, 268 env steps, 1s
+20:14:36 [r11l-495a7899] depth 3: 120 states, 32 nodes, 1420 env steps, 2s
+20:14:40 [r11l-495a7899] done: outcome=program-found states=374 nodes=114 found=True len=4 partial=False wall=5.0s | running tally 7/13 found
+20:14:40 [re86-8af5384d] starting (14/25)
+20:14:40 [re86-8af5384d] timer mask: rows=[63] cols=[] (24 effective transitions)
+20:14:40 [re86-8af5384d] wake=off: probe (1, {}) changed the masked grid on step 1
+20:14:40 [re86-8af5384d] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:14:40 [re86-8af5384d] depth 1: 6 states, 2 nodes, 38 env steps, 0s
+20:14:40 [re86-8af5384d] depth 2: 22 states, 7 nodes, 113 env steps, 0s
+20:14:40 [re86-8af5384d] depth 3: 70 states, 23 nodes, 433 env steps, 0s
+20:14:40 [re86-8af5384d] depth 4: 198 states, 71 nodes, 1633 env steps, 1s
+20:14:42 [re86-8af5384d] depth 5: 486 states, 199 nodes, 5473 env steps, 2s
+20:14:45 [re86-8af5384d] depth 6: 1046 states, 487 nodes, 15553 env steps, 5s
+20:14:52 [re86-8af5384d] depth 7: 2021 states, 1047 nodes, 37953 env steps, 13s
+20:15:07 [re86-8af5384d] depth 8: 3585 states, 2022 nodes, 81828 env steps, 27s
+20:15:32 [re86-8af5384d] depth 9: 5940 states, 3586 nodes, 160028 env steps, 52s
+20:15:39 [re86-8af5384d] done: outcome=node-budget-exhausted states=6638 nodes=4000 found=False len=None partial=False wall=59.1s | running tally 7/14 found
+20:15:39 [s5i5-18d95033] starting (15/25)
+20:15:39 [s5i5-18d95033] timer mask: rows=[63] cols=[] (24 effective transitions)
+20:15:39 [s5i5-18d95033] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:15:39 [s5i5-18d95033] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:15:39 [s5i5-18d95033] depth 1: 5 states, 2 nodes, 59 env steps, 0s
+20:15:39 [s5i5-18d95033] depth 2: 12 states, 6 nodes, 203 env steps, 0s
+20:15:39 [s5i5-18d95033] depth 3: 20 states, 13 nodes, 539 env steps, 0s
+20:15:40 [s5i5-18d95033] depth 4: 28 states, 21 nodes, 1019 env steps, 0s
+20:15:40 [s5i5-18d95033] depth 5: 37 states, 29 nodes, 1595 env steps, 1s
+20:15:40 [s5i5-18d95033] depth 6: 47 states, 38 nodes, 2351 env steps, 1s
+20:15:40 [s5i5-18d95033] depth 7: 58 states, 48 nodes, 3311 env steps, 1s
+20:15:41 [s5i5-18d95033] depth 8: 70 states, 59 nodes, 4499 env steps, 1s
+20:15:41 [s5i5-18d95033] depth 9: 83 states, 71 nodes, 5939 env steps, 2s
+20:15:42 [s5i5-18d95033] depth 10: 96 states, 84 nodes, 7655 env steps, 2s
+20:15:42 [s5i5-18d95033] depth 11: 107 states, 97 nodes, 9527 env steps, 3s
+20:15:43 [s5i5-18d95033] depth 12: 116 states, 108 nodes, 11243 env steps, 3s
+20:15:43 [s5i5-18d95033] done: outcome=program-found states=119 nodes=112 found=True len=13 partial=False wall=3.7s | running tally 8/15 found
+20:15:43 [sb26-7fbdac44] starting (16/25)
+20:15:43 [sb26-7fbdac44] timer mask: rows=[] cols=[] (4 effective transitions)
+20:15:43 [sb26-7fbdac44] wake=off: probe (5, {}) changed the masked grid on step 1
+20:15:43 [sb26-7fbdac44] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:15:43 [sb26-7fbdac44] depth 1: 3 states, 2 nodes, 54 env steps, 0s
+20:15:43 [sb26-7fbdac44] depth 2: 5 states, 4 nodes, 132 env steps, 0s
+20:15:43 [sb26-7fbdac44] depth 3: 7 states, 6 nodes, 236 env steps, 0s
+20:15:43 [sb26-7fbdac44] depth 4: 9 states, 8 nodes, 366 env steps, 0s
+20:15:44 [sb26-7fbdac44] depth 5: 11 states, 10 nodes, 522 env steps, 1s
+20:15:44 [sb26-7fbdac44] depth 6: 13 states, 12 nodes, 704 env steps, 1s
+20:15:44 [sb26-7fbdac44] depth 7: 15 states, 14 nodes, 912 env steps, 1s
+20:15:45 [sb26-7fbdac44] depth 8: 17 states, 16 nodes, 1146 env steps, 2s
+20:15:45 [sb26-7fbdac44] depth 9: 19 states, 18 nodes, 1406 env steps, 2s
+20:15:46 [sb26-7fbdac44] depth 10: 21 states, 20 nodes, 1692 env steps, 3s
+20:15:46 [sb26-7fbdac44] depth 11: 23 states, 22 nodes, 2004 env steps, 4s
+20:15:47 [sb26-7fbdac44] depth 12: 25 states, 24 nodes, 2342 env steps, 4s
+20:15:48 [sb26-7fbdac44] depth 13: 27 states, 26 nodes, 2706 env steps, 5s
+20:15:49 [sb26-7fbdac44] depth 14: 29 states, 28 nodes, 3096 env steps, 6s
+20:15:50 [sb26-7fbdac44] depth 15: 31 states, 30 nodes, 3512 env steps, 7s
+20:15:50 [sb26-7fbdac44] done: outcome=state-space-exhausted states=33 nodes=31 found=False len=None partial=False wall=7.6s | running tally 8/16 found
+20:15:51 [sc25-635fd71a] starting (17/25)
+20:15:51 [sc25-635fd71a] timer mask: rows=[] cols=[62, 63] (15 effective transitions)
+20:15:51 [sc25-635fd71a] wake=ON (1, {}): probe (1, {}): step 1 left the masked grid identical, the identical step 2 changed it -- post-reset swallow detected
+20:15:51 [sc25-635fd71a] depth 0: 1 states, 1 nodes, 30 env steps, 0s
+20:15:51 [sc25-635fd71a] depth 1: 12 states, 2 nodes, 78 env steps, 0s
+20:15:52 [sc25-635fd71a] depth 2: 64 states, 13 nodes, 782 env steps, 1s
+20:15:56 [sc25-635fd71a] depth 3: 229 states, 65 nodes, 4942 env steps, 5s
+20:16:09 [sc25-635fd71a] depth 4: 680 states, 230 nodes, 20782 env steps, 19s
+20:16:50 [sc25-635fd71a] depth 5: 1654 states, 681 nodes, 71294 env steps, 59s
+20:18:22 [sc25-635fd71a] depth 6: 3167 states, 1655 nodes, 195966 env steps, 152s
+20:20:54 [sc25-635fd71a] depth 7: 5211 states, 3168 nodes, 413838 env steps, 303s
+20:22:21 [sc25-635fd71a] done: outcome=node-budget-exhausted states=6315 nodes=4000 found=False len=None partial=False wall=390.8s | running tally 8/17 found
+20:22:21 [sk48-d8078629] starting (18/25)
+20:22:22 [sk48-d8078629] timer mask: rows=[] cols=[] (5 effective transitions)
+20:22:22 [sk48-d8078629] wake=off: probe (1, {}) changed the masked grid on step 1
+20:22:22 [sk48-d8078629] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:22:22 [sk48-d8078629] depth 1: 4 states, 2 nodes, 60 env steps, 0s
+20:22:22 [sk48-d8078629] depth 2: 8 states, 5 nodes, 204 env steps, 0s
+20:22:22 [sk48-d8078629] depth 3: 13 states, 9 nodes, 460 env steps, 0s
+20:22:22 [sk48-d8078629] depth 4: 25 states, 14 nodes, 860 env steps, 1s
+20:22:23 [sk48-d8078629] depth 5: 37 states, 26 nodes, 2012 env steps, 1s
+20:22:23 [sk48-d8078629] depth 6: 46 states, 38 nodes, 3356 env steps, 2s
+20:22:24 [sk48-d8078629] depth 7: 73 states, 47 nodes, 4508 env steps, 2s
+20:22:26 [sk48-d8078629] depth 8: 108 states, 74 nodes, 8396 env steps, 4s
+20:22:29 [sk48-d8078629] depth 9: 155 states, 109 nodes, 13996 env steps, 7s
+20:22:33 [sk48-d8078629] depth 10: 275 states, 156 nodes, 22268 env steps, 12s
+20:22:45 [sk48-d8078629] depth 11: 405 states, 276 nodes, 45308 env steps, 23s
+20:22:58 [sk48-d8078629] depth 12: 545 states, 406 nodes, 72348 env steps, 37s
+20:23:15 [sk48-d8078629] depth 13: 938 states, 546 nodes, 103708 env steps, 54s
+20:23:24 [sk48-d8078629] done: outcome=program-found states=1031 nodes=622 found=True len=14 partial=False wall=62.9s | running tally 9/18 found
+20:23:24 [sp80-589a99af] starting (19/25)
+20:23:25 [sp80-589a99af] timer mask: rows=[0] cols=[] (24 effective transitions)
+20:23:25 [sp80-589a99af] wake=off: probe (1, {}) changed the masked grid on step 1
+20:23:25 [sp80-589a99af] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:23:25 [sp80-589a99af] depth 1: 5 states, 2 nodes, 62 env steps, 0s
+20:23:25 [sp80-589a99af] depth 2: 12 states, 6 nodes, 266 env steps, 0s
+20:23:25 [sp80-589a99af] depth 3: 21 states, 13 nodes, 742 env steps, 0s
+20:23:25 [sp80-589a99af] done: outcome=program-found states=31 nodes=21 found=True len=4 partial=False wall=0.6s | running tally 10/19 found
+20:23:25 [su15-1944f8ab] starting (20/25)
+20:23:25 [su15-1944f8ab] timer mask: rows=[63] cols=[] (18 effective transitions)
+20:23:25 [su15-1944f8ab] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:23:25 [su15-1944f8ab] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:23:25 [su15-1944f8ab] depth 1: 2 states, 2 nodes, 59 env steps, 0s
+20:23:25 [su15-1944f8ab] done: outcome=state-space-exhausted states=2 nodes=2 found=False len=None partial=False wall=0.2s | running tally 10/20 found
+20:23:25 [tn36-ef4dde99] starting (21/25)
+20:23:26 [tn36-ef4dde99] timer mask: rows=[1] cols=[] (24 effective transitions)
+20:23:26 [tn36-ef4dde99] wake=off: probe (6, {'x': 32, 'y': 41}) changed the masked grid on step 1
+20:23:26 [tn36-ef4dde99] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:23:26 [tn36-ef4dde99] depth 1: 2 states, 2 nodes, 52 env steps, 0s
+20:23:26 [tn36-ef4dde99] done: outcome=state-space-exhausted states=2 nodes=2 found=False len=None partial=False wall=0.2s | running tally 10/21 found
+20:23:26 [tr87-cd924810] starting (22/25)
+20:23:26 [tr87-cd924810] timer mask: rows=[] cols=[] (24 effective transitions)
+20:23:26 [tr87-cd924810] wake=off: probe (1, {}) changed the masked grid on step 1
+20:23:26 [tr87-cd924810] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:23:26 [tr87-cd924810] depth 1: 5 states, 2 nodes, 36 env steps, 0s
+20:23:26 [tr87-cd924810] depth 2: 18 states, 6 nodes, 84 env steps, 0s
+20:23:26 [tr87-cd924810] depth 3: 56 states, 19 nodes, 292 env steps, 0s
+20:23:26 [tr87-cd924810] depth 4: 163 states, 57 nodes, 1052 env steps, 1s
+20:23:28 [tr87-cd924810] depth 5: 411 states, 164 nodes, 3620 env steps, 2s
+20:23:32 [tr87-cd924810] depth 6: 1068 states, 412 nodes, 10564 env steps, 7s
+20:23:45 [tr87-cd924810] depth 7: 2358 states, 1069 nodes, 31588 env steps, 19s
+20:24:12 [tr87-cd924810] depth 8: 5609 states, 2359 nodes, 78028 env steps, 46s
+20:24:51 [tr87-cd924810] done: outcome=node-budget-exhausted states=8345 nodes=4000 found=False len=None partial=False wall=85.4s | running tally 10/22 found
+20:24:51 [tu93-0768757b] starting (23/25)
+20:24:51 [tu93-0768757b] timer mask: rows=[63] cols=[] (24 effective transitions)
+20:24:51 [tu93-0768757b] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:24:51 [tu93-0768757b] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:24:51 [tu93-0768757b] depth 1: 2 states, 2 nodes, 43 env steps, 0s
+20:24:51 [tu93-0768757b] depth 2: 4 states, 3 nodes, 55 env steps, 0s
+20:24:51 [tu93-0768757b] depth 3: 6 states, 5 nodes, 87 env steps, 0s
+20:24:51 [tu93-0768757b] depth 4: 8 states, 7 nodes, 127 env steps, 0s
+20:24:51 [tu93-0768757b] depth 5: 10 states, 9 nodes, 175 env steps, 0s
+20:24:51 [tu93-0768757b] depth 6: 13 states, 11 nodes, 231 env steps, 0s
+20:24:51 [tu93-0768757b] depth 7: 18 states, 14 nodes, 327 env steps, 0s
+20:24:51 [tu93-0768757b] depth 8: 25 states, 19 nodes, 507 env steps, 0s
+20:24:52 [tu93-0768757b] depth 9: 31 states, 26 nodes, 787 env steps, 0s
+20:24:52 [tu93-0768757b] depth 10: 35 states, 32 nodes, 1051 env steps, 0s
+20:24:52 [tu93-0768757b] depth 11: 40 states, 36 nodes, 1243 env steps, 1s
+20:24:52 [tu93-0768757b] depth 12: 47 states, 41 nodes, 1503 env steps, 1s
+20:24:52 [tu93-0768757b] depth 13: 53 states, 48 nodes, 1895 env steps, 1s
+20:24:52 [tu93-0768757b] depth 14: 56 states, 54 nodes, 2255 env steps, 1s
+20:24:52 [tu93-0768757b] depth 15: 58 states, 57 nodes, 2447 env steps, 1s
+20:24:52 [tu93-0768757b] done: outcome=state-space-exhausted states=60 nodes=58 found=False len=None partial=False wall=1.1s | running tally 10/23 found
+20:24:52 [vc33-5430563c] starting (24/25)
+20:24:52 [vc33-5430563c] timer mask: rows=[0] cols=[] (24 effective transitions)
+20:24:52 [vc33-5430563c] wake=off: undetermined: 3 probe(s) were no-ops twice from fresh resets; wake disabled
+20:24:52 [vc33-5430563c] depth 0: 1 states, 1 nodes, 35 env steps, 0s
+20:24:53 [vc33-5430563c] depth 1: 3 states, 2 nodes, 59 env steps, 0s
+20:24:53 [vc33-5430563c] depth 2: 5 states, 4 nodes, 131 env steps, 0s
+20:24:53 [vc33-5430563c] done: outcome=program-found states=6 nodes=5 found=True len=3 partial=False wall=0.2s | running tally 11/24 found
+20:24:53 [wa30-ee6fef47] starting (25/25)
+20:24:53 [wa30-ee6fef47] timer mask: rows=[] cols=[] (19 effective transitions)
+20:24:53 [wa30-ee6fef47] wake=off: probe (1, {}) changed the masked grid on step 1
+20:24:53 [wa30-ee6fef47] depth 0: 1 states, 1 nodes, 28 env steps, 0s
+20:24:53 [wa30-ee6fef47] depth 1: 5 states, 2 nodes, 38 env steps, 0s
+20:24:53 [wa30-ee6fef47] depth 2: 25 states, 6 nodes, 98 env steps, 0s
+20:24:53 [wa30-ee6fef47] depth 3: 57 states, 26 nodes, 498 env steps, 0s
+20:24:53 [wa30-ee6fef47] depth 4: 104 states, 58 nodes, 1298 env steps, 0s
+20:24:53 [wa30-ee6fef47] depth 5: 246 states, 105 nodes, 2708 env steps, 1s
+20:24:55 [wa30-ee6fef47] depth 6: 359 states, 247 nodes, 7678 env steps, 2s
+20:24:56 [wa30-ee6fef47] depth 7: 541 states, 360 nodes, 12198 env steps, 3s
+20:24:58 [wa30-ee6fef47] depth 8: 1186 states, 542 nodes, 20388 env steps, 5s
+20:25:05 [wa30-ee6fef47] depth 9: 2030 states, 1187 nodes, 52638 env steps, 13s
+20:25:16 [wa30-ee6fef47] depth 10: 3401 states, 2031 nodes, 99058 env steps, 24s
+20:25:37 [wa30-ee6fef47] depth 11: 7802 states, 3402 nodes, 181318 env steps, 44s
+20:25:46 [wa30-ee6fef47] done: outcome=node-budget-exhausted states=8332 nodes=4000 found=False len=None partial=False wall=53.7s | running tally 11/25 found
+20:25:46 SWEEP COMPLETE: 11 of 25 games with a level-1 program; bar '>= 5 of 25 games with a level-1-completing program found within budget' -> MET

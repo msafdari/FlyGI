@@ -1,0 +1,63 @@
+[14:22:23] free RAM 4.1 GB (rule: single process <= 3 GB)
+[14:22:23] preregistered MB config: tau_m 20 / tau_syn 5 / beta 1.0 -> theta 41.4178, alpha 1.1200e-06
+[14:22:34] subcircuit 4790 nodes / 770711 edges; w_scale 0.05762; positive KC->MBON edges 61210
+[14:22:34] train games ['dc22', 'ka59', 're86', 'sk48', 'su15']; held-out games ['bp35', 'lf52', 'r11l', 'sc25', 'tr87']
+[14:23:16] train d=0.3 dc22: accuracy 0.00 (elig [270, 321], depressed [1830, 2954])
+[14:23:57] train d=0.3 ka59: accuracy 0.50 (elig [896, 1226], depressed [5697, 10683])
+[14:24:38] train d=0.3 re86: accuracy 1.00 (elig [439, 350], depressed [3245, 2969])
+[14:25:20] train d=0.3 sk48: accuracy 1.00 (elig [245, 168], depressed [1817, 1546])
+[14:26:01] train d=0.3 su15: accuracy 0.00 (elig [266, 253], depressed [2031, 2173])
+[14:26:43] train d=0.6 dc22: accuracy 0.00 (elig [270, 365], depressed [1830, 3421])
+[14:27:24] train d=0.6 ka59: accuracy 1.00 (elig [896, 1224], depressed [5697, 10684])
+[14:28:05] train d=0.6 re86: accuracy 1.00 (elig [439, 342], depressed [3245, 2923])
+[14:28:47] train d=0.6 sk48: accuracy 1.00 (elig [245, 167], depressed [1817, 1536])
+[14:29:28] train d=0.6 su15: accuracy 0.50 (elig [266, 241], depressed [2031, 2086])
+[14:30:09] train d=0.9 dc22: accuracy 0.25 (elig [270, 809], depressed [1830, 8237])
+[14:30:51] train d=0.9 ka59: accuracy 1.00 (elig [896, 1221], depressed [5697, 10663])
+[14:31:34] train d=0.9 re86: accuracy 1.00 (elig [439, 340], depressed [3245, 2914])
+[14:32:16] train d=0.9 sk48: accuracy 0.50 (elig [245, 165], depressed [1817, 1513])
+[14:32:58] train d=0.9 su15: accuracy 0.50 (elig [266, 246], depressed [2031, 2132])
+[14:32:58] TRAIN calibration: d* = 0.6 (means {'0.3': 0.5, '0.6': 0.7, '0.9': 0.65}); frozen before held-out
+[14:32:59] seed 0: rewired control built {'pn_kc': 229126, 'kc_mbon': 624338} swaps
+[14:32:59] seed 1: rewired control built {'pn_kc': 229205, 'kc_mbon': 612616} swaps
+[14:33:00] seed 2: rewired control built {'pn_kc': 229411, 'kc_mbon': 613433} swaps
+[14:35:52] cell bp35/seed0: real 1.00 rewired 1.00 shuffled 0.50 engineered 1.00 (171.7s)
+[14:38:43] cell lf52/seed0: real 0.25 rewired 1.00 shuffled 1.00 engineered 1.00 (171.9s)
+[14:41:35] cell r11l/seed0: real 0.75 rewired 0.75 shuffled 0.50 engineered 1.00 (171.3s)
+[14:44:27] cell sc25/seed0: real 0.50 rewired 0.50 shuffled 0.00 engineered 1.00 (172.4s)
+[14:47:21] cell tr87/seed0: real 1.00 rewired 1.00 shuffled 0.00 engineered 1.00 (173.9s)
+[14:50:14] cell bp35/seed1: real 0.25 rewired 1.00 shuffled 0.00 engineered 1.00 (173.3s)
+[14:53:07] cell lf52/seed1: real 0.50 rewired 0.75 shuffled 0.50 engineered 1.00 (172.7s)
+[14:55:59] cell r11l/seed1: real 0.50 rewired 0.50 shuffled 0.00 engineered 0.50 (171.4s)
+[14:58:49] cell sc25/seed1: real 0.00 rewired 0.50 shuffled 0.00 engineered 1.00 (170.3s)
+[15:01:43] cell tr87/seed1: real 1.00 rewired 0.75 shuffled 0.75 engineered 1.00 (174.2s)
+[15:04:37] cell bp35/seed2: real 1.00 rewired 1.00 shuffled 0.75 engineered 1.00 (173.7s)
+[15:07:29] cell lf52/seed2: real 0.50 rewired 1.00 shuffled 1.00 engineered 0.50 (171.7s)
+[15:10:19] cell r11l/seed2: real 0.50 rewired 0.75 shuffled 0.00 engineered 0.75 (170.5s)
+[15:13:10] cell sc25/seed2: real 1.00 rewired 1.00 shuffled 0.75 engineered 1.00 (170.5s)
+[15:16:01] cell tr87/seed2: real 0.25 rewired 0.50 shuffled 0.25 engineered 1.00 (171.5s)
+[15:16:01] {
+  "passed": false,
+  "band_1_accuracy": {
+    "value": 0.6,
+    "required": "> 0.5 with binomial p < 0.05",
+    "p": 0.0775009520016303,
+    "holds": false
+  },
+  "band_2_controls": {
+    "rewired": {
+      "p": 0.99609375,
+      "holds": false
+    },
+    "shuffled_credit": {
+      "p": 0.019287109375,
+      "holds": true
+    },
+    "engineered": {
+      "p": 1.0,
+      "holds": false
+    }
+  }
+}
+[15:16:01] pooled: real 0.600, control_rewired 0.800, control_shuffled_credit 0.400, control_engineered 0.917
+[15:16:01] done in 3217.7s, 450 presentations at 7121 ms each, peak RSS 1142 MB -> /Users/mustafasafdari/Documents/ChatGPT/FlyGI/results/benchmarks/mb_association.json

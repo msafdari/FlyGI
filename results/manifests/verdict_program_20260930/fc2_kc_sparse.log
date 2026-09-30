@@ -1,0 +1,82 @@
+[12:24:46] subcircuit: 4790 nodes (627 PN / 4064 KC / 2 APL / 97 MBON), 770711 edges, dropped modulatory 0, unsigned 0; mean PN->KC claw weight 17.35 -> w_scale 0.05762
+[12:32:48] cfg 0 tau_m 8.0 tau_syn 5.0 beta 0.5: theta 21.59 (cal 0.0960, 7 evals) held-out intact 0.2552 blocked 0.2672 band=False lin=True (482.6s)
+[12:37:57] cfg 1 tau_m 8.0 tau_syn 5.0 beta 1.0: theta 22.64 (cal 0.0869, 5 evals) held-out intact 0.0704 blocked 0.2463 band=True lin=True (308.8s)
+[12:40:31] cfg 2 tau_m 8.0 tau_syn 5.0 beta 2.0: theta 20.69 (cal 0.0876, 1 evals) held-out intact 0.0814 blocked 0.3292 band=True lin=True (153.5s)
+[12:45:26] cfg 3 tau_m 20.0 tau_syn 5.0 beta 0.5: theta 43.87 (cal 0.0903, 5 evals) held-out intact 0.0645 blocked 0.0780 band=True lin=True (295.1s)
+[12:50:20] cfg 4 tau_m 20.0 tau_syn 5.0 beta 1.0: theta 41.42 (cal 0.0866, 5 evals) held-out intact 0.0731 blocked 0.1006 band=True lin=True (294.4s)
+[12:55:15] cfg 5 tau_m 20.0 tau_syn 5.0 beta 2.0: theta 35.82 (cal 0.0952, 5 evals) held-out intact 0.0938 blocked 0.5509 band=True lin=True (295.1s)
+[12:57:49] cfg 6 tau_m 8.0 tau_syn 10.0 beta 0.5: theta 36.68 (cal 0.1085, 1 evals) held-out intact 0.2682 blocked 0.5465 band=False lin=True (153.5s)
+[13:02:43] cfg 7 tau_m 8.0 tau_syn 10.0 beta 1.0: theta 39.82 (cal 0.1095, 5 evals) held-out intact 0.0630 blocked 0.0834 band=True lin=True (294.7s)
+[13:08:50] cfg 8 tau_m 8.0 tau_syn 10.0 beta 2.0: theta 38.71 (cal 0.0965, 7 evals) held-out intact 0.0595 blocked 0.3196 band=True lin=True (367.1s)
+[13:13:45] cfg 9 tau_m 20.0 tau_syn 10.0 beta 0.5: theta 80.44 (cal 0.0901, 5 evals) held-out intact 0.0741 blocked 0.0839 band=True lin=True (294.2s)
+[13:16:20] cfg 10 tau_m 20.0 tau_syn 10.0 beta 1.0: theta 74.62 (cal 0.1031, 1 evals) held-out intact 0.0861 blocked 0.1181 band=True lin=True (155.3s)
+[13:18:54] cfg 11 tau_m 20.0 tau_syn 10.0 beta 2.0: theta 71.70 (cal 0.0861, 1 evals) held-out intact 0.0844 blocked 0.2621 band=True lin=True (153.8s)
+[13:19:43] trivial T1_shiu_uniform: held-out median 1.0000 in_band=False
+[13:20:32] trivial T2_raw_counts: held-out median 1.0000 in_band=False
+[13:20:33] structural: single-claw sub 0.995, majority supra 0.425
+[13:20:33] {
+  "pass_configs": [
+    {
+      "tau_m_kc": 8.0,
+      "tau_syn_kc": 5.0,
+      "beta": 1.0
+    },
+    {
+      "tau_m_kc": 8.0,
+      "tau_syn_kc": 5.0,
+      "beta": 2.0
+    },
+    {
+      "tau_m_kc": 20.0,
+      "tau_syn_kc": 5.0,
+      "beta": 0.5
+    },
+    {
+      "tau_m_kc": 20.0,
+      "tau_syn_kc": 5.0,
+      "beta": 1.0
+    },
+    {
+      "tau_m_kc": 20.0,
+      "tau_syn_kc": 5.0,
+      "beta": 2.0
+    },
+    {
+      "tau_m_kc": 8.0,
+      "tau_syn_kc": 10.0,
+      "beta": 1.0
+    },
+    {
+      "tau_m_kc": 8.0,
+      "tau_syn_kc": 10.0,
+      "beta": 2.0
+    },
+    {
+      "tau_m_kc": 20.0,
+      "tau_syn_kc": 10.0,
+      "beta": 0.5
+    },
+    {
+      "tau_m_kc": 20.0,
+      "tau_syn_kc": 10.0,
+      "beta": 1.0
+    },
+    {
+      "tau_m_kc": 20.0,
+      "tau_syn_kc": 10.0,
+      "beta": 2.0
+    }
+  ],
+  "passed": true,
+  "best": {
+    "tau_m_kc": 20.0,
+    "tau_syn_kc": 10.0,
+    "beta": 0.5,
+    "theta": 80.438032508363,
+    "alpha": 5.497050362309254e-07,
+    "heldout_median": 0.07406496062992125,
+    "blocked_median": 0.08390748031496063
+  },
+  "attribution_holds": true
+}
+[13:20:33] done in 3360.5s, peak RSS 1225 MB -> /Users/mustafasafdari/Documents/ChatGPT/FlyGI/results/benchmarks/fc2_kc_sparse.json

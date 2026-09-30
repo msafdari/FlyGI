@@ -1,0 +1,916 @@
+{
+ "benchmark": "H-T4T5-CLASS25-MOTION: class-2.5 T4/T5 population vs real ARC sprite displacement direction, held-out games",
+ "preregistration": "EXPERIMENTS.yaml H-T4T5-CLASS25-MOTION (2026-09-30, before implementation)",
+ "pass_bands": "held-out 4-way accuracy > 0.25 (binomial p<0.05, ALL 3 seeds; declared operationalization) AND real > uniform-tau AND real > rewired (paired sign tests p<0.05 over game x seed cells)",
+ "declared": {
+  "capture_seed": 20260930,
+  "replay_budget": 600,
+  "event_cap": 60,
+  "event_floor": 10,
+  "settle_ms": 2500.0,
+  "response_window_ms": 750.0,
+  "dt_ms": 2.0,
+  "px_per_column": 1.0,
+  "luminance": "colour_index/15 (ASSUMPTION)",
+  "anchor": "timer-masked diff centroid (symmetric +/- d/2, no label leak)",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "heldout_fraction": 0.4,
+  "probe": "z-score(TRAIN) + multinomial logistic L2 lbfgs, C by leave-one-TRAIN-game-out CV over (0.01, 0.1, 1.0, 10.0)",
+  "rewire": "degree_preserving_rewire, default NullOptions, seed = 4242+seed, real gain/table",
+  "gain_real": 0.3,
+  "gain_twin": 0.3
+ },
+ "games": {
+  "bp35": {
+   "transitions": 571,
+   "movers": {
+    "3": [
+     0,
+     -6
+    ],
+    "4": [
+     0,
+     6
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 7,
+   "label_counts": {
+    "right": 34,
+    "left": 26
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "cn04": {
+   "transitions": 593,
+   "movers": {
+    "2": [
+     3,
+     0
+    ],
+    "3": [
+     0,
+     -3
+    ],
+    "1": [
+     -3,
+     0
+    ],
+    "4": [
+     0,
+     3
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "label_counts": {
+    "down": 19,
+    "left": 11,
+    "right": 10,
+    "up": 20
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "dc22": {
+   "transitions": 596,
+   "movers": {
+    "1": [
+     -2,
+     0
+    ],
+    "2": [
+     2,
+     0
+    ],
+    "3": [
+     0,
+     -2
+    ],
+    "4": [
+     0,
+     2
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "label_counts": {
+    "down": 16,
+    "left": 14,
+    "right": 14,
+    "up": 16
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "ft09": {
+   "transitions": 0,
+   "movers": {},
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "n_events": 0,
+   "qualified": false
+  },
+  "ka59": {
+   "transitions": 595,
+   "movers": {
+    "3": [
+     0,
+     -3
+    ],
+    "4": [
+     0,
+     3
+    ],
+    "1": [
+     -3,
+     0
+    ],
+    "2": [
+     3,
+     0
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 2,
+   "label_counts": {
+    "left": 18,
+    "down": 10,
+    "right": 17,
+    "up": 15
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "ls20": {
+   "transitions": 596,
+   "movers": {
+    "4": [
+     0,
+     5
+    ],
+    "2": [
+     5,
+     0
+    ],
+    "1": [
+     -5,
+     0
+    ],
+    "3": [
+     0,
+     -5
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "label_counts": {
+    "right": 16,
+    "left": 11,
+    "up": 18,
+    "down": 15
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "re86": {
+   "transitions": 595,
+   "movers": {
+    "2": [
+     3,
+     0
+    ],
+    "4": [
+     0,
+     3
+    ],
+    "1": [
+     -3,
+     0
+    ],
+    "3": [
+     0,
+     -3
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "label_counts": {
+    "down": 16,
+    "up": 15,
+    "right": 16,
+    "left": 13
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "sb26": {
+   "transitions": 0,
+   "movers": {},
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "n_events": 0,
+   "qualified": false
+  },
+  "sc25": {
+   "transitions": 589,
+   "movers": {
+    "4": [
+     0,
+     4
+    ],
+    "1": [
+     2,
+     0
+    ],
+    "3": [
+     0,
+     -4
+    ],
+    "2": [
+     2,
+     0
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 12,
+   "label_counts": {
+    "down": 31,
+    "left": 14,
+    "right": 15
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "sk48": {
+   "transitions": 597,
+   "movers": {
+    "1": [
+     -6,
+     0
+    ],
+    "4": [
+     0,
+     6
+    ],
+    "3": [
+     -2,
+     0
+    ],
+    "2": [
+     6,
+     0
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 7,
+   "label_counts": {
+    "up": 33,
+    "down": 16,
+    "right": 11
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "su15": {
+   "transitions": 0,
+   "movers": {},
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "n_events": 0,
+   "qualified": false
+  },
+  "tr87": {
+   "transitions": 596,
+   "movers": {
+    "4": [
+     0,
+     7
+    ],
+    "3": [
+     0,
+     -7
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "label_counts": {
+    "right": 29,
+    "left": 31
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "tu93": {
+   "transitions": 589,
+   "movers": {
+    "3": [
+     0,
+     -6
+    ],
+    "1": [
+     -6,
+     0
+    ],
+    "2": [
+     6,
+     0
+    ],
+    "4": [
+     0,
+     6
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 0,
+   "label_counts": {
+    "up": 26,
+    "left": 17,
+    "down": 13,
+    "right": 4
+   },
+   "n_events": 60,
+   "qualified": true
+  },
+  "wa30": {
+   "transitions": 598,
+   "movers": {
+    "4": [
+     0,
+     4
+    ],
+    "1": [
+     -4,
+     0
+    ],
+    "3": [
+     0,
+     -4
+    ],
+    "2": [
+     4,
+     0
+    ]
+   },
+   "diagonal_excluded": 0,
+   "rejected_shift_mismatch": 16,
+   "label_counts": {
+    "up": 9,
+    "right": 13,
+    "down": 14,
+    "left": 24
+   },
+   "n_events": 60,
+   "qualified": true
+  }
+ },
+ "qualifying_games": [
+  "bp35",
+  "cn04",
+  "dc22",
+  "ka59",
+  "ls20",
+  "re86",
+  "sc25",
+  "sk48",
+  "tr87",
+  "tu93",
+  "wa30"
+ ],
+ "events_total": 660,
+ "alpha_coverage": {
+  "pairs_total": 320,
+  "pairs_trained": 132,
+  "edges_trained_fraction": 0.8847058823529412,
+  "synapse_mass_trained_fraction": 0.9785861968994141
+ },
+ "rewire_stats": {
+  "0": {
+   "kind": "degree_preserving",
+   "seed": 4242,
+   "nodes": 2701,
+   "edges": 47175,
+   "target_swaps": 471750,
+   "accepted_swaps": 472261,
+   "proposed_swaps": 495327,
+   "batches": 21,
+   "swaps_per_edge_requested": 10.0,
+   "swaps_per_edge_achieved": 10.010832008479067,
+   "acceptance_rate": 0.9534327827879361,
+   "allow_self_edges": false,
+   "reached_target": true,
+   "weight_rule": "edge weight travels with its presynaptic slot",
+   "normalization_applied": false
+  },
+  "1": {
+   "kind": "degree_preserving",
+   "seed": 4243,
+   "nodes": 2701,
+   "edges": 47175,
+   "target_swaps": 471750,
+   "accepted_swaps": 472114,
+   "proposed_swaps": 495327,
+   "batches": 21,
+   "swaps_per_edge_requested": 10.0,
+   "swaps_per_edge_achieved": 10.007715951245363,
+   "acceptance_rate": 0.9531360091414358,
+   "allow_self_edges": false,
+   "reached_target": true,
+   "weight_rule": "edge weight travels with its presynaptic slot",
+   "normalization_applied": false
+  },
+  "2": {
+   "kind": "degree_preserving",
+   "seed": 4244,
+   "nodes": 2701,
+   "edges": 47175,
+   "target_swaps": 471750,
+   "accepted_swaps": 472245,
+   "proposed_swaps": 495327,
+   "batches": 21,
+   "swaps_per_edge_requested": 10.0,
+   "swaps_per_edge_achieved": 10.010492845786963,
+   "acceptance_rate": 0.9534004808944394,
+   "allow_self_edges": false,
+   "reached_target": true,
+   "weight_rule": "edge weight travels with its presynaptic slot",
+   "normalization_applied": false
+  }
+ },
+ "settle_residuals": {
+  "real": 0.0,
+  "uniform_tau": 0.0,
+  "rewired_0": 4e-10,
+  "rewired_1": 2e-10,
+  "rewired_2": 3e-10
+ },
+ "events_dropped_unstable": 0,
+ "per_seed": [
+  {
+   "seed": 0,
+   "train_games": [
+    "bp35",
+    "cn04",
+    "ka59",
+    "re86",
+    "tr87",
+    "tu93",
+    "wa30"
+   ],
+   "held_games": [
+    "dc22",
+    "ls20",
+    "sc25",
+    "sk48"
+   ],
+   "train_label_counts": {
+    "up": 85,
+    "down": 72,
+    "left": 140,
+    "right": 123
+   },
+   "arms": {
+    "real": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.6,
+     "per_game": {
+      "dc22": {
+       "n": 60,
+       "correct": 32,
+       "accuracy": 0.5333333333333333
+      },
+      "ls20": {
+       "n": 60,
+       "correct": 44,
+       "accuracy": 0.7333333333333333
+      },
+      "sc25": {
+       "n": 60,
+       "correct": 11,
+       "accuracy": 0.18333333333333332
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 1,
+       "accuracy": 0.016666666666666666
+      }
+     },
+     "pooled_correct": 88,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.36666666666666664,
+     "binomial_p_vs_0.25": 4.03132041515583e-05
+    },
+    "uniform_tau": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.6,
+     "per_game": {
+      "dc22": {
+       "n": 60,
+       "correct": 31,
+       "accuracy": 0.5166666666666667
+      },
+      "ls20": {
+       "n": 60,
+       "correct": 44,
+       "accuracy": 0.7333333333333333
+      },
+      "sc25": {
+       "n": 60,
+       "correct": 11,
+       "accuracy": 0.18333333333333332
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 1,
+       "accuracy": 0.016666666666666666
+      }
+     },
+     "pooled_correct": 87,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.3625,
+     "binomial_p_vs_0.25": 7.10952003555956e-05
+    },
+    "rewired": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.5929,
+     "per_game": {
+      "dc22": {
+       "n": 60,
+       "correct": 20,
+       "accuracy": 0.3333333333333333
+      },
+      "ls20": {
+       "n": 60,
+       "correct": 60,
+       "accuracy": 1.0
+      },
+      "sc25": {
+       "n": 60,
+       "correct": 15,
+       "accuracy": 0.25
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 11,
+       "accuracy": 0.18333333333333332
+      }
+     },
+     "pooled_correct": 106,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.44166666666666665,
+     "binomial_p_vs_0.25": 8.347932066315775e-11
+    }
+   },
+   "engineered_pooled_accuracy": 1.0
+  },
+  {
+   "seed": 1,
+   "train_games": [
+    "bp35",
+    "cn04",
+    "dc22",
+    "ka59",
+    "sc25",
+    "tr87",
+    "tu93"
+   ],
+   "held_games": [
+    "ls20",
+    "re86",
+    "sk48",
+    "wa30"
+   ],
+   "train_label_counts": {
+    "up": 77,
+    "down": 89,
+    "left": 131,
+    "right": 123
+   },
+   "arms": {
+    "real": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.581,
+     "per_game": {
+      "ls20": {
+       "n": 60,
+       "correct": 51,
+       "accuracy": 0.85
+      },
+      "re86": {
+       "n": 60,
+       "correct": 3,
+       "accuracy": 0.05
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 1,
+       "accuracy": 0.016666666666666666
+      },
+      "wa30": {
+       "n": 60,
+       "correct": 54,
+       "accuracy": 0.9
+      }
+     },
+     "pooled_correct": 109,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.45416666666666666,
+     "binomial_p_vs_0.25": 5.585399151748679e-12
+    },
+    "uniform_tau": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.5881,
+     "per_game": {
+      "ls20": {
+       "n": 60,
+       "correct": 53,
+       "accuracy": 0.8833333333333333
+      },
+      "re86": {
+       "n": 60,
+       "correct": 4,
+       "accuracy": 0.06666666666666667
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 1,
+       "accuracy": 0.016666666666666666
+      },
+      "wa30": {
+       "n": 60,
+       "correct": 54,
+       "accuracy": 0.9
+      }
+     },
+     "pooled_correct": 112,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.4666666666666667,
+     "binomial_p_vs_0.25": 3.2230100756336316e-13
+    },
+    "rewired": {
+     "chosen_C": 0.1,
+     "train_cv_accuracy": 0.5405,
+     "per_game": {
+      "ls20": {
+       "n": 60,
+       "correct": 59,
+       "accuracy": 0.9833333333333333
+      },
+      "re86": {
+       "n": 60,
+       "correct": 0,
+       "accuracy": 0.0
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 2,
+       "accuracy": 0.03333333333333333
+      },
+      "wa30": {
+       "n": 60,
+       "correct": 55,
+       "accuracy": 0.9166666666666666
+      }
+     },
+     "pooled_correct": 116,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.48333333333333334,
+     "binomial_p_vs_0.25": 5.7117341005916404e-15
+    }
+   },
+   "engineered_pooled_accuracy": 1.0
+  },
+  {
+   "seed": 2,
+   "train_games": [
+    "cn04",
+    "ka59",
+    "ls20",
+    "re86",
+    "sc25",
+    "tr87",
+    "wa30"
+   ],
+   "held_games": [
+    "bp35",
+    "dc22",
+    "sk48",
+    "tu93"
+   ],
+   "train_label_counts": {
+    "up": 77,
+    "down": 105,
+    "left": 122,
+    "right": 116
+   },
+   "arms": {
+    "real": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.7119,
+     "per_game": {
+      "bp35": {
+       "n": 60,
+       "correct": 0,
+       "accuracy": 0.0
+      },
+      "dc22": {
+       "n": 60,
+       "correct": 34,
+       "accuracy": 0.5666666666666667
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 1,
+       "accuracy": 0.016666666666666666
+      },
+      "tu93": {
+       "n": 60,
+       "correct": 47,
+       "accuracy": 0.7833333333333333
+      }
+     },
+     "pooled_correct": 82,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.3416666666666667,
+     "binomial_p_vs_0.25": 0.0009389388990066962
+    },
+    "uniform_tau": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.7143,
+     "per_game": {
+      "bp35": {
+       "n": 60,
+       "correct": 0,
+       "accuracy": 0.0
+      },
+      "dc22": {
+       "n": 60,
+       "correct": 34,
+       "accuracy": 0.5666666666666667
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 1,
+       "accuracy": 0.016666666666666666
+      },
+      "tu93": {
+       "n": 60,
+       "correct": 48,
+       "accuracy": 0.8
+      }
+     },
+     "pooled_correct": 83,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.3458333333333333,
+     "binomial_p_vs_0.25": 0.0005798819757001525
+    },
+    "rewired": {
+     "chosen_C": 0.01,
+     "train_cv_accuracy": 0.5833,
+     "per_game": {
+      "bp35": {
+       "n": 60,
+       "correct": 0,
+       "accuracy": 0.0
+      },
+      "dc22": {
+       "n": 60,
+       "correct": 25,
+       "accuracy": 0.4166666666666667
+      },
+      "sk48": {
+       "n": 60,
+       "correct": 11,
+       "accuracy": 0.18333333333333332
+      },
+      "tu93": {
+       "n": 60,
+       "correct": 52,
+       "accuracy": 0.8666666666666667
+      }
+     },
+     "pooled_correct": 88,
+     "pooled_n": 240,
+     "pooled_accuracy": 0.36666666666666664,
+     "binomial_p_vs_0.25": 4.03132041515583e-05
+    }
+   },
+   "engineered_pooled_accuracy": 1.0
+  }
+ ],
+ "paired_tests": {
+  "binomial_vs_chance_real": {
+   "per_seed": [
+    {
+     "seed": 0,
+     "k": 88,
+     "n": 240,
+     "accuracy": 0.3667,
+     "p": 4.03132041515583e-05
+    },
+    {
+     "seed": 1,
+     "k": 109,
+     "n": 240,
+     "accuracy": 0.4542,
+     "p": 5.585399151748679e-12
+    },
+    {
+     "seed": 2,
+     "k": 82,
+     "n": 240,
+     "accuracy": 0.3417,
+     "p": 0.0009389388990066962
+    }
+   ],
+   "all_seeds_significant": true
+  },
+  "real_vs_uniform_tau": {
+   "n_cells": 12,
+   "n_pos": 1,
+   "n_neg": 3,
+   "ties": 8,
+   "p_one_sided": 0.9375
+  },
+  "real_vs_rewired": {
+   "n_cells": 12,
+   "n_pos": 3,
+   "n_neg": 8,
+   "ties": 1,
+   "p_one_sided": 0.96728515625
+  },
+  "cells": [
+   "dc22@s0",
+   "ls20@s0",
+   "sc25@s0",
+   "sk48@s0",
+   "ls20@s1",
+   "re86@s1",
+   "sk48@s1",
+   "wa30@s1",
+   "bp35@s2",
+   "dc22@s2",
+   "sk48@s2",
+   "tu93@s2"
+  ],
+  "cell_accuracies": {
+   "real": [
+    0.5333,
+    0.7333,
+    0.1833,
+    0.0167,
+    0.85,
+    0.05,
+    0.0167,
+    0.9,
+    0.0,
+    0.5667,
+    0.0167,
+    0.7833
+   ],
+   "uniform_tau": [
+    0.5167,
+    0.7333,
+    0.1833,
+    0.0167,
+    0.8833,
+    0.0667,
+    0.0167,
+    0.9,
+    0.0,
+    0.5667,
+    0.0167,
+    0.8
+   ],
+   "rewired": [
+    0.3333,
+    1.0,
+    0.25,
+    0.1833,
+    0.9833,
+    0.0,
+    0.0333,
+    0.9167,
+    0.0,
+    0.4167,
+    0.1833,
+    0.8667
+   ]
+  }
+ },
+ "heldout_accuracy_mean_over_seeds": {
+  "real": 0.3875,
+  "uniform_tau": 0.3917,
+  "rewired": 0.4306,
+  "engineered": 1.0
+ },
+ "passed": false,
+ "peak_rss_gib": 1.19,
+ "elapsed_s": 276.0,
+ "ram_at_end": "free=0.09GiB inactive(reclaimable)=3.92GiB"
+}
