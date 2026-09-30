@@ -859,6 +859,37 @@ hypotheses:
         shipped combo candidate is untouched. Level-2 wall standing:
         composition above arrival semantics remains the frontier.
     updated: 2026-09-25
+  H-ONLINE-SEARCH:
+    statement: >
+      A budgeted online breadth-first program search -- simple actions
+      plus scene-component-derived clicks, frame-dedup, RESET replay,
+      the live game as its own oracle -- is a GAME-AGNOSTIC mechanism
+      that converts unseen games whose level-1 state space is small,
+      and is therefore the one remaining architecture idea with
+      hidden-set upside after three submissions measured that
+      game-specific grammars transfer zero (LB 0.15 = the generic
+      floor, three times).
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-09-29/30 BEFORE THE SWEEP. Premise-killer:
+        run the bounded search offline against all 25 public games
+        (budget fixed at 4,000 expanded nodes and depth 16 per game;
+        click branching from the champion's own scene-component
+        candidates, capped per scene; sc25-style wake handling
+        auto-detected). PREREGISTERED ENDPOINT: the number of games
+        where the search finds a level-1-completing program within
+        budget. DECISION BAR, fixed now: >= 5 of 25 games (i.e.,
+        meaningfully beyond ft09/sc25, whose solvability blind search
+        already partially probed) => build the online layer and take
+        it through the battery + gateway gates; < 5 => the idea is
+        dead and the score track has no remaining non-LLM lever in
+        this repository's measured record. Secondary endpoints,
+        reported alongside: distinct-state counts and depth-to-first-
+        score distributions (the hidden-set feasibility proxy).
+        Expected tier, base rate stated: ~1 for 14.
+    updated: 2026-09-30
+
   H-MB-CLASS2-ASSOCIATION:
     statement: >
       The class-2-validated mushroom body (real MaleCNS PN/KC/APL/MBON
