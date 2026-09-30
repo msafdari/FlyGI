@@ -68,6 +68,13 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   want one (optional).
 - [ ] Optional: enable GitHub Issues template pointing hypothesis
   discussions at EXPERIMENTS.yaml semantics (nice-to-have, not blocking).
+- [ ] Record reconciliation found by the 2026-09-30 fact-check pass:
+  LEAGUE.md (generated snapshot, 2026-09-26) still lists H-EFFERENCE as
+  "open" while EXPERIMENTS.yaml and WORKLOG say null. Regenerate LEAGUE.md
+  on the local machine (`scripts/league.py`; needs the result bundles this
+  container lacks) before release. The registry's duplicate-status-key
+  landmine in H-MB-CLASS2-ASSOCIATION was fixed in-container 2026-09-30
+  (run the full pytest suite locally to confirm nothing depended on it).
 
 ## Final order of operations
 

@@ -1032,7 +1032,10 @@ hypotheses:
       function (Aso 2014, Hige 2015: reinforcement-coincident KC
       activity depresses KC->MBON of the opposing valence) doing real
       work on this task's stimuli.
-    status: open
+    # status at registration was open; the authoritative status is the
+    # single key below (was a duplicate-key landmine: YAML last-wins made
+    # it parse as refuted, but any key-order-sensitive reader would have
+    # read "open"). Removed 2026-09-30 during pre-publication audit.
     evidence:
       - >
         PREREGISTERED 2026-09-29 BEFORE IMPLEMENTATION, including one

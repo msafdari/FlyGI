@@ -6,7 +6,9 @@ this date (tier SOURCED: link-backed but externally unverified except where
 noted; direct fetches of arcprize.org and dsec.ifi.uzh.ch were proxy-blocked,
 so those details come from search snippets and deadlines must be re-verified
 before committing to them). Every fit assessment below is INFERRED or
-EXPECTED; this project's base rate on expected-score claims is 0 for 11.
+EXPECTED; this project's base rate on expected-score claims is 0 for 12
+(as of 2026-09-26; the earlier "0 for 11" here was stale — corrected
+2026-09-30 during the pre-publication audit).
 
 ## Part A — the internal ledger (MEASURED, this repository)
 
@@ -199,4 +201,4 @@ verified by local clone and read). INFERRED: the fit assessments and the
 module inventory are exhaustive for ARC-relevant computation; a class-3
 reversal on a module that then also beat its null on ARC would break it).
 EXPECTED: any suggestion that an entry above produces a competitive score —
-base rate 0/11.
+base rate 0 for 12.

@@ -165,8 +165,8 @@ check-in triggers + a one-page application kit per venue.
    completed task, not an abandoned one).
 4. Claim tiers in every outward artifact; the deployed-fly-content boundary
    (static eye map only; dynamics OFF in scored submissions) appears in
-   every public statement. Expected-tier statements carry the 0-for-11 base
-   rate.
+   every public statement. Expected-tier statements carry the 0-for-12 base
+   rate (canonical count as of 2026-09-26; verified 2026-09-30).
 5. Outward-facing steps (Kaggle actions, repo-public, license change,
    posting, account creation, emails to maintainers) are prepared here,
    executed by the user.
