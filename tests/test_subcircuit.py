@@ -26,11 +26,20 @@ class TestSelection:
 
 class TestRealRing:
     def test_ring_signs_follow_nt_convention(self) -> None:
+        # The PEN patterns need wildcards: select_nodes is exact fnmatch and
+        # the MaleCNS type names are "PEN_a(PEN1)"/"PEN_b(PEN2)", so bare
+        # "PEN_a"/"PEN_b" match ZERO nodes and the "ring" silently degrades
+        # to 106 EPG+Delta7+PEG cells with no PEN population (the bug this
+        # list carried until 2026-09-30). MEASURED 2026-09-29
+        # (scripts/benchmarks/fc2_eb_ring.py registration header): corrected
+        # patterns select 148 neurons = 46 EPG + 20 PEN_a(PEN1) +
+        # 22 PEN_b(PEN2) + 42 Delta7 + 18 PEG, all PENs acetylcholine.
         ring = select_nodes(
-            RUNTIME, type_patterns=("EPG", "PEN_a", "PEN_b", "Delta7", "PEG")
+            RUNTIME, type_patterns=("EPG", "PEN_a*", "PEN_b*", "Delta7", "PEG")
         )
         sub = extract_subcircuit(RUNTIME, ring)
         assert sub.node_count == ring.size
+        assert 130 <= sub.node_count <= 170  # 148 in this compilation
         assert sub.matrix.nnz > 1000
         coo = sub.matrix.tocoo()
         inhibitory = np.isin(
@@ -42,6 +51,14 @@ class TestRealRing:
         # ESTABLISHED compass motif: Delta7 is the ring's inhibition.
         delta7 = sub.indices_where("Delta7")
         assert (sub.consensus_nt[delta7] == "glutamate").all()
+        # Regression guard for the pattern bug above: both PEN populations
+        # must actually be in the ring, and cholinergic per consensus_nt.
+        pen_a = sub.indices_where("PEN_a*")
+        pen_b = sub.indices_where("PEN_b*")
+        assert pen_a.size > 0
+        assert pen_b.size > 0
+        assert (sub.consensus_nt[pen_a] == "acetylcholine").all()
+        assert (sub.consensus_nt[pen_b] == "acetylcholine").all()
 
 
 if __name__ == "__main__":
