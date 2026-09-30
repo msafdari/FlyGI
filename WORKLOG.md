@@ -15,6 +15,47 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## ARENA PROGRAM OPENED: plan + assumptions register committed -- 2026-09-30
+
+User directive: execute all eight ranked arenas from
+docs/next_arenas_survey_20260930.md, top rank first, one at a time, with
+due diligence before each, continuous documentation, and tracked
+assumptions. Task 1 (ARC Paper Track) must also yield LinkedIn + X post
+drafts leading to the (to-become-public) GitHub repo.
+
+Due diligence ran first: a ten-agent web-verification workflow
+(wf_77415764-bf9), all ten arenas checked. Plan: docs/arenas/PLAN.md.
+Register: docs/arenas/ASSUMPTIONS.md. The findings that reshape the work:
+
+- Paper Track judged artifact is a <=1,500-word KAGGLE WRITEUP with a
+  required Media Gallery and attached PUBLIC notebook, linked to a real
+  code submission, from the SAME account (megusalexandrus). "The code
+  submission need not achieve a high score" -- our three 0.15s qualify.
+  Deadline 2026-11-09 per Kaggle (one source says 11-08; planning to
+  11-08). Prize eligibility wants CC0/MIT-0 on submitter code -- current
+  LICENSE is plain MIT; relicensing is the user's call. Precedent:
+  CompressARC placed 3rd at ~20% accuracy; no pure negative-results paper
+  has ever placed -- nulls go in as controls, not the headline.
+- DSEC-Flow: open, rolling; floor on the board is MultiCM EPE 3.47; 6-month
+  report-or-deleted rule; institutional-email account requirement.
+- FlyBench: we would be external contributor #1; MaleCNS fetch is
+  anonymous via neuprint; verified-badge requires maintainer-rerunnable
+  stack; substrate differs from ours (176,422/6.29M vs our 166,700/24.99M).
+- NeuroBench: no active challenge; leaderboard is maintainer-gated
+  (relationship, not API). Brain-Score: rolling, pure-NumPy precedent
+  (pixels/gabor/hmax live on the 2026 board), submission = public PR.
+- e-nose: no open competition anywhere; paper route; UCI corpus has a
+  published integrity critique (Dennler 2022); Aug-2026 engineered
+  olfactory-SNN paper is the near-competitor.
+- MLPerf Tiny: v1.4 done July 2026, v1.5 unannounced (~H1 2027 inferred);
+  an individual submitter exists, path is real; join WG 8+ weeks early.
+- NEW hard date the survey missed: IJCNN 2027 competition PROPOSALS due
+  2026-11-30 (Cape Town, Jun 2027; scope includes neuromorphic + embodied).
+
+Container constraints measured: no Kaggle credentials, no compiled MaleCNS
+runtime -- all Kaggle/browser/outward steps are prepared here, executed by
+the user via runbooks. Task 1 is ACTIVE; next entry when its artifacts land.
+
 ## Fly-limit question answered; external survey recorded -- 2026-09-30
 
 The user asked whether anything else is extractable from the fly and, if the
