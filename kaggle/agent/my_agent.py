@@ -601,7 +601,7 @@ class MyAgent(Agent):
             # Registered gate-(a) amendment: the rerun's budget is MAX_ACTIONS
             # minus turns taken -- effectively uncapped, so the search layer
             # engages there while short local rows keep it idle.
-            budget_setter(MAX_ACTIONS - self._flygi_turns)
+            budget_setter(self.MAX_ACTIONS - self._flygi_turns)
         if self._flygi_turns % 100 == 0:
             diagnostics = getattr(self._policy, "diagnostics", None)
             if callable(diagnostics):
