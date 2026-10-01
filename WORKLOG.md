@@ -15,6 +15,43 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Task 1 (ARC Paper Track): full package built -- 2026-10-01
+
+The complete submission package is in docs/arenas/task1_arc_paper/,
+produced under adversarial verification at every stage:
+
+- factsheet.md: every number checked against the durable record by a
+  four-agent pass (wf_7e405dd9-8a8); corrections applied (base rate is
+  0-for-12; coordinate-HEAD vs H-COORDINATE-CONVENTION disambiguated;
+  three learning nulls, not four; partial-lead phrasing; NOT-USEFUL
+  fidelity scoping). Record hygiene fixed en route: the registry's
+  duplicate status key on H-MB-CLASS2-ASSOCIATION removed (YAML parses,
+  status=refuted); LEAGUE.md's stale H-EFFERENCE row flagged for local
+  regeneration; AP-6 CONFIRMED (MaleCNS is CC BY 4.0 per README).
+- writeup.md: the judged artifact (title + subtitle + 1,429-word body),
+  built by a 9-agent workflow (three angles, three judge lenses,
+  synthesis, two gates: wf_6cc4b6d7-f47); all four gate findings applied.
+  Headline: "The Grammar Scaffold Transferred Zero. The Fly's Eye Map
+  Survived Its Control."
+- media/: cover + three figures (ladder-vs-hidden, verdict matrix,
+  controls-both-ways), palette-validated, rendered 2x from committed HTML
+  sources; all numbers from the factsheet.
+- public_notebook.ipynb: 9-cell public companion (narrative + RECORD
+  dict + ladder chart + guarded spectral-radius reproduction cell).
+- linkedin_post.md + x_post.md: announcement drafts, posting gated on
+  repo-public.
+- submission_runbook.md + public_release_checklist.md: the user-executed
+  half (this container has no Kaggle credentials and the rules pages are
+  egress-blocked). Step 0 verifies the OPEN register rows (deadline
+  11-08 vs 11-09, CC0/MIT-0 wording, same-account rule). README's stale
+  milestone-era results section replaced with the current verdict matrix
+  and submission record.
+
+Remaining on Task 1, all user-side: runbook steps 0-7 (verify rules,
+join paper-track comp, license decision, repo public, notebook upload,
+writeup submit before 2026-11-08, posts). Claude-side artifacts are
+complete pending one final outward-artifact compliance check in flight.
+
 ## ARENA PROGRAM OPENED: plan + assumptions register committed -- 2026-09-30
 
 User directive: execute all eight ranked arenas from

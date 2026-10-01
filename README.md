@@ -57,32 +57,31 @@ about the fly, however good it looks on a leaderboard. Whatever the agent scores
 the number that matters is the gap between the real graph and a degree-preserving
 rewiring of it, because that gap is the only part that anatomy can claim.
 
-This checkout implements **Milestones 0–3 and part of Milestone 4**: repository
-and ARC submission plumbing, MaleCNS acquisition and verification, unsigned and
-heuristic-signed sparse graph compilation, the frozen SciPy/CPU leaky-rate
-backend, a live seeded closed loop from ARC frame to legal ARC action through
-the full 166,700-neuron graph, seeded directed degree-preserving nulls, an
-interface-matched no-recurrent-graph bypass, a score-blind sampler calibration,
-fail-closed Kaggle packaging, provenance manifests, and 189 tests. Learning
-(Track B) and plasticity (Track C) are not implemented.
+## Where the project landed (as of 2026-09-30)
 
-**Current results, in short.** The agent works and is not better than a bypass.
-Gate 2 passed on all 25 public games with zero trainable parameters. The real
-signed graph and the interface-matched bypass scored an identical mean of
-0.190476, each completing one level in one game out of 25; the degree-preserving
-null scored zero; the random control scored 0.050626. The connectome agent
-explores *less* than chance. Separately, the real graph does separate cleanly
-from its degree-preserving nulls on dynamical measures — spectral radius 0.8289
-against 0.2309 ± 0.0078 over three seeds, a ratio of 3.59 — but that structural
-difference produced no ARC advantage. A post-hoc engineering repair now uses
-seeded scale-aware action/coordinate sampling and grounded click exploration;
-the score-blind calibration froze action temperature 0.15 and coordinate
-temperature 0.20 before the next full score-bearing gate. No leaderboard
-submission has been made and no biological advantage is claimed. See
-[WORKLOG.md](WORKLOG.md).
+Every circuit faced the same preregistered protocol — validate its biology at
+a declared fidelity class, gate its input, then test on ARC against controls
+(exact degree-preserving rewires, scrambled twins, bypasses, engineered
+equivalents). The per-module verdicts, all measured:
 
-See [WORKLOG.md](WORKLOG.md) for the latest reproducible checkpoint, measured
-full-data results, current limitations, and ordered next steps.
+| Circuit | Verdict |
+| --- | --- |
+| Eye map (static retinotopy) | **USEFUL, deployed** — level-1 action cost 2.59x human baseline vs 11.59x for its scrambled twin (4.5x), the one fly component in every scored submission |
+| T4/T5 motion (13,585 neurons) | **NOT USEFUL** for ARC motion decoding at validated class-2.5 fidelity — real 0.3875 vs its own rewire 0.4306; engineered matcher 1.0000 |
+| Mushroom body (4,064 KC) | **NOT USEFUL** for one-shot ARC association at class-2 fidelity — real 0.600 vs its own rewire 0.800; matched perceptron 0.917 |
+| EB ring (compass) | UNVALIDATABLE at classes 1–2 — holds activity, not position (all 155 alive LIF configs delocalized) |
+| LC object code | UNVALIDATABLE at class 1 — position code sign-inverted at all 21 operating points |
+
+Kaggle record: six early 0.00s (a construction crash — zero actions played),
+then three COMPLETE submissions (56620463, 56650224, 56683298) all scoring
+**0.15**, the abstention floor, while the engineered grammar scaffold grew the
+matched local gateway ~52-fold (0.551859 → 28.742260) — game-specific grammar
+transfer to the hidden set measured zero, three times. Neuronal dynamics were
+OFF in every scored run; a leaderboard score establishes engineering, not fly
+computation. Full narrative: [WORKLOG.md](WORKLOG.md); every arm and verdict:
+[LEAGUE.md](LEAGUE.md) and [EXPERIMENTS.yaml](EXPERIMENTS.yaml); the ARC Prize
+2026 Paper Track writeup and figures:
+[docs/arenas/task1_arc_paper/](docs/arenas/task1_arc_paper/).
 
 ## Quick start
 
