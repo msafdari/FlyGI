@@ -1,9 +1,11 @@
 # FlyGI durable worklog
 
-OPERATIONAL NOTE 2026-09-28: disk-space compaction gzipped every file over
-10MB and older than a day under results/connectome_agent/ (2.7GB -> 506MB;
-evidence preserved, nothing deleted). Paired-comparison scripts reading old
-arms' .rows.jsonl must gunzip them first.
+OPERATIONAL NOTE 2026-09-28, widened 2026-09-30: disk-space compaction
+gzips every file over 10MB anywhere under results/ (2.7GB -> ~0.4GB;
+evidence preserved, nothing deleted). Paired-comparison scripts reading
+arms' .rows.jsonl / result .json must gunzip them first. Stale Kaggle
+staging copies (kaggle/dist/dataset-loopescape, dataset-submit) were
+deleted; scripts/package_kaggle_dataset.py regenerates staging.
 
 This is the compact operational record for FlyGI. The detailed chronological
 diary from repository creation through the second Kaggle submission remains
