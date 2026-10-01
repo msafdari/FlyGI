@@ -34,17 +34,18 @@ engineering did from what the fly's anatomy did.
 
 ## Prior work
 
-A September-2026 wave of 50+ public connectome game demos (dated survey in
-the repository) shares one shape — a frozen graph plus a hand-written
-readout — with no controls and, as of that survey, no ARC entry. Published
-lines cut against innate-wiring usefulness: a worm connectome plus trained
-mapping walks a fly body realistically; fly-hero's trained readout hits
-100% on a random network; connectome-reservoir benchmarks report
-randomized nulls matching real wiring. Our rewired-null discipline answers
-exactly these. Among ARC methods, CompressARC took
-third at ~20% accuracy — novel method at modest score — and
+In a September-2026 wave of 50+ public connectome game demos (dated
+survey in the repository), most share one shape — a frozen graph plus a
+hand-written readout; none ran validation, input gates and controls
+together — and, as of that survey, none entered any ARC version.
+Published lines cut against innate-wiring usefulness: a worm connectome
+plus trained mapping walks a fly body realistically; fly-hero's trained
+readout hits 100% on a random network; connectome-reservoir benchmarks
+report randomized nulls often matching or beating real wiring. Our
+rewired-null discipline answers exactly these. Among ARC methods,
+CompressARC took third in 2025 at ~20% on ARC-AGI-1, and
 biologically-flavored entries (ARC-NCA, vector-symbolic) have placed; no
-negative-results-led paper has.
+pure negative-results paper has (2024–2025 winner lists).
 
 ## The system and the instrument
 
@@ -77,21 +78,20 @@ Each rung shipped; each scored 0.15, which is what pure abstention earns —
 held three times while the local score grew ~52-fold. The ladder ended
 honestly: an online-search layer failed its preregistered gate, 28.459550
 against the 28.742260 bar, and did not ship — the 28.74 rung is the
-measured local ceiling. Before these three: six 0.00s from a construction
+measured local ceiling of this non-LLM track. Before these three: six 0.00s from a construction
 crash, diagnosed from the empty scorecard, not exit codes.
 
 ## Result 2 (measured): the fly component is small, real, and bounded
 
-Stated plainly: **the fly content of all three
+**The fly content of all three
 scored submissions is the compiled anatomical eye map only, deployed as
 static retinotopy metadata; neuronal dynamics were OFF
 (`neuronal_dynamics_active=false`, machine-readable in the preflight) in
 every scored run.**
 
 Locally, against its scrambled-map twin, real retinotopy won where the
-offline premise predicted: r11l completions ran 0.27–0.68x human baseline,
-the project's first sub-baseline completions (league scores 0.3064,
-replicated 0.3058, vs 0.1875 permuted). The boundary travels with the win:
+offline premise predicted: r11l completions ran 0.27–0.68x human baseline
+(league scores 0.3064, replicated 0.3058, vs 0.1875 permuted). The boundary travels with the win:
 the same ladder failed its breadth bar, 17 levels vs the champion's 21. The
 eye map's hidden-set contribution was never isolated — no scrambled-map
 control ever ran on Kaggle.
@@ -118,7 +118,7 @@ class-1 grid points (best Spearman -0.203 vs a +0.50 band).
 
 **Against ourselves.** A coordinate head shipped in two early submissions
 with six passing tests explored 3.29x less than clicking at random (72 vs
-236 unique observations). A 520-parameter
+236 mean unique observations, six click-only games). A 520-parameter
 trained head was genuinely connectome-dependent (trace ablation 0.2835 ->
 exactly 0.0000) yet generalized zero: 0.0000 on all 17 held-out games
 against 0.8858 on its own training games. Connectome-dependent and useless
@@ -163,9 +163,6 @@ one.
   ARC motion decoding at validated class-2.5 fidelity. At class 1 the
   standing verdict is "NOT USEFUL: NONE — no prior null may be stated as a
   fact about the fly."
-
-That ordering — validate, gate, then test — is what lets a null mean
-something.
 
 ## What this buys anyone chasing 85%
 

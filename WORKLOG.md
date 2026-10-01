@@ -1,5 +1,31 @@
 # FlyGI durable worklog
 
+## Task 1: Prior-work section added to the writeup under gates -- 2026-10-02
+
+The user eyeballed arcprize.org/competitions/2026/paper (pasted
+verbatim): AP-1 CONFIRMED (papers due 2026-11-08 -- the plan date is
+now verified), AP-2 CONFIRMED verbatim, AP-9 raised to high confidence
+("linked to", not "new"), and new AP-10 found a real gap -- the
+What-to-Include guidance lists Prior work and the Novelty rubric scores
+against existing public research, while writeup.md named no prior
+approach. Revision applied at the user's direction: a ~100-word Prior
+work section (demo wave; the three published counter-evidence lines;
+CompressARC 2025 3rd at ~20% on ARC-AGI-1; ARC-NCA/VSA placement; no
+pure negative-results paper in the money, 2024-2025 winner lists), with
+offsetting trims (sg-bioeye-t4t5 borderline sentence removed to the
+factsheet only; parentheticals compressed; no number changed). Factsheet
+External-context extended so every new claim traces. TWO GATES run as
+independent agents: compliance regression (1 finding: restore "compiled"
++ "min" in the EB-ring sentence -- applied) and fact/tier (7 findings,
+all qualifier/scope restorations: "most"/none-ran-all-three on the wave,
+"often matching or beating", ARC-AGI-1 + 2025 qualifiers on CompressARC,
+"pure ... in the money (2024-2025 winner lists)" dated, "of this
+non-LLM track" restored, "min" circvar, click-only-games scope -- all
+applied). Body 1,470 -> 1,448 words (target <=1,450; Kaggle cap 1,500).
+Remaining Kaggle-side unknowns for the user's browser check: AP-3,
+AP-4 (license wording + when it binds), AP-5 mechanics, AP-9 linking
+mechanics.
+
 ## Task 3: adapter kill test PASSED both bars, zero free parameters -- 2026-10-01
 
 H-FLYGI-FLYBENCH-ADAPTER: open -> supported, measured minutes after
