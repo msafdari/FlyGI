@@ -36,12 +36,25 @@ record: docs/arenas/task3_flybench/due_diligence_delta.md. Measured:
   division wants n_free_parameters + fit_data, benchmark-fitted params
   ineligible). New rows AF-4..AF-6.
 
-DECISION OWED BY THE USER before any Task 3 build: proceed as
-prepare-here/run-there (the Task 2 pattern: Claude writes the adapter
-against the read interfaces, user runs toy + verify-adapter + the
-MaleCNS fetch locally), or authorize third-party execution in this
-container, or defer Task 3. No adapter code is written until then
-(kill-test-first: the toy run IS the premise check).
+DECISION RESOLVED same day: the USER explicitly authorized third-party
+execution in this container ("Do #2. I authorize."). Measured
+immediately after: `pip install -e .` works, `flybench toy` builds the
+3,792-neuron / 45,343-edge synthetic connectome, and `flybench run -c
+toy` completes in ~2 min with the REFERENCE simulator at score 0.93 /
+graded 0.94 / 24 of 30 tasks (6 skipped: toy has no nerve-cord
+readouts; flygym/flyvis extras not installed). AF-6 flipped to
+CONFIRMED-under-authorization. The adapter kill test is registered
+BEFORE any adapter code: docs/arenas/task3_flybench/killtest_design.md
++ EXPERIMENTS.yaml H-FLYGI-FLYBENCH-ADAPTER (open) -- premise: our
+class-2 SpikingNetwork, UNMODIFIED, behind their Simulator contract
+with declared plumbing only (derived unit bridge w_scale =
+w_syn*gain/tau_m, shared Shiu constants, suprathreshold-pulse emulation
+of their forced Poisson stimuli); trivial alternative: their reference
+LIF's measured toy row; PASS = verify-adapter zero defects AND the five
+canonical core reflexes pass at the derived w_scale (fallback: the
+reference's own declared gain-sweep freedom, 1 free parameter).
+neuprint stays blocked (AF-2), so MaleCNS rows remain local-only
+regardless.
 
 ## Task 2 (DSEC-Flow): registered, built, data-gated -- COMPLETE cloud-side -- 2026-10-01
 

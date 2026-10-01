@@ -2020,6 +2020,39 @@ hypotheses:
         (H-T4T5-CLASS25-MOTION) measured the rewire ABOVE real on
         ARC frames.
     updated: 2026-10-01
+
+  H-FLYGI-FLYBENCH-ADAPTER:
+    statement: >
+      The fidelity-class-2 engine (flygi.dynamics.spiking.SpikingNetwork,
+      unmodified) can sit behind flybench's Simulator contract with
+      declared plumbing only -- a derived weight/unit bridge
+      (w_scale = w_syn_mv * gain / tau_m_ms), the Shiu-constant
+      parameter table both models share, and a suprathreshold-pulse
+      emulation of their forced Poisson stimuli -- passing
+      flybench verify-adapter with zero defects and reproducing the
+      five canonical core reflexes the reference LIF passes on the
+      bundled toy connectome.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-01, before any adapter code, after the
+        user authorized third-party execution in the cloud container.
+        Frozen design: docs/arenas/task3_flybench/killtest_design.md.
+        Context measured first: flybench v0.2.1 (commit 3052ce5)
+        installs and runs in-container; the REFERENCE simulator on the
+        toy (3,792 neurons / 45,343 edges) scores 0.93, graded 0.94,
+        24/30 tasks, 6 skipped (toy lacks nerve-cord readouts;
+        flygym/flyvis extras not installed). TRIVIAL ALTERNATIVE: that
+        reference row; the adapter must function as a peer, not beat
+        it. PASS iff verify-adapter exits 0 with the engine unmodified
+        AND the five named core reflexes pass at the DERIVED w_scale
+        (declared fallback, same freedom as the reference's own rows:
+        one global gain sweep {0.3,0.5,0.7,1.0,1.5}x derived, nearest
+        1.0x passing point, counted as 1 free parameter later). Full
+        toy score reported as context. KILL => recorded model-form
+        limit; pivot (our parameters through their simulator) or end
+        is the user's call. Expected tier, base rate stated: 0 for 12.
+    updated: 2026-10-01
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
