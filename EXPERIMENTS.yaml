@@ -1978,6 +1978,48 @@ hypotheses:
       share. Config sha256 and feature-index-list hashes recorded in the
       result document; null bundle carries written provenance.
     updated: 2026-09-24
+
+  H-T4T5-DSEC-DIRECTION:
+    statement: >
+      On one real event-camera driving sequence (DSEC train, fallback
+      MVSEC indoor_flying1), the class-2.5-validated T4/T5 patch
+      (trained flyvis ensemble parameters at the fc25 passing
+      configuration, zero re-tuning) recovers per-column motion
+      DIRECTION with lower angular error than a circuit-free
+      event-centroid-shift estimator on the identical binned input AND
+      lower than its own degree-preserving rewire -- the motion
+      detector's native function doing real work on its native input
+      statistics, where the ARC arm measured that it did not.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-01 BEFORE ANY DATA CONTACT (the cloud
+        container cannot reach the data hosts -- measured HTTP 000;
+        nobody on the project has seen the sequence). Full frozen
+        design: docs/arenas/task2_dsec_flow/killtest_design.md.
+        Instrument: scripts/arenas/dsec_killtest.py (data-gated;
+        metrics scripts/arenas/dsec_metrics.py, verified on synthetic
+        flow in-cloud). Protocol: first 250 GT flow windows, temporal
+        20% calibration prefix (dt per arm chosen there from
+        {10,20,50,100} ms, matched freedom) / 80% evaluation; events
+        -> signed polarity sums -> central-square crop binned onto
+        the 13x13 patch lattice (AD-6/AD-7); fc2 settle-stream-tail
+        protocol; fixed subtype population-vector readout using
+        fc25's own measured preferred directions (AD-8, no fitted
+        parameters). ARMS: real / uniform-tau twin / 3x
+        degree-preserving rewire / zero-flow (EPE context) /
+        GT-median global direction (context) / event-centroid-shift
+        (kill comparator) / lattice cross-correlation (ceiling
+        context). PASS iff real beats event-argmax AND rewired on
+        per-window mean 2D angular error (one-sided paired sign
+        tests across evaluation windows, p<0.05, plus strictly lower
+        medians). KILL => recorded class-2.5 limit, task complete,
+        no dense pipeline, no benchmark entry. BLOCKED (not a
+        verdict) if < 30 evaluable evaluation windows. Expected
+        tier, base rate stated: 0 for 12; the nearest precedent
+        (H-T4T5-CLASS25-MOTION) measured the rewire ABOVE real on
+        ARC frames.
+    updated: 2026-10-01
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
