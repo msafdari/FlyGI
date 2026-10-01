@@ -110,10 +110,10 @@ class-2.5 fidelity (pooled median DSI 0.3216 against a >=0.30 band) scored
 seed, while the rewire reached 0.4306 (p=0.97) and an engineered
 shift-matcher 1.0000. These circuits' specializations are real, and on these
 ARC tasks, at these fidelities, they point the wrong way. Two more circuits
-died earlier in the pipeline: the ellipsoid-body ring holds activity, not
-position, at both fidelities tested (155/155 alive class-2 configs
-delocalized, circular variance 0.853 vs a 0.6 band; shuffled ring
-comparable), and the LC object-position code was sign-inverted at all 21
+died earlier in the pipeline: the compiled ellipsoid-body ring holds
+activity, not position, at both fidelities tested (155/155 alive class-2
+configs delocalized, min circular variance 0.853 vs a 0.6 band; shuffled
+ring comparable), and the LC object-position code was sign-inverted at all 21
 class-1 grid points (best Spearman -0.203 vs a +0.50 band).
 
 **Against ourselves.** A coordinate head shipped in two early submissions
