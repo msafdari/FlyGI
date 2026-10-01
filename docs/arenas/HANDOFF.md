@@ -115,6 +115,15 @@ Task 2 counts as "complete" once the harness, design, runbook and
 registration are committed and the blocker is surfaced. Its
 measurement runs wherever the data and runtime are reachable.
 
+**Reconcile first:** `docs/arenas/task2_dsec/KILL_TEST.md` is a
+TRUNCATED, UNREVIEWED draft of the kill-test registration. It ends
+mid-sentence in the Arms list. It most likely came from an interrupted
+turn whose file write finished anyway, and it was swept into the pause
+commit. Its premise, data choice, pipeline and arms match next-step 2
+above. The new session should review it, finish it (complete the arms
+list and the frozen pass/kill rule), and settle on ONE Task-2 directory
+(`task2_dsec/` or `task2_dsec_flow/`) before writing anything else.
+
 ### Tasks 3-8 — what due diligence already established
 
 See PLAN.md (per-task premise, kill test, deliverables) and
