@@ -69,6 +69,9 @@ L=LEAGUE.md, R=EXPERIMENTS.yaml.
   on breadth (17 levels vs champion 21; 6-7 games vs 10), so the efficiency
   separation coexists with a measured breadth loss. Deployed as static
   anatomy metadata — no live dynamics. [W,R]
+  The eye map's hidden-set contribution was never isolated: no
+  scrambled-map control ever ran on Kaggle (the local league pair is the
+  only measured comparison). [W,L]
 - sg-bioeye-t4t5: +0.0717 [+0.005,+0.156] p=0.070, 22 vs 13 levels, 75
   matched rows, vs its scrambled control — the league's only HELPS;
   survived a hash-grade source audit; recorded as borderline at ship time.

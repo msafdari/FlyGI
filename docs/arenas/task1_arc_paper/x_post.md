@@ -4,19 +4,20 @@
 thread. Attach media/cover.png to the lead post; figures 1–3 to thread
 tweets as marked. Character counts exclude the link, which X shortens.)*
 
-## Option A — single post (~270 chars)
+## Option A — single post (270 chars as X counts it)
 
-> I wired the complete fruit-fly connectome (166,700 neurons) to ARC-AGI-3 —
-> with controls. Our engineered scaffold gained ~52x locally and transferred
-> ZERO to hidden games (0.15 x3). The fly's eye map beat its scrambled twin
-> 4.5x. Full audit, open: github.com/msafdari/FlyGI
+> I audited the complete fruit-fly connectome (166,700 neurons) on
+> ARC-AGI-3, with controls. Scored agents used only its static eye map
+> (dynamics off): beat its scrambled twin 4.5x. Engineered scaffold: ~52x
+> locally, ZERO hidden transfer (0.15 x3). github.com/msafdari/FlyGI
 
 ## Option B — thread
 
 **1/** (attach cover.png)
-Everyone wired the new fly connectome to Doom this September. We wired it to
-ARC-AGI-3 instead — with degree-preserving controls on every claim. The
-results cut in both directions. 🧵
+Dozens of projects wired the newly mapped fly connectomes to Doom this
+September. We put one on ARC-AGI-3 instead — with matched controls
+(degree-preserving rewires, scrambled twins) on every claim. The results cut
+in both directions. 🧵
 
 **2/** (attach fig1_ladder_vs_hidden.png)
 Our engineered scaffold (13 hand-built game grammars) grew the local score
@@ -25,14 +26,14 @@ Our engineered scaffold (13 hand-built game grammars) grew the local score
 exactly zero, three times.
 
 **3/**
-The one fly component we actually deployed — the eye's anatomical map,
-straight from the connectome, zero training — completed first levels at
+The one fly component we actually deployed — the eye's static anatomical map,
+straight from the connectome — no dynamics, zero training — completed first levels at
 2.59x the human action baseline vs 11.59x for a scrambled-map twin. A 4.5x
 gap attributable to anatomy alone. Small, real, control-backed.
 
 **4/** (attach fig3_controls_both_ways.png)
-The deep circuits are the twist: the mushroom body and T4/T5 motion
-detectors PASSED their biology benchmarks — then both lost the ARC task to
+The deep circuits are the twist: our class-2 mushroom-body and class-2.5 T4/T5 models PASSED their biology
+benchmarks — then both lost the ARC task to
 their own shuffled twins (0.600 vs 0.800; 0.3875 vs 0.4306). The wiring is
 real. On pixel grids, at these fidelities, it points the wrong way.
 
@@ -44,7 +45,8 @@ random are compatible.
 
 **6/**
 Why publish a 0.15? Because "brain plays game" demos are everywhere and
-attribution is nowhere. Validate the biology → gate the input → test vs
+attribution is almost nowhere — no demo we found runs validation, input
+gates and controls together. Validate the biology → gate the input → test vs
 rewired twins. Everything's open — code, worklog, preregistrations, and our
 ARC Prize 2026 Paper Track writeup:
 github.com/msafdari/FlyGI

@@ -88,8 +88,8 @@ replicated 0.3058, vs 0.1875 permuted). The boundary travels with the win:
 the same ladder failed its breadth bar, 17 levels vs the champion's 21. One
 further configuration, sg-bioeye-t4t5, is the league's only HELPS: +0.0717
 [+0.005, +0.156], p=0.070 over 75 matched rows against its scrambled control
-— recorded as borderline at ship time. The eye map's hidden-set transfer was
-never measured in either direction.
+— recorded as borderline at ship time. The eye map's hidden-set contribution was
+never isolated — no scrambled-map control ever ran on Kaggle.
 
 ## The verdict matrix: controls firing both ways
 
