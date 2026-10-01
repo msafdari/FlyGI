@@ -15,6 +15,59 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Task 2 (DSEC-Flow): registered, built, data-gated -- COMPLETE cloud-side -- 2026-10-01
+
+Resumed in a new session per the pause entry below; HANDOFF.md's resume
+order followed exactly. All four of its Task-2 next steps are done and
+pushed (branch claude/admiring-goldberg-wtqkbg):
+
+- RECONCILED first, as flagged: the truncated, unreviewed
+  docs/arenas/task2_dsec/KILL_TEST.md draft is superseded by the
+  complete, FROZEN registration docs/arenas/task2_dsec_flow/
+  killtest_design.md (directory settled as task2_dsec_flow/, parallel
+  to task1_arc_paper/; old directory removed). Frozen before any data
+  contact: arms (real / uniform-tau twin / 3x degree-preserving rewire
+  / zero-flow EPE-context / GT-median context / event-centroid-shift
+  KILL COMPARATOR / lattice cross-correlation ceiling), the pass/kill
+  rule (real must beat event-argmax AND the rewire on per-window mean
+  2D angular error, one-sided paired sign tests p<0.05 plus lower
+  medians), the 250-window cap with temporal 20% calibration prefix,
+  the BLOCKED-vs-KILL distinction (<30 evaluable eval windows = not a
+  verdict), and the dt grid {10,20,50,100} ms with per-arm matched
+  calibration freedom. Registered as EXPERIMENTS.yaml
+  H-T4T5-DSEC-DIRECTION (open); ASSUMPTIONS.md gained AD-6 (polarity
+  running-sum as pseudo-luminance), AD-7 (central-crop isotropic
+  binning), AD-8 (fc25-measured subtype preferred directions as the
+  fixed vote basis) and updated AD-3..AD-5.
+- scripts/arenas/dsec_metrics.py -- the connectome-independent half,
+  MEASURED in-cloud on synthetic flow: 6/6 selftest checks, 19 tests.
+  EPE / 2D+3D angular error / 1-2-3PE, the DSEC-KITTI 16-bit flow-PNG
+  codec in pure numpy+zlib (round trip exact to the 1/128 px quantum,
+  all five PNG filters), zero-flow and GT-median baselines. numpy +
+  stdlib only, so the local run needs no imaging dependency.
+- scripts/arenas/dsec_killtest.py -- the data-gated harness against
+  the real fc2/fc25 interfaces (build_patch, GradedFlyvisNetwork,
+  trained_weight_matrix/trained_table, verbatim trained_subset gain,
+  degree_preserving_rewire). MEASURED in-cloud: it exits 3 with a
+  BLOCKED report correctly naming this container's missing
+  prerequisites (compiled runtime, fc25 results file, h5py/pyarrow,
+  data root) -- the egress blocker recorded in the pause entry stands.
+  Its 13 pure-plumbing tests (geometry, binning, comparators, vote DC
+  cancellation, GT gates, exact sign test, frozen-constant assertions)
+  pass; 32 total across both Task-2 suites.
+- docs/arenas/task2_dsec_flow/runbook.md -- the user's local steps:
+  precondition check, ~4 GB single-sequence download (thun_00_a
+  primary), the one command, and the report-back protocol.
+
+Task 2 is COMPLETE by the HANDOFF definition (harness, design, runbook,
+registration committed; blocker surfaced). The MEASUREMENT is the
+user's local run; on report-back the hypothesis closes from the JSON
+(supported / refuted / blocked) and the registry + this file update.
+Expected tier, base rate stated: 0 for 12, and the nearest precedent
+(H-T4T5-CLASS25-MOTION) measured the rewire ABOVE real on ARC frames.
+Next per the program order: Task 3 (FlyBench) opens with its
+due-diligence delta.
+
 ## SESSION PAUSED for resume elsewhere -- 2026-10-01
 
 The user paused the arena-program session and will resume in a new one.

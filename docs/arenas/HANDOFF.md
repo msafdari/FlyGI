@@ -21,7 +21,7 @@ post and an X post that lead to the public FlyGI GitHub repo.
 | # | Task | Status |
 | --- | --- | --- |
 | 1 | ARC Prize 2026 Paper Track | **Claude-side COMPLETE.** All artifacts in docs/arenas/task1_arc_paper/. Remaining steps are the user's (runbook steps 0-7). |
-| 2 | DSEC-Flow | **IN PROGRESS — due diligence done, build paused** (details below). |
+| 2 | DSEC-Flow | **Claude-side COMPLETE (2026-10-01).** Kill test registered (H-T4T5-DSEC-DIRECTION, frozen), metrics + data-gated harness built and tested, runbook written. The measurement is the user's local run: docs/arenas/task2_dsec_flow/runbook.md. |
 | 3 | FlyBench | pending |
 | 4 | NeuroBench | pending |
 | 5 | Brain-Score | pending |
@@ -51,7 +51,17 @@ docs/arenas/task1_arc_paper/:
   license decision (MIT -> CC0/MIT-0 is the user's call), the LEAGUE.md
   regeneration (local), the merge to main, and the order of operations.
 
-### Task 2 — DSEC-Flow: exact pause point
+### Task 2 — DSEC-Flow: RESOLVED 2026-10-01 (section kept as history)
+
+The next steps and the "reconcile first" item below were all executed on
+2026-10-01 (WORKLOG entry of that date): the truncated draft became the
+frozen registration docs/arenas/task2_dsec_flow/killtest_design.md
+(directory settled, old task2_dsec/ removed), the metrics module and the
+data-gated harness are built and tested, the runbook is written, and
+H-T4T5-DSEC-DIRECTION is registered. What remains is the USER's local
+kill-test run per runbook.md; the hypothesis closes from its JSON.
+
+### Task 2 — DSEC-Flow: exact pause point (historical)
 
 DONE:
 - Due diligence (full detail in due_diligence_20260930.md, `dsec-flow`).
