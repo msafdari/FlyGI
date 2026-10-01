@@ -12,7 +12,7 @@ strike through and mark instead.
 | ID | Statement | Tier | Status | Check / consequence if wrong |
 | --- | --- | --- | --- | --- |
 | P-1 | This container has no Kaggle credentials and no compiled MaleCNS runtime; those steps are user-executed | MEASURED (2026-09-30: no ~/.kaggle, no data/processed) | CONFIRMED | Runbooks must be exact; if wrong, we can execute more ourselves |
-| P-2 | Egress proxy blocks kaggle.com, arcprize.org, dsec.ifi.uzh.ch, download.ifi.uzh.ch, arxiv.org, mlcommons.org, brain-score.org, archive.ics.uci.edu, huggingface.co, neurobench.ai | MEASURED (agent fetch attempts, 2026-09-30) | CONFIRMED | Re-test per task; user may extend allowlist |
+| P-2 | Egress proxy blocks kaggle.com, arcprize.org, dsec.ifi.uzh.ch, download.ifi.uzh.ch, arxiv.org, mlcommons.org, brain-score.org, archive.ics.uci.edu, huggingface.co, neurobench.ai | MEASURED (agent fetch attempts, 2026-09-30; curl 2026-10-01: dsec, download.ifi, drive.google.com, neuprint.janelia.org all HTTP 000; raw.githubusercontent.com 200) | CONFIRMED | Re-test per task; user may extend allowlist (environment settings -> Network access) |
 | P-3 | The user intends the FlyGI repo to become public (stated 2026-09-30: posts "lead to the FlyGI github repo where the findings and code is public") | user statement | CONFIRMED | The public-release step itself remains the user's action |
 
 ## Task 1 — ARC Paper Track (AP-*)
@@ -44,7 +44,7 @@ strike through and mark instead.
 | ID | Statement | Tier | Status | Check / consequence |
 | --- | --- | --- | --- | --- |
 | AF-1 | flybench MaleCNS (neuprint, >=5-syn, 176,422 neurons / 6.29M edges) and our compile (166,700 / 24.99M) are different compilations of the same source; results are not directly comparable across them | MEASURED (both repos read) | CONFIRMED | Any cross-claim states the substrate; consider running our params through THEIR build |
-| AF-2 | neuprint.janelia.org is reachable from this container for the anonymous fetch | ASSUMED | OPEN | Test at task start; else user machine |
+| AF-2 | neuprint.janelia.org is reachable from this container for the anonymous fetch | MEASURED 2026-10-01: HTTP 000 from the cloud container | INVALIDATED (in-cloud) | FlyBench MaleCNS fetch must run locally or after an allowlist change; the toy suite needs no fetch |
 | AF-3 | Our simulator stack can implement their Simulator/run->SimResult interface without violating their no-fitting-on-tasks rule (our calibrations were done on OUR protocols, not their tasks) | INFERRED | OPEN | Declare n_free_parameters + fit_data explicitly; ask maintainer if ambiguous |
 
 ## Task 4 — NeuroBench (AN-*)

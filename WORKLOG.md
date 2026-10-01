@@ -15,6 +15,29 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## SESSION PAUSED for resume elsewhere -- 2026-10-01
+
+The user paused the arena-program session and will resume in a new one.
+RESUME FROM docs/arenas/HANDOFF.md. It records the exact pause point:
+Task 1 is complete on the Claude side and the user's runbook steps are
+pending. Task 2 (DSEC-Flow) has its due diligence done and its build
+paused.
+
+Task 2 measured blocker (2026-10-01): the cloud container's egress
+returned HTTP 000 for dsec.ifi.uzh.ch, download.ifi.uzh.ch,
+drive.google.com (MVSEC) and neuprint.janelia.org. GitHub raw returned
+200. The container also lacks the compiled runtime and the flyvis
+checkpoints. So the DSEC kill test runs on the local machine, or in the
+cloud after a network-allowlist change. The planned next steps are
+recorded in HANDOFF.md: build and verify the connectome-independent
+metrics/baselines module in the cloud, freeze the kill-test design and
+pass/kill rule, write the data-gated harness against the fc2/fc25
+interfaces, write the runbook, and register the hypothesis.
+
+The full ten-agent due-diligence record is now preserved in the repo as
+docs/arenas/due_diligence_20260930.md. It previously existed only in
+session temp files.
+
 ## Task 1 (ARC Paper Track): full package built -- 2026-10-01
 
 The complete submission package is in docs/arenas/task1_arc_paper/,
