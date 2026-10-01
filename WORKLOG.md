@@ -15,6 +15,34 @@ latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
 
+## Task 3 (FlyBench) OPENED: due-diligence delta measured; execution is user-side -- 2026-10-01
+
+Opened immediately after Task 2 closed, per the program order. Full
+record: docs/arenas/task3_flybench/due_diligence_delta.md. Measured:
+
+- flybench is NOT on PyPI (404) -- survey corrected; install is
+  `pip install -e .` from the GitHub clone (read-only cloned in-cloud:
+  v0.2.1, commit 3052ce5). The project moved since the survey:
+  terminal-aware LIF is a second verified mechanism row, a flyvis-eye
+  task showed the reference loom escape was hand-fed, and a closed-loop
+  escape task exists that nobody passes. Our MB-calibration angle
+  remains unclaimed.
+- neuprint.janelia.org still HTTP 000 in-cloud (AF-2 stands).
+- NEW measured blocker: this environment's execution policy DENIES
+  installing/running third-party code, so even the no-fetch toy suite
+  cannot be verified here. Reading the clone is permitted and the
+  adapter-relevant interface facts are recorded (Simulator(connectome,
+  params).run -> SPIKE-only SimResult; verify-adapter CLI; open
+  division wants n_free_parameters + fit_data, benchmark-fitted params
+  ineligible). New rows AF-4..AF-6.
+
+DECISION OWED BY THE USER before any Task 3 build: proceed as
+prepare-here/run-there (the Task 2 pattern: Claude writes the adapter
+against the read interfaces, user runs toy + verify-adapter + the
+MaleCNS fetch locally), or authorize third-party execution in this
+container, or defer Task 3. No adapter code is written until then
+(kill-test-first: the toy run IS the premise check).
+
 ## Task 2 (DSEC-Flow): registered, built, data-gated -- COMPLETE cloud-side -- 2026-10-01
 
 Resumed in a new session per the pause entry below; HANDOFF.md's resume
