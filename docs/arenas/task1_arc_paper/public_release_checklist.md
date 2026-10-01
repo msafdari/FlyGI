@@ -32,11 +32,13 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 
 ## Licensing
 
-- [ ] LICENSE: currently MIT. Paper-track prize eligibility reportedly
-  requires CC0 or MIT-0 for submitter-authored code (register AP-4;
-  verify wording in runbook Step 0). Relicensing is the copyright
-  holder's decision; a prepared MIT-0 LICENSE text will be committed on
-  your go.
+- [x] LICENSE: MIT stays (2026-10-02). The Kaggle Rules set the winner
+  license to CC-BY 4.0, granted only on winning (register AP-4,
+  INVALIDATED as originally sourced); MIT satisfies Rules §3.6.b for
+  public sharing. Relicensing is optional; say so if you want it anyway.
+- [ ] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
+  register AP-12): repo link in the Paper Track and ARC-AGI-3 discussion
+  forums.
 - [ ] THIRD_PARTY_NOTICES.md: present; re-read once before release to
   confirm every vendored/embedded third-party piece is listed with a
   compatible license.

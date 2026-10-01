@@ -48,7 +48,7 @@ docs/arenas/task1_arc_paper/:
 - `submission_runbook.md` — the user's steps 0-7. Step 0 resolves the
   OPEN register rows AP-1..AP-5 and AP-9. Deadline: plan to 2026-11-08.
 - `public_release_checklist.md` — the secrets/PII audit (clean), the
-  license decision (MIT -> CC0/MIT-0 is the user's call), the LEAGUE.md
+  license (MIT stays: Kaggle winner license is CC-BY 4.0, granted only on winning — AP-4), the LEAGUE.md
   regeneration (local), the merge to main, and the order of operations.
 
 ### Task 2 — DSEC-Flow: RESOLVED 2026-10-01 (section kept as history)

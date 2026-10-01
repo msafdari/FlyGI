@@ -57,8 +57,9 @@ Work breakdown (in-container unless marked USER):
 3. Figures + cover image for Media Gallery (dataviz discipline).
 4. Public demonstration notebook (.ipynb, runnable narrative of methods and
    controls; adapted from the embedded-source path, no private assets).
-5. Public-release package: README refresh, license decision (MIT -> MIT-0
-   or CC0 — USER decision as copyright holder), secrets/PII audit, MaleCNS
+5. Public-release package: README refresh, license (MIT stays — the
+   Kaggle winner license is CC-BY 4.0, granted only on winning; AP-4
+   invalidated 2026-10-02), secrets/PII audit, MaleCNS
    data-licensing note, repo-public step (USER).
 6. LinkedIn article draft + X post draft pointing at the public repo.
 7. Submission runbook (exact Kaggle clicks, same-account requirement,

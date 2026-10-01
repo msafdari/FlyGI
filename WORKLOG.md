@@ -1,5 +1,39 @@
 # FlyGI durable worklog
 
+## Task 1: Kaggle Rules read; license requirement reversed -- 2026-10-02
+
+The user JOINED the Paper Track on Kaggle (entry deadline 2026-10-26
+retired) and pasted the full Kaggle Rules tab verbatim. Measured against
+the register:
+
+- AP-4 INVALIDATED as sourced. The rules name the winner license as
+  CC-BY 4.0 (§1.6, §2.5), granted "if you are a Competition winner" as a
+  condition of the prize (§2.8). CC0/MIT-0 -- what our 2026-09-30 search
+  extraction reported -- appears nowhere in the rules text. Consequence:
+  no relicense is needed to submit; the repo stays MIT (our reading, not
+  legal advice; MIT also meets §3.6.b's OSI/commercial-use condition).
+  Residual: the CC0/MIT-0 wording may live on the Kaggle Overview tab or
+  arcprize's general 2026 overview page, which were not pasted.
+- AP-3 CONFIRMED: "Team must match the team making a submission to either
+  ARC-AGI-2 or ARC-AGI-3" (§2.1.b).
+- AP-5 still OPEN but located: the rules defer to "the requirements
+  stated on the Competition Website" (Overview tab).
+- NEW, all CONFIRMED from the text: AP-11 one writeup submission per
+  team (§2.2.a) -- SUBMIT is one-shot; AP-12 public code sharing during
+  the competition period must also be posted on the competition's Kaggle
+  forum/notebooks (§3.6.b) -- a forum post with the repo link is now a
+  release-day step; AP-13 winner clocks (respond in 1 week, prize docs
+  in 2 weeks, code + reproduction docs). AP-14 (low risk, OPEN): every
+  third-party component in THIRD_PARTY_NOTICES.md is MIT/MIT-0 except
+  the sponsor's own Kaggle starter, whose pinned commit has no LICENSE
+  file.
+
+Docs brought in line: submission_runbook.md (status block, Step 2 now
+optional, forum-post step, one-shot SUBMIT warning, dates table, and a
+stale instruction removed -- it told the user to trim a section "marked
+OPTIONAL" that the writeup does not have), public_release_checklist.md,
+PLAN.md, HANDOFF.md.
+
 ## Task 1: Prior-work section added to the writeup under gates -- 2026-10-02
 
 The user eyeballed arcprize.org/competitions/2026/paper (pasted
