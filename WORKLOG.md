@@ -1,5 +1,34 @@
 # FlyGI durable worklog
 
+## Task 3: adapter kill test PASSED both bars, zero free parameters -- 2026-10-01
+
+H-FLYGI-FLYBENCH-ADAPTER: open -> supported, measured minutes after
+registration (registry entry has every number; compressed here). Our
+class-2 SpikingNetwork, UNMODIFIED, behind flybench's contract via
+scripts/arenas/flygi_flybench_adapter.py (plumbing only, all declared
+in killtest_design.md): verify-adapter "conforms: no defects", and the
+five canonical core reflexes PASS on the toy at the DERIVED unit
+bridge w_scale = w_syn*gain/tau_m -- no gain sweep, no fitted
+parameter anywhere. Seed guard: --tier core --seeds 3 = 5/5, graded
+0.99 [0.99, 0.99]. Full-suite context: ours 0.90/0.92/21-of-30 vs
+reference 0.93/0.94/24-of-30; the three lost tasks (EPG ring bump
+never ignites, APL sparsification ratio 1.03 vs 1.14, one steering
+rate at 4.07 vs bar 5) are all sustained-activity-flavored, matching
+the declared differences (no delay line, dt 0.5 vs 0.1 ms,
+current-based synapse) -- and the ring loss echoes this repo's own
+two-fidelity-class bump verdict. One check gained (PN transfer stays
+under the 170 Hz bar where the reference saturates to 272). SCOPE:
+contract-level, synthetic toy, no fly claim.
+
+Task 3 remaining, in order: (a) MaleCNS rows -- neuprint fetch is
+local-only (AF-2); the natural next artifact is a Task-3 runbook for
+the user's local fetch + build + our-adapter run with their
+shuffled-wiring controls; (b) the scientific heart, our
+Litwin-Kumar-calibrated MB parameters vs their PN-broadcast finding,
+needs its own registered design first (AF-4 spike-conversion question
+included); (c) any submission (PR, verified badge) is the user's
+outward step. The adapter commit is the checkpoint before (a).
+
 OPERATIONAL NOTE 2026-09-28: disk-space compaction gzipped every file over
 10MB and older than a day under results/connectome_agent/ (2.7GB -> 506MB;
 evidence preserved, nothing deleted). Paired-comparison scripts reading old

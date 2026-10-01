@@ -2032,7 +2032,7 @@ hypotheses:
       flybench verify-adapter with zero defects and reproducing the
       five canonical core reflexes the reference LIF passes on the
       bundled toy connectome.
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-10-01, before any adapter code, after the
@@ -2052,6 +2052,32 @@ hypotheses:
         toy score reported as context. KILL => recorded model-form
         limit; pivot (our parameters through their simulator) or end
         is the user's call. Expected tier, base rate stated: 0 for 12.
+      - >
+        MEASURED 2026-10-01, same container, adapter =
+        scripts/arenas/flygi_flybench_adapter.py: BOTH BARS PASS at
+        the DERIVED w_scale -- zero free parameters, no gain sweep
+        used. (1) verify-adapter: "conforms: no defects", exit 0,
+        engine unmodified (toy contract run 0.2 s, 8,847 spikes/s).
+        (2) All five canonical core reflexes PASS; seed-robustness
+        per their own guard: --tier core --seeds 3 gives 5/5, graded
+        0.99 [0.99, 0.99]. CONTEXT, full toy suite: ours 0.90 /
+        graded 0.92 / 21 of 30 vs reference 0.93 / 0.94 / 24 of 30;
+        flybench diff over 151 shared checks: mean graded difference
+        reference-minus-ours +0.036 +/- 0.028 (95%), P(reference
+        better on a random check) 68%. The three tasks ours loses are
+        all sustained-activity-flavored, consistent with the declared
+        model differences (no 1.8 ms delay line, dt 0.5 vs 0.1 ms,
+        current-based synapse): epg_ring_attractor (EPG 0 Hz -- the
+        bump never ignites; echoes this repo's own two-fidelity-class
+        ring verdict), mb_sparseness_apl (APL sparsification ratio
+        1.03 vs reference 1.14, bar 1.0), steering_dna02 (dna01->leg
+        MN 4.07 Hz vs bar 5.0). One check gained: pn_transfer
+        rate[orn100, da1_pn] 166 Hz <= 170 where the reference
+        saturates to 272 and fails. SCOPE: a contract-level result on
+        the synthetic toy -- no fly claim; MaleCNS rows remain
+        neuprint-gated (local). Result JSONs: results/arenas/
+        flybench_toy_{reference,flygi,flygi_core_seeds3}.json
+        (gitignored; numbers recorded here).
     updated: 2026-10-01
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----

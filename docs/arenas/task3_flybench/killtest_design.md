@@ -105,7 +105,7 @@ its own registered step, reached only on PASS.
 ## Registration and single commands
 
 Hypothesis: EXPERIMENTS.yaml `H-FLYGI-FLYBENCH-ADAPTER` (same commit).
-Adapter: `scripts/arenas/flybench_adapter.py` (plumbing only).
+Adapter: `scripts/arenas/flygi_flybench_adapter.py` (plumbing only).
 
     PYTHONPATH=src:scripts/arenas flybench verify-adapter \
         flygi_flybench_adapter:FlyGIAdapter -c toy
