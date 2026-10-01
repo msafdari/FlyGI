@@ -55,6 +55,9 @@ L=LEAGUE.md, R=EXPERIMENTS.yaml.
 
 ## Fly-positive results (measured)
 
+- Eye-map substrate: 23,720 ol_intrinsic lamina/medulla interneurons carry
+  the column assignments, spanning 892 occupied retinotopic columns
+  (photoreceptors carry none: 0 of 6,098). [W Phase 0]
 - EYE MAP LOAD-BEARING (the one deployed fly component): metric is level-1
   per-completion action cost vs human baseline. Real retinotopic map 2.59x
   human baseline vs scrambled-map twin 11.59x — 4.5x efficiency separation
