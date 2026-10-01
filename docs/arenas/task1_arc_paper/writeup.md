@@ -32,15 +32,28 @@ is a submission-verified public measurement of zero grammar transfer at this
 scaffold scale, plus the attribution instrument separating what the
 engineering did from what the fly's anatomy did.
 
+## Prior work
+
+A September-2026 wave of 50+ public connectome game demos (dated survey in
+the repository) shares one shape — a frozen graph plus a hand-written
+readout — with no controls and, as of that survey, no ARC entry. Published
+lines cut against innate-wiring usefulness: a worm connectome plus trained
+mapping walks a fly body realistically; fly-hero's trained readout hits
+100% on a random network; connectome-reservoir benchmarks report
+randomized nulls matching real wiring. Our rewired-null discipline answers
+exactly these. Among ARC methods, CompressARC took
+third at ~20% accuracy — novel method at modest score — and
+biologically-flavored entries (ARC-NCA, vector-symbolic) have placed; no
+negative-results-led paper has.
+
 ## The system and the instrument
 
 FlyGI asks what a fly's innate wiring computes for free on ARC-AGI-3.
 Substrate: MaleCNS v1.0, 166,700 retained neurons; the deployed graph is the
 24,994,595-edge modulator-preserving runtime. Circuits run on a fidelity
 ladder — class 1: full-graph float32 leaky-tanh rate dynamics; class 2:
-per-type LIF/graded dynamics on extracted subcircuits (mushroom body: 627 PN
-/ 4,064 KC / 2 graded APL / 97 MBON); class 2.5: trained flyvis ensemble
-parameters with verified provenance for T4/T5.
+per-type LIF/graded dynamics on extracted subcircuits; class 2.5: trained
+flyvis ensemble parameters with verified provenance for T4/T5.
 
 Every module faces the same three stages, preregistered with bands and kill
 rules (EXPERIMENTS.yaml):
@@ -56,26 +69,20 @@ rules (EXPERIMENTS.yaml):
    time, and a matched engineered equivalent for calibration.
 
 Any claim of the form "connectome X does Y" can be run through this
-instrument unchanged; the instrument is what transfers. Our dated survey of
-the September-2026 wave of public connectome game demos (2026-09-30, in the
-repository) found none that runs all three stages together — the common
-shape is a frozen graph plus a hand-written readout — and no other
-connectome-based entry on any ARC version.
+instrument unchanged; the instrument is what transfers.
 
 ## Result 1 (measured): local ladder up, hidden set flat
 
 Each rung shipped; each scored 0.15, which is what pure abstention earns —
-held three consecutive times while the local score grew ~52-fold (the ratio
-of the quoted endpoints). The ladder ended honestly: an online-search layer
-failed its preregistered gate, 28.459550 against the 28.742260 bar, and did
-not ship — the 28.74 rung is the measured local ceiling of this non-LLM
-track. Before these three: six 0.00s from a construction crash invisible to
-exit codes — zero actions ever played, diagnosed from the empty scorecard,
-not the exit status.
+held three times while the local score grew ~52-fold. The ladder ended
+honestly: an online-search layer failed its preregistered gate, 28.459550
+against the 28.742260 bar, and did not ship — the 28.74 rung is the
+measured local ceiling. Before these three: six 0.00s from a construction
+crash, diagnosed from the empty scorecard, not exit codes.
 
 ## Result 2 (measured): the fly component is small, real, and bounded
 
-Stated plainly, because it matters most: **the fly content of all three
+Stated plainly: **the fly content of all three
 scored submissions is the compiled anatomical eye map only, deployed as
 static retinotopy metadata; neuronal dynamics were OFF
 (`neuronal_dynamics_active=false`, machine-readable in the preflight) in
@@ -85,11 +92,9 @@ Locally, against its scrambled-map twin, real retinotopy won where the
 offline premise predicted: r11l completions ran 0.27–0.68x human baseline,
 the project's first sub-baseline completions (league scores 0.3064,
 replicated 0.3058, vs 0.1875 permuted). The boundary travels with the win:
-the same ladder failed its breadth bar, 17 levels vs the champion's 21. One
-further configuration, sg-bioeye-t4t5, is the league's only HELPS: +0.0717
-[+0.005, +0.156], p=0.070 over 75 matched rows against its scrambled control
-— recorded as borderline at ship time. The eye map's hidden-set contribution was
-never isolated — no scrambled-map control ever ran on Kaggle.
+the same ladder failed its breadth bar, 17 levels vs the champion's 21. The
+eye map's hidden-set contribution was never isolated — no scrambled-map
+control ever ran on Kaggle.
 
 ## The verdict matrix: controls firing both ways
 
@@ -100,20 +105,20 @@ than the real wiring (sign test p=0.996); shuffled-credit scored 0.400 (real
 beats it, p=0.019: the depression mechanism genuinely carries credit); a
 matched one-shot perceptron scored 0.917. T4/T5 motion decoding at validated
 class-2.5 fidelity (pooled median DSI 0.3216 against a >=0.30 band) scored
-0.3875 on the held-out test (4 games x 3 seeds, drawn from 660 verified
-displacement events across 11 qualifying games) — above chance on every
+0.3875 on the held-out test (660 verified events, 11 games, 4 held-out x
+3 seeds) — above chance on every
 seed, while the rewire reached 0.4306 (p=0.97) and an engineered
 shift-matcher 1.0000. These circuits' specializations are real, and on these
 ARC tasks, at these fidelities, they point the wrong way. Two more circuits
 died earlier in the pipeline: the ellipsoid-body ring holds activity, not
-position, at both fidelities tested (class 2: all 155 alive LIF configs
-delocalized, minimum circular variance 0.853 vs a 0.6 band; a shuffled ring
+position, at both fidelities tested (155/155 alive class-2 configs
+delocalized, circular variance 0.853 vs a 0.6 band; shuffled ring
 comparable), and the LC object-position code was sign-inverted at all 21
 class-1 grid points (best Spearman -0.203 vs a +0.50 band).
 
 **Against ourselves.** A coordinate head shipped in two early submissions
 with six passing tests explored 3.29x less than clicking at random (72 vs
-236 mean unique observations in the six click-only games). A 520-parameter
+236 unique observations). A 520-parameter
 trained head was genuinely connectome-dependent (trace ablation 0.2835 ->
 exactly 0.0000) yet generalized zero: 0.0000 on all 17 held-out games
 against 0.8858 on its own training games. Connectome-dependent and useless

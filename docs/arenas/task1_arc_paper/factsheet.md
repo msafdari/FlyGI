@@ -203,6 +203,20 @@ From docs/next_arenas_survey_20260930.md (two-agent web survey, 2026-09-30):
   validate-at-fidelity or input-gate stages; the survey found NO demo
   running all three stages (validate, gate inputs, test vs controls)
   together.
+- Three published lines cut against innate-wiring usefulness (survey,
+  2026-09-30; sources in docs/next_arenas_survey_20260930.md): "digital
+  sphinx" (Tuthill lab, bioRxiv 2026.03.20.713233) — a worm connectome +
+  trained mapping produces realistic fly walking; fly-hero
+  (github.com/bsgelman/fly-hero) — dopamine-RPE learning needs real wiring
+  (99.3% vs 21.9% shuffled) but a TRAINED readout hits 100% on a random
+  network; connectome-reservoir benchmarks (arXiv:2609.30508 and others) —
+  randomized nulls often match or beat real wiring.
+- ARC Paper Track precedent (due_diligence_20260930.md, sourced from
+  2024+2025 winner lists): CompressARC ("ARC-AGI Without Pretraining",
+  Liao & Gu) took 3rd in 2025 at ~20% ARC-AGI-1 accuracy with 76K
+  parameters; biologically-flavored entries ARC-NCA and Vector Symbolic
+  Algebras placed as runners-up; NO pure negative-results paper has ever
+  placed in the money.
 - Scope rule: facts about the world outside this repository are
   survey-dated claims ("found as of 2026-09-30"), never absolutes, and we
   did not survey non-connectome entrants for transfer measurements.
