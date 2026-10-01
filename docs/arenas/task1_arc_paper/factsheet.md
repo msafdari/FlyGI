@@ -183,6 +183,24 @@ L=LEAGUE.md, R=EXPERIMENTS.yaml.
   2026-09-26; twelfth recorded 2026-09-24; "the measurements, as usual,
   all held"). [W,R]
 
+## External context (SOURCED — dated survey, in-repo)
+
+From docs/next_arenas_survey_20260930.md (two-agent web survey, 2026-09-30):
+- A September-2026 wave of ~50+ public MaleCNS/FlyWire game demos exists
+  (Doom, Mario 64, Beat Saber, trading, chess); the public critique of the
+  wave: "most demos are a frozen graph plus a hand-written readout"
+  (Mineault, neuroai.science).
+- Zero connectome-based or fly-circuit attempts were found on any ARC
+  version as of 2026-09-30.
+- At least one wave demo (fly-hero) ran real/shuffled-wiring controls on
+  its plasticity — but with a trained readout, and without
+  validate-at-fidelity or input-gate stages; the survey found NO demo
+  running all three stages (validate, gate inputs, test vs controls)
+  together.
+- Scope rule: facts about the world outside this repository are
+  survey-dated claims ("found as of 2026-09-30"), never absolutes, and we
+  did not survey non-connectome entrants for transfer measurements.
+
 ## Claim boundaries (must appear in any public artifact)
 
 - Deployed agents' fly content = the compiled anatomical eye map only
