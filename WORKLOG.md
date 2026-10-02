@@ -1,5 +1,35 @@
 # FlyGI durable worklog
 
+## Task 1: quality pass over the writeup + all visual assets -- 2026-10-02
+
+User-directed review ("make sure they're up to snuff"), every rendered
+asset eyeballed and every figure number re-traced to the factsheet.
+Found and fixed:
+
+- COVER BUG (shipping-blocking): the title wrapped to a second line and
+  COLLIDED with the subtitle -- present in the shipped cover.png since
+  2026-10-01. Fixed (one-line title at 34px, subtitle cleared),
+  re-rendered at 2x, eyeballed clean.
+- fig3 semantic fix: in the trained-head panel the held-out measurement
+  was colored GRAY, which the legend defines as "control" -- it is our
+  component's honest held-out score, not a control. Both trained-head
+  dots are now blue per the legend's own definition. Also trimmed the
+  dead band at the canvas bottom (1600 -> 1380 px tall).
+- fig2's "4,257 neurons" (LC) had no factsheet row -- the number is
+  solid (EXPERIMENTS.yaml, literal_rate_lc_readout config, WORKLOG
+  readout table) and now traces: factsheet row added.
+- writeup.md: two ragged source lines from the edit rounds rewrapped
+  (no word changed; body stays 1,448).
+
+Verified clean, no action: fig1 (ladder vs hidden -- all six numbers,
+submission IDs, legend, scope footer), fig2 (all verdict-matrix numbers
+match writeup + factsheet), card.png (legible at thumbnail scale),
+writeup end-to-end read (no seams, boundaries intact). Palette: the
+figure palette passes the dataviz validator's CVD/normal-vision/contrast
+checks; the gray slot intentionally fails the chroma floor because
+controls are DELIBERATELY recessive gray with every dot direct-labeled
+-- recorded as the accepted deviation.
+
 ## Task 1: relicensed to MIT-0 on the user's go -- 2026-10-02
 
 "go MIT-0" (the user, copyright holder). LICENSE is now the MIT No

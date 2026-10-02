@@ -75,8 +75,9 @@ Each rung shipped; each scored 0.15, which is what pure abstention earns —
 held three times while the local score grew ~52-fold. The ladder ended
 honestly: an online-search layer failed its preregistered gate, 28.459550
 against the 28.742260 bar, and did not ship — the 28.74 rung is the
-measured local ceiling of this non-LLM track. Before these three: six 0.00s from a construction
-crash, diagnosed from the empty scorecard, not exit codes.
+measured local ceiling of this non-LLM track. Before these three: six
+0.00s from a construction crash, diagnosed from the empty scorecard, not
+exit codes.
 
 ## Result 2 (measured): the fly component is small, real, and bounded
 
@@ -88,8 +89,9 @@ every scored run.**
 
 Locally, against its scrambled-map twin, real retinotopy won where the
 offline premise predicted: r11l completions ran 0.27–0.68x human baseline
-(league scores 0.3064, replicated 0.3058, vs 0.1875 permuted). The boundary travels with the win:
-the same ladder failed its breadth bar, 17 levels vs the champion's 21. The
+(league scores 0.3064, replicated 0.3058, vs 0.1875 permuted). The
+boundary travels with the win: the same ladder failed its breadth bar,
+17 levels vs the champion's 21. The
 eye map's hidden-set contribution was never isolated — no scrambled-map
 control ever ran on Kaggle.
 
