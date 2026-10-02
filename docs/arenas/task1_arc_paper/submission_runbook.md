@@ -45,16 +45,18 @@ click Join / accept rules. Do this well before 2026-10-26 (the entry
 deadline on the code tracks; treat it as the safe bound for the paper track
 too). You are already entered in arc-prize-2026-arc-agi-3.
 
-## Step 2 — license (now OPTIONAL; no action required)
+## Step 2 — license: RELICENSE TO MIT-0 BEFORE RELEASE (reopened 2026-10-02)
 
-The Kaggle Rules (§1.6, §2.5, §2.8) set the winner license to CC-BY 4.0,
-granted to the sponsor only if you win, as a condition of the prize. Our
-reading (not legal advice): the repo can stay MIT — as sole copyright
-holder you grant CC-BY 4.0 on the winning submission at that time — and
-MIT already satisfies §3.6.b for publicly shared code. Relicensing is now
-a preference, not a requirement. Only if the Overview tab or arcprize's
-2026 overview page turns out to name CC0/MIT-0 does this become a decision
-again.
+The arcprize 2026 overview page (the user checked it; verbatim in
+register AP-4) makes CC0/MIT-0 open-sourcing an ELIGIBILITY condition,
+to be done before official evaluation. This coexists with the Kaggle
+Rules' CC-BY 4.0 winner grant (that one binds only on winning). Plain
+MIT has an attribution clause and is not a "public domain" license, so
+the safe move is relicensing FlyGI-authored code to MIT-0 before the
+repo goes public (~Nov 1). You are the copyright holder; a prepared
+MIT-0 LICENSE commit (license text + README line; THIRD_PARTY_NOTICES
+unchanged — third-party code keeps its own licenses, which clear
+arcprize's Apache-2.0/GPLv3 floor) lands on your go.
 
 ## Step 3 — make the repo public
 
@@ -76,6 +78,13 @@ submission notebook). Verify it renders top to bottom, set visibility
 Public, copy its URL.
 
 ## Step 5 — create the Writeup
+
+USE docs/arenas/task1_arc_paper/kaggle_form.md: it is the field-by-field
+paste guide for the LIVE form (measured 2026-10-02: six required
+checklist items, title <=80 chars, subtitle <=140, a 560x280 card image,
+no code-submission selector, no notebook field — notebooks and the repo
+go under Project Links). The bullets below are the original plan, kept
+for history; where they differ, kaggle_form.md wins.
 
 On the Paper Track competition page: create a Kaggle Writeup.
 - Title + subtitle: first lines of docs/arenas/task1_arc_paper/writeup.md.

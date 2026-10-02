@@ -20,6 +20,7 @@ from math import hypot
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from flygi.controller.fap_archetypes.merge_deliver import (
     MergeBoardParse,
@@ -38,6 +39,9 @@ from flygi.controller.fap_library import Step
 RECOGNIZER_NPZ = (
     Path(__file__).resolve().parents[1]
     / "results/diagnostics/recognizer_frames.npz"
+)
+needs_recognizer_frames = pytest.mark.skipif(
+    not RECOGNIZER_NPZ.exists(), reason="recognizer frames absent"
 )
 
 # Measured board (offline arcade, seed derived_run_seeds(0, su15)).
@@ -532,6 +536,7 @@ def test_abstains_on_structured_near_misses() -> None:
     assert archetype.match(bad_timer) is None
 
 
+@needs_recognizer_frames
 def test_su15_recognizer_frames_all_match() -> None:
     frames = np.load(RECOGNIZER_NPZ)
     archetype = MergeDeliverArchetype()
@@ -539,6 +544,7 @@ def test_su15_recognizer_frames_all_match() -> None:
         assert archetype.match(frame.astype(np.int16)) is not None, index
 
 
+@needs_recognizer_frames
 def test_negative_audit_every_non_su15_recognizer_frame() -> None:
     frames = np.load(RECOGNIZER_NPZ)
     archetype = MergeDeliverArchetype()

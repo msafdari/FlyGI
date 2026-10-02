@@ -225,7 +225,7 @@ def test_abstains_on_structured_non_matching_boards() -> None:
     assert CrosshairParkingArchetype().match(maze) is None
 
 
-_FRAMES = Path("/Users/mustafasafdari/Documents/ChatGPT/FlyGI/results/diagnostics/recognizer_frames.npz")
+_FRAMES = Path(__file__).resolve().parents[1] / "results/diagnostics/recognizer_frames.npz"
 
 
 @pytest.mark.skipif(not _FRAMES.exists(), reason="recognizer frame bank absent")

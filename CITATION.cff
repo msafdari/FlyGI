@@ -1,20 +1,44 @@
 cff-version: 1.2.0
 message: >-
-  If you use FlyGI, cite this software and the MaleCNS dataset and paper
-  identified in the repository's data provenance documentation.
+  If you use FlyGI, please cite this software as below, and also cite the
+  MaleCNS connectome it is built on (listed under references): "Sexual
+  dimorphism in the complete connectome of the Drosophila male central
+  nervous system", Cell (2026), doi:10.1016/j.cell.2026.08.015.
 title: FlyGI
 type: software
 version: 0.1.0
 authors:
-  - name: FlyGI contributors
+  - given-names: Mustafa
+    family-names: Safdari
+    alias: msafdari
+repository-code: "https://github.com/msafdari/FlyGI"
 abstract: >-
   FlyGI is an experimental framework for testing whether the topology of the
   MaleCNS v1.0 fruit-fly connectome offers measurable advantages on interactive
   ARC-AGI-3 tasks relative to matched graph controls.
-license: MIT
+license: MIT-0
 keywords:
   - ARC-AGI-3
   - connectome
   - Drosophila
   - reservoir computing
   - reproducible research
+references:
+  - type: article
+    title: >-
+      Sexual dimorphism in the complete connectome of the Drosophila male
+      central nervous system
+    authors:
+      - name: FlyEM at HHMI Janelia
+      - name: University of Cambridge Department of Zoology
+      - name: MRC Laboratory of Molecular Biology
+      - name: Google Research
+    journal: Cell
+    year: 2026
+    doi: 10.1016/j.cell.2026.08.015
+    notes: >-
+      MaleCNS v1.0 dataset, released 2026-06-08 under CC BY 4.0. The author
+      list here names the collaborating institutions as given in this
+      repository's README; use the paper's own author list (via the DOI) when
+      citing it. FlyGI runtime assets are modified derivatives, neither an
+      official release nor endorsed by the data creators.

@@ -1,14 +1,11 @@
 # The Grammar Scaffold Transferred Zero. The Fly's Eye Map Survived Its Control.
 
-**Subtitle:** An attribution audit of the complete MaleCNS fly connectome
-(166,700 neurons) on ARC-AGI-3: the engineered scaffold's ~52-fold local gain
-transferred zero to the hidden set, the fly's static eye map survived its
-scrambled control, and both circuits that reached a full ARC test lost to
-their own degree-preserving rewires.
+**Subtitle:** Auditing the 166,700-neuron MaleCNS fly connectome on ARC-AGI-3:
+both circuits tested in full scored below their degree-preserving rewires.
 
-*(Kaggle Writeup body below — target <=1,450 words. Links to attach: public
-notebook; Project Link https://github.com/msafdari/FlyGI; linked code
-submission 56683298.)*
+*(Kaggle Writeup body below — target <=1,450 words. Field-by-field paste
+guide for the Kaggle form: kaggle_form.md in this directory. Title 78/80
+chars, subtitle 139/140.)*
 
 ---
 
@@ -78,8 +75,9 @@ Each rung shipped; each scored 0.15, which is what pure abstention earns —
 held three times while the local score grew ~52-fold. The ladder ended
 honestly: an online-search layer failed its preregistered gate, 28.459550
 against the 28.742260 bar, and did not ship — the 28.74 rung is the
-measured local ceiling of this non-LLM track. Before these three: six 0.00s from a construction
-crash, diagnosed from the empty scorecard, not exit codes.
+measured local ceiling of this non-LLM track. Before these three: six
+0.00s from a construction crash, diagnosed from the empty scorecard, not
+exit codes.
 
 ## Result 2 (measured): the fly component is small, real, and bounded
 
@@ -91,8 +89,9 @@ every scored run.**
 
 Locally, against its scrambled-map twin, real retinotopy won where the
 offline premise predicted: r11l completions ran 0.27–0.68x human baseline
-(league scores 0.3064, replicated 0.3058, vs 0.1875 permuted). The boundary travels with the win:
-the same ladder failed its breadth bar, 17 levels vs the champion's 21. The
+(league scores 0.3064, replicated 0.3058, vs 0.1875 permuted). The
+boundary travels with the win: the same ladder failed its breadth bar,
+17 levels vs the champion's 21. The
 eye map's hidden-set contribution was never isolated — no scrambled-map
 control ever ran on Kaggle.
 

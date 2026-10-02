@@ -1,5 +1,179 @@
 # FlyGI durable worklog
 
+## Task 1: quality pass over the writeup + all visual assets -- 2026-10-02
+
+User-directed review ("make sure they're up to snuff"), every rendered
+asset eyeballed and every figure number re-traced to the factsheet.
+Found and fixed:
+
+- COVER BUG (shipping-blocking): the title wrapped to a second line and
+  COLLIDED with the subtitle -- present in the shipped cover.png since
+  2026-10-01. Fixed (one-line title at 34px, subtitle cleared),
+  re-rendered at 2x, eyeballed clean.
+- fig3 semantic fix: in the trained-head panel the held-out measurement
+  was colored GRAY, which the legend defines as "control" -- it is our
+  component's honest held-out score, not a control. Both trained-head
+  dots are now blue per the legend's own definition. Also trimmed the
+  dead band at the canvas bottom (1600 -> 1380 px tall).
+- fig2's "4,257 neurons" (LC) had no factsheet row -- the number is
+  solid (EXPERIMENTS.yaml, literal_rate_lc_readout config, WORKLOG
+  readout table) and now traces: factsheet row added.
+- writeup.md: two ragged source lines from the edit rounds rewrapped
+  (no word changed; body stays 1,448).
+
+Verified clean, no action: fig1 (ladder vs hidden -- all six numbers,
+submission IDs, legend, scope footer), fig2 (all verdict-matrix numbers
+match writeup + factsheet), card.png (legible at thumbnail scale),
+writeup end-to-end read (no seams, boundaries intact). Palette: the
+figure palette passes the dataviz validator's CVD/normal-vision/contrast
+checks; the gray slot intentionally fails the chroma floor because
+controls are DELIBERATELY recessive gray with every dot direct-labeled
+-- recorded as the accepted deviation.
+
+## Task 1: relicensed to MIT-0 on the user's go -- 2026-10-02
+
+"go MIT-0" (the user, copyright holder). LICENSE is now the MIT No
+Attribution text with the same copyright line; README's license sentence
+and CITATION.cff's license field (SPDX MIT-0) updated;
+THIRD_PARTY_NOTICES deliberately untouched (third-party code keeps its
+own MIT/MIT-0 licenses, clearing arcprize's public-sharing floor for
+3rd-party code). AP-4 closed. The last ARC-side prerequisite that was
+Claude-or-user decision-shaped is done; what remains on Task 1 is pure
+execution (release ~Nov 1, submit by Nov 8 per kaggle_form.md).
+
+## Task 1: arcprize overview checked -- the CC0/MIT-0 requirement is REAL; AP-4 re-reversed -- 2026-10-02
+
+The user pasted the last unchecked source, arcprize.org's general 2026
+overview. It carries the clause the Kaggle Rules do not, verbatim: "all
+code and methods authored by the submitter must be made open source
+under a permissive public domain license (eg. CC0 or MIT-0)", as an
+ELIGIBILITY condition, "before receiving official private evaluation
+scores". Reconciliation of all three sources, now each read in full:
+arcprize's CC0/MIT-0 = eligibility open-sourcing to the world; Kaggle's
+CC-BY 4.0 = the winner's separate grant to the sponsor; the Kaggle tabs
+simply never carry the first clause -- which is exactly how yesterday's
+Rules-only reading went wrong. AP-4: back to CONFIRMED as originally
+sourced; the one-day invalidation is itself invalidated and both moves
+are recorded in the register row (the register's never-delete rule is
+why this whiplash stays visible). Plain MIT has an attribution clause
+and is not "public domain"; the safe reading is it does NOT qualify.
+
+CONSEQUENCE, reopened for the user (copyright holder): relicense
+FlyGI-authored code to MIT-0 (recommended -- minimal diff) or CC0
+BEFORE the repo goes public (~Nov 1). Prepared commit on their go.
+Third-party components are unaffected: arcprize's floor for 3rd-party
+code is "allows public sharing (eg. Apache-2.0, GPLv3)" and every
+notice-listed piece is MIT/MIT-0. Also re-confirmed on the same page:
+papers due Nov 8; no-internet evaluation (our submissions complied).
+Runbook Step 2 and the release checklist flipped back accordingly.
+
+## Task 1: Kaggle OVERVIEW tab measured; eligibility layer corrected -- 2026-10-02
+
+The user pasted the Overview tab (submission requirements + evaluation).
+Register deltas, all banked:
+
+- AP-5 CONFIRMED IN FULL, and my form-only reading corrected: the form's
+  checklist and the ELIGIBILITY requirements differ. The Overview makes
+  the Media Gallery (with a required cover image) and the public code
+  notebook (via Project Links) conditions of eligibility even though the
+  form checklist does not enforce them. The 1,500-word limit + penalty
+  wording is now verbatim-measured (we are at 1,448).
+- AP-4 residual nearly closed: the Overview also contains NO CC0/MIT-0
+  wording. Only arcprize.org's general 2026 overview page remains
+  unchecked; MIT stays.
+- AP-9 fully resolved: "you will be asked to provide your submission ID"
+  (Accuracy criterion note) -- have 56683298 ready.
+- AP-15 updated: Kaggle is internally consistent at 2026-11-09 23:59 UTC
+  (form + Overview agree); arcprize still says Nov 8; plan stays Nov 8.
+- NEW AP-16 (auto-publication): a private Kaggle resource attached to
+  the writeup "will automatically be made public after the deadline."
+  Linking the private submission notebook = consent to publication, so
+  prefer making it public deliberately on release day, and put the
+  MaleCNS CC BY 4.0 citation on the private dataset's description
+  BEFORE submitting (AP-6) in case publication cascades.
+
+kaggle_form.md corrected to carry both layers (gallery/notebook now
+marked required; submission-ID and dataset-citation items added to the
+pre-Submit checklist). No artifact changed: we already satisfied every
+requirement; this pass was about knowing it rather than assuming it.
+
+## Task 1: the LIVE Kaggle writeup form measured; artifacts brought to spec -- 2026-10-02
+
+The user opened the real New Writeup form and pasted it verbatim. Three
+assumptions moved, two artifacts were produced, one was fixed:
+
+- AP-5 part-INVALIDATED: the six REQUIRED checklist items are Title
+  (<=80), Subtitle (<=140), Card/Thumbnail Image (560x280), Track
+  (auto), Project Description, Project Links. The Media gallery and
+  file uploads are OPTIONAL, there is NO notebook-attachment field
+  (notebooks go under Project Links), and no word limit is displayed
+  (keeping <=1,500 anyway; the penalty wording from the extraction is
+  unverified).
+- AP-9 CONFIRMED with mechanics: no code-submission selector exists;
+  linkage = same team (Rules 2.1.b) + the submission IDs named in the
+  body + a Project Link to the submission notebook.
+- NEW AP-15: the form shows Nov 9 2026 3:59 PM PST (= 11-09 23:59 UTC)
+  vs arcprize's Nov 8 -- a confirmed two-source discrepancy; the plan
+  stays 11-08.
+- FIXED: the writeup subtitle was 322 chars against the form's 140 cap.
+  Rewritten to 139, scope words kept ("both circuits tested in full
+  scored below their degree-preserving rewires"); title already fits
+  (78/80). Body untouched (1,448 words).
+- NEW media/card.html + card.png (1120x560 at 2x) + card_560x280.png:
+  the required 2:1 card image, cover-palette hex motif, rendered through
+  the headless Chromium and eyeballed.
+- NEW kaggle_form.md: field-by-field paste guide (slug, card, gallery
+  order, description paste boundary, the three Project Links incl. the
+  currently-private submission notebook megusalexandrus/flygi-arc-agi-3
+  with a recommended-not-required make-public note, DOI opt-in, and the
+  pre-Submit checklist). submission_runbook.md Step 5 now defers to it.
+
+## Public-release hygiene: personal paths + email scrubbed, CITATION.cff set -- 2026-10-02
+
+User direction: apply best practice (remove local /Users/... paths, set
+the citation). Measured sweep: 76 lines in 56 tracked files embedded
+/Users/<username>/...; one tracked doc carried the user's personal
+email. Done, category by category, and verified:
+
+- 47 archived probe/solver scripts in docs/fap_extension_20260928/ now
+  resolve ROOT = Path(__file__).resolve().parents[3] (portable; logic
+  unchanged). Verified: all compile; root resolves to the repo root for
+  every one. Nothing imports them (docstring references only).
+- JSON records (integration_reports.json, completion_reports.json) and
+  results/manifests/{dynamics_regime_20260921,positive_control_regime_
+  20260922}.json now carry repo-relative paths; hashes and values
+  unchanged; nothing in the code reads these files (grepped).
+- LATENT BUG FIXED: tests/test_fap_arch_crosshair_parking.py hardcoded
+  its fixture's absolute path, so off the original machine its
+  frame-bank negative audit silently SKIPPED. Now repo-relative like its
+  siblings. Measured: with a synthetic bank at the repo path the test
+  RUNS and passes; without one it skips cleanly.
+- CLAUDE_CODE_REFACTOR_HANDOFF.md paths made generic; the personal email
+  in docs/arenas/due_diligence_20260930.md replaced (the release
+  checklist's "no emails" sweep predated that file).
+- CITATION.cff: author Mustafa Safdari (alias msafdari -- the name every
+  commit is already authored under; no email), repository link, MaleCNS
+  paper as a reference. cffconvert: valid against schema 1.2.0.
+- Not done, deliberately: history rewrite (AGENTS.md forbids force-push
+  of shared history without an explicit ask; old paths only expose the
+  username, which equals the public author name already on every
+  commit).
+
+ENVIRONMENT NOTE: the cloud container's default python3 is 3.11, but
+the repo requires 3.12 (PEP 695 syntax in src/flygi/controller/scene.py),
+so repo tests must run under 3.12 here (uv venv in the session
+scratchpad). PRE-EXISTING (identical on the untouched tree, verified by
+stash): 4 fap_arch tests (merge_deliver x2, pip_door x2) hard-fail with
+FileNotFoundError when results/diagnostics/recognizer_frames.npz is
+absent -- they lack the skip guard their siblings use. Under 3.12 the
+fap_arch + dsec families: 199 passed, 8 skipped, those 4 failed.
+FIXED same day at the user's direction: those 4 tests now carry the
+siblings' skipif guard (module-level `needs_recognizer_frames`). Measured
+under 3.12: fresh-clone state 199 passed, 12 skipped, 0 failed; with a
+synthetic bank present all 4 RUN (the su15 positive test correctly fails
+on blank frames -- the guard hides nothing when the data exists). On the
+user's machine, where the real bank lives, behavior is unchanged.
+
 ## Task 1: Kaggle Rules read; license requirement reversed -- 2026-10-02
 
 The user JOINED the Paper Track on Kaggle (entry deadline 2026-10-26
