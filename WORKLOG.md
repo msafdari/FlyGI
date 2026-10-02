@@ -39,6 +39,12 @@ stash): 4 fap_arch tests (merge_deliver x2, pip_door x2) hard-fail with
 FileNotFoundError when results/diagnostics/recognizer_frames.npz is
 absent -- they lack the skip guard their siblings use. Under 3.12 the
 fap_arch + dsec families: 199 passed, 8 skipped, those 4 failed.
+FIXED same day at the user's direction: those 4 tests now carry the
+siblings' skipif guard (module-level `needs_recognizer_frames`). Measured
+under 3.12: fresh-clone state 199 passed, 12 skipped, 0 failed; with a
+synthetic bank present all 4 RUN (the su15 positive test correctly fails
+on blank frames -- the guard hides nothing when the data exists). On the
+user's machine, where the real bank lives, behavior is unchanged.
 
 ## Task 1: Kaggle Rules read; license requirement reversed -- 2026-10-02
 
