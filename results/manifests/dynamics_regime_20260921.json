@@ -130,9 +130,9 @@
     "release": "male-cns:v1.0",
     "runtime_dir": "data/processed/male-cns-v1.0/literal-rate",
     "verified_output_hashes": {
-      "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate/graph.npz": "99c9441be6e6ac89eb20c3c17162308240f2e4326003d97a4e5034e998be8acc",
-      "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate/groups.npz": "09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d",
-      "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/data/processed/male-cns-v1.0/literal-rate/node_metadata.npz": "2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c"
+      "data/processed/male-cns-v1.0/literal-rate/graph.npz": "99c9441be6e6ac89eb20c3c17162308240f2e4326003d97a4e5034e998be8acc",
+      "data/processed/male-cns-v1.0/literal-rate/groups.npz": "09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d",
+      "data/processed/male-cns-v1.0/literal-rate/node_metadata.npz": "2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c"
     }
   },
   "interpretation": "Diagnostic measurement, not a gate and not an ARC or biological-advantage result. Two findings bear on the declared configuration. First, sensory drive needs three anatomical hops and four internal steps to move all 1,314 descending neurons, so the declared K=2 leaves the readout blind on the first decision and lagged thereafter. Second, cross-action memory has a half-life of two actions in both conditions, which is set by the leak term rather than by recurrence through the graph. The real and weak-null graphs differ sharply in pathway depth, readout magnitude, and readout dimensionality, but barely in cross-action memory. The weak null preserves in-degree and per-row weight multisets only; it is not the preregistered directed degree-preserving null and no real-versus-null claim may rest on it.",

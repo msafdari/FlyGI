@@ -23,12 +23,21 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 
 ## Personal information
 
-- [x] Local macOS paths embed the username (e.g.
-  /Users/mustafasafdari/Documents/... in docs/fap_extension_20260928/*
-  probe scripts) and CLAUDE_CODE_REFACTOR_HANDOFF.md names msafdari.
-  DECISION NEEDED (default: leave as-is — the repo will be publicly
-  attributed to you anyway; say the word if you want the paths scrubbed).
-- [x] No email addresses or phone numbers found in tracked files.
+- [x] Local macOS paths scrubbed 2026-10-02 (user's call: best practice).
+  The 47 archived probe/solver scripts in docs/fap_extension_20260928/
+  now resolve the repo root from __file__ (portable; logic unchanged);
+  JSON records and results/manifests/* carry repo-relative paths (hashes
+  unchanged; no code reads these files); one test's hardcoded fixture
+  path — which silently SKIPPED its audit off the original machine — now
+  resolves repo-relative like its siblings; the handoff doc's paths are
+  generic. History still holds the old paths (no rewrite: the username
+  equals the public commit author name already on every commit).
+- [x] No email addresses or phone numbers in the tracked tree (re-swept
+  2026-10-02: one personal address found in due_diligence_20260930.md,
+  committed after the first sweep, now removed). Note: git commit
+  metadata carries the author email by design; GitHub shows it on
+  commits. To hide it on FUTURE commits, use GitHub's noreply address
+  (Settings -> Emails -> Keep my email addresses private).
 
 ## Licensing
 
@@ -65,9 +74,13 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   A public-audience rewrite is prepared as part of the Task-1 package
   (leads with the question, the verdict matrix, the paper link, how to
   reproduce, claim boundaries). Apply before visibility change.
-- [ ] CITATION.cff: update `authors` (currently "FlyGI contributors") if
-  you want your name on citations, and add the Zenodo/DOI step if you
-  want one (optional).
+- [x] CITATION.cff (2026-10-02): author = Mustafa Safdari (alias
+  msafdari; the name every commit is already authored under; no email
+  added), repository-code link, and the MaleCNS paper as a reference
+  (DOI from README). Validated: cffconvert "valid according to schema
+  version 1.2.0". GitHub renders it as a "Cite this repository" button.
+  Zenodo DOI stays optional: after the repo is public, enable the repo at
+  zenodo.org -> GitHub, then cut a GitHub release; Zenodo mints a DOI.
 - [ ] Optional: enable GitHub Issues template pointing hypothesis
   discussions at EXPERIMENTS.yaml semantics (nice-to-have, not blocking).
 - [ ] Record reconciliation found by the 2026-09-30 fact-check pass:

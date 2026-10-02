@@ -1,5 +1,45 @@
 # FlyGI durable worklog
 
+## Public-release hygiene: personal paths + email scrubbed, CITATION.cff set -- 2026-10-02
+
+User direction: apply best practice (remove local /Users/... paths, set
+the citation). Measured sweep: 76 lines in 56 tracked files embedded
+/Users/mustafasafdari/...; one tracked doc carried the user's personal
+email. Done, category by category, and verified:
+
+- 47 archived probe/solver scripts in docs/fap_extension_20260928/ now
+  resolve ROOT = Path(__file__).resolve().parents[3] (portable; logic
+  unchanged). Verified: all compile; root resolves to the repo root for
+  every one. Nothing imports them (docstring references only).
+- JSON records (integration_reports.json, completion_reports.json) and
+  results/manifests/{dynamics_regime_20260921,positive_control_regime_
+  20260922}.json now carry repo-relative paths; hashes and values
+  unchanged; nothing in the code reads these files (grepped).
+- LATENT BUG FIXED: tests/test_fap_arch_crosshair_parking.py hardcoded
+  its fixture's absolute path, so off the original machine its
+  frame-bank negative audit silently SKIPPED. Now repo-relative like its
+  siblings. Measured: with a synthetic bank at the repo path the test
+  RUNS and passes; without one it skips cleanly.
+- CLAUDE_CODE_REFACTOR_HANDOFF.md paths made generic; the personal email
+  in docs/arenas/due_diligence_20260930.md replaced (the release
+  checklist's "no emails" sweep predated that file).
+- CITATION.cff: author Mustafa Safdari (alias msafdari -- the name every
+  commit is already authored under; no email), repository link, MaleCNS
+  paper as a reference. cffconvert: valid against schema 1.2.0.
+- Not done, deliberately: history rewrite (AGENTS.md forbids force-push
+  of shared history without an explicit ask; old paths only expose the
+  username, which equals the public author name already on every
+  commit).
+
+ENVIRONMENT NOTE: the cloud container's default python3 is 3.11, but
+the repo requires 3.12 (PEP 695 syntax in src/flygi/controller/scene.py),
+so repo tests must run under 3.12 here (uv venv in the session
+scratchpad). PRE-EXISTING (identical on the untouched tree, verified by
+stash): 4 fap_arch tests (merge_deliver x2, pip_door x2) hard-fail with
+FileNotFoundError when results/diagnostics/recognizer_frames.npz is
+absent -- they lack the skip guard their siblings use. Under 3.12 the
+fap_arch + dsec families: 199 passed, 8 skipped, those 4 failed.
+
 ## Task 1: Kaggle Rules read; license requirement reversed -- 2026-10-02
 
 The user JOINED the Paper Track on Kaggle (entry deadline 2026-10-26

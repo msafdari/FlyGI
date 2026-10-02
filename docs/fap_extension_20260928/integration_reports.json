@@ -1,7 +1,7 @@
 [
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/glyph_toggle.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_glyph_toggle.py",
+  "module_path": "src/flygi/controller/fap_archetypes/glyph_toggle.py",
+  "test_path": "tests/test_fap_arch_glyph_toggle.py",
   "class_name": "GlyphToggleArchetype",
   "levels_verified_with_executor": 6,
   "dossier_target": 6,
@@ -11,8 +11,8 @@
   "blockers": "None. One registration-time requirement (not a blocker for this deliverable): when seating into FapExecutor's default archetype list (which happens in fap_library, outside this task's file scope), GlyphToggleArchetype must precede GlyphMiniatureArchetype, or GlyphMiniature mis-claims level-5-style masked boards and the run stalls at 4/6 (measured)."
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/flatten_builder.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_flatten_builder.py",
+  "module_path": "src/flygi/controller/fap_archetypes/flatten_builder.py",
+  "test_path": "tests/test_fap_arch_flatten_builder.py",
   "class_name": "FlattenBuilderArchetype",
   "levels_verified_with_executor": 8,
   "dossier_target": 8,
@@ -33,8 +33,8 @@
   "blockers": ""
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/pip_door.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_pip_door.py",
+  "module_path": "src/flygi/controller/fap_archetypes/pip_door.py",
+  "test_path": "tests/test_fap_arch_pip_door.py",
   "class_name": "PipDoorArchetype",
   "levels_verified_with_executor": 4,
   "dossier_target": 4,
@@ -44,8 +44,8 @@
   "blockers": ""
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/slot_dock.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_slot_dock.py",
+  "module_path": "src/flygi/controller/fap_archetypes/slot_dock.py",
+  "test_path": "tests/test_fap_arch_slot_dock.py",
   "class_name": "SlotDockArchetype",
   "levels_verified_with_executor": 7,
   "dossier_target": 7,
@@ -55,8 +55,8 @@
   "blockers": "None. (Operational note: the fan-out agents share one scratchpad directory; a sibling overwrote the generically named executor_run.py after my first run, so the final verification was re-run from the uniquely named slot_dock_executor_run.py with identical results.)"
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/crosshair_parking.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_crosshair_parking.py",
+  "module_path": "src/flygi/controller/fap_archetypes/crosshair_parking.py",
+  "test_path": "tests/test_fap_arch_crosshair_parking.py",
   "class_name": "CrosshairParkingArchetype",
   "levels_verified_with_executor": 6,
   "dossier_target": 6,
@@ -66,8 +66,8 @@
   "blockers": "None. The two new files are untracked and uncommitted per the task's no-git rule; WORKLOG.md was intentionally not updated because the task forbids touching any existing file -- the orchestrator should fold these numbers into the worklog at integration time."
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/pattern_key.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_pattern_key.py",
+  "module_path": "src/flygi/controller/fap_archetypes/pattern_key.py",
+  "test_path": "tests/test_fap_arch_pattern_key.py",
   "class_name": "PatternKeyArchetype",
   "levels_verified_with_executor": 5,
   "dossier_target": 5,
@@ -77,8 +77,8 @@
   "blockers": "None for the 5-level target. Level 6 remains unsolvable by design (dossier: box B glyph provably outside the 24-pattern reachable orbit), so the archetype abstains there after delivering what it can; if a hidden level carries a pattern outside the measured f-domain, the planner avoids shifters and may abstain rather than guess."
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/merge_deliver.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_merge_deliver.py",
+  "module_path": "src/flygi/controller/fap_archetypes/merge_deliver.py",
+  "test_path": "tests/test_fap_arch_merge_deliver.py",
   "class_name": "MergeDeliverArchetype",
   "levels_verified_with_executor": 7,
   "dossier_target": 7,
@@ -88,8 +88,8 @@
   "blockers": "None for the 7-level target. Level 8 remains unsolved (as in the dossier): the greedy planner cannot yet schedule the two C5 sprints against three predators, and its deterministic retry loop burns lives without progress there."
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/balloon_climb.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_balloon_climb.py",
+  "module_path": "src/flygi/controller/fap_archetypes/balloon_climb.py",
+  "test_path": "tests/test_fap_arch_balloon_climb.py",
   "class_name": "BalloonClimbArchetype",
   "levels_verified_with_executor": 6,
   "dossier_target": 4,
@@ -99,8 +99,8 @@
   "blockers": "None for the deliverable. Not done: level 7+ (see notes for the measured reason and next step); WORKLOG.md/commits intentionally untouched per the task contract (exactly two files created, no git run)."
  },
  {
-  "module_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/src/flygi/controller/fap_archetypes/card_climb.py",
-  "test_path": "/Users/mustafasafdari/Documents/ChatGPT/FlyGI/tests/test_fap_arch_card_climb.py",
+  "module_path": "src/flygi/controller/fap_archetypes/card_climb.py",
+  "test_path": "tests/test_fap_arch_card_climb.py",
   "class_name": "CardClimbArchetype",
   "levels_verified_with_executor": 3,
   "dossier_target": 3,
