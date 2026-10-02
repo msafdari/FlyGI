@@ -127,3 +127,22 @@ def test_the_real_registry_is_coherent() -> None:
         for hypothesis in spec.get("tests") or []:
             assert hypothesis in hypotheses, f"{condition}: unknown hypothesis {hypothesis}"
         assert spec.get("regime") in registry["regimes"], f"{condition}: unknown regime"
+
+
+def test_gzipped_results_are_read_like_plain_ones(arena: Path) -> None:
+    """Result files over 10MB are gzipped in place to save disk; the league
+    must still see them, or a regeneration silently drops those arms."""
+
+    import gzip
+
+    results = arena / "results"
+    rows = [_row(0, "g00", 0.5, 1, "zipped")]
+    with gzip.open(results / "zipped.json.gz", "wt", encoding="utf-8") as handle:
+        handle.write(json.dumps({"condition": "zipped", "rows": rows}))
+    with gzip.open(results / "zipped-cp.rows.jsonl.gz", "wt", encoding="utf-8") as handle:
+        handle.write(json.dumps(_row(0, "g00", 0.5, 1, "zipped-cp")) + "\n")
+    _write_registry(arena, {"zipped-cp": {"regime": "r", "baseline": None}})
+    league = league_module.build_league(resamples=100)
+    assert "zipped" in league["unregistered_conditions"]
+    by = {e["condition"]: e for e in league["entries"]}
+    assert by["zipped-cp"]["rows"] == 1  # read from the gzipped checkpoint
