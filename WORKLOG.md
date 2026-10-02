@@ -1,5 +1,36 @@
 # FlyGI durable worklog
 
+## Task 1: the LIVE Kaggle writeup form measured; artifacts brought to spec -- 2026-10-02
+
+The user opened the real New Writeup form and pasted it verbatim. Three
+assumptions moved, two artifacts were produced, one was fixed:
+
+- AP-5 part-INVALIDATED: the six REQUIRED checklist items are Title
+  (<=80), Subtitle (<=140), Card/Thumbnail Image (560x280), Track
+  (auto), Project Description, Project Links. The Media gallery and
+  file uploads are OPTIONAL, there is NO notebook-attachment field
+  (notebooks go under Project Links), and no word limit is displayed
+  (keeping <=1,500 anyway; the penalty wording from the extraction is
+  unverified).
+- AP-9 CONFIRMED with mechanics: no code-submission selector exists;
+  linkage = same team (Rules 2.1.b) + the submission IDs named in the
+  body + a Project Link to the submission notebook.
+- NEW AP-15: the form shows Nov 9 2026 3:59 PM PST (= 11-09 23:59 UTC)
+  vs arcprize's Nov 8 -- a confirmed two-source discrepancy; the plan
+  stays 11-08.
+- FIXED: the writeup subtitle was 322 chars against the form's 140 cap.
+  Rewritten to 139, scope words kept ("both circuits tested in full
+  scored below their degree-preserving rewires"); title already fits
+  (78/80). Body untouched (1,448 words).
+- NEW media/card.html + card.png (1120x560 at 2x) + card_560x280.png:
+  the required 2:1 card image, cover-palette hex motif, rendered through
+  the headless Chromium and eyeballed.
+- NEW kaggle_form.md: field-by-field paste guide (slug, card, gallery
+  order, description paste boundary, the three Project Links incl. the
+  currently-private submission notebook megusalexandrus/flygi-arc-agi-3
+  with a recommended-not-required make-public note, DOI opt-in, and the
+  pre-Submit checklist). submission_runbook.md Step 5 now defers to it.
+
 ## Public-release hygiene: personal paths + email scrubbed, CITATION.cff set -- 2026-10-02
 
 User direction: apply best practice (remove local /Users/... paths, set

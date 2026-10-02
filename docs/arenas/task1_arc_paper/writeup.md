@@ -1,14 +1,11 @@
 # The Grammar Scaffold Transferred Zero. The Fly's Eye Map Survived Its Control.
 
-**Subtitle:** An attribution audit of the complete MaleCNS fly connectome
-(166,700 neurons) on ARC-AGI-3: the engineered scaffold's ~52-fold local gain
-transferred zero to the hidden set, the fly's static eye map survived its
-scrambled control, and both circuits that reached a full ARC test lost to
-their own degree-preserving rewires.
+**Subtitle:** Auditing the 166,700-neuron MaleCNS fly connectome on ARC-AGI-3:
+both circuits tested in full scored below their degree-preserving rewires.
 
-*(Kaggle Writeup body below — target <=1,450 words. Links to attach: public
-notebook; Project Link https://github.com/msafdari/FlyGI; linked code
-submission 56683298.)*
+*(Kaggle Writeup body below — target <=1,450 words. Field-by-field paste
+guide for the Kaggle form: kaggle_form.md in this directory. Title 78/80
+chars, subtitle 139/140.)*
 
 ---
 

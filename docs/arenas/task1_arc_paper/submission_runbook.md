@@ -77,6 +77,13 @@ Public, copy its URL.
 
 ## Step 5 — create the Writeup
 
+USE docs/arenas/task1_arc_paper/kaggle_form.md: it is the field-by-field
+paste guide for the LIVE form (measured 2026-10-02: six required
+checklist items, title <=80 chars, subtitle <=140, a 560x280 card image,
+no code-submission selector, no notebook field — notebooks and the repo
+go under Project Links). The bullets below are the original plan, kept
+for history; where they differ, kaggle_form.md wins.
+
 On the Paper Track competition page: create a Kaggle Writeup.
 - Title + subtitle: first lines of docs/arenas/task1_arc_paper/writeup.md.
 - Body: paste the body of writeup.md — everything after the `---`
