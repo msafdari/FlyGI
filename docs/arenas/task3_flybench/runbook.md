@@ -41,13 +41,24 @@ PYTHONPATH=src:scripts/arenas flybench run -c toy \
 ```bash
 flybench fetch-neuprint data-malecns      # male-cns:v1.0, >=5 synapses
 flybench build data-malecns --name malecns
-flybench fingerprint -c malecns           # record the printed hash
+flybench fingerprint malecns              # positional arg, NOT -c; record the hash
 ```
 
 Keep `data-malecns/` outside the FlyGI repo tree (no large artifacts
 in Git). Note for the record: their build is 176,422 neurons / 6.29 M
 edges at >=5 synapses — a DIFFERENT compilation of the same source as
 our 166,700 / 24.99 M (AF-1); never compare across them silently.
+
+MEASURED 2026-10-02 (first local run): a fresh anonymous neuPrint fetch
+reproduces the pinned COUNTS exactly (176,422 neurons / 6,287,789 edges)
+but NOT the pinned fingerprint (ours b9683a39..., pin c25b35ab..., pinned
+2026-09-16). The hash also covers the annotation table and signed
+weights, and neuPrint re-exports drift without a version bump (their own
+manifest.py note). Consequence: `flybench run -c malecns` REFUSES the build
+unless `--allow-unpinned` is passed, and results are then marked
+`unpinned: true`. Both rows below therefore carry `--allow-unpinned`; the
+reference row doubles as the drift check against their recorded
+malecns-gain-0.65.json (core 0.5667 / hard 0.5798, 3 seeds, rewired).
 
 ## 2. The characterization rows (both at their Minecraft-demo config)
 
@@ -57,13 +68,13 @@ then our adapter, same config, three seeds, rewired control:
 ```bash
 cd <FlyGI repo root>
 flybench run -c malecns --config ~/flybench/configs/malecns_minecraft.yaml \
-    --seeds 3 --controls rewired \
+    --seeds 3 --controls rewired --allow-unpinned \
     --label "reference LIF, gain 0.65" -o results/arenas/malecns_reference.json
 
 PYTHONPATH=src:scripts/arenas flybench run -c malecns \
     --config ~/flybench/configs/malecns_minecraft.yaml \
     --simulator flygi_flybench_adapter:FlyGIAdapter \
-    --seeds 3 --controls rewired \
+    --seeds 3 --controls rewired --allow-unpinned \
     --label "FlyGI class-2 engine, Shiu constants" \
     -o results/arenas/malecns_flygi.json
 
