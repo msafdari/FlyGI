@@ -41,10 +41,12 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 
 ## Licensing
 
-- [x] LICENSE: MIT stays (2026-10-02). The Kaggle Rules set the winner
-  license to CC-BY 4.0, granted only on winning (register AP-4,
-  INVALIDATED as originally sourced); MIT satisfies Rules §3.6.b for
-  public sharing. Relicensing is optional; say so if you want it anyway.
+- [ ] LICENSE: relicense to MIT-0 before the repo goes public
+  (REOPENED 2026-10-02: arcprize's overview makes CC0/MIT-0 an
+  eligibility condition — register AP-4, confirmed after a one-day
+  detour through the Kaggle-Rules-only reading). Prepared commit lands
+  on the user's go. The Kaggle CC-BY 4.0 winner grant is separate and
+  binds only on winning.
 - [ ] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
   register AP-12): repo link in the Paper Track and ARC-AGI-3 discussion
   forums.

@@ -1,5 +1,31 @@
 # FlyGI durable worklog
 
+## Task 1: arcprize overview checked -- the CC0/MIT-0 requirement is REAL; AP-4 re-reversed -- 2026-10-02
+
+The user pasted the last unchecked source, arcprize.org's general 2026
+overview. It carries the clause the Kaggle Rules do not, verbatim: "all
+code and methods authored by the submitter must be made open source
+under a permissive public domain license (eg. CC0 or MIT-0)", as an
+ELIGIBILITY condition, "before receiving official private evaluation
+scores". Reconciliation of all three sources, now each read in full:
+arcprize's CC0/MIT-0 = eligibility open-sourcing to the world; Kaggle's
+CC-BY 4.0 = the winner's separate grant to the sponsor; the Kaggle tabs
+simply never carry the first clause -- which is exactly how yesterday's
+Rules-only reading went wrong. AP-4: back to CONFIRMED as originally
+sourced; the one-day invalidation is itself invalidated and both moves
+are recorded in the register row (the register's never-delete rule is
+why this whiplash stays visible). Plain MIT has an attribution clause
+and is not "public domain"; the safe reading is it does NOT qualify.
+
+CONSEQUENCE, reopened for the user (copyright holder): relicense
+FlyGI-authored code to MIT-0 (recommended -- minimal diff) or CC0
+BEFORE the repo goes public (~Nov 1). Prepared commit on their go.
+Third-party components are unaffected: arcprize's floor for 3rd-party
+code is "allows public sharing (eg. Apache-2.0, GPLv3)" and every
+notice-listed piece is MIT/MIT-0. Also re-confirmed on the same page:
+papers due Nov 8; no-internet evaluation (our submissions complied).
+Runbook Step 2 and the release checklist flipped back accordingly.
+
 ## Task 1: Kaggle OVERVIEW tab measured; eligibility layer corrected -- 2026-10-02
 
 The user pasted the Overview tab (submission requirements + evaluation).
