@@ -186,6 +186,7 @@ without degree-preserving and parameter-matched controls.
 
 ## License
 
-Code is MIT-licensed; see [LICENSE](LICENSE). MaleCNS data is not redistributed
+Code is licensed under MIT No Attribution (MIT-0); see [LICENSE](LICENSE).
+MaleCNS data is not redistributed
 here and remains subject to its CC-BY terms. Upstream ARC components retain their
 own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

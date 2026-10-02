@@ -41,12 +41,13 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 
 ## Licensing
 
-- [ ] LICENSE: relicense to MIT-0 before the repo goes public
-  (REOPENED 2026-10-02: arcprize's overview makes CC0/MIT-0 an
-  eligibility condition — register AP-4, confirmed after a one-day
-  detour through the Kaggle-Rules-only reading). Prepared commit lands
-  on the user's go. The Kaggle CC-BY 4.0 winner grant is separate and
-  binds only on winning.
+- [x] LICENSE: relicensed to MIT No Attribution (MIT-0) on the user's
+  explicit go, 2026-10-02 ("go MIT-0"; register AP-4 — arcprize's
+  CC0/MIT-0 eligibility condition). LICENSE text replaced (same
+  copyright line), README and CITATION.cff updated (cffconvert-valid);
+  THIRD_PARTY_NOTICES untouched — third-party code keeps its own
+  licenses, which clear arcprize's Apache-2.0/GPLv3 floor. The Kaggle
+  CC-BY 4.0 winner grant is separate and binds only on winning.
 - [ ] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
   register AP-12): repo link in the Paper Track and ARC-AGI-3 discussion
   forums.

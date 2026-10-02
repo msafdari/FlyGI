@@ -1,5 +1,16 @@
 # FlyGI durable worklog
 
+## Task 1: relicensed to MIT-0 on the user's go -- 2026-10-02
+
+"go MIT-0" (the user, copyright holder). LICENSE is now the MIT No
+Attribution text with the same copyright line; README's license sentence
+and CITATION.cff's license field (SPDX MIT-0) updated;
+THIRD_PARTY_NOTICES deliberately untouched (third-party code keeps its
+own MIT/MIT-0 licenses, clearing arcprize's public-sharing floor for
+3rd-party code). AP-4 closed. The last ARC-side prerequisite that was
+Claude-or-user decision-shaped is done; what remains on Task 1 is pure
+execution (release ~Nov 1, submit by Nov 8 per kaggle_form.md).
+
 ## Task 1: arcprize overview checked -- the CC0/MIT-0 requirement is REAL; AP-4 re-reversed -- 2026-10-02
 
 The user pasted the last unchecked source, arcprize.org's general 2026

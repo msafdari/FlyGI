@@ -16,7 +16,7 @@ abstract: >-
   FlyGI is an experimental framework for testing whether the topology of the
   MaleCNS v1.0 fruit-fly connectome offers measurable advantages on interactive
   ARC-AGI-3 tasks relative to matched graph controls.
-license: MIT
+license: MIT-0
 keywords:
   - ARC-AGI-3
   - connectome
