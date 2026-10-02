@@ -1,5 +1,35 @@
 # FlyGI durable worklog
 
+## Task 1: Kaggle OVERVIEW tab measured; eligibility layer corrected -- 2026-10-02
+
+The user pasted the Overview tab (submission requirements + evaluation).
+Register deltas, all banked:
+
+- AP-5 CONFIRMED IN FULL, and my form-only reading corrected: the form's
+  checklist and the ELIGIBILITY requirements differ. The Overview makes
+  the Media Gallery (with a required cover image) and the public code
+  notebook (via Project Links) conditions of eligibility even though the
+  form checklist does not enforce them. The 1,500-word limit + penalty
+  wording is now verbatim-measured (we are at 1,448).
+- AP-4 residual nearly closed: the Overview also contains NO CC0/MIT-0
+  wording. Only arcprize.org's general 2026 overview page remains
+  unchecked; MIT stays.
+- AP-9 fully resolved: "you will be asked to provide your submission ID"
+  (Accuracy criterion note) -- have 56683298 ready.
+- AP-15 updated: Kaggle is internally consistent at 2026-11-09 23:59 UTC
+  (form + Overview agree); arcprize still says Nov 8; plan stays Nov 8.
+- NEW AP-16 (auto-publication): a private Kaggle resource attached to
+  the writeup "will automatically be made public after the deadline."
+  Linking the private submission notebook = consent to publication, so
+  prefer making it public deliberately on release day, and put the
+  MaleCNS CC BY 4.0 citation on the private dataset's description
+  BEFORE submitting (AP-6) in case publication cascades.
+
+kaggle_form.md corrected to carry both layers (gallery/notebook now
+marked required; submission-ID and dataset-citation items added to the
+pre-Submit checklist). No artifact changed: we already satisfied every
+requirement; this pass was about knowing it rather than assuming it.
+
 ## Task 1: the LIVE Kaggle writeup form measured; artifacts brought to spec -- 2026-10-02
 
 The user opened the real New Writeup form and pasted it verbatim. Three

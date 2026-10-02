@@ -1,15 +1,24 @@
 # Kaggle Writeup form — field-by-field paste guide
 
-Mirrors the live form the user pasted on 2026-10-02 (Paper Track ->
-Writeups -> New). Kaggle's submission checklist has six items: Title,
-Subtitle, Card and Thumbnail Image, Submission Track, Project
-Description, Project Links. All six must be complete before Submit
-unlocks. The Media gallery, Files and DOI are optional.
+Mirrors the live form AND the Overview tab, both pasted by the user on
+2026-10-02. Two layers of "required": the form's checklist enforces six
+items before Submit unlocks (Title, Subtitle, Card and Thumbnail Image,
+Submission Track, Project Description, Project Links); the Overview tab
+makes two more things ELIGIBILITY requirements even though the checklist
+does not enforce them — a Media Gallery with a cover image, and your
+code as a public notebook in Project Links. Satisfy all of it. The word
+limit is verbatim: "Your Writeup should not exceed 1,500 words.
+Submissions over this limit may be subject to penalty." (Body: 1,448.)
 
-**Deadline shown on the form:** Nov 9 2026, 3:59 PM PST, which is
-2026-11-09 23:59 UTC (PST is UTC-8 after US DST ends on Nov 1).
-arcprize.org says papers are due Nov 8. **Plan to Nov 8**, which is safe
-under both. **Submit exactly once** (Rules §2.2.a, register AP-11).
+**Deadline:** Kaggle is internally consistent at 2026-11-09 23:59 UTC
+(form and Overview agree); arcprize.org says Nov 8. **Plan to Nov 8**,
+safe under both. **Submit exactly once** (Rules §2.2.a, register AP-11).
+
+**Auto-publication warning (Overview, verbatim):** "If you attach a
+private Kaggle Resource to your public Kaggle Writeup, your private
+Resource will automatically be made public after the deadline." Linking
+the private submission notebook is therefore consent to it going public
+— see Project links below.
 
 ---
 
@@ -33,9 +42,11 @@ sharp 2x render). If the uploader insists on exactly 560x280, use
 
 **Submission Track:** Main Track (auto-selected; nothing to do).
 
-## Media gallery (optional; not on the checklist; recommended)
+## Media gallery (REQUIRED for eligibility — Overview: "A cover image
+is required to submit your Writeup"; the form checklist just doesn't
+enforce it)
 
-Images, in this order:
+Images, in this order (cover first — it is the required cover image):
 
 1. `media/cover.png`
 2. `media/fig1_ladder_vs_hidden.png`
@@ -57,27 +68,30 @@ through the fact/tier gate, never ad hoc.
 
 ## Attachments -> Project links
 
-The form has **no field for picking a code submission**. The paper is
-linked to the code submission in three ways: (1) the Rules require the
-same team for both (§2.1.b; you are the solo team megusalexandrus);
-(2) the body names submissions 56620463, 56650224 and 56683298 in its
-first paragraph; (3) the notebook that produced 56683298 is linked here.
+Per the Overview tab, Project Links is where your code notebook goes:
+"Your code should be submitted as a public notebook in the Project
+Links field." The form has no code-submission selector; linkage is (1)
+the same-team rule (§2.1.b; you are the solo team megusalexandrus),
+(2) the submission IDs named in the body's first paragraph, and (3) the
+Overview's note under Accuracy: "you will be asked to provide your
+submission ID" — when asked, give **56683298**.
 
 Add these links (title -> URL):
 
-1. **Source code (GitHub)** -> https://github.com/msafdari/FlyGI
+1. **Public walkthrough notebook** (satisfies the required public
+   notebook) -> the URL of the new public notebook you upload from
+   `public_notebook.ipynb` (runbook Step 4). Must open logged out.
+2. **Source code (GitHub)** -> https://github.com/msafdari/FlyGI
    The repo must be public before you submit (release step, ~Nov 1).
-2. **Public walkthrough notebook** -> the URL of the new public notebook
-   you upload from `public_notebook.ipynb` (runbook Step 4).
 3. **Submission notebook (produced 56683298)** ->
    https://www.kaggle.com/code/megusalexandrus/flygi-arc-agi-3
-   It is currently PRIVATE. Making it public on release day is
-   recommended, not required: it is the literal code behind the scored
-   entry, and a public Kaggle notebook also meets Rules §3.6.b's
-   Kaggle-side sharing condition. If you do, keep the MaleCNS CC BY 4.0
-   citation in its description (AP-6). If you'd rather keep it private,
-   leave this link out; the team rule + submission IDs still carry the
-   linkage.
+   Currently PRIVATE. Linking it means it is AUTOMATICALLY MADE PUBLIC
+   after the deadline (Overview, verbatim; register AP-16) — which we
+   want anyway, so prefer making it public yourself on release day
+   (also meets Rules §3.6.b). Either way, BEFORE submitting put the
+   MaleCNS CC BY 4.0 citation on the private dataset
+   megusalexandrus/flygi-malecns-runtime's description (AP-6), in case
+   auto-publication cascades to the notebook's attached dataset.
 
 ## Files (optional)
 
@@ -93,7 +107,11 @@ CITATION.cff.
 
 ## Before clicking Submit
 
-- [ ] Checklist reads 6 of 6.
+- [ ] Checklist reads 6 of 6, AND the gallery has the cover image, AND
+  a public notebook is in Project Links (eligibility layer).
+- [ ] The MaleCNS CC BY 4.0 citation is on the Kaggle dataset
+  description (AP-6/AP-16).
+- [ ] Submission ID 56683298 noted, ready for when the organizers ask.
 - [ ] The repo link opens logged out (repo is public).
 - [ ] The walkthrough notebook opens logged out.
 - [ ] Preview renders the body's headers and lists correctly.
