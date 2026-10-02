@@ -385,7 +385,7 @@ def check_prerequisites(data_root: Path | None) -> list[str]:
     if not FC25_RESULTS.exists():
         missing.append(f"fc25 passing result (local-only artifact): "
                        f"{FC25_RESULTS}")
-    for mod in ("h5py", "pyarrow", "scipy"):
+    for mod in ("h5py", "hdf5plugin", "pyarrow", "scipy"):
         if importlib.util.find_spec(mod) is None:
             missing.append(f"python package: {mod}")
     if data_root is None:
@@ -554,6 +554,10 @@ def main() -> int:
         return 3
 
     import h5py  # noqa: PLC0415  (gated import)
+    # MEASURED 2026-10-02 (local run): DSEC event arrays use HDF5 filter
+    # 32001 (Blosc); h5py can read them only after hdf5plugin registers
+    # the filter, else the read dies with an opaque plugin-path OSError.
+    import hdf5plugin  # noqa: F401, PLC0415
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     handle = open(args.output.with_suffix(".log"), "w")

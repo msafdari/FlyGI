@@ -18,8 +18,11 @@ python scripts/arenas/dsec_killtest.py          # no --data-root yet
 
 It must report BLOCKED with exactly ONE missing line — the `--data-root`
 one. If it lists anything else (runtime, annotations, fc25 results,
-h5py/pyarrow/scipy), fix that first; `pip install h5py` is the only
-dependency the earlier benchmarks did not already need. The metrics
+h5py/hdf5plugin/pyarrow/scipy), fix that first; `pip install h5py
+hdf5plugin` are the only dependencies the earlier benchmarks did not
+already need. hdf5plugin is REQUIRED, not optional: DSEC compresses
+event arrays with Blosc (HDF5 filter 32001), which plain h5py cannot
+decompress (measured 2026-10-02 on the first local run). The metrics
 module is self-contained (numpy + stdlib):
 
 ```bash
