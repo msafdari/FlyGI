@@ -1990,7 +1990,7 @@ hypotheses:
       lower than its own degree-preserving rewire -- the motion
       detector's native function doing real work on its native input
       statistics, where the ARC arm measured that it did not.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-01 BEFORE ANY DATA CONTACT (the cloud
@@ -2019,7 +2019,32 @@ hypotheses:
         tier, base rate stated: 0 for 12; the nearest precedent
         (H-T4T5-CLASS25-MOTION) measured the rewire ABOVE real on
         ARC frames.
-    updated: 2026-10-01
+      - >
+        MEASURED 2026-10-02 (user's local run; results/arenas/
+        dsec_killtest.json, gitignored as designed; numbers reported
+        back verbatim): VERDICT KILL -- valid, not blocked. One
+        instrument fix before any measurement, committed e6477dd:
+        DSEC event files are Blosc-compressed (HDF5 filter 32001) and
+        the harness now imports hdf5plugin. The frozen test then ran
+        clean on thun_00_a in 66 s (1.33 GB peak): 41 windows (8 cal /
+        33 eval), 33/33 usable, 0 unstable -- well above the 30-window
+        BLOCKED threshold. Eval median per-window mean angular error
+        (deg): real 81.36, uniform-tau 78.09, rewired(mean) 78.85,
+        event-centroid comparator 81.88, GT-median global direction
+        65.36. EPE context (px): zero-flow 5.08, real(scaled) 5.39,
+        comparator(scaled) 5.85. Frozen bars: real<comparator 18/33,
+        p=0.364 (FAIL); real<rewired 11/33, p=0.982 (FAIL). STATUS:
+        REFUTED. Reading, stated at tier: every arm sits near the
+        90-deg chance line at this binning (the oracle global
+        direction, 65.4 deg, beats all per-column estimates), so no
+        arm extracts usable per-column direction here -- and within
+        that, the rewire beats the real wiring for the THIRD
+        consecutive time (MB 0.800>0.600; ARC T4/T5 0.4306>0.3875;
+        DSEC 78.85<81.36 AE). Per the registration: recorded
+        class-2.5 limit on event-camera input at the declared
+        binning; no dense pipeline, no benchmark account, no entry.
+        Task 2 closes COMPLETE-with-verdict (operating rule 3).
+    updated: 2026-10-02
 
   H-FLYGI-FLYBENCH-ADAPTER:
     statement: >

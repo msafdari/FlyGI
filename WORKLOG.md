@@ -1,5 +1,25 @@
 # FlyGI durable worklog
 
+## TASK 2 CLOSED WITH VERDICT: DSEC kill test KILLED -- H-T4T5-DSEC-DIRECTION refuted -- 2026-10-02
+
+The user ran the frozen kill test locally (thun_00_a; one instrument
+fix en route, e6477dd: DSEC events are Blosc-compressed, the harness
+now imports hdf5plugin). Valid, not blocked: 33/33 usable eval windows
+(threshold 30), 0 unstable, 66 s. MEASURED: eval median per-window mean
+angular error -- real 81.36 deg, uniform-tau 78.09, rewired(mean)
+78.85, event-centroid comparator 81.88, GT-median global direction
+65.36. Both frozen bars FAILED (real<comparator p=0.364; real<rewired
+p=0.982). Registry closed refuted, with the honest reading at tier:
+every arm sits near the 90-deg chance line at this binning -- the
+oracle single global direction beats all per-column estimates -- so no
+arm extracts usable per-column direction here, and within that the
+degree-preserving rewire beats the real wiring for the THIRD
+consecutive time across tasks (MB association, ARC motion, DSEC
+direction). Per the registration: recorded class-2.5 limit on
+event-camera input at the declared binning; no dense pipeline, no
+benchmark account (AD-1/AD-2 retired), no entry. Task 2 is COMPLETE
+per operating rule 3 -- a failed kill test is a completed task.
+
 ## Task 1: quality pass over the writeup + all visual assets -- 2026-10-02
 
 User-directed review ("make sure they're up to snuff"), every rendered

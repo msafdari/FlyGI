@@ -21,7 +21,7 @@ post and an X post that lead to the public FlyGI GitHub repo.
 | # | Task | Status |
 | --- | --- | --- |
 | 1 | ARC Prize 2026 Paper Track | **Claude-side COMPLETE.** All artifacts in docs/arenas/task1_arc_paper/. Remaining steps are the user's (runbook steps 0-7). |
-| 2 | DSEC-Flow | **Claude-side COMPLETE (2026-10-01).** Kill test registered (H-T4T5-DSEC-DIRECTION, frozen), metrics + data-gated harness built and tested, runbook written. The measurement is the user's local run: docs/arenas/task2_dsec_flow/runbook.md. |
+| 2 | DSEC-Flow | **COMPLETE WITH VERDICT (2026-10-02): kill test KILLED.** H-T4T5-DSEC-DIRECTION refuted on thun_00_a -- both frozen bars failed, the rewire beat the real wiring a third time, all arms near chance at the declared binning. No dense pipeline, no benchmark entry (per the frozen rule). Full record in EXPERIMENTS.yaml. |
 | 3 | FlyBench | **IN PROGRESS (2026-10-01).** Adapter kill test PASSED in-cloud (H-FLYGI-FLYBENCH-ADAPTER supported; user authorized third-party execution). MaleCNS rows are the user's local run: docs/arenas/task3_flybench/runbook.md. The calibrated-parameters design (AF-4) is registered next, before any build. |
 | 4 | NeuroBench | pending |
 | 5 | Brain-Score | pending |
