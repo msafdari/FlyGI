@@ -2104,6 +2104,42 @@ hypotheses:
         flybench_toy_{reference,flygi,flygi_core_seeds3}.json
         (gitignored; numbers recorded here).
     updated: 2026-10-01
+  H-FLYGI-FLYBENCH-CALIBRATED:
+    statement: >
+      Layering the class-2 calibration ingredients onto the flybench
+      adapter as declared per-type parameter tables -- literature
+      fast/slow membrane-tau classes (fc2 table verbatim), graded
+      APL/CT1 as internal non-spiking units, and Litwin-Kumar-style KC
+      thresholds calibrated on seeded NON-TASK random PN drives to a
+      literature sparseness band -- improves the ACTIVATION-check
+      subset over the measured Shiu-uniform baseline on the MaleCNS
+      build, without giving back the overall graded score or the
+      wiring-specificity edge.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-02, before any build, from the first
+        measured MaleCNS rows (uniform baseline: core 1.000 / hard
+        0.6044 / graded 0.711 / specificity +0.282; reference LIF
+        0.5667 / 0.5366 / 0.639 / +0.184). Frozen design:
+        docs/arenas/task3_flybench/calibrated_design.md. The design
+        input is AF-8 (measured decomposition: our net win rides
+        suppression checks a quieter engine wins cheaply; the one big
+        loss is an activation check). TRIVIAL ALTERNATIVE: our own
+        uniform row, not the reference. BARS, all three required:
+        activation-subset mean graded >= uniform + 0.02; overall
+        graded >= 0.701; specificity >= +0.252. The
+        activation/suppression split is derived MECHANICALLY from the
+        task YAML (exceed-threshold vs ratio/below-threshold) before
+        any calibrated run. BLOCKED (not a verdict) on near-zero
+        type-name coverage or an unreachable sparseness band on the
+        non-task calibration protocol. KILL => the uniform row stands
+        as Task 3's measured contribution. Expected tier, base rate
+        stated: 0 for 12; precedents split (tau heterogeneity added
+        nothing on ARC motion; LK calibration carried the class-2 MB
+        sparseness pass).
+    updated: 2026-10-02
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:

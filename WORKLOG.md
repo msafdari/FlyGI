@@ -1,5 +1,21 @@
 # FlyGI durable worklog
 
+## Task 3: calibrated-parameters design REGISTERED (before build) -- 2026-10-02
+
+H-FLYGI-FLYBENCH-CALIBRATED registered, frozen design in
+docs/arenas/task3_flybench/calibrated_design.md. Premise: the class-2
+calibration ingredients (fc2 tau table by literature class, graded
+APL/CT1 internal to the adapter, LK-style KC thresholds calibrated on
+seeded NON-TASK random PN drives) buy back the activation checks
+without surrendering suppression or specificity. Trivial alternative:
+our own measured uniform row. Bars frozen: activation-subset mean
++>=0.02, overall graded >=0.701, specificity >=+0.252; mechanical
+activation/suppression split from task YAML; BLOCKED on near-zero
+type-name coverage. Next cloud-side: implement the calibrated table +
+calibration hook in the adapter (engine unmodified; toy regression =
+byte-identical fallback) with tests; the measurement is the user's
+local run, same pattern as before.
+
 ## Task 3: first MaleCNS rows MEASURED (unpinned); engine beats reference on net -- 2026-10-02
 
 The user executed the Task-3 runbook locally. Instrument surprise first,
