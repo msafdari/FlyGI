@@ -4,7 +4,7 @@
 
 User direction: apply best practice (remove local /Users/... paths, set
 the citation). Measured sweep: 76 lines in 56 tracked files embedded
-/Users/mustafasafdari/...; one tracked doc carried the user's personal
+/Users/<username>/...; one tracked doc carried the user's personal
 email. Done, category by category, and verified:
 
 - 47 archived probe/solver scripts in docs/fap_extension_20260928/ now
