@@ -1,5 +1,42 @@
 # FlyGI durable worklog
 
+## Task 3: first MaleCNS rows MEASURED (unpinned); engine beats reference on net -- 2026-10-02
+
+The user executed the Task-3 runbook locally. Instrument surprise first,
+measured and banked (AF-7): a fresh anonymous neuPrint fetch reproduces
+the pinned COUNTS exactly (176,422 / 6,287,789) but not the pinned
+FINGERPRINT (annotations + signed weights drift on re-export), so both
+rows ran --allow-unpinned and are marked unpinned; the runbook was
+corrected en route (0323fdb). Toy sanity reproduced the cloud result
+(verify-adapter clean; core 5/5, graded ~0.99).
+
+THE ROWS (malecns_minecraft.yaml config, 3 seeds, rewired control;
+JSONs local at results/arenas/malecns_{reference,flygi}.json):
+- reference LIF g0.65: core 0.5667 / hard 0.5366 / graded 0.639 /
+  specificity vs rewired +0.184. Core matches their recorded row
+  EXACTLY (drift check passes on core); hard differs from their 0.5798
+  -- annotation drift in hard-tier selectors suspected.
+- FlyGI class-2 engine (Shiu constants): core 1.000 / hard 0.6044 /
+  graded 0.711 / specificity +0.282.
+Diff over 149 shared checks: mean graded reference-minus-ours -0.070,
+seed-bootstrap CI [-0.062, -0.045] AS REPORTED (flagged: the point
+estimate sits outside the reported interval -- user to re-check which
+statistic the CI covers before this number goes in any outward text).
+Our engine is reliably better on net AND more wiring-specific (+0.282
+vs +0.184).
+
+HONESTY NOTE, the design input (new AF-8): the win decomposes
+asymmetrically -- our biggest gains are SUPPRESSION checks where the
+reference saturates (292 Hz -> 0), and our one big loss is an
+ACTIVATION check (water response 95.8 -> 0 Hz). A globally quieter
+engine wins suppression cheaply, so activation checks are the
+discriminating set for the calibrated-parameters step. Skips recorded:
+egg_laying_ovidn (flywire-only), halt_walk_off (selector matches no
+MaleCNS neurons -- their README predicted male-name gaps),
+embodied/closed-loop (flygym not installed). AF-4 part-resolved
+structurally: graded units are internal to the adapter; the spike-only
+contract holds unless a readout population is declared graded.
+
 ## TASK 2 CLOSED WITH VERDICT: DSEC kill test KILLED -- H-T4T5-DSEC-DIRECTION refuted -- 2026-10-02
 
 The user ran the frozen kill test locally (thun_00_a; one instrument
