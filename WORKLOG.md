@@ -1,5 +1,37 @@
 # FlyGI durable worklog
 
+## Task 4: DVS Gesture kill test REGISTERED and BUILT (data-gated) -- 2026-10-03
+
+User said proceed. Registration FIRST (H-T4T5-DVS-GESTURE, open;
+docs/arenas/task4_neurobench/killtest_design.md -- frozen with the
+moved priors stated on its face), instrument second:
+
+- scripts/arenas/dvs_killtest.py: our own AEDAT 3.1 polarity reader
+  (spec-exact bit layout, validity mask, timestamp overflow, foreign
+  packets skipped; validated on synthetic packed bytes); the dataset's
+  OWN subject split read verbatim; 6x250 ms windows per trial; DSEC
+  binning imported and reused on the identity 128-crop; fixed 10 ms
+  sub-windows (no dt sweep); one drive-norm scalar from a seeded
+  TRAIN calibration subset; fc2 settle-stream-tail batched across all
+  windows; arms real / twin / per-seed rewire / circuit-free
+  event-count features; t4t5-motion-style probe (3-fold CV on TRAIN);
+  the frozen three-bar verdict assembled mechanically
+  (chance-in-all-seeds, beats-rewire, beats-event-count; paired sign
+  tests over subject x seed cells + pooled majority). Data gate
+  verified in-cloud (exit 3 naming the measured missing pieces).
+- 9 unit tests (tests/test_dvs_killtest.py): parser round trip,
+  validity/overflow/foreign-packet handling, truncated-tail safety,
+  window placement incl. short trials, event-count features, exact
+  binomial, PASS + three KILL paths of the verdict, frozen constants.
+- Runbook: docs/arenas/task4_neurobench/runbook.md (download, the one
+  command, 30-90 min local, report-back protocol). The neurobench
+  package is never executed for this decision.
+
+NEXT: the user's local run decides. On KILL, Task 4's T4/T5 limb closes
+with no NeuroBench integration built; the Keyword-FSCIL/MB limb then
+needs an explicit go. On PASS, the harness integration gets its own
+registered design.
+
 ## TASK 3 CLOSED; base rate propagated; Task 4 (NeuroBench) OPENS -- 2026-10-03
 
 The local session's verdict run closed H-FLYGI-FLYBENCH-CALIBRATED
