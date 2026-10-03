@@ -22,7 +22,7 @@ post and an X post that lead to the public FlyGI GitHub repo.
 | --- | --- | --- |
 | 1 | ARC Prize 2026 Paper Track | **Claude-side COMPLETE.** All artifacts in docs/arenas/task1_arc_paper/. Remaining steps are the user's (runbook steps 0-7). |
 | 2 | DSEC-Flow | **COMPLETE WITH VERDICT (2026-10-02): kill test KILLED.** H-T4T5-DSEC-DIRECTION refuted on thun_00_a -- both frozen bars failed, the rewire beat the real wiring a third time, all arms near chance at the declared binning. No dense pipeline, no benchmark entry (per the frozen rule). Full record in EXPERIMENTS.yaml. |
-| 3 | FlyBench | **IN PROGRESS (2026-10-01).** Adapter kill test PASSED in-cloud (H-FLYGI-FLYBENCH-ADAPTER supported; user authorized third-party execution). MaleCNS rows are the user's local run: docs/arenas/task3_flybench/runbook.md. The calibrated-parameters design (AF-4) is registered next, before any build. |
+| 3 | FlyBench | **COMPLETE WITH VERDICT (2026-10-03).** Adapter kill test PASSED (contract-level); first MaleCNS rows measured (unpinned, AF-7); calibrated arm KILLED — H-FLYGI-FLYBENCH-CALIBRATED refuted (activation subset moved +0.0002 vs the +0.02 bar; the gain landed in suppression, led by the one task the LK calibration directly targets). The UNIFORM row stands as the measured contribution: core 1.000 / hard 0.6044 / graded 0.711 / specificity +0.282 vs reference 0.5667 / 0.5366 / 0.639 / +0.184. Any flybench PR / verified-badge step is the USER's decision from that row. |
 | 4 | NeuroBench | pending |
 | 5 | Brain-Score | pending |
 | 6 | e-nose / gas drift | pending |
@@ -144,8 +144,9 @@ its own quick due-diligence delta when it starts.
 
 - Every outward number must trace to a verified factsheet. Run an
   adversarial fact/tier gate before anything ships.
-- The base rate for expected-tier score claims is **0 for 12** (as of
-  2026-09-26; verified). Any stale "0 for 11" is a bug.
+- The base rate for expected-tier score claims is **0 for 13** (as of
+  2026-10-03; the 13th is H-FLYGI-FLYBENCH-CALIBRATED). Any stale
+  "0 for 12" or earlier is a bug.
 - Required scope words: model (class-N) vs fly; connectome vs brain.
   Never "the fly" when the record is scoped to a circuit, task and
   fidelity class.

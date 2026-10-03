@@ -177,7 +177,7 @@ one.
    gates, rewired nulls, scrambled twins, engineered ceilings, preregistered
    kill rules — portable to any structured prior.
 
-Expected — carried with our 0-for-12 base rate on score-adjacent predictions
+Expected — carried with our 0-for-13 base rate on score-adjacent predictions
 (the measurements held): a scaffold triggered by structure rather than game
 identity moves off the abstention floor. Everything needed to test it —
 worklog, preregistrations, league harness, notebooks, submission 56683298 —

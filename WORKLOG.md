@@ -1,5 +1,38 @@
 # FlyGI durable worklog
 
+## TASK 3 CLOSED; base rate propagated; Task 4 (NeuroBench) OPENS -- 2026-10-03
+
+The local session's verdict run closed H-FLYGI-FLYBENCH-CALIBRATED
+refuted (its two WORKLOG entries below carry the numbers; registry has
+the evidence block). Cloud-side reconciliation on top: HANDOFF Task-3
+row -> COMPLETE WITH VERDICT (the UNIFORM row stands as the measured
+contribution; any flybench PR / verified-badge step is the user's
+decision from that row); the canonical expected-tier base rate moved to
+0 for 13 and is propagated to the three outward-facing carriers --
+HANDOFF's conventions line, the factsheet row (with the thirteenth
+named), and the writeup's closing sentence (word count unchanged at
+1,448; the factsheet is the trace). Per the program order, Task 4
+(NeuroBench) opens with its due-diligence delta next.
+
+## Task 4 (NeuroBench) OPENED: delta measured; priors moved; decision surfaced -- 2026-10-03
+
+Full record: docs/arenas/task4_neurobench/due_diligence_delta.md.
+MEASURED: neurobench 2.3.0 IS on PyPI (torch-shaped deps, gdown);
+neurobench.ai / research.ibm.com / dropbox.com egress-blocked in-cloud
+(drive.google.com already was) -- datasets are local-side; in-cloud
+install/run of the neurobench package is a NEW third-party execution
+awaiting the user's nod (AF-6 covered flybench). THE IMPORTANT DELTA is
+internal: since the 2026-09-30 survey ranked DVS Gesture a "native
+T4/T5 fit", this program refuted T4/T5 on ARC frames AND on
+event-camera input, with the rewire beating real wiring three
+consecutive times (base rate 0 for 13). Gesture classification is a
+different computation (stated in the delta doc -- the kill test is not
+pre-decided), but the expected-tier prior is materially worse than at
+ranking. NEXT: register the DVS kill test (DSEC-pattern arms: real /
+uniform-tau / rewire / event-count features, frozen bars) and build its
+data-gated instrument -- unless the user, reading the moved priors,
+chooses to skip or re-rank Task 4. AN-2 annotated; AN-3/AN-4 added.
+
 ## TASK 3 CLOSED WITH VERDICT: calibrated arm KILLED by the frozen bars; H-FLYGI-FLYBENCH-CALIBRATED refuted -- 2026-10-03
 
 The user ran the calibrated MaleCNS arm locally (runbook section 3:

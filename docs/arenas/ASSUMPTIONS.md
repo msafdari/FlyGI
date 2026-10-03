@@ -67,7 +67,9 @@ strike through and mark instead.
 | ID | Statement | Tier | Status | Check / consequence |
 | --- | --- | --- | --- | --- |
 | AN-1 | Leaderboard acceptance is maintainer-gated and has only ever ingested paper-baseline or challenge rows; a cold entry is a negotiation | SOURCED (commit history) | OPEN | Budget an email + report; no leaderboard promise |
-| AN-2 | DVS Gesture readout can stay a linear map over T4/T5 population activity | ASSUMED | OPEN | Null + event-count controls in the kill test |
+| AN-2 | DVS Gesture readout can stay a linear map over T4/T5 population activity | ASSUMED | OPEN | Null + event-count controls in the kill test | [PRIOR MOVED 2026-10-03, before any Task-4 build: H-T4T5-CLASS25-MOTION and H-T4T5-DSEC-DIRECTION both refuted since the survey -- the rewire beat real wiring on ARC frames AND on event-camera input; base rate 0 for 13. The kill test decides; the delta doc carries the reasoning.]
+| AN-3 | NeuroBench is pip-installable | MEASURED 2026-10-03: neurobench 2.3.0 on PyPI, Python >=3.10; heavy torch-shaped deps (pytorch-lightning<2.0, snntorch, numba, jitcdde, gdown) | CONFIRMED | In-cloud install/run is a NEW third-party execution -- needs the user's nod (AF-6 covered flybench) or runs local |
+| AN-4 | DVS Gesture data is reachable from this container | MEASURED 2026-10-03: neurobench.ai, research.ibm.com, dropbox.com all HTTP 000; drive.google.com already 000 (covers gdown); one S3 root answered 403 (object-level untested) | INVALIDATED (in-cloud, expected) | Dataset acquisition is local-side, as for DSEC/MaleCNS |
 
 ## Task 5 — Brain-Score (AB-*)
 
