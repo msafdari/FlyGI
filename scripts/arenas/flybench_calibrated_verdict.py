@@ -43,10 +43,17 @@ def is_activation(check: dict) -> bool:
 
 
 def check_table(report: dict) -> dict[tuple[str, str], dict]:
+    # Key by the check's identity, NOT its full description: flybench appends
+    # a volatile "  [N/3 seeds, sd S]" annotation that changes whenever the
+    # measured values change, so keying on the full string silently drops
+    # every check the manipulation moved (caught 2026-10-03: 66 of 149 checks
+    # "shared" on the first calibrated run). Same convention as flybench's
+    # own diff command.
     out = {}
     for task in report.get("tasks", []):
         for check in task.get("checks", []):
-            out[(task.get("task", "?"), str(check.get("description", "")))] = check
+            ident = str(check.get("description", "")).split("  [")[0]
+            out[(task.get("task", "?"), ident)] = check
     return out
 
 

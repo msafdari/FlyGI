@@ -1,5 +1,61 @@
 # FlyGI durable worklog
 
+## TASK 3 CLOSED WITH VERDICT: calibrated arm KILLED by the frozen bars; H-FLYGI-FLYBENCH-CALIBRATED refuted -- 2026-10-03
+
+The user ran the calibrated MaleCNS arm locally (runbook section 3:
+malecns_minecraft config, 3 seeds, rewired control, --jobs 6, unpinned
+build; results/arenas/malecns_calibrated.json, gitignored like the
+other rows). One instrument bug found and fixed en route (below). The
+registered premise -- biological calibration buys back the activation
+checks -- is REFUTED; the uniform row stands as Task 3's measured
+contribution, per the registration.
+
+MEASURED, the calibrated row: core 1.000 / hard 0.6194 / graded 0.7445
+(CI95 [0.7414, 0.7481]) / specificity vs rewired +0.295 / 10 of 30
+tasks passed (uniform: 1.000 / 0.6044 / 0.7113 / +0.282 / 9). Every
+passing task fails on shuffled wiring. Skips identical to the uniform
+run -- the known four plus gf_free_route_to_ttmn and closed_loop_escape
+(both flygym/torch, also skipped in the uniform run; nothing new).
+Cost: 79.5 min wall at --jobs 6, peak RSS 679 MB.
+
+Calibration sidecar facts (healthy, not blocked): real wiring alpha
+1.826, achieved KC sparseness 0.0750 (band midpoint exactly), tau
+table resolved for 36,822 of 176,422 neurons, 4 graded units (APL/CT1),
+4,064 KCs; rewired control calibrated FRESH on its own wiring (alpha
+1.780, sparseness 0.0750), so the specificity number carries no
+threshold-mismatch artifact. Two calibrations total, as designed. (The
+on-disk sidecar's "applied: false" is a write-order quirk -- the cache
+file is saved before _apply() updates the in-memory dict; the run
+numbers differ from uniform throughout, so application is not in
+doubt. Cosmetic; left unfixed post-measurement deliberately.)
+
+THE VERDICT (mechanical, frozen bars): KILL. Bar 1 FAILS -- mean
+graded over the 58 shared activation checks moved +0.0002 against a
+required +0.02. Bars 2 and 3 HOLD (overall 0.7445 >= 0.701;
+specificity +0.295 >= +0.252). The decomposition is the AF-8 story
+repeated at higher fidelity: the calibration's entire gain landed in
+the suppression/ratio class (mean 0.639 -> 0.685), almost all of it
+mb_sparseness_apl 0.625 -> 1.000 -- the one task the LK calibration
+directly targets -- while the activation subset it was built to buy
+back did not move, and the flagged water-response loss stayed at 0 Hz.
+The instrument did what it was designed to do: it refused to credit a
+win in the class the premise was not about.
+
+INSTRUMENT BUG, found before recording, fixed, regression-tested
+(scripts/arenas/flybench_calibrated_verdict.py): shared checks were
+keyed on the FULL description string, which embeds flybench's volatile
+"[N/3 seeds, sd S]" annotation, so every check the calibration moved
+silently left the shared set -- the first verdict ran on 66 of 149
+checks, i.e. almost only unmoved ones (a near-tautology). Fixed to key
+on the annotation-stripped identity (flybench diff's own convention);
+corrected run shares 149/149 checks. The KILL holds under BOTH keyings
+(delta +0.0005 buggy, +0.0002 corrected), so no conclusion changed --
+but the corrected audit list is the one of record. Test:
+test_moved_checks_stay_shared_despite_annotation_drift.
+
+Registry: H-FLYGI-FLYBENCH-CALIBRATED -> refuted, evidence block
+carries the numbers. Expected-tier base rate is now 0 for 13.
+
 ## Task 3: the flagged bootstrap-CI oddity RESOLVED (instrument, not data) -- 2026-10-03
 
 The 2026-10-02 flag ("point estimate -0.070 outside the reported CI

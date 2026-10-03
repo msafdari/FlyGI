@@ -188,6 +188,17 @@ def test_verdict_blocked_on_empty_activation_set():
     assert any("activation" in r for r in out["blocked_reasons"])
 
 
+def test_moved_checks_stay_shared_despite_annotation_drift():
+    # Regression for the 2026-10-03 instrument bug: flybench appends a
+    # volatile "  [N/3 seeds, sd S]" annotation to each description, so a
+    # check the manipulation MOVED got a new annotation and dropped out of
+    # the shared set -- bar 1 was then computed only over unmoved checks.
+    uni = _report([_chk("rate[x] > 5.0 Hz  [0/3 seeds, sd 0]", ">", 0.40)])
+    cal = _report([_chk("rate[x] > 5.0 Hz  [3/3 seeds, sd 0.21]", ">", 0.90)])
+    act, sup = vd.split_scores(uni, cal)
+    assert len(act) == 1 and act[0][1:] == (0.40, 0.90)
+
+
 def test_frozen_bar_constants_match_registration():
     assert vd.BAR_ACTIVATION_DELTA == 0.02
     assert vd.BAR_OVERALL_GRADED == 0.701

@@ -2115,8 +2115,30 @@ hypotheses:
       subset over the measured Shiu-uniform baseline on the MaleCNS
       build, without giving back the overall graded score or the
       wiring-specificity edge.
-    status: open
+    status: refuted
     evidence:
+      - >
+        KILLED 2026-10-03 by the frozen bars on the measured run
+        (malecns_minecraft, 3 seeds, rewired control, unpinned build;
+        results/arenas/malecns_calibrated.json, local). MEASURED:
+        calibrated core 1.000 / hard 0.6194 / graded 0.7445 /
+        specificity +0.295; bars 2 and 3 HOLD, bar 1 FAILS -- mean
+        graded over the 149 shared checks' 58 activation checks moved
+        +0.0002 against a required +0.02. Calibration healthy, not
+        blocked: tau coverage 36,822/176,422 neurons, 4,064 KCs,
+        achieved sparseness 0.0750 on target, rewired control
+        calibrated fresh on its own wiring. The entire gain landed in
+        the suppression/ratio class (0.639 -> 0.685, driven by
+        mb_sparseness_apl 0.625 -> 1.000, the task the LK calibration
+        directly targets); the one big activation loss (water
+        response, 0 Hz) was not bought back. Per the registration the
+        uniform row stands as Task 3's measured contribution.
+        Instrument note: the first verdict-script run keyed shared
+        checks on the full description incl. flybench's volatile
+        seed/sd annotation, silently dropping every moved check
+        (66/149 shared); fixed and regression-tested same day -- the
+        corrected verdict is recorded here, and the KILL holds under
+        both keyings.
       - >
         PREREGISTERED 2026-10-02, before any build, from the first
         measured MaleCNS rows (uniform baseline: core 1.000 / hard
@@ -2138,7 +2160,7 @@ hypotheses:
         stated: 0 for 12; precedents split (tau heterogeneity added
         nothing on ARC motion; LK calibration carried the class-2 MB
         sparseness pass).
-    updated: 2026-10-02
+    updated: 2026-10-03
 
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
