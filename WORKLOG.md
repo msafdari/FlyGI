@@ -1,5 +1,40 @@
 # FlyGI durable worklog
 
+## Task 3: the flagged bootstrap-CI oddity RESOLVED (instrument, not data) -- 2026-10-03
+
+The 2026-10-02 flag ("point estimate -0.070 outside the reported CI
+[-0.062, -0.045]") is resolved. MEASURED, by reading flybench's diff
+command and recomputing from the two stored JSONs:
+
+- The point estimate is real: mean stored-graded difference
+  reference-minus-FlyGI over the 149 shared checks = -0.0696.
+- The CI is also real but covers a DIFFERENT estimator: flybench
+  diff's "seed-bootstrap" re-grades resampled per-seed values through
+  plain graded_from_margin(margin_of(...)), which ignores the
+  saturated/floored flags that zero a check's stored graded score. On
+  9 of the 149 checks (6 reference, 3 FlyGI -- pn_transfer_function,
+  da1_sparseness, steering_dna02_vs_dna01) the stored graded is 0.0
+  (non-diagnostic signal) while the re-grade is nonzero. The
+  re-graded full-sample mean is -0.0546, which sits INSIDE the
+  reproduced CI [-0.062, -0.045] (center -0.0540). So: a consistent
+  CI around an estimator that is not the headline statistic -- a
+  flybench instrument inconsistency, not a transcription error and
+  not a problem with our rows.
+- A CI consistent with the headline statistic, stated with what is
+  resampled: bootstrap over CHECKS (resample the 149 paired
+  per-check differences of stored graded values, 10,000 resamples)
+  gives 95% CI [-0.112, -0.030], containing -0.0696. The
+  seed-resampling CI cannot be computed consistently without
+  reimplementing flybench's saturation/floor logic, so the
+  check-resampling CI is the one to quote.
+- Context number from the same recompute: P(reference better on a
+  random shared check) = 0.446 -- consistent with AF-8's finding that
+  our net win is concentrated, not uniform.
+
+Outward text should quote: mean graded difference reference-minus-ours
+-0.070 over 149 shared checks, 95% CI [-0.112, -0.030] (bootstrap over
+checks), P(reference better) 44.6%.
+
 ## Task 3: calibrated adapter BUILT and exercised; one instrument bug caught by its test -- 2026-10-03
 
 H-FLYGI-FLYBENCH-CALIBRATED's instrument is implemented and pushed;
