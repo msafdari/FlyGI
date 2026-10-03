@@ -1,5 +1,48 @@
 # FlyGI durable worklog
 
+## Task 3: calibrated adapter BUILT and exercised; one instrument bug caught by its test -- 2026-10-03
+
+H-FLYGI-FLYBENCH-CALIBRATED's instrument is implemented and pushed;
+the MaleCNS measurement is the user's run (runbook section 3).
+
+- scripts/arenas/flygi_flybench_adapter.py gains FlyGICalibratedAdapter
+  (engine UNMODIFIED, all composition): fc2 tau table verbatim (slow
+  150 / Tm9 200, the dossier anchor, ASSUMPTION-labelled), graded
+  APL/CT1 via the benchmark's own selectors with a declared
+  rate-equivalence bridge (5 Hz/mV, ASSUMED), and LK-style per-KC
+  thresholds (mu + alpha*sigma, alpha bisected to the 0.075 literature
+  midpoint) calibrated on seeded random subsets of the KCs' OWN
+  presynaptic partners -- never a benchmark stimulus. File-cached per
+  wiring (shared across --jobs workers). Reuse policy, each branch
+  labelled: identical wiring and jitter-same-pattern reuse; SILENCED
+  variants reuse the intact thresholds (acute shibire -- recalibrating
+  would partially cancel the manipulation under test); genuinely
+  different wirings (the rewired CONTROL above all) calibrate fresh on
+  their own wiring, so specificity carries no threshold-mismatch
+  artifact.
+- BUG CAUGHT BY ITS OWN UNIT TEST before any measurement: the
+  silenced-variant predicate checked zeroed ROWS of the engine's
+  transposed matrix -- i.e. incoming synapses -- while silence_neurons
+  zeroes OUTGOING (columns of the transpose). Fixed to compare in CSC
+  space; the test now also asserts APL-silenced toy variants reuse the
+  intact thresholds.
+- scripts/arenas/flybench_calibrated_verdict.py applies the FROZEN
+  bars mechanically (activation +0.02 / overall >=0.701 / specificity
+  >=+0.252; split = exceed-and-not-ratio, audit list printable;
+  BLOCKED from calibration sidecars scoped by n_neurons).
+- Tests: 9 in tests/test_flybench_calibrated.py (alpha search, reuse
+  predicates, toy-level calibration + determinism + cache round trip +
+  silenced reuse, split classification, all four verdict outcomes,
+  frozen-constant assertions).
+- MEASURED, toy exercise: verify-adapter clean on the calibrated
+  class; full toy suite completes with calibration + graded + silenced
+  paths engaged -- 0.91 / graded 0.93 / 22 of 30 (uniform class: 0.90
+  / 0.92 / 21). Design-doc amendment recorded OPENLY at build time:
+  the toy carries KC/APL/tau-table type names by construction, so the
+  registered byte-identity toy bar applies to the uniform class only;
+  the calibrated class's toy bar is the calibration-exercise check.
+  The three frozen MaleCNS bars are untouched.
+
 ## Task 3: calibrated-parameters design REGISTERED (before build) -- 2026-10-02
 
 H-FLYGI-FLYBENCH-CALIBRATED registered, frozen design in

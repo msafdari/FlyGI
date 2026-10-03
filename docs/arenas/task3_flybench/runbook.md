@@ -101,3 +101,31 @@ non-diagnostic — their flag, our discipline too), and registers the
 calibrated-parameters design (per-type tables + graded units through
 AF-4) before any of it is built. Any PR / submission / verified-badge
 step is yours and comes only after that design's own kill test.
+
+
+## 3. The calibrated arm (H-FLYGI-FLYBENCH-CALIBRATED; added 2026-10-03)
+
+Pull the branch first. One run + one mechanical verdict:
+
+```bash
+cd <FlyGI repo root>
+PYTHONPATH=src:scripts/arenas flybench run -c malecns \
+    --config ~/flybench/configs/malecns_minecraft.yaml \
+    --simulator flygi_flybench_adapter:FlyGICalibratedAdapter \
+    --seeds 3 --controls rewired --allow-unpinned \
+    --label "FlyGI calibrated (fc2 taus, graded APL/CT1, LK KC thresholds)" \
+    -o results/arenas/malecns_calibrated.json
+
+python scripts/arenas/flybench_calibrated_verdict.py \
+    results/arenas/malecns_flygi.json results/arenas/malecns_calibrated.json \
+    --list-checks
+```
+
+Notes: the first construction per wiring runs the LK calibration (~2-4
+min for MaleCNS; cached under ~/.cache/flygi-flybench-calibration/ and
+shared across --jobs workers, so real + rewired = two calibrations
+total). Silenced and weight-jittered conditions deliberately REUSE the
+intact wiring's thresholds (acute manipulation; the policy and its
+rationale are at the code site). The verdict script applies the frozen
+bars and prints PASS / KILL / BLOCKED — no interpretation. Report back
+the verdict JSON it prints plus the calibrated run's summary line.

@@ -101,11 +101,22 @@ the class-2 MB sparseness pass on our substrate).
 
 Cloud-side: implement the calibrated table + calibration hook in
 scripts/arenas/flygi_flybench_adapter.py (engine stays UNMODIFIED; the
-adapter composes it), toy contract regression (on the toy the type
-table resolves nothing and must fall back exactly to today's behavior —
-byte-identical toy scores are the regression bar), unit tests for the
+adapter composes it), toy regression, unit tests for the
 split-derivation and calibration plumbing. Local (user): the one
 measurement command, mirroring the characterization runs.
+
+AMENDED 2026-10-03, at build time and before any MaleCNS run of this
+class: the registration assumed the toy would resolve no fly types, so
+byte-identity was named as the toy regression bar. MEASURED at build:
+the toy DOES carry KC (400), APL (2) and even fc2 tau-table type names
+(192 cells) by construction — task 26 runs on the toy. The toy bar is
+therefore amended to a CALIBRATION-EXERCISE check: verify-adapter clean
+on the calibrated class; the full toy suite completes with calibration,
+graded units and the silenced-reuse path engaged; the achieved
+calibration sparseness hits the target. Byte-identity remains the bar
+for the UNIFORM class only. The three frozen MaleCNS bars are untouched
+by this amendment. (Toy exercise result, context only: score 0.91 /
+graded 0.93 / 22 of 30 vs the uniform class's 0.90 / 0.92 / 21.)
 
 Registration: EXPERIMENTS.yaml `H-FLYGI-FLYBENCH-CALIBRATED` (same
 commit). The flagged bootstrap-CI transcription oddity from the first
