@@ -2162,6 +2162,40 @@ hypotheses:
         sparseness pass).
     updated: 2026-10-03
 
+  H-T4T5-DVS-GESTURE:
+    statement: >
+      The class-2.5 T4/T5 patch at its fc25-passing configuration,
+      driven by binned DVS128 gesture events through the DSEC test's
+      declared plumbing, yields population features from which one
+      linear probe classifies 11 gestures on HELD-OUT SUBJECTS better
+      than the patch's degree-preserving rewire AND better than
+      circuit-free raw event-count features -- the motion circuit
+      finally earning its keep on event input, where per-column
+      direction regression did not.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-03 BEFORE ANY INSTRUMENT CODE, with the
+        moved priors on the table (T4/T5 refuted on ARC frames and on
+        DSEC events; rewire over real three consecutive times; base
+        rate 0 for 13). Frozen design: docs/arenas/task4_neurobench/
+        killtest_design.md. Data: IBM DVS128 Gesture, the dataset's
+        OWN subject split (subject-held-out by construction); TRAIN
+        subsampled to 40 trials/class (seeded), full TEST; BLOCKED
+        below 600/150 parsed trials. Pipeline: our AEDAT 3.1 reader;
+        6 x 250 ms windows per trial; DSEC binning verbatim at fixed
+        10 ms sub-windows; fc2 settle-stream-tail (250 ms tail);
+        features = 498 scored-cell evoked integrals averaged over
+        windows; t4t5_motion_arm probe. ARMS: real / uniform-tau twin
+        (attribution context) / rewire per seed / event-count features
+        (2x169 dims, same binning, no circuit). PASS iff real above
+        1/11 chance in all 3 seeds AND beats the rewire AND beats
+        event-count (paired sign tests over subject x seed cells,
+        p<0.05, plus pooled-accuracy majority). KILL closes Task 4's
+        T4/T5 limb with no NeuroBench integration built. The
+        neurobench package is deliberately NOT used for this decision.
+    updated: 2026-10-03
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
