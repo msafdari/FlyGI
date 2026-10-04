@@ -78,6 +78,8 @@ strike through and mark instead.
 | AB-1 | Any fly-neuropil -> V1/V2/V4/IT layer map is an invention (no homology); auto-select is the less-assumptive option but still encodes it | ASSUMED (structural) | CONFIRMED (as an assumption we accept) | Record the choice in WORKLOG either way |
 | AB-2 | Submission makes the model code public immediately (PR into brain-score/vision) | SOURCED | OPEN | Sequence after repo-public decision |
 | AB-3 | Compiled arrays can be served to their sandbox via a public versioned URL | SOURCED (their convention) + ASSUMED (our hosting) | OPEN | Needs AP-6 resolved first |
+| AB-4 | A static image can be presented to the luminance-change-native fly frontend via ONE declared drive convention (sustained luminance, or onset flash + settle as fc2 does) without that choice doing the work | ASSUMED (structural; the choice is an invention) | OPEN | Kill test fixes one convention, declares it, no sweep; scrambled/rewire controls carry the burden |
+| AB-5 | Brain-Score is still open and locally scorable: automated zip/PR submission alive; brainscore-vision 2.3.22 (PyPI 2026-06-09, Python >=3.11, torch>=2.6 among 29 deps); limited PUBLIC benchmark pool (e.g. MajajHong2015public.IT-pls) scorable locally without submitting | SOURCED 2026-10-04 (PyPI JSON measured in-cloud; readthedocs via web search — site itself egress-blocked) | CONFIRMED | Kill test runs on the public pool locally; in-container install would need a new third-party-execution nod (AF-6 covered flybench only) |
 
 ## Task 6 — e-nose (AE-*)
 

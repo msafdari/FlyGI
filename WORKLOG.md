@@ -1,5 +1,39 @@
 # FlyGI durable worklog
 
+## Task 5 (Brain-Score): due diligence delta OPEN, kill test sketched, awaiting go -- 2026-10-04
+
+Per program order after the Task 4 close (the Keyword-FSCIL/MB limb
+stays gated), the next ranked arena's premise was re-verified from the
+cloud before anything is built
+(docs/arenas/task5_brainscore/due_diligence_delta.md):
+
+- SOURCED today: submission still open and automated (website zip ->
+  Jenkins PR, or direct GitHub PR; scored on their OpenMind cluster);
+  brainscore-vision 2.3.22 on PyPI (2026-06-09, Python >=3.11, heavy
+  torch-shaped deps); a limited PUBLIC benchmark pool (e.g.
+  MajajHong2015public.IT-pls) is scorable locally without submitting.
+- MEASURED container reachability: brain-score.org 000, readthedocs
+  egress-blocked, pypi.org 200 -- data acquisition presumed local-side
+  again.
+- Moved priors stated on the delta's face: base rate 0 for 14; rewire
+  over real 4 consecutive on T4/T5; the one surviving fly-positive
+  (eye map, 4.5x vs scrambled) won as STATIC ANATOMY, not dynamics --
+  the survey line bundles both, and the kill test must split them.
+  Lamina/medulla early filters have never been tested against their
+  own rewire; that is the open question.
+- New assumption rows AB-4 (static image -> change-native frontend
+  drive convention is an invention; fix one, declare, no sweep) and
+  AB-5 (platform-alive facts, sourced) added to the register.
+- Kill-test sketch (NOT registered yet): early-filter population
+  features vs raw pixels AND vs degree-preserving rewire on one public
+  benchmark, their metric code verbatim, locally, before any
+  BrainModel wrapper or submission plumbing. Registration follows the
+  user's go. AF-6's in-container authorization is NOT assumed to
+  extend to brainscore-vision.
+
+USER DECISION PENDING: go on Task 5 as sketched, or an explicit go on
+the Task 4 MB limb, or a re-rank.
+
 ## Task 4 CLOSED (T4/T5 limb) with verdict; base rate 0 for 14 propagated -- 2026-10-04
 
 Cloud-side close of the KILL recorded below, per the runbook's
