@@ -391,7 +391,16 @@ def main() -> int:
     # or data failure is BLOCKED, never a verdict ------------------------
     try:
         import brainscore_vision
-        from brainio.assemblies import NeuroidAssembly
+        try:
+            from brainio.assemblies import NeuroidAssembly
+        except ModuleNotFoundError:
+            # brainscore-vision >= 2.3 vendors brainio inside
+            # brainscore_core (measured on 2.3.22, 2026-10-04: the
+            # standalone package is no longer a dependency). Same class,
+            # new home; plumbing only.
+            from brainscore_core.supported_data_standards.brainio.assemblies import (  # noqa: E501
+                NeuroidAssembly,
+            )
 
         benchmark = brainscore_vision.load_benchmark(BENCHMARK_ID)
         degrees = resolve_visual_degrees(benchmark)
@@ -446,7 +455,19 @@ def main() -> int:
                     raise ApiMismatch(
                         f"benchmark asked to record {recording_target!r}; "
                         f"the registration hard-assigns {RECORDING_TARGET}")
-                self._time_bins = ([tuple(b) for b in time_bins]
+                def as_bin(b):
+                    # brainscore-vision 2.3.22 hands each bin as a 0-d
+                    # object ndarray wrapping the (start, stop) tuple
+                    # (measured 2026-10-04: timebins ==
+                    # [array((50, 200), dtype=object)]); unwrap before
+                    # tuple(). Plumbing only -- the declared contract
+                    # (same features for every requested bin) is
+                    # unchanged.
+                    if isinstance(b, np.ndarray) and b.ndim == 0:
+                        b = b.item()
+                    return tuple(b)
+
+                self._time_bins = ([as_bin(b) for b in time_bins]
                                    if time_bins is not None else None)
 
             def look_at(self, stimuli, number_of_trials=1, **_kwargs):

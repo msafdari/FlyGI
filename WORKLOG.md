@@ -1,5 +1,53 @@
 # FlyGI durable worklog
 
+## Task 5: Brain-Score V1 kill test RUN -- verdict KILL (dynamics beat their input; the wiring still loses to its rewire) -- 2026-10-04
+
+Environment first: brainscore-vision cannot install on Python 3.12 /
+macOS arm64 (every version pins eva-decord, which ships no cp312 arm64
+wheel -- MEASURED against PyPI); installed into ~/venvs/brainscore on
+a uv-managed CPython 3.11.14 instead (torch 2.14.1). Disk for the
+install + the benchmark's 1.33 GB assembly came from the user deleting
+~/datasets/DvsGesture (4.9 GB, their call, re-downloadable per the
+Task-4 entry).
+
+Two plumbing BLOCKEDs before any verdict-relevant quantity, each fixed
+at the API-contact line and recorded (the registered allowance):
+1. brainscore-vision 2.3.22 no longer depends on standalone brainio --
+   the module is vendored at
+   brainscore_core.supported_data_standards.brainio. Import fallback
+   added.
+2. The benchmark hands time_bins as [array((50, 200), dtype=object)]
+   -- a 0-d object ndarray per bin; tuple(b) raised "iteration over a
+   0-d array". start_recording now unwraps 0-d arrays via .item().
+   The declared contract (identical features per requested bin) is
+   unchanged.
+
+THE RUN (FreemanZiemba2013public.V1-pls, their PLS/CV/ceiling code
+verbatim, locally): valid, not blocked -- 135 stimuli (floor 100),
+visual degrees 4.0, lattice 169 columns / 1,046 scored early-filter
+cells of 2,701 / pixels assigned 0.441, ZERO unstable presentations in
+every arm, 75.9 s end to end after the one-time 1.33 GB data fetch,
+peak RSS 2.38 GB.
+
+MEASURED, ceiled centers (error = their reported estimate):
+- real          0.0690 +/- 0.0201
+- twin          0.0697 +/- 0.0209  (context: decides nothing; ~= real)
+- passthrough   0.0330 +/- 0.0193
+- rewire seeds  0.0828 / 0.0756 / 0.0735
+
+THE FROZEN BARS: above-floor HOLDS (0.0690 - 0.0201 > 0); beats-
+passthrough HOLDS -- the program's FIRST arm where the dynamics add
+predictivity over their own input (0.069 vs 0.033, roughly double);
+beats-rewire FAILS in ALL THREE seeds (every shuffle scores at or
+above real). VERDICT: KILL, exit 1. FIFTH consecutive
+rewire-beats-real on fc25-class circuits. The sharpened reading this
+adds: what the metric rewards is the dynamics' temporal/nonlinear
+transformation, which survives degree-preserving shuffling intact --
+the specific early-filter wiring contributes nothing this benchmark
+can see. Per the registration: no BrainModel submission, no account,
+no further Brain-Score work; the hypothesis close in EXPERIMENTS.yaml
+is the cloud side's step. Expected-tier base rate: 0 for 15.
+
 ## Task 5: Brain-Score V1 kill test REGISTERED and BUILT (data-gated) -- 2026-10-04
 
 User said go. Registration FIRST (H-EARLYFILTER-BRAINSCORE-V1, open;
