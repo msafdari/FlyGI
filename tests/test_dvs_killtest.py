@@ -68,6 +68,56 @@ def test_aedat_parser_truncated_tail_is_safe():
     assert x.size == 1
 
 
+def test_expand_subwindow_drive_matches_dense_layout():
+    # Regression for the 2026-10-03 memory fix: the per-trial dense
+    # (k, n_sub, n_nodes) drive tensors (measured ~21 GB held state over
+    # the real dataset, pre-fix) are replaced by (m, n_sub, n_cols) grids
+    # expanded one sub-window at a time. The expansion must reproduce the
+    # old layout bit for bit.
+    rng = np.random.default_rng(7)
+    m, n_sub, n_cols, n_nodes = 3, 2, 5, 7
+    driven_idx = np.array([1, 4, 2])
+    driven_cols = np.array([0, 3, 2])
+    input_drive = 7.5
+    cum = rng.normal(size=(m, n_sub, n_cols))
+    dense = np.zeros((m, n_sub, n_nodes))
+    dense[:, :, driven_idx] = input_drive * cum[:, :, driven_cols]
+    out = np.zeros((n_nodes, m))
+    for k in range(n_sub):
+        got = dv.expand_subwindow_drive(cum, k, driven_idx, driven_cols,
+                                        input_drive, out)
+        assert np.array_equal(got, dense[:, k, :].T)
+
+
+def test_load_split_binner_bins_filtered_events_and_drops_them(tmp_path):
+    # The binner must receive the same in-frame-filtered events the eager
+    # layout stored, with the label row's own t0/t1 -- and the raw arrays
+    # must not be kept on the trial.
+    events = [(5, 7, 1, 1000, 1), (200, 3, 0, 1500, 1),  # x=200: out of frame
+              (64, 64, 1, 2000, 1)]
+    (tmp_path / "a.aedat").write_bytes(b"#hdr\n" + _packet(events))
+    (tmp_path / "a_labels.csv").write_text(
+        "class,startTime_usec,endTime_usec\n2,900,1600\n5,1900,2100\n")
+    (tmp_path / "split.txt").write_text("a.aedat\n")
+    logs = []
+    plain = dv.load_split(tmp_path, "split.txt", logs.append)
+    calls = []
+
+    def binner(evts, t0, t1):
+        calls.append((evts, t0, t1))
+        return ("binned", t0, t1)
+
+    binned = dv.load_split(tmp_path, "split.txt", logs.append, binner=binner)
+    assert len(plain) == len(binned) == len(calls) == 2
+    for trial_plain, trial_binned, (evts, t0, t1) in zip(plain, binned, calls):
+        assert "events" not in trial_binned
+        assert trial_binned["windows"] == ("binned", t0, t1)
+        assert (t0, t1) == (trial_plain["t0"], trial_plain["t1"])
+        for got, want in zip(evts, trial_plain["events"]):
+            assert np.array_equal(got, want)
+    assert calls[0][0][0].tolist() == [5, 64]  # out-of-frame event filtered
+
+
 def test_window_starts_spacing_and_short_trials():
     s = dv.window_starts(0.0, 6_000_000.0)          # 6 s trial
     assert s.size == dv.WINDOWS_PER_TRIAL

@@ -1,5 +1,37 @@
 # FlyGI durable worklog
 
+## Task 4: instrument memory fix BEFORE the first run (measured 21 GB -> ~2.5 GB) -- 2026-10-03
+
+Local preconditions passed as registered (BLOCKED with exactly the one
+--data-root line, exit 3; 9/9 unit tests). Dataset downloaded from
+IBM's official Box folder (DvsGesture.tar.gz, 2,938,955,106 bytes;
+license CC BY 4.0, attribution IBM Research), stream-extracted to
+~/datasets/DvsGesture: 122 .aedat + 122 _labels.csv pairs, both split
+files, 4.9 GB.
+
+MEASURED before launching, per the resource rule: load_split holds
+every file's raw events as int64/float64 (32 B/event; one 42.3 MB file
+parsed to 0.168 GB in 0.4 s), projecting to ~21 GB across the 5.3 GB
+of AEDAT -- unrunnable on the 16 GB host. The sample file showed 0.0%
+out-of-frame events. Patch dims for the arithmetic: 2,701 nodes, 507
+driven, 498 scored, 169 columns.
+
+THE FIX (semantics-preserving memory layout, no decision-rule contact;
+scripts/arenas/dvs_killtest.py): (1) load_split takes a binner and
+stores each trial's (signed, counts) window tensors (~0.4 MB/trial),
+dropping raw events file by file; (2) drives_and_ec returns the
+(k, n_sub, 169) normalized cumulative grids instead of dense
+(k, n_sub, 2701) tensors, which were zero off driven_idx; (3) simulate
+expands one sub-window at a time via the new expand_subwindow_drive
+into a reused (n_nodes, m) buffer. Identical binning calls on identical
+inputs and an elementwise-identical drive expansion, so downstream
+numbers are bit-identical to the registered pipeline -- asserted by two
+new unit tests (dense-layout equivalence; binner receives exactly the
+filtered events the eager path stored). 11/11 tests; the BLOCKED
+precondition line is unchanged. No verdict-relevant quantity was
+computed before this fix (data contact so far: the one-file RAM/parse
+measurement and its out-of-frame fraction).
+
 ## Task 4: DVS Gesture kill test REGISTERED and BUILT (data-gated) -- 2026-10-03
 
 User said proceed. Registration FIRST (H-T4T5-DVS-GESTURE, open;

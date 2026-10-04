@@ -219,8 +219,18 @@ def check_prerequisites(data_root: Path | None) -> list[str]:
     return missing
 
 
-def load_split(data_root: Path, listing: str, log) -> list[dict]:
-    """Parse every listed AEDAT file + its _labels.csv into trials."""
+def load_split(data_root: Path, listing: str, log, binner=None) -> list[dict]:
+    """Parse every listed AEDAT file + its _labels.csv into trials.
+
+    With `binner` ((x, y, p, t), t0, t1) -> window tensors, each trial
+    stores its binned tensors under "windows" and the raw event arrays
+    are dropped file by file. MEASURED 2026-10-03, before the first run:
+    the eager layout holds every file's events as int64/float64 (32
+    B/event; one 42.3 MB file parsed to 0.168 GB), projecting to ~21 GB
+    over the 5.3 GB dataset -- unrunnable on the 16 GB local host --
+    while the binned tensors are ~0.4 MB/trial. The binner calls the
+    same binning on the same filtered events, so downstream numbers are
+    bit-identical to the eager layout (equivalence unit-tested)."""
     trials = []
     names = [ln.strip() for ln in (data_root / listing).read_text().splitlines()
              if ln.strip()]
@@ -239,10 +249,28 @@ def load_split(data_root: Path, listing: str, log) -> list[dict]:
         x, y, p, t = x[ok], y[ok], p[ok], t[ok]
         rows = np.loadtxt(labels, delimiter=",", skiprows=1, ndmin=2)
         for cls, t0, t1 in rows:
-            trials.append({"file": name, "class": int(cls),
-                           "t0": float(t0), "t1": float(t1),
-                           "events": (x, y, p, t)})
+            trial = {"file": name, "class": int(cls),
+                     "t0": float(t0), "t1": float(t1)}
+            if binner is None:
+                trial["events"] = (x, y, p, t)
+            else:
+                trial["windows"] = binner((x, y, p, t), float(t0), float(t1))
+            trials.append(trial)
     return trials
+
+
+def expand_subwindow_drive(stacked_cum, k, driven_idx, driven_cols,
+                           input_drive, out):
+    """Dense (n_nodes, m) drive for sub-window k from the (m, n_sub,
+    n_cols) normalized cumulative grids. Part of the 2026-10-03 memory
+    fix: the per-trial (k, n_sub, n_nodes) tensors were zero off
+    driven_idx, so only the n_cols-wide grids are materialized and the
+    dense drive is expanded one sub-window at a time. Writes only the
+    driven rows; `out` must arrive zero off driven_idx and is reused
+    across sub-windows. Values are bit-identical to the dense layout
+    d[:, :, driven_idx] = input_drive * cum[:, :, driven_cols]."""
+    out[driven_idx, :] = input_drive * stacked_cum[:, k, :][:, driven_cols].T
+    return out
 
 
 def main() -> int:
@@ -299,22 +327,12 @@ def main() -> int:
     log(f"lattice: {n_cols} columns; {score_idx.size} scored cells; "
         f"pixels assigned {float((pixel_to_col >= 0).mean()):.3f}")
 
-    # Trials.
-    train_all = load_split(args.data_root, "trials_to_train.txt", log)
-    test_all = load_split(args.data_root, "trials_to_test.txt", log)
-    log(f"parsed trials: train {len(train_all)}, test {len(test_all)}")
-    if len(train_all) < MIN_TRAIN_TRIALS or len(test_all) < MIN_TEST_TRIALS:
-        log(f"BLOCKED: parse floors not met "
-            f"({len(train_all)}/{MIN_TRAIN_TRIALS} train, "
-            f"{len(test_all)}/{MIN_TEST_TRIALS} test)")
-        return 3
-
     n_sub = int(round(WINDOW_MS / DT_SUB_MS))
 
-    def trial_windows(trial):
+    def bin_trial(events, t0, t1):
         """(k, n_sub, n_cols) signed and counts tensors for one trial."""
-        x, y, p, t = trial["events"]
-        starts = window_starts(trial["t0"], trial["t1"])
+        x, y, p, t = events
+        starts = window_starts(t0, t1)
         signed = np.zeros((starts.size, n_sub, n_cols))
         counts = np.zeros_like(signed)
         for w, s0 in enumerate(starts):
@@ -323,6 +341,25 @@ def main() -> int:
                 pixel_to_col, n_cols, 0, 0)
             signed[w], counts[w] = sg, ct
         return signed, counts
+
+    # Trials, binned at load (see load_split: the eager event layout
+    # measures ~21 GB over this dataset and cannot fit the local host).
+    train_all = load_split(args.data_root, "trials_to_train.txt", log,
+                           binner=bin_trial)
+    test_all = load_split(args.data_root, "trials_to_test.txt", log,
+                          binner=bin_trial)
+    log(f"parsed trials: train {len(train_all)}, test {len(test_all)}")
+    if len(train_all) < MIN_TRAIN_TRIALS or len(test_all) < MIN_TEST_TRIALS:
+        log(f"BLOCKED: parse floors not met "
+            f"({len(train_all)}/{MIN_TRAIN_TRIALS} train, "
+            f"{len(test_all)}/{MIN_TEST_TRIALS} test)")
+        return 3
+
+    def trial_windows(trial):
+        """The trial's binned (signed, counts) tensors."""
+        if "windows" in trial:
+            return trial["windows"]
+        return bin_trial(trial["events"], trial["t0"], trial["t1"])
 
     # One normalization scalar (seed-0 calibration subset; frozen).
     rng0 = np.random.default_rng(SEEDS[0])
@@ -339,15 +376,17 @@ def main() -> int:
     log(f"drive norm (seed-0 cal subset, {len(cal_ids)} trials): {norm:.4f}")
 
     def drives_and_ec(trials):
-        """Per trial: drive tensor list [(k, n_sub, n_nodes)] and
-        event-count feature matrix (len(trials), 2*n_cols)."""
+        """Per trial: normalized cumulative column grids [(k, n_sub,
+        n_cols)] and event-count feature matrix (len(trials), 2*n_cols).
+        The dense (k, n_sub, n_nodes) drive tensors are NOT materialized
+        here (memory fix, 2026-10-03): they were zero off driven_idx, so
+        simulate() expands sub-window slices via expand_subwindow_drive
+        -- bit-identical values, ~16x smaller held state."""
         drv, ec = [], []
         for trial in trials:
             sg, ct = trial_windows(trial)
             cum = np.cumsum(sg, axis=1) / col_npix[None, None, :] / norm
-            d = np.zeros((sg.shape[0], n_sub, n_nodes))
-            d[:, :, driven_idx] = fc2.INPUT_DRIVE * cum[:, :, driven_cols]
-            drv.append(d)
+            drv.append(cum)
             k = max(sg.shape[0], 1)
             ec.append(np.concatenate([ct.sum(axis=(0, 1)),
                                       sg.sum(axis=(0, 1))]) / k)
@@ -373,11 +412,13 @@ def main() -> int:
         total = np.zeros((score_idx.size, m))
         sub_steps = int(round(DT_SUB_MS / fc2.DT_MS))
         tail_steps = int(round(TAIL_MS / fc2.DT_MS))
-        stacked = np.stack(flat)                       # (m, n_sub, n_nodes)
+        stacked = np.stack(flat)                       # (m, n_sub, n_cols)
+        drive = np.zeros((n_nodes, m))                 # reused per sub-window
         step = 0
         with np.errstate(over="ignore", invalid="ignore"):
             for k in range(n_sub):
-                drive = stacked[:, k, :].T
+                expand_subwindow_drive(stacked, k, driven_idx, driven_cols,
+                                       fc2.INPUT_DRIVE, drive)
                 for _ in range(sub_steps):
                     net.step(drive)
                     step += 1
