@@ -2172,7 +2172,7 @@ hypotheses:
       circuit-free raw event-count features -- the motion circuit
       finally earning its keep on event input, where per-column
       direction regression did not.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-03 BEFORE ANY INSTRUMENT CODE, with the
@@ -2194,7 +2194,34 @@ hypotheses:
         p<0.05, plus pooled-accuracy majority). KILL closes Task 4's
         T4/T5 limb with no NeuroBench integration built. The
         neurobench package is deliberately NOT used for this decision.
-    updated: 2026-10-03
+      - >
+        MEASURED 2026-10-03 (user's local run of the one registered
+        command; record in WORKLOG, commits efd06a9 + 0418a4f):
+        VERDICT KILL, exit 1. Valid run, not BLOCKED: 1,176 train /
+        288 test trials parsed (floors 600/150), zero out-of-frame
+        parser flags over all 122 files, zero unstable windows in any
+        arm, 453.5 s wall, 2.39 GB peak RSS; drive norm 1.4130; test
+        subjects user24-29. Pooled test accuracy per seed (chance
+        1/11): real 0.4097/0.3889/0.4271; twin 0.3993/0.3750/0.4132;
+        null (degree-preserving rewire) 0.4410/0.4236/0.4653;
+        event_count 0.4722/0.4444/0.5035. Bar 1 HOLDS -- real above
+        chance in every seed, worst p 2.6e-42. Bars 2 and 3 FAIL:
+        real loses to its own rewire in all three seeds (sign test
+        over 18 subject x seed cells: real better on 5, p 0.985) and
+        to the circuit-free event-count features in all three (better
+        on 4 of 16, p 0.989). Attribution context: the uniform-tau
+        twin sits BELOW real in every seed, so the temporal
+        heterogeneity contributes -- just nothing the rewire does not
+        do better. FOURTH consecutive rewire-over-real result on this
+        circuit (ARC motion, DSEC real + uniform-tau context, DVS
+        Gesture). Instrument fix efd06a9 (memory layout only,
+        bit-identical outputs asserted by two equivalence tests)
+        landed BEFORE any verdict-relevant quantity was computed. Per
+        the registration: Task 4's T4/T5 limb closes with no
+        NeuroBench integration built; the Keyword-FSCIL/MB limb needs
+        the user's explicit go. AN-2 invalidated. Expected-tier base
+        rate becomes 0 for 14, as the registration pre-stated.
+    updated: 2026-10-04
 
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----

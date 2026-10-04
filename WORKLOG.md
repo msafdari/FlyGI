@@ -1,5 +1,32 @@
 # FlyGI durable worklog
 
+## Task 4 CLOSED (T4/T5 limb) with verdict; base rate 0 for 14 propagated -- 2026-10-04
+
+Cloud-side close of the KILL recorded below, per the runbook's
+division of labor:
+
+- EXPERIMENTS.yaml: H-T4T5-DVS-GESTURE open -> REFUTED, with the
+  MEASURED evidence bullet carrying the per-seed numbers, both failed
+  sign tests, the twin-below-real attribution note, and the
+  pre-verdict instrument fix (efd06a9). YAML re-validated.
+- ASSUMPTIONS.md: AN-2 OPEN -> INVALIDATED, annotated in place (the
+  linear readout works far above chance; it just does not earn the
+  specific wiring its keep -- rewire and event counts both beat it).
+- HANDOFF.md: Task 4 row -> T4/T5 LIMB COMPLETE WITH VERDICT; the
+  Keyword-FSCIL/MB limb stays gated on the user's explicit go.
+- Expected-tier base rate 0 for 13 -> 0 for 14 (the fourteenth is
+  H-T4T5-DVS-GESTURE, exactly as its registration pre-stated)
+  propagated to the three outward carriers: HANDOFF conventions,
+  task1 factsheet row, task1 writeup closing sentence. Writeup body
+  re-counted: 1,448 words, unchanged (the swap is count-neutral).
+  Dated historical "0 for 13" mentions (frozen registration, earlier
+  worklog entries, AN-2's preserved prior text) left as written.
+
+Per the frozen rule, no NeuroBench harness integration is built. Next
+arena decision is the user's: Task 5 (Brain-Score) per program order,
+or an explicit go on the Keyword-FSCIL/MB limb, or a re-rank given
+the fourth consecutive rewire-over-real result.
+
 ## Task 4: DVS Gesture kill test RUN -- verdict KILL (real loses to its rewire AND to event counts) -- 2026-10-03
 
 The user ran the one registered command on the fixed instrument

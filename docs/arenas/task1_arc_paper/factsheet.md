@@ -188,9 +188,10 @@ L=LEAGUE.md, R=EXPERIMENTS.yaml.
   "controller-fly"; the 2026-09-26 audit made the adapter report
   controller-light / deploy_fly_tiebreak=false /
   neuronal_dynamics_active=false machine-readably. [W]
-- EXPECTED-tier base rate: 0 for 13 on score-adjacent predictions (as of
-  2026-10-03; twelfth recorded 2026-09-24, thirteenth 2026-10-03 =
-  H-FLYGI-FLYBENCH-CALIBRATED, refuted on its frozen activation bar;
+- EXPECTED-tier base rate: 0 for 14 on score-adjacent predictions (as of
+  2026-10-03; thirteenth = H-FLYGI-FLYBENCH-CALIBRATED, refuted on its
+  frozen activation bar; fourteenth = H-T4T5-DVS-GESTURE, refuted on
+  both comparison bars exactly as its registration pre-stated;
   "the measurements, as usual, all held"). [W,R]
 
 ## External context (SOURCED — dated survey, in-repo)

@@ -23,7 +23,7 @@ post and an X post that lead to the public FlyGI GitHub repo.
 | 1 | ARC Prize 2026 Paper Track | **Claude-side COMPLETE.** All artifacts in docs/arenas/task1_arc_paper/. Remaining steps are the user's (runbook steps 0-7). |
 | 2 | DSEC-Flow | **COMPLETE WITH VERDICT (2026-10-02): kill test KILLED.** H-T4T5-DSEC-DIRECTION refuted on thun_00_a -- both frozen bars failed, the rewire beat the real wiring a third time, all arms near chance at the declared binning. No dense pipeline, no benchmark entry (per the frozen rule). Full record in EXPERIMENTS.yaml. |
 | 3 | FlyBench | **COMPLETE WITH VERDICT (2026-10-03).** Adapter kill test PASSED (contract-level); first MaleCNS rows measured (unpinned, AF-7); calibrated arm KILLED — H-FLYGI-FLYBENCH-CALIBRATED refuted (activation subset moved +0.0002 vs the +0.02 bar; the gain landed in suppression, led by the one task the LK calibration directly targets). The UNIFORM row stands as the measured contribution: core 1.000 / hard 0.6044 / graded 0.711 / specificity +0.282 vs reference 0.5667 / 0.5366 / 0.639 / +0.184. Any flybench PR / verified-badge step is the USER's decision from that row. |
-| 4 | NeuroBench | pending |
+| 4 | NeuroBench | **T4/T5 LIMB COMPLETE WITH VERDICT (2026-10-03): kill test KILLED.** H-T4T5-DVS-GESTURE refuted on held-out subjects -- real T4/T5 far above chance but beaten by its own degree-preserving rewire in all 3 seeds AND by circuit-free event-count features (fourth consecutive rewire-over-real on this circuit). No NeuroBench integration built, per the frozen rule. The Keyword-FSCIL/MB limb needs the user's explicit go (priors in task4_neurobench/due_diligence_delta.md). Full record in EXPERIMENTS.yaml + WORKLOG. |
 | 5 | Brain-Score | pending |
 | 6 | e-nose / gas drift | pending |
 | 7 | MLPerf Tiny | pending |
@@ -144,9 +144,9 @@ its own quick due-diligence delta when it starts.
 
 - Every outward number must trace to a verified factsheet. Run an
   adversarial fact/tier gate before anything ships.
-- The base rate for expected-tier score claims is **0 for 13** (as of
-  2026-10-03; the 13th is H-FLYGI-FLYBENCH-CALIBRATED). Any stale
-  "0 for 12" or earlier is a bug.
+- The base rate for expected-tier score claims is **0 for 14** (as of
+  2026-10-03; the 14th is H-T4T5-DVS-GESTURE, exactly as its own
+  registration pre-stated). Any stale "0 for 13" or earlier is a bug.
 - Required scope words: model (class-N) vs fly; connectome vs brain.
   Never "the fly" when the record is scoped to a circuit, task and
   fidelity class.
