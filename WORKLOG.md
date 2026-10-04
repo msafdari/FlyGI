@@ -1,5 +1,36 @@
 # FlyGI durable worklog
 
+## Task 4: DVS Gesture kill test RUN -- verdict KILL (real loses to its rewire AND to event counts) -- 2026-10-03
+
+The user ran the one registered command on the fixed instrument
+(results/arenas/dvs_killtest.json + .log, gitignored). Valid, not
+blocked: 1,176 train / 288 test trials parsed (floors 600/150), ZERO
+out-of-frame parser flags over all 122 files, ZERO unstable windows in
+every arm, 453.5 s wall, peak RSS 2.39 GB (the pre-fix projection was
+~21 GB; the estimate of ~2.5 GB held). Drive norm (seed-0 cal subset,
+50 trials): 1.4130. Train union 876 trials; test subjects user24-29.
+
+MEASURED, per seed (pooled test accuracy; chance 1/11):
+- seed 0: real 0.4097, twin 0.3993, null 0.4410, event_count 0.4722
+- seed 1: real 0.3889, twin 0.3750, null 0.4236, event_count 0.4444
+- seed 2: real 0.4271, twin 0.4132, null 0.4653, event_count 0.5035
+
+THE FROZEN BARS: bar 1 HOLDS (real above chance all seeds, worst
+p 2.6e-42); bars 2 and 3 FAIL -- real loses to its own
+degree-preserving rewire in ALL THREE seeds (sign test over 18
+subject x seed cells: real better on 5, p 0.985) and to the
+circuit-free event-count features in all three (better on 4 of 16,
+p 0.989). VERDICT: KILL, exit 1. Attribution context: twin
+(uniform-tau) sits BELOW real in every seed, so the temporal
+heterogeneity is doing something -- just nothing the rewire does not
+do better. This is the FOURTH consecutive result on this circuit
+where the specific T4/T5 wiring is beaten by a degree-preserving
+shuffle of itself (ARC motion, DSEC real, DSEC uniform-tau context,
+now DVS Gesture). Per the registration: Task 4's T4/T5 limb closes
+with no NeuroBench integration built; the Keyword-FSCIL/MB limb needs
+the user's explicit go. Hypothesis close in EXPERIMENTS.yaml is the
+cloud side's step per the runbook; this entry is the measured record.
+
 ## Task 4: instrument memory fix BEFORE the first run (measured 21 GB -> ~2.5 GB) -- 2026-10-03
 
 Local preconditions passed as registered (BLOCKED with exactly the one
