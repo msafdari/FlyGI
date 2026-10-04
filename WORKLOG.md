@@ -1,5 +1,51 @@
 # FlyGI durable worklog
 
+## Task 5: Brain-Score V1 kill test REGISTERED and BUILT (data-gated) -- 2026-10-04
+
+User said go. Registration FIRST (H-EARLYFILTER-BRAINSCORE-V1, open;
+docs/arenas/task5_brainscore/killtest_design.md -- frozen with the
+moved priors stated on its face; commit e89eb70 carries the
+registration alone, before any instrument code), instrument second:
+
+- scripts/arenas/brainscore_killtest.py: ONE public benchmark
+  (FreemanZiemba2013public.V1-pls, their metric/ceiling/CV verbatim,
+  locally); scored population = INPUT_TYPES cells in the central 9x9
+  hex window (T4/T5 excluded -- they have their four results); ONE
+  declared drive convention (AB-4: grayscale -> pure-numpy bilinear
+  128x128 -> DSEC identity-crop column means -> contrast about
+  mid-gray, constant 250 ms + 250 ms tail through L1/L2/L3 at
+  INPUT_DRIVE -1.0, no sweep); fc25 trained_subset passing config
+  verbatim; arms real / twin (context) / rewire per seed (4242
+  convention) / input-passthrough; minimal BrainModel adapter with
+  the two declared plumbing assumptions (visual_degrees = the
+  benchmark's own; identical features per requested time bin) and
+  per-arm identifiers so their regression cache cannot collide
+  across arms; ApiMismatch and package failures exit BLOCKED (3),
+  never a verdict.
+- tests/test_brainscore_killtest.py: 8 tests on the pure plumbing
+  (grayscale variants, deterministic bilinear resize, the declared
+  column-drive convention incl. the empty-column ASSUMPTION branch,
+  hex-window inversion, tolerant Score extractor across the API
+  shapes, PASS + three KILL verdict paths + missing-error and
+  missing-seed handling, frozen constants, cloud BLOCKED listing).
+- MEASURED in-cloud: 8/8 new tests pass (32/32 with the DSEC + DVS
+  suites, venv312); the script exits 3 BLOCKED here listing
+  brainscore_vision among the missing prerequisites.
+- Instrument bug caught by its own unit test BEFORE any data contact:
+  inverting the hex embedding moves a boundary cell at exactly
+  |dh| = 4 to 4 + O(eps), dropping it from the scored window;
+  build_patch selects on raw hex coords and never faces this. Fixed
+  with a 1e-9 tolerance, commented at the site.
+- Runbook: docs/arenas/task5_brainscore/runbook.md. The
+  brainscore-vision install is the user's own call (AF-6 covered
+  flybench only); no dataset download by hand -- the benchmark
+  fetches its own data on first load.
+
+NEXT: user runs the one command locally and reports the JSON; cloud
+closes H-EARLYFILTER-BRAINSCORE-V1 either way. On KILL, Task 5 ends
+with no submission built. 0 for 15 would be the base-rate count if
+the premise fails (pre-stated in the registration).
+
 ## Task 5 (Brain-Score): due diligence delta OPEN, kill test sketched, awaiting go -- 2026-10-04
 
 Per program order after the Task 4 close (the Keyword-FSCIL/MB limb
