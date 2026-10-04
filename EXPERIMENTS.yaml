@@ -2223,6 +2223,44 @@ hypotheses:
         rate becomes 0 for 14, as the registration pre-stated.
     updated: 2026-10-04
 
+  H-EARLYFILTER-BRAINSCORE-V1:
+    statement: >
+      The fc25 class-2.5 patch's early-filter population (13
+      INPUT_TYPES: L1-L5, Mi1/Mi4/Mi9, Tm1-Tm4/Tm9 -- the one
+      dynamics-bearing circuit family never yet tested against its own
+      rewire), driven by static benchmark images through one declared
+      flash-onset convention at the fc25-passing configuration, yields
+      evoked-integral features whose V1 neural predictivity
+      (FreemanZiemba2013public.V1-pls, Brain-Score's own public metric
+      code verbatim, run locally) beats BOTH the input-passthrough
+      control and the patch's degree-preserving rewire.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-04 BEFORE ANY INSTRUMENT CODE, with the
+        moved priors on the table (rewire over real 4 consecutive on
+        T4/T5; the one surviving fly-positive won as STATIC ANATOMY;
+        base rate 0 for 14 -- 0 for 15 would be the count if this
+        fails). Frozen design: docs/arenas/task5_brainscore/
+        killtest_design.md. ONE public benchmark, their metric/ceiling/
+        CV verbatim on the user's machine (AF-6 does NOT extend to
+        brainscore-vision in-container). ONE declared drive convention
+        (AB-4): grayscale -> 128x128 -> DSEC identity-crop column
+        means -> contrast about mid-gray, constant 250 ms + 250 ms
+        tail through L1/L2/L3 at INPUT_DRIVE -1.0; no sweep. Scored:
+        INPUT_TYPES cells in the central 9x9 window; T4/T5 excluded.
+        ARMS: real / uniform-tau twin (context, non-decisional) /
+        degree-preserving rewire per seed (0,1,2; base 4242) /
+        input-passthrough (the circuit's own column-contrast input as
+        features). PASS iff real ceiled center > 0 beyond its reported
+        error AND > rewire in all 3 seeds AND > passthrough. KILL
+        closes the arena with no BrainModel submission built. BLOCKED
+        floors: package/benchmark unloadable locally, < 100 stimuli,
+        > 20% unstable presentations, or an API mismatch blocking the
+        metric call (plumbing fixes pre-verdict recorded, DVS
+        precedent; bars and arms are not plumbing).
+    updated: 2026-10-04
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:
