@@ -1,5 +1,42 @@
 # FlyGI durable worklog
 
+## Task 6: gas-drift MB kill test RUN -- verdict KILL (real beats scrambled glomeruli, loses to every rewire and to raw features) -- 2026-10-06
+
+The user ran the one registered command (UCI 224 corpus, batch1..10
+under ~/datasets/gasdrift/Dataset; results/arenas/gasdrift_killtest
+.json + console log, gitignored). No instrument fixes were needed --
+the test ran out of the box. Disk for the corpus came from clearing
+this session's own closed Task-5 artifacts (~/venvs/brainscore 1.8 GB,
+~/.brainio 1.2 GB, ~/.result_caching; re-creatable from the Task-5
+entry if Brain-Score work ever reopens).
+
+VALID, not blocked: all 10 batches parsed (per-batch class lines in
+the log), trainable classes [1-6], train 90 / test 305 across batches
+2-10; subcircuit 4,790 nodes (627 PN / 4,064 KC / 2 APL / 97 MBON),
+162 glomerular types, w_scale 0.05762; ALL FIVE calibrations
+hit_target=True (cal_median 0.0866-0.1040 in the band); ZERO
+exceptions in every arm; 4,562.9 s wall at --workers 8 (declared ~1 h,
+observed 76 min), peak RSS 1.22 GB.
+
+MEASURED, mean-over-batches (pooled n=305; chance 1/6):
+- real   0.4257 (129/305)  curve .543 .500 .433 .467 .417 .528 .278 .278 .389
+- scram  0.3817 (115/305)  (scrambled-glomeruli control: real WINS)
+- null0  0.4338 (131/305), null1 0.4854 (146/305), null2 0.4648
+  (140/305) -- every degree-preserving rewire beats real
+- raw    0.5022 (149/305)  (circuit-free comparator: beats everything)
+
+THE FROZEN BARS: above-chance HOLDS (p 5.2e-26); beats-rewire FAILS
+in all three seeds; beats-raw FAILS. VERDICT: KILL, exit 1. SIXTH
+consecutive rewire-beats-real, now on the olfactory side. The new
+decomposition this adds: the real PN->KC map DOES carry structure the
+scrambled-glomerulus control destroys (0.426 vs 0.382) -- the fly's
+glomerular fan-in is not nothing -- but a degree-preserving shuffle
+preserves whatever the metric rewards and adds a little, and the raw
+16x8 sensor features beat every spiking arm. Per the registration the
+cloud side closes H-ALMB-GASDRIFT and executes the pre-stated dual
+close of the Task 4 Keyword-FSCIL/MB limb. Expected-tier base rate:
+0 for 16.
+
 ## Task 6: gas-drift MB kill test REGISTERED and BUILT (data-gated) -- 2026-10-06
 
 User chose option 1 (Task 6 as the MB's last stand, one kill test
