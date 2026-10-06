@@ -1,5 +1,51 @@
 # FlyGI durable worklog
 
+## Task 6: gas-drift MB kill test REGISTERED and BUILT (data-gated) -- 2026-10-06
+
+User chose option 1 (Task 6 as the MB's last stand, one kill test
+settling both open MB premises). Registration FIRST (H-ALMB-GASDRIFT,
+open; docs/arenas/task6_enose/killtest_design.md -- frozen with the
+moved priors AND the literature's own prediction on its face: Caron
+2013 / Litwin-Kumar 2017 say PN->KC is near-random, so a bar-2 KILL is
+the ESTABLISHED expectation, not a surprise; commit 769e0d8 carries
+the due-diligence delta + registration alone), instrument second:
+
+- scripts/arenas/gasdrift_killtest.py: UCI drift corpus, TRAIN batch 1
+  (15/class seeded) / TEST batches 2-10 (6/class/batch), trainable
+  classes derived from batch 1; frozen encoder (AE-1/AE-4: rank-CDF
+  fit on TRAIN only, ENCODER_SEED permutation onto glomerular types,
+  5-100 Hz PN rates, Poisson paired across arms); fc2_kc_sparse
+  machinery verbatim at its passing config (asserted against
+  verdict.pass_configs), theta AND alpha recalibrated per arm by the
+  LK recipe verbatim on a seeded CAL_N=8 TRAIN subset (rewired arms
+  calibrate fresh); run_sample = run_trial with the binary member
+  mask generalized to the affine continuous drive; arms real /
+  rewire x3 / raw-feature probe / scrambled-encoder context;
+  --workers N process pool (decision-neutral: per-sample seeds
+  fixed); BLOCKED on floors, any calibration miss, >5% exceptions.
+- Two review catches BEFORE any data contact: (1) the alpha-balance
+  feedback must read the ARM's own APL->KC block, not the real
+  circuit's (a rewired arm has different APL edges); (2) Subcircuit
+  is a frozen dataclass -- matrix swaps go through
+  dataclasses.replace.
+- tests/test_gasdrift_killtest.py: 9 tests -- the load-bearing one
+  asserts run_sample EXACTLY reproduces fc2_kc_sparse.run_trial
+  (same Poisson stream, same spike counts) at binary levels on a toy
+  spiking network, plus parser dialects, rank-CDF saturation
+  semantics, seeded encoder, split floors/caps, PASS + three KILL
+  verdict paths, frozen constants, cloud BLOCKED listing.
+- MEASURED in-cloud: 9/9 new (41/41 across the four kill-test
+  suites, venv312); the script exits 3 BLOCKED here listing
+  --data-root among the missing prerequisites.
+- Runbook: docs/arenas/task6_enose/runbook.md. No new third-party
+  packages this time. Declared cost ~7-8 h at --workers 1, ~1 h at
+  --workers 8.
+
+NEXT: user runs the one command locally and reports the JSON; cloud
+closes H-ALMB-GASDRIFT either way. On KILL, the pre-stated dual close
+also ends the Task 4 Keyword-FSCIL/MB limb as not pursued. 0 for 16
+would be the base-rate count if the premise fails (pre-stated).
+
 ## Task 5 CLOSED with verdict; base rate 0 for 15 propagated -- 2026-10-06
 
 Cloud-side close of the KILL recorded below, per the runbook's
