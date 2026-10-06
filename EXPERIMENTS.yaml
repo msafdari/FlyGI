@@ -2234,7 +2234,7 @@ hypotheses:
       (FreemanZiemba2013public.V1-pls, Brain-Score's own public metric
       code verbatim, run locally) beats BOTH the input-passthrough
       control and the patch's degree-preserving rewire.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-04 BEFORE ANY INSTRUMENT CODE, with the
@@ -2259,7 +2259,34 @@ hypotheses:
         > 20% unstable presentations, or an API mismatch blocking the
         metric call (plumbing fixes pre-verdict recorded, DVS
         precedent; bars and arms are not plumbing).
-    updated: 2026-10-04
+      - >
+        MEASURED 2026-10-04 (user's local run of the one registered
+        command; record in WORKLOG, commit 0c418a2): VERDICT KILL,
+        exit 1. Valid, not blocked: 135 stimuli (floor 100), visual
+        degrees 4.0, 169 columns / 1,046 scored early-filter cells of
+        2,701 nodes, zero unstable presentations in every arm, 75.9 s
+        after the one-time 1.33 GB assembly fetch. Ceiled centers
+        (their reported error): real 0.0690 +/- 0.0201; twin 0.0697
+        +/- 0.0209 (context, ~= real -- temporal heterogeneity
+        decides nothing here); passthrough 0.0330 +/- 0.0193; rewire
+        seeds 0.0828 / 0.0756 / 0.0735. Bars 1 and 2-of-3: above-
+        floor HOLDS and beats-passthrough HOLDS -- the program's
+        FIRST arm whose dynamics add predictivity over their own
+        input (roughly double, 0.069 vs 0.033). Beats-rewire FAILS in
+        ALL THREE seeds: every degree-preserving shuffle scored at or
+        above real. FIFTH consecutive rewire-over-real on fc25-class
+        circuits. Sharpened reading (inferred, bridge stated: one
+        benchmark, one drive convention): what the V1 metric rewards
+        is the population's temporal/nonlinear transformation, which
+        survives shuffling intact; the specific early-filter wiring
+        contributes nothing this benchmark can see. Two plumbing
+        BLOCKEDs fixed pre-verdict at the API line (vendored brainio
+        import; 0-d object-array time_bins), decision rules
+        untouched, suites green (765 passed). Per the registration:
+        no BrainModel submission, no account, no further Brain-Score
+        work. Expected-tier base rate becomes 0 for 15, as the
+        registration pre-stated.
+    updated: 2026-10-06
 
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----

@@ -1,5 +1,46 @@
 # FlyGI durable worklog
 
+## Task 5 CLOSED with verdict; base rate 0 for 15 propagated -- 2026-10-06
+
+Cloud-side close of the KILL recorded below, per the runbook's
+division of labor:
+
+- EXPERIMENTS.yaml: H-EARLYFILTER-BRAINSCORE-V1 open -> REFUTED, with
+  the MEASURED evidence bullet carrying the per-arm centers/errors,
+  the two-bars-cleared-for-the-first-time note (floor AND
+  passthrough), the all-three-rewires-at-or-above-real failure, the
+  fifth-consecutive count, and the two pre-verdict plumbing fixes
+  (vendored brainio import; 0-d object-array time_bins). YAML
+  re-validated.
+- ASSUMPTIONS.md: AB-2/AB-3 -> MOOT (no submission on a KILL, so the
+  rows never get exercised); AB-4 -> EXERCISED, USABLE (the declared
+  convention produced above-floor predictivity and doubled its own
+  passthrough -- the KILL came from the rewire bar, not a dead
+  frontend; whether another convention reorders real vs rewire stays
+  an open structural assumption). Rows annotated in place, never
+  deleted.
+- HANDOFF.md: Task 5 row -> COMPLETE WITH VERDICT.
+- Expected-tier base rate 0 for 14 -> 0 for 15 (the fifteenth is
+  H-EARLYFILTER-BRAINSCORE-V1, exactly as its registration
+  pre-stated) propagated to the three outward carriers: HANDOFF
+  conventions, task1 factsheet row, task1 writeup closing sentence.
+  Writeup body re-counted: 1,448 words, unchanged. Dated historical
+  "0 for 14" mentions left as written.
+
+Per the frozen rule: no BrainModel submission, no account, no further
+Brain-Score work. The program-level finding sharpens to: five
+consecutive rewire-over-real on fc25-class circuits, with Task 5
+adding the first MEASURED case where the dynamics beat their own
+input -- the transformation is worth something; the specific wiring
+is what keeps failing to be.
+
+NEXT (user decision): Task 6 (e-nose / UCI gas drift) is next in
+program order, but it is MB-dependent and inherits the MB's weak
+priors (association rewire loss; calibrated flybench arm refuted) --
+same priors gate the still-parked Task 4 Keyword-FSCIL/MB limb. The
+options are a Task 6 due-diligence delta, an explicit MB-limb go, or
+a re-rank of what remains (Tasks 6-8).
+
 ## Task 5: Brain-Score V1 kill test RUN -- verdict KILL (dynamics beat their input; the wiring still loses to its rewire) -- 2026-10-04
 
 Environment first: brainscore-vision cannot install on Python 3.12 /
