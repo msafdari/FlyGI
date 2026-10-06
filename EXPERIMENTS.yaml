@@ -2288,6 +2288,49 @@ hypotheses:
         registration pre-stated.
     updated: 2026-10-06
 
+  H-ALMB-GASDRIFT:
+    statement: >
+      The class-2-validated MB (real MaleCNS PN/KC/APL subcircuit at
+      the fc2_kc_sparse-passing configuration, theta and alpha
+      recalibrated per arm by the circuit's own Litwin-Kumar recipe on
+      this input), given UCI gas-drift samples through one declared
+      seeded encoder (128 rank-CDF-normalized features -> 128 of 162
+      glomerular types as PN Poisson rates), yields KC sparse-code
+      features whose linear-probe gas classification on drift-held-out
+      batches 2-10 beats BOTH the identical probe on the raw features
+      AND the subcircuit's degree-preserving rewire.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-06 BEFORE ANY INSTRUMENT CODE, with the
+        moved priors on the table (five consecutive rewire-over-real
+        on visual circuits; the MB's own record weakest in the
+        program: mb_association rewire loss, calibrated flybench arm
+        refuted; base rate 0 for 15 -- 0 for 16 would be the count if
+        this fails) AND the established literature's prediction stated
+        on the design's face: Caron 2013 / Litwin-Kumar 2017 say
+        PN->KC wiring is near-random, so bar 2 failing is the
+        literature's own expectation -- the informative content either
+        way is the circuit-vs-raw bar and the per-batch drift curves.
+        Frozen design: docs/arenas/task6_enose/killtest_design.md.
+        TRAIN batch 1 (15/class, seeded), TEST batches 2-10 (6/class/
+        batch); trainable classes derived from batch 1 (floor 4
+        classes / 150 test samples). Encoder frozen (AE-1/AE-4):
+        rank-CDF fit on TRAIN only, ENCODER_SEED 20261006 permutation
+        onto glomerular types, rates 5-100 Hz, Poisson paired across
+        arms. ARMS: real / rewire x3 (4242+seed, each calibrated
+        fresh) / raw-feature probe / scrambled-encoder context
+        (non-decisional). PASS iff real above chance (exact binomial
+        p < 0.05) AND mean-over-batches accuracy > all 3 rewires AND
+        > raw. BLOCKED: files/classes/test floors, calibration miss
+        (hit_target false) in any arm, > 5% simulation exceptions.
+        DUAL CLOSE, binding: on KILL the Task 4 Keyword-FSCIL/MB limb
+        closes as NOT PURSUED (inferred bridge stated in the design:
+        same machinery, native modality, smaller encoder invention;
+        the audio hypothesis itself stays unmeasured); on PASS it
+        reopens with this result as its prior.
+    updated: 2026-10-06
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:

@@ -87,7 +87,9 @@ strike through and mark instead.
 | --- | --- | --- | --- | --- |
 | AE-1 | Sensor-channel -> ORN/glomerulus assignment (16 or 62 channels onto ~50 classes) is an invention | ASSUMED (structural) | CONFIRMED (as an assumption; control = permuted/random maps) | Scrambled-encoder control mandatory |
 | AE-2 | UCI drift corpus has class-correlated batch artifacts (Dennler 2022); UCI-only headlines are attackable | SOURCED | CONFIRMED (as literature fact) | Pair with Sci Data 2025 dataset |
-| AE-3 | AL gain-control transfers to MOX drift robustness | INFERRED (established AL biology + untested bridge) | OPEN | This IS the experiment |
+| AE-3 | AL gain-control transfers to MOX drift robustness | INFERRED (established AL biology + untested bridge) | OPEN — now under test (H-ALMB-GASDRIFT, registered 2026-10-06) | This IS the experiment |
+| AE-4 | Per-feature rank-CDF normalization fit on the TRAIN batch (frozen, clipped to [0,1]; drift beyond train range reaches the circuit as saturation) is a usable drive convention and does no hidden work | ASSUMED (structural; the choice is an invention) | OPEN | The kill test fixes it, declares it, no sweep; the RAW arm consumes the identical normalized features, so the convention cannot favor the circuit |
+| AE-5 | The specific PN->KC wiring is approximately random, so a degree-preserving rewire should match it | ESTABLISHED (Caron et al. 2013 Nature 497:113; Litwin-Kumar et al. 2017 Neuron 93:1153) | CONFIRMED (as literature prior) | Stated on the registration's face: bar-2 failure in H-ALMB-GASDRIFT is the literature's own expectation, not a surprise |
 
 ## Task 7 — MLPerf Tiny (AM-*)
 
