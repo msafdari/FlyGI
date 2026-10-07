@@ -1,5 +1,28 @@
 # FlyGI durable worklog
 
+## Task 8: IJCNN 2027 competition proposal -- analyzed, recommendation NO-GO -- 2026-10-07
+
+User asked for the go/no-go. The call was re-verified today (SOURCED:
+4-page PDF due 2026-11-30; notification 12-15; launch 2027-01-01;
+entries close 02-28; competition papers 04-01; conference June 14-18
+2027, Cape Town; organizers may not compete; regular papers due
+2027-01-31). Full analysis:
+docs/arenas/task8_venues/ijcnn2027_go_no_go.md.
+
+RECOMMENDATION: NO-GO on proposing a competition this cycle. The one
+honest candidate ("Beat the Null" on the public MIT-0 harnesses) fits
+the science, but an accepted proposal is a solo Jan-Jun 2027
+operating commitment (hosting multi-GB arrays, live support, paper
+shepherding, Cape Town presence) colliding with the Task 1 calendar,
+with real under-participation risk, and the public release + a paper
+buys most of the value for none of the tail. The better IJCNN
+vehicle is the REGULAR PAPER (6 IEEE pages, due 2027-01-31 -- after
+the Dec 4 ARC results; the synthesis is already paper-shaped); that
+decision can wait until after Dec 4 at no cost. Reconsider the
+competition format for IJCNN 2028 / Telluride 2027 / CVPR 2027
+windows if the release brings co-organizers. A minimum GO path is
+recorded in the doc in case the user overrides.
+
 ## Program synthesis written: docs/arenas/SYNTHESIS.md -- 2026-10-07
 
 User chose option 1 after the Task 6 close. The completed sweep now
