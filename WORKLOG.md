@@ -1,5 +1,50 @@
 # FlyGI durable worklog
 
+## Task 6 CLOSED with verdict; DUAL CLOSE executed (Task 4 MB limb ends); base rate 0 for 16 -- 2026-10-07
+
+Cloud-side close of the KILL recorded below, per the runbook's
+division of labor:
+
+- EXPERIMENTS.yaml: H-ALMB-GASDRIFT open -> REFUTED, with the
+  MEASURED evidence bullet (all numbers, the alpha~0 calibration
+  fact, zero exceptions, 76 min at --workers 8). YAML re-validated.
+- THE PRE-STATED DUAL CLOSE EXECUTED: the Task 4 Keyword-FSCIL/MB
+  limb is CLOSED AS NOT PURSUED, exactly as H-ALMB-GASDRIFT's
+  registration bound it (inferred bridge: same AL->KC machinery,
+  native modality, smaller encoder invention -- the audio hypothesis
+  stays unmeasured). Task 4 is now fully closed. HANDOFF rows 4 and 6
+  updated.
+- SCOPE CORRECTION, recorded in the close (the dated run entry below
+  stands as written, annotated here): the run entry's "scrambled-
+  glomeruli control: real WINS" over-scopes. Both encoder maps are
+  seeded arbitrary permutations (the design's own SCRAM framing), so
+  the +4.4-point real-vs-scram gap is MEASURED encoder-invention
+  variance, not a real-wiring-beats-scrambled finding -- no real
+  feature->glomerulus correspondence exists to scramble. What it does
+  establish: the circuit's output depends materially on the invented
+  assignment, and single-map numbers carry ~4 points of map noise
+  (which also bounds how hard any one rewire gap, +0.8 to +6.0, can
+  be read). The decisive real-vs-rewire comparison was map-matched;
+  the KILL is unaffected. AE-1 annotated accordingly; AE-3 -> NOT
+  SUPPORTED as tested (with the alpha~0 caveat: the gain-control
+  bridge was tested with the knob near off); AE-4 -> exercised,
+  usable.
+- Base rate 0 for 15 -> 0 for 16 (the sixteenth is H-ALMB-GASDRIFT,
+  as its registration pre-stated) propagated to HANDOFF conventions,
+  the task1 factsheet row, and the writeup closing sentence (body
+  re-counted: 1,448 words, unchanged).
+
+PROGRAM STATE AFTER THIS CLOSE: Tasks 1-6 are done (1 awaiting the
+user's calendar steps; 2, 3-calibrated, 4-both-limbs, 5, 6 closed
+with verdicts). The runnable arena sweep is complete: six consecutive
+rewire-over-real across visual AND olfactory circuits, with two
+measured positives along the way (Task 5: dynamics beat their own
+input; Task 3: the uniform adapter row). What remains is
+calendar-gated: Task 7 (MLPerf Tiny, ~early 2027, working-group
+membership) and Task 8 (community venues; nearest date IJCNN 2027
+competition proposals due 2026-11-30), plus the user's Task 1 dates
+(release ~Nov 1, Kaggle submit before Nov 8 23:59 UTC).
+
 ## Task 6: gas-drift MB kill test RUN -- verdict KILL (real beats scrambled glomeruli, loses to every rewire and to raw features) -- 2026-10-06
 
 The user ran the one registered command (UCI 224 corpus, batch1..10

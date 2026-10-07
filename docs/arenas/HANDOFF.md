@@ -23,9 +23,9 @@ post and an X post that lead to the public FlyGI GitHub repo.
 | 1 | ARC Prize 2026 Paper Track | **Claude-side COMPLETE.** All artifacts in docs/arenas/task1_arc_paper/. Remaining steps are the user's (runbook steps 0-7). |
 | 2 | DSEC-Flow | **COMPLETE WITH VERDICT (2026-10-02): kill test KILLED.** H-T4T5-DSEC-DIRECTION refuted on thun_00_a -- both frozen bars failed, the rewire beat the real wiring a third time, all arms near chance at the declared binning. No dense pipeline, no benchmark entry (per the frozen rule). Full record in EXPERIMENTS.yaml. |
 | 3 | FlyBench | **COMPLETE WITH VERDICT (2026-10-03).** Adapter kill test PASSED (contract-level); first MaleCNS rows measured (unpinned, AF-7); calibrated arm KILLED — H-FLYGI-FLYBENCH-CALIBRATED refuted (activation subset moved +0.0002 vs the +0.02 bar; the gain landed in suppression, led by the one task the LK calibration directly targets). The UNIFORM row stands as the measured contribution: core 1.000 / hard 0.6044 / graded 0.711 / specificity +0.282 vs reference 0.5667 / 0.5366 / 0.639 / +0.184. Any flybench PR / verified-badge step is the USER's decision from that row. |
-| 4 | NeuroBench | **T4/T5 LIMB COMPLETE WITH VERDICT (2026-10-03): kill test KILLED.** H-T4T5-DVS-GESTURE refuted on held-out subjects -- real T4/T5 far above chance but beaten by its own degree-preserving rewire in all 3 seeds AND by circuit-free event-count features (fourth consecutive rewire-over-real on this circuit). No NeuroBench integration built, per the frozen rule. The Keyword-FSCIL/MB limb needs the user's explicit go (priors in task4_neurobench/due_diligence_delta.md). Full record in EXPERIMENTS.yaml + WORKLOG. |
+| 4 | NeuroBench | **T4/T5 LIMB COMPLETE WITH VERDICT (2026-10-03): kill test KILLED.** H-T4T5-DVS-GESTURE refuted on held-out subjects -- real T4/T5 far above chance but beaten by its own degree-preserving rewire in all 3 seeds AND by circuit-free event-count features (fourth consecutive rewire-over-real on this circuit). No NeuroBench integration built, per the frozen rule. **Keyword-FSCIL/MB limb CLOSED AS NOT PURSUED (2026-10-07)** via the dual close pre-stated in H-ALMB-GASDRIFT's registration: the MB lost its native-modality last stand (Task 6 KILL), so the audio limb — same machinery behind a larger encoder invention — has no remaining support; its hypothesis stays unmeasured. Task 4 is now fully closed. Full record in EXPERIMENTS.yaml + WORKLOG. |
 | 5 | Brain-Score | **COMPLETE WITH VERDICT (2026-10-04): kill test KILLED.** H-EARLYFILTER-BRAINSCORE-V1 refuted — real 0.0690 cleared the floor AND doubled its own input passthrough (0.0330, the program's first dynamics arm to add anything over its encoder), but all three degree-preserving rewires scored at or above it (0.0735–0.0828). Fifth consecutive rewire-over-real on fc25-class circuits. No BrainModel submission, no account, per the frozen rule. Full record in EXPERIMENTS.yaml + WORKLOG. |
-| 6 | e-nose / gas drift | **Kill test REGISTERED + BUILT (2026-10-06), awaiting the user's local run.** H-ALMB-GASDRIFT frozen (killtest_design.md) before the instrument (scripts/arenas/gasdrift_killtest.py, 9 unit tests incl. run_trial equivalence, BLOCKED in-cloud as designed). The literature's own prediction (PN->KC ~ random) and the binding dual close (a KILL also closes the Task 4 MB limb as not pursued) are on the registration's face. User executes docs/arenas/task6_enose/runbook.md; cloud closes either way. |
+| 6 | e-nose / gas drift | **COMPLETE WITH VERDICT (2026-10-06): kill test KILLED.** H-ALMB-GASDRIFT refuted — real 0.4257 decisively above chance (p 5.2e-26) but below every degree-preserving rewire (0.4338–0.4854) and below the raw 16-sensor features (0.5022). Sixth consecutive rewire-over-real, first olfactory, exactly as the registration's stated literature prior predicted for the rewire bar. Scope correction recorded at close: the real-vs-scram gap (+4.4 pts) is encoder-invention variance (both maps are seeded inventions), not a wiring win. No benchmark entry; the dual close executed (see Task 4 row). Full record in EXPERIMENTS.yaml + WORKLOG. |
 | 7 | MLPerf Tiny | pending |
 | 8 | Community venues | pending (hard date: IJCNN 2027 competition proposals due 2026-11-30) |
 
@@ -144,10 +144,9 @@ its own quick due-diligence delta when it starts.
 
 - Every outward number must trace to a verified factsheet. Run an
   adversarial fact/tier gate before anything ships.
-- The base rate for expected-tier score claims is **0 for 15** (as of
-  2026-10-04; the 15th is H-EARLYFILTER-BRAINSCORE-V1, exactly as its
-  own registration pre-stated). Any stale "0 for 14" or earlier is a
-  bug.
+- The base rate for expected-tier score claims is **0 for 16** (as of
+  2026-10-06; the 16th is H-ALMB-GASDRIFT, exactly as its own
+  registration pre-stated). Any stale "0 for 15" or earlier is a bug.
 - Required scope words: model (class-N) vs fly; connectome vs brain.
   Never "the fly" when the record is scoped to a circuit, task and
   fidelity class.

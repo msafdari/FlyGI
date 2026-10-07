@@ -2299,7 +2299,7 @@ hypotheses:
       features whose linear-probe gas classification on drift-held-out
       batches 2-10 beats BOTH the identical probe on the raw features
       AND the subcircuit's degree-preserving rewire.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-06 BEFORE ANY INSTRUMENT CODE, with the
@@ -2329,7 +2329,41 @@ hypotheses:
         same machinery, native modality, smaller encoder invention;
         the audio hypothesis itself stays unmeasured); on PASS it
         reopens with this result as its prior.
-    updated: 2026-10-06
+      - >
+        MEASURED 2026-10-06 (user's local run of the one registered
+        command; record in WORKLOG, commit 327f1c9; no instrument
+        fixes needed): VERDICT KILL, exit 1. Valid, not blocked: all
+        10 batches parsed, trainable classes 1-6, 90 train / 305 test,
+        all five calibrations hit_target (cal_median 0.0866-0.1040),
+        zero exceptions over 1,975 spiking samples, 4,562.9 s at
+        --workers 8, peak RSS 1.22 GB. Recorded calibration fact: the
+        alpha-balance came out ~0 at the printed precision in every
+        arm, so the APL feedback loop was effectively minimal,
+        equally, in all arms. Mean-over-batches (chance 1/6): real
+        0.4257; scram 0.3817; rewires 0.4338 / 0.4854 / 0.4648; raw
+        0.5022. Bar 1 HOLDS (pooled p 5.2e-26); bars 2 and 3 FAIL --
+        every degree-preserving rewire at or above real, and the raw
+        16-sensor features beat every spiking arm. SIXTH consecutive
+        rewire-over-real, first on the olfactory side, and exactly
+        what the registration's stated literature prior (Caron 2013 /
+        Litwin-Kumar 2017) predicted for bar 2. SCOPE CORRECTION,
+        recorded at close: the real-vs-scram gap (+4.4 points) is NOT
+        a real-wiring-beats-scrambled result -- both encoder maps are
+        seeded arbitrary permutations (20261006 vs 20261007, the
+        design's own framing), so the gap is MEASURED
+        encoder-invention variance: the circuit's output depends
+        materially on which glomeruli carry which features, and
+        single-map results carry ~4 points of map noise. The
+        real-vs-rewire comparison is map-matched, so the KILL is
+        unaffected; the rewire gaps (+0.8 to +6.0) sit at the scale
+        of that map noise, which bounds how much any one of them
+        should be read into. Per the registration: Task 6 closes with
+        no benchmark entry, and the PRE-STATED DUAL CLOSE executes --
+        the Task 4 Keyword-FSCIL/MB limb is CLOSED AS NOT PURSUED
+        (inferred bridge as registered; its audio hypothesis stays
+        unmeasured). Expected-tier base rate becomes 0 for 16, as the
+        registration pre-stated.
+    updated: 2026-10-07
 
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
