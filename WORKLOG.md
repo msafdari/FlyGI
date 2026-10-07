@@ -1,5 +1,44 @@
 # FlyGI durable worklog
 
+## Program synthesis written: docs/arenas/SYNTHESIS.md -- 2026-10-07
+
+User chose option 1 after the Task 6 close. The completed sweep now
+has a single tiered synthesis document, every number traced to
+EXPERIMENTS.yaml / WORKLOG / the factsheet (no new measurement):
+
+- The central MEASURED result as a seven-row table: every registered
+  degree-preserving-rewire comparison since 2026-09-29 (MB
+  association, ARC motion, DSEC, DVS, Brain-Score V1, gas drift) with
+  the real-vs-rewire numbers and the per-test context arms.
+- The measured positives collected in one place: the eye-map anatomy
+  separation (2.59x vs 11.59x), dynamics-over-input (0.069 vs 0.033),
+  the working DAN-gated credit mechanism (0.600 vs shuffled 0.400,
+  p=0.019), twin-below-real tau structure, the flybench uniform row,
+  and the far-above-chance codes everywhere.
+- The INFERRED synthesis with its bridge stated: benchmark metrics
+  reward the population transformation, which lives in degree
+  sequences + weight distributions + cell-type parameters -- all
+  rewire-invariant; the surviving wins are an index, a mechanism, a
+  parameter set and a transformation, never the permutation. Claim
+  boundaries carried: model-class-at-fidelity (not the fly); the
+  literature SPLIT (PN->KC null is Caron/LK's own prediction; T4/T5
+  null is NOT Maisak's -- the recorded falsifier is a class-3
+  reversal there); the measured ~4-point encoder-map noise; the
+  alpha~0 AE-3 caveat.
+- Open alternative explanations (fidelity ceiling / readout mismatch
+  / task statistics), with the MB association native-readout evidence
+  already bearing on the second.
+- The method record (0 for 16 score-adjacent; the older broader
+  counter disambiguated; five builds prevented; four pre-data-contact
+  instrument catches; two pre-verdict API fixes) and the ordered list
+  of measurements that would move the synthesis (class-3 on T4/T5
+  first).
+- Record map table: all eight hypothesis IDs -> verdict -> location.
+
+HANDOFF conventions now point at the synthesis as the required read
+before citing the program's arc. Dates cross-checked against the
+registry (adapter supported 2026-10-01 per its updated field).
+
 ## Task 6 CLOSED with verdict; DUAL CLOSE executed (Task 4 MB limb ends); base rate 0 for 16 -- 2026-10-07
 
 Cloud-side close of the KILL recorded below, per the runbook's

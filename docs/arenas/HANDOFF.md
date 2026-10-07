@@ -142,6 +142,11 @@ its own quick due-diligence delta when it starts.
 
 ## Durable conventions established in this program
 
+- The program-level synthesis of the completed sweep (Tasks 1-6, the
+  seven rewire-over-real instances with their decompositions, the
+  surviving positives, open explanations, and the record map) lives
+  in docs/arenas/SYNTHESIS.md (2026-10-07). Read it before citing the
+  program's arc anywhere.
 - Every outward number must trace to a verified factsheet. Run an
   adversarial fact/tier gate before anything ships.
 - The base rate for expected-tier score claims is **0 for 16** (as of
