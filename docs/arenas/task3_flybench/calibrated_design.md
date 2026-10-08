@@ -121,4 +121,7 @@ graded 0.93 / 22 of 30 vs the uniform class's 0.90 / 0.92 / 21.)
 Registration: EXPERIMENTS.yaml `H-FLYGI-FLYBENCH-CALIBRATED` (same
 commit). The flagged bootstrap-CI transcription oddity from the first
 rows (point estimate outside the reported interval) must be re-checked
-before any of these numbers appear in outward text.
+before any of these numbers appear in outward text. (RESOLVED 2026-10-03,
+re-checked: the point estimate is real; the CI covers a different
+estimator — a flybench diff-tool inconsistency, not a transcription error
+and not a problem with these rows. See the WORKLOG 2026-10-03 entry.)

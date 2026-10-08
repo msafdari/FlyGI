@@ -54,7 +54,9 @@ So every claim carries its tier, in the same sentence that makes it:
   loud ("assuming exploration predicts conversion"), because the bridge is the
   part that fails.
 - **Expected** -- a prediction about score or outcome. Always accompanied by
-  the base rate, which at the time of writing is eleven straight nulls.
+  the CURRENT base rate, kept canonically in docs/arenas/SYNTHESIS.md
+  (0 for 16 score-adjacent as of 2026-10-07; eleven straight nulls when
+  this directive was first written).
 
 The headline sentence never carries broader scope than the measurement under
 it: "the agent was action-blind" when only the connectome was measured is how

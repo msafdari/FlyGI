@@ -15,9 +15,12 @@ FROZEN BARS (all three must hold; constants verbatim from the registry):
   1. mean graded over SHARED activation checks: calibrated >= uniform + 0.02
   2. overall graded (calibrated) >= 0.701
   3. specificity vs rewired (calibrated) >= +0.252
-BLOCKED (not a verdict): near-zero tau/type coverage or KC sparseness band
-unreachable (read from the calibration sidecars), or an empty shared
-activation set.
+BLOCKED (not a verdict). The two registered conditions, frozen: near-zero
+tau/type coverage, or the KC sparseness band unreachable (both read from
+the calibration sidecars). A third condition -- an empty shared activation
+set -- is NOT in the registration: it is an instrument-level guard added
+at build time, because bar 1 is a mean over the shared activation set and
+is undefined on an empty set.
 
 Usage:
   python scripts/arenas/flybench_calibrated_verdict.py \
@@ -90,6 +93,8 @@ def blocked_reasons(calibrated: dict) -> list[str]:
 def verdict(uniform: dict, calibrated: dict) -> dict:
     act, sup = split_scores(uniform, calibrated)
     reasons = blocked_reasons(calibrated)
+    # Instrument-level guard, not in the registration: bar 1 is a mean
+    # over the shared activation set, hence undefined on an empty set.
     if not act:
         reasons.append("shared activation-check set is empty")
     mean = lambda rows, i: (sum(r[i] for r in rows) / len(rows)) if rows else float("nan")  # noqa: E731

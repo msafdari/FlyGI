@@ -72,8 +72,8 @@ fly — every verdict carries its fidelity class and its task. But the method
 "biology does AI" claim, and the measurement that a 52-fold local gain can
 transfer exactly zero is a warning label every benchmark chaser can use.
 
-Everything is open: the code, the full experiment log (including the twelve
-failed predictions — our score forecasts went 0 for 12 while the
+Everything is open: the code, the full experiment log (including the sixteen
+failed predictions — our score forecasts went 0 for 16 while the
 measurements all held), the preregistrations, and the Kaggle writeup we
 submitted to the ARC Prize 2026 Paper Track.
 

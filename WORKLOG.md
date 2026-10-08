@@ -1,5 +1,31 @@
 # FlyGI durable worklog
 
+## Pre-release audit IN PROGRESS: 68 verified findings, part 1 of fixes checkpointed -- 2026-10-08
+
+An 86-agent adversarially-verified audit swept every shipping document
+(8 sweep groups -> per-finding skeptic verification; 68 confirmed, 10
+rejected as dated-record false positives). Also fixed first: six tests
+requiring gitignored runtime data failed on fresh clones -- skip-guarded
+(commit 8958404); full suite 756 passed / 23 skipped / 0 failed
+in-cloud. This checkpoint carries the completed fix groups (blockers
+first: linkedin_post 0-for-12 -> 0-for-16; HANDOFF/PLAN "MIT stays" ->
+MIT-0 per AP-4's reconciled reading; kaggle_submission.md preflight
+edge-count pinned per lineage, 24,994,595 for the deployed v10/v12,
+and the adapter-contract section now names the deployed dynamics-off
+mode; README landing section carried through the arena-program close
+with a SYNTHESIS link; AGENTS.md/PLAN base-rate rules now point at the
+living counter; SYNTHESIS seven-instances-six-registrations correction,
+dead task2_dsec/ path, and IJCNN no-go status; executed-KILL banners on
+all five task runbooks; AP-7 reworded off its unfalsifiable score
+prediction; AV-1 annotated; task4 registration's seeds-line
+discrepancy reconciled in a dated post-verdict note; due-diligence
+absolute paths made repo-relative; three instrument docstrings label
+their operationalizations). Remaining in flight: docs/experiment.md /
+controls.md / modeling_assumptions.md / data_provenance.md and the
+docs/social kit; the closeout entry lands with that final group. The
+LEAGUE.md regeneration (needs local result bundles) is added to the
+release checklist as a user step.
+
 ## Task 8: IJCNN 2027 competition proposal -- analyzed, recommendation NO-GO -- 2026-10-07
 
 User asked for the go/no-go. The call was re-verified today (SOURCED:

@@ -54,14 +54,15 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 - [ ] THIRD_PARTY_NOTICES.md: present; re-read once before release to
   confirm every vendored/embedded third-party piece is listed with a
   compatible license.
-- [ ] MaleCNS data terms (register AP-6): the repo tracks NO connectome
-  arrays (ignore rules held), only manifests/hashes — good. The compiled
-  arrays live in the private Kaggle dataset
-  megusalexandrus/flygi-malecns-runtime. Before pointing the public at
-  that dataset (or making it public), confirm male-cns:v1.0 redistribution
-  terms (neuPrint datasets are typically CC-BY 4.0 — verify at
-  neuprint.janelia.org / the MaleCNS paper's data availability) and that
-  data/manifests + docs/data_provenance.md carry the required attribution.
+- [x] MaleCNS data terms VERIFIED (register AP-6, MEASURED 2026-10-01,
+  CONFIRMED): MaleCNS v1.0 is CC BY 4.0; data/README.md carries the
+  required citation (doi:10.1016/j.cell.2026.08.015) and the
+  derivative/non-endorsement disclaimer. The repo tracks NO connectome
+  arrays (ignore rules held), only manifests/hashes.
+- [ ] Residual before making the Kaggle dataset
+  megusalexandrus/flygi-malecns-runtime public: put the same CC BY 4.0
+  attribution + citation on the dataset's own description page (it
+  auto-publishes with the submission).
 
 ## Repository hygiene
 
@@ -73,10 +74,10 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 - [ ] Branch state: this program's work lives on
   claude/admiring-goldberg-wtqkbg. Merge to main (or open and merge a PR)
   before going public so the default branch shows the current record.
-- [ ] README refresh: the current README leads with milestone-era framing.
-  A public-audience rewrite is prepared as part of the Task-1 package
-  (leads with the question, the verdict matrix, the paper link, how to
-  reproduce, claim boundaries). Apply before visibility change.
+- [x] README refresh: applied in cb99eeb (2026-10-01) — README leads
+  with the question, the verdict matrix, the writeup link, reproduction
+  steps, and the MIT-0 line. Landing section updated through the
+  arena-program close in the 2026-10-08 pre-release audit.
 - [x] CITATION.cff (2026-10-02): author = Mustafa Safdari (alias
   msafdari; the name every commit is already authored under; no email
   added), repository-code link, and the MaleCNS paper as a reference
@@ -86,13 +87,24 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   zenodo.org -> GitHub, then cut a GitHub release; Zenodo mints a DOI.
 - [ ] Optional: enable GitHub Issues template pointing hypothesis
   discussions at EXPERIMENTS.yaml semantics (nice-to-have, not blocking).
-- [ ] Record reconciliation found by the 2026-09-30 fact-check pass:
-  LEAGUE.md (generated snapshot, 2026-09-26) still lists H-EFFERENCE as
-  "open" while EXPERIMENTS.yaml and WORKLOG say null. Regenerate LEAGUE.md
-  on the local machine (`scripts/league.py`; needs the result bundles this
-  container lacks) before release. The registry's duplicate-status-key
-  landmine in H-MB-CLASS2-ASSOCIATION was fixed in-container 2026-09-30
-  (run the full pytest suite locally to confirm nothing depended on it).
+- [x] Record reconciliation found by the 2026-09-30 fact-check pass:
+  RESOLVED by the 2026-10-02 local regeneration (commit 9255f6d) —
+  LEAGUE.md's H-EFFERENCE row now reads "null", matching
+  EXPERIMENTS.yaml/WORKLOG. The registry's duplicate-status-key landmine
+  in H-MB-CLASS2-ASSOCIATION was fixed in-container 2026-09-30 and the
+  full suite has run green since.
+- [ ] Regenerate LEAGUE.md AGAIN before release (found by the 2026-10-08
+  audit): the 2026-10-02 snapshot shows H-T4T5-DSEC-DIRECTION as "open"
+  (now refuted) and omits the four hypotheses closed after it
+  (H-FLYGI-FLYBENCH-CALIBRATED, H-T4T5-DVS-GESTURE,
+  H-EARLYFILTER-BRAINSCORE-V1, H-ALMB-GASDRIFT, all refuted). Run
+  `uv run python scripts/league.py --write-md LEAGUE.md` ONLY on the
+  machine holding results/connectome_agent (in this container the
+  gitignored bundles are absent and regeneration would wipe all 57
+  condition rows to "missing | 0 | 0.0000" — do not commit a
+  bundle-less regeneration). After regenerating, diff and verify:
+  (1) H-T4T5-DSEC-DIRECTION reads refuted; (2) the four new rows appear,
+  all refuted; (3) no condition row newly reads "missing" with 0 rows.
 
 ## Final order of operations
 

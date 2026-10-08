@@ -365,6 +365,13 @@ def main() -> int:
     rng0 = np.random.default_rng(SEEDS[0])
     cal_ids = rng0.choice(len(train_all), size=min(CAL_TRIALS, len(train_all)),
                           replace=False)
+    # The registration's "|end-of-window column sum|" is operationalized
+    # here as the per-pixel-normalized column aggregate (sg.sum(axis=1)
+    # / col_npix), matching the DSEC drive path's own convention; the
+    # same / col_npix appears in the drive construction (drives_and_ec),
+    # so norm and drive share units. This is the instrument's declared
+    # operationalization of the registered quantity, recorded 2026-10-08
+    # at audit, post-verdict; decision rules untouched.
     end_sums = []
     for i in cal_ids:
         sg, _ = trial_windows(train_all[i])

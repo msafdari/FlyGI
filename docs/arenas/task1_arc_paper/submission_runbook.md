@@ -26,17 +26,18 @@ Confirm or correct, against the register:
 5. AP-4: open-source licensing wording — CC0 / MIT-0 for submitter-authored
    code (and by when: at submission vs before prize payment).
 
-STATUS 2026-10-02: the user pasted arcprize.org's paper page and the full
-Kaggle Rules tab. Resolved: AP-1 (papers due 2026-11-08), AP-2, AP-3 (team
-must match the code-track team), AP-4 (INVALIDATED: the Kaggle winner
-license is CC-BY 4.0, granted only on winning — no relicense needed to
-submit). Still open, all on the Kaggle Overview tab / writeup form: AP-5
-mechanics, AP-9 linking mechanics, and the AP-4 residual (any CC0/MIT-0
-wording outside the Rules tab). New from the rules: ONE writeup submission
-per team (AP-11), and public code sharing must also be posted on the
-competition's Kaggle forum/notebooks (AP-12).
-6. AP-9: whether the paper may document the EXISTING Sept submissions or
-   a fresh linked submission is needed before Nov 2.
+STATUS end of 2026-10-02 (all Step-0 questions now resolved; the
+register rows carry the detail): AP-1 resolved (papers due 2026-11-08);
+AP-2, AP-3 resolved (team must match the code-track team); AP-4
+CONFIRMED — the CC0/MIT-0 open-sourcing clause is verbatim on
+arcprize.org's 2026 overview (the earlier Rules-only INVALIDATED call
+was itself reversed the same day; both reversals in the register), and
+the MIT-0 relicense is already committed (Step 2 below, DONE);
+AP-5 CONFIRMED in full from the Overview tab (writeup <= 1,500 words,
+Media Gallery cover, public notebook via Project Links); AP-9 CONFIRMED
+(no fourth submission needed; linkage mechanics known — kaggle_form.md
+encodes them). From the rules: ONE writeup submission per team (AP-11);
+public code sharing also posted on the competition forums (AP-12).
 
 ## Step 1 — join the Paper Track competition
 
@@ -45,7 +46,12 @@ click Join / accept rules. Do this well before 2026-10-26 (the entry
 deadline on the code tracks; treat it as the safe bound for the paper track
 too). You are already entered in arc-prize-2026-arc-agi-3.
 
-## Step 2 — license: RELICENSE TO MIT-0 BEFORE RELEASE (reopened 2026-10-02)
+## Step 2 — license: DONE 2026-10-02 (relicensed to MIT-0; kept as history)
+
+The relicense landed on the user's "go MIT-0": LICENSE in the tree is
+MIT No Attribution, with README and CITATION.cff updated (commit
+be5912d; register AP-4). Nothing left to execute here. Original
+reasoning preserved below.
 
 The arcprize 2026 overview page (the user checked it; verbatim in
 register AP-4) makes CC0/MIT-0 open-sourcing an ELIGIBILITY condition,

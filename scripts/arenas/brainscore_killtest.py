@@ -14,7 +14,11 @@ frozen BEFORE this file existed; restated, not changed):
     the central 9x9 hex window (SCORE_HALF=4 around PATCH_CENTER);
     T4/T5 are excluded from features.
   - ONE declared drive convention (AB-4, no sweep): image -> grayscale
-    (Rec. 601 if RGB) -> bilinear 128x128 -> per-column mean luminance
+    (Rec. 601 if RGB) -> bilinear 128x128 (the registration says only
+    "resized to 128x128", naming no interpolation; bilinear,
+    pixel-center aligned, is the instrument's operationalization of
+    that -- the pure-numpy choice, made for determinism) -> per-column
+    mean luminance
     over the DSEC identity-crop pixel assignment -> drive =
     (column mean - 0.5), constant for 250 ms, through L1/L2/L3 at
     INPUT_DRIVE (-1.0). Settle 2500 ms at zero drive once per arm;

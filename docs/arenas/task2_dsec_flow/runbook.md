@@ -1,5 +1,12 @@
 # Task 2 (DSEC-Flow) — kill-test runbook (user-executed)
 
+> **EXECUTED 2026-10-02 — VERDICT KILL.** H-T4T5-DSEC-DIRECTION refuted; Task 2 is
+> COMPLETE WITH VERDICT. Records: EXPERIMENTS.yaml and WORKLOG.md. The body below is
+> preserved as written before the run — a historical record, not current
+> instructions: the session-branch line (`claude/admiring-goldberg-wtqkbg`, which
+> will not resolve once the release merges to main) and the "0 for 12" base rate are
+> contemporaneous; the current base rate is 0 for 16 (see docs/arenas/SYNTHESIS.md).
+
 The kill test cannot run in the cloud container: dsec.ifi.uzh.ch,
 download.ifi.uzh.ch and drive.google.com all returned HTTP 000 (measured
 2026-10-01), and the container has no compiled MaleCNS runtime and no

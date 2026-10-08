@@ -22,7 +22,7 @@ on its calendar. Tasks 7-8 are calendar-gated into 2027.
 
 ## 2. The central measured result
 
-Seven times since 2026-09-29, under seven frozen registrations, a
+Seven times since 2026-09-29, under six frozen registrations, a
 degree-preserving rewire of the circuit under test met or beat the
 real wiring on the registered metric. No registered test went the
 other way. (The WORKLOG's running "six consecutive" count covers the
@@ -161,9 +161,12 @@ Three explanations for the regularity remain live, none tested:
 ## 7. What remains, and what would change the picture
 
 Calendar-gated: Task 7 (MLPerf Tiny, ~early 2027, working-group
-membership required) and Task 8 (community venues; nearest date IJCNN
-2027 competition proposals, 2026-11-30), plus the Task 1 release and
-submission dates (2026-11-01 / 2026-11-08).
+membership required) and Task 8 (community venues: the IJCNN 2027
+competition proposal, due 2026-11-30, was analyzed NO-GO on
+2026-10-07 — task8_venues/ijcnn2027_go_no_go.md; the nearest live
+Task-8 vehicle is the IJCNN regular paper, due 2027-01-31, decidable
+after the 2026-12-04 ARC results; the user has not yet decided), plus
+the Task 1 release and submission dates (2026-11-01 / 2026-11-08).
 
 Measurements that would move this synthesis, in information order:
 
@@ -184,7 +187,7 @@ Measurements that would move this synthesis, in information order:
 | --- | --- | --- |
 | H-MB-CLASS2-ASSOCIATION | refuted 09-29 | EXPERIMENTS.yaml; mb_association.py |
 | H-T4T5-CLASS25-MOTION | refuted 09-30 | EXPERIMENTS.yaml; t4t5_motion_arm.py |
-| H-T4T5-DSEC-DIRECTION | refuted 10-02 | EXPERIMENTS.yaml; task2_dsec/ |
+| H-T4T5-DSEC-DIRECTION | refuted 10-02 | EXPERIMENTS.yaml; task2_dsec_flow/ |
 | H-FLYGI-FLYBENCH-ADAPTER | supported 10-01 | EXPERIMENTS.yaml; task3_flybench/ |
 | H-FLYGI-FLYBENCH-CALIBRATED | refuted 10-03 | EXPERIMENTS.yaml; task3_flybench/ |
 | H-T4T5-DVS-GESTURE | refuted 10-03 | EXPERIMENTS.yaml; task4_neurobench/ |

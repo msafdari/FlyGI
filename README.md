@@ -57,7 +57,7 @@ about the fly, however good it looks on a leaderboard. Whatever the agent scores
 the number that matters is the gap between the real graph and a degree-preserving
 rewiring of it, because that gap is the only part that anatomy can claim.
 
-## Where the project landed (as of 2026-09-30)
+## Where the project landed
 
 Every circuit faced the same preregistered protocol — validate its biology at
 a declared fidelity class, gate its input, then test on ARC against controls
@@ -78,7 +78,26 @@ then three COMPLETE submissions (56620463, 56650224, 56683298) all scoring
 matched local gateway ~52-fold (0.551859 → 28.742260) — game-specific grammar
 transfer to the hidden set measured zero, three times. Neuronal dynamics were
 OFF in every scored run; a leaderboard score establishes engineering, not fly
-computation. Full narrative: [WORKLOG.md](WORKLOG.md); every arm and verdict:
+computation.
+
+After the ARC arm, the same preregistered rewire-control protocol ran on five
+external arenas (2026-09-30 to 10-07): DSEC event-camera flow direction,
+flybench, DVS128 gesture, Brain-Score V1, and UCI gas-sensor drift. Within
+that program a degree-preserving rewire met or beat the real wiring six
+consecutive times (seven registered instances counting the 2026-09-29 MB
+association arm): H-T4T5-DSEC-DIRECTION, H-FLYGI-FLYBENCH-CALIBRATED,
+H-T4T5-DVS-GESTURE, H-EARLYFILTER-BRAINSCORE-V1 and H-ALMB-GASDRIFT were
+refuted, and one result was supported — the flybench adapter contract
+(H-FLYGI-FLYBENCH-ADAPTER). Two measured positives rode along: on Brain-Score
+V1 the early-filter dynamics roughly doubled the predictivity of their own
+input (0.0690 vs 0.0330 — the first arm where a simulated circuit beat its
+encoder), and the uniform flybench adapter rows beat the reference
+configuration on all four summary rows. Our expected-tier score predictions
+stand at 0 for 16; the measurements held. The full program synthesis —
+instances, positives, open explanations, falsifiers — is
+[docs/arenas/SYNTHESIS.md](docs/arenas/SYNTHESIS.md).
+
+Full narrative: [WORKLOG.md](WORKLOG.md); every arm and verdict:
 [LEAGUE.md](LEAGUE.md) and [EXPERIMENTS.yaml](EXPERIMENTS.yaml); the ARC Prize
 2026 Paper Track writeup and figures:
 [docs/arenas/task1_arc_paper/](docs/arenas/task1_arc_paper/).

@@ -1,5 +1,12 @@
 # Task 3 (FlyBench) — MaleCNS runbook (user-executed)
 
+> **Task 3 CLOSED WITH VERDICT.** Adapter SUPPORTED 2026-10-01
+> (H-FLYGI-FLYBENCH-ADAPTER); calibrated arm KILLED 2026-10-03
+> (H-FLYGI-FLYBENCH-CALIBRATED refuted: activation delta +0.0002 vs the frozen
+> +0.02 bar). Every command below was executed. Records: EXPERIMENTS.yaml and
+> WORKLOG.md. The body is preserved as the historical protocol record — the
+> session-branch pull line will not resolve once the release merges to main.
+
 The adapter kill test PASSED in-cloud on the toy (2026-10-01,
 H-FLYGI-FLYBENCH-ADAPTER: supported — verify-adapter clean, five core
 reflexes at the derived unit bridge, 5/5 across 3 seeds). What the
@@ -103,7 +110,7 @@ AF-4) before any of it is built. Any PR / submission / verified-badge
 step is yours and comes only after that design's own kill test.
 
 
-## 3. The calibrated arm (H-FLYGI-FLYBENCH-CALIBRATED; added 2026-10-03)
+## 4. The calibrated arm (H-FLYGI-FLYBENCH-CALIBRATED; added 2026-10-03; numbered 3 in contemporaneous WORKLOG references)
 
 Pull the branch first. One run + one mechanical verdict:
 

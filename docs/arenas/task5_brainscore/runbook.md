@@ -1,5 +1,11 @@
 # Task 5 (Brain-Score) — V1 kill-test runbook (user-executed)
 
+> **EXECUTED 2026-10-04 — VERDICT KILL.** H-EARLYFILTER-BRAINSCORE-V1 refuted;
+> Task 5 closed COMPLETE WITH VERDICT 2026-10-06 with no BrainModel submission
+> built. Records: EXPERIMENTS.yaml and WORKLOG.md. The body below is preserved as
+> written before the run; the session-branch pull line is historical and will not
+> resolve once the release merges to main.
+
 The kill test is registered (killtest_design.md,
 H-EARLYFILTER-BRAINSCORE-V1) and its instrument is data-gated: the
 cloud container has neither the compiled runtime nor the

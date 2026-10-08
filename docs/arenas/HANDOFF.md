@@ -1,7 +1,8 @@
-# Arena program — session handoff (paused 2026-10-01)
+# Arena program — living handoff and status
 
-The user paused the session that ran the arena program and asked for a
-clean resume in a new session. This file is the resume point. Read in
+Opened as the handoff when the user paused the original arena session
+(2026-10-01); maintained since as the program's living status file.
+This file is the resume point. Read in
 this order: WORKLOG.md (top entries) -> this file -> PLAN.md ->
 ASSUMPTIONS.md. Branch: `claude/admiring-goldberg-wtqkbg` (all work
 pushed; nothing lives only in the old session).
@@ -26,16 +27,16 @@ post and an X post that lead to the public FlyGI GitHub repo.
 | 4 | NeuroBench | **T4/T5 LIMB COMPLETE WITH VERDICT (2026-10-03): kill test KILLED.** H-T4T5-DVS-GESTURE refuted on held-out subjects -- real T4/T5 far above chance but beaten by its own degree-preserving rewire in all 3 seeds AND by circuit-free event-count features (fourth consecutive rewire-over-real on this circuit). No NeuroBench integration built, per the frozen rule. **Keyword-FSCIL/MB limb CLOSED AS NOT PURSUED (2026-10-07)** via the dual close pre-stated in H-ALMB-GASDRIFT's registration: the MB lost its native-modality last stand (Task 6 KILL), so the audio limb — same machinery behind a larger encoder invention — has no remaining support; its hypothesis stays unmeasured. Task 4 is now fully closed. Full record in EXPERIMENTS.yaml + WORKLOG. |
 | 5 | Brain-Score | **COMPLETE WITH VERDICT (2026-10-04): kill test KILLED.** H-EARLYFILTER-BRAINSCORE-V1 refuted — real 0.0690 cleared the floor AND doubled its own input passthrough (0.0330, the program's first dynamics arm to add anything over its encoder), but all three degree-preserving rewires scored at or above it (0.0735–0.0828). Fifth consecutive rewire-over-real on fc25-class circuits. No BrainModel submission, no account, per the frozen rule. Full record in EXPERIMENTS.yaml + WORKLOG. |
 | 6 | e-nose / gas drift | **COMPLETE WITH VERDICT (2026-10-06): kill test KILLED.** H-ALMB-GASDRIFT refuted — real 0.4257 decisively above chance (p 5.2e-26) but below every degree-preserving rewire (0.4338–0.4854) and below the raw 16-sensor features (0.5022). Sixth consecutive rewire-over-real, first olfactory, exactly as the registration's stated literature prior predicted for the rewire bar. Scope correction recorded at close: the real-vs-scram gap (+4.4 pts) is encoder-invention variance (both maps are seeded inventions), not a wiring win. No benchmark entry; the dual close executed (see Task 4 row). Full record in EXPERIMENTS.yaml + WORKLOG. |
-| 7 | MLPerf Tiny | pending |
+| 7 | MLPerf Tiny | **CALENDAR-GATED to 2027.** Next round ~early 2027 (inferred from cadence, unannounced); USER joins the working group >= 8 weeks before any deadline. |
 | 8 | Community venues | **IJCNN 2027 competition proposal analyzed (2026-10-07): recommendation NO-GO** this cycle (task8_venues/ijcnn2027_go_no_go.md — solo operating commitment + calendar collision + participation risk; the public release + a paper buys most of the value). Better IJCNN vehicle: the regular paper, due 2027-01-31, decidable after the Dec 4 ARC results. Later windows stay live: Telluride 2027 (~Feb), CVPR 2027 event-vision / VAND 5.0 (Dec-Feb announcements), IJCNN 2028 competition if co-organizers appear. User has not yet decided. |
 
 ### Task 1 — what exists, what the user still does
 
 docs/arenas/task1_arc_paper/:
-- `writeup.md` — the judged Kaggle Writeup: title, subtitle, 1,433-word
+- `writeup.md` — the judged Kaggle Writeup: title, subtitle, 1,448-word
   body. Built by a draft/judge/synthesize/check workflow, then passed a
-  fact gate, a tier gate, and a 23-finding outward-artifact compliance
-  gate, with every finding applied.
+  fact gate, a tier gate, and an outward-artifact compliance gate, with
+  every finding applied.
 - `factsheet.md` — the VERIFIED fact base. Every number in every
   outward artifact must trace to it. It was checked against the durable
   record by a four-agent adversarial pass.
@@ -48,7 +49,7 @@ docs/arenas/task1_arc_paper/:
 - `submission_runbook.md` — the user's steps 0-7. Step 0 resolves the
   OPEN register rows AP-1..AP-5 and AP-9. Deadline: plan to 2026-11-08.
 - `public_release_checklist.md` — the secrets/PII audit (clean), the
-  license (MIT stays: Kaggle winner license is CC-BY 4.0, granted only on winning — AP-4), the LEAGUE.md
+  license (relicensed to MIT-0 2026-10-02 per AP-4: arcprize requires CC0/MIT-0; the Kaggle winner CC-BY 4.0 grant is a separate, on-winning obligation), the LEAGUE.md
   regeneration (local), the merge to main, and the order of operations.
 
 ### Task 2 — DSEC-Flow: RESOLVED 2026-10-01 (section kept as history)

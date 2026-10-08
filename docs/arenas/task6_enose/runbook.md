@@ -1,5 +1,12 @@
 # Task 6 (e-nose) — gas-drift MB kill-test runbook (user-executed)
 
+> **EXECUTED by the user 2026-10-06 — VERDICT KILL (exit 1).** H-ALMB-GASDRIFT
+> refuted; closed 2026-10-07, and the pre-stated dual close of the Task 4
+> Keyword-FSCIL/MB limb executed the same day. Records: EXPERIMENTS.yaml and
+> WORKLOG.md. The body below is preserved as written before the run; the
+> session-branch pull line is historical and will not resolve once the release
+> merges to main.
+
 The kill test is registered (killtest_design.md, H-ALMB-GASDRIFT) and
 its instrument is data-gated: the cloud container has neither the
 compiled runtime, nor the fc2_kc_sparse passing result, nor the UCI

@@ -6,7 +6,7 @@ tweets as marked. Character counts exclude the link, which X shortens.)*
 
 ## Option A — single post (270 chars as X counts it)
 
-> I audited the complete fruit-fly connectome (166,700 neurons) on
+> I audited the MaleCNS fly connectome (166,700 retained neurons) on
 > ARC-AGI-3, with controls. Scored agents used only its static eye map
 > (dynamics off): beat its scrambled twin 4.5x. Engineered scaffold: ~52x
 > locally, ZERO hidden transfer (0.15 x3). github.com/msafdari/FlyGI

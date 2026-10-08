@@ -1,6 +1,12 @@
 # Task 4 (NeuroBench) — DVS Gesture kill-test runbook (user-executed)
 
-The kill test is registered (killtest_design.md, H-T4T5-DVS-GESTURE)
+> **EXECUTED 2026-10-03 — VERDICT KILL.** H-T4T5-DVS-GESTURE refuted (real below its
+> degree-preserving rewire in all 3 seeds AND below circuit-free event-count
+> features); Task 4 fully closed 2026-10-07 (Keyword-FSCIL/MB limb closed as not
+> pursued via the dual close pre-stated in H-ALMB-GASDRIFT's registration). Records:
+> EXPERIMENTS.yaml and WORKLOG.md. Body preserved as the pre-run record: "expect 9
+> passed" predates the instrument fix efd06a9 (the suite now collects 11 tests), and
+> the session-branch pull line will not resolve once the release merges to main. (killtest_design.md, H-T4T5-DVS-GESTURE)
 and its instrument is data-gated: the cloud container has neither the
 dataset (hosts egress-blocked) nor the compiled runtime. The decision
 deliberately does NOT use the neurobench package — nothing new to

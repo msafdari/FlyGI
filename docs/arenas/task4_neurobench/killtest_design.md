@@ -110,3 +110,16 @@ Instrument: `scripts/arenas/dvs_killtest.py` (data-gated; pure parts
 unit-tested in-cloud). The one command, where the data lives:
 
     python scripts/arenas/dvs_killtest.py --data-root <DvsGesture dir>
+
+## Post-verdict reconciliation note (2026-10-08, audit; frozen text above untouched)
+
+The Arms bullet's seeds line includes "the calibration subset" among
+the per-seed-seeded items, which contradicts the Pipeline section's
+"ONE drive-normalization scalar ... shared by every simulated arm" and
+the frozen instrument (scripts/arenas/dvs_killtest.py computes exactly
+one norm from the SEEDS[0] calibration subset, used by all arms and
+all seeds). The Pipeline section and the instrument are the executed
+registration; the Arms bullet's phrasing was imprecise, not a second
+convention — no per-seed norm ever existed, so no measured quantity
+depended on the discrepancy. Recorded here rather than edited in place
+per the frozen-registration rule.

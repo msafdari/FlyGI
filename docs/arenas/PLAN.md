@@ -1,5 +1,14 @@
 # Arena program plan — 2026-09-30
 
+> **HISTORICAL SNAPSHOT (frozen at program start; statuses and in-line
+> rules below are as of 2026-09-30 and are NOT maintained).** The
+> program completed 2026-10-07: Tasks 2-6 closed with verdicts, Task 4's
+> second limb closed via dual close, Tasks 7-8 calendar-gated. Current
+> status lives in HANDOFF.md; the program synthesis in SYNTHESIS.md;
+> the current expected-tier base rate (0 for 16 as of 2026-10-06) in
+> HANDOFF.md's conventions. The [ACTIVE]/[QUEUED] markers and the
+> "0-for-12" operating rule below are the frozen 09-30 state.
+
 User directive (2026-09-30): execute all eight ranked arena tasks from
 docs/next_arenas_survey_20260930.md, top rank first, one task finished
 completely before the next; due-diligence check before each task; document
@@ -8,7 +17,8 @@ docs/arenas/ASSUMPTIONS.md. Task 1 must additionally yield a LinkedIn blog
 post and an X post that lead to the FlyGI GitHub repo once public.
 
 Due diligence base: ten-agent web verification run 2026-09-30 (workflow
-wf_77415764-bf9; full reports in the session record). kaggle.com,
+wf_77415764-bf9; full reports preserved in docs/arenas/
+due_diligence_20260930.md). kaggle.com,
 arcprize.org, dsec.ifi.uzh.ch, arxiv.org, mlcommons.org, brain-score.org,
 archive.ics.uci.edu are egress-blocked from this container, so those facts
 are SOURCED from search extraction, not primary pages — each is in the
@@ -57,10 +67,9 @@ Work breakdown (in-container unless marked USER):
 3. Figures + cover image for Media Gallery (dataviz discipline).
 4. Public demonstration notebook (.ipynb, runnable narrative of methods and
    controls; adapted from the embedded-source path, no private assets).
-5. Public-release package: README refresh, license (MIT stays — the
-   Kaggle winner license is CC-BY 4.0, granted only on winning; AP-4
-   invalidated 2026-10-02), secrets/PII audit, MaleCNS
-   data-licensing note, repo-public step (USER).
+5. Public-release package: README refresh, license (MIT-0, relicensed
+   2026-10-02 per AP-4's reconciled three-source reading), secrets/PII
+   audit, MaleCNS data-licensing note, repo-public step (USER).
 6. LinkedIn article draft + X post draft pointing at the public repo.
 7. Submission runbook (exact Kaggle clicks, same-account requirement,
    deadlines) (execution: USER).
@@ -166,8 +175,10 @@ check-in triggers + a one-page application kit per venue.
    completed task, not an abandoned one).
 4. Claim tiers in every outward artifact; the deployed-fly-content boundary
    (static eye map only; dynamics OFF in scored submissions) appears in
-   every public statement. Expected-tier statements carry the 0-for-12 base
-   rate (canonical count as of 2026-09-26; verified 2026-09-30).
+   every public statement. Expected-tier statements carry the CURRENT
+   score-adjacent base rate, kept in HANDOFF.md's conventions and
+   SYNTHESIS.md (0 for 12 when this plan froze on 2026-09-30; 0 for 16
+   as of 2026-10-06).
 5. Outward-facing steps (Kaggle actions, repo-public, license change,
    posting, account creation, emails to maintainers) are prepared here,
    executed by the user.

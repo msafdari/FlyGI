@@ -4,9 +4,11 @@ The survey's Task 8 hard date. The decision is whether to propose
 ORGANIZING a competition at IJCNN 2027 — not whether to submit a
 paper; the regular-paper option is analyzed as the alternative.
 
-## The call, verified today (SOURCED, ijcnn.org/2027 via web search;
-## the site is read through search snippets — re-verify the exact
-## cutoff time zone in the submission system before any submit)
+## The call, verified today
+
+SOURCED, ijcnn.org/2027 via web search; the site is read through
+search snippets — re-verify the exact cutoff time zone in the
+submission system before any submit.
 
 - Conference: June 14-18, 2027, Cape Town, South Africa (standalone
   IJCNN; INNS + IEEE CIS).
@@ -54,7 +56,9 @@ silent board hardens it.
    of connectomics and benchmark practice — small. A launched
    competition with near-zero entries costs reputation that a
    never-proposed one does not. (Participation estimates here are
-   EXPECTED-tier guesses; flagged as such.)
+   EXPECTED-tier guesses, flagged as such; no program base rate exists
+   for participation predictions — the 0-for-16 record covers
+   score-adjacent claims only.)
 3. **Calendar collision.** Proposal work lands Nov (against the
    Kaggle submission, due Nov 8, and release sequence ~Nov 1);
    acceptance/launch land Dec 15-Jan 1, exactly across the Dec 4 ARC
