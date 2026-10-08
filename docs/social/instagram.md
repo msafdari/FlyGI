@@ -61,7 +61,8 @@ Four icons, four lines.
 ## Caption
 
 A complete fruit-fly connectome — 166,700 neurons, 24.5 million synapses —
-playing an AI reasoning benchmark with zero trainable parameters. 🪰
+played an AI reasoning benchmark with zero trainable parameters during the
+controlled runs. 🪰
 
 The first finding surprised me: its wiring is provably not random. Rewire it
 while keeping every neuron's connection count and every weight, and the real

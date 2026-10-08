@@ -1,5 +1,36 @@
 # FlyGI durable worklog
 
+## Pre-release audit COMPLETE: all 68 verified findings applied -- 2026-10-08
+
+Part 2 (this checkpoint) closes the audit: docs/experiment.md,
+controls.md, modeling_assumptions.md and data_provenance.md brought
+from their 2026-09-21-era blanket claims to the measured current state
+(nine scored submissions named with the construction-crash root cause;
+the two bounded fly-positives stated with their encoder/anatomy
+attribution; the real remaining gaps listed -- weight/sign shuffles,
+>=10 seeded nulls, reservoir ARC runs; the completed acquisition
+recorded from the tracked manifest with its expected_sha256-null
+caveat). The docs/social kit is posting-safe: social_announcement.md
+carries a SUPERSEDED banner (its 3,052 / 0.01 / 3050-3212 figures were
+never in the durable record and are flagged non-reusable; the
+unanchorable "163 teams" row was dropped rather than re-written);
+FACTS.md's leaderboard section rebuilt to the nine-submission record
+with a dynamics-off note and a dated re-verification line (other
+sections still carry their 09-22 verification and say so); all drafts
+recast to past tense scoped to the controlled runs; longform's
+unanchored 389,471 deleted (390,272 anchors); the
+no-other-study-ran-controls title option replaced with a self-scoped
+one; README caveat guards {{BEST_SCORE}} insertion.
+
+AUDIT TOTALS: 86 agents (8 sweep groups, per-finding adversarial
+verification), 68 confirmed / 10 rejected as dated-record false
+positives; 7 blockers among the confirmed, all fixed; plus the
+fresh-clone test fix (6 runtime-data tests skip-guarded). One finding
+is a USER step on the release checklist: regenerate LEAGUE.md on the
+machine with the local result bundles (the 10-02 snapshot predates
+five closed hypotheses). Commits: 8958404 (test guards), 8c1be1c
+(part 1), this one (part 2). Suites green in-cloud after every batch.
+
 ## Pre-release audit IN PROGRESS: 68 verified findings, part 1 of fixes checkpointed -- 2026-10-08
 
 An 86-agent adversarially-verified audit swept every shipping document

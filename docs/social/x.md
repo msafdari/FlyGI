@@ -8,7 +8,7 @@ low-arousal negative, the weakest opening the evidence identifies.
 
 ## Single post
 
-A complete fruit-fly brain is playing an AI reasoning benchmark.
+A complete fruit-fly brain played an AI reasoning benchmark.
 
 166,700 neurons. 24,559,055 synapses. 0 trainable parameters.
 
@@ -22,10 +22,11 @@ Then I ran the controls, and it got interesting. 🪰🧵
 ## Thread (9 posts)
 
 **1/**
-A complete fruit-fly brain is playing an AI reasoning benchmark.
+A complete fruit-fly brain played an AI reasoning benchmark.
 
 166,700 neurons. 24,559,055 synapses. The entire adult *Drosophila* CNS,
-reconstructed from electron microscopy, making every decision.
+reconstructed from electron microscopy, made every decision during the
+controlled runs.
 
 0 trainable parameters.
 

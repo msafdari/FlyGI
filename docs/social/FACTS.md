@@ -4,7 +4,10 @@
 this page with a source, it does not go out. This exists because the project has
 already had to retract one public-sounding claim -- see *Retracted* below.
 
-Last verified: 2026-09-22.
+Last verified: 2026-09-22; Leaderboard section and the flagged rows
+re-verified 2026-10-08 (pre-release audit) — other sections still carry
+the 09-22 verification and must be re-checked against
+docs/arenas/task1_arc_paper/factsheet.md before any post goes out.
 
 ## The system
 
@@ -20,13 +23,20 @@ Last verified: 2026-09-22.
 
 ## Leaderboard
 
-| Fact | Value |
-| --- | --- |
-| Submission 1 (`56444435`), 80-action ceiling | public score **0.00** |
-| Submission 2 (`56459984`), 600-action ceiling + loop escape | public score **0.00** |
-| Rank after submission 1 | 3212 of 3215 |
-| Teams tied at 0.00 in that snapshot | 163 |
-| Top of leaderboard at that snapshot | 18.81 |
+Re-verified 2026-10-08 against `docs/arenas/task1_arc_paper/factsheet.md`.
+
+| Fact | Value | Source |
+| --- | --- | --- |
+| Six 0.00 submissions (`56444435` ranked 3212/3215; latest of the six `56563583`) | public score **0.00** each | factsheet.md |
+| Root cause of all six 0.00s | construction crash — **zero actions ever played**, so any "action ceiling" explanation is wrong | factsheet.md |
+| `56620463` (combo_light engineering baseline, notebook v10) | COMPLETE, **0.15** | factsheet.md |
+| `56650224` (two FAP archetypes, notebook v11) | COMPLETE, **0.15** | factsheet.md |
+| `56683298` (thirteen archetypes, notebook v12) | scored **0.15** | factsheet.md |
+| Top of leaderboard, 2026-09-22 snapshot | 18.81 | WORKLOG.md |
+
+The 0.15 runs are the engineered FAP-archetype scaffold with
+`neuronal_dynamics_active=false`; their only fly content is the compiled
+static retinotopic eye map (factsheet.md, claim boundaries).
 
 `{{BEST_SCORE}}` and `{{BEST_RANK}}` are placeholders. **Do not fill them with a
 local public-set number.** Only a completed Kaggle submission counts, because
@@ -55,8 +65,15 @@ real edge set. **No ARC advantage has followed from it.**
 | Our "smart" clicking vs random clicking | 72 vs 236 unique states, **3.29x worse**, in the 6 click-only games |
 | Trained head, training games vs held out | 0.885805 vs **0.000000** |
 | Trained head with the connectome zeroed | 0.283458 → **0.000000** |
-| Public games ever solved by any condition | **5 of 25** |
+| Public games solved by any condition, fly-agent era (as of 2026-09-22) | **5 of 25** |
 | Dopaminergic edges our own config deleted | **129,132** into Kenyon cells, 3,195 into MBONs |
+
+Era scope (added 2026-10-08): the games-solved row is a fly-agent-era fact.
+The later engineered-scaffold era (FAP archetypes, dynamics off) recorded
+four full game wins and 20 scoring games on the local competition-mode
+ladder, and H-ONLINE-SEARCH's preregistered bar was met decisively, 11 of 25
+games (sources: `docs/arenas/task1_arc_paper/factsheet.md`; WORKLOG.md
+2026-09-30).
 
 ## Retracted
 
@@ -69,7 +86,13 @@ three times as often. **This must never appear in a post.**
 ## Claims that are never made
 
 - that a fly understands ARC, or is reasoning;
-- that the connectome beat its controls on ARC (it has not);
+- that the real **graph** beat any control: every comparison isolating the
+  real graph (degree-preserving null, rewired, shuffled) is null or favors
+  the rewire (see `docs/arenas/SYNTHESIS.md`). The two bounded fly-positives
+  are encoder/anatomy-attributed, not graph-attributed: sg-bioeye-t4t5 HELPS
+  (+0.0717 [+0.005,+0.156], p=0.070, borderline) vs its scrambled-ENCODER
+  control, and the eye map's 2.59x-vs-11.59x action-cost separation vs its
+  scrambled twin, from static anatomy;
 - that any result here is zero-shot generality (training used public games);
 - that other projects have no controls (at least one published a
   parameter-matched control that beat its own connectome condition).

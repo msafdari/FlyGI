@@ -10,7 +10,8 @@ hook, and put the negative result in the title.
 Discovery frame, not defeat frame. See [VIRALITY_NOTES.md](VIRALITY_NOTES.md).
 
 1. A fruit-fly connectome is provably not random — 3.59x. It still didn't help.
-2. 166,700 neurons, 0 trainable parameters, and the controls nobody runs
+2. 166,700 neurons, 0 trainable parameters, and the controls that decide what
+   it means
 3. I wired a complete fly brain to an AI benchmark, then tried to prove myself
    wrong
 
@@ -19,8 +20,10 @@ Discovery frame, not defeat frame. See [VIRALITY_NOTES.md](VIRALITY_NOTES.md).
 ## Body
 
 The complete MaleCNS v1.0 adult male *Drosophila* central nervous system —
-166,700 neurons, 24,559,055 directed synaptic connections — is running in the
-decision loop of an ARC-AGI-3 agent, with zero trainable parameters.
+166,700 neurons, 24,559,055 directed synaptic connections — ran in the
+decision loop of an ARC-AGI-3 agent during the controlled runs, with zero
+trainable parameters. (The scored Kaggle submissions ran dynamics-off with
+the static eye map as the only fly content — see FACTS.md.)
 
 The first thing I measured was the best thing I measured, so it goes first.
 
@@ -58,8 +61,8 @@ evolved circuit and the two adapters I wrote. Calling the inputs
   independent seeds, ten double-edge swaps per edge, each retaining 0.51% of the
   real edge set.
 - **Parameter-matched bypass.** Identical interface budget, recurrent gain set
-  to zero, projection retargeted so its readout is actually driven — 389,471
-  interface non-zeros against the real condition's 390,272.
+  to zero, projection retargeted so its readout is actually driven — matched
+  against the real condition's 390,272 projection connections.
 - **Positive control.** A reservoir deliberately placed at the edge of chaos, so
   that if everything scores zero I can tell "the connectome doesn't help" from
   "my harness can't express help from any graph." It retains ~400× more state

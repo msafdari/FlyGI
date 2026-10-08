@@ -25,6 +25,15 @@ it predates the controls and is superseded by this directory.
 | `{{BEST_RANK_LINE}}` | One sentence of rank context, or delete. |
 | `{{REPO_LINK}}` | Public repo or write-up URL, once one exists. |
 
+> **2026-10-08:** The best completed submission is **0.15** (`56620463` /
+> `56650224` / `56683298`), earned by the engineered FAP-archetype scaffold
+> with `neuronal_dynamics_active=false`; the only fly content in those runs
+> is the compiled static retinotopic eye map. Any draft written in the "fly
+> is playing live" voice must be recast to the controlled-run past tense and
+> checked against FACTS.md before this number is inserted — pasting 0.15
+> into a zero-trainable-parameter full-connectome framing misattributes it.
+> (The drafts' openings were recast on this date.)
+
 If the best score is still 0.00, say so. A zero with controls is a stronger
 artifact than a small number without them, and the posts are written to work
 either way.

@@ -11,11 +11,11 @@ the failure spends credibility that has not been established yet.
 
 ## Draft A — recommended
 
-**A complete fruit-fly brain is now playing an AI reasoning benchmark.**
+**A complete fruit-fly brain played an AI reasoning benchmark.**
 
 166,700 neurons. 24,559,055 synaptic connections. The entire central nervous
 system of an adult male *Drosophila*, reconstructed from electron microscopy,
-making every decision inside an ARC-AGI-3 agent.
+making every decision inside an ARC-AGI-3 agent during the controlled runs.
 
 Zero trainable parameters. No network learned this. It is the fly's own wiring,
 in the loop.
@@ -104,7 +104,7 @@ properly.
 
 ## Draft B — shorter
 
-**A complete fruit-fly brain is playing an AI benchmark.** 166,700 neurons.
+**A complete fruit-fly brain played an AI benchmark.** 166,700 neurons.
 24,559,055 synapses. Zero trainable parameters.
 
 The first finding surprised me: its wiring is *provably* not random. Rewire it

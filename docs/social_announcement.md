@@ -1,3 +1,11 @@
+> **SUPERSEDED (2026-10-08) — do not post anything from this file.** Written
+> after the first 0.00 submission; the record has moved: six 0.00 submissions
+> (root cause a construction crash — zero actions played), then three COMPLETE
+> at 0.15 (56620463/56650224/56683298). Current draft kit: docs/social/; every
+> number must pass docs/social/FACTS.md. The untraceable figures below (3,052;
+> 0.01; the 3050-3212 band) were never recorded in the durable record and must
+> not be reused.
+
 # FlyGI social announcement drafts
 
 These drafts are intentionally honest about the result. Do not imply that FlyGI

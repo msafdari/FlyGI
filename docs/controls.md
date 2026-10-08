@@ -1,9 +1,20 @@
 # Experimental controls
 
 Controls are the core scientific test. The directed degree-preserving null and
-the no-recurrent-graph bypass are implemented and have been run; the remaining
-conditions are not. No biological advantage on ARC is claimed anywhere in this
-repository.
+the no-recurrent-graph bypass are implemented and have been run; the generic
+matched reservoir and the positive control are implemented and compiled with
+ARC runs pending; weight and sign shuffles are not implemented. Within the
+class-1 recurrent-dynamics program this document covers, no
+connectome-versus-control advantage was measured: the real graph came out
+null against its degree-preserving rewires and against the interface-matched
+bypass (`LEAGUE.md`). Two bounded fly-positive results are measured: the
+compiled static retinotopic eye map at 2.59x the human action-cost baseline
+versus its scrambled-map twin at 11.59x, and `sg-bioeye-t4t5`, the league's
+only HELPS versus its scrambled control (+0.0717 [+0.005,+0.156], p=0.070,
+recorded as borderline). For the full program record -- six consecutive
+rewire-over-real results, with the surviving positives being an anatomy
+index, a mechanism, a parameter set, and a transformation-over-input -- see
+`docs/arenas/SYNTHESIS.md`.
 
 ## Implementation status
 
