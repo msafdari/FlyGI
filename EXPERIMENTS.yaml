@@ -2365,6 +2365,76 @@ hypotheses:
         registration pre-stated.
     updated: 2026-10-07
 
+  H-CX-RING-TOPOLOGY:
+    statement: >
+      The real MaleCNS CX wiring (the validated 148-neuron
+      EPG/PEN_a/PEN_b/Delta7/PEG subcircuit) carries ring-compass
+      topology under the anatomical wedge ordering -- circularly
+      banded EPG<->EPG coupling through PEN, and opposite-signed
+      left/right PEN_a offsets (the shifter) -- at levels its
+      degree-preserving rewires cannot produce.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-10 BEFORE ANY INSTRUMENT CODE, jointly
+        and in the same commit as the gated Stage-B registration
+        (H-CX-HEADING-LATENT) so neither can be tuned on the other.
+        Frozen design: docs/arenas/task9_cx_latent/killtest_design.md.
+        Metrics (AC-4, mechanical): relu two-hop W2 per PEN
+        population, 16x16 wedge aggregation via the cx_ring verbatim
+        wedge mapping (AC-1), bandedness = within +/-2 circular
+        wedge-distance mass fraction, offsets = argmax of the
+        circular-difference profile (0 and the antipode invalid).
+        Nulls: 200 degree-preserving rewires of the full subcircuit
+        (seeds 4242+0..199), empirical one-sided p = (1+#>=real)/201.
+        PASS iff bandedness p < 0.05 AND PEN_a left/right offsets
+        valid, opposite-signed, with separation p < 0.05. KILL closes
+        Task 9 with no dynamics built. BLOCKED: composition deviates
+        from 46/20/22/42/18, wedge labels < 90% parseable, degenerate
+        two-hop, or runtime absent. PRIORS, stated: this is the
+        program's first registration whose priors FAVOR pass -- the
+        measured gain-2.0 persistence separation (real 0.27 mass vs
+        null dead by t=40, H-CX-RING-ATTRACTOR) and Hulse 2021's
+        established hemibrain CX structure. Not score-adjacent; the
+        0-for-16 counter does not apply.
+    updated: 2026-10-10
+
+  H-CX-HEADING-LATENT:
+    statement: >
+      At the measured working regime (class-1 rate dynamics, full
+      compiled graph, gain 1.5 / leak 0.3 -- where opposite-sign PEN
+      steering is measured and position storage was never tested),
+      the real CX wiring maintains a heading CONTINUUM across
+      held-out seed angles and tracks integrated PEN self-motion
+      commands, while CX-block-rewired controls fail: a latent
+      heading representation carried by the specific wiring.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-10 BEFORE ANY INSTRUMENT CODE, gated:
+        the instrument builds ONLY after a Stage-A
+        (H-CX-RING-TOPOLOGY) PASS; on a Stage-A KILL this hypothesis
+        closes not-pursued with no dynamics built. Frozen design:
+        docs/arenas/task9_cx_latent/killtest_design.md. Protocol:
+        cx_ring machinery verbatim; 4 preregistered angles (22.5
+        calibration, 112.5/202.5/292.5 held out); arms real /
+        CX-internal-block rewire x3 (AC-5; seeds 4242+0..2); 3
+        preregistered tracking sequences (seed 20261010). PASS iff
+        (1) all three held-out angles retain PVA within 45 deg at
+        circvar <= 0.6 after 2 s darkness (kills the two-fixed-point
+        mode measured at gain 2.0); (2) mean final tracking error <=
+        45 deg; (3) real beats every rewired arm and no rewired arm
+        passes 1+2. Engineered integrator = ceiling context, not a
+        bar. BLOCKED: calibration-angle persistence precheck fails
+        (AC-2 regime transplant), runtime absent, > 20% unstable.
+        PRIORS, mixed and stated: steering measured to work at 1.5
+        (H-CX-RING-ATTRACTOR regime sweep); position storage
+        unmeasured there; class-2 fully delocalized (fc2_eb_ring);
+        H-CX-CALIBRATION's transplant refusal is why the whole graph
+        runs at 1.5. Not score-adjacent; the 0-for-16 counter does
+        not apply.
+    updated: 2026-10-10
+
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
   sg-controller-only:

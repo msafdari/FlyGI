@@ -104,3 +104,13 @@ strike through and mark instead.
 | --- | --- | --- | --- | --- |
 | AV-1 | IJCNN 2027 competition proposals due 2026-11-30; entering (not proposing) is our default posture | SOURCED + program decision | OPEN | USER may choose to propose; that is an organizing commitment | [2026-10-07: go/no-go analyzed (task8_venues/ijcnn2027_go_no_go.md) — recommendation NO-GO on proposing this cycle; call re-verified same day (proposals due 2026-11-30); no user decision recorded; minimum GO path in the doc if overridden; preferred IJCNN vehicle is the regular paper, due 2027-01-31, decidable after 2026-12-04] |
 | AV-2 | All 2027 window dates are projections from prior cycles until calls open | SOURCED/INFERRED | CONFIRMED (as projections) | Scheduled re-checks in the monitoring calendar |
+
+## Task 9 — CX latent state (AC-*)
+
+| ID | Statement | Tier | Status | Check / consequence |
+| --- | --- | --- | --- | --- |
+| AC-1 | EPG/PEN instance wedge ids (_L1-_L8/_R1-_R8) map onto 16 ring positions as index=(wedge-1)*2+(0 if L else 1), 22.5 deg per index | ESTABLISHED (annotation) + ASSUMED (interleaving; correct up to a fixed rotation) — carried verbatim from cx_ring/cx_scratchpad | OPEN | No Stage-A metric depends on the fixed rotation; the blind spectral-ordering context check reports on the interleaving |
+| AC-2 | The measured gain-1.5/leak-0.3 working regime (H-CX-RING-ATTRACTOR regime sweep, 2026-09-25) reproduces when Stage B re-runs it | MEASURED once + ASSUMED reproduction | OPEN | Stage B's calibration-angle persistence precheck; failure = BLOCKED, not a verdict |
+| AC-3 | "Heading latent" is the testable fragment of "world model"; no claim about modeling the physical environment is licensed by any Task-9 outcome | ASSUMED (scope rule, set at registration) | CONFIRMED (as a framing rule) | Scope words in every Task-9 claim |
+| AC-4 | The ringness operationalizations (relu two-hop, 16x16 wedge aggregation, +/-2 bandedness, argmax offsets) measure ring-compass topology | ASSUMED (inventions; declared, frozen) | OPEN | Validated on synthetic ring graphs in-cloud BEFORE any data contact; the rewire null carries the decision burden |
+| AC-5 | Rewiring only the CX-internal 148x148 block (rest of graph intact) isolates the CX wiring's contribution in Stage B | ASSUMED (attribution convention) | OPEN | Declared; the alternative (full-graph rewire) would confound the regime itself |

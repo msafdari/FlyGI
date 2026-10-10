@@ -1,5 +1,42 @@
 # FlyGI durable worklog
 
+## Task 9 (off-survey): CX latent-state kill tests REGISTERED, both stages jointly frozen -- 2026-10-10
+
+User asked whether the fly connectome could be shown to carry a latent
+representation / world model of the physical environment, and said go.
+Due diligence first (docs/arenas/task9_cx_latent/due_diligence_delta
+.md): the question is PARTIALLY measured and the record is the
+program's richest -- the CX owns the one anatomy-specific dynamical
+separation ever measured here (gain-2.0 persistence: real mass 0.27
+for 120+ darkness steps vs null dead by t=40), steering works at
+whole-network gain 1.5 (opposite signs, circvar 0.52) but cannot be
+transplanted (H-CX-CALIBRATION refuted), position storage FAILED at
+gain 2.0 (two fixed points, H-CX-SCRATCHPAD) and was NEVER measured at
+1.5, and class-2 LIF delocalized at all 155 configs (fc2_eb_ring).
+Scope fixed at registration: the testable claim is a HEADING latent
+(AC-3), never "a world model of the physical environment."
+
+Both stages frozen in ONE commit (so neither can be tuned on the
+other; docs/arenas/task9_cx_latent/killtest_design.md):
+- H-CX-RING-TOPOLOGY (Stage A, structural, instrument builds now):
+  ring bandedness + opposite-signed left/right PEN_a shifter offsets
+  under the cx_ring verbatim wedge mapping (AC-1), vs 200
+  degree-preserving rewires, empirical p < 0.05 both bars. The
+  program's FIRST registration whose priors favor PASS (the measured
+  persistence separation; Hulse 2021 ESTABLISHED structure).
+- H-CX-HEADING-LATENT (Stage B, dynamical, instrument ONLY after a
+  Stage-A PASS): continuum across held-out angles + tracking of
+  integrated PEN commands at the measured gain-1.5/leak-0.3 regime,
+  real vs CX-block rewires x3 (AC-5), calibration-angle persistence
+  precheck as the AC-2 BLOCKED gate. Engineered 2-variable integrator
+  = ceiling context, not a bar.
+
+Neither is score-adjacent (the 0-for-16 counter does not apply and is
+not incremented). Assumption rows AC-1..AC-5 registered. HANDOFF row
+9 added. NEXT: build the Stage-A instrument + synthetic-ring tests
+(in-cloud), runbook; user runs Stage A locally (seconds-to-minutes);
+on PASS, Stage-B instrument builds against the frozen design.
+
 ## Pre-release audit COMPLETE: all 68 verified findings applied -- 2026-10-08
 
 Part 2 (this checkpoint) closes the audit: docs/experiment.md,
