@@ -1,5 +1,41 @@
 # FlyGI durable worklog
 
+## Task 9 Stage A: instrument BUILT; shifter statistic amended PRE-DATA-CONTACT by its own validation gate -- 2026-10-10
+
+scripts/arenas/cx_topology_killtest.py, with the whole decision
+pipeline a pure function so the AC-4 synthetic gate could validate it
+end-to-end in-cloud -- including through the REAL
+degree_preserving_rewire machinery -- before any data contact. The
+gate earned its keep immediately, twice:
+
+- MEASURED: the frozen shifter statistic |argmax_L - argmax_R| is
+  anti-informative -- on a perfect synthetic +/-1 compass, real S 2.0
+  vs rewired-null argmax pairs up to 14.0 (p 0.459): it rewards
+  randomness. A first replacement (mass-weighted mean-offset
+  separation) was also measured weak (null max 5.4, p 0.230).
+- ADOPTED, recorded as a dated amendment in killtest_design.md and
+  the registry (both still pre-data-contact): the MIRROR-PEAK
+  statistic -- normalized positive offset profiles q_L, q_R; S =
+  max_d max(q_L(d) q_R(-d), q_L(-d) q_R(d)), d in 1..7;
+  chirality-free, nonzero only for opposite-offset concentration.
+  MEASURED on the gate: real 1.0000 vs null max 0.107 (median 0.025),
+  p 0.0099 at 100 nulls. Argmax and mean offsets stay as reported
+  context.
+- Also caught by the gate's first run: a test-fixture bug (dense
+  noise made the synthetic graph complete -> zero legal
+  degree-preserving swaps); noise now jitters existing edges only.
+- Tests: 8/8 in-cloud (wedge-parser AC-1 mapping, metric mechanics,
+  mirror-peak semantics, full-pipeline PASS on the synthetic ring +
+  KILL on its rewire through the frozen bars, BLOCKED coverage and
+  degeneracy paths, frozen constants). The script exits 3 BLOCKED
+  in-cloud (runtime absent), as designed.
+- Runbook: docs/arenas/task9_cx_latent/runbook.md. Stage A costs the
+  user seconds-to-minutes locally; no downloads, no new packages.
+
+NEXT: user runs Stage A and reports the JSON; on PASS the Stage-B
+(H-CX-HEADING-LATENT) instrument is built against its already-frozen
+registration; on KILL, Task 9 closes with no dynamics built.
+
 ## Task 9 (off-survey): CX latent-state kill tests REGISTERED, both stages jointly frozen -- 2026-10-10
 
 User asked whether the fly connectome could be shown to carry a latent

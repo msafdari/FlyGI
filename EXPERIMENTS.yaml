@@ -2397,6 +2397,23 @@ hypotheses:
         null dead by t=40, H-CX-RING-ATTRACTOR) and Hulse 2021's
         established hemibrain CX structure. Not score-adjacent; the
         0-for-16 counter does not apply.
+      - >
+        AMENDED 2026-10-10, BEFORE ANY DATA CONTACT (the AC-4
+        synthetic validation doing its registered job). The frozen
+        shifter statistic and one candidate replacement were MEASURED
+        inadequate on a perfect synthetic +/-1 compass with real
+        rewire-machinery nulls: (1) frozen |argmax_L - argmax_R|
+        anti-informative (real 2.0, null max 14.0, p 0.459 -- rewards
+        randomness); (2) mass-weighted mean-offset separation still
+        weak (null max 5.4, p 0.230). ADOPTED: the MIRROR-PEAK
+        statistic -- per side, normalized positive profile q(d) over
+        d in -7..7 (antipode excluded); S = max over d in 1..7 of
+        max(q_L(d)*q_R(-d), q_L(-d)*q_R(d)); chirality-free, nonzero
+        only for opposite-offset concentration. MEASURED on the
+        synthetic gate: real 1.0000 vs null max 0.107, p 0.0099 (100
+        nulls). Bar 2 = mirror-peak beats the nulls at p < 0.05;
+        argmax and mean offsets stay reported as context. Full
+        sequence in killtest_design.md's dated amendment.
     updated: 2026-10-10
 
   H-CX-HEADING-LATENT:

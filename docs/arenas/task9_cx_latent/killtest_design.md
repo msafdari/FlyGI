@@ -143,3 +143,33 @@ class-2 fully delocalized; AC-2 transplant risk). The measurements
 publish either way, and a Stage-B KILL on the wiring-favored circuit
 is the strongest available confirmation of SYNTHESIS.md's
 transformation-not-permutation reading.
+
+## AMENDMENT 2026-10-10, BEFORE ANY DATA CONTACT (Stage A shifter statistic)
+
+The synthetic-ring validation AC-4 mandates (run in-cloud, before the
+instrument ever saw real data) measured the frozen shifter statistic
+and one candidate replacement to be inadequate, and the decision
+statistic was replaced BEFORE any data contact. The full sequence,
+all MEASURED on the synthetic +/-1 compass with degree-preserving
+nulls through the real rewire machinery:
+
+1. FROZEN ORIGINAL, S = |argmax_L - argmax_R|: anti-informative --
+   real S 2.0 vs null argmax pairs up to 14.0; empirical p 0.459
+   (60 nulls). The statistic rewards randomness.
+2. CANDIDATE, mass-weighted mean offsets |mu_L - mu_R| with opposite
+   signs: still weak -- rewired graphs' sparse spiky profiles give a
+   heavy null tail (null max 5.4, p 0.230 on the perfect compass).
+3. ADOPTED: the MIRROR-PEAK statistic. Per side, q(d) = positive
+   profile mass at circular difference d (d in -7..7, antipode
+   excluded), normalized to sum 1;
+   S = max over d in 1..7 of max(q_L(d)*q_R(-d), q_L(-d)*q_R(d)) --
+   chirality-free, and nonzero only when the two hemispheres
+   concentrate coupling at OPPOSITE offsets, which is what a shifter
+   is. MEASURED on the synthetic gate: real 1.0000 vs null max 0.107
+   (95th pct 0.065, median 0.025), empirical p 0.0099 with 100 nulls.
+
+Bar 2 is therefore: mirror-peak S beats the nulls at p < 0.05. The
+argmax offsets and per-side mass-weighted mean offsets remain
+REPORTED as context. Everything else stands as frozen; the synthetic
+compass passes the amended bar and a rewired synthetic kills it, both
+asserted by unit test before any data contact.
