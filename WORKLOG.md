@@ -1,5 +1,43 @@
 # FlyGI durable worklog
 
+## TASK 9 STAGE A: PASS -- the CX ring topology survives its own rewire null (first PASS in the arena series) -- 2026-10-10
+
+The user ran the Stage-A structural kill test (seconds of real
+metrics, 200 degree-preserving rewires in 21.8 s; 30.6 s total;
+results/arenas/cx_topology_killtest.json, gitignored). Preconditions:
+8/8 unit tests; no instrument changes needed locally.
+
+VALID, not blocked: subcircuit composition exact (148 = 46 EPG +
+20 PEN_a + 22 PEN_b + 42 Delta7 + 18 PEG); wedge coverage 1.0 for
+EPG, 1.0 for PEN_a, 1.0 for PEN_b; groups PEN_a 10L/10R,
+PEN_b 11L/11R; all-PEN two-hop weight nonzero.
+
+MEASURED, against 200 degree-preserving rewires of the full
+subcircuit (seeds 4242+0..199), empirical one-sided p = (1+k)/201:
+- BANDEDNESS: real 0.5881 vs null MAX 0.3376 -- real exceeds every
+  null; p 0.00498 (the floor). Bar 1 HOLDS.
+- SHIFTER (mirror-peak statistic, amended 2026-10-10 BEFORE any data
+  contact after the synthetic-ring gate measured the frozen argmax
+  statistic anti-informative -- the amendment, its sequence and its
+  synthetic validation are in killtest_design.md): PEN_a S 0.01445
+  vs null MAX 0.00792 -- exceeds every null; p 0.00498. Bar 2 HOLDS.
+- Context, non-decisional: PEN_b mirror-peak 0.00706 (below the
+  PEN_a signal -- consistent with PEN_b's weaker shifter role);
+  argmax offsets all 0/invalid (exactly the degeneracy the amendment
+  documented); blind spectral ordering residual 46.6 deg vs the
+  anatomical wedge order.
+
+VERDICT: PASS, exit 0 -- the first registered PASS in this program's
+arena series, and the first structural property of the real wiring
+that its own degree-preserving null cannot reproduce. Scope words,
+carefully: this is a STRUCTURAL result about the EPG<->PEN coupling
+matrix under the anatomical wedge ordering. It licenses building
+Stage B (H-CX-HEADING-LATENT, already frozen in the same
+registration commit) and claims nothing yet about dynamics or
+function -- Stage B is where the wiring either computes a heading
+latent or does not. Stage-B instrument build is the cloud side's
+step per the registration.
+
 ## Task 9 Stage A: instrument BUILT; shifter statistic amended PRE-DATA-CONTACT by its own validation gate -- 2026-10-10
 
 scripts/arenas/cx_topology_killtest.py, with the whole decision
