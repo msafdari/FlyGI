@@ -1,5 +1,38 @@
 # FlyGI durable worklog
 
+## Task 9 Stage B: BLOCKED at the AC-2 precheck -- and the durable record says the gate was never passable -- 2026-10-10
+
+The user ran the Stage-B heading-latent kill test (7/7 unit tests
+first; full graph loaded, 166,700 nodes in 1.4 s; 14.4 s wall, peak
+RSS 0.50 GB). Exit 3, BLOCKED, NOT a verdict; no JSON written, no
+calibrated-rates or per-arm lines reached. The printed precheck:
+
+  precheck (cal 22.5): retention 0.0000, circvar 0.661, angle 352.1
+  BLOCKED: calibration-angle persistence precheck failed (AC-2)
+
+RECONCILED against the durable record before reporting, per the
+operating directive: results/benchmarks/cx_ring.json's class-1 grid
+already contains the same regime (gain 1.5, leak 0.3, angle 22.5):
+retention 0.0003, final_circvar 0.713, final angle 349.6,
+angle_pass FALSE -- and every other gain-1.5 leak row fails
+persistence the same way. The Stage-B instrument therefore
+REPRODUCED the prior measurement almost exactly (0.0000/0.661/352.1
+vs 0.0003/0.713/349.6; small deltas consistent with the protocols'
+window differences). MEASURED tier, both runs agree: at gain 1.5 /
+leak 0.3 the compiled CX does not retain a seeded bump through 2 s of
+darkness. What failed to hold is the AC-2 gate's premise that the
+measured steering regime also persists headings -- steering was
+measured there; persistence never was, and the grid says it fails
+there. The instrument is not suspected: it refused, before burning
+the budget, to evaluate a premise in a regime whose required
+property does not hold, which is exactly its declared BLOCKED
+contract.
+
+Disposition is the cloud side's call per the registration (any
+amendment needs a recorded finding; this entry is that finding's
+local half). No instrument changes made locally; nothing in the
+frozen bars touched.
+
 ## Task 9 Stage A CLOSED: SUPPORTED -- the arena series' FIRST PASS; Stage-B instrument built -- 2026-10-10
 
 Cloud-side close of the user's Stage-A run (record below, commit
