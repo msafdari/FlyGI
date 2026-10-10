@@ -2373,7 +2373,7 @@ hypotheses:
       banded EPG<->EPG coupling through PEN, and opposite-signed
       left/right PEN_a offsets (the shifter) -- at levels its
       degree-preserving rewires cannot produce.
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-10-10 BEFORE ANY INSTRUMENT CODE, jointly
@@ -2414,6 +2414,28 @@ hypotheses:
         nulls). Bar 2 = mirror-peak beats the nulls at p < 0.05;
         argmax and mean offsets stay reported as context. Full
         sequence in killtest_design.md's dated amendment.
+      - >
+        MEASURED 2026-10-10 (user's local run; record in WORKLOG,
+        commit 2530194; instrument ran unmodified): VERDICT PASS,
+        exit 0 -- THE FIRST PASS IN THE ARENA SERIES, and the first
+        measured property of the real fly wiring that its own
+        degree-preserving null cannot reproduce. Composition exact
+        (46/20/22/42/18), wedge coverage 1.0 everywhere (PEN_a
+        10L/10R, PEN_b 11L/11R). Bar 1: bandedness 0.5881 vs null max
+        0.3376 over 200 rewires, p 0.00498 (the floor). Bar 2: PEN_a
+        mirror-peak 0.01445 vs null max 0.00792, p 0.00498. 30.6 s
+        wall. Context behaved as the pre-data amendment predicted:
+        the retired argmax statistic degenerates to 0/invalid on the
+        real sparse profiles; PEN_b mirror-peak weaker (0.00706,
+        consistent with a secondary shifter role); blind spectral
+        ordering 46.6 deg from the anatomical one -- the AC-1
+        interleaving stays an open assumption (no bar depended on it:
+        bandedness is rotation-invariant, the mirror-peak
+        chirality-free). SCOPE: structural only -- the wiring carries
+        ring-compass topology its rewires cannot fake; whether it
+        computes a heading latent is Stage B's question
+        (H-CX-HEADING-LATENT, frozen in the same commit as this
+        registration, now cleared to build).
     updated: 2026-10-10
 
   H-CX-HEADING-LATENT:

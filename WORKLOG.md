@@ -1,5 +1,44 @@
 # FlyGI durable worklog
 
+## Task 9 Stage A CLOSED: SUPPORTED -- the arena series' FIRST PASS; Stage-B instrument built -- 2026-10-10
+
+Cloud-side close of the user's Stage-A run (record below, commit
+2530194; instrument ran unmodified):
+
+- EXPERIMENTS.yaml: H-CX-RING-TOPOLOGY open -> SUPPORTED, with the
+  MEASURED bullet: bandedness 0.5881 vs null max 0.3376 and PEN_a
+  mirror-peak 0.01445 vs null max 0.00792, each p 0.00498 (the floor
+  at 200 nulls); coverage 1.0 everywhere; 30.6 s. The first measured
+  property of the real fly wiring that its own degree-preserving null
+  cannot reproduce, and the program's first PASS. SCOPE: structural
+  only. Context behaved exactly as the pre-data amendment predicted
+  (argmax degenerate on the real sparse profiles; PEN_b weaker at
+  0.00706; blind spectral ordering 46.6 deg off the anatomical one --
+  AC-1's interleaving stays OPEN, annotated; no bar depended on it).
+- ASSUMPTIONS: AC-1 annotated with the measured coverage and spectral
+  residual; AC-4 -> EXERCISED, USABLE (the gate fired twice before
+  data contact, then the real run separated at the p-floor).
+- STAGE-B INSTRUMENT BUILT against its registration (frozen in the
+  same commit as Stage A's, untouched since the PASS):
+  scripts/arenas/cx_heading_killtest.py -- cx_ring loading/drive/read/
+  rotation conventions verbatim at gain 1.5 / leak 0.3; AC-2
+  persistence precheck on the calibration angle; ONE labeled
+  instrument-level guard added at build time (same-signed or
+  sub-threshold calibrated rates BLOCK: the command integral is
+  undefined without a signed rate basis); CX-block-only rewires
+  (AC-5) via cx_block_rewire, unit-tested to touch nothing outside
+  the 148x148 block and to preserve in/out degrees inside it; the 3
+  preregistered sequences (seed 20261010) and the command-integral
+  decode, with the registration's singular "rotation-rate
+  calibration" operationalized as the REAL arm's rates defining every
+  arm's ground truth (documented in the docstring: an arm that cannot
+  steer accumulates error against the commanded trajectory). 7/7
+  tests in-cloud; exits 3 BLOCKED here as designed. Runbook Stage-B
+  section added.
+
+NEXT: user runs Stage B locally (~1 h); cloud closes
+H-CX-HEADING-LATENT either way.
+
 ## TASK 9 STAGE A: PASS -- the CX ring topology survives its own rewire null (first PASS in the arena series) -- 2026-10-10
 
 The user ran the Stage-A structural kill test (seconds of real
