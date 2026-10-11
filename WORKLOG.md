@@ -1,5 +1,40 @@
 # FlyGI durable worklog
 
+## Task 9 FULLY CLOSED: both reopening hypotheses refuted in the registry; synthesis updated -- 2026-10-11
+
+Cloud-side close of the two local KILLs (run record: the entry below,
+commit eeb75b5). Changes, all propagated the same day:
+
+- EXPERIMENTS.yaml: H-CX-SEEDING-PROTOCOL -> refuted (regime-bound,
+  not protocol-bound; the frozen decision rule licenses NO class-1
+  Stage-B re-registration). H-CX-CLASS3-COMPASS -> refuted, with the
+  verdict-machine gate pass recorded first (the engine reproduces
+  the published Pisokas fly bump where the verdict was produced, so
+  the KILL is about the counts, not the engine). Both run bullets
+  carry tiers: MEASURED numbers verbatim from the run record;
+  INFERRED readings (landscape-decides; point-attractor-not-ring)
+  with their bridges stated; the class-3 close scoped to the
+  declared AC-6 mapping and the AC-8 standalone circuit.
+- SYNTHESIS.md: second Task-9 addendum. The headline: the
+  structure/function split is now measured at TWO fidelity classes
+  of the same circuit, with DIFFERENT failure modes (class 1: the
+  rate bump dies; class 3: the spiking bump persists at retention
+  0.94-0.997 but slides to a common basin, errors 155-177 deg).
+  Record map extended with the four Task-9 hypotheses. Noted
+  explicitly: the null-bar record does NOT gain instances from these
+  runs -- in both, the real arm failed before any rewire ran.
+- ASSUMPTIONS.md: AC-6 and AC-8 annotated EXERCISED (mapping usable
+  -- stable everywhere; scope carried into the close sentences).
+  AC-7 stands CONFIRMED.
+- HANDOFF row 9: REOPENED and RE-CLOSED; Task 9 is closed at every
+  registered level.
+
+No further Task-9 work is queued. The live reopening-shaped question
+that remains in the record is SYNTHESIS section 7 item 1 (class-3 on
+a killed circuit, T4/T5 named), which now carries the CX precedent
+that fidelity CHANGES the failure mode; it runs only on an explicit
+go.
+
 ## Task 9 reopening: BOTH kill tests run -- probe KILL, class-3 KILL (gate passed; the counts hold activity but not position) -- 2026-10-11
 
 The user ran both reopening instruments in the registered order

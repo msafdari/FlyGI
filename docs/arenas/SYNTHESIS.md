@@ -193,6 +193,10 @@ Measurements that would move this synthesis, in information order:
 | H-T4T5-DVS-GESTURE | refuted 10-03 | EXPERIMENTS.yaml; task4_neurobench/ |
 | H-EARLYFILTER-BRAINSCORE-V1 | refuted 10-04 | EXPERIMENTS.yaml; task5_brainscore/ |
 | H-ALMB-GASDRIFT | refuted 10-06 | EXPERIMENTS.yaml; task6_enose/ |
+| H-CX-RING-TOPOLOGY | supported 10-10 | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-HEADING-LATENT | null 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-SEEDING-PROTOCOL | refuted 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-CLASS3-COMPASS | refuted 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:
@@ -235,3 +239,57 @@ holds the structural PASS, the gain-2.0 persistence separation, AND a
 concrete protocol question (visual-arc vs wedge-write seeding at
 gain 1.5) that a cheap registered probe could settle. Neither runs
 without an explicit go.
+
+## Addendum 2026-10-11 (later) — Task 9 reopening: both paths run, both KILL
+
+The user said "do them both"; both reopening hypotheses were
+registered jointly before any instrument code, built, validated, and
+run locally the same day (WORKLOG eeb75b5; closes in
+EXPERIMENTS.yaml). No instrument changes in either run, zero
+instability in every arm, and the class-3 validation gate passed ON
+THE VERDICT MACHINE first — the published Pisokas 60-neuron fly
+circuit reproduces in our engine (mean bump width 99.0 deg under
+their own estimator vs their 88.3) — so both KILLs are about the
+counts, not the instruments.
+
+- **H-CX-SEEDING-PROTOCOL: refuted.** At gain 1.5, four seeding
+  protocols spanning a 5x-longer write, a 3x-stronger write, and
+  direct state injection all land at the same held-out errors
+  (~121/149/59 deg, circvar 0.66-0.68); at gain 2.0 all four
+  reproduce the known fixed-point mode. Inferred, bridge stated: the
+  attractor landscape, not the write, decides where mass settles.
+  Stage B's failure was regime-bound; no class-1 re-registration is
+  licensed, closing the protocol question the first addendum left
+  open.
+- **H-CX-CLASS3-COMPASS: refuted — the strongest statement in the
+  program's record.** At literature-pinned spiking physiology (the
+  model class where idealized fly topology is published to work and
+  measured working here), the real MaleCNS counts under the declared
+  AC-6 mapping fail the compass gate at all six declared scales: G1
+  at best 2 of 8 angles, steering never opposite-signed. The NEW
+  measured fact inside the KILL: the failure MODE changed with
+  fidelity. At class 1 the rate bump died in darkness (retention
+  ~0.00); at class 3 the spiking bump SURVIVES (retention
+  0.94-0.997) but slides to a common region (~177-221 deg) from
+  every write angle — errors 155-177 deg. Inferred: a point
+  attractor, not a ring of them. Activity persistence without a
+  position continuum.
+
+What this does to the synthesis: section 4's
+transformation-not-permutation reading now has its sharpest
+instance, measured at two fidelity classes of the same circuit. The
+wiring carries ring-compass STRUCTURE its nulls cannot fake (Stage
+A, p 0.005), and does not COMPUTE heading with it at either tested
+physiology — rate-tier class 1 or published spiking-tier class 3
+(scoped: under the declared, unfitted AC-6 count mapping; the
+published rate-tier successes on these connectomes all FIT per-type
+parameters, which is exactly the lesson of Duan & Fiete that this
+registration chose not to import). Note the null-bar record does NOT
+gain instances from these runs: in both, the real arm failed before
+any rewire ran — the frozen cost-honest order means the rewire table
+stays at seven registered instances plus the Stage-A PASS. Section
+7's measurement list stands, with item 1's "class-3 on one killed
+circuit" now carrying a CX precedent: at class-3 fidelity the CX
+KILL changed the failure mode, so a T4/T5 class-3 run retains its
+information value — but it, like everything else here, runs only on
+an explicit go.

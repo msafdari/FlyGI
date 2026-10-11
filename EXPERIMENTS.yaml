@@ -2446,7 +2446,7 @@ hypotheses:
       4-protocol seeding set yields darkness persistence of a
       localized, position-faithful EPG bump in the real CX that the
       CX-block rewires lack.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-11 BEFORE ANY INSTRUMENT CODE, jointly
@@ -2482,6 +2482,27 @@ hypotheses:
         BLOCKED in-cloud as designed (exit 3, runtime absent).
         Awaiting the local run; this probe runs FIRST, class-3 after
         it reports.
+      - >
+        2026-10-11 RUN (local, exit 1, 422.8 s; record WORKLOG
+        eeb75b5; JSON gitignored at results/arenas/
+        cx_seeding_killtest.json): KILL. All 8 real cells fail the
+        frozen cell rule, so the rewires never ran (the wiring bar is
+        defined only at real-passing cells; frozen cost-honest
+        order). Zero instability in every arm; 13/13 tests; no
+        instrument changes. MEASURED: at gain 1.5 all four protocols
+        -- the cx_ring-verbatim write, the 100-step write, the
+        scale-3.0 write, AND direct state injection -- land at the
+        same held-out errors (~121/149/59 deg) with circvar
+        0.66-0.68; at gain 2.0 every protocol reproduces the measured
+        fixed-point mode (112.5 -> circvar 0.000, err 22.5; other
+        angles circvar ~0.83). INFERRED (bridge stated): failure
+        invariant across a 5x-longer, a 3x-stronger, and a
+        direct-state write means the attractor landscape, not the
+        write protocol, decides where mass settles. CLOSE: Stage B's
+        failure was regime-bound, not protocol-bound; per the frozen
+        decision rule, no class-1 Stage-B re-registration is
+        licensed. The registration's stated prior (P4 at gain 2.0
+        expected to reproduce the fixed points) held.
     updated: 2026-10-11
 
   H-CX-CLASS3-COMPASS:
@@ -2494,7 +2515,7 @@ hypotheses:
       localized persistent bump, 8-angle position continuum,
       opposite-signed steering -- and its degree-preserving rewires do
       not.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-11 BEFORE ANY INSTRUMENT CODE, jointly
@@ -2547,6 +2568,39 @@ hypotheses:
         stable, asserted by unit test. The engine reproduces the
         published fly spiking bump; nothing about MaleCNS is claimed
         yet. Runs AFTER the seeding probe reports.
+      - >
+        2026-10-11 RUN (local, exit 1, 990.4 s; record WORKLOG
+        eeb75b5; JSON gitignored at results/arenas/
+        cx_class3_killtest.json): KILL, with the validation gate
+        PASSING LOCALLY FIRST (pass=true, mean width 99.0 deg
+        matching the in-cloud measurement; per-seed retention
+        0.97-0.99, err 15-41 deg) -- the engine reproduces the
+        published idealized fly circuit on the verdict machine, so
+        the verdict is about the counts, not the engine. MEASURED on
+        the real MaleCNS counts, all 6 declared grid points: G1 at
+        best 2 of 8 angles (bar >= 6); G2 never opposite-signed
+        (best L -8.0 / R -8.3 deg/s, same-signed, at 0.5x global;
+        near zero at 1.0x and 2.0x). Rewires never ran (no
+        real-passing points). NEW MEASURED failure mode: retention
+        0.94-0.997 -- the spiking bump SURVIVES 2 s of darkness,
+        where the class-1 rate bump died -- but position-unfaithful:
+        final PVA clusters at ~177-221 deg regardless of write angle
+        (errors 155-177 deg). Zero instability; 22/22 tests; no
+        instrument changes. INFERRED (bridge stated): finals
+        clustering at one region across all 8 write angles is the
+        signature of a point-attractor basin, not a ring of states --
+        activity persistence without a position continuum. CLOSE,
+        the registration's own preregistered reading: at the model
+        class where idealized fly topology is PUBLISHED to work --
+        and demonstrably reproduces in this engine on this machine --
+        the compiled MaleCNS CX synapse counts do not carry the
+        compass: no position continuum, no opposite-signed steering,
+        at any declared scale, under the declared AC-6 mapping
+        (scoped: a different literature-pinned mapping would need its
+        own registration). Combined with Stage A (topology present at
+        p 0.005 vs 200 rewires), the structure-without-computation
+        split is now measured at two fidelity classes with different
+        failure modes.
     updated: 2026-10-11
 
   H-CX-HEADING-LATENT:
