@@ -1,5 +1,52 @@
 # FlyGI durable worklog
 
+## Task 9 reopening: BOTH kill tests run -- probe KILL, class-3 KILL (gate passed; the counts hold activity but not position) -- 2026-10-11
+
+The user ran both reopening instruments in the registered order
+(probe first). 13/13 and 22/22 unit tests; no instrument changes
+needed; zero instability in every arm of both runs. JSONs gitignored
+at results/arenas/cx_{seeding,class3}_killtest.json.
+
+PROBE (H-CX-SEEDING-PROTOCOL): KILL, exit 1, 422.8 s. All 8 real
+cells fail the cell rule; rewires therefore never ran (frozen
+evaluation order). MEASURED pattern across cells: at gain 1.5 every
+protocol (P1-P4, including the 100-step write, the scale-3 write and
+direct state injection) lands at the same held-out errors
+(~121/149/59 deg) with circvar ~0.66-0.68 -- the landscape, not the
+write, decides where mass sits; at gain 2.0 all protocols reproduce
+the known fixed-point mode (112.5 -> circvar 0.000 err 22.5; others
+circvar ~0.83). Stage B's failure was NOT protocol-bound: no
+re-registration of class-1 Stage B is licensed.
+
+CLASS-3 (H-CX-CLASS3-COMPASS): KILL, exit 1, 990.4 s. The
+validation gate PASSED LOCALLY first -- the Pisokas 60-neuron
+idealized fly circuit reproduces in this engine on this machine
+(pass=True, mean width 99.0 deg, matching the in-cloud measurement;
+per-seed retentions 0.97-0.99, errors 15-41 deg) -- so the verdict
+is valid, not blocked. On the real MaleCNS counts, all 6 declared
+grid points fail: G1 best 2 of 8 angles (bar: >= 6), G2 steering
+never opposite-signed (best L -8.0/R -8.3 deg/s same-signed at 0.5x;
+near-zero at 1.0x/2.0x). Rewires never ran (no real-passing points).
+MEASURED failure mode, and it is NEW: retention at the grid points
+is HIGH (0.94-0.997 -- the spiking bump persists through darkness)
+but position-unfaithful -- final angles cluster at ~177-221 deg
+regardless of the write angle (errors 155-177 deg). At class-1 rate
+dynamics the bump died; at class-3 spiking fidelity it survives but
+slides to a common attractor basin. Activity persistence without a
+position continuum.
+
+THE SCOPED STATEMENT this pair buys (the registration's own words):
+at the model class where idealized fly topology is PUBLISHED to work
+-- and reproduces in our engine -- the compiled MaleCNS synapse
+counts do not carry the compass: no continuum (G1), no opposite
+steering (G2), at any declared scale. Combined with Stage A (the
+topology IS in the counts, p 0.005 against 200 rewires) the
+structure/function split is now measured at two fidelity classes:
+the wiring carries ring-compass STRUCTURE its nulls cannot fake, and
+does not COMPUTE heading with it at either tested physiology.
+Hypothesis closes (both) are the cloud side's step per the
+registration.
+
 ## Task 9 reopening: BOTH instruments BUILT; class-3 engine REPRODUCES the published fly bump (gate PASS, estimator amendment recorded) -- 2026-10-11
 
 Both registered instruments now exist, tested, with the class-3
