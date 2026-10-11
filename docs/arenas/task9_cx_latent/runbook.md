@@ -1,5 +1,16 @@
 # Task 9 — CX latent-state runbooks (user-executed)
 
+> **Task 9 CLOSED at every registered level (2026-10-11).** Stage A
+> SUPPORTED (H-CX-RING-TOPOLOGY, the series' first PASS); Stage B
+> H-CX-HEADING-LATENT closed "null" (BLOCKED at the AC-2 precheck);
+> the reopening probe and the class-3 test below were both run
+> locally the same day and both KILLED (H-CX-SEEDING-PROTOCOL and
+> H-CX-CLASS3-COMPASS refuted; the class-3 validation gate passed on
+> the verdict machine first). Every command below was executed.
+> Records: EXPERIMENTS.yaml, WORKLOG eeb75b5 + the close entry,
+> SYNTHESIS second Task-9 addendum, HANDOFF row 9. This file is a
+> historical record; nothing in it is awaiting a run.
+
 Stage A is ready to run; Stage B's instrument builds only after a
 Stage-A PASS (both registrations are already frozen in
 killtest_design.md, including the dated pre-data-contact amendment of

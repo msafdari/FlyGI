@@ -230,3 +230,24 @@ finding that per-type tuning is necessary at rate tier (our per-class
 scales are pinned, not fitted), and this program's six-of-seven
 rewire record on dynamics. Either outcome publishes; the
 structure-without-computation split sharpens or breaks here.
+
+---
+
+## Dual close note (2026-10-11; frozen text above untouched)
+
+Both tests ran locally the same day, in the registered order, with no
+instrument changes and zero instability in any arm (run record:
+WORKLOG eeb75b5; closes: EXPERIMENTS.yaml).
+
+- H-CX-SEEDING-PROTOCOL: KILL (exit 1, 422.8 s). All 8 real cells
+  failed the cell rule; rewires never ran (the frozen cost-honest
+  order). The frozen decision rule applies: no class-1 Stage-B
+  re-registration is licensed. The stated prior held (P4 at gain 2.0
+  reproduced the fixed points).
+- H-CX-CLASS3-COMPASS: KILL (exit 1, 990.4 s), with the validation
+  gate above PASSING on the verdict machine first (mean width
+  99.0 deg under the published estimator, per the dated amendment).
+  All 6 declared grid points failed G1 (best 2 of 8) and G2 (never
+  opposite-signed); rewires never ran. The preregistered KILL reading
+  applies, scoped as registered (standalone circuit, AC-6 mapping,
+  declared grid).

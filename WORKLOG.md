@@ -19,7 +19,8 @@ commit eeb75b5). Changes, all propagated the same day:
   structure/function split is now measured at TWO fidelity classes
   of the same circuit, with DIFFERENT failure modes (class 1: the
   rate bump dies; class 3: the spiking bump persists at retention
-  0.94-0.997 but slides to a common basin, errors 155-177 deg).
+  0.94-0.997 but slides to a common region, ~177-221 deg, errors
+  155-177 deg; the point-attractor reading is INFERRED).
   Record map extended with the four Task-9 hypotheses. Noted
   explicitly: the null-bar record does NOT gain instances from these
   runs -- in both, the real arm failed before any rewire ran.

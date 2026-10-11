@@ -123,7 +123,11 @@ Three explanations for the regularity remain live, none tested:
 
 1. **Fidelity ceiling** — class-2/2.5 dynamics may be too coarse to
    express what the specific wiring does. Untested above class 2.5
-   everywhere; the single most informative next measurement.
+   on the killed sensory circuits; first tested at class 3 on the CX
+   2026-10-11 (KILL, and the failure mode CHANGED with fidelity —
+   second Task-9 addendum below), which sharpens rather than
+   discharges this explanation for the sensory circuits. Still the
+   single most informative next measurement for T4/T5.
 2. **Readout mismatch** — linear probes on spike counts and evoked
    integrals may not read what the wiring computes. Evidence against,
    for the MB: the association arm used the circuit's NATIVE readout
@@ -255,25 +259,31 @@ counts, not the instruments.
 - **H-CX-SEEDING-PROTOCOL: refuted.** At gain 1.5, four seeding
   protocols spanning a 5x-longer write, a 3x-stronger write, and
   direct state injection all land at the same held-out errors
-  (~121/149/59 deg, circvar 0.66-0.68); at gain 2.0 all four
+  (~121/149/59 deg, circvar ~0.66-0.68); at gain 2.0 all four
   reproduce the known fixed-point mode. Inferred, bridge stated: the
   attractor landscape, not the write, decides where mass settles.
   Stage B's failure was regime-bound; no class-1 re-registration is
-  licensed, closing the protocol question the first addendum left
-  open.
-- **H-CX-CLASS3-COMPASS: refuted — the strongest statement in the
-  program's record.** At literature-pinned spiking physiology (the
-  model class where idealized fly topology is published to work and
-  measured working here), the real MaleCNS counts under the declared
-  AC-6 mapping fail the compass gate at all six declared scales: G1
-  at best 2 of 8 angles, steering never opposite-signed. The NEW
-  measured fact inside the KILL: the failure MODE changed with
-  fidelity. At class 1 the rate bump died in darkness (retention
-  ~0.00); at class 3 the spiking bump SURVIVES (retention
-  0.94-0.997) but slides to a common region (~177-221 deg) from
-  every write angle — errors 155-177 deg. Inferred: a point
-  attractor, not a ring of them. Activity persistence without a
-  position continuum.
+  licensed (the frozen decision rule). By the inferred landscape
+  reading this also supersedes the arc-vs-wedge protocol question
+  the first addendum left open — the arc protocol itself remains
+  unreproducible and was never rerun; direct state injection failing
+  is the bridge's strongest case.
+- **H-CX-CLASS3-COMPASS: refuted — per the registration's
+  preregistered reading, the program's strongest possible statement
+  that the compiled counts do not carry the compass at physiological
+  fidelity.** At literature-pinned spiking physiology (the model
+  class where idealized fly topology is published to work and
+  measured working here), the real MaleCNS counts — standalone
+  148-neuron circuit, AC-8 scope — under the declared AC-6 mapping
+  fail the compass gate at all six declared grid points: G1 at best
+  2 of 8 angles, steering never opposite-signed. The NEW measured
+  fact inside the KILL: the failure MODE changed with fidelity. At
+  class 1 the rate bump died in darkness (best recorded wedge-write
+  grid retention 0.0177; Stage-B precheck 0.0000); at class 3 the
+  spiking bump SURVIVES (retention 0.94-0.997) but slides to a
+  common region (~177-221 deg) from every write angle — errors
+  155-177 deg. Inferred: a point attractor, not a ring of them.
+  Activity persistence without a position continuum.
 
 What this does to the synthesis: section 4's
 transformation-not-permutation reading now has its sharpest
@@ -281,10 +291,11 @@ instance, measured at two fidelity classes of the same circuit. The
 wiring carries ring-compass STRUCTURE its nulls cannot fake (Stage
 A, p 0.005), and does not COMPUTE heading with it at either tested
 physiology — rate-tier class 1 or published spiking-tier class 3
-(scoped: under the declared, unfitted AC-6 count mapping; the
-published rate-tier successes on these connectomes all FIT per-type
-parameters, which is exactly the lesson of Duan & Fiete that this
-registration chose not to import). Note the null-bar record does NOT
+(scoped: under the declared, unfitted AC-6 count mapping and the
+AC-8 standalone-circuit setting — the CX in situ is untested at
+class 3; the published rate-tier successes on these connectomes all
+FIT per-type parameters, which is exactly the lesson of Duan & Fiete
+that this registration chose not to import). Note the null-bar record does NOT
 gain instances from these runs: in both, the real arm failed before
 any rewire ran — the frozen cost-honest order means the rewire table
 stays at seven registered instances plus the Stage-A PASS. Section

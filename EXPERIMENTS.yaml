@@ -2493,7 +2493,7 @@ hypotheses:
         -- the cx_ring-verbatim write, the 100-step write, the
         scale-3.0 write, AND direct state injection -- land at the
         same held-out errors (~121/149/59 deg) with circvar
-        0.66-0.68; at gain 2.0 every protocol reproduces the measured
+        ~0.66-0.68; at gain 2.0 every protocol reproduces the measured
         fixed-point mode (112.5 -> circvar 0.000, err 22.5; other
         angles circvar ~0.83). INFERRED (bridge stated): failure
         invariant across a 5x-longer, a 3x-stronger, and a
@@ -2594,10 +2594,12 @@ hypotheses:
         class where idealized fly topology is PUBLISHED to work --
         and demonstrably reproduces in this engine on this machine --
         the compiled MaleCNS CX synapse counts do not carry the
-        compass: no position continuum, no opposite-signed steering,
-        at any declared scale, under the declared AC-6 mapping
-        (scoped: a different literature-pinned mapping would need its
-        own registration). Combined with Stage A (topology present at
+        compass in the STANDALONE 148-neuron circuit (AC-8): no
+        position continuum, no opposite-signed steering, at any
+        declared scale, under the declared AC-6 mapping (scoped: a
+        different literature-pinned mapping would need its own
+        registration, and in-situ class-3 behavior is untested).
+        Combined with Stage A (topology present at
         p 0.005 vs 200 rewires), the structure-without-computation
         split is now measured at two fidelity classes with different
         failure modes.
@@ -2678,6 +2680,13 @@ hypotheses:
         this from becoming an operating-point search tuned to pass.
         Task 9 closes: structure yes (Stage A, the series' first
         PASS), computation untestable at classes 1-2 (this record).
+      - >
+        2026-10-11 (later): BOTH named reopening paths were
+        registered, run, and KILLED the same day -- see
+        H-CX-SEEDING-PROTOCOL (path b ran as the declared-protocol
+        probe, the arc protocol itself being unreproducible from the
+        committed record) and H-CX-CLASS3-COMPASS (path a). This
+        "null" stands; Task 9 is closed at every registered level.
     updated: 2026-10-11
 
 experiments:
