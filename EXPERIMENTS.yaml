@@ -2438,6 +2438,85 @@ hypotheses:
         registration, now cleared to build).
     updated: 2026-10-10
 
+  H-CX-SEEDING-PROTOCOL:
+    statement: >
+      Stage B's heading-latent failure was PROTOCOL-bound, not
+      regime-bound: at an operating point with measured steering
+      (gain 1.5/leak 0.3 or 2.0/0.3), some protocol from a frozen
+      4-protocol seeding set yields darkness persistence of a
+      localized, position-faithful EPG bump in the real CX that the
+      CX-block rewires lack.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-11 BEFORE ANY INSTRUMENT CODE, jointly
+        with H-CX-CLASS3-COMPASS (one commit; neither tunable on the
+        other). Frozen design: docs/arenas/task9_cx_latent/
+        killtest_design_reopening.md. Protocols: P1 wedge-write 20
+        steps scale 1.0 (cx_ring verbatim -- the reproduction
+        control, measured dead in the tracked grid, git 09a998a);
+        P2 100-step write; P3 scale 3.0 (the fc2_eb_ring declared
+        factor); P4 direct EPG state injection (cx_scratchpad style;
+        gain-2.0 outcome already measured as two fixed points).
+        Cell pass: >= 2 of 3 held-out angles with retention >= 0.05,
+        circvar <= 0.6, PVA within 45 deg of seed; wiring bar: all 3
+        CX-block rewires fail every real-passing cell; PASS iff >= 1
+        cell passes both; all 8 cells reported in full, rewires
+        evaluated at real-passing cells only (decision-identical).
+        Tracking at passing cells is reported as CONTEXT; the
+        heading-latent verdict belongs to a re-registered Stage B,
+        not this probe. BLOCKED: runtime absent, composition
+        mismatch, > 20% instability. Not score-adjacent. Priors both
+        ways: steering measured at both points; wedge-write
+        persistence measured dead everywhere; the one persistence
+        positive used the unreproducible arc protocol
+        (reopening_delta.md).
+    updated: 2026-10-11
+
+  H-CX-CLASS3-COMPASS:
+    statement: >
+      At literature-pinned spiking physiology (Kakaria/Pisokas LIF
+      with PSC templates, the model class where idealized fly-topology
+      ring attractors are published to work) with declared per-class
+      weight scales on the REAL MaleCNS CX synapse counts, the
+      standalone 148-neuron circuit passes the compass gate --
+      localized persistent bump, 8-angle position continuum,
+      opposite-signed steering -- and its degree-preserving rewires do
+      not.
+    status: open
+    evidence:
+      - >
+        PREREGISTERED 2026-10-11 BEFORE ANY INSTRUMENT CODE, jointly
+        with H-CX-SEEDING-PROTOCOL. Frozen design: killtest_design_
+        reopening.md, with the full pinned physiology (the paper-vs-
+        code Cm/Rm discrepancy recorded; CODE values used with code
+        weights: Cm 20 nF, Rm 1 MOhm, tau_m 20 ms, rest -52 mV,
+        threshold -45 mV, 2 ms AP template to -72 mV, PSC quarter-
+        sine 2 ms + 5 ms-half-life decay peak 5 nA, dt 1e-4 s,
+        background 5 Hz, von Mises kappa 3pi/4 heading drive, PEN_a
+        hemisphere rotation drive) and Pisokas's optimized fly class
+        weights from their published code. Weight mapping AC-6: per-
+        edge = count x per-class scale, scale set so the class MEAN
+        drive matches the Pisokas class weight -- heterogeneity
+        preserved, unit literature-pinned, nothing fitted. Declared
+        6-point variant grid (global scale x {0.5,1,2} x inhibitory
+        scale x {1,2}), all reported. Gate: G1 continuum/persistence
+        (>= 6 of 8 write angles: retention >= 0.05, circvar <= 0.6,
+        PVA within 45 deg after 2 s darkness) + G2 opposite steering
+        (both |rate| >= 9 deg/s); null bar: all 3 rewires fail G1 at
+        every real-passing point. PASS iff >= 1 point clears all.
+        INSTRUMENT VALIDATION GATE, in-cloud, before data contact:
+        the engine must reproduce the published Pisokas 60-neuron fly
+        result (bump forms, persists 2 s, FWHM 60-120 deg) or there
+        is no instrument. PRECEDENT (registered sweep 2026-10-11):
+        connectome-weighted fly CX bumps exist only at rate tier with
+        fitted per-type parameters (Biswas 2024, incl. MaleCNS; Duan,
+        Dong & Fiete, NeurIPS 2025, tuning shown necessary); no
+        spiking/conductance connectome-weighted bump is published --
+        this registration targets that gap. Not score-adjacent.
+        Priors both ways stated in the design.
+    updated: 2026-10-11
+
   H-CX-HEADING-LATENT:
     statement: >
       At the measured working regime (class-1 rate dynamics, full

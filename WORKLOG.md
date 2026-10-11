@@ -1,5 +1,43 @@
 # FlyGI durable worklog
 
+## Task 9 reopening: BOTH kill tests jointly REGISTERED (probe + class-3), literature pinned -- 2026-10-11
+
+The literature sweep landed (3 agents, zero errors; sources
+code-verified where stated) and both registrations froze in one
+commit (docs/arenas/task9_cx_latent/killtest_design_reopening.md):
+
+- H-CX-SEEDING-PROTOCOL (class-1 probe): frozen 4-protocol x 2-point
+  set (P1 cx_ring wedge-write as the measured-dead reproduction
+  control; P2 sustained write; P3 scale-3 write; P4 direct state
+  injection), position-faithful cell pass rule, rewire wiring bar at
+  real-passing cells, all cells reported. Tracking at passing cells
+  is context only -- the heading-latent verdict would belong to a
+  re-registered Stage B.
+- H-CX-CLASS3-COMPASS: Kakaria/Pisokas template-LIF physiology,
+  code-verified values (the sweep CAUGHT a paper-vs-code parameter
+  discrepancy -- paper Cm 2 nF / Rm 10 MOhm vs code 20 nF / 1 MOhm,
+  same tau_m, 10x current gain; we pin the CODE set with the code's
+  optimized fly class weights, extracted from their published
+  MATLAB: 99.968 / 47.917 / 6.072 / -35.677 / -19.336). Weight
+  mapping AC-6 (class-mean-matched scales, heterogeneity preserved,
+  nothing fitted); declared 6-point grid; G1 8-angle continuum +
+  persistence, G2 opposite steering; rewires must fail G1 at every
+  real-passing point. IN-CLOUD VALIDATION GATE: the engine must
+  reproduce the published Pisokas 60-neuron fly bump before any data
+  contact.
+- PRECEDENT, from the sweep (absence finding, stated): connectome-
+  weighted fly CX bumps exist only at rate tier with FITTED per-type
+  parameters (Biswas 2024 bioRxiv, incl. exact MaleCNS realizations;
+  Duan, Dong & Fiete NeurIPS 2025, tuning shown necessary on
+  hemibrain); NO spiking/conductance connectome-weighted bump is
+  published anywhere. H-CX-CLASS3-COMPASS targets exactly that gap
+  with pinned (unfitted) parameters.
+- AC-6..AC-8 registered. Neither hypothesis is score-adjacent.
+
+NEXT: build both instruments (probe reuses the Stage-B machinery;
+class-3 engine must pass the Pisokas validation gate in-cloud), then
+the user runs the probe first.
+
 ## Task 9 reopening: due diligence recorded; joint registration pending the literature sweep -- 2026-10-11
 
 User go on BOTH reopening paths. Due diligence first
