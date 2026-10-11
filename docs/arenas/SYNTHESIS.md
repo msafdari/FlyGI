@@ -198,3 +198,40 @@ Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:
 WORKLOG.md. Outward fact base: docs/arenas/task1_arc_paper/
 factsheet.md.
+
+## Addendum 2026-10-11 — Task 9 (CX latent state, off-survey)
+
+A user-directed ninth task asked whether the compiled CX carries a
+heading latent — the fly's established world-model fragment. Outcome,
+both halves measured, full record in EXPERIMENTS.yaml and
+docs/arenas/task9_cx_latent/:
+
+- **Stage A (H-CX-RING-TOPOLOGY): SUPPORTED — the series' first
+  PASS.** The real CX wiring carries ring-compass topology its
+  degree-preserving rewires cannot produce: bandedness 0.5881 vs null
+  max 0.3376, PEN_a mirror-peak 0.01445 vs 0.00792, each at the
+  empirical floor over 200 rewires. The first measured property of
+  the real wiring that its own null cannot reproduce.
+- **Stage B (H-CX-HEADING-LATENT): closed "null" — untestable at
+  classes 1-2 under the registered protocol.** The premise's two
+  required properties exist in the record only in disjoint
+  regime x protocol combinations: persistence at gain 2.0 wedge-write
+  (fixed-point, not a continuum), opposite-signed steering at
+  gain 1.5 under visual-arc seeding, and NO persistence at gain 1.5
+  wedge-write (the class-1 grid and the Stage-B precheck, two
+  independent runs concurring); class-2 delocalized everywhere.
+
+What this does to the synthesis: it REFINES rather than breaks it.
+Section 4's reading said the surviving wins are an index, a
+mechanism, a parameter set, and a transformation — never the
+permutation. Stage A adds a second anatomy-tier positive: the
+permutation IS detectably special in the CX, structurally. What still
+has no measured win is the permutation DOING anything at simulable
+fidelity: even where the structure is real and null-detectable, no
+class-1/2 regime runs it as the compass it anatomically resembles.
+That sharpens the fidelity-ceiling explanation (section 5, option 1)
+and moves the CX ahead of T4/T5 as the class-3 candidate: it now
+holds the structural PASS, the gain-2.0 persistence separation, AND a
+concrete protocol question (visual-arc vs wedge-write seeding at
+gain 1.5) that a cheap registered probe could settle. Neither runs
+without an explicit go.

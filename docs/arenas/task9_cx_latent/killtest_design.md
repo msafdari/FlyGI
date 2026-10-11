@@ -173,3 +173,22 @@ argmax offsets and per-side mass-weighted mean offsets remain
 REPORTED as context. Everything else stands as frozen; the synthetic
 compass passes the amended bar and a rewired synthetic kills it, both
 asserted by unit test before any data contact.
+
+## Stage-B close note (2026-10-11; frozen text above untouched)
+
+Stage B BLOCKED at the AC-2 precheck (2026-10-10, exit 3, no verdict):
+retention 0.0000 / circvar 0.661 at the calibration angle,
+reproducing the class-1 cx_ring grid's own wedge-write measurement of
+this regime (0.0003 / 0.713, angle_pass false; every gain-1.5 leak
+row likewise). H-CX-HEADING-LATENT is closed "null" -- unvalidatable
+at class-1 under this protocol, untested rather than refuted: the
+premise's two required properties were only ever measured in disjoint
+regime x protocol combinations (persistence at gain 2.0 wedge-write,
+later shown fixed-point; opposite-signed steering at gain 1.5 under
+VISUAL-ARC seeding; no persistence at gain 1.5 wedge-write). The
+registration's reliance on the regime sweep's persistence number was
+a due-diligence miss against cx_ring.py's own "sign pattern, not
+numerically" caveat, recorded in the WORKLOG close. Reopening paths
+(each needs an explicit go and its own registration): class-3 CX
+fidelity, or a registered visual-arc-seeding reconciliation at 1.5
+with pre-stated pass rules.

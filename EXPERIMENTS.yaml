@@ -2447,7 +2447,7 @@ hypotheses:
       held-out seed angles and tracks integrated PEN self-motion
       commands, while CX-block-rewired controls fail: a latent
       heading representation carried by the specific wiring.
-    status: open
+    status: "null"
     evidence:
       - >
         PREREGISTERED 2026-10-10 BEFORE ANY INSTRUMENT CODE, gated:
@@ -2472,7 +2472,48 @@ hypotheses:
         H-CX-CALIBRATION's transplant refusal is why the whole graph
         runs at 1.5. Not score-adjacent; the 0-for-16 counter does
         not apply.
-    updated: 2026-10-10
+      - >
+        BLOCKED 2026-10-10 (user's local run, exit 3; record in
+        WORKLOG, commit dcedb9f; no verdict, premise untested): the
+        AC-2 precheck failed at the calibration angle -- retention
+        0.0000, circvar 0.661 after the 200-step darkness at
+        gain 1.5 / leak 0.3 -- and the run stopped before any arm,
+        per its contract. RECONCILED against the durable record (the
+        local session's finding, confirmed): the class-1 cx_ring.json
+        grid ALREADY measured this regime dead under the wedge-write
+        protocol (1.5/0.3, angle 22.5: retention 0.0003, circvar
+        0.713, angle_pass false; every gain-1.5 leak row likewise),
+        and the Stage-B precheck reproduced it almost exactly. The
+        instrument is not suspected.
+      - >
+        CLOSED 2026-10-11 as NULL -- unvalidatable at class-1 under
+        the registered protocol; the premise is untested, not
+        refuted. The reconciled record now says the two properties
+        the premise requires were only ever measured in DISJOINT
+        regime x protocol combinations: persistence at gain 2.0
+        (wedge-write; later shown fixed-point, not a continuum, with
+        same-signed steering); opposite-signed steering at gain 1.5
+        (the 2026-09-25 regime sweep, VISUAL-ARC seeding); and no
+        persistence at gain 1.5 under wedge-write (cx_ring grid +
+        this precheck, two independent runs concurring). No measured
+        class-1 operating point carries both under one protocol;
+        class-2 delocalized everywhere (fc2_eb_ring). DUE-DILIGENCE
+        MISS, owned: the registration read the regime sweep's
+        persistence (circvar 0.52) as protocol-portable although
+        cx_ring.py's committed header flags its anchor as "agreement
+        expected in sign pattern, not numerically", and the grid's
+        contradicting wedge-write rows were in the durable (local)
+        record. WHAT WOULD REOPEN THIS: (a) class-3 CX fidelity --
+        the CX is now the strongest class-3 candidate, holding both
+        the structural PASS (H-CX-RING-TOPOLOGY) and the gain-2.0
+        persistence separation; (b) a REGISTERED protocol
+        reconciliation (visual-arc seeding at 1.5, with pre-stated
+        pass rules, to test whether seeding -- not regime -- decides
+        persistence); neither runs without an explicit go, to keep
+        this from becoming an operating-point search tuned to pass.
+        Task 9 closes: structure yes (Stage A, the series' first
+        PASS), computation untestable at classes 1-2 (this record).
+    updated: 2026-10-11
 
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----

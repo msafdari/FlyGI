@@ -1,5 +1,48 @@
 # FlyGI durable worklog
 
+## Task 9 CLOSED: structure yes, computation untestable at classes 1-2; AC-2 invalidated -- 2026-10-11
+
+Cloud-side close of the Stage-B BLOCKED (local record below at commit
+dcedb9f; the local session's reconciliation against cx_ring.json is
+confirmed and adopted):
+
+- EXPERIMENTS.yaml: H-CX-HEADING-LATENT -> "null" with two bullets --
+  the BLOCKED record (precheck 0.0000/0.661 reproducing the grid's
+  0.0003/0.713 almost exactly; instrument not suspected) and the
+  close: UNVALIDATABLE at class-1 under the registered protocol,
+  untested rather than refuted. The reconciled record shows the
+  premise's two required properties measured only in DISJOINT
+  regime x protocol combinations: persistence at gain 2.0 wedge-write
+  (fixed-point), opposite-signed steering at gain 1.5 VISUAL-ARC
+  seeding, no persistence at gain 1.5 wedge-write (two independent
+  runs). Class-2 delocalized everywhere.
+- DUE-DILIGENCE MISS, OWNED: the Stage-B registration read the regime
+  sweep's persistence (circvar 0.52 at 1.5) as protocol-portable.
+  cx_ring.py's committed header flags that anchor as "agreement
+  expected in sign pattern, not numerically", and the grid's
+  contradicting wedge-write rows were in the durable (local-only)
+  record. The gate the registration DID carry (AC-2 precheck ->
+  BLOCKED) is what contained the cost: 14.4 s, no arm evaluated, no
+  verdict-relevant quantity computed.
+- ASSUMPTIONS: AC-2 -> INVALIDATED with the measured numbers and the
+  protocol-portability flaw named. killtest_design.md gains a dated
+  Stage-B close note (frozen text untouched). HANDOFF row 9 ->
+  CLOSED. SYNTHESIS gains a dated Task-9 addendum: Stage A is a
+  second anatomy-tier positive (the permutation IS detectably
+  special, structurally); what still has no measured win is the
+  permutation DOING anything at simulable fidelity -- the
+  fidelity-ceiling explanation sharpens, and the CX moves ahead of
+  T4/T5 as the class-3 candidate (structural PASS + persistence
+  separation + the concrete visual-arc-vs-wedge-write protocol
+  question).
+
+REOPENING PATHS, each needing an explicit user go and its own
+registration: (a) class-3 CX fidelity; (b) a cheap registered
+visual-arc-seeding reconciliation at gain 1.5 with pre-stated pass
+rules (settles whether seeding, not regime, decides persistence).
+Neither runs on my initiative -- an unregistered operating-point
+search is tuning-to-pass.
+
 ## Task 9 Stage B: BLOCKED at the AC-2 precheck -- and the durable record says the gate was never passable -- 2026-10-10
 
 The user ran the Stage-B heading-latent kill test (7/7 unit tests
