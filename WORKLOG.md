@@ -1,5 +1,25 @@
 # FlyGI durable worklog
 
+## Task 9 reopening: due diligence recorded; joint registration pending the literature sweep -- 2026-10-11
+
+User go on BOTH reopening paths. Due diligence first
+(docs/arenas/task9_cx_latent/reopening_delta.md), with two new
+findings: (1) the verdict program's cx_ring grid survives as TRACKED
+provenance (git 09a998a) and is stronger than the Stage-B close knew
+-- wedge-write C1 persistence fails at EVERY grid point including
+gain 2.0 (best retention 0.0177), while C2 opposite steering PASSES
+at 1.5/0.3 and 2.0/0.3; the ONLY persistence measurement in the
+record is the Sept-25 arc-seeded run. (2) The arc protocol is
+UNREPRODUCIBLE from the committed record -- its scripts never existed
+in git; only registry prose and local JSONs survive. The probe
+therefore freezes a DECLARED 4-protocol x 2-operating-point set with
+pre-stated pass rules instead of claiming to replicate a lost
+protocol. The class-3 registration pins its parameter table from a
+running literature sweep (Pisokas 2020 / Kakaria 2017 / other CX
+models; whether any CONNECTOME-WEIGHTED fly CX has ever sustained a
+bump is the precedent question). Both registrations freeze in ONE
+commit when the sweep lands; no instrument code before that commit.
+
 ## Task 9 CLOSED: structure yes, computation untestable at classes 1-2; AC-2 invalidated -- 2026-10-11
 
 Cloud-side close of the Stage-B BLOCKED (local record below at commit
