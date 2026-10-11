@@ -2471,6 +2471,17 @@ hypotheses:
         persistence measured dead everywhere; the one persistence
         positive used the unreproducible arc protocol
         (reopening_delta.md).
+      - >
+        2026-10-11 INSTRUMENT BUILT (scripts/arenas/
+        cx_seeding_killtest.py): the Stage-B module is IMPORTED and
+        its machinery called directly, so loading/drive/read are
+        verbatim by construction; 13 in-cloud tests, including the
+        frozen design table, the P4 injection, the cell rule, the
+        verdict logic, and the per-cell runner end-to-end on stub
+        networks (perfect-memory stub passes, decaying stub fails).
+        BLOCKED in-cloud as designed (exit 3, runtime absent).
+        Awaiting the local run; this probe runs FIRST, class-3 after
+        it reports.
     updated: 2026-10-11
 
   H-CX-CLASS3-COMPASS:
@@ -2515,6 +2526,27 @@ hypotheses:
         spiking/conductance connectome-weighted bump is published --
         this registration targets that gap. Not score-adjacent.
         Priors both ways stated in the design.
+      - >
+        2026-10-11 INSTRUMENT BUILT (scripts/arenas/
+        cx_class3_killtest.py; fixture tests/data/
+        pisokas_fly_connectivity.npz = their 60x60 label matrix,
+        orientation structurally verified; 22 in-cloud tests). The
+        validation gate's width measurement was AMENDED pre-data-
+        contact (full dated record in killtest_design_reopening.md):
+        the first operationalization (per-cell E-PG fraction above
+        half max) MEASURED 160 deg on an otherwise healthy bump, and
+        code-reading their published repository ESTABLISHED that the
+        Table-1 width is measureBump1 over the LEFT-hemisphere P-EN
+        raster columns -- (k-1)/8 x 360 deg, 45-deg-quantized, 100 ms
+        window, and a trial MEAN. Band (60-120) and all other bars
+        unchanged; no MaleCNS-facing bar uses the width estimator.
+        MEASURED gate result with the published estimator: PASS --
+        per-seed widths {90, 135, 90, 90, 90} over declared seeds
+        7-11, mean 99.0 deg (their Table 1: 88.3); all five trials
+        retention >= 0.968, PVA err <= 41.4 deg, circvar <= 0.549;
+        stable, asserted by unit test. The engine reproduces the
+        published fly spiking bump; nothing about MaleCNS is claimed
+        yet. Runs AFTER the seeding probe reports.
     updated: 2026-10-11
 
   H-CX-HEADING-LATENT:

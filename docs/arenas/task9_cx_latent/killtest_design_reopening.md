@@ -172,6 +172,54 @@ FWHM in 60-120 deg (their Table 1: 88.3 deg). Asserted by unit test.
 If the engine cannot reproduce the literature circuit, there is no
 instrument and nothing about MaleCNS is claimed.
 
+#### AMENDMENT 2026-10-11 (pre-data-contact; width operationalization)
+
+Recorded while building the gate, before the instrument ever touched
+MaleCNS data. The 60-120 deg band and every other bar are UNCHANGED;
+what changed is how "bump FWHM" is computed, because the first
+operationalization measured a different quantity than the published
+one:
+
+- MEASURED (in-cloud, Pisokas fixture): a naive per-cell estimator
+  (fraction of the 18 E-PG cells above half max x 360) read 160 deg
+  on a settled bump that is otherwise healthy (retention 0.982,
+  PVA err 9.4 deg, circvar 0.334) -- a gate failure.
+- ESTABLISHED (code-verified in their published repository): the
+  Table-1 width is NOT a per-cell E-PG statistic. Their pipeline
+  (collect_stats_long_run.m:1697-1703, measureBump1.m,
+  PBexperimentModified.m:259-282, matrix layout per
+  collect_stats_long_run.m:328-332 = [P-EN 16, P-EG 18, E-PG 18,
+  Delta7 8]) measures the raster's first 8 columns -- the LEFT-
+  hemisphere P-ENs, one 45-deg EB column each -- averages a 100 ms
+  window ending 100 ms before simulation end, thresholds at
+  (max-min)/2, and scores a k-column contiguous run as
+  (k-1)/8 x 360 deg: a 45-deg-QUANTIZED statistic whose published
+  88.3 deg is a trial mean (3-column runs = 90 deg dominate). Their
+  von Mises drive is sampled at the 8 column angles and applied
+  identically to both 9-cell E-PG hemisphere blocks, the 9th cell
+  duplicating column 1 (p = [p; p(1)]).
+- AMENDED OPERATIONALIZATION: drive and PVA-read geometry use the
+  published column convention (block cell j at 45 x (j mod 8) deg;
+  write center 120 deg = their default stim_neuron_list [4]); width =
+  measureBump1's exact formula on the 8 left-hemisphere P-EN columns
+  over their 100 ms window, wrap-aware variant (equal to their
+  verbatim first-run value whenever the bump does not wrap; both are
+  reported); the gate statistic is the MEAN width over declared fixed
+  seeds 7-11 with every per-trial persistence/position/localization
+  bar still required, because the published 88.3 is itself a trial
+  mean of the quantized statistic (single trials legitimately read
+  90 or 135).
+- MEASURED (after amendment, same engine, no physiology change):
+  per-seed widths {90, 135, 90, 90, 90}, mean 99.0 deg -- in band,
+  within one estimator quantum (45 deg) of the published 88.3; all
+  five trials pass retention (>= 0.968), PVA err (<= 41.4 deg) and
+  circvar (<= 0.549). GATE PASS.
+
+This is an instrument-fidelity correction of the gate's own
+measurement code against the published code it is defined by, made
+and recorded before any MaleCNS contact; no MaleCNS-facing bar (G1,
+G2, null bar, grid) uses the width estimator.
+
 ### Tier
 
 Not score-adjacent. Expected-tier function prediction with priors

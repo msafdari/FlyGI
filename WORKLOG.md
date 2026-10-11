@@ -1,5 +1,55 @@
 # FlyGI durable worklog
 
+## Task 9 reopening: BOTH instruments BUILT; class-3 engine REPRODUCES the published fly bump (gate PASS, estimator amendment recorded) -- 2026-10-11
+
+Both registered instruments now exist, tested, with the class-3
+validation gate green in-cloud. The user runs the PROBE FIRST
+(runbook updated with both commands).
+
+- CLASS-3 ENGINE VALIDATED (scripts/arenas/cx_class3_killtest.py +
+  fixture tests/data/pisokas_fly_connectivity.npz + 22 tests).
+  MEASURED, in-cloud, published Pisokas 60-neuron fly circuit,
+  declared seeds 7-11: retention 0.968-0.987, PVA err 14.6-41.4 deg,
+  circvar 0.382-0.549, bump width per-seed {90, 135, 90, 90, 90},
+  MEAN 99.0 deg vs their Table-1 88.3 (one estimator quantum = 45
+  deg); stable at 3 s, and in earlier diagnostics at 10 s. To our
+  knowledge from the registered sweep this is the first
+  spiking-tier reproduction of their fly bump in this repository's
+  stack; it validates the INSTRUMENT only -- nothing about MaleCNS
+  is claimed.
+- GATE AMENDMENT (dated, PRE-DATA-CONTACT; full record in
+  killtest_design_reopening.md): the first width operationalization
+  (per-cell E-PG fraction above half max) MEASURED 160 deg on a bump
+  that is otherwise healthy, failing the 60-120 band. Reading their
+  published code ESTABLISHED the Table-1 width is a different
+  object: measureBump1 on the raster's first 8 columns = the LEFT-
+  hemisphere P-ENs (matrix layout [P-EN 16, P-EG 18, E-PG 18,
+  Delta7 8]), threshold (max-min)/2, width (k-1)/8 x 360 deg --
+  45-deg-QUANTIZED -- averaged over trials, on a 100 ms window; the
+  von Mises drive is sampled at the 8 EB column angles and applied
+  identically to both 9-cell E-PG hemisphere blocks (9th cell
+  duplicates column 1). The gate now uses their estimator, their
+  window, their column geometry, and a trial MEAN over declared
+  seeds; the 60-120 band and every other bar are unchanged; no
+  MaleCNS-facing bar (G1/G2/null) uses the width estimator. The
+  crude-estimator 160-deg reading is recorded as an instrument-
+  fidelity error, not an engine failure.
+- PROBE BUILT (scripts/arenas/cx_seeding_killtest.py + 13 tests):
+  imports the Stage-B module and calls its machinery directly, so
+  loading/drive/read are verbatim by construction. Frozen 8-cell
+  grid (2 points x 4 protocols), position-faithful cell rule,
+  rewires only at real-passing cells, tracking context at decisive
+  cells. Stub-network end-to-end: perfect-memory stub passes the
+  cell rule under all 4 protocols, decaying stub fails. BLOCKED
+  in-cloud as designed (exit 3, runtime absent).
+- Registry updated (both hypotheses carry the instrument-built
+  evidence; class-3 carries the amendment). Suites: 22 + 13 new
+  tests pass; Stage-A/B suites still pass (15).
+
+NEXT: user runs cx_seeding_killtest.py locally FIRST, reports JSON;
+then cx_class3_killtest.py (either probe outcome). Cloud side closes
+each hypothesis from the reports.
+
 ## Task 9 reopening: BOTH kill tests jointly REGISTERED (probe + class-3), literature pinned -- 2026-10-11
 
 The literature sweep landed (3 agents, zero errors; sources
