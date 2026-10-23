@@ -47,6 +47,33 @@ natstat harness; reservoir needs no instrument (launch of existing
 machinery). Reservoir runs FIRST locally, before the 2026-11-01
 release.
 
+UPDATE same day — INSTRUMENTS LANDING. (1) nulls2 built and pushed
+(24e7c71): weight/sign shuffle generators + invariants, decomposition
+runner on Stage-A machinery verbatim, 9 tests with both dissociation-
+gate directions MEASURED through the real rewire machinery
+(magnitude-tuned synthetic: real bandedness 0.639 vs null max 0.327,
+p at the floor; topology-banded jittered ring: weight family inert,
+rewire separates); controls.md rows closed to implemented+validated.
+(2) FB probe built (fb_topology_killtest.py, 14 tests): mirror_peak
+reused by identity from Stage A (asserted); synthetic Hulse-motif
+gate MEASURED both directions at 200 nulls in-cloud (ideal p 0.004975
+= floor on both bars; rewired ideal 0.677/0.294, both bars dead);
+main re-runs the gate at 200 nulls before any data contact; BLOCKED
+in-cloud as designed. Operationalizations recorded in the module
+(antipode sector = circular distance in [160,180]; Bar-2 on the
+Stage-A 16-bin offset frame via a circulant whose offset_profile is
+exactly the histogram — Stage-A semantics reused, not retuned).
+(3) natstat harness built (natstat_killtest.py, 31 tests): frozen
+van Hateren list imk00001..imk00060 sha256-pinned; scramble/
+translation/AD-8 gates all asserted in-cloud; exact binomial sign
+test pinned in-module (no scipy drift); B1/B2 verdict logic
+unit-tested on all paths; BLOCKED in-cloud naming the four missing
+local pieces. Joint suite: 79 passed. (4) The first build pass lost
+the class-3-T4/T5 and FlyBench-mechanisms agents to a usage-credit
+outage mid-flight; their partial artifacts were moved OUT of the tree
+(scratchpad/partials) and the two builds are re-running clean from
+the frozen registrations. Runbook sections 4-5 appended.
+
 ## Task 9 FULLY CLOSED: both reopening hypotheses refuted in the registry; synthesis updated -- 2026-10-11
 
 Cloud-side close of the two local KILLs (run record: the entry below,
