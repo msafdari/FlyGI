@@ -26,8 +26,8 @@ index, a mechanism, a parameter set, and a transformation-over-input -- see
 | Random legal agent | Implemented; Gate 0 chance floor recorded |
 | Generic matched sparse reservoir | Implemented and compiled; ARC run pending |
 | Positive control (edge of chaos) | Implemented, compiled and validated; ARC run pending |
-| Weight shuffle | Not implemented |
-| Sign shuffle within transmitter strata | Not implemented |
+| Weight shuffle | Implemented + validated in-cloud 2026-10-23 (flygi.connectome.nulls.weight_shuffle, within-presynaptic PRIMARY + global variant; dissociation gates in tests/test_stagea_nulls2.py). Stage-A application registered (H-STAGEA-NULL-DECOMPOSITION), pending the local run |
+| Sign shuffle within transmitter strata | Implemented + validated in-cloud 2026-10-23 (flygi.connectome.nulls.sign_shuffle, per-presynaptic-neuron, Dale-consistent; mixed-sign columns rejected). Stage-A application registered, pending the local run; ARC-scope application deferred (recorded, killtest_design.md section 7) |
 
 ## The implemented degree-preserving null
 

@@ -238,6 +238,225 @@ def degree_preserving_rewire(
     return rewired, statistics
 
 
+def weight_shuffle(
+    matrix: sparse.spmatrix,
+    *,
+    seed: int,
+    within_presynaptic: bool = True,
+) -> tuple[sparse.csr_matrix, dict[str, Any]]:
+    """Permute |weight| magnitudes over the EXISTING edges; topology and
+    per-edge signs held fixed (H-STAGEA-NULL-DECOMPOSITION, frozen
+    2026-10-23 in docs/arenas/task10_menu/killtest_design.md section 7).
+
+    within_presynaptic=True (the PRIMARY variant, AC-N1): magnitudes are
+    permuted within each presynaptic neuron's outgoing edge set -- the
+    clean complement of the degree-preserving rewire, whose declared
+    weight rule preserves exactly those per-presynaptic multisets.
+    within_presynaptic=False: one global permutation over all edges.
+
+    The sign of every edge stays in place (per-edge signs identical to
+    the real graph -- a declared invariant); only |w| moves.
+    """
+
+    csr = _as_canonical_csr(matrix)
+    node_count = int(csr.shape[0])
+    pre, post, weights = _coo_arrays(csr)
+    edge_count = len(pre)
+    if edge_count < 2:
+        raise NullValidationError("weight shuffle needs at least two edges")
+
+    signs = np.sign(weights).astype(np.float32)
+    magnitudes = np.abs(weights).astype(np.float32)
+    generator = np.random.default_rng(seed)
+
+    shuffled = magnitudes.copy()
+    if within_presynaptic:
+        order = np.argsort(pre, kind="stable")
+        sorted_pre = pre[order]
+        boundaries = np.flatnonzero(np.diff(sorted_pre)) + 1
+        for group in np.split(order, boundaries):
+            if group.size > 1:
+                shuffled[group] = magnitudes[group[generator.permutation(group.size)]]
+    else:
+        shuffled = magnitudes[generator.permutation(edge_count)]
+
+    new_weights = (signs * shuffled).astype(np.float32)
+    result = sparse.csr_matrix(
+        (new_weights, (post, pre)), shape=(node_count, node_count), dtype=np.float32
+    )
+    result.sort_indices()
+
+    changed = float(np.mean(~np.isclose(shuffled, magnitudes)))
+    statistics = {
+        "kind": "weight_shuffle",
+        "variant": "within_presynaptic" if within_presynaptic else "global",
+        "seed": int(seed),
+        "nodes": node_count,
+        "edges": edge_count,
+        # Degeneracy floor (frozen >= 0.5): below it the permutation is
+        # near-identity and the caller must BLOCK, never read a p.
+        "fraction_magnitudes_changed": changed,
+        "normalization_applied": False,
+    }
+    return result, statistics
+
+
+def sign_shuffle(
+    matrix: sparse.spmatrix,
+    *,
+    seed: int,
+) -> tuple[sparse.csr_matrix, dict[str, Any]]:
+    """Permute the per-presynaptic-neuron sign assignment; topology and
+    per-edge |weight| held fixed (H-STAGEA-NULL-DECOMPOSITION, AC-N2:
+    signs are per-neuron transmitter properties, so the shuffle moves
+    whole columns' signs -- Dale-consistent by construction; a per-edge
+    sign permutation was rejected as non-biological).
+
+    Requires the input to satisfy column sign-constancy (every
+    presynaptic neuron's outgoing edges share one sign); a mixed-sign
+    column raises NullValidationError -- the caller's BLOCKED floor,
+    never a verdict.
+    """
+
+    csr = _as_canonical_csr(matrix)
+    node_count = int(csr.shape[0])
+    pre, post, weights = _coo_arrays(csr)
+    if len(pre) < 1:
+        raise NullValidationError("sign shuffle needs at least one edge")
+
+    signs = np.sign(weights)
+    bearing = np.unique(pre)
+    column_sign = np.zeros(node_count, dtype=np.float32)
+    for column in bearing:
+        edge_signs = np.unique(signs[pre == column])
+        edge_signs = edge_signs[edge_signs != 0]
+        if edge_signs.size > 1:
+            raise NullValidationError(
+                f"presynaptic column {int(column)} carries mixed signs; "
+                "sign shuffle requires column sign-constancy"
+            )
+        column_sign[column] = edge_signs[0] if edge_signs.size else 1.0
+
+    generator = np.random.default_rng(seed)
+    permuted = column_sign.copy()
+    permuted[bearing] = column_sign[bearing][generator.permutation(bearing.size)]
+
+    new_weights = (np.abs(weights) * permuted[pre]).astype(np.float32)
+    result = sparse.csr_matrix(
+        (new_weights, (post, pre)), shape=(node_count, node_count), dtype=np.float32
+    )
+    result.sort_indices()
+
+    multiset = column_sign[bearing]
+    constant = bool(np.all(multiset == multiset[0])) if bearing.size else True
+    statistics = {
+        "kind": "sign_shuffle",
+        "seed": int(seed),
+        "nodes": node_count,
+        "edges": int(len(pre)),
+        "sign_bearing_columns": int(bearing.size),
+        # Degeneracy flag (frozen): a constant sign multiset makes the
+        # shuffle the identity -- the caller reports NA, never a p.
+        "constant_sign_multiset": constant,
+        "fraction_signs_changed": float(np.mean(permuted[pre] != signs))
+        if len(pre)
+        else 0.0,
+        "normalization_applied": False,
+    }
+    return result, statistics
+
+
+def shuffle_invariants(
+    original: sparse.spmatrix,
+    shuffled: sparse.spmatrix,
+    *,
+    family: Literal["weight", "sign"],
+    within_presynaptic: bool = True,
+) -> dict[str, Any]:
+    """Verify the declared invariants of the second null family
+    (killtest_design.md section 7): the edge set is IDENTICAL to the
+    real graph (unlike the rewire), and per family the untouched
+    component is bit-preserved."""
+
+    source = _as_canonical_csr(original)
+    target = _as_canonical_csr(shuffled)
+    if source.shape != target.shape:
+        raise NullValidationError("shuffled graph must match the real graph's shape")
+
+    s_pre, s_post, s_w = _coo_arrays(source)
+    t_pre, t_post, t_w = _coo_arrays(target)
+    node_count = int(source.shape[0])
+    same_edges = bool(
+        np.array_equal(s_pre * node_count + s_post, t_pre * node_count + t_post)
+    )
+
+    record: dict[str, Any] = {
+        "family": family,
+        "edges": int(len(s_pre)),
+        "edge_set_identical": same_edges,
+    }
+    failures: list[str] = []
+    if not same_edges:
+        failures.append("edge set changed")
+
+    if family == "weight":
+        record["sign_pattern_identical"] = bool(
+            np.array_equal(np.sign(s_w), np.sign(t_w))
+        )
+        if not record["sign_pattern_identical"]:
+            failures.append("per-edge signs changed")
+        if within_presynaptic:
+            ok = True
+            for column in np.unique(s_pre):
+                mask = s_pre == column
+                if not np.array_equal(
+                    np.sort(np.abs(s_w[mask])), np.sort(np.abs(t_w[mask]))
+                ):
+                    ok = False
+                    break
+            record["per_presynaptic_magnitude_multisets_identical"] = ok
+            if not ok:
+                failures.append("per-presynaptic |w| multiset changed")
+        else:
+            record["magnitude_multiset_identical"] = bool(
+                np.array_equal(np.sort(np.abs(s_w)), np.sort(np.abs(t_w)))
+            )
+            if not record["magnitude_multiset_identical"]:
+                failures.append("global |w| multiset changed")
+    else:
+        record["magnitudes_identical_per_edge"] = bool(
+            np.allclose(np.abs(s_w), np.abs(t_w))
+        )
+        if not record["magnitudes_identical_per_edge"]:
+            failures.append("per-edge |w| changed")
+
+        def _column_signs(pre: NDArray[np.int64], w: NDArray[np.float32]):
+            out = {}
+            for column in np.unique(pre):
+                edge_signs = np.unique(np.sign(w[pre == column]))
+                edge_signs = edge_signs[edge_signs != 0]
+                if edge_signs.size > 1:
+                    return None
+                out[int(column)] = float(edge_signs[0]) if edge_signs.size else 1.0
+            return out
+
+        s_cols = _column_signs(s_pre, s_w)
+        t_cols = _column_signs(t_pre, t_w)
+        record["column_sign_constancy_preserved"] = t_cols is not None
+        if t_cols is None:
+            failures.append("column sign-constancy violated")
+        elif s_cols is not None:
+            record["column_sign_multiset_identical"] = sorted(
+                s_cols.values()
+            ) == sorted(t_cols.values())
+            if not record["column_sign_multiset_identical"]:
+                failures.append("column-sign multiset changed")
+
+    record["failures"] = failures
+    record["valid"] = not failures
+    return record
+
+
 def directed_degrees(
     matrix: sparse.spmatrix,
 ) -> tuple[NDArray[np.int64], NDArray[np.int64]]:
