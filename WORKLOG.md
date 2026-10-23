@@ -1,5 +1,28 @@
 # FlyGI durable worklog
 
+## Task 10 OPENED: exhaustion audit recorded; user go on the full science menu -- 2026-10-23
+
+Context: on 2026-10-15 the user asked whether the program has used
+"everything possible from the fly (latent world models, ODEs, the
+works)". A 9-agent audit (5 map lenses + 4 adversarial gap lenses)
+answered against the record at c1505c0; the condensed, tiered record
+is docs/arenas/task10_menu/exhaustion_audit.md. On 2026-10-23 the
+user gave the go on ALL menu items: (1) reservoir positive control on
+ARC, (2) class-3 T4/T5, (3) fitted per-type CX (Biswas/Duan-Fiete
+configuration), (4) FB structural probe, (5) naturalistic-statistics
+task, (6) FlyBench's terminal-aware placement + SFA mechanisms,
+(7) second null family (weight/sign shuffles).
+
+House pattern applies: due diligence (7-agent sweep, running) ->
+joint frozen registrations BEFORE any instrument code -> instruments
+with in-cloud validation gates -> user runs locally. None of the
+items is score-adjacent; every Expected-tier prior inherits the
+0-for-16 base rate (docs/arenas/SYNTHESIS.md).
+
+NEXT: registrations from the diligence results; items whose
+diligence comes back needs-fetch or blocked are recorded as such,
+not silently dropped.
+
 ## Task 9 FULLY CLOSED: both reopening hypotheses refuted in the registry; synthesis updated -- 2026-10-11
 
 Cloud-side close of the two local KILLs (run record: the entry below,
