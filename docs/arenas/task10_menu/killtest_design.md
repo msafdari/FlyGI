@@ -654,3 +654,62 @@ the informative outcome space is asymmetric — the mirror-peak and the
 magnitude question carry the news. Either way the decomposition
 sentence is new, measured information about what the program's one
 PASS consists of.
+
+---
+
+## Build-time operationalization notes (dated 2026-10-23, PRE-DATA-CONTACT; frozen text above untouched)
+
+Recorded when the instruments were built, before any of them touched
+MaleCNS data. These resolve details the frozen sections left unstated;
+no frozen constant, bar, floor or gate changed. Full code-site
+comments carry the same content.
+
+### Section 2 (H-T4T5-CLASS3-DS), R1-R6
+
+- R1 calibration target: fc2's 0.5 a.u. has no spiking unit; the
+  calibrated global gain targets median evoked rate in the v2 window
+  = sqrt(BG_HZ x DRIVE_PEAK_HZ) ~= 30.8 Hz (geometric midpoint of the
+  pinned input-rate band), log-grid argmin over fc25's extended gain
+  grid; scoring never feeds back.
+- R2 kernel assignment: each synapse's kernel class = its presynaptic
+  type, decay tau = that type's trained tau, rise = the pinned 2 ms.
+  INTERPRETIVE RISK, stated: the trained tau then filters twice
+  (membrane and outgoing kernel); this is arm-symmetric, so the
+  real-vs-rewire comparison is unaffected, and the uniform-tau twin
+  (which ablates kernel decays to 50 ms as well) carries the
+  attribution check.
+- R3 the correlator-optimum anchor is read strictly: the TF argmax
+  over the three speeds must be the interior 1 Hz point.
+- R4 gate-A detectors are T4-analogs scored on ON edges; "arm taus
+  equalized" = both arms carry the fast kernel.
+- R5 gate-B reference tolerance +/-0.02 borrowed from section 5's G0
+  declaration for the same 0.3216 number; the 0.3365 twin value is
+  recorded, not re-run.
+- R6 evoked clamped at 0 (fc2 convention); baseline = final 1 s of
+  settle; Shiu context arm varies the weight mapping only (0.275 mV
+  bridged to unitary-PSC equivalents numerically, ~1.19 mV unitary
+  PSP); no-stable-calibration-gain exits BLOCKED. Gate A's hand-set
+  idealized-circuit values were engineered against the frozen gate
+  bars only, in-cloud, before any data contact, and are recorded in
+  the gate report.
+
+### Section 6 (FlyBench mechanisms)
+
+- The SFA adapter's forced-event pulse is STATE-DEPENDENT
+  ((v_th - v_i)/dt + 1 + sfa_a_i) rather than the Task-3 uniform
+  adapter's fixed pulse: MEASURED at build time, the fixed pulse under
+  adaptation left driven neurons ~40 mV below rest and silenced them
+  through flybench's forced path (a verify-adapter defect = shared
+  floor v). The compensation restores the registered forced-spike
+  semantics through the engine's own threshold; Task-3's declared
+  uncompensated-inhibition limit stands.
+- The verdict script carries instrument-level guards beyond the
+  frozen floors (calibrated-verdict precedent, labelled in its
+  header): empty shared activation set, missing report fields,
+  missing/off mechanism sidecar, terminal-source mismatch -- each
+  makes an otherwise silently-fake bar impossible; none is a new bar.
+
+### Section 5 (natstat)
+
+- The Dror/O'Carroll/Laughlin anchor is recorded in the output JSON
+  as SOURCED and NON-DECISIONAL (unverifiable from the cloud).

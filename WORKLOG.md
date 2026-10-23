@@ -74,6 +74,36 @@ outage mid-flight; their partial artifacts were moved OUT of the tree
 (scratchpad/partials) and the two builds are re-running clean from
 the frozen registrations. Runbook sections 4-5 appended.
 
+UPDATE same day — INSTRUMENT STAGE COMPLETE. The rebuilt pair landed
+and was verified (orchestrator re-ran every suite): (5) t4t5 class-3
+instrument (t4t5_class3_killtest.py, 27 tests, ~100 s): GATE A
+MEASURED PASSING IN-CLOUD — the idealized spiking delay-line
+correlator reaches median DSI 1.0000 with the TF optimum at 1.0 Hz
+and collapses to 0.0000 with equalized arms (robust at three more
+seeds) — so the spiking model class CAN express the delay code and a
+local KILL would be about the counts; unitary-PSC equivalence
+asserted numerically (rel 1e-6) against the validated CX template
+incl. a 133 ms kernel; engine = TemplateLIF + per-type taus +
+two-state exponential synapses + signed drive. (6) FlyBench
+mechanisms (spiking.py default-off SFA + two adapter classes +
+flybench_mechanisms_verdict.py, 19 tests, ~150 s): SFA off-switch
+BIT-IDENTICAL to the pre-extension engine (asserted vs a frozen copy
+of the 08fac61 step); Benda-Herz closed form within tolerance
+(unadapted 200.0 vs analytic 191.7 Hz; adapted 81.0 vs fixed point
+81.01; ISI 5.5 -> 12.0 ms); toy-suite equivalence vs flybench's own
+simulators both mechanisms (SFA deltas same direction as theirs;
+terminal within declared engine differences); shipped terminal table
+asserted to sum to exactly 3,782,429. Build-time operationalizations
+recorded as a dated pre-data-contact note in killtest_design.md
+(T4/T5 R1-R6 incl. the R2 double-filtering risk, arm-symmetric; the
+SFA state-dependent forced-pulse compensation, measured necessary;
+the natstat anchor marked SOURCED non-decisional). Full joint suite
+in-cloud: 46 + 32 natstat/regression green; every data-gated main
+BLOCKS exit 3. Runbook sections 6-7 + the suggested overall order
+appended. ALL SEVEN MENU ITEMS DELIVERED (six runnable now, Biswas
+awaiting the user fetch). The ball is with the local host; the
+reservoir control runs FIRST, before the 2026-11-01 release.
+
 ## Task 9 FULLY CLOSED: both reopening hypotheses refuted in the registry; synthesis updated -- 2026-10-11
 
 Cloud-side close of the two local KILLs (run record: the entry below,

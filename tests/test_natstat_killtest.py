@@ -22,6 +22,8 @@ throughout; no fly runtime, no data files.
 
 import importlib.util
 import math
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -430,6 +432,21 @@ def test_check_prerequisites_reports_cloud_blockers():
     assert any("--image-root" in m for m in missing)
     if not (ROOT / "data/processed").exists():
         assert any("runtime" in m for m in missing)
+
+
+def test_main_blocks_without_corpus_exit_3():
+    """Floor 6 end to end (the dsec precondition pattern): invoked with
+    no corpus flag, main exits BLOCKED (3) and names the missing corpus.
+    Holds in-cloud (runtime also absent) AND on the local host (corpus
+    flag still absent), so the assertion is environment-independent."""
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "scripts/arenas/natstat_killtest.py")],
+        capture_output=True, text=True, cwd=str(ROOT),
+        env={**os.environ, "PYTHONPATH": str(ROOT / "src")},
+    )
+    assert proc.returncode == nk.EXIT_CODES["BLOCKED"] == 3
+    assert "BLOCKED" in proc.stdout
+    assert "--image-root" in proc.stdout
 
 
 # ---------------------------------------------------------------------------

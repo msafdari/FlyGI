@@ -1265,6 +1265,11 @@ def main() -> int:
         "expected_tier_note": "base rate for score-adjacent expectations "
                               "0 for 16 (docs/arenas/SYNTHESIS.md); none "
                               "offered beyond it",
+        "literature_anchor_nondecisional": (
+            "correlator velocity estimation on translating van Hateren "
+            "scenes: Dror, O'Carroll & Laughlin ~2001 (SOURCED, "
+            "unverifiable from the cloud; registration section 5 names it "
+            "as context only -- it decides nothing here)"),
         "corpus": {"source": source,
                    "ids": [e["id"] for e in entries],
                    "checksums": checks,

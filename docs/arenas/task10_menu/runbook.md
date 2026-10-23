@@ -139,3 +139,60 @@ dt 2 ms — this is the heaviest run of the menu; expect hours (the
 fc25 precedent and your machine decide; the JSON reports per-arm
 timing). Exit 0 PASS / 1 KILL / 3 BLOCKED. Report
 results/arenas/natstat_killtest.json.
+
+## 6. H-T4T5-CLASS3-DS — class-3 spiking physiology on T4/T5
+
+```bash
+PYTHONPATH=src python -m pytest tests/test_t4t5_class3_killtest.py -q   # 27 passed (~100 s; gate A runs inside)
+python scripts/arenas/t4t5_class3_killtest.py      # the one command
+```
+
+What it does, in order: (1) GATE A on your machine — the idealized
+spiking delay-line correlator must express DS (median DSI >= 0.30,
+TF optimum at the interior 1 Hz point) and collapse (< 0.05) with
+equalized arms; failure = BLOCKED, a measured absence statement about
+the spiking model class, never a fly verdict (in-cloud it passed:
+DSI 1.0000, optimum 1.0 Hz, collapse 0.0000). (2) GATE B — patch dims
+(2,701/507/498/169) + the fc25 reference reproducing within +/-0.02
+of 0.3216. (3) Calibration (18 gains x 2 polarities — the dominant
+cost), then the 3-point grid on the real patch, Maisak band per
+point; (4) the 3 rewires at real-passing points only; (5) uniform-tau
+twin + Shiu-mapping context arms (non-decisional). Expect roughly
+1-2 h locally. Exit 0 PASS / 1 KILL / 3 BLOCKED. Report
+results/arenas/t4t5_class3_killtest.json + the printed gate and
+per-grid-point lines. The build-time operationalizations R1-R6 are
+recorded as a dated pre-data-contact note in killtest_design.md.
+
+## 7. H-FLYGI-FLYBENCH-SFA and -TERMINAL — the two FlyBench mechanisms
+
+```bash
+PYTHONPATH=src python -m pytest tests/test_flybench_mechanisms.py -q   # 19 passed (~150 s; toy-suite gates run inside)
+# SFA arm:
+PYTHONPATH=src:scripts/arenas flybench run -c malecns_minecraft \
+  --simulator flygi_flybench_adapter:FlyGISFAAdapter
+python scripts/arenas/flybench_mechanisms_verdict.py --mechanism sfa \
+  results/arenas/<your stored uniform baseline>.json <the new SFA run>.json
+# Terminal arm (point the env var at flybench's shipped table):
+export FLYGI_TERMINAL_TABLE=<flybench clone>/data/terminal/malecns_terminal.csv.gz
+PYTHONPATH=src:scripts/arenas flybench run -c malecns_minecraft \
+  --simulator flygi_flybench_adapter:FlyGITerminalAdapter
+python scripts/arenas/flybench_mechanisms_verdict.py --mechanism terminal \
+  results/arenas/<uniform baseline>.json <the new terminal run>.json
+```
+
+Notes: the verdict script blocks unless the stored uniform baseline
+records n_neurons 176,422 (like-for-like floor); each adapter writes a
+mechanism sidecar the verdict script reads (its --list-checks prints
+every bar and floor); mechanisms are evaluated ONE AT A TIME (a
+combined arm, if you want it afterwards, is reported non-decisionally
+only if both singles pass). Cost per arm ~ the Task-3 uniform run you
+already did (3 seeds + rewired control). Report both verdict-script
+outputs verbatim.
+
+## Suggested overall order
+
+1 (reservoir, BEFORE the release) -> 2 (nulls2, minutes) -> 4 (FB,
+minutes-to-tens) -> 7 (SFA then terminal) -> 6 (t4t5 class 3, 1-2 h)
+-> 5 (natstat, heaviest, needs the corpus) -> 3 (Biswas, after you
+fetch the papers). Any order after item 1 is fine; nothing depends on
+anything else's outcome.

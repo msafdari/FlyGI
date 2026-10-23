@@ -466,3 +466,437 @@ class FlyGICalibratedAdapter:
     # -- contract ------------------------------------------------------------
     def run(self, duration_ms: float, stimuli=None) -> SimResult:
         return FlyGIAdapter.run(self, duration_ms, stimuli)
+
+
+# ===========================================================================
+# MECHANISM ADAPTERS -- H-FLYGI-FLYBENCH-SFA and H-FLYGI-FLYBENCH-TERMINAL
+# (docs/arenas/task10_menu/killtest_design.md section 6, FROZEN 2026-10-23
+# BEFORE this code existed. Two default-off mechanisms, evaluated ONE AT A
+# TIME behind separate adapter classes; the uniform FlyGIAdapter above stays
+# byte-for-byte untouched and remains the trivial alternative both are
+# measured against. Verdict: scripts/arenas/flybench_mechanisms_verdict.py.)
+#
+# ASSUMPTION (AF-11, docs/arenas/ASSUMPTIONS.md -- the load-bearing INFERRED
+# bridge): mechanisms MEASURED to move FlyBench's reference LIF (different
+# integrator, dt 0.1 vs our 0.5 ms, their 1.8 ms delay line vs our one-step)
+# also move OUR class-2 engine. Untested by construction -- it is exactly
+# what the registered kill tests measure. If it is wrong, the KILL is a
+# result about the bridge, not about the mechanisms.
+# ===========================================================================
+
+from scipy import sparse as _sparse  # noqa: E402
+
+# Their release constants, imported VERBATIM from the installed flybench --
+# zero constants of ours in the terminal mechanism (AF-13: convention
+# imported, not re-derived).
+from flybench.models.terminal_lif import (  # noqa: E402
+    RELEASE_FLOOR as _RELEASE_FLOOR,
+    RELEASE_SLOPE as _RELEASE_SLOPE,
+)
+
+# --- SFA constants (H-FLYGI-FLYBENCH-SFA) -----------------------------------
+# ASSUMPTION (AF-9): point values b = 2.0 mV, tau_a = 200 ms, UNIFORM across
+# neurons -- FlyBench's best open-division row. The literature RANGE
+# tau_a 100-500 ms is ESTABLISHED (Benda & Herz 2003 via their model card);
+# the point and the uniformity are not. Checked by: the registered bars
+# themselves. Breaks if: adaptation strength is strongly cell-type-dependent
+# in the regimes the benchmark probes.
+# ASSUMPTION (AF-12): their SFA measurement is on flywire783 (hard
+# 0.512->0.647, graded 0.644->0.754); NO SFA number exists on MaleCNS, so
+# transfer across connectomes is assumed and is part of what the kill test
+# measures. Breaks if: the mechanism's gain is connectome-specific.
+SFA_B_MV = 2.0
+SFA_TAU_A_MS = 200.0
+
+# --- terminal-table constants (H-FLYGI-FLYBENCH-TERMINAL) -------------------
+# ASSUMPTION (AF-13): "terminal" is defined by FlyBench's theta convention
+# (flybench/terminal.py: p >= 0.8, min 20 synapses per neuropil) and their
+# SHIPPED MaleCNS table data/terminal/malecns_terminal.csv.gz -- provenance
+# imported, not re-derived here. Guards: the frozen magnitude gate (the table
+# must sum to exactly 3,782,429 terminal synapses, their FINDINGS M1b) and
+# the run-time body-ID alignment gate (>= 0.95 of the table's body IDs must
+# exist in the handed build; in-cloud expectation vs official annotations:
+# 0.9998). Re-derivation from upstream synapse tables is the recorded
+# costlier alternative.
+TERMINAL_TABLE_ENV = "FLYGI_TERMINAL_TABLE"
+TERMINAL_TABLE_SUM = 3_782_429
+TERMINAL_COVERAGE_FLOOR = 0.95
+TERMINAL_SURVIVAL_FLOOR = 0.90     # verdict-side floor; recorded per attach
+
+# Sidecars: one small JSON per (mechanism, wiring), the channel through which
+# run-time instrument facts (terminal gates, non-finite membranes, the
+# derived sfa_b actually in force) reach the frozen verdict script -- the
+# registered flybench_calibrated_verdict.py precedent.
+MECH_SIDECAR_DIR = _Path.home() / ".cache" / "flygi-flybench-mechanisms"
+
+
+class TerminalGateError(RuntimeError):
+    """A frozen loader gate failed; the run is invalid, never a verdict."""
+
+
+def _mech_sidecar_write(adapter, mechanism: str, extra: dict) -> None:
+    """Write/refresh this wiring's sidecar. A pre-existing nonfinite_v=True
+    is sticky (a later clean construction must not erase the record)."""
+    meta = getattr(adapter.c, "meta", {}) or {}
+    record = {
+        "mechanism": mechanism,
+        "n_neurons": int(adapter.net.node_count),
+        "control": meta.get("control"),
+        "weight_jitter": float(meta.get("weight_jitter") or 0.0),
+        "silenced": int(meta.get("silenced") or 0),
+        "nonfinite_v": False,
+        **extra,
+    }
+    path = MECH_SIDECAR_DIR / f"{mechanism}-{_wiring_key(adapter.net.matrix)}.json"
+    try:
+        MECH_SIDECAR_DIR.mkdir(parents=True, exist_ok=True)
+        if path.exists():
+            try:
+                record["nonfinite_v"] = bool(
+                    _json.loads(path.read_text()).get("nonfinite_v")) or False
+            except Exception:
+                pass
+        path.write_text(_json.dumps(record, indent=1))
+        adapter._sidecar_path = path
+    except OSError:
+        # Sidecar IO must never crash a run; its ABSENCE blocks the verdict
+        # (conservative direction), never fakes a pass.
+        adapter._sidecar_path = None
+    adapter._sidecar = record
+
+
+def _mech_note_nonfinite(adapter) -> None:
+    """Shared BLOCKED floor (v): record a non-finite membrane, stickily."""
+    if np.isfinite(adapter.net.v).all():
+        return
+    adapter._sidecar["nonfinite_v"] = True
+    if getattr(adapter, "_sidecar_path", None) is not None:
+        try:
+            adapter._sidecar_path.write_text(_json.dumps(adapter._sidecar, indent=1))
+        except OSError:
+            pass
+
+
+_TERMINAL_TABLE_CACHE: dict = {}
+
+
+def _load_terminal_table(path: str):
+    """The shipped (pre, post, terminal) table, cached per path."""
+    import pandas as pd
+    key = str(_Path(path).expanduser())
+    if key not in _TERMINAL_TABLE_CACHE:
+        df = pd.read_csv(key)
+        missing = {"pre", "post", "terminal"} - set(df.columns)
+        if missing:
+            raise TerminalGateError(
+                f"terminal table {key} lacks columns {sorted(missing)}")
+        _TERMINAL_TABLE_CACHE[key] = df
+    return _TERMINAL_TABLE_CACHE[key]
+
+
+def resolve_terminal(connectome):
+    """Terminal matrix for this wiring -> (signed (pre, post) CSR or None,
+    gates dict for the sidecar). Resolution order, declared in the
+    registration:
+
+      1. a CONTROL wiring (meta['control']) runs terminal=None -- FlyBench's
+         own convention verbatim (their controls never carry a terminal
+         matrix); a terminal-preserving rewire belongs to the second null
+         family (killtest_design.md section 7), not here.
+      2. the SHIPPED table, attached explicitly via $FLYGI_TERMINAL_TABLE
+         (the registered primary input; the local MaleCNS flybench build
+         does not carry terminal.npz). Loader gates ASSERT at run time:
+         table sum == 3,782,429 and body-ID coverage >= 0.95. Survival
+         after clipping to |W| is RECORDED here and floored (0.90) by the
+         verdict script on base arms only, so a weight-jittered task
+         condition (which legitimately shrinks |W|) cannot spuriously
+         block the run.
+      3. connectome.terminal, exactly as their TerminalLIFSimulator reads
+         it (covers a build that carries terminal.npz, silenced variants
+         derived from it, and the synthetic-injection equivalence gate).
+    """
+    meta = getattr(connectome, "meta", {}) or {}
+    if meta.get("control"):
+        return None, {"attached": False, "source": f"control:{meta['control']}"}
+    path = _os.environ.get(TERMINAL_TABLE_ENV, "")
+    if path:
+        import pandas as pd
+        table = _load_terminal_table(path)
+        total = float(table["terminal"].sum())
+        if total != TERMINAL_TABLE_SUM:
+            raise TerminalGateError(
+                f"terminal table sums to {total:.0f}, frozen gate expects "
+                f"{TERMINAL_TABLE_SUM} (killtest_design.md section 6)")
+        ids = np.union1d(table["pre"].to_numpy(np.int64),
+                         table["post"].to_numpy(np.int64))
+        found = pd.Index(np.asarray(connectome.root_ids, dtype=np.int64)
+                         ).get_indexer(ids) >= 0
+        coverage = float(found.mean())
+        if coverage < TERMINAL_COVERAGE_FLOOR:
+            raise TerminalGateError(
+                f"body-ID coverage {coverage:.4f} < {TERMINAL_COVERAGE_FLOOR} "
+                f"vs this {connectome.n}-neuron build (in-cloud expectation "
+                f"0.9998 vs official annotations)")
+        from flybench.terminal import to_matrix
+        T = to_matrix(connectome, table)           # aligns, clips to |W|, signs
+        survival = float(abs(T).sum()) / TERMINAL_TABLE_SUM
+        gates = {"attached": bool(T.nnz), "source": "table", "table_path": path,
+                 "table_sum": total, "coverage": coverage,
+                 "survival": survival, "terminal_nnz": int(T.nnz)}
+        return (T if T.nnz else None), gates
+    if connectome.terminal is not None:
+        # their composition line, verbatim (terminal_lif.py): magnitude never
+        # exceeds the edge it annotates; sign follows W
+        W = connectome.W.tocsr()
+        T = abs(connectome.terminal.tocsr()).minimum(abs(W)).multiply(W.sign()).tocsr()
+        T.eliminate_zeros()
+        return (T if T.nnz else None), {
+            "attached": bool(T.nnz), "source": "connectome.terminal",
+            "terminal_nnz": int(T.nnz)}
+    return None, {"attached": False, "source": "none"}
+
+
+class TerminalSpikingNetwork(SpikingNetwork):
+    """SpikingNetwork + FlyBench's terminal release composition, living in
+    the ADAPTER path (the engine class itself is untouched; with no terminal
+    matrix every override delegates, so behavior is bit-identical to the
+    engine -- their own off-convention, asserted in the tests).
+
+    Ported composition (their TerminalLIFSimulator.step, order preserved):
+      m_j   = clip(1 + RELEASE_SLOPE * min(d_j, 0) / v_th_dist,
+                   RELEASE_FLOOR, 1)        from the PRE-update terminal drive
+      spike of j delivers m_j * W_soma[j, :]  (here: engine matrix is
+                   W_soma^T and last_output is scaled by m before propagation)
+      d    += T^T @ spikes                  (terminal contacts, unmodulated,
+                   in mV-equivalent units: w_syn * gain per synapse)
+      d    *= exp(-dt / tau_syn)            after the membrane update
+
+    ASSUMPTION (AF-10-analog, declared scheme/dt differences): d decays by
+    THEIR exponential factor at OUR dt = 0.5 ms (theirs 0.1), and delivery is
+    one-step rather than their 1.8 ms delay line -- the Task-3 adapter's
+    declared differences, inherited verbatim. The toy-equivalence gate bounds
+    what these differences cost.
+    NOTE: release modulation applies to last_output as a whole; in this
+    adapter every node is spiking (0/1 outputs), so this equals their
+    per-arriving-spike scaling exactly. A graded node here would have its
+    graded output scaled too -- flagged, unused in this instrument.
+    """
+
+    def __init__(self, matrix, types, table, *, terminal_mv=None,
+                 v_th_dist_mv: float = 7.0, terminal_tau_syn_ms: float = 5.0,
+                 **kw) -> None:
+        super().__init__(matrix, types, table, **kw)
+        self._terminal_mv = None
+        if terminal_mv is not None and terminal_mv.nnz:
+            self._terminal_mv = _sparse.csr_matrix(terminal_mv, dtype=np.float32)
+            if self._terminal_mv.shape != self.matrix.shape:
+                raise SpikingError("terminal matrix shape must match the wiring")
+            self._v_th_dist = np.float32(v_th_dist_mv)
+            self._t_decay = np.float32(np.exp(-self.dt / float(terminal_tau_syn_ms)))
+
+    def reset(self) -> None:
+        super().reset()
+        # terminal drive per neuron, mV-equivalent (their `d`)
+        self.term_d = np.zeros(self.node_count, dtype=np.float32)
+
+    def step(self, external=None):
+        T = getattr(self, "_terminal_mv", None)
+        if T is None:
+            return super().step(external)
+        out = self.last_output
+        # release from the PRE-update terminal drive (their order)
+        m = np.clip(
+            1.0 + _RELEASE_SLOPE * np.minimum(self.term_d, 0.0) / self._v_th_dist,
+            _RELEASE_FLOOR, 1.0,
+        ).astype(np.float32)
+        tdrive = T @ out                     # unmodulated, as theirs
+        self.last_output = (out * m).astype(np.float32)
+        self.term_d += tdrive.astype(np.float32)
+        output = super().step(external)      # engine propagates m * spikes
+        self.term_d *= self._t_decay
+        return output
+
+
+class FlyGISFAAdapter:
+    """H-FLYGI-FLYBENCH-SFA: the uniform adapter + the engine's default-off
+    spike-frequency adaptation, switched ON at the pinned constants.
+
+    UNIT BRIDGE (AF-10, DERIVED -- the registered w_scale bridge pattern,
+    never a fit): their per-spike adaptation kick b (mV) enters their
+    membrane as integral(a / tau_m) dt = b * tau_a / tau_m; our kick enters
+    as integral(a) dt = sfa_b * tau_a. Equate:
+
+        sfa_b = b_mv / tau_m_ms        (= 2.0 / 20 = 0.1 at Shiu constants,
+                                        derived below, never hardcoded)
+    """
+
+    capabilities: frozenset = frozenset({"can_silence"})
+
+    def __init__(self, connectome, params: LIFParams | None = None):
+        self.c = connectome
+        self.p = params or LIFParams()
+        p = self.p
+        extra = dict(getattr(p, "extra", {}) or {})
+        # params.extra may override, mirroring their AdaptiveLIFSimulator's
+        # own convention; the DEFAULTS are the pinned AF-9 values.
+        b_mv = float(extra.get("b_mv", SFA_B_MV))
+        tau_a_ms = float(extra.get("tau_a_ms", SFA_TAU_A_MS))
+        sfa_b = b_mv / p.tau_m_ms            # AF-10 derived bridge
+        w_scale = p.w_syn_mv * p.gain / p.tau_m_ms
+        table = ParameterTable(
+            default=TypeParams(
+                tau_m_ms=p.tau_m_ms,
+                v_thresh=p.v_th_mv,
+                provenance=(
+                    "Shiu 2024 constants via flybench LIFParams; SFA per "
+                    "Benda & Herz 2003 via flybench adaptive_lif.py "
+                    "(killtest_design.md section 6)"
+                ),
+                tau_syn_ms=p.tau_syn_ms,
+                v_rest=p.v_rest_mv,
+                v_reset=p.v_reset_mv,
+                refractory_ms=p.t_ref_ms,
+                graded=False,
+            ),
+        )
+        types = np.full(connectome.n, "neuron", dtype="U16")
+        self.net = SpikingNetwork(
+            connectome.W.T.tocsr(), types, table,
+            dt_ms=DT_MS, w_scale=w_scale, seed=p.seed,
+            sfa_b=sfa_b, sfa_tau_ms=tau_a_ms,
+        )
+        self._spiking = ~self.net.params["graded"]
+        self._pulse = (p.v_th_mv - p.v_rest_mv) / DT_MS + 1.0
+        _mech_sidecar_write(self, "sfa",
+                            {"b_mv": b_mv, "tau_a_ms": tau_a_ms,
+                             "sfa_b": sfa_b})
+
+    def run(self, duration_ms: float, stimuli=None) -> SimResult:
+        # FlyGIAdapter.run's loop verbatim, with ONE declared plumbing
+        # change: the forced-event pulse is STATE-DEPENDENT,
+        #     external[i] += (v_th - v_i)/dt + 1 + sfa_a[i],
+        # instead of the uniform adapter's fixed (v_th - v_rest)/dt + 1.
+        # Reason (measured at build time, 2026-10-23): their forced path
+        # fires REGARDLESS of membrane state (adaptive_lif.py unions
+        # `forced` into `fired` bypassing V, refractory honoured), and at
+        # the pinned constants adaptation holds a 100 Hz-driven neuron
+        # ~b_mv*tau_a*f = 40 mV below rest between events, so a fixed pulse
+        # made driven neurons adapt themselves silent (toy GRNs 38 Hz, a
+        # verify-adapter defect) -- a stimulus-bridge artifact, not the
+        # mechanism. The Task-3 declared limit stands in spirit: synaptic
+        # INHIBITION at event steps is still not separately compensated
+        # (only the known engine states v and sfa_a are). Interface
+        # plumbing per AGENTS.md rule 2; recorded in the structured report.
+        net = self.net
+        net.reset()
+        rng = np.random.default_rng(self.p.seed)
+        stimuli = stimuli or []
+        n = self.c.n
+        n_steps = int(round(duration_ms / DT_MS))
+        per_ms = DT_MS / 1000.0
+        stim = [
+            (np.asarray(s.neurons, dtype=np.int32), s.rate_hz * per_ms,
+             s.t_start_ms, s.t_end_ms, s)
+            for s in stimuli
+            if len(s.neurons)
+        ]
+        times: list[np.ndarray] = []
+        ids: list[np.ndarray] = []
+        external = np.zeros(n, dtype=np.float64)
+        for k in range(n_steps):
+            t_now = k * DT_MS
+            external[:] = 0.0
+            any_event = False
+            for neurons, prob, t0, t1, s in stim:
+                if not (t0 <= t_now < t1):
+                    continue
+                if s.rate_series_hz is not None:
+                    events = neurons[
+                        rng.random(neurons.size) < s.rates_at(t_now) * per_ms
+                    ]
+                elif s.rate_end_hz is not None:
+                    events = neurons[
+                        rng.random(neurons.size) < s.rate_at(t_now) * per_ms
+                    ]
+                else:
+                    events = neurons[rng.random(neurons.size) < prob]
+                if events.size:
+                    external[events] += (
+                        (self.p.v_th_mv - net.v[events]) / DT_MS + 1.0
+                        + net.sfa_a[events]
+                    )
+                    any_event = True
+            output = net.step(external if any_event else None)
+            fired = np.flatnonzero((output > 0) & self._spiking)
+            if fired.size:
+                times.append(np.full(fired.size, (k + 1) * DT_MS,
+                                     dtype=np.float32))
+                ids.append(fired.astype(np.int32))
+        _mech_note_nonfinite(self)
+        return SimResult(
+            spike_times_ms=(np.concatenate(times) if times
+                            else np.empty(0, dtype=np.float32)),
+            spike_neurons=(np.concatenate(ids) if ids
+                           else np.empty(0, dtype=np.int32)),
+            duration_ms=float(n_steps * DT_MS),
+            n=n,
+        )
+
+
+class FlyGITerminalAdapter:
+    """H-FLYGI-FLYBENCH-TERMINAL: the uniform adapter + FlyBench's
+    terminal-aware synapse placement (W_soma / T split + release dynamics),
+    composed exactly as their TerminalLIFSimulator composes it. NOT
+    3D-position-based: synapses are classified by THEIR theta convention,
+    input is THEIR shipped table (AF-13). With no terminal source resolved
+    this is the uniform adapter exactly (their own off-convention)."""
+
+    capabilities: frozenset = frozenset({"can_silence"})
+
+    def __init__(self, connectome, params: LIFParams | None = None):
+        self.c = connectome
+        self.p = params or LIFParams()
+        p = self.p
+        w_scale = p.w_syn_mv * p.gain / p.tau_m_ms
+        T_signed, gates = resolve_terminal(connectome)
+        W = connectome.W.tocsr()
+        if T_signed is not None:
+            W_soma = (W - T_signed).tocsr()          # their: somatic input only
+            W_soma.eliminate_zeros()
+            # their Trow currency: mV-equivalent (w_syn * gain per synapse),
+            # transposed to the engine's (post, pre) orientation
+            terminal_mv = (T_signed * (p.w_syn_mv * p.gain)).T.tocsr()
+        else:
+            W_soma, terminal_mv = W, None
+        table = ParameterTable(
+            default=TypeParams(
+                tau_m_ms=p.tau_m_ms,
+                v_thresh=p.v_th_mv,
+                provenance=(
+                    "Shiu 2024 constants via flybench LIFParams; terminal "
+                    "release per Olsen & Wilson 2008 conventions via "
+                    "flybench terminal_lif.py (killtest_design.md section 6)"
+                ),
+                tau_syn_ms=p.tau_syn_ms,
+                v_rest=p.v_rest_mv,
+                v_reset=p.v_reset_mv,
+                refractory_ms=p.t_ref_ms,
+                graded=False,
+            ),
+        )
+        types = np.full(connectome.n, "neuron", dtype="U16")
+        self.net = TerminalSpikingNetwork(
+            W_soma.T.tocsr(), types, table,
+            dt_ms=DT_MS, w_scale=w_scale, seed=p.seed,
+            terminal_mv=terminal_mv,
+            v_th_dist_mv=p.v_th_mv - p.v_rest_mv,
+            terminal_tau_syn_ms=p.tau_syn_ms,
+        )
+        self._spiking = ~self.net.params["graded"]
+        self._pulse = (p.v_th_mv - p.v_rest_mv) / DT_MS + 1.0
+        _mech_sidecar_write(self, "terminal", gates)
+
+    def run(self, duration_ms: float, stimuli=None) -> SimResult:
+        result = FlyGIAdapter.run(self, duration_ms, stimuli)
+        _mech_note_nonfinite(self)
+        return result
