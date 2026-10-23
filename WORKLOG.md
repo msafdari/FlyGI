@@ -23,6 +23,30 @@ NEXT: registrations from the diligence results; items whose
 diligence comes back needs-fetch or blocked are recorded as such,
 not silently dropped.
 
+UPDATE same day — DILIGENCE LANDED AND THE JOINT FREEZE IS IN
+(docs/arenas/task10_menu/due_diligence.md + killtest_design.md, one
+commit, before any instrument code). Verdicts: 6 of 7
+ready-to-register; Biswas fitted-CX is needs-fetch (paper absent
+from the container, every serving host proxy-denied — MEASURED;
+pre-commitments frozen blind, numeric completion after the user
+fetches 3 documents, list in the design doc). Eight hypotheses
+registered: H-ARC-HARNESS-SENSITIVITY (+ reservoir-positive-control
+and reservoir-matched-random condition rows, regime gain0.9-dead for
+the league's cross-regime rule), H-T4T5-CLASS3-DS (with the recorded
+absence finding: no published spiking motion detector exists — gate
+A engine-capacity + gate B continuity stand in), H-CX-BISWAS-FITTED
+(partial), H-FB-COLUMNAR-TOPOLOGY (FB composition frozen from an
+in-cloud ANNOTATION-ONLY download; weights table untouched, decision
+statistics outcome-blind), H-T4T5-NATSTAT-DIRECTION,
+H-FLYGI-FLYBENCH-SFA, H-FLYGI-FLYBENCH-TERMINAL,
+H-STAGEA-NULL-DECOMPOSITION (refinement, never a reopening).
+27 new assumption rows (A-RES-1..4, AT-1..2, AC-FB1..6, ANS-1..5,
+AF-9..13, AC-N1..4). NEXT: instruments, in the declared order —
+nulls2 module, FB probe, SFA/terminal adapters, class-3 T4/T5,
+natstat harness; reservoir needs no instrument (launch of existing
+machinery). Reservoir runs FIRST locally, before the 2026-11-01
+release.
+
 ## Task 9 FULLY CLOSED: both reopening hypotheses refuted in the registry; synthesis updated -- 2026-10-11
 
 Cloud-side close of the two local KILLs (run record: the entry below,
