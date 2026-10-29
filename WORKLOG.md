@@ -1,5 +1,37 @@
 # FlyGI durable worklog
 
+## Natstat OFF-edge instrument bug: found, measured, fixed; full re-run required -- 2026-10-29
+
+G0 did exactly its job. The defect (dated finding in
+docs/arenas/task10_menu/killtest_design.md; code-site comments at the
+fix): natstat's drive->external boundary applied INPUT_DRIVE to the
+AB-4 mid-gray-centered contrast instead of ABSOLUTE luminance.
+MEASURED on the registered 169-column lattice, all 24 polarity x
+direction x speed combinations: the composite drive sat at exactly
+fc2-native +0.5 at every plateau and settle sample; worst-column
+time-integrated divergence 4.887 a.u.s; the OFF item's entire scored
+v2 window ran at POSITIVE lamina drive, outside fc2's native -1..0
+envelope -- matching the measured G0 channel split (T4/ON 0.31583 in
+band, T5/OFF 0.11562). INFERRED, bridge at the code site: the relu
+floor absorbed the shift on the ON side; the OFF release increment
+had no ceiling and doubled. FIX: one pure helper external_from_drive
+= INPUT_DRIVE x (drive + MID_GRAY), routed through the three (only)
+network-input call sites; the ANS-1/AE-1 single-shared-map guarantee
+is preserved and now explicit. Post-fix: plateau/settle divergence
+0.0 exactly; residual = the declared OP-5 pixel-sampling transient
+(worst-column integral 0.132 a.u.s, 37x down). Four regression tests
+added, EACH verified to fail on the pre-fix code -- including the
+composite-path ON and OFF drive-equality tests the original
+encoder-only test lacked (why it missed the bug: it asserted the
+encoder's mid-gray-centered values in isolation, which were exactly
+where the bug lived). Suites: natstat 36 passed; joint with
+fb/dsec/brainscore/t4t5 109 passed. Registry bullet + runbook 5b
+(re-run instructions) added. Per the frozen rule the FULL protocol
+re-runs locally; the drive-level equality is MEASURED, the DSI
+consequence is the re-run's to measure (Expected-tier statements
+inherit the 0-for-16 base rate).
+
+
 ## Task 10 CLOSED cloud-side: seven verdicts in the registry; ARC null prose downgraded before release -- 2026-10-29
 
 Cloud-side close of the seven local runs (records 3313458..95914f7).

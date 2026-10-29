@@ -2947,6 +2947,21 @@ hypotheses:
         stimulus path. Instrument-bug investigation opened cloud-side
         2026-10-29; fix lands with a recorded finding + the frozen
         full re-run rule. Hypothesis remains OPEN, untested.
+      - >
+        2026-10-29 INSTRUMENT BUG FOUND, MEASURED AND FIXED
+        (same day; dated finding in killtest_design.md): the
+        drive->external boundary applied INPUT_DRIVE to mid-gray-
+        centered contrast instead of absolute luminance -- the
+        composite drive sat at exactly fc2-native +0.5 everywhere,
+        putting the OFF scored window at POSITIVE lamina drive
+        outside fc2's -1..0 envelope (the measured T5/OFF collapse);
+        fixed at one shared helper (external = INPUT_DRIVE x (drive
+        + MID_GRAY)); post-fix drive divergence 0.0 at plateaus and
+        settle, residual = the declared pixel-sampling transient
+        (worst-column integral 4.887 -> 0.132 a.u.s); 4 regression
+        tests added, each failing on the pre-fix code. FULL LOCAL
+        RE-RUN REQUIRED per the frozen rule -- drive equality is
+        MEASURED, the DSI consequence is the re-run's to measure.
     updated: 2026-10-29
 
   H-FLYGI-FLYBENCH-SFA:

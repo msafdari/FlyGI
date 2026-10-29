@@ -713,3 +713,31 @@ comments carry the same content.
 
 - The Dror/O'Carroll/Laughlin anchor is recorded in the output JSON
   as SOURCED and NON-DECISIONAL (unverifiable from the cloud).
+
+### Section 5 instrument-bug finding (dated 2026-10-29; caught by G0 BEFORE decision-data contact; frozen text untouched)
+
+The registered G0 gate fired on the first local run and the defect is
+now found, measured, and fixed at its single site: the stimulus
+path's drive->external boundary applied INPUT_DRIVE to the AB-4
+MID-GRAY-CENTERED contrast instead of ABSOLUTE luminance, delivering
+exactly fc2's native drive +0.5 at every plateau and settle sample
+(measured over all 24 polarity x direction x speed combinations on
+the registered lattice; worst-column time-integrated divergence
+4.887 a.u.s). Mechanistically (inferred, bridge in the code comment),
+the relu floor absorbed the shift on the ON side while the OFF side's
+scored window ran at POSITIVE lamina drive -- outside fc2's native
+[-1, 0] envelope -- which matches the measured G0 channel split
+(T4/ON 0.31583 in band; T5/OFF 0.11562). Fix: one pure helper
+external_from_drive = INPUT_DRIVE x (drive + MID_GRAY), routed
+through all three network-input call sites (G0 settle, G0 sweep,
+simulate_items), preserving the single-shared-map ANS-1/AE-1
+guarantee. Post-fix drive divergence is 0.0 exactly at plateaus and
+settle; the residual is the declared OP-5 pixel-sampling transient
+(worst-column integral 0.132 a.u.s, 37x down). Four regression tests
+added, each verified to FAIL on the pre-fix code, including the
+composite-path ON and OFF drive-equality tests the original
+encoder-only test lacked. No frozen constant, bar, floor, or encoder
+element changed. Required next: the FULL local re-run (the frozen
+rule); the drive-level equality is MEASURED, the DSI consequence is
+the re-run's to measure (Expected-tier statements inherit the
+0-for-16 base rate).

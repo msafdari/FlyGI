@@ -196,3 +196,18 @@ minutes-to-tens) -> 7 (SFA then terminal) -> 6 (t4t5 class 3, 1-2 h)
 -> 5 (natstat, heaviest, needs the corpus) -> 3 (Biswas, after you
 fetch the papers). Any order after item 1 is fine; nothing depends on
 anything else's outcome.
+
+## 5b. Natstat RE-RUN (after the 2026-10-29 OFF-edge fix)
+
+The first run's G0 block is explained and fixed (instrument-bug
+finding in killtest_design.md; drive boundary now reconstructs
+absolute luminance). Pull, then repeat section 5 verbatim:
+
+```bash
+git pull
+PYTHONPATH=src python -m pytest tests/test_natstat_killtest.py -q   # 36 passed
+python scripts/arenas/natstat_killtest.py --image-root <CORPUS>
+```
+
+Everything else (corpus, checksums, flags) is unchanged; the frozen
+full-re-run rule applies, so the whole protocol runs fresh.

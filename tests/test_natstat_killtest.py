@@ -18,6 +18,16 @@ estimator, the single-encoder-instance guarantee (ANS-1), and a
 synthetic smoke test of the batched item simulator (the OP-8 static-
 item zero-evoked invariant). Synthetic inputs with known answers
 throughout; no fly runtime, no data files.
+
+2026-10-29 regression gate (instrument bug caught by G0, finding at
+natstat_killtest.external_from_drive): the composite stimulus path
+(pixel-rendered edge -> AB-4 encoder -> external input) must deliver
+fc2's NATIVE per-column drive -- exactly at plateaus and settle, within
+the declared OP-5 residuals at crossings -- per polarity, direction and
+speed. The original edge test only checked the encoder output in
+isolation and asserted the mid-gray-centered plateau values (-0.5/+0.5)
+that already contained the +0.5 offset; it could not see the external
+boundary at all.
 """
 
 import importlib.util
@@ -238,6 +248,113 @@ def test_edge_frame_drives_renders_the_fc2_edge_through_ab4():
     off = nk.edge_frame_drives(proj, fronts, "off", pixel_to_col,
                                lat["n_cols"])
     assert np.allclose(off[0], +0.5) and np.allclose(off[2], -0.5)
+
+
+# ---------------------------------------------------------------------------
+# 2026-10-29 instrument-bug regression gate: the EXTERNAL drive the
+# network receives (not just the encoder output) must match fc2's native
+# edge drive, per polarity x direction x speed. The bug this pins down:
+# external = INPUT_DRIVE * (column mean - MID_GRAY) sat exactly +0.5 off
+# fc2's INPUT_DRIVE * luminance at every plateau/settle sample; the OFF
+# channel's scored window ran at positive lamina drive (outside fc2's
+# [-1, 0] envelope) and the local G0 measured T5/OFF DSI collapsed to
+# 0.11562 (T4/ON in band, 0.31583). Finding + before/after numbers:
+# natstat_killtest.external_from_drive.
+# ---------------------------------------------------------------------------
+
+def test_external_from_drive_restores_absolute_luminance():
+    fc2 = _load_fc2()
+    assert fc2.INPUT_DRIVE == -1.0
+    # full-bright AB-4 drive (+0.5) -> fc2's bright external (-1.0);
+    # mid-gray (0.0) -> -0.5; full-dark (-0.5) -> fc2's dark external 0.0
+    got = nk.external_from_drive(np.array([+0.5, 0.0, -0.5]),
+                                 fc2.INPUT_DRIVE)
+    assert np.allclose(got, [-1.0, -0.5, 0.0], atol=1e-15)
+    # the composite is the identity INPUT_DRIVE * luminance: fc2's whole
+    # envelope [-1, 0] is the image of luminance [0, 1], and no in-range
+    # luminance can produce POSITIVE lamina drive (the T5-collapse regime)
+    lum = np.linspace(0.0, 1.0, 11)
+    ext = nk.external_from_drive(lum - nk.bk.MID_GRAY, fc2.INPUT_DRIVE)
+    assert np.allclose(ext, -lum, atol=1e-15)
+    assert (ext <= 0.0).all()
+
+
+@pytest.mark.parametrize("pol", ["on", "off"])
+def test_g0_edge_external_drive_matches_fc2_native(pol):
+    """The G0 composite path (pixel edge -> AB-4 -> external_from_drive)
+    vs fc2.run_sweep's native drive, on the engine-step grid, for every
+    registered direction and speed, on the registered 169-column
+    lattice. Declared tolerances (measured 2026-10-29 at the fix):
+    settle + plateau samples EXACT (0.0); residuals confined to each
+    column's crossing (OP-5 pixel ramp <= ASSIGN_RADIUS + pixel pitch,
+    frame hold <= 20 ms): mean |diff| <= 0.011 (measured max 0.0100),
+    worst-column time-integrated |diff| <= 0.15 a.u. s (measured
+    0.132). Also documents the defect this gate exists for: the
+    pre-fix composite (INPUT_DRIVE * drive, no +MID_GRAY) sits at
+    EXACTLY +0.5 divergence on those same plateau samples."""
+    fc2 = _load_fc2()
+    lat = hex_lattice(radius=6)              # the registered 13x13
+    assert lat["n_cols"] == 169
+    mapping = nk.dk.crop_mapping(lat["col_x"], lat["col_y"],
+                                 crop=nk.IMAGE_SIZE)
+    pixel_to_col = nk.dk.assign_crop_pixels(lat, mapping)
+    n_cols = lat["n_cols"]
+    crop = nk.IMAGE_SIZE
+    pyg, pxg = np.mgrid[0:crop, 0:crop]
+    pxx, pyy = nk.dk.pixels_to_plane(pxg.ravel(), pyg.ravel(), mapping)
+    extent = nk.travel_extent(lat["col_x"], lat["col_y"])
+    travel = extent + 2.0 * fc2.EDGE_MARGIN
+    sub = int(round(nk.STIM_FRAME_MS / fc2.DT_MS))
+    tail_steps = int(round(fc2.TAIL_MS / fc2.DT_MS))
+
+    # the settle screen's external == fc2's settle drive, exactly
+    screen0 = (np.zeros((crop, crop)) if pol == "on"
+               else np.ones((crop, crop)))
+    d0 = nk.column_drive(screen0, pixel_to_col, n_cols)
+    want0 = 0.0 if pol == "on" else fc2.INPUT_DRIVE * 1.0
+    assert np.allclose(nk.external_from_drive(d0, fc2.INPUT_DRIVE),
+                       want0, atol=1e-12)
+
+    for dname in fc2.DIRECTIONS:
+        dx, dy = fc2.DIR_VECTORS[dname]
+        proj = lat["col_x"] * dx + lat["col_y"] * dy
+        front0 = float(proj.min()) - fc2.EDGE_MARGIN
+        pixel_proj = pxx * dx + pyy * dy
+        for speed in fc2.SPEEDS:
+            n_frames = max(int(math.ceil(
+                travel / speed * 1000.0 / nk.STIM_FRAME_MS)), 2)
+            fronts = front0 + speed * (np.arange(n_frames)
+                                       * nk.STIM_FRAME_MS / 1000.0)
+            drives = nk.edge_frame_drives(pixel_proj, fronts, pol,
+                                          pixel_to_col, n_cols)
+            k = np.arange(n_frames * sub + tail_steps)
+            f_idx = np.minimum(k // sub, n_frames - 1)
+            ext_new = nk.external_from_drive(drives[f_idx],
+                                             fc2.INPUT_DRIVE)
+            # fc2.run_sweep's native drive on the same engine grid
+            t = k * fc2.DT_MS / 1000.0
+            front_f = front0 + speed * t
+            behind = proj[None, :] <= front_f[:, None]
+            lum = (np.where(behind, 1.0, 0.0) if pol == "on"
+                   else np.where(behind, 0.0, 1.0))
+            ext_fc2 = fc2.INPUT_DRIVE * lum
+            diff = np.abs(ext_new - ext_fc2)
+            # plateau = both fronts > 1.5 col away from the column:
+            # outside the pixel ramp (<= ASSIGN_RADIUS 0.75 + pitch)
+            # and the <= 20 ms hold (<= 0.2 col at 10 col/s)
+            plateau = ((np.abs(proj[None, :] - front_f[:, None]) > 1.5)
+                       & (np.abs(proj[None, :]
+                                 - fronts[f_idx][:, None]) > 1.5))
+            assert plateau.mean() > 0.5, (dname, speed)
+            assert diff[plateau].max() == 0.0, (dname, speed)
+            assert diff.mean() <= 0.011, (dname, speed)
+            worst_integral = (diff.sum(axis=0) * fc2.DT_MS / 1000.0).max()
+            assert worst_integral <= 0.15, (dname, speed)
+            # the recorded defect: the pre-fix composite is +0.5 off on
+            # exactly these samples (regression documentation)
+            buggy = np.abs(fc2.INPUT_DRIVE * drives[f_idx] - ext_fc2)
+            assert buggy[plateau].min() == pytest.approx(0.5)
+            assert buggy[plateau].max() == pytest.approx(0.5)
 
 
 # ---------------------------------------------------------------------------
@@ -581,6 +698,36 @@ def test_simulate_items_static_item_evokes_zero():
     assert evoked[0, 0] < 1e-6
     # a changing stimulus evokes a response through the circuit
     assert evoked[1, 0] > 1e-3
+
+
+def test_simulate_items_luminance_only_suppresses_lamina():
+    """simulate_items uses the same fixed drive convention as G0
+    (external_from_drive): under fc2's absolute-luminance histamine
+    drive, NO in-range luminance can push a lamina cell above its dark
+    rest. A bright -> mid-gray decrement must evoke exactly nothing
+    from L1 (V rises from -0.5 toward 0, release stays clipped), while
+    bright -> full dark releases it to the tonic rest (the real OFF
+    response). The pre-2026-10-29 mid-gray-centered convention gave
+    darker-than-mean POSITIVE lamina drive -- the regime in which the
+    local G0 measured the T5/OFF collapse -- and fails this test."""
+    from scipy import sparse
+    fc2 = _load_fc2()
+    types = np.array(["L1", "T4a"])
+    matrix = sparse.csr_matrix(np.array([[0.0, 0.0], [1.0, 0.0]]))
+    drives = np.zeros((3, 10, 1))
+    drives[0, :, 0] = +0.5                  # static full bright
+    drives[1, 0, 0] = +0.5                  # bright settle frame...
+    drives[1, 1:, 0] = 0.0                  # ...then mid-gray
+    drives[2, 0, 0] = +0.5                  # bright settle frame...
+    drives[2, 1:, 0] = -0.5                 # ...then full dark
+    evoked, bad = nk.simulate_items(
+        fc2, matrix, types, _toy_table(), 1.0, drives,
+        driven_idx=np.array([0]), driven_cols=np.array([0]),
+        score_idx=np.array([0]))            # score L1 itself
+    assert not bad.any()
+    assert evoked[0, 0] < 1e-9              # OP-8 static invariant
+    assert evoked[1, 0] < 1e-9              # mid-gray cannot excite L1
+    assert evoked[2, 0] > 1e-3              # dark releases to tonic rest
 
 
 def test_simulate_items_flags_instability():

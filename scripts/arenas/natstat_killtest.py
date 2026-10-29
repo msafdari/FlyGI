@@ -154,6 +154,22 @@ code site):
   OP-15 Scramble seeds: seed = SCRAMBLE_SEED_BASE + corpus index (one
         declared seed per image, frozen here).
 
+INSTRUMENT AMENDMENT (2026-10-29; G0 blocked the first local run BEFORE
+any decision data, exactly as designed -- recorded at the
+post-data-contact standard regardless): the drive -> external boundary
+as first committed applied INPUT_DRIVE to the mid-gray-centered column
+contrast, handing the network fc2's native drive + 0.5 at every sample
+of every sweep and settle (measured exactly on the registered lattice;
+OFF items spent their whole scored window at POSITIVE lamina drive,
+outside fc2's native [-1, 0] envelope, and the local G0 measured T5/OFF
+collapsed at 0.11562 while T4/ON held in band at 0.31583). Fixed by
+restoring absolute luminance at the single shared external_from_drive
+site (external = INPUT_DRIVE * (drive + MID_GRAY)); the frozen
+constants, bars, floors, the AB-4 encoder functions and the sweep
+geometry are untouched. Full finding + before/after numbers at
+external_from_drive; the registration's required full re-run happens on
+the local host.
+
 TIER DISCIPLINE: every number this script prints or saves is Measured
 under this protocol. Expected-tier content, with its base rate: none
 offered beyond the program's 0-for-16 score-adjacent record
@@ -201,7 +217,12 @@ def _load_module(name: str, path: Path):
 # ASSUMPTION (ANS-1, register row): the encoder is the Task-5 AB-4
 # convention VERBATIM -- grayscale (Rec. 601) -> bilinear 128x128 ->
 # per-column mean luminance over the DSEC identity-crop pixel assignment
-# -> drive = column mean - 0.5 through L1/L2/L3 at INPUT_DRIVE. ONE
+# -> drive = column mean - 0.5. AMENDED 2026-10-29 (instrument bug,
+# caught by G0): applying INPUT_DRIVE to that mid-gray-centered drive
+# directly handed the network fc2's drive + 0.5 everywhere; the network
+# boundary now restores absolute luminance first (external =
+# INPUT_DRIVE * (drive + MID_GRAY); finding + measured divergence at
+# external_from_drive). The encoder itself is unchanged. ONE
 # instance across all arms and conditions (the AE-1 dodge): these are
 # the brainscore_killtest/dsec_killtest functions themselves, imported,
 # not reimplemented, so no arm can see a different map. What breaks if
@@ -468,6 +489,42 @@ def edge_frame_drives(pixel_proj: np.ndarray, fronts: np.ndarray,
             lum = np.where(behind, 0.0, 1.0)
         out[k] = column_drive(lum.reshape(crop, crop), pixel_to_col, n_cols)
     return out
+
+
+def external_from_drive(col_drive: np.ndarray, input_drive: float) -> np.ndarray:
+    """The ONE drive -> network-external-input convention. Every network
+    input in this instrument (G0 settle, G0 sweep, simulate_items) goes
+    through this function, so no arm or gate can see a different map.
+
+    BUG FIX (2026-10-29, instrument; caught by G0 BEFORE any decision
+    data, exactly as the gate was designed to): as first committed this
+    boundary was `input_drive * col_drive` -- fc2's histaminergic sign
+    applied to the MID-GRAY-CENTERED AB-4 contrast instead of to
+    absolute luminance. MEASURED divergence vs fc2's native edge drive
+    (engine-step grid, registered 169-column lattice, both polarities x
+    4 directions x 3 speeds): external = fc2's + 0.5 EXACTLY at every
+    plateau sample and both settle screens (ON settle +0.5 vs fc2 0.0;
+    OFF settle -0.5 vs -1.0; OFF post-edge +0.5 vs 0.0 -- POSITIVE
+    drive into the histaminergic lamina, outside fc2's native [-1, 0]
+    envelope, so every OFF item spent its scored v2 window in a regime
+    fc2's convention cannot produce; the ON post-edge level -0.5 stays
+    inside the envelope). Local G0 consequence (run record, WORKLOG
+    "Task 10 item 5", 2026-10-29): pooled v2 median DSI 0.17634 vs the
+    required 0.3216 +/- 0.02 -- T4/ON in band (0.31583), T5/OFF
+    collapsed (0.11562), while the same fc25 reference reproduced at
+    0.32157 the same day through fc2's native drive (t4t5 gate B).
+    FIX: reconstruct absolute column luminance before the sign,
+    external = input_drive * (col_drive + MID_GRAY) = input_drive *
+    column_mean_luminance. Measured after: plateau + settle divergence
+    0.0 exactly; residual confined to each column's crossing (the
+    declared OP-5 pixel-sampling ramp + <= 20 ms frame hold): mean
+    |diff| <= 0.0100, worst-column time-integral 0.132 a.u. s (was
+    4.887). Frozen constants/bars/floors and the shared AB-4 encoder
+    (ANS-1) untouched; asserted per direction/speed/polarity by
+    tests/test_natstat_killtest.py::
+    test_g0_edge_external_drive_matches_fc2_native."""
+    return float(input_drive) * (np.asarray(col_drive, np.float64)
+                                 + bk.MID_GRAY)
 
 
 def lattice_xcorr_shift(drive_a: np.ndarray, drive_b: np.ndarray,
@@ -943,7 +1000,10 @@ def simulate_items(fc2mod, matrix, types, table, gain: float,
 
     def ext(frame_cols: np.ndarray) -> np.ndarray:
         d = np.zeros((n_nodes, m))
-        d[driven_idx, :] = fc2mod.INPUT_DRIVE * frame_cols[:, driven_cols].T
+        # 2026-10-29 bug-fix site: absolute luminance restored at the one
+        # shared boundary (see external_from_drive).
+        d[driven_idx, :] = external_from_drive(
+            frame_cols[:, driven_cols].T, fc2mod.INPUT_DRIVE)
         return d
 
     settle_steps = int(round(fc2mod.SETTLE_MS / fc2mod.DT_MS))
@@ -1022,7 +1082,11 @@ def g0_edge_reproduction(fc2mod, patch, pixel_to_col, n_cols, lattice,
         screen0 = np.zeros((crop, crop)) if pol == "on" else np.ones((crop, crop))
         d0 = column_drive(screen0, pixel_to_col, n_cols)
         ext0 = np.zeros(n_nodes)
-        ext0[driven_idx] = fc2mod.INPUT_DRIVE * d0[driven_cols]
+        # 2026-10-29 bug-fix site (see external_from_drive): settle on the
+        # pre-edge screen at fc2's absolute-luminance drive (ON 0.0 / OFF
+        # -1.0), not at its mid-gray-centered +0.5-shifted image.
+        ext0[driven_idx] = external_from_drive(d0[driven_cols],
+                                               fc2mod.INPUT_DRIVE)
         net = fc2mod.GradedFlyvisNetwork(patch["matrix"], types, table,
                                          dt_ms=fc2mod.DT_MS, gain=gain)
         for k in range(settle_steps):
@@ -1063,7 +1127,9 @@ def g0_edge_reproduction(fc2mod, patch, pixel_to_col, n_cols, lattice,
                 for f in range(n_frames + 1):
                     # last frame held for fc2.TAIL_MS (OP-13)
                     frame = col_frames[min(f, n_frames - 1)]
-                    ext[driven_idx] = fc2mod.INPUT_DRIVE * frame[driven_cols]
+                    # 2026-10-29 bug-fix site (see external_from_drive)
+                    ext[driven_idx] = external_from_drive(
+                        frame[driven_cols], fc2mod.INPUT_DRIVE)
                     reps = sub_steps if f < n_frames else tail_steps
                     for _ in range(reps):
                         t = step * fc2mod.DT_MS / 1000.0
