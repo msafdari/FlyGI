@@ -91,6 +91,16 @@ its biological organization caused performance.
 Likewise, a zero result is informative engineering and does not imply that the
 biological nervous system lacks intelligence.
 
+**Measured harness-sensitivity boundary (2026-10, H-ARC-HARNESS-SENSITIVITY):
+the long-memory positive-control reservoir also produced no score separation
+on the full matched protocol (both decision CIs span zero; detection power
+~ +0.1 score at 75 rows).** The class-1 ARC real-vs-null and real-vs-bypass
+results in this document therefore carry the weakened reading: under this
+interface, no tested graph — including a reservoir validated into the regime
+reservoir computing recommends — moved official score, and the real wiring
+also did not. They are not evidence that the harness could have registered a
+graph advantage had one existed.
+
 ## Reproducibility rules
 
 - Treat each result directory as immutable.

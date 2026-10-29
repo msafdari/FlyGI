@@ -84,6 +84,14 @@ L=LEAGUE.md, R=EXPERIMENTS.yaml.
   leak=0.3, gain=0.9 point; DN participation ratio 5.39 vs 14.33-18.54.
   The record's own caveat travels with it: "the strongest reproducible
   connectome result. It has not yet produced an ARC outcome advantage." [W]
+- Harness-sensitivity bound (measured 2026-10, H-ARC-HARNESS-SENSITIVITY,
+  FLAT): the validated long-memory positive-control reservoir (rho 0.9924,
+  half-life 3 actions) scored 0.0137 on the full eff- protocol — both
+  decision CIs span zero (vs real -0.0511, CI -0.153..0.000; vs
+  degree-preserving null +0.0058, CI 0.000..+0.017); detection power
+  ~ +0.1 score at 75 rows. Class-1 ARC real-vs-null results read as
+  interface-bounded: no tested graph moved score, the real wiring
+  included. Arena-series rewire results unaffected (own positives). [W]
 - KC SPARSE CODING VALIDATED at class 2: held-out median active fraction
   0.0741 in the [0.03, 0.15] band; APL densification control +0.0098
   (load-bearing exactly on dense stimuli, Lin-consistent); both trivial

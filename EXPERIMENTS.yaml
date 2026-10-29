@@ -2697,7 +2697,7 @@ hypotheses:
       memory half-life 3 actions vs real 1) beats both the real graph
       and its degree-preserving null on complete matched pairs under
       the identical interface, games, seeds and budget.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-23 BEFORE ANY INSTRUMENT CODE, jointly
@@ -2718,7 +2718,27 @@ hypotheses:
         stated: certification covers advantages >= ~+0.1 at 75 rows.
         Secondary arm: reservoir-matched-random (the control's dumb
         twin). Runs FIRST among Task-10 items, before the release.
-    updated: 2026-10-23
+      - >
+        2026-10 RUN (local; record WORKLOG c3ec5bd; LEAGUE regenerated
+        at 95914f7): FLAT per the frozen reading -- the certification
+        claim is KILLED. MEASURED, 75 matched rows per arm, clustered
+        bootstrap at 5000: positive control 0.0137 vs real 0.0648
+        (delta -0.0511, CI -0.153..+0.000), vs degree-preserving null
+        0.0079 (delta +0.0058, CI +0.000..+0.017), vs its rho-0.16
+        matched-random twin 0.0320 (delta -0.0183, CI -0.055..+0.000).
+        Both decision CIs span zero; the validated long-memory
+        reservoir did not separate even from its dumb twin. The frozen
+        FLAT consequence EXECUTED 2026-10-29, before the 2026-11-01
+        release: class-1 ARC null prose downgraded in
+        docs/controls.md, docs/experiment.md, the LEAGUE-rendered
+        eff-row notes, factsheet.md and writeup.md -- the published
+        reading is now "under this interface no tested graph moved
+        official score" with the ~+0.1-score power floor stated.
+        Exhaustion-audit standing criticism 1 is discharged in the
+        UNFAVORABLE direction: the class-1 ARC harness is measured
+        unable to demonstrate detection of any graph advantage at this
+        resolution. Arena rewire instances untouched (own positives).
+    updated: 2026-10-29
 
   H-T4T5-CLASS3-DS:
     statement: >
@@ -2728,7 +2748,7 @@ hypotheses:
       real-vs-rewire comparison on the DS statistic at any fidelity,
       on the one killed circuit where the literature disagrees with
       our null (a reversal breaks SYNTHESIS section 4).
-    status: open
+    status: "null"
     evidence:
       - >
         PREREGISTERED 2026-10-23 (killtest_design.md section 2).
@@ -2749,7 +2769,31 @@ hypotheses:
         BLOCKED, never a fly verdict. Scope AT-1: close sentences are
         about the spiking model class under the declared mapping; the
         conductance/graded rung is declined and recorded.
-    updated: 2026-10-23
+      - >
+        2026-10 RUN: BLOCKED-CLOSED "null" (exit 3; record WORKLOG
+        54a8624) -- the DS question CANNOT BE POSED at this fidelity
+        under the declared mapping; no grid, no rewires, no fly
+        verdict. MEASURED, with every gate green first on the verdict
+        machine (gate A: delay-line median DSI 1.0000, tf optimum
+        1.0 Hz, equalized collapse 0.0000; gate B dims exact; sign
+        audit 35,041 curated edges, 0 flipped; fc25 reference 0.32157
+        in tolerance; AT-2 coverage 132/320 pairs, 0.9786 synapse
+        mass): the calibration swept 18 global gains over 1e-05..3000,
+        all stable, and median evoked T4/T5 rate was 0.000 Hz at EVERY
+        gain -- the compiled patch produces zero evoked spiking at any
+        drive scale under Kakaria/Pisokas-pinned physiology with the
+        declared mapping and the fc2-verbatim inhibitory (histaminergic)
+        L1/L2/L3 drive. The registered no-stable-gain floor fired: an
+        instrument statement, not a verdict. MEASURED ABSENCE, the
+        companion to H-CX-CLASS3-COMPASS: there the counts spiked but
+        lost position; here the columnar patch never fires. SCOPE
+        (AT-1 carried): a statement about the spiking model class
+        under the declared mapping, never "the fly's T4/T5".
+        REOPENING PATH (explicit go + own registration): a different
+        declared drive convention (e.g. bipolar luminance about a
+        spontaneous set point) or per-type pinned background rates;
+        the conductance/graded rung remains the declined rung above.
+    updated: 2026-10-29
 
   H-CX-BISWAS-FITTED:
     statement: >
@@ -2780,7 +2824,32 @@ hypotheses:
         and before instrument code. If the fetched materials carry
         neither MaleCNS parameters nor a complete recipe, this item
         closes blocked-data, recorded.
-    updated: 2026-10-23
+      - >
+        2026-10 FETCH COMPLETE (local; files at ~/datasets/
+        biswas_papers/): it is a RECIPE, not tables. MEASURED from the
+        PDFs by the local session: v2 (posted 2026-03-08, 63 pp, with
+        supplement) is the MaleCNS version; v1 has no MaleCNS content;
+        the 2026 follow-up (Hulse/Aneesh/Romani, "Hidden symmetries")
+        is hemibrain-only -- the runbook's guess that it carries the
+        MaleCNS realizations is REFUTED and corrected here. No numeric
+        MaleCNS parameter tables exist in any of the documents (the
+        vectors appear only in a p7 figure; no code/data-availability
+        statement). Their Methods specify a derivation recipe:
+        coarse-grain EPG/Delta7 counts to wedge/glomerulus blocks
+        (each Delta7 assigned to a glomerulus by maximal cumulative
+        output); the connectome enters as four 5D synapse-count
+        vectors c_EE, c_EI, c_IE, c_II with one gamma scale per block
+        submatrix; ring-attractor conditions per their Table 1 (p42).
+        COMPLETION PATH (the pre-commitment's "recipe applied once to
+        our counts" branch): extract the recipe equations and Table-1
+        conditions verbatim from the v2 Methods, re-derive the vectors
+        from OUR compiled counts, gate = their exact-attractor
+        property on the derived system (+ the p7 figure values as a
+        plausibility cross-check). Dated numeric-completion addendum
+        and instrument still pending that extraction. Duan/Dong/Fiete
+        v1 fetched (hemibrain; carries the necessity claims; no code
+        link on the NeurIPS poster page).
+    updated: 2026-10-29
 
   H-FB-COLUMNAR-TOPOLOGY:
     statement: >
@@ -2791,7 +2860,7 @@ hypotheses:
       and degree-preserving rewires destroy both. Structure only
       (Stage-A scope rule); the program's first contact with the
       literature's vector-navigation substrate.
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-10-23 (killtest_design.md section 4).
@@ -2810,7 +2879,26 @@ hypotheses:
         circuit must PASS both bars and its rewire must KILL them,
         asserted by unit test before data contact. Mapping
         assumptions AC-FB1..6 registered.
-    updated: 2026-10-23
+      - >
+        2026-10 RUN (local, exit 0, 163.4 s; record WORKLOG 3313458):
+        PASS -- the program's SECOND structural PASS, on the
+        literature's vector-navigation substrate at first contact.
+        MEASURED: synthetic gate re-passed on the verdict machine
+        (ideal at floor both bars; its rewire kills both); subcircuit
+        1,399 nodes / 85,353 signed edges; coverage FC 1.0, hDelta
+        1.0, labelled-PFN 0.98788; column counts read EXACTLY the
+        registered FC 9 / hDelta 12 / vDelta 10 (AC-FB1 confirmed);
+        consensus-NT audit: all columnar types 100% acetylcholine
+        (AC-FB5 confirmed on the compiled runtime). Bar 1 hDelta
+        antipodal mass 0.40548 vs null max 0.18682 (p 0.00498, the
+        floor); Bar 2 PFN mirror 0.01458 vs null max 0.01286
+        (p 0.00498, the floor); 200 rewires. CONTEXT behaves as the
+        Hulse motifs predict: vDelta antipodal mass 0.00041 (~0), PFL
+        mirror 0.02168. SCOPE (Stage-A rule, carried): structure
+        only -- the MaleCNS FB columnar wiring encodes the published
+        vector-computation geometry its degree-preserving rewires
+        cannot produce; no computation claim at any fidelity.
+    updated: 2026-10-29
 
   H-T4T5-NATSTAT-DIRECTION:
     statement: >
@@ -2842,7 +2930,24 @@ hypotheses:
         verdict machine), G1 usable-input (real-natural beats the
         90-deg chance floor, else BLOCKED as a convention limit).
         Assumptions ANS-1..5 registered.
-    updated: 2026-10-23
+      - >
+        2026-10 FIRST RUN: BLOCKED at G0 (exit 3, 20.6 s; record
+        WORKLOG 95914f7) -- the gate did its job BEFORE any decision
+        data: the 2x2 never ran, so nothing here is a verdict.
+        MEASURED: scramble selftest passed (worst amplitude rel err
+        3.5e-16); corpus checksums first-contact-pinned; G0 pooled
+        median DSI 0.17634 vs required 0.3216 +/- 0.02, with the
+        T4/ON channel reproducing IN BAND (0.31583, 4 distinct
+        preferred) and the T5/OFF channel collapsed (0.11562).
+        LOCALIZATION (measured, decisive for the fix): the same fc25
+        reference reproduced at 0.32157 through the class-3
+        instrument's native-edge path the same day, so patch, fc25
+        JSON and machine are exonerated -- the defect is
+        OFF-edge-specific inside THIS instrument's new pixel/AB-4
+        stimulus path. Instrument-bug investigation opened cloud-side
+        2026-10-29; fix lands with a recorded finding + the frozen
+        full re-run rule. Hypothesis remains OPEN, untested.
+    updated: 2026-10-29
 
   H-FLYGI-FLYBENCH-SFA:
     statement: >
@@ -2852,7 +2957,7 @@ hypotheses:
       behind the Task-3 FlyBench adapter on the local MaleCNS build,
       improves the hard tier without selling activation or
       specificity.
-    status: open
+    status: refuted
     evidence:
       - >
         PREREGISTERED 2026-10-23 (killtest_design.md section 6).
@@ -2867,7 +2972,22 @@ hypotheses:
         own AdaptiveLIFSimulator. Their measurement (flywire783:
         hard 0.512->0.647) is the external prior; AF-11/AF-12 record
         the transfer bridges as the thing under test.
-    updated: 2026-10-23
+      - >
+        2026-10 RUN (local; record WORKLOG 8f2149a; 19/19 mechanism
+        gates green first): KILL. MEASURED (like-for-like vs the
+        stored uniform baseline, n_neurons 176,422): hard-tier graded
+        0.6078 -> 0.6305 (+0.0226, bar +0.02 MET) and activation held
+        (-0.0008, bar MET) and specificity held (+0.2684 vs floor
+        +0.252, bar MET) -- but core fell 1.000 -> 0.8000 and overall
+        graded fell to 0.6940 vs the 0.701 floor (bar FAILED).
+        CLOSE: SFA at the pinned uniform b 2.0 mV / tau_a 200 ms buys
+        hard-tier dynamics by breaking a core task and the overall
+        floor on our engine -- the mechanism does not transfer
+        beneficially as pinned (AF-11's bridge measured FALSE for
+        SFA; AF-12's flywire783->MaleCNS transfer assumption did not
+        survive contact). Their measured flywire783 gain is not
+        disputed; our registered bars are.
+    updated: 2026-10-29
 
   H-FLYGI-FLYBENCH-TERMINAL:
     statement: >
@@ -2876,7 +2996,7 @@ hypotheses:
       3,782,429 terminal synapses = 4.2%), added default-off to our
       class-2 engine behind the Task-3 adapter, improves the hard
       tier with core staying 1.000.
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-10-23 (killtest_design.md section 6).
@@ -2893,7 +3013,26 @@ hypotheses:
         (sums to 3,782,429); >= 95% ID coverage vs the local build;
         >= 90% synapse survival after clipping. AF-13 records the
         imported provenance.
-    updated: 2026-10-23
+      - >
+        2026-10 RUN (local; record WORKLOG 8f2149a; gates green,
+        FLYGI_TERMINAL_TABLE = FlyBench's shipped MaleCNS table):
+        PASS -- the program's FIRST FUNCTIONAL MECHANISM WIN.
+        MEASURED, every frozen bar: hard-tier graded 0.6078 -> 0.6445
+        (+0.0366 vs bar +0.02); core stayed 1.0000; overall graded
+        0.7622 (floor 0.701); specificity GREW +0.2823 -> +0.3135
+        (floor +0.252); activation also improved (+0.0041). SCOPE,
+        stated in the same sentence as the win: terminal-aware
+        synapse placement improves OUR class-2 engine on FlyBench's
+        task suite under FlyBench's shipped MaleCNS terminal table
+        (AF-13 provenance imported, not re-derived) -- a fidelity
+        mechanism carrying measured function on this benchmark
+        family; NOTHING about ARC score (base rate 0 for 16
+        untouched), and the specificity bar means the gain rides the
+        real wiring, not the mechanism alone (its rewired control ran
+        terminal=None per FlyBench's own convention, as declared).
+        The combined SFA+terminal arm was NOT run (registered rule:
+        both singles must pass; SFA failed).
+    updated: 2026-10-29
 
   H-STAGEA-NULL-DECOMPOSITION:
     statement: >
@@ -2903,7 +3042,7 @@ hypotheses:
       (H-CX-RING-TOPOLOGY) into placement-carried vs
       magnitude/sign-carried components, and close docs/controls.md's
       recorded not-implemented null rows.
-    status: open
+    status: supported
     evidence:
       - >
         PREREGISTERED 2026-10-23 (killtest_design.md section 7).
@@ -2924,7 +3063,26 @@ hypotheses:
         sign multiset = NA). Readings are decomposition sentences
         (AC-N4 bridge stated); no closed verdict changes at any
         outcome.
-    updated: 2026-10-23
+      - >
+        2026-10 RUN (local, exit 0, 22.9 s, 600 nulls; record WORKLOG
+        3313458): READINGS COMPLETE. MEASURED: the Stage-A signature
+        SEPARATES from both weight-shuffle families (within-pre AND
+        global: p_banded 0.00498 at the floor, p_mirror 0.00995;
+        fraction of magnitudes changed 0.937/0.960 -- no degeneracy)
+        and DOES NOT separate from Dale-consistent sign flips
+        (p_banded 0.43781, p_mirror 0.82587; sign-family nulls even
+        reach bandedness 0.642 > real 0.5881). All invariants valid
+        in every family. DECOMPOSITION SENTENCE (the refinement this
+        registration bought): H-CX-RING-TOPOLOGY's PASS is carried by
+        edge placement AND magnitude assignment jointly, not by the
+        sign pattern. NOTE, stated at tier: AC-N4's pre-registered
+        bridge anticipated reading "p >= 0.05 under the weight family
+        => topology-carried"; the measured outcome is the OTHER
+        branch (p < 0.05), so the bandedness/mirror statistics are
+        magnitude-dependent as well as placement-dependent -- a
+        sharper statement than Stage A alone licensed. No closed
+        verdict changes (refinement, as registered).
+    updated: 2026-10-29
 
 experiments:
   # ---- controller reference (no connectome; regime-independent) ----
@@ -3051,10 +3209,10 @@ experiments:
     note: Track A degree-preserving null.
   real-signed-focused: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: null, tests: [], note: Focused-game subset run.}
   real-signed-loop-escape: {config: configs/literal_rate_signed_loop_escape.yaml, regime: gain0.9-dead, baseline: real-signed, tests: [], note: Loop-escape calibration winner.}
-  eff-real-signed: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-no-graph-bypass, tests: [], note: Efficiency-sweep replicate.}
+  eff-real-signed: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-no-graph-bypass, tests: [], note: Efficiency-sweep replicate. Reading downgraded 2026-10 (H-ARC-HARNESS-SENSITIVITY FLAT) -- no tested graph incl. the long-memory positive control moved score under this interface.}
   eff-no-graph-bypass: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: null, tests: [], note: Efficiency-sweep bypass.}
-  eff-null-degree-preserving: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-real-signed, tests: [], note: Efficiency-sweep null.}
-  reservoir-positive-control: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-real-signed, tests: [H-ARC-HARNESS-SENSITIVITY], note: Edge-of-chaos reservoir bundle (rho 0.9924, dynamics measured ALIVE despite the regime tag; registered here because league.py refuses cross-regime comparison). Positive control, not a matched null.}
+  eff-null-degree-preserving: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-real-signed, tests: [], note: Efficiency-sweep null. Real-vs-null reads under the FLAT harness-sensitivity downgrade (docs/controls.md, positive-control section).}
+  reservoir-positive-control: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: eff-real-signed, tests: [H-ARC-HARNESS-SENSITIVITY], note: Edge-of-chaos reservoir bundle (rho 0.9924, alive despite the regime tag). MEASURED 2026-10 FLAT -- score 0.0137, both decision CIs span zero (vs real -0.0511, CI -0.153..+0.000; vs null +0.0058, CI +0.000..+0.017); certification KILLED, prose downgraded per the frozen reading. Positive control, not a matched null.}
   reservoir-matched-random: {config: configs/literal_rate_signed.yaml, regime: gain0.9-dead, baseline: reservoir-positive-control, tests: [H-ARC-HARNESS-SENSITIVITY], note: The positive control's dumb twin (rho 0.1608, half-life 1); context arm.}
   sweep800-escape: {config: configs/literal_rate_signed_loop_escape.yaml, regime: gain0.9-dead, baseline: null, tests: [H-BUDGET], note: 800-action budget probe.}
   sweep1600-mild: {config: configs/literal_rate_signed_loop_balanced.yaml, regime: gain0.9-dead, baseline: null, tests: [H-BUDGET], note: 1600-action budget probe.}

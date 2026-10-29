@@ -201,6 +201,12 @@ Measurements that would move this synthesis, in information order:
 | H-CX-HEADING-LATENT | null 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
 | H-CX-SEEDING-PROTOCOL | refuted 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
 | H-CX-CLASS3-COMPASS | refuted 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-ARC-HARNESS-SENSITIVITY | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-STAGEA-NULL-DECOMPOSITION | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-FB-COLUMNAR-TOPOLOGY | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-T4T5-CLASS3-DS | null 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-FLYGI-FLYBENCH-SFA | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-FLYGI-FLYBENCH-TERMINAL | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:
@@ -304,3 +310,67 @@ circuit" now carrying a CX precedent: at class-3 fidelity the CX
 KILL changed the failure mode, so a T4/T5 class-3 run retains its
 information value — but it, like everything else here, runs only on
 an explicit go.
+
+
+## Addendum 2026-10-29 — Task 10 (the science menu): seven runs, the map redrawn in four places
+
+The exhaustion-audit menu ran in full (registrations frozen jointly
+2026-10-23; run records WORKLOG 3313458..95914f7; closes in
+EXPERIMENTS.yaml). Zero instrument fixes were needed across seven
+local runs. Four results move this synthesis:
+
+1. **The class-1 ARC nulls are now interface-bounded, by measurement
+   (H-ARC-HARNESS-SENSITIVITY: FLAT, refuted).** The validated
+   long-memory reservoir (rho 0.9924, half-life 3 actions) moved
+   official score not at all -- 0.0137 vs real 0.0648 vs null 0.0079,
+   both decision CIs spanning zero, and no separation even from its
+   rho-0.16 twin. Standing criticism 1 of the exhaustion audit is
+   discharged in the unfavorable direction: section 6's ARC-side
+   zeros read, from now on, as "under this interface no tested graph
+   moved score" (power floor ~ +0.1 at 75 rows). The prose downgrade
+   executed before the 2026-11-01 release in controls.md,
+   experiment.md, the LEAGUE-rendered notes, factsheet and writeup.
+   The arena-series rewire instances are untouched -- each of those
+   harnesses carried its own measured positive.
+2. **A THIRD anatomy-tier positive, and a second circuit: the FB
+   columnar system (H-FB-COLUMNAR-TOPOLOGY: supported).** At first
+   contact, the fan-shaped-body wiring carries the published
+   vector-computation geometry at the empirical floor on both bars
+   (hDelta antipode 0.4055 vs null max 0.1868; PFN mirror 0.0146 vs
+   0.0129; p 0.00498 each, 200 rewires), with the context populations
+   behaving exactly as the Hulse motifs predict. Structure only, as
+   registered. The section-4 reading strengthens: the permutation is
+   detectably special in BOTH compass-adjacent circuits -- and still,
+   nowhere, measured computing.
+3. **The one structural PASS is now decomposed
+   (H-STAGEA-NULL-DECOMPOSITION: supported).** Stage A's signature
+   separates from BOTH weight-shuffle families at the floor and NOT
+   from Dale-consistent sign flips: it is carried by edge placement
+   AND magnitude assignment jointly, not by sign organization. This
+   is sharper than Stage A licensed -- the pre-registered bridge's
+   other branch realized (the statistics are magnitude-dependent),
+   and it retires the idea that the PASS is "mere topology".
+4. **The fidelity ladder's two class-3 rungs now fail in OPPOSITE
+   directions, and one fidelity mechanism carries measured function.**
+   T4/T5 at pinned spiking physiology never fires (zero evoked
+   spiking at every declared gain; blocked-closed "null", scoped to
+   the model class under the declared mapping) -- where the CX at the
+   same physiology fired but lost position. Meanwhile
+   terminal-aware synapse placement (H-FLYGI-FLYBENCH-TERMINAL:
+   supported) is the program's FIRST functional mechanism win: every
+   frozen bar passed with specificity GROWING (+0.2823 -> +0.3135),
+   so the gain rides the real wiring -- scoped to FlyBench's tasks
+   under FlyBench's shipped terminal table, nothing about ARC. Its
+   sibling SFA (refuted) bought the hard tier by breaking core: the
+   mechanisms split, which is itself information -- fidelity additions
+   are not generically good; one specific, anatomy-coupled one is.
+
+Still open from the menu: H-T4T5-NATSTAT-DIRECTION (blocked at its own
+G0 gate by an OFF-edge instrument bug, localized and under fix
+cloud-side -- the gate worked; the hypothesis is untested) and
+H-CX-BISWAS-FITTED (fetch complete; their MaleCNS realization is a
+published RECIPE, not tables -- numeric completion pending the
+Methods extraction; the follow-up paper is hemibrain-only, correcting
+the runbook's guess). Score-adjacent base rate: unchanged at 0 for 16
+-- nothing in Task 10 was score-adjacent, and the FLAT result
+retroactively WEAKENS what the ARC zeros ever said about the fly.

@@ -129,6 +129,17 @@ radius 0.8289 vs 0.2219–0.2360 across three exact degree-preserving nulls
 reproducible connectome result. It has not yet produced an ARC outcome
 advantage."
 
+**What bounds the nulls.** The registered harness-sensitivity control ran
+before release (2026-10): a reservoir validated into the long-memory
+regime (rho 0.9924, memory half-life 3 actions vs the real graph's 1)
+also moved official score not at all — both decision CIs span zero, with
+detection power around +0.1 score at 75 matched rows. Our class-1 ARC
+real-vs-null results therefore read as: under this interface, no tested
+graph — engineered or biological — moved score. They bound the
+interface's tested graphs, not what the fly wiring could confer under a
+different harness. (The arena-series rewire results are unaffected: each
+of those harnesses carried its own measured positive control.)
+
 ## Theory: why it fails where it fails
 
 **(1) A fidelity wall, located exactly:** at class 1, no delay lines, no

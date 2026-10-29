@@ -93,6 +93,15 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   EXPERIMENTS.yaml/WORKLOG. The registry's duplicate-status-key landmine
   in H-MB-CLASS2-ASSOCIATION was fixed in-container 2026-09-30 and the
   full suite has run green since.
+- [ ] VERIFY THE FLAT DOWNGRADE LANDED (added 2026-10-29, triggered by the
+  measured H-ARC-HARNESS-SENSITIVITY FLAT -- the frozen pre-release
+  consequence): docs/controls.md (positive-control section carries the
+  measured ARC outcome and the weakened reading), docs/experiment.md
+  (claim-boundary section carries the harness-sensitivity boundary),
+  EXPERIMENTS.yaml eff-row notes (render into LEAGUE.md on regeneration),
+  factsheet.md and writeup.md (the harness-sensitivity bound). The class-1
+  ARC null prose must nowhere claim the harness could have registered an
+  advantage.
 - [ ] Regenerate LEAGUE.md AGAIN before release (found by the 2026-10-08
   audit): the 2026-10-02 snapshot shows H-T4T5-DSEC-DIRECTION as "open"
   (now refuted) and omits the four hypotheses closed after it

@@ -1,5 +1,52 @@
 # FlyGI durable worklog
 
+## Task 10 CLOSED cloud-side: seven verdicts in the registry; ARC null prose downgraded before release -- 2026-10-29
+
+Cloud-side close of the seven local runs (records 3313458..95914f7).
+Registry: H-ARC-HARNESS-SENSITIVITY refuted (FLAT per the frozen
+reading); H-STAGEA-NULL-DECOMPOSITION supported (the Stage-A PASS is
+placement+magnitudes, not signs -- the pre-registered bridge's OTHER
+branch realized); H-FB-COLUMNAR-TOPOLOGY supported (the program's
+second structural PASS, both bars at the 200-null floor; AC-FB1/5/6
+confirmed on the compiled runtime); H-T4T5-CLASS3-DS "null"
+(blocked-closed: zero evoked spiking at every declared gain -- the
+opposite class-3 failure mode to the CX; scope AT-1/AT-2 carried;
+reopening path = new drive-convention registration);
+H-FLYGI-FLYBENCH-SFA refuted (hard-tier gain bought by breaking core
+1.000 -> 0.800 and the overall floor); H-FLYGI-FLYBENCH-TERMINAL
+supported (first functional mechanism win; every bar; specificity
++0.2823 -> +0.3135; FlyBench scope only); H-T4T5-NATSTAT-DIRECTION
+stays open (G0 did its job; OFF-edge stimulus-path instrument bug
+localized, cloud-side fix in flight); H-CX-BISWAS-FITTED stays open
+(fetch complete; RECIPE not tables; the 2026 follow-up is
+hemibrain-only -- runbook guess corrected; completion = extract the
+v2 Methods recipe + Table-1 conditions, derive the vectors from our
+counts).
+
+THE RELEASE-BLOCKING ITEM EXECUTED: the frozen FLAT consequence --
+class-1 ARC null prose downgraded in docs/controls.md (measured
+outcome + weakened tie reading + power floor), docs/experiment.md
+(claim-boundary addition), EXPERIMENTS.yaml eff-row and reservoir
+condition notes (render into LEAGUE.md on the user's local
+regeneration), factsheet.md and writeup.md (harness-sensitivity
+bound); public_release_checklist.md gained a verification item. The
+published reading everywhere: under this interface no tested graph --
+engineered or biological -- moved official score; power floor ~ +0.1
+at 75 rows. Arena rewire instances untouched.
+
+SYNTHESIS: Task-10 addendum (four map-moving results) + six record-map
+rows. ASSUMPTIONS: 13 rows annotated with run outcomes (notably
+AF-11 split FALSE-for-SFA / TRUE-for-terminal; AC-N4's other branch;
+AT-2 exercised-blocked).
+
+NEXT: (1) natstat OFF-edge fix lands with a recorded instrument-bug
+finding; user re-runs natstat only. (2) Biswas numeric completion
+from the v2 Methods (extraction pending), then the instrument.
+(3) USER CALENDAR: Nov-1 release sequence now includes verifying the
+FLAT downgrade (checklist); Kaggle writeup once before Nov 8
+23:59 UTC; Dec 4 results; IJCNN decision after.
+
+
 ## Task 10 item 5: natstat BLOCKED at G0 -- the new stimulus path does not reproduce fc25's reference (plumbing, not a verdict) -- 2026-10-29
 
 Exit 3 in 5.8 s of measurement; 31/31 unit tests first. The gate

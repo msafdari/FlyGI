@@ -94,6 +94,28 @@ Validated at the deployed operating point:
 | Matched random reservoir | 0.1608 | 1 action | 0.00000 |
 | Positive control | 0.9924 | 3 actions | 0.07686 |
 
+**ARC outcome, measured 2026-10 (H-ARC-HARNESS-SENSITIVITY, run record
+in WORKLOG; the registered certification test): FLAT.** On the full
+eff- protocol (25 games x seeds 0-2 x 500 actions, matched pairs,
+clustered bootstrap), the positive control scored 0.0137 vs the real
+graph's 0.0648 (delta -0.0511, CI [-0.153, +0.000]) and vs the
+degree-preserving null's 0.0079 (delta +0.0058, CI [+0.000, +0.017]);
+it did not separate from its own rho-0.16 matched-random twin
+(0.0320; CI [-0.055, +0.000]). Both decision CIs span zero. The tie
+this section describes is therefore resolved in the UNINFORMATIVE
+direction, and the sentence above is hereby weakened to its measured
+form: the class-1 ARC near-zero results read as "under this interface
+and operating point, no tested graph — including a reservoir
+validated into the known-good long-memory regime — moved official
+score; the real wiring also did not." They are statements about this
+interface's tested graphs, never a measured absence of advantage
+attributable to the fly wiring specifically. Certification power
+floor: the comparator CI half-widths (±0.07-0.19 score at 75 rows)
+mean only advantages of roughly >= +0.1 score were detectable. This
+downgrade does NOT touch the arena-program rewire results (each arena
+harness carried its own measured positive control) or the structural
+separations.
+
 ## The full declared control set
 
 | Condition | Must preserve or match | Question |
