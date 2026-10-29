@@ -1,5 +1,68 @@
 # FlyGI durable worklog
 
+## Task 10 session 1: items 2 + 4 run (nulls2 readings; FB PASS), corpora + papers fetched; reservoir arm 1 in flight -- 2026-10-28
+
+Preconditions: pull to 6e35fa6; full suite 917 passed / 15 skipped;
+test_stagea_nulls2 11 passed.
+
+ITEM 1 (reservoir control, release-gating): arm 1
+(reservoir-positive-control, edge_of_chaos seed-20260922, 3 seeds x
+all games x 500 actions) launched and in flight. MEASURED pace after
+startup ~1.4 min/row => ~1.75 h/arm, consistent with A-RES-3's 0.148
+s/action; no re-plan needed. Early seed-0 rows score 0.0 with action
+entropies ~2.0-2.5 (alive, not scoring -- consistent with the dead
+regime registration note).
+
+ITEM 2 (H-STAGEA-NULL-DECOMPOSITION): READINGS COMPLETE, exit 0,
+22.9 s, 600 nulls. MEASURED per family (real bandedness 0.5881,
+mirror 0.01445): weight_within_pre SEPARATES (p 0.005 / 0.010);
+weight_global SEPARATES (p 0.005 / 0.010); sign shuffles DO NOT
+separate (p 0.438 / 0.826; null band max 0.642 exceeds real). Stage
+A's ring signature lives in edge placement + magnitudes, not in the
+sign pattern. Refinement only; no verdict changes.
+
+ITEM 4 (H-FB-COLUMNAR-TOPOLOGY): PASS, exit 0, 163.4 s -- the
+SECOND structural PASS. Synthetic Hulse gate passed locally (ideal at
+the floor on both bars, its rewire kills both: antipodal p 0.677,
+mirror p 0.294). Subcircuit 1,399 nodes / 85,353 signed edges;
+column_counts exactly AC-FB1 (FC 9 / hDelta 12 / vDelta 10; PFNa 9,
+PFNd 8, PFNm_a 9, PFNm_b 9, PFNv 9); coverage 1.0 / 1.0 / 0.988.
+MEASURED vs 200 rewires: bar1 hDelta antipodal 0.4055, bar2 PFN L/R
+mirror 0.0146, both p 0.00498 (the floor). Context (non-decisional):
+vDelta antipodal 0.0004 (absent, as Hulse predicts for the
+within-column type), PFL mirror 0.0217.
+
+ITEM 5 CORPUS: van Hateren imk00001-60.iml fetched from the
+pirsquared.org mirror to ~/datasets/vanhateren -- all 60 files
+exactly 3,145,728 bytes.
+
+ITEM 3 FETCHES (papers to ~/datasets/biswas_papers): (1)
+biswas2024_v2.pdf = Biswas/Stanoev/Romani/Fitzgerald v2 (posted
+2026-03-08, 63 pp, includes supplement) -- the MaleCNS version;
+biswas_nsf_par.pdf = the 2024-11-01 v1 (47 pp) which contains NO
+MaleCNS content (MaleCNS arrived in v2; provenance point). (2)
+biswas2026_followup.pdf = Hulse/Aneesh/Romani 2026, "Hidden
+symmetries..." (31 pp) -- contains NO MaleCNS realizations (hemibrain
+only; the runbook's guess that MaleCNS realizations live here is
+refuted by text search). (3) Duan/Dong/Fiete: NeurIPS 2025 poster
+115017 metadata captured (title "From Synapses to Dynamics: ...",
+OpenReview id zn4F6os6cq, no code link on the page); the bioRxiv PDF
+is still Cloudflare-rate-limited (1015) -- retry pending. KEY READING
+for the registration: biswas2024_v2 gives a DERIVATION RECIPE, not a
+printed parameter table -- coarse-grain MaleCNS EPG/Delta7 counts to
+wedge/glomerulus blocks (Delta7 assigned to glomerulus by maximal
+cumulative output), four 5D synapse-count vectors c_EE/c_EI/c_IE/c_II
+with one gamma scale per block submatrix, ring-attractor conditions
+per their Table 1 (p42); the numeric MaleCNS vectors appear only in
+figures (p7), there is no code/data availability statement in the
+PDF, and sampled-parameter sweeps were amplitude-matched to the
+MaleCNS vectors (p13). Numeric completion will need either
+re-derivation from our own MaleCNS data per the recipe, or the
+supplement page (fetch currently 429-limited).
+
+Remaining this session: arm 2 + LEAGUE rows (after arm 1), FlyBench
+SFA + terminal, t4t5 class-3, natstat (corpus ready).
+
 ## Task 10 OPENED: exhaustion audit recorded; user go on the full science menu -- 2026-10-23
 
 Context: on 2026-10-15 the user asked whether the program has used
