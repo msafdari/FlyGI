@@ -1,5 +1,35 @@
 # FlyGI durable worklog
 
+## Task 10 item 5: natstat BLOCKED at G0 -- the new stimulus path does not reproduce fc25's reference (plumbing, not a verdict) -- 2026-10-29
+
+Exit 3 in 5.8 s of measurement; 31/31 unit tests first. The gate
+sequence worked exactly as registered: corpus loaded (60 van Hateren
+images, sha256 checksums PINNED AT FIRST CONTACT to
+results/arenas/natstat_corpus_checksums_van_hateren.json -- now the
+pin for every future run); contrast calibration hit its target
+(gamma 8.0, p95 |column drive| 0.5000); scramble-integrity selftest
+exact (amplitude rel err 3.5e-16, decorrelated). Then G0 FAILED:
+fc25's moving-edge result reproduces at median v2 DSI 0.1763 through
+the NEW stimulus path, against the required 0.3216 +/- 0.02 (tiling
+exact). G1 reported failed alongside (REAL-natural did not beat the
+90-deg chance floor) -- consistent with the same path defect.
+
+Scope, precise: this is an INSTRUMENT statement. The same reference
+reproduced at 0.32157 through the t4t5-class3 instrument's path the
+same day, so the defect is localized to natstat's new stimulus
+machinery (binning/travel/windowing), not to the patch, the fc25
+result, or the corpus. Nothing about natural statistics was measured;
+the 2x2 never ran. Fix is cloud-side (adapter plumbing before any
+verdict-relevant quantity, the registered allowance); the corpus +
+checksum pin and the calibration curve are banked for the re-run.
+
+MENU STATE after this entry: item 1 FLAT (release downgrade
+triggered), item 2 readings complete, item 4 PASS, item 7 SFA KILL /
+terminal PASS, item 6 BLOCKED (no spiking operating point), item 5
+BLOCKED (G0 plumbing), item 3 fetches complete (recipe documented;
+numeric completion = re-derive from our MaleCNS data or the
+supplement page). Hypothesis closes are the cloud side's steps.
+
 ## Task 10 item 6: t4t5 class-3 BLOCKED -- no operating point exists (zero evoked spikes at every gain) -- 2026-10-29
 
 Exit 3, instrument statement, never a fly verdict; 27/27 unit tests
