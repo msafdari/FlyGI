@@ -1,5 +1,35 @@
 # FlyGI durable worklog
 
+## Task 10 item 7: SFA KILLED, TERMINAL PASSED -- the program's first functional mechanism win, specificity intact -- 2026-10-29
+
+Both mechanism arms run (3 seeds, rewired control, unpinned MaleCNS,
+like-for-like with the stored uniform baseline malecns_flygi.json;
+19/19 gates passed first under the flybench venv). One at a time, as
+registered. JSONs gitignored (malecns_sfa.json,
+malecns_terminal.json).
+
+SFA ARM: KILL. core 0.8000 / hard 0.6276 / graded 0.6940 /
+specificity +0.2684, 7/30. Bars: hard_improves TRUE (+0.0226),
+activation holds, specificity holds, overall FAILS (0.6940 < 0.701)
+-- and core dropped 1.0 -> 0.8. MEASURED shape: spike-frequency
+adaptation buys hard-tier dynamics by breaking a core task and the
+overall floor. The frozen bars refuse the trade.
+
+TERMINAL ARM: PASS -- ALL FOUR BARS HOLD. core 1.0000 / hard 0.6418
+(bar delta +0.0366) / graded 0.7622 (uniform 0.7113; floor held with
++0.051 to spare) / specificity +0.3135 (uniform +0.2823), 11/30 tasks
+(uniform 9). Suppression also up (0.639 -> 0.701), activation up
+(+0.004). MEASURED, scope held tight: weighting the compiled MaleCNS
+counts by flybench's shipped per-terminal table improves the
+characterization score on every frozen bar while the rewired control
+still collapses (specificity GREW). This is the program's first
+functional mechanism PASS on an external benchmark. It is a claim
+about the terminal-weighted count matrix on FlyBench's tasks -- not
+about ARC, and not about any other mechanism. Hypothesis closes
+(H-FLYGI-FLYBENCH-SFA refuted, H-FLYGI-FLYBENCH-TERMINAL supported)
+are the cloud side's step; a combined SFA+terminal arm is NOT run
+(registered rule: combined only if both singles pass; SFA failed).
+
 ## Task 10 item 1: reservoir positive control is FLAT -- certification claim KILLED; release-prose downgrade triggered for 11-01 -- 2026-10-29
 
 Both arms complete (75 rows each, 25 games x seeds 0-2 x 500 actions,
