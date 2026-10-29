@@ -1,5 +1,28 @@
 # FlyGI durable worklog
 
+## Task 10 item 6: t4t5 class-3 BLOCKED -- no operating point exists (zero evoked spikes at every gain) -- 2026-10-29
+
+Exit 3, instrument statement, never a fly verdict; 27/27 unit tests
+first. GATE A passed locally (idealized spiking delay-line: median
+DSI 1.0000, TF optimum at the interior 1 Hz point, equalized-arm
+collapse 0.0000 -- the model class can express DS). GATE B passed
+(patch dims 2,701/507/498/169 exact; sign audit 0 curation flips --
+measured MaleCNS consensus NT agrees with the curated table for every
+patch type; fc25 class-2.5 reference reproduced at 0.32157 vs 0.3216
++/- 0.02). AT-2 coverage 132/320 pairs trained, synapse mass 0.9786.
+
+THEN THE CALIBRATION: median evoked T4/T5 rate 0.000 Hz at EVERY one
+of the 18 gains spanning 1e-5 to 3000 (both polarities) -- BLOCKED:
+"no stable nonzero gain on the calibration grid". MEASURED absence,
+scope exact: at Kakaria/Pisokas-pinned spiking physiology with the
+AC-6 per-class scales, the compiled MaleCNS optic-lobe patch produces
+zero evoked spiking in the scored T4/T5 population at any global
+drive scale, so the DS question cannot be posed at this fidelity. The
+companion result to the CX class-3 run (there the counts spiked but
+lost position; here the columnar patch never fires at all). No grid,
+no rewires, no verdict; H-T4T5-CLASS3-DS disposition (BLOCKED-as-wall
+vs re-registration) is the cloud side's call.
+
 ## Task 10 item 7: SFA KILLED, TERMINAL PASSED -- the program's first functional mechanism win, specificity intact -- 2026-10-29
 
 Both mechanism arms run (3 seeds, rewired control, unpinned MaleCNS,
