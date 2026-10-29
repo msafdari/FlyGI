@@ -1,5 +1,45 @@
 # FlyGI durable worklog
 
+## Task 10 item 1: reservoir positive control is FLAT -- certification claim KILLED; release-prose downgrade triggered for 11-01 -- 2026-10-29
+
+Both arms complete (75 rows each, 25 games x seeds 0-2 x 500 actions,
+exit 0 both; pace matched A-RES-3 after startup). MEASURED means:
+reservoir-positive-control 0.0137 (1 level), reservoir-matched-random
+0.0320 (3 levels); comparators, previously measured: eff-real-signed
+0.0648, eff-null-degree-preserving 0.0079.
+
+THE FROZEN READING (clustered bootstrap, 5000 resamples, matched
+pairs, full precision):
+- positive-control vs eff-real-signed: -0.0511, CI [-0.1532, +0.0000]
+- positive-control vs eff-null-degree-preserving: +0.0058,
+  CI [+0.0000, +0.0174]
+- context, vs its matched-random twin: -0.0183, CI [-0.0550, 0.0000]
+Both decision CIs span zero => FLAT (KILL for the certification
+claim). The dynamically-validated edge-of-chaos reservoir (rho
+0.9924, memory half-life 3x the real graph's) moved official score
+not at all -- and does not even separate from its rho-0.16 dumb twin.
+A-RES-2's warning is the measured story: ARC level-1 completion does
+not pay for cross-action neural memory under this interface.
+
+CONSEQUENCE, frozen in the registration and now TRIGGERED: the
+published class-1 ARC nulls downgrade from "the real wiring conferred
+no advantage under this interface" to "under an interface in which no
+tested graph -- including one tuned into the known-good long-memory
+reservoir regime -- moved official score, the real wiring also did
+not." This caveat must land in docs/experiment.md, docs/controls.md,
+LEAGUE.md's real-vs-null/bypass prose, and the task1_arc_paper
+factsheet/writeup BEFORE the 2026-11-01 release (cloud-side close +
+edits per the division of labor; this entry is the measured record).
+POWER FLOOR, also frozen: comparator CI half-widths are +/-0.07-0.19
+at 75 rows, so FLAT means "no detected advantage at roughly the
++0.1-score resolution", and the old "cannot register an advantage
+that ANY graph could confer" prose weakens to that measured form.
+The seven rewire-parity instances, the retinotopy positive and the
+structural separations are untouched (each carried its own measured
+positive).
+
+LEAGUE.md regenerated with both rows (league verdicts: null / null).
+
 ## Task 10 session 1: items 2 + 4 run (nulls2 readings; FB PASS), corpora + papers fetched; reservoir arm 1 in flight -- 2026-10-28
 
 Preconditions: pull to 6e35fa6; full suite 917 passed / 15 skipped;
