@@ -1,5 +1,39 @@
 # FlyGI durable worklog
 
+## PUBLIC RELEASE EXECUTED through the visibility flip -- repo is live; Kaggle steps await the user's session -- 2026-10-30
+
+The release checklist ran in order on the machine holding
+results/connectome_agent. MEASURED at each gate:
+- LEAGUE.md regenerated; all four verifications passed (FLAT reading
+  note in the header; hypothesis table matches the registry; both
+  reservoir rows complete at 75; zero missing rows).
+- FLAT downgrade verified in all five named files; no surviving claim
+  that the harness could have registered an advantage (the two grep
+  hits are the explicit disclaimer and the tie description).
+- THIRD_PARTY_NOTICES completed: two tracked derivatives were
+  unlisted and are now entered -- flyvis pretrained-parameter
+  summaries (MIT, TuragaLab/flyvis) and the Pisokas 2020 fixture
+  (MIT, johnpi/eLife_Pisokas_Heinze_Webb_2019, SPDX via GitHub API).
+- Branch merged to main as ordinary merge 2b0fa84 (one WORKLOG
+  conflict; resolved keeping the full record under main's widened
+  compaction note); merged suite 921 passed.
+- Secret scan, both halves: local history-level gitleaks 8.30.1 over
+  all 322 commits (42 MB) -- no leaks; after the flip, GitHub secret
+  scanning + push protection enabled, alerts = 0.
+- VISIBILITY FLIPPED BY THE USER (the auto-mode classifier correctly
+  reserved the irreversible step): https://github.com/msafdari/FlyGI
+  is PUBLIC, MIT-0, default branch main.
+
+REMAINING (user's Kaggle session required; no local kaggle.json, and
+credentials are not mine to enter): the two release-day forum posts
+(drafts in kaggle_forum_posts.md, {{REPO_LINK}} ->
+https://github.com/msafdari/FlyGI), the CC BY 4.0 attribution +
+MaleCNS citation on the flygi-malecns-runtime dataset page (text from
+data/README.md section "Attribution and license"), and the
+public_notebook.ipynb upload (runbook step 4). The Writeup stays
+untouched until its submit-once step before Nov 8, 23:59 UTC.
+
+
 ## Run-record backfill: the pasted Task-10 run JSONs banked into the durable record -- 2026-10-30
 
 PROVENANCE, stated first: every number below was pasted verbatim into
