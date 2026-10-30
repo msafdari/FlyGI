@@ -57,6 +57,17 @@ Videos must be YouTube-hosted. There are none.
 
 ## Project Description
 
+**RENDERER GOTCHA (measured 2026-10-30, fixed same day):** Kaggle's
+writeup renderer treats SINGLE newlines inside paragraphs as hard line
+breaks, so pasting the hard-wrapped writeup.md verbatim renders every
+~75-char source wrap as a forced break (the user caught it on the live
+page). The fix: paste an UNWRAPPED body — join lines within each
+paragraph and list item, keep blank lines between blocks. The
+submitted description was replaced with the token-identical unwrapped
+form via "Update Submission" (still Submitted). Any future re-paste
+must unwrap first.
+
+
 Paste everything in `writeup.md` **after** the `---` separator, i.e. the
 body. It starts at "**One measured pair carries the paper.**" and ends
 with "neuronal_dynamics_active=false." The body is markdown (## headers,

@@ -1,5 +1,24 @@
 # FlyGI durable worklog
 
+## Writeup formatting fix: unwrapped the hard-wrapped body (words unchanged); still Submitted -- 2026-10-30
+
+The user spotted forced line breaks on the rendered writeup. CONFIRMED
+on the live page: Kaggle's renderer treats single newlines inside
+paragraphs as hard breaks, so writeup.md's ~75-char source wrapping
+rendered as ragged forced breaks (first paragraph ended with the lone
+word "control."). FIX: regenerated the body with a markdown-aware line
+joiner -- paragraphs and list items joined to single lines, block
+structure untouched -- verified token-identical (1,484 words, same
+word stream, zero internal paragraph newlines), replaced the Project
+Description, and saved via "Update Submission" (NOT "Unsubmit and Save
+as Draft"). Verified after: paragraphs flow to full column width and
+the banner still reads "Submitted!". writeup.md in the repo keeps its
+hard wrap (GitHub renders it correctly); the gotcha + unwrap rule is
+recorded in kaggle_form.md's Project Description section. The forum
+posts and dataset description were authored unwrapped and were never
+affected.
+
+
 ## WRITEUP SUBMITTED (AP-11, the submit-once step): "Submitted!" confirmed -- 2026-10-30
 
 Executed per kaggle_form.md field by field, via the user's Chrome
