@@ -13,7 +13,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   (results/manifests/gateway_*.json) and a test placeholder
   `ARC_API_KEY=test-key-123` in scripts/build_notebook.py. Neither is a
   secret. MEASURED.
-- [ ] History audit before flipping visibility: run GitHub secret scanning
+- [x] History audit before flipping visibility: run GitHub secret scanning
   on the repo (Settings -> Security, or ask this session to trigger the
   API scan) — tracked-file audit does not cover old blobs. The WORKLOG
   records "credentials were not logged" discipline throughout, so the
@@ -51,7 +51,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 - [ ] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
   register AP-12): repo link in the Paper Track and ARC-AGI-3 discussion
   forums. Drafts ready: kaggle_forum_posts.md (fill {{REPO_LINK}}).
-- [ ] THIRD_PARTY_NOTICES.md: present; re-read once before release to
+- [x] THIRD_PARTY_NOTICES.md: present; re-read once before release to
   confirm every vendored/embedded third-party piece is listed with a
   compatible license.
 - [x] MaleCNS data terms VERIFIED (register AP-6, MEASURED 2026-10-01,
@@ -71,7 +71,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
 - [x] No large artifacts in history per the operating directive (raw
   downloads, compiled arrays, caches all ignored; 2026-09-28 compaction
   note confirms results stayed local).
-- [ ] Branch state: this program's work lives on
+- [x] Branch state: this program's work lives on
   claude/admiring-goldberg-wtqkbg. Merge to main (or open and merge a PR)
   before going public so the default branch shows the current record.
 - [x] README refresh: applied in cb99eeb (2026-10-01) — README leads
@@ -93,7 +93,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   EXPERIMENTS.yaml/WORKLOG. The registry's duplicate-status-key landmine
   in H-MB-CLASS2-ASSOCIATION was fixed in-container 2026-09-30 and the
   full suite has run green since.
-- [ ] VERIFY THE FLAT DOWNGRADE LANDED (added 2026-10-29, triggered by the
+- [x] VERIFY THE FLAT DOWNGRADE LANDED (added 2026-10-29, triggered by the
   measured H-ARC-HARNESS-SENSITIVITY FLAT -- the frozen pre-release
   consequence): docs/controls.md (positive-control section carries the
   measured ARC outcome and the weakened reading), docs/experiment.md
@@ -105,7 +105,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   factsheet.md and writeup.md (the harness-sensitivity bound). The class-1
   ARC null prose must nowhere claim the harness could have registered an
   advantage.
-- [ ] Regenerate LEAGUE.md AGAIN before release (updated 2026-10-30; the
+- [x] Regenerate LEAGUE.md AGAIN before release (updated 2026-10-30; the
   2026-10-29 regeneration at c3ec5bd predates the Task-10 closes AND the
   league.py header reading-note). Run
   `uv run python scripts/league.py --write-md LEAGUE.md` ONLY on the
