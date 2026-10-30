@@ -62,7 +62,15 @@ null field must never be represented as an observed SHA-256 or graph count.
 ## Milestone 0-1 status boundary
 
 The repository provides the ingestion contract, configuration, sparse build
-path, and fixture-level validation. It does not check a generated full-data
-manifest into Git and therefore does not claim that the large source files have
-been downloaded or that any commonly quoted node/edge totals were reproduced
-on this checkout.
+path, and fixture-level validation, and it records a completed acquisition:
+the tracked manifest
+[`data/manifests/download-20260920T003233.928109Z.json`](../data/manifests/download-20260920T003233.928109Z.json)
+holds the observed SHA-256s and byte counts of the three v1.0 source files,
+measured at download on 2026-09-20 (recorded with `expected_sha256: null`,
+so they are locally observed values, not verified against a published hash).
+Real builds from those files are recorded in `WORKLOG.md` and the result
+manifests (measured): 166,700 retained neurons; 25,582,837 edges in the
+unsigned graph, 24,559,055 in the heuristic-signed build, and 24,994,595 in
+the modulator-preserving runtime. The boundary that remains: the raw source
+files and compiled graph arrays themselves stay outside Git; only the
+manifests that describe them are tracked.

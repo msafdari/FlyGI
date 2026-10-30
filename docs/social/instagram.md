@@ -48,8 +48,9 @@ Four icons, four lines.
 
 **Slide 7 — the twist**
 > …and it still didn't help.
-> Random beat it.
-> The brain-free version tied it.
+> Random beat it. The brain-free version tied it.
+> Even the control built to succeed moved nothing —
+> the zeros bound my harness, not just the fly.
 
 **Slide 8 — the point**
 > Anyone can post the demo.
@@ -61,7 +62,8 @@ Four icons, four lines.
 ## Caption
 
 A complete fruit-fly connectome — 166,700 neurons, 24.5 million synapses —
-playing an AI reasoning benchmark with zero trainable parameters. 🪰
+played an AI reasoning benchmark with zero trainable parameters during the
+controlled runs. 🪰
 
 The first finding surprised me: its wiring is provably not random. Rewire it
 while keeping every neuron's connection count and every weight, and the real
@@ -72,7 +74,9 @@ Then the part that usually gets left out: I built the controls. A rewired
 version that keeps every neuron's connection count. A version with the brain
 deleted entirely. Games it had never seen.
 
-And it still didn't beat random action selection.
+And it still didn't beat random action selection — and neither did the
+control built to succeed, which is the part that bounds the harness itself,
+not just the fly.
 
 My own "smart" clicking turned out to be 3.29× worse than clicking at random. I
 shipped that twice before I checked.

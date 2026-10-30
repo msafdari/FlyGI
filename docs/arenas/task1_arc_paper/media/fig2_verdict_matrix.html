@@ -1,0 +1,84 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; width: 1200px; background: #fcfcfb;
+         font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #0b0b0b; }
+  .wrap { padding: 36px 44px 28px; }
+  h1 { font-size: 24px; font-weight: 650; margin: 0 0 4px; }
+  .sub { font-size: 15px; color: #52514e; margin: 0 0 20px; max-width: 1050px; line-height: 1.45; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th { text-align: left; color: #52514e; font-weight: 600; padding: 8px 12px; border-bottom: 1px solid #c3c2b7; }
+  td { padding: 10px 12px; border-bottom: 1px solid #e1e0d9; vertical-align: top; line-height: 1.4; }
+  td.circ { font-weight: 650; white-space: nowrap; }
+  .pass { color: #006300; font-weight: 650; }
+  .fail { color: #d03b3b; font-weight: 650; }
+  .na   { color: #898781; }
+  .verdict { font-weight: 700; }
+  .v-useful { color: #006300; }
+  .v-not { color: #d03b3b; }
+  .v-unv { color: #52514e; }
+  .small { color: #898781; font-size: 12px; }
+  .foot { font-size: 12.5px; color: #898781; margin-top: 16px; line-height: 1.5; }
+</style>
+<body>
+<div class="wrap">
+  <h1>The verdict matrix: five circuits, one protocol</h1>
+  <p class="sub">Each MaleCNS circuit faces the same preregistered stages — validate its biology at a declared
+     fidelity class, gate its input, then test on ARC against controls. Scope words are part of each verdict.</p>
+  <table>
+    <tr>
+      <th style="width:14%">Circuit</th>
+      <th style="width:9%">Fidelity</th>
+      <th style="width:21%">1 &middot; Biology validation</th>
+      <th style="width:15%">2 &middot; Input gate</th>
+      <th style="width:23%">3 &middot; ARC test vs controls</th>
+      <th style="width:18%">Verdict</th>
+    </tr>
+    <tr>
+      <td class="circ">Eye map<br><span class="small">retinotopy, static anatomy</span></td>
+      <td>anatomy<br><span class="small">(no dynamics)</span></td>
+      <td><span class="na">exempt</span> — compiled anatomical map, not a dynamical claim</td>
+      <td><span class="pass">&#10003; drives 892 columns</span></td>
+      <td>L1 action cost 2.59&times; human baseline vs <b>11.59&times;</b> scrambled twin (4.5&times;); breadth bar failed (17 vs 21 levels)</td>
+      <td class="verdict v-useful">USEFUL &mdash; deployed<br><span class="small">the only fly content in scored submissions</span></td>
+    </tr>
+    <tr>
+      <td class="circ">T4/T5 motion<br><span class="small">13,585 neurons</span></td>
+      <td>class 2.5</td>
+      <td><span class="pass">&#10003; PASS</span> &mdash; DSI 0.3216 (band &ge;0.30), trained flyvis params</td>
+      <td><span class="pass">&#10003; 660 verified displacement events</span></td>
+      <td>real 0.3875 &lt; rewire <b>0.4306</b> (p=0.97); engineered matcher 1.0000</td>
+      <td class="verdict v-not">NOT USEFUL<br><span class="small">for ARC motion decoding at class-2.5 fidelity</span></td>
+    </tr>
+    <tr>
+      <td class="circ">Mushroom body<br><span class="small">4,064 KC / 97 MBON</span></td>
+      <td>class 2</td>
+      <td><span class="pass">&#10003; PASS</span> &mdash; KC sparse code 0.0741 in [0.03, 0.15]; APL load-bearing</td>
+      <td><span class="pass">&#10003; PN&rarr;KC drive 62&ndash;87%</span> (bar: 5%)</td>
+      <td>real 0.600 &lt; rewire <b>0.800</b> (p=0.996); shuffled-credit 0.400; perceptron 0.917</td>
+      <td class="verdict v-not">NOT USEFUL<br><span class="small">for one-shot ARC association at class-2 fidelity</span></td>
+    </tr>
+    <tr>
+      <td class="circ">EB ring (compass)<br><span class="small">148 neurons</span></td>
+      <td>classes 1 + 2</td>
+      <td><span class="fail">&#10007; FAIL</span> &mdash; all 155 alive LIF configs delocalized (circ. var. 0.853 vs 0.6 band)</td>
+      <td><span class="na">&mdash; not reached</span></td>
+      <td><span class="na">&mdash; not reached</span></td>
+      <td class="verdict v-unv">UNVALIDATABLE at tested fidelities<br><span class="small">holds activity, not position</span></td>
+    </tr>
+    <tr>
+      <td class="circ">LC object code<br><span class="small">4,257 neurons</span></td>
+      <td>class 1</td>
+      <td><span class="fail">&#10007; FAIL</span> &mdash; position code sign-inverted at all 21 points (best &rho; &minus;0.203 vs +0.50 band)</td>
+      <td><span class="na">&mdash; not reached</span></td>
+      <td><span class="na">&mdash; not reached</span></td>
+      <td class="verdict v-unv">UNVALIDATABLE at class 1<br><span class="small">untested at class 2</span></td>
+    </tr>
+  </table>
+  <p class="foot">A circuit only earns a NOT-USEFUL verdict after passing stages 1 and 2 &mdash; a null measured
+     through unusable input is about the plumbing, not the fly (this rule was paid for: the mushroom body was
+     once &ldquo;taught&rdquo; at 0.00% driven sensory input). At class 1 the standing verdict is
+     &ldquo;NOT USEFUL: NONE &mdash; no prior null may be stated as a fact about the fly.&rdquo;</p>
+</div>
+</body>

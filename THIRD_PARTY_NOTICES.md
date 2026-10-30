@@ -65,6 +65,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## flyvis pretrained parameters (embedded derivative)
+
+`docs/fidelity2/flyvis_trained_params.json` aggregates per-type/per-pair
+parameter summaries derived from the released pretrained ensemble
+(flow/0000) of [flyvis](https://github.com/TuragaLab/flyvis) 1.2.0
+(Lappalainen et al. 2024, Nature 634:1132; full provenance, download
+checksums and derivation are recorded inside the JSON itself). flyvis is
+MIT-licensed (Copyright (c) 2023 Janne K. Lappalainen, Fabian D. Tschopp,
+Mason McGill, Jakob H. Macke, Srinivas C. Turaga). The derived summaries
+are redistributed here under that license's terms with this notice.
+
+## Pisokas, Heinze & Webb 2020 fly circuit fixture (embedded derivative)
+
+`tests/data/pisokas_fly_connectivity.npz` embeds the 60-neuron idealized
+fly head-direction circuit (connectivity labels and class weights) from
+the published modeling code of Pisokas, Heinze & Webb 2020 (eLife
+9:e53985), repository
+[johnpi/eLife_Pisokas_Heinze_Webb_2019](https://github.com/johnpi/eLife_Pisokas_Heinze_Webb_2019)
+(MIT License). It is used as the validation gate for the class-3
+instruments; the physiology constants pinned in those instruments cite
+the same source.
+
 ## ARC-AGI-3 state-graph references
 
 FlyGI's Phase 1 controller is a native implementation informed by generic

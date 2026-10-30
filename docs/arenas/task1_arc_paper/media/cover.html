@@ -1,0 +1,134 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; width: 1200px; height: 675px; background: #fcfcfb;
+         font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #0b0b0b; }
+  .t  { position: absolute; left: 90px; top: 44px; font-size: 34px; font-weight: 700; letter-spacing: -0.5px; white-space: nowrap; }
+  .s  { position: absolute; left: 90px; top: 94px; font-size: 18px; color: #52514e; white-space: nowrap; }
+  .lab { position: absolute; font-size: 16px; color: #52514e; }
+  .num { font-weight: 700; color: #0b0b0b; }
+  .floor { position: absolute; left: 90px; top: 574px; width: 1020px; border-top: 1px solid #c3c2b7;
+           padding-top: 12px; font-size: 16px; color: #52514e; display: flex; justify-content: space-between; }
+</style>
+<body>
+  <div class="t">What does a whole fly connectome compute for free?</div>
+  <div class="s">FlyGI &mdash; the complete MaleCNS connectome (166,700 neurons), audited module by module on ARC-AGI-3</div>
+  <svg style="position:absolute;left:0;top:0" width="1200" height="675">
+    <polygon points="90.0,126.0 110.8,138.0 110.8,162.0 90.0,174.0 69.2,162.0 69.2,138.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="135.2,126.0 156.0,138.0 156.0,162.0 135.2,174.0 114.5,162.0 114.5,138.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="180.5,126.0 201.3,138.0 201.3,162.0 180.5,174.0 159.7,162.0 159.7,138.0" fill="#3987e5" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="225.7,126.0 246.5,138.0 246.5,162.0 225.7,174.0 204.9,162.0 204.9,138.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="316.2,126.0 337.0,138.0 337.0,162.0 316.2,174.0 295.4,162.0 295.4,138.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="361.4,126.0 382.2,138.0 382.2,162.0 361.4,174.0 340.7,162.0 340.7,138.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="406.7,126.0 427.5,138.0 427.5,162.0 406.7,174.0 385.9,162.0 385.9,138.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="112.6,165.0 133.4,177.0 133.4,201.0 112.6,213.0 91.8,201.0 91.8,177.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="157.9,165.0 178.6,177.0 178.6,201.0 157.9,213.0 137.1,201.0 137.1,177.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="203.1,165.0 223.9,177.0 223.9,201.0 203.1,213.0 182.3,201.0 182.3,177.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="248.3,165.0 269.1,177.0 269.1,201.0 248.3,213.0 227.6,201.0 227.6,177.0" fill="#3987e5" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="293.6,165.0 314.4,177.0 314.4,201.0 293.6,213.0 272.8,201.0 272.8,177.0" fill="#cde2fb" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="338.8,165.0 359.6,177.0 359.6,201.0 338.8,213.0 318.0,201.0 318.0,177.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="429.3,165.0 450.1,177.0 450.1,201.0 429.3,213.0 408.5,201.0 408.5,177.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="90.0,204.0 110.8,216.0 110.8,240.0 90.0,252.0 69.2,240.0 69.2,216.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="135.2,204.0 156.0,216.0 156.0,240.0 135.2,252.0 114.5,240.0 114.5,216.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="180.5,204.0 201.3,216.0 201.3,240.0 180.5,252.0 159.7,240.0 159.7,216.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="225.7,204.0 246.5,216.0 246.5,240.0 225.7,252.0 204.9,240.0 204.9,216.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="271.0,204.0 291.7,216.0 291.7,240.0 271.0,252.0 250.2,240.0 250.2,216.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="112.6,243.0 133.4,255.0 133.4,279.0 112.6,291.0 91.8,279.0 91.8,255.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="157.9,243.0 178.6,255.0 178.6,279.0 157.9,291.0 137.1,279.0 137.1,255.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="248.3,243.0 269.1,255.0 269.1,279.0 248.3,291.0 227.6,279.0 227.6,255.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="293.6,243.0 314.4,255.0 314.4,279.0 293.6,291.0 272.8,279.0 272.8,255.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="338.8,243.0 359.6,255.0 359.6,279.0 338.8,291.0 318.0,279.0 318.0,255.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="90.0,282.0 110.8,294.0 110.8,318.0 90.0,330.0 69.2,318.0 69.2,294.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="135.2,282.0 156.0,294.0 156.0,318.0 135.2,330.0 114.5,318.0 114.5,294.0" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="180.5,282.0 201.3,294.0 201.3,318.0 180.5,330.0 159.7,318.0 159.7,294.0" fill="#cde2fb" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="225.7,282.0 246.5,294.0 246.5,318.0 225.7,330.0 204.9,318.0 204.9,294.0" fill="#cde2fb" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="271.0,282.0 291.7,294.0 291.7,318.0 271.0,330.0 250.2,318.0 250.2,294.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="112.6,321.0 133.4,333.0 133.4,357.0 112.6,369.0 91.8,357.0 91.8,333.0" fill="#cde2fb" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="157.9,321.0 178.6,333.0 178.6,357.0 157.9,369.0 137.1,357.0 137.1,333.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="203.1,321.0 223.9,333.0 223.9,357.0 203.1,369.0 182.3,357.0 182.3,333.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="248.3,321.0 269.1,333.0 269.1,357.0 248.3,369.0 227.6,357.0 227.6,333.0" fill="#3987e5" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="429.3,321.0 450.1,333.0 450.1,357.0 429.3,369.0 408.5,357.0 408.5,333.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="90.0,360.0 110.8,372.0 110.8,396.0 90.0,408.0 69.2,396.0 69.2,372.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="135.2,360.0 156.0,372.0 156.0,396.0 135.2,408.0 114.5,396.0 114.5,372.0" fill="#3987e5" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="180.5,360.0 201.3,372.0 201.3,396.0 180.5,408.0 159.7,396.0 159.7,372.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="225.7,360.0 246.5,372.0 246.5,396.0 225.7,408.0 204.9,396.0 204.9,372.0" fill="#3987e5" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="271.0,360.0 291.7,372.0 291.7,396.0 271.0,408.0 250.2,396.0 250.2,372.0" fill="#3987e5" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="316.2,360.0 337.0,372.0 337.0,396.0 316.2,408.0 295.4,396.0 295.4,372.0" fill="#6da7ec" stroke="#fcfcfb" stroke-width="2"/>
+<polygon points="361.4,360.0 382.2,372.0 382.2,396.0 361.4,408.0 340.7,396.0 340.7,372.0" fill="#9ec5f4" stroke="#fcfcfb" stroke-width="2"/>
+    <rect x="760" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="828" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="862" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="896" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="998" y="128" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="162" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="162" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="828" y="162" width="32" height="32" rx="3" fill="#2a78d6"/>
+<rect x="862" y="162" width="32" height="32" rx="3" fill="#2a78d6"/>
+<rect x="896" y="162" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="162" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="162" width="32" height="32" rx="3" fill="#eb6834"/>
+<rect x="998" y="162" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="196" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="196" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="828" y="196" width="32" height="32" rx="3" fill="#2a78d6"/>
+<rect x="862" y="196" width="32" height="32" rx="3" fill="#2a78d6"/>
+<rect x="896" y="196" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="196" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="196" width="32" height="32" rx="3" fill="#eb6834"/>
+<rect x="998" y="196" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="828" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="862" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="896" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="998" y="230" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="264" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="264" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="828" y="264" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="862" y="264" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="896" y="264" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="264" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="264" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="998" y="264" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="298" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="298" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="828" y="298" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="862" y="298" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="896" y="298" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="298" width="32" height="32" rx="3" fill="#eda100"/>
+<rect x="964" y="298" width="32" height="32" rx="3" fill="#eda100"/>
+<rect x="998" y="298" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="332" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="332" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="828" y="332" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="862" y="332" width="32" height="32" rx="3" fill="#1baf7a"/>
+<rect x="896" y="332" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="332" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="332" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="998" y="332" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="760" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="794" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="828" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="862" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="896" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="930" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="964" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+<rect x="998" y="366" width="32" height="32" rx="3" fill="#e1e0d9"/>
+    <path d="M 505 290 C 580 290 620 290 695 290" stroke="#898781" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#898781"/></marker></defs>
+  </svg>
+  <div class="lab" style="left:90px; top:470px; width:380px;">the fly&rsquo;s eye map, compiled and deployed:<br>
+    level-1 cost <span class="num">2.59&times;</span> human baseline &mdash; scrambled twin <span class="num">11.59&times;</span></div>
+  <div class="lab" style="left:760px; top:430px; width:350px;">the engineered grammar scaffold:<br>
+    <span class="num">~52&times;</span> local gain, <span class="num">zero</span> hidden-set transfer</div>
+  <div class="floor">
+    <span>hidden-set score, three straight submissions: <span class="num">0.15&nbsp;&middot;&nbsp;0.15&nbsp;&middot;&nbsp;0.15</span> &mdash; the abstention floor</span>
+    <span>github.com/msafdari/FlyGI</span>
+  </div>
+</body>

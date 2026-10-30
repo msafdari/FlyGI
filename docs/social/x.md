@@ -8,7 +8,7 @@ low-arousal negative, the weakest opening the evidence identifies.
 
 ## Single post
 
-A complete fruit-fly brain is playing an AI reasoning benchmark.
+A complete fruit-fly brain played an AI reasoning benchmark.
 
 166,700 neurons. 24,559,055 synapses. 0 trainable parameters.
 
@@ -22,10 +22,11 @@ Then I ran the controls, and it got interesting. 🪰🧵
 ## Thread (9 posts)
 
 **1/**
-A complete fruit-fly brain is playing an AI reasoning benchmark.
+A complete fruit-fly brain played an AI reasoning benchmark.
 
 166,700 neurons. 24,559,055 synapses. The entire adult *Drosophila* CNS,
-reconstructed from electron microscopy, making every decision.
+reconstructed from electron microscopy, made every decision during the
+controlled runs.
 
 0 trainable parameters.
 
@@ -74,7 +75,9 @@ I built the things that could answer it:
 • held-out games
 
 **7/**
-The answer: no advantage.
+The answer: no advantage — from ANY of them.
+Even the positive control, tuned to succeed, moved no score (both decision
+CIs span zero): the zeros bound my interface, not just the fly.
 
 Random action selection outscored it, 0.098 to 0.065.
 The brain-free bypass tied it exactly.
@@ -98,8 +101,9 @@ Score: **{{BEST_SCORE}}**
 A fly brain is extraordinary — at being a fly. Nothing selected it for symbolic
 puzzles on a screen.
 
-The wiring is real. The advantage isn't. Both of those are results, and you only
-get the second one if you build the thing that can say no.
+The wiring is real. The advantage never showed — not from the fly, not from any
+graph this harness tested. Both of those are results, and you only get the
+second one if you build the thing that can say no.
 
 {{REPO_LINK}} 🪰
 

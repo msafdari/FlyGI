@@ -27,10 +27,20 @@ and Kaggle competition immediately before packaging.
 ## FlyGI adapter contract
 
 The competition adapter owns the framework-specific `MyAgent` class. In
-the current implementation it loads and hash-verifies the packaged graph and
-config once per process, then delegates frame encoding, sparse propagation,
-readout, legal-action masking, seeded action sampling, and coordinate generation
-to the core package. Core `flygi` modules do not import Kaggle-specific code.
+every packaging mode it loads and hash-verifies the packaged graph and
+config once per process, fails closed on missing or invalid assets, and
+emits the FLYGI_PREFLIGHT identity line (mode, dynamics flag, graph
+identity). Core `flygi` modules do not import Kaggle-specific code.
+
+Two packaging modes exist. The literal fly-dynamics mode (described in
+the paragraph below) delegates frame encoding, sparse propagation,
+readout, legal-action masking, seeded action sampling, and coordinate
+generation to the core package. The DEPLOYED scored submissions
+(56620463/56650224/56683298, notebooks v10/v12) instead ran the
+controller-light FAP-archetype mode with neuronal_dynamics_active=false
+and the compiled eye map as static metadata — the factsheet's claim
+boundary; the dynamics mode is retained for the controlled runs, not
+the scored deployments.
 
 Missing or invalid connectome assets fail closed. The random-legal fallback is
 available only through an explicit local smoke-test opt-in, and competition
@@ -69,5 +79,9 @@ make notebook
 The staged dataset and generated notebook are ignored by Git. Publishing the
 private dataset, pushing the private notebook, and spending a competition
 submission are separate outward-facing actions. The ordinary notebook log must
-show the signed 166,700-node, 24,559,055-edge, `K=4` runtime before the selected
-notebook version is submitted.
+show the FLYGI_PREFLIGHT identity matching the selected notebook's lineage
+before that version is submitted: for the currently deployed v10/v12
+modulator-preserving runtime that is 166,700 nodes, **24,994,595 edges**,
+`K=4` (the factsheet's "THREE edge counts, do not mix" rule — 24,559,055
+was the six-zeros-era v3 preflight and must NOT be used to gate a v10/v12
+submission).

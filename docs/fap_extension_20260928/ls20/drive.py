@@ -7,7 +7,7 @@ Optional second arg: dump directory to write full frame renders per step.
 import sys, json, importlib.util
 from pathlib import Path
 
-ROOT = Path('/Users/mustafasafdari/Documents/ChatGPT/FlyGI')
+ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'src'))
 spec = importlib.util.spec_from_file_location('b', ROOT / 'scripts/evaluate_random_baseline.py')
 b = importlib.util.module_from_spec(spec)

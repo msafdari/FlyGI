@@ -22,6 +22,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 from flygi.controller.fap_archetypes.pip_door import PipDoorArchetype
 from flygi.controller.fap_library import PipPunchRollArchetype, Step
@@ -32,6 +33,9 @@ DOSSIER = (
 RECOGNIZER_NPZ = (
     Path(__file__).resolve().parents[1]
     / "results/diagnostics/recognizer_frames.npz"
+)
+needs_recognizer_frames = pytest.mark.skipif(
+    not RECOGNIZER_NPZ.exists(), reason="recognizer frames absent"
 )
 
 # Measured boards (drive.py renders, runs 11/16), one hex digit per pixel.
@@ -368,6 +372,7 @@ def test_abstains_without_a_six_pattern_display() -> None:
     assert PipDoorArchetype().match(grid) is None
 
 
+@needs_recognizer_frames
 def test_abstains_on_structured_doorless_sc25_board() -> None:
     # A real sc25 level-1 frame (pip board, f-display, die and dock present,
     # no door): the strongest structured near-miss available.
@@ -377,6 +382,7 @@ def test_abstains_on_structured_doorless_sc25_board() -> None:
         assert archetype.match(frame.astype(np.int16)) is None
 
 
+@needs_recognizer_frames
 def test_negative_audit_every_non_sc25_recognizer_frame() -> None:
     frames = np.load(RECOGNIZER_NPZ)
     archetype = PipDoorArchetype()

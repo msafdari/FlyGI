@@ -57,32 +57,69 @@ about the fly, however good it looks on a leaderboard. Whatever the agent scores
 the number that matters is the gap between the real graph and a degree-preserving
 rewiring of it, because that gap is the only part that anatomy can claim.
 
-This checkout implements **Milestones 0–3 and part of Milestone 4**: repository
-and ARC submission plumbing, MaleCNS acquisition and verification, unsigned and
-heuristic-signed sparse graph compilation, the frozen SciPy/CPU leaky-rate
-backend, a live seeded closed loop from ARC frame to legal ARC action through
-the full 166,700-neuron graph, seeded directed degree-preserving nulls, an
-interface-matched no-recurrent-graph bypass, a score-blind sampler calibration,
-fail-closed Kaggle packaging, provenance manifests, and 189 tests. Learning
-(Track B) and plasticity (Track C) are not implemented.
+## Where the project landed
 
-**Current results, in short.** The agent works and is not better than a bypass.
-Gate 2 passed on all 25 public games with zero trainable parameters. The real
-signed graph and the interface-matched bypass scored an identical mean of
-0.190476, each completing one level in one game out of 25; the degree-preserving
-null scored zero; the random control scored 0.050626. The connectome agent
-explores *less* than chance. Separately, the real graph does separate cleanly
-from its degree-preserving nulls on dynamical measures — spectral radius 0.8289
-against 0.2309 ± 0.0078 over three seeds, a ratio of 3.59 — but that structural
-difference produced no ARC advantage. A post-hoc engineering repair now uses
-seeded scale-aware action/coordinate sampling and grounded click exploration;
-the score-blind calibration froze action temperature 0.15 and coordinate
-temperature 0.20 before the next full score-bearing gate. No leaderboard
-submission has been made and no biological advantage is claimed. See
-[WORKLOG.md](WORKLOG.md).
+Every circuit faced the same preregistered protocol — validate its biology at
+a declared fidelity class, gate its input, then test on ARC against controls
+(exact degree-preserving rewires, scrambled twins, bypasses, engineered
+equivalents). The per-module verdicts, all measured:
 
-See [WORKLOG.md](WORKLOG.md) for the latest reproducible checkpoint, measured
-full-data results, current limitations, and ordered next steps.
+| Circuit | Verdict |
+| --- | --- |
+| Eye map (static retinotopy) | **USEFUL, deployed** — level-1 action cost 2.59x human baseline vs 11.59x for its scrambled twin (4.5x), the one fly component in every scored submission |
+| T4/T5 motion (13,585 neurons) | **NOT USEFUL** for ARC motion decoding at validated class-2.5 fidelity — real 0.3875 vs its own rewire 0.4306; engineered matcher 1.0000 |
+| Mushroom body (4,064 KC) | **NOT USEFUL** for one-shot ARC association at class-2 fidelity — real 0.600 vs its own rewire 0.800; matched perceptron 0.917 |
+| EB ring (compass) | **Structure PASS, computation KILL** — the ring-compass topology is in the wiring (first structural PASS of the series: bandedness 0.5881 vs null max 0.3376, p 0.005 vs 200 rewires) but computes no compass at any tested physiology: classes 1–2 delocalized or fixed-point; at class-3 spiking (published-physiology engine, validated on the Pisokas circuit first) the bump persists through darkness yet slides to one region from every heading (H-CX-CLASS3-COMPASS refuted; scoped to the declared unfitted mapping, standalone circuit) |
+| FB columnar system (vector navigation) | **Structure PASS** (2026-10-29) — hDelta antipode 0.4055 vs null max 0.1868 and PFN mirror geometry, both at the empirical floor vs 200 rewires; structure only, computation untested |
+| LC object code | UNVALIDATABLE at class 1 — position code sign-inverted at all 21 operating points |
+
+Kaggle record: six early 0.00s (a construction crash — zero actions played),
+then three COMPLETE submissions (56620463, 56650224, 56683298) all scoring
+**0.15**, the abstention floor, while the engineered grammar scaffold grew the
+matched local gateway ~52-fold (0.551859 → 28.742260) — game-specific grammar
+transfer to the hidden set measured zero, three times. Neuronal dynamics were
+OFF in every scored run; a leaderboard score establishes engineering, not fly
+computation.
+
+After the ARC arm, the same preregistered rewire-control protocol ran on five
+external arenas (2026-09-30 to 10-07): DSEC event-camera flow direction,
+flybench, DVS128 gesture, Brain-Score V1, and UCI gas-sensor drift. Within
+that program a degree-preserving rewire met or beat the real wiring six
+consecutive times (seven registered instances counting the 2026-09-29 MB
+association arm): H-T4T5-DSEC-DIRECTION, H-FLYGI-FLYBENCH-CALIBRATED,
+H-T4T5-DVS-GESTURE, H-EARLYFILTER-BRAINSCORE-V1 and H-ALMB-GASDRIFT were
+refuted, and one result was supported — the flybench adapter contract
+(H-FLYGI-FLYBENCH-ADAPTER). Two measured positives rode along: on Brain-Score
+V1 the early-filter dynamics roughly doubled the predictivity of their own
+input (0.0690 vs 0.0330 — the first arm where a simulated circuit beat its
+encoder), and the uniform flybench adapter rows beat the reference
+configuration on all four summary rows. Our expected-tier score predictions
+stand at 0 for 16; the measurements held.
+
+Two later rounds (2026-10-10..29) extended the record in both directions.
+Structure: the CX ring-compass topology and the fan-shaped-body vector
+geometry each passed against 200 degree-preserving rewires at the empirical
+floor — the program's two structural PASSes — and the one PASS was then
+decomposed (it is carried by edge placement AND magnitude assignment, not
+the sign pattern). Computation: the compass still computes nothing at any
+tested physiology, including a published spiking-tier engine validated on
+the literature circuit first; the spiking T4/T5 attempt could not even be
+posed (zero evoked spikes at every drive scale, an instrument-scoped
+absence). One fidelity mechanism carried measured function: FlyBench's
+terminal-aware synapse placement improved every registered bar with the
+rewired control still collapsing — scoped to that benchmark, nothing about
+ARC. And the registered harness-sensitivity control came back FLAT: a
+reservoir tuned into the known-good long-memory regime also moved no ARC
+score, so the class-1 ARC zeros above read as "under this interface, no
+tested graph moved score" (power floor ~ +0.1), never as a measured absence
+of fly advantage specifically. The full program synthesis — instances,
+positives, open explanations, falsifiers — is
+[docs/arenas/SYNTHESIS.md](docs/arenas/SYNTHESIS.md).
+
+Full narrative: [WORKLOG.md](WORKLOG.md); every arm and verdict:
+[LEAGUE.md](LEAGUE.md) and [EXPERIMENTS.yaml](EXPERIMENTS.yaml); the ARC Prize
+2026 Paper Track writeup and figures:
+[docs/arenas/task1_arc_paper/](docs/arenas/task1_arc_paper/).
 
 ## Quick start
 
@@ -187,6 +224,7 @@ without degree-preserving and parameter-matched controls.
 
 ## License
 
-Code is MIT-licensed; see [LICENSE](LICENSE). MaleCNS data is not redistributed
+Code is licensed under MIT No Attribution (MIT-0); see [LICENSE](LICENSE).
+MaleCNS data is not redistributed
 here and remains subject to its CC-BY terms. Upstream ARC components retain their
 own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -2,7 +2,7 @@
 
 **Audience:** Claude Code, currently operating the FlyARC experiment queue
 **Issued:** 2026-09-23 (America/Los_Angeles)
-**Repository:** `/Users/mustafasafdari/Documents/ChatGPT/FlyGI`
+**Repository:** the FlyGI checkout (repository root)
 **Current branch at inspection:** `main`, tracking `origin/main`
 **Inspected HEAD:** `96353dd` (`Preregister click-game endpoints for the decoder arms; kill two ideas by measurement`)
 **Status:** Historical coordination record. The queue described below is closed;
@@ -65,7 +65,7 @@ The career-facing sequence is:
 
 The canonical planning context for that program is currently:
 
-`/Users/mustafasafdari/Downloads/FlyGI_CODEX_HANDOFF.md`
+`~/Downloads/FlyGI_CODEX_HANDOFF.md` (outside the repository)
 
 That handoff is context and a research charter, not permission to refactor a
 live checkout. An implementation-grade Experiment 000 specification will be
@@ -97,9 +97,9 @@ counts as health telemetry only—never as scientific evidence.
 - Their checkpoints and final bundles live under
   `results/connectome_agent/`.
 - The parent chain script observed during inspection was:
-  `/private/tmp/claude-501/-Users-mustafasafdari-Documents-ChatGPT-FlyGI/cff83bb1-4408-49fb-9bcd-66f308a8f609/scratchpad/chain_bioeye.sh`.
+  `<Claude Code session temp dir>/cff83bb1-4408-49fb-9bcd-66f308a8f609/scratchpad/chain_bioeye.sh`.
 - The decoder waiter was genuinely armed at:
-  `/private/tmp/claude-501/-Users-mustafasafdari-Documents-ChatGPT-FlyGI/cff83bb1-4408-49fb-9bcd-66f308a8f609/scratchpad/chain_retdec.sh`.
+  `<Claude Code session temp dir>/cff83bb1-4408-49fb-9bcd-66f308a8f609/scratchpad/chain_retdec.sh`.
 - That waiter polls for **both** final bio-eye bundles, then launches
   `sg-bioeye-lc-retdec` and `sg-bioeye-lc-surprise`, again at 4 threads,
   3 × 25 rows, and 600 actions.

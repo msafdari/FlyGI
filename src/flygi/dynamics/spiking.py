@@ -21,6 +21,20 @@ synapse counts from flygi.connectome.subcircuit):
     out   = relu(v - v_rest) * graded_gain for graded nodes (APL, CT1:
             ESTABLISHED non-spiking interneurons)
 
+Optional, DEFAULT-OFF spike-frequency adaptation (H-FLYGI-FLYBENCH-SFA,
+docs/arenas/task10_menu/killtest_design.md section 6; mechanism form
+ESTABLISHED: Benda & Herz 2003 via FlyBench adaptive_lif.py -- one
+adaptation state per neuron):
+
+    on spike: sfa_a += sfa_b          # sfa_b in the engine's CURRENT units
+    sfa_a    <- sfa_a * exp(-dt/sfa_tau_ms)
+    total_input <- i_syn + i_ext - sfa_a   # adaptation opposes the drive
+
+With sfa_b = 0.0 (the default) every adaptation branch is skipped, so the
+engine's arithmetic is BIT-IDENTICAL to the pre-extension behavior
+(asserted by tests/test_flybench_mechanisms.py against a frozen copy of
+the pre-extension step).
+
 Every default below is labelled; ASSUMED values carry sweep ranges in the
 benchmark scripts, never silent trust.
 """
@@ -112,15 +126,32 @@ class SpikingNetwork:
         dt_ms: float = 0.5,
         w_scale: float = 1.0,
         seed: int = 0,
+        sfa_b: float = 0.0,
+        sfa_tau_ms: float = 200.0,
     ) -> None:
         if matrix.shape[0] != matrix.shape[1] or matrix.shape[0] != types.shape[0]:
             raise SpikingError("matrix and types must agree on node count")
         if dt_ms <= 0:
             raise SpikingError("dt_ms must be positive")
+        if sfa_tau_ms <= 0:
+            raise SpikingError("sfa_tau_ms must be positive")
         self.matrix = sparse.csr_matrix(matrix, dtype=np.float32)
         self.node_count = int(matrix.shape[0])
         self.dt = float(dt_ms)
         self.w_scale = float(w_scale)
+        # Spike-frequency adaptation, DEFAULT OFF (sfa_b = 0.0). The per-spike
+        # increment sfa_b is in the engine's current units; callers derive it
+        # from a published mV value via the registered unit bridge
+        # sfa_b = b_mv / tau_m_ms (AF-10, flygi_flybench_adapter.py).
+        # ASSUMPTION (AF-10, scheme choice): the adaptation state decays
+        # EXPONENTIALLY (a *= exp(-dt/tau_a)), matching FlyBench's
+        # AdaptiveLIFSimulator, while this engine's synaptic current decays by
+        # the Euler factor (1 - dt/tau_syn). A declared scheme difference, not
+        # a fit; wrong only if the two decay schemes diverge at dt = 0.5 ms,
+        # which the Benda-Herz closed-form gate bounds.
+        self.sfa_b = float(sfa_b)
+        self.sfa_tau_ms = float(sfa_tau_ms)
+        self._sfa_decay = np.float32(np.exp(-self.dt / self.sfa_tau_ms))
         self.params = table.resolve(types)
         self._refractory_steps = np.maximum(
             np.round(self.params["refractory_ms"] / self.dt).astype(np.int32), 0
@@ -133,6 +164,8 @@ class SpikingNetwork:
         self.i_syn = np.zeros(self.node_count, dtype=np.float32)
         self._refractory_left = np.zeros(self.node_count, dtype=np.int32)
         self.last_output = np.zeros(self.node_count, dtype=np.float32)
+        # adaptation state exists even when off (zeros; introspectable)
+        self.sfa_a = np.zeros(self.node_count, dtype=np.float32)
 
     def step(self, external: NDArray[np.floating] | None = None) -> NDArray[np.float32]:
         """Advance one dt; returns the per-node output (spikes / graded rate)."""
@@ -141,10 +174,18 @@ class SpikingNetwork:
         drive = self.w_scale * (self.matrix @ self.last_output)
         self.i_syn += (self.dt / p["tau_syn_ms"]) * (-self.i_syn) + drive
         total_input = self.i_syn if external is None else self.i_syn + external
+        if self.sfa_b != 0.0:
+            # SFA (default off): the pre-decay adaptation state opposes the
+            # drive this step, exactly as FlyBench's AdaptiveLIFSimulator uses
+            # its pre-decay `a` in the membrane update. Guarded so sfa_b = 0
+            # leaves the arithmetic bit-identical to the unextended engine.
+            total_input = total_input - self.sfa_a
         refractory = self._refractory_left > 0
         dv = (self.dt / p["tau_m_ms"]) * (-(self.v - p["v_rest"])) + self.dt * total_input
         self.v = np.where(refractory, self.v, self.v + dv).astype(np.float32)
         self._refractory_left = np.maximum(self._refractory_left - 1, 0)
+        if self.sfa_b != 0.0:
+            self.sfa_a *= self._sfa_decay   # exponential decay (AF-10 scheme)
 
         graded = p["graded"]
         spiking = ~graded
@@ -157,6 +198,8 @@ class SpikingNetwork:
         )
         self.v[fired] = p["v_reset"][fired]
         self._refractory_left[fired] = self._refractory_steps[fired]
+        if self.sfa_b != 0.0:
+            self.sfa_a[fired] += self.sfa_b   # a += b on spike (their rule)
         self.last_output = output
         return output
 

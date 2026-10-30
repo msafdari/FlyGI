@@ -1,0 +1,77 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; width: 1200px; background: #fcfcfb;
+         font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #0b0b0b; }
+  .wrap { padding: 36px 44px 30px; }
+  h1 { font-size: 24px; font-weight: 650; margin: 0 0 4px; }
+  .sub { font-size: 15px; color: #52514e; margin: 0 0 22px; max-width: 1000px; line-height: 1.45; }
+  .legend { display: flex; gap: 22px; font-size: 14px; color: #52514e; margin: 0 0 14px; }
+  .key { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+  .foot { font-size: 12.5px; color: #898781; margin-top: 14px; line-height: 1.5; }
+  text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+</style>
+<body>
+<div class="wrap">
+  <h1>Local ladder up, hidden set flat</h1>
+  <p class="sub">Matched 35-minute competition-mode gateway scores for the three shipped agents
+     (measured locally) against each agent&rsquo;s Kaggle hidden-set score. The engineered grammar
+     ladder grew ~52-fold locally; every submission scored the 0.15 abstention floor.</p>
+  <div class="legend">
+    <span><span class="key" style="background:#2a78d6"></span>Local gateway (measured, 35-min window)</span>
+    <span><span class="key" style="background:#eb6834"></span>Kaggle hidden set (official score)</span>
+  </div>
+  <svg width="1112" height="430" viewBox="0 0 1112 430" role="img" aria-label="Grouped bar chart: local gateway score versus hidden-set score for three submissions">
+    <!-- plot area: x 70..1092, y 20..360 ; y scale 0..30 linear -->
+    <g font-size="13" fill="#898781">
+      <!-- gridlines at 0,10,20,30 -->
+      <line x1="70" x2="1092" y1="360" y2="360" stroke="#c3c2b7" stroke-width="1"/>
+      <line x1="70" x2="1092" y1="246.7" y2="246.7" stroke="#e1e0d9" stroke-width="1"/>
+      <line x1="70" x2="1092" y1="133.3" y2="133.3" stroke="#e1e0d9" stroke-width="1"/>
+      <line x1="70" x2="1092" y1="20"  y2="20"  stroke="#e1e0d9" stroke-width="1"/>
+      <text x="58" y="364" text-anchor="end">0</text>
+      <text x="58" y="251" text-anchor="end">10</text>
+      <text x="58" y="138" text-anchor="end">20</text>
+      <text x="58" y="24"  text-anchor="end">30</text>
+    </g>
+    <!-- groups centered at x=255, 581, 907; bar width 24, gap 2 -->
+    <!-- scale: y = 360 - value*(340/30) = 360 - value*11.3333 -->
+    <!-- group 1: combo_light 0.551859 -> h=6.25 ; hidden 0.15 -> h=1.7 -->
+    <g>
+      <path d="M 229 353.75 h 24 v 6.25 h -24 Z" fill="#2a78d6"/>
+      <path d="M 255 358.3 h 24 v 1.7 h -24 Z" fill="#eb6834"/>
+      <text x="241" y="341" text-anchor="middle" font-size="14" fill="#0b0b0b" font-weight="600">0.551859</text>
+      <text x="285" y="352" text-anchor="start" font-size="14" fill="#52514e">0.15</text>
+    </g>
+    <!-- group 2: two archetypes 3.044167 -> h=34.5 ; hidden 0.15 -->
+    <g>
+      <path d="M 555 329.5 a 4 4 0 0 1 4 -4 h 16 a 4 4 0 0 1 4 4 v 30.5 h -24 Z" fill="#2a78d6"/>
+      <path d="M 581 358.3 h 24 v 1.7 h -24 Z" fill="#eb6834"/>
+      <text x="567" y="313" text-anchor="middle" font-size="14" fill="#0b0b0b" font-weight="600">3.044167</text>
+      <text x="611" y="352" text-anchor="start" font-size="14" fill="#52514e">0.15</text>
+    </g>
+    <!-- group 3: thirteen archetypes 28.742260 -> h=325.7, top y=34.3; rounded top 4px -->
+    <g>
+      <path d="M 881 38.3 a 4 4 0 0 1 4 -4 h 16 a 4 4 0 0 1 4 4 v 321.7 h -24 Z" fill="#2a78d6"/>
+      <path d="M 907 358.3 h 24 v 1.7 h -24 Z" fill="#eb6834"/>
+      <text x="893" y="24" text-anchor="middle" font-size="14" fill="#0b0b0b" font-weight="600">28.742260</text>
+      <text x="937" y="352" text-anchor="start" font-size="14" fill="#52514e">0.15</text>
+    </g>
+    <!-- x labels -->
+    <g font-size="14" fill="#52514e" text-anchor="middle">
+      <text x="253" y="388">combo_light baseline</text>
+      <text x="253" y="406" fill="#898781" font-size="12.5">submission 56620463</text>
+      <text x="579" y="388">two grammars</text>
+      <text x="579" y="406" fill="#898781" font-size="12.5">submission 56650224</text>
+      <text x="905" y="388">thirteen grammars</text>
+      <text x="905" y="406" fill="#898781" font-size="12.5">submission 56683298</text>
+    </g>
+  </svg>
+  <p class="foot">Local bars: official competition-mode gateway, matched 35-minute windows
+     (thirteen-grammar rung: 73 levels, four full game wins). Hidden bars: official Kaggle scores.
+     0.15 is the abstention floor &mdash; what an agent earns with no hidden-game match. Grammar
+     transfer to the hidden set measured zero, three times. Fly content of all three agents:
+     the static compiled eye map; neuronal dynamics OFF.</p>
+</div>
+</body>

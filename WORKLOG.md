@@ -1,5 +1,1918 @@
 # FlyGI durable worklog
 
+## Run-record backfill: the pasted Task-10 run JSONs banked into the durable record -- 2026-10-30
+
+PROVENANCE, stated first: every number below was pasted verbatim into
+the session by the user on 2026-10-29 from the gitignored local
+results (results/arenas/*.json and the verdict-script outputs). The
+2026-10-29 registry closes cited several of these values while the
+five WORKLOG run entries carried only headline numbers -- the
+adversarial close review (47 agents, run 2026-10-29) correctly
+flagged every such value as untraceable from the repo alone. This
+entry banks them so the registry is self-tracing. Nothing here is a
+new measurement; it is the hand-off record, recorded. All 37
+confirmed review findings (3 clusters of blockers: untraced numbers,
+the false zero-fixes claim, stale/contradictory release prose incl.
+the social drafts and the non-actionable LEAGUE checklist item) are
+applied in the commit this entry ships in.
+
+- RESERVOIR (H-ARC-HARNESS-SENSITIVITY), full-precision compare
+  outputs: positive-control 0.0137; vs eff-real-signed -0.051064,
+  CI [-0.153193, +0.000000]; vs eff-null-degree-preserving +0.005814,
+  CI [+0.000000, +0.017443]; matched-random twin 0.0320, control vs
+  twin -0.018334, CI [-0.055001, +0.000000]. LEAGUE regenerated in
+  commit c3ec5bd (the 2026-10-29 close bullet's pointer to 95914f7
+  is corrected in the registry today).
+- DECOMPOSITION (H-STAGEA-NULL-DECOMPOSITION) JSON: real bandedness
+  0.5881 / mirror 0.01445; null maxes per family: within-pre
+  0.50366/0.01523, global 0.51038/0.01552, sign 0.64245/0.01914;
+  p 0.00498/0.00995 (both weight families), 0.43781/0.82587 (sign);
+  fraction_magnitudes_changed 0.93704 (within-pre) / 0.96038
+  (global); fraction_signs_changed 0.3899 over 148 sign-bearing
+  columns; all invariants valid; elapsed 22.9 s.
+- FB (H-FB-COLUMNAR-TOPOLOGY) JSON: subcircuit 1,399 nodes / 85,353
+  signed edges; real bar1 antipodal 0.40548, bar2 mirror 0.01458
+  (one-hop masses L 30.075 / R 28.315); null maxes 0.18682 /
+  0.01286; p 0.00498 both; context vDelta antipodal 0.00041, PFL
+  mirror 0.02168; coverage FC 1.0, hDelta 1.0, labelled-PFN 0.98788;
+  column_counts FC 9 / hDelta 12 / vDelta 10 / PFNa 9 / PFNd 8 /
+  PFNm_a 9 / PFNm_b 9 / PFNv 9; irregular_flagged all 0;
+  consensus_nt_audit "all columnar types 100% acetylcholine";
+  163.4 s.
+- NATSTAT (H-T4T5-NATSTAT-DIRECTION) first-run JSON: gates
+  {scramble true, g0 false, g1 false}; G0 band_v2 pooled median DSI
+  0.17634, T4/ON 0.31583 (4 distinct preferred), T5/OFF 0.11562,
+  defined fraction 1.0, T5 distinct 3; scramble worst amplitude rel
+  err 3.5e-16; calibration chosen_gamma 8.0 / p95 0.5; elapsed_s
+  20.6 TOTAL (the run entry's "5.8 s" was the measurement segment --
+  both are true; the registry cites 20.6 s total from this JSON).
+  The OFF-edge localization was the close-time LEAD from this channel
+  split; it has since been MEASURED cloud-side (commit 587b40d: the
+  drive boundary sat at fc2-native +0.5 exactly; OFF scored windows
+  at positive lamina drive).
+- T4T5 CLASS-3 (H-T4T5-CLASS3-DS) JSON/printout: sign audit 35,041
+  curated edges, 0 flipped; gate A per-speed preferred-direction
+  table [2.0, 3.0, 2.0] with preferred == designed 12/12; AT-2
+  coverage 132/320 pairs at 0.9786 synapse mass; calibration 18
+  gains 1e-05..3000, ALL STABLE, median evoked 0.000 Hz at every
+  gain; gate B fc25 reference 0.32157.
+- FLYBENCH MECHANISMS (H-FLYGI-FLYBENCH-SFA / -TERMINAL)
+  verdict-script JSONs, n_shared_checks 149 (58 activation / 91
+  suppression). METRIC NOTE, load-bearing: the verdict script's
+  hard_graded is computed over the 149 SHARED checks and differs by
+  construction from the run-headline "hard" tier (uniform row
+  headline 0.6044; SFA run headline 0.6276; terminal run headline
+  0.6418) -- the registered bars run on the VERDICT SCRIPT's values.
+  SFA: hard_graded uniform 0.6078476716360247 -> 0.6304517572540541
+  (delta +0.0226040856180294); activation_mean 0.7113888474695774 ->
+  0.710560086550812 (-0.000828760918765381); overall graded
+  0.6940025391943447; specificity 0.26838624338624334; core 0.8000;
+  run 7/30. TERMINAL: hard_graded 0.6078476716360247 ->
+  0.6444645432726246 (+0.03661687163659988); activation_mean ->
+  0.7155087815384199 (+0.004119934068842479); suppression_mean
+  0.7013620129934217; overall 0.7621652165934433; specificity
+  0.3135251322751323; core 1.0000; run 11/30.
+- BISWAS fetch details (files at ~/datasets/biswas_papers/):
+  biswas2024_v2.pdf (v2 posted 2026-03-08, 63 pp incl. supplement;
+  the MaleCNS version; recipe in Methods "Constructing
+  connectome-derived ring attractors"; vectors only in the p7
+  figure; no code/data-availability statement; their 1e6-parameter
+  sweeps amplitude-matched to the MaleCNS vectors, p13);
+  biswas_nsf_par.pdf (v1, 47 pp, NO MaleCNS content);
+  biswas2026_followup.pdf (31 pp, hemibrain-only, text-searched);
+  duan_fiete_2025.pdf FETCHED (v1 2025-05-29, 11 pp, hemibrain,
+  carries the necessity claims; NeurIPS poster 115017, OpenReview
+  zn4F6os6cq, no code link) -- the earlier rate-limit note is
+  superseded; the fetch completed.
+
+
+## Natstat OFF-edge instrument bug: found, measured, fixed; full re-run required -- 2026-10-29
+
+G0 did exactly its job. The defect (dated finding in
+docs/arenas/task10_menu/killtest_design.md; code-site comments at the
+fix): natstat's drive->external boundary applied INPUT_DRIVE to the
+AB-4 mid-gray-centered contrast instead of ABSOLUTE luminance.
+MEASURED on the registered 169-column lattice, all 24 polarity x
+direction x speed combinations: the composite drive sat at exactly
+fc2-native +0.5 at every plateau and settle sample; worst-column
+time-integrated divergence 4.887 a.u.s; the OFF item's entire scored
+v2 window ran at POSITIVE lamina drive, outside fc2's native -1..0
+envelope -- matching the measured G0 channel split (T4/ON 0.31583 in
+band, T5/OFF 0.11562). INFERRED, bridge at the code site: the relu
+floor absorbed the shift on the ON side; the OFF release increment
+had no ceiling and doubled. FIX: one pure helper external_from_drive
+= INPUT_DRIVE x (drive + MID_GRAY), routed through the three (only)
+network-input call sites; the ANS-1/AE-1 single-shared-map guarantee
+is preserved and now explicit. Post-fix: plateau/settle divergence
+0.0 exactly; residual = the declared OP-5 pixel-sampling transient
+(worst-column integral 0.132 a.u.s, 37x down). Four regression tests
+added, EACH verified to fail on the pre-fix code -- including the
+composite-path ON and OFF drive-equality tests the original
+encoder-only test lacked (why it missed the bug: it asserted the
+encoder's mid-gray-centered values in isolation, which were exactly
+where the bug lived). Suites: natstat 36 passed; joint with
+fb/dsec/brainscore/t4t5 109 passed. Registry bullet + runbook 5b
+(re-run instructions) added. Per the frozen rule the FULL protocol
+re-runs locally; the drive-level equality is MEASURED, the DSI
+consequence is the re-run's to measure (Expected-tier statements
+inherit the 0-for-16 base rate).
+
+
+## Task 10 CLOSED cloud-side: six verdicts in the registry; ARC null prose downgraded before release -- 2026-10-29 [headline corrected 2026-10-30: six, not seven -- natstat's G0 BLOCK is an instrument statement, never a verdict]
+
+Cloud-side close of the seven local runs (records 3313458..95914f7).
+Registry: H-ARC-HARNESS-SENSITIVITY refuted (FLAT per the frozen
+reading); H-STAGEA-NULL-DECOMPOSITION supported (the Stage-A PASS is
+placement+magnitudes, not signs -- the pre-registered bridge's OTHER
+branch realized); H-FB-COLUMNAR-TOPOLOGY supported (the program's
+second structural PASS, both bars at the 200-null floor; AC-FB1/5/6
+confirmed on the compiled runtime); H-T4T5-CLASS3-DS "null"
+(blocked-closed: zero evoked spiking at every declared gain -- the
+opposite class-3 failure mode to the CX; scope AT-1/AT-2 carried;
+reopening path = new drive-convention registration);
+H-FLYGI-FLYBENCH-SFA refuted (hard-tier gain bought by breaking core
+1.000 -> 0.800 and the overall floor); H-FLYGI-FLYBENCH-TERMINAL
+supported (first functional mechanism win; every bar; specificity
++0.2823 -> +0.3135; FlyBench scope only); H-T4T5-NATSTAT-DIRECTION
+stays open (G0 did its job; OFF-edge stimulus-path instrument bug
+localized, cloud-side fix in flight); H-CX-BISWAS-FITTED stays open
+(fetch complete; RECIPE not tables; the 2026 follow-up is
+hemibrain-only -- runbook guess corrected; completion = extract the
+v2 Methods recipe + Table-1 conditions, derive the vectors from our
+counts).
+
+THE RELEASE-BLOCKING ITEM EXECUTED: the frozen FLAT consequence --
+class-1 ARC null prose downgraded in docs/controls.md (measured
+outcome + weakened tie reading + power floor), docs/experiment.md
+(claim-boundary addition), EXPERIMENTS.yaml eff-row and reservoir
+condition notes (render into LEAGUE.md on the user's local
+regeneration), factsheet.md and writeup.md (harness-sensitivity
+bound); public_release_checklist.md gained a verification item. The
+published reading everywhere: under this interface no tested graph --
+engineered or biological -- moved official score; power floor ~ +0.1
+at 75 rows. Arena rewire instances untouched.
+
+SYNTHESIS: Task-10 addendum (four map-moving results) + six record-map
+rows. ASSUMPTIONS: 13 rows annotated with run outcomes (notably
+AF-11 split FALSE-for-SFA / TRUE-for-terminal; AC-N4's other branch;
+AT-2 exercised-blocked).
+
+NEXT: (1) natstat OFF-edge fix lands with a recorded instrument-bug
+finding; user re-runs natstat only. (2) Biswas numeric completion
+from the v2 Methods (extraction pending), then the instrument.
+(3) USER CALENDAR: Nov-1 release sequence now includes verifying the
+FLAT downgrade (checklist); Kaggle writeup once before Nov 8
+23:59 UTC; Dec 4 results; IJCNN decision after.
+
+
+## Task 10 item 5: natstat BLOCKED at G0 -- the new stimulus path does not reproduce fc25's reference (plumbing, not a verdict) -- 2026-10-29
+
+Exit 3 in 5.8 s of measurement; 31/31 unit tests first [annotation 2026-10-30: the suite collected 32 at that commit; 31 was a transcription slip -- and 20.6 s was the run's total elapsed, 5.8 s the measurement segment, per the backfill]. The gate
+sequence worked exactly as registered: corpus loaded (60 van Hateren
+images, sha256 checksums PINNED AT FIRST CONTACT to
+results/arenas/natstat_corpus_checksums_van_hateren.json -- now the
+pin for every future run); contrast calibration hit its target
+(gamma 8.0, p95 |column drive| 0.5000); scramble-integrity selftest
+exact (amplitude rel err 3.5e-16, decorrelated). Then G0 FAILED:
+fc25's moving-edge result reproduces at median v2 DSI 0.1763 through
+the NEW stimulus path, against the required 0.3216 +/- 0.02 (tiling
+exact). G1 reported failed alongside (REAL-natural did not beat the
+90-deg chance floor) -- consistent with the same path defect.
+
+Scope, precise: this is an INSTRUMENT statement. The same reference
+reproduced at 0.32157 through the t4t5-class3 instrument's path the
+same day, so the defect is localized to natstat's new stimulus
+machinery (binning/travel/windowing), not to the patch, the fc25
+result, or the corpus. Nothing about natural statistics was measured;
+the 2x2 never ran. Fix is cloud-side (adapter plumbing before any
+verdict-relevant quantity, the registered allowance); the corpus +
+checksum pin and the calibration curve are banked for the re-run.
+
+MENU STATE after this entry: item 1 FLAT (release downgrade
+triggered), item 2 readings complete, item 4 PASS, item 7 SFA KILL /
+terminal PASS, item 6 BLOCKED (no spiking operating point), item 5
+BLOCKED (G0 plumbing), item 3 fetches complete (recipe documented;
+numeric completion = re-derive from our MaleCNS data or the
+supplement page). Hypothesis closes are the cloud side's steps.
+
+## Task 10 item 6: t4t5 class-3 BLOCKED -- no operating point exists (zero evoked spikes at every gain) -- 2026-10-29
+
+Exit 3, instrument statement, never a fly verdict; 27/27 unit tests
+first. GATE A passed locally (idealized spiking delay-line: median
+DSI 1.0000, TF optimum at the interior 1 Hz point, equalized-arm
+collapse 0.0000 -- the model class can express DS). GATE B passed
+(patch dims 2,701/507/498/169 exact; sign audit 0 curation flips --
+measured MaleCNS consensus NT agrees with the curated table for every
+patch type; fc25 class-2.5 reference reproduced at 0.32157 vs 0.3216
++/- 0.02). AT-2 coverage 132/320 pairs trained, synapse mass 0.9786.
+
+THEN THE CALIBRATION: median evoked T4/T5 rate 0.000 Hz at EVERY one
+of the 18 gains spanning 1e-5 to 3000 (both polarities) -- BLOCKED:
+"no stable nonzero gain on the calibration grid". MEASURED absence,
+scope exact: at Kakaria/Pisokas-pinned spiking physiology with the
+AC-6 per-class scales, the compiled MaleCNS optic-lobe patch produces
+zero evoked spiking in the scored T4/T5 population at any global
+drive scale, so the DS question cannot be posed at this fidelity. The
+companion result to the CX class-3 run (there the counts spiked but
+lost position; here the columnar patch never fires at all). No grid,
+no rewires, no verdict; H-T4T5-CLASS3-DS disposition (BLOCKED-as-wall
+vs re-registration) is the cloud side's call.
+
+## Task 10 item 7: SFA KILLED, TERMINAL PASSED -- the program's first functional mechanism win, specificity intact -- 2026-10-29
+
+Both mechanism arms run (3 seeds, rewired control, unpinned MaleCNS,
+like-for-like with the stored uniform baseline malecns_flygi.json;
+19/19 gates passed first under the flybench venv). One at a time, as
+registered. JSONs gitignored (malecns_sfa.json,
+malecns_terminal.json).
+
+SFA ARM: KILL. core 0.8000 / hard 0.6276 / graded 0.6940 /
+specificity +0.2684, 7/30. Bars: hard_improves TRUE (+0.0226),
+activation holds, specificity holds, overall FAILS (0.6940 < 0.701)
+-- and core dropped 1.0 -> 0.8. MEASURED shape: spike-frequency
+adaptation buys hard-tier dynamics by breaking a core task and the
+overall floor. The frozen bars refuse the trade.
+
+TERMINAL ARM: PASS -- ALL FOUR BARS HOLD. core 1.0000 / hard 0.6418
+(bar delta +0.0366) / graded 0.7622 (uniform 0.7113; floor held with
++0.051 to spare [annotation 2026-10-30: +0.051 is the delta over the uniform row's 0.7113; the margin over the registered 0.701 floor is +0.061]) / specificity +0.3135 (uniform +0.2823), 11/30 tasks
+(uniform 9). Suppression also up (0.639 -> 0.701), activation up
+(+0.004). MEASURED, scope held tight: weighting the compiled MaleCNS
+counts by flybench's shipped per-terminal table improves the
+characterization score on every frozen bar while the rewired control
+still collapses (specificity GREW). This is the program's first
+functional mechanism PASS on an external benchmark. It is a claim
+about the terminal-weighted count matrix on FlyBench's tasks -- not
+about ARC, and not about any other mechanism. Hypothesis closes
+(H-FLYGI-FLYBENCH-SFA refuted, H-FLYGI-FLYBENCH-TERMINAL supported)
+are the cloud side's step; a combined SFA+terminal arm is NOT run
+(registered rule: combined only if both singles pass; SFA failed).
+
+## Task 10 item 1: reservoir positive control is FLAT -- certification claim KILLED; release-prose downgrade triggered for 11-01 -- 2026-10-29
+
+Both arms complete (75 rows each, 25 games x seeds 0-2 x 500 actions,
+exit 0 both; pace matched A-RES-3 after startup). MEASURED means:
+reservoir-positive-control 0.0137 (1 level), reservoir-matched-random
+0.0320 (3 levels); comparators, previously measured: eff-real-signed
+0.0648, eff-null-degree-preserving 0.0079.
+
+THE FROZEN READING (clustered bootstrap, 5000 resamples, matched
+pairs, full precision):
+- positive-control vs eff-real-signed: -0.0511, CI [-0.1532, +0.0000]
+- positive-control vs eff-null-degree-preserving: +0.0058,
+  CI [+0.0000, +0.0174]
+- context, vs its matched-random twin: -0.0183, CI [-0.0550, 0.0000]
+Both decision CIs span zero => FLAT (KILL for the certification
+claim). The dynamically-validated edge-of-chaos reservoir (rho
+0.9924, memory half-life 3x the real graph's) moved official score
+not at all -- and does not even separate from its rho-0.16 dumb twin.
+A-RES-2's warning is the measured story: ARC level-1 completion does
+not pay for cross-action neural memory under this interface.
+
+CONSEQUENCE, frozen in the registration and now TRIGGERED: the
+published class-1 ARC nulls downgrade from "the real wiring conferred
+no advantage under this interface" to "under an interface in which no
+tested graph -- including one tuned into the known-good long-memory
+reservoir regime -- moved official score, the real wiring also did
+not." This caveat must land in docs/experiment.md, docs/controls.md,
+LEAGUE.md's real-vs-null/bypass prose, and the task1_arc_paper
+factsheet/writeup BEFORE the 2026-11-01 release (cloud-side close +
+edits per the division of labor; this entry is the measured record).
+POWER FLOOR, also frozen: comparator CI half-widths are +/-0.07-0.19
+at 75 rows, so FLAT means "no detected advantage at roughly the
++0.1-score resolution", and the old "cannot register an advantage
+that ANY graph could confer" prose weakens to that measured form.
+The seven rewire-parity instances, the retinotopy positive and the
+structural separations are untouched (each carried its own measured
+positive).
+
+LEAGUE.md regenerated with both rows (league verdicts: null / null).
+
+## Task 10 session 1: items 2 + 4 run (nulls2 readings; FB PASS), corpora + papers fetched; reservoir arm 1 in flight -- 2026-10-28
+
+Preconditions: pull to 6e35fa6; full suite 917 passed / 15 skipped;
+test_stagea_nulls2 11 passed.
+
+ITEM 1 (reservoir control, release-gating): arm 1
+(reservoir-positive-control, edge_of_chaos seed-20260922, 3 seeds x
+all games x 500 actions) launched and in flight. MEASURED pace after
+startup ~1.4 min/row => ~1.75 h/arm, consistent with A-RES-3's 0.148
+s/action; no re-plan needed. Early seed-0 rows score 0.0 with action
+entropies ~2.0-2.5 (alive, not scoring -- consistent with the dead
+regime registration note).
+
+ITEM 2 (H-STAGEA-NULL-DECOMPOSITION): READINGS COMPLETE, exit 0,
+22.9 s, 600 nulls. MEASURED per family (real bandedness 0.5881,
+mirror 0.01445): weight_within_pre SEPARATES (p 0.005 / 0.010);
+weight_global SEPARATES (p 0.005 / 0.010); sign shuffles DO NOT
+separate (p 0.438 / 0.826; null band max 0.642 exceeds real). Stage
+A's ring signature lives in edge placement + magnitudes, not in the
+sign pattern. Refinement only; no verdict changes.
+
+ITEM 4 (H-FB-COLUMNAR-TOPOLOGY): PASS, exit 0, 163.4 s -- the
+SECOND structural PASS. Synthetic Hulse gate passed locally (ideal at
+the floor on both bars, its rewire kills both: antipodal p 0.677,
+mirror p 0.294). Subcircuit 1,399 nodes / 85,353 signed edges;
+column_counts exactly AC-FB1 (FC 9 / hDelta 12 / vDelta 10; PFNa 9,
+PFNd 8, PFNm_a 9, PFNm_b 9, PFNv 9); coverage 1.0 / 1.0 / 0.988.
+MEASURED vs 200 rewires: bar1 hDelta antipodal 0.4055, bar2 PFN L/R
+mirror 0.0146, both p 0.00498 (the floor). Context (non-decisional):
+vDelta antipodal 0.0004 (absent, as Hulse predicts for the
+within-column type), PFL mirror 0.0217.
+
+ITEM 5 CORPUS: van Hateren imk00001-60.iml fetched from the
+pirsquared.org mirror to ~/datasets/vanhateren -- all 60 files
+exactly 3,145,728 bytes.
+
+ITEM 3 FETCHES (papers to ~/datasets/biswas_papers): (1)
+biswas2024_v2.pdf = Biswas/Stanoev/Romani/Fitzgerald v2 (posted
+2026-03-08, 63 pp, includes supplement) -- the MaleCNS version;
+biswas_nsf_par.pdf = the 2024-11-01 v1 (47 pp) which contains NO
+MaleCNS content (MaleCNS arrived in v2; provenance point). (2)
+biswas2026_followup.pdf = Hulse/Aneesh/Romani 2026, "Hidden
+symmetries..." (31 pp) -- contains NO MaleCNS realizations (hemibrain
+only; the runbook's guess that MaleCNS realizations live here is
+refuted by text search). (3) Duan/Dong/Fiete: NeurIPS 2025 poster
+115017 metadata captured (title "From Synapses to Dynamics: ...",
+OpenReview id zn4F6os6cq, no code link on the page); the bioRxiv PDF
+is still Cloudflare-rate-limited (1015) -- retry pending. KEY READING
+for the registration: biswas2024_v2 gives a DERIVATION RECIPE, not a
+printed parameter table -- coarse-grain MaleCNS EPG/Delta7 counts to
+wedge/glomerulus blocks (Delta7 assigned to glomerulus by maximal
+cumulative output), four 5D synapse-count vectors c_EE/c_EI/c_IE/c_II
+with one gamma scale per block submatrix, ring-attractor conditions
+per their Table 1 (p42); the numeric MaleCNS vectors appear only in
+figures (p7), there is no code/data availability statement in the
+PDF, and sampled-parameter sweeps were amplitude-matched to the
+MaleCNS vectors (p13). Numeric completion will need either
+re-derivation from our own MaleCNS data per the recipe, or the
+supplement page (fetch currently 429-limited).
+
+Remaining this session: arm 2 + LEAGUE rows (after arm 1), FlyBench
+SFA + terminal, t4t5 class-3, natstat (corpus ready).
+
+## Task 10 OPENED: exhaustion audit recorded; user go on the full science menu -- 2026-10-23
+
+Context: on 2026-10-15 the user asked whether the program has used
+"everything possible from the fly (latent world models, ODEs, the
+works)". A 9-agent audit (5 map lenses + 4 adversarial gap lenses)
+answered against the record at c1505c0; the condensed, tiered record
+is docs/arenas/task10_menu/exhaustion_audit.md. On 2026-10-23 the
+user gave the go on ALL menu items: (1) reservoir positive control on
+ARC, (2) class-3 T4/T5, (3) fitted per-type CX (Biswas/Duan-Fiete
+configuration), (4) FB structural probe, (5) naturalistic-statistics
+task, (6) FlyBench's terminal-aware placement + SFA mechanisms,
+(7) second null family (weight/sign shuffles).
+
+House pattern applies: due diligence (7-agent sweep, running) ->
+joint frozen registrations BEFORE any instrument code -> instruments
+with in-cloud validation gates -> user runs locally. None of the
+items is score-adjacent; every Expected-tier prior inherits the
+0-for-16 base rate (docs/arenas/SYNTHESIS.md).
+
+NEXT: registrations from the diligence results; items whose
+diligence comes back needs-fetch or blocked are recorded as such,
+not silently dropped.
+
+UPDATE same day — DILIGENCE LANDED AND THE JOINT FREEZE IS IN
+(docs/arenas/task10_menu/due_diligence.md + killtest_design.md, one
+commit, before any instrument code). Verdicts: 6 of 7
+ready-to-register; Biswas fitted-CX is needs-fetch (paper absent
+from the container, every serving host proxy-denied — MEASURED;
+pre-commitments frozen blind, numeric completion after the user
+fetches 3 documents, list in the design doc). Eight hypotheses
+registered: H-ARC-HARNESS-SENSITIVITY (+ reservoir-positive-control
+and reservoir-matched-random condition rows, regime gain0.9-dead for
+the league's cross-regime rule), H-T4T5-CLASS3-DS (with the recorded
+absence finding: no published spiking motion detector exists — gate
+A engine-capacity + gate B continuity stand in), H-CX-BISWAS-FITTED
+(partial), H-FB-COLUMNAR-TOPOLOGY (FB composition frozen from an
+in-cloud ANNOTATION-ONLY download; weights table untouched, decision
+statistics outcome-blind), H-T4T5-NATSTAT-DIRECTION,
+H-FLYGI-FLYBENCH-SFA, H-FLYGI-FLYBENCH-TERMINAL,
+H-STAGEA-NULL-DECOMPOSITION (refinement, never a reopening).
+27 new assumption rows (A-RES-1..4, AT-1..2, AC-FB1..6, ANS-1..5,
+AF-9..13, AC-N1..4). NEXT: instruments, in the declared order —
+nulls2 module, FB probe, SFA/terminal adapters, class-3 T4/T5,
+natstat harness; reservoir needs no instrument (launch of existing
+machinery). Reservoir runs FIRST locally, before the 2026-11-01
+release.
+
+UPDATE same day — INSTRUMENTS LANDING. (1) nulls2 built and pushed
+(24e7c71): weight/sign shuffle generators + invariants, decomposition
+runner on Stage-A machinery verbatim, 9 tests with both dissociation-
+gate directions MEASURED through the real rewire machinery
+(magnitude-tuned synthetic: real bandedness 0.639 vs null max 0.327,
+p at the floor; topology-banded jittered ring: weight family inert,
+rewire separates); controls.md rows closed to implemented+validated.
+(2) FB probe built (fb_topology_killtest.py, 14 tests): mirror_peak
+reused by identity from Stage A (asserted); synthetic Hulse-motif
+gate MEASURED both directions at 200 nulls in-cloud (ideal p 0.004975
+= floor on both bars; rewired ideal 0.677/0.294, both bars dead);
+main re-runs the gate at 200 nulls before any data contact; BLOCKED
+in-cloud as designed. Operationalizations recorded in the module
+(antipode sector = circular distance in [160,180]; Bar-2 on the
+Stage-A 16-bin offset frame via a circulant whose offset_profile is
+exactly the histogram — Stage-A semantics reused, not retuned).
+(3) natstat harness built (natstat_killtest.py, 31 tests): frozen
+van Hateren list imk00001..imk00060 sha256-pinned; scramble/
+translation/AD-8 gates all asserted in-cloud; exact binomial sign
+test pinned in-module (no scipy drift); B1/B2 verdict logic
+unit-tested on all paths; BLOCKED in-cloud naming the four missing
+local pieces. Joint suite: 79 passed. (4) The first build pass lost
+the class-3-T4/T5 and FlyBench-mechanisms agents to a usage-credit
+outage mid-flight; their partial artifacts were moved OUT of the tree
+(scratchpad/partials) and the two builds are re-running clean from
+the frozen registrations. Runbook sections 4-5 appended.
+
+UPDATE same day — INSTRUMENT STAGE COMPLETE. The rebuilt pair landed
+and was verified (orchestrator re-ran every suite): (5) t4t5 class-3
+instrument (t4t5_class3_killtest.py, 27 tests, ~100 s): GATE A
+MEASURED PASSING IN-CLOUD — the idealized spiking delay-line
+correlator reaches median DSI 1.0000 with the TF optimum at 1.0 Hz
+and collapses to 0.0000 with equalized arms (robust at three more
+seeds) — so the spiking model class CAN express the delay code and a
+local KILL would be about the counts; unitary-PSC equivalence
+asserted numerically (rel 1e-6) against the validated CX template
+incl. a 133 ms kernel; engine = TemplateLIF + per-type taus +
+two-state exponential synapses + signed drive. (6) FlyBench
+mechanisms (spiking.py default-off SFA + two adapter classes +
+flybench_mechanisms_verdict.py, 19 tests, ~150 s): SFA off-switch
+BIT-IDENTICAL to the pre-extension engine (asserted vs a frozen copy
+of the 08fac61 step); Benda-Herz closed form within tolerance
+(unadapted 200.0 vs analytic 191.7 Hz; adapted 81.0 vs fixed point
+81.01; ISI 5.5 -> 12.0 ms); toy-suite equivalence vs flybench's own
+simulators both mechanisms (SFA deltas same direction as theirs;
+terminal within declared engine differences); shipped terminal table
+asserted to sum to exactly 3,782,429. Build-time operationalizations
+recorded as a dated pre-data-contact note in killtest_design.md
+(T4/T5 R1-R6 incl. the R2 double-filtering risk, arm-symmetric; the
+SFA state-dependent forced-pulse compensation, measured necessary;
+the natstat anchor marked SOURCED non-decisional). Full joint suite
+in-cloud: 46 + 32 natstat/regression green; every data-gated main
+BLOCKS exit 3. Runbook sections 6-7 + the suggested overall order
+appended. ALL SEVEN MENU ITEMS DELIVERED (six runnable now, Biswas
+awaiting the user fetch). The ball is with the local host; the
+reservoir control runs FIRST, before the 2026-11-01 release.
+
+## Task 9 FULLY CLOSED: both reopening hypotheses refuted in the registry; synthesis updated -- 2026-10-11
+
+Cloud-side close of the two local KILLs (run record: the entry below,
+commit eeb75b5). Changes, all propagated the same day:
+
+- EXPERIMENTS.yaml: H-CX-SEEDING-PROTOCOL -> refuted (regime-bound,
+  not protocol-bound; the frozen decision rule licenses NO class-1
+  Stage-B re-registration). H-CX-CLASS3-COMPASS -> refuted, with the
+  verdict-machine gate pass recorded first (the engine reproduces
+  the published Pisokas fly bump where the verdict was produced, so
+  the KILL is about the counts, not the engine). Both run bullets
+  carry tiers: MEASURED numbers verbatim from the run record;
+  INFERRED readings (landscape-decides; point-attractor-not-ring)
+  with their bridges stated; the class-3 close scoped to the
+  declared AC-6 mapping and the AC-8 standalone circuit.
+- SYNTHESIS.md: second Task-9 addendum. The headline: the
+  structure/function split is now measured at TWO fidelity classes
+  of the same circuit, with DIFFERENT failure modes (class 1: the
+  rate bump dies; class 3: the spiking bump persists at retention
+  0.94-0.997 but slides to a common region, ~177-221 deg, errors
+  155-177 deg; the point-attractor reading is INFERRED).
+  Record map extended with the four Task-9 hypotheses. Noted
+  explicitly: the null-bar record does NOT gain instances from these
+  runs -- in both, the real arm failed before any rewire ran.
+- ASSUMPTIONS.md: AC-6 and AC-8 annotated EXERCISED (mapping usable
+  -- stable everywhere; scope carried into the close sentences).
+  AC-7 stands CONFIRMED.
+- HANDOFF row 9: REOPENED and RE-CLOSED; Task 9 is closed at every
+  registered level.
+
+No further Task-9 work is queued. The live reopening-shaped question
+that remains in the record is SYNTHESIS section 7 item 1 (class-3 on
+a killed circuit, T4/T5 named), which now carries the CX precedent
+that fidelity CHANGES the failure mode; it runs only on an explicit
+go.
+
+## Task 9 reopening: BOTH kill tests run -- probe KILL, class-3 KILL (gate passed; the counts hold activity but not position) -- 2026-10-11
+
+The user ran both reopening instruments in the registered order
+(probe first). 13/13 and 22/22 unit tests; no instrument changes
+needed; zero instability in every arm of both runs. JSONs gitignored
+at results/arenas/cx_{seeding,class3}_killtest.json.
+
+PROBE (H-CX-SEEDING-PROTOCOL): KILL, exit 1, 422.8 s. All 8 real
+cells fail the cell rule; rewires therefore never ran (frozen
+evaluation order). MEASURED pattern across cells: at gain 1.5 every
+protocol (P1-P4, including the 100-step write, the scale-3 write and
+direct state injection) lands at the same held-out errors
+(~121/149/59 deg) with circvar ~0.66-0.68 -- the landscape, not the
+write, decides where mass sits; at gain 2.0 all protocols reproduce
+the known fixed-point mode (112.5 -> circvar 0.000 err 22.5; others
+circvar ~0.83). Stage B's failure was NOT protocol-bound: no
+re-registration of class-1 Stage B is licensed.
+
+CLASS-3 (H-CX-CLASS3-COMPASS): KILL, exit 1, 990.4 s. The
+validation gate PASSED LOCALLY first -- the Pisokas 60-neuron
+idealized fly circuit reproduces in this engine on this machine
+(pass=True, mean width 99.0 deg, matching the in-cloud measurement;
+per-seed retentions 0.97-0.99, errors 15-41 deg) -- so the verdict
+is valid, not blocked. On the real MaleCNS counts, all 6 declared
+grid points fail: G1 best 2 of 8 angles (bar: >= 6), G2 steering
+never opposite-signed (best L -8.0/R -8.3 deg/s same-signed at 0.5x;
+near-zero at 1.0x/2.0x). Rewires never ran (no real-passing points).
+MEASURED failure mode, and it is NEW: retention at the grid points
+is HIGH (0.94-0.997 -- the spiking bump persists through darkness)
+but position-unfaithful -- final angles cluster at ~177-221 deg
+regardless of the write angle (errors 155-177 deg). At class-1 rate
+dynamics the bump died; at class-3 spiking fidelity it survives but
+slides to a common attractor basin. Activity persistence without a
+position continuum.
+
+THE SCOPED STATEMENT this pair buys (the registration's own words):
+at the model class where idealized fly topology is PUBLISHED to work
+-- and reproduces in our engine -- the compiled MaleCNS synapse
+counts do not carry the compass: no continuum (G1), no opposite
+steering (G2), at any declared scale. Combined with Stage A (the
+topology IS in the counts, p 0.005 against 200 rewires) the
+structure/function split is now measured at two fidelity classes:
+the wiring carries ring-compass STRUCTURE its nulls cannot fake, and
+does not COMPUTE heading with it at either tested physiology.
+Hypothesis closes (both) are the cloud side's step per the
+registration.
+
+## Task 9 reopening: BOTH instruments BUILT; class-3 engine REPRODUCES the published fly bump (gate PASS, estimator amendment recorded) -- 2026-10-11
+
+Both registered instruments now exist, tested, with the class-3
+validation gate green in-cloud. The user runs the PROBE FIRST
+(runbook updated with both commands).
+
+- CLASS-3 ENGINE VALIDATED (scripts/arenas/cx_class3_killtest.py +
+  fixture tests/data/pisokas_fly_connectivity.npz + 22 tests).
+  MEASURED, in-cloud, published Pisokas 60-neuron fly circuit,
+  declared seeds 7-11: retention 0.968-0.987, PVA err 14.6-41.4 deg,
+  circvar 0.382-0.549, bump width per-seed {90, 135, 90, 90, 90},
+  MEAN 99.0 deg vs their Table-1 88.3 (one estimator quantum = 45
+  deg); stable at 3 s, and in earlier diagnostics at 10 s. To our
+  knowledge from the registered sweep this is the first
+  spiking-tier reproduction of their fly bump in this repository's
+  stack; it validates the INSTRUMENT only -- nothing about MaleCNS
+  is claimed.
+- GATE AMENDMENT (dated, PRE-DATA-CONTACT; full record in
+  killtest_design_reopening.md): the first width operationalization
+  (per-cell E-PG fraction above half max) MEASURED 160 deg on a bump
+  that is otherwise healthy, failing the 60-120 band. Reading their
+  published code ESTABLISHED the Table-1 width is a different
+  object: measureBump1 on the raster's first 8 columns = the LEFT-
+  hemisphere P-ENs (matrix layout [P-EN 16, P-EG 18, E-PG 18,
+  Delta7 8]), threshold (max-min)/2, width (k-1)/8 x 360 deg --
+  45-deg-QUANTIZED -- averaged over trials, on a 100 ms window; the
+  von Mises drive is sampled at the 8 EB column angles and applied
+  identically to both 9-cell E-PG hemisphere blocks (9th cell
+  duplicates column 1). The gate now uses their estimator, their
+  window, their column geometry, and a trial MEAN over declared
+  seeds; the 60-120 band and every other bar are unchanged; no
+  MaleCNS-facing bar (G1/G2/null) uses the width estimator. The
+  crude-estimator 160-deg reading is recorded as an instrument-
+  fidelity error, not an engine failure.
+- PROBE BUILT (scripts/arenas/cx_seeding_killtest.py + 13 tests):
+  imports the Stage-B module and calls its machinery directly, so
+  loading/drive/read are verbatim by construction. Frozen 8-cell
+  grid (2 points x 4 protocols), position-faithful cell rule,
+  rewires only at real-passing cells, tracking context at decisive
+  cells. Stub-network end-to-end: perfect-memory stub passes the
+  cell rule under all 4 protocols, decaying stub fails. BLOCKED
+  in-cloud as designed (exit 3, runtime absent).
+- Registry updated (both hypotheses carry the instrument-built
+  evidence; class-3 carries the amendment). Suites: 22 + 13 new
+  tests pass; Stage-A/B suites still pass (15).
+
+NEXT: user runs cx_seeding_killtest.py locally FIRST, reports JSON;
+then cx_class3_killtest.py (either probe outcome). Cloud side closes
+each hypothesis from the reports.
+
+## Task 9 reopening: BOTH kill tests jointly REGISTERED (probe + class-3), literature pinned -- 2026-10-11
+
+The literature sweep landed (3 agents, zero errors; sources
+code-verified where stated) and both registrations froze in one
+commit (docs/arenas/task9_cx_latent/killtest_design_reopening.md):
+
+- H-CX-SEEDING-PROTOCOL (class-1 probe): frozen 4-protocol x 2-point
+  set (P1 cx_ring wedge-write as the measured-dead reproduction
+  control; P2 sustained write; P3 scale-3 write; P4 direct state
+  injection), position-faithful cell pass rule, rewire wiring bar at
+  real-passing cells, all cells reported. Tracking at passing cells
+  is context only -- the heading-latent verdict would belong to a
+  re-registered Stage B.
+- H-CX-CLASS3-COMPASS: Kakaria/Pisokas template-LIF physiology,
+  code-verified values (the sweep CAUGHT a paper-vs-code parameter
+  discrepancy -- paper Cm 2 nF / Rm 10 MOhm vs code 20 nF / 1 MOhm,
+  same tau_m, 10x current gain; we pin the CODE set with the code's
+  optimized fly class weights, extracted from their published
+  MATLAB: 99.968 / 47.917 / 6.072 / -35.677 / -19.336). Weight
+  mapping AC-6 (class-mean-matched scales, heterogeneity preserved,
+  nothing fitted); declared 6-point grid; G1 8-angle continuum +
+  persistence, G2 opposite steering; rewires must fail G1 at every
+  real-passing point. IN-CLOUD VALIDATION GATE: the engine must
+  reproduce the published Pisokas 60-neuron fly bump before any data
+  contact.
+- PRECEDENT, from the sweep (absence finding, stated): connectome-
+  weighted fly CX bumps exist only at rate tier with FITTED per-type
+  parameters (Biswas 2024 bioRxiv, incl. exact MaleCNS realizations;
+  Duan, Dong & Fiete NeurIPS 2025, tuning shown necessary on
+  hemibrain); NO spiking/conductance connectome-weighted bump is
+  published anywhere. H-CX-CLASS3-COMPASS targets exactly that gap
+  with pinned (unfitted) parameters.
+- AC-6..AC-8 registered. Neither hypothesis is score-adjacent.
+
+NEXT: build both instruments (probe reuses the Stage-B machinery;
+class-3 engine must pass the Pisokas validation gate in-cloud), then
+the user runs the probe first.
+
+## Task 9 reopening: due diligence recorded; joint registration pending the literature sweep -- 2026-10-11
+
+User go on BOTH reopening paths. Due diligence first
+(docs/arenas/task9_cx_latent/reopening_delta.md), with two new
+findings: (1) the verdict program's cx_ring grid survives as TRACKED
+provenance (git 09a998a) and is stronger than the Stage-B close knew
+-- wedge-write C1 persistence fails at EVERY grid point including
+gain 2.0 (best retention 0.0177), while C2 opposite steering PASSES
+at 1.5/0.3 and 2.0/0.3; the ONLY persistence measurement in the
+record is the Sept-25 arc-seeded run. (2) The arc protocol is
+UNREPRODUCIBLE from the committed record -- its scripts never existed
+in git; only registry prose and local JSONs survive. The probe
+therefore freezes a DECLARED 4-protocol x 2-operating-point set with
+pre-stated pass rules instead of claiming to replicate a lost
+protocol. The class-3 registration pins its parameter table from a
+running literature sweep (Pisokas 2020 / Kakaria 2017 / other CX
+models; whether any CONNECTOME-WEIGHTED fly CX has ever sustained a
+bump is the precedent question). Both registrations freeze in ONE
+commit when the sweep lands; no instrument code before that commit.
+
+## Task 9 CLOSED: structure yes, computation untestable at classes 1-2; AC-2 invalidated -- 2026-10-11
+
+Cloud-side close of the Stage-B BLOCKED (local record below at commit
+dcedb9f; the local session's reconciliation against cx_ring.json is
+confirmed and adopted):
+
+- EXPERIMENTS.yaml: H-CX-HEADING-LATENT -> "null" with two bullets --
+  the BLOCKED record (precheck 0.0000/0.661 reproducing the grid's
+  0.0003/0.713 almost exactly; instrument not suspected) and the
+  close: UNVALIDATABLE at class-1 under the registered protocol,
+  untested rather than refuted. The reconciled record shows the
+  premise's two required properties measured only in DISJOINT
+  regime x protocol combinations: persistence at gain 2.0 wedge-write
+  (fixed-point), opposite-signed steering at gain 1.5 VISUAL-ARC
+  seeding, no persistence at gain 1.5 wedge-write (two independent
+  runs). Class-2 delocalized everywhere.
+- DUE-DILIGENCE MISS, OWNED: the Stage-B registration read the regime
+  sweep's persistence (circvar 0.52 at 1.5) as protocol-portable.
+  cx_ring.py's committed header flags that anchor as "agreement
+  expected in sign pattern, not numerically", and the grid's
+  contradicting wedge-write rows were in the durable (local-only)
+  record. The gate the registration DID carry (AC-2 precheck ->
+  BLOCKED) is what contained the cost: 14.4 s, no arm evaluated, no
+  verdict-relevant quantity computed.
+- ASSUMPTIONS: AC-2 -> INVALIDATED with the measured numbers and the
+  protocol-portability flaw named. killtest_design.md gains a dated
+  Stage-B close note (frozen text untouched). HANDOFF row 9 ->
+  CLOSED. SYNTHESIS gains a dated Task-9 addendum: Stage A is a
+  second anatomy-tier positive (the permutation IS detectably
+  special, structurally); what still has no measured win is the
+  permutation DOING anything at simulable fidelity -- the
+  fidelity-ceiling explanation sharpens, and the CX moves ahead of
+  T4/T5 as the class-3 candidate (structural PASS + persistence
+  separation + the concrete visual-arc-vs-wedge-write protocol
+  question).
+
+REOPENING PATHS, each needing an explicit user go and its own
+registration: (a) class-3 CX fidelity; (b) a cheap registered
+visual-arc-seeding reconciliation at gain 1.5 with pre-stated pass
+rules (settles whether seeding, not regime, decides persistence).
+Neither runs on my initiative -- an unregistered operating-point
+search is tuning-to-pass.
+
+## Task 9 Stage B: BLOCKED at the AC-2 precheck -- and the durable record says the gate was never passable -- 2026-10-10
+
+The user ran the Stage-B heading-latent kill test (7/7 unit tests
+first; full graph loaded, 166,700 nodes in 1.4 s; 14.4 s wall, peak
+RSS 0.50 GB). Exit 3, BLOCKED, NOT a verdict; no JSON written, no
+calibrated-rates or per-arm lines reached. The printed precheck:
+
+  precheck (cal 22.5): retention 0.0000, circvar 0.661, angle 352.1
+  BLOCKED: calibration-angle persistence precheck failed (AC-2)
+
+RECONCILED against the durable record before reporting, per the
+operating directive: results/benchmarks/cx_ring.json's class-1 grid
+already contains the same regime (gain 1.5, leak 0.3, angle 22.5):
+retention 0.0003, final_circvar 0.713, final angle 349.6,
+angle_pass FALSE -- and every other gain-1.5 leak row fails
+persistence the same way. The Stage-B instrument therefore
+REPRODUCED the prior measurement almost exactly (0.0000/0.661/352.1
+vs 0.0003/0.713/349.6; small deltas consistent with the protocols'
+window differences). MEASURED tier, both runs agree: at gain 1.5 /
+leak 0.3 the compiled CX does not retain a seeded bump through 2 s of
+darkness. What failed to hold is the AC-2 gate's premise that the
+measured steering regime also persists headings -- steering was
+measured there; persistence never was, and the grid says it fails
+there. The instrument is not suspected: it refused, before burning
+the budget, to evaluate a premise in a regime whose required
+property does not hold, which is exactly its declared BLOCKED
+contract.
+
+Disposition is the cloud side's call per the registration (any
+amendment needs a recorded finding; this entry is that finding's
+local half). No instrument changes made locally; nothing in the
+frozen bars touched.
+
+## Task 9 Stage A CLOSED: SUPPORTED -- the arena series' FIRST PASS; Stage-B instrument built -- 2026-10-10
+
+Cloud-side close of the user's Stage-A run (record below, commit
+2530194; instrument ran unmodified):
+
+- EXPERIMENTS.yaml: H-CX-RING-TOPOLOGY open -> SUPPORTED, with the
+  MEASURED bullet: bandedness 0.5881 vs null max 0.3376 and PEN_a
+  mirror-peak 0.01445 vs null max 0.00792, each p 0.00498 (the floor
+  at 200 nulls); coverage 1.0 everywhere; 30.6 s. The first measured
+  property of the real fly wiring that its own degree-preserving null
+  cannot reproduce, and the program's first PASS. SCOPE: structural
+  only. Context behaved exactly as the pre-data amendment predicted
+  (argmax degenerate on the real sparse profiles; PEN_b weaker at
+  0.00706; blind spectral ordering 46.6 deg off the anatomical one --
+  AC-1's interleaving stays OPEN, annotated; no bar depended on it).
+- ASSUMPTIONS: AC-1 annotated with the measured coverage and spectral
+  residual; AC-4 -> EXERCISED, USABLE (the gate fired twice before
+  data contact, then the real run separated at the p-floor).
+- STAGE-B INSTRUMENT BUILT against its registration (frozen in the
+  same commit as Stage A's, untouched since the PASS):
+  scripts/arenas/cx_heading_killtest.py -- cx_ring loading/drive/read/
+  rotation conventions verbatim at gain 1.5 / leak 0.3; AC-2
+  persistence precheck on the calibration angle; ONE labeled
+  instrument-level guard added at build time (same-signed or
+  sub-threshold calibrated rates BLOCK: the command integral is
+  undefined without a signed rate basis); CX-block-only rewires
+  (AC-5) via cx_block_rewire, unit-tested to touch nothing outside
+  the 148x148 block and to preserve in/out degrees inside it; the 3
+  preregistered sequences (seed 20261010) and the command-integral
+  decode, with the registration's singular "rotation-rate
+  calibration" operationalized as the REAL arm's rates defining every
+  arm's ground truth (documented in the docstring: an arm that cannot
+  steer accumulates error against the commanded trajectory). 7/7
+  tests in-cloud; exits 3 BLOCKED here as designed. Runbook Stage-B
+  section added.
+
+NEXT: user runs Stage B locally (~1 h); cloud closes
+H-CX-HEADING-LATENT either way.
+
+## TASK 9 STAGE A: PASS -- the CX ring topology survives its own rewire null (first PASS in the arena series) -- 2026-10-10
+
+The user ran the Stage-A structural kill test (seconds of real
+metrics, 200 degree-preserving rewires in 21.8 s; 30.6 s total;
+results/arenas/cx_topology_killtest.json, gitignored). Preconditions:
+8/8 unit tests; no instrument changes needed locally.
+
+VALID, not blocked: subcircuit composition exact (148 = 46 EPG +
+20 PEN_a + 22 PEN_b + 42 Delta7 + 18 PEG); wedge coverage 1.0 for
+EPG, 1.0 for PEN_a, 1.0 for PEN_b; groups PEN_a 10L/10R,
+PEN_b 11L/11R; all-PEN two-hop weight nonzero.
+
+MEASURED, against 200 degree-preserving rewires of the full
+subcircuit (seeds 4242+0..199), empirical one-sided p = (1+k)/201:
+- BANDEDNESS: real 0.5881 vs null MAX 0.3376 -- real exceeds every
+  null; p 0.00498 (the floor). Bar 1 HOLDS.
+- SHIFTER (mirror-peak statistic, amended 2026-10-10 BEFORE any data
+  contact after the synthetic-ring gate measured the frozen argmax
+  statistic anti-informative -- the amendment, its sequence and its
+  synthetic validation are in killtest_design.md): PEN_a S 0.01445
+  vs null MAX 0.00792 -- exceeds every null; p 0.00498. Bar 2 HOLDS.
+- Context, non-decisional: PEN_b mirror-peak 0.00706 (below the
+  PEN_a signal -- consistent with PEN_b's weaker shifter role);
+  argmax offsets all 0/invalid (exactly the degeneracy the amendment
+  documented); blind spectral ordering residual 46.6 deg vs the
+  anatomical wedge order.
+
+VERDICT: PASS, exit 0 -- the first registered PASS in this program's
+arena series, and the first structural property of the real wiring
+that its own degree-preserving null cannot reproduce. Scope words,
+carefully: this is a STRUCTURAL result about the EPG<->PEN coupling
+matrix under the anatomical wedge ordering. It licenses building
+Stage B (H-CX-HEADING-LATENT, already frozen in the same
+registration commit) and claims nothing yet about dynamics or
+function -- Stage B is where the wiring either computes a heading
+latent or does not. Stage-B instrument build is the cloud side's
+step per the registration.
+
+## Task 9 Stage A: instrument BUILT; shifter statistic amended PRE-DATA-CONTACT by its own validation gate -- 2026-10-10
+
+scripts/arenas/cx_topology_killtest.py, with the whole decision
+pipeline a pure function so the AC-4 synthetic gate could validate it
+end-to-end in-cloud -- including through the REAL
+degree_preserving_rewire machinery -- before any data contact. The
+gate earned its keep immediately, twice:
+
+- MEASURED: the frozen shifter statistic |argmax_L - argmax_R| is
+  anti-informative -- on a perfect synthetic +/-1 compass, real S 2.0
+  vs rewired-null argmax pairs up to 14.0 (p 0.459): it rewards
+  randomness. A first replacement (mass-weighted mean-offset
+  separation) was also measured weak (null max 5.4, p 0.230).
+- ADOPTED, recorded as a dated amendment in killtest_design.md and
+  the registry (both still pre-data-contact): the MIRROR-PEAK
+  statistic -- normalized positive offset profiles q_L, q_R; S =
+  max_d max(q_L(d) q_R(-d), q_L(-d) q_R(d)), d in 1..7;
+  chirality-free, nonzero only for opposite-offset concentration.
+  MEASURED on the gate: real 1.0000 vs null max 0.107 (median 0.025),
+  p 0.0099 at 100 nulls. Argmax and mean offsets stay as reported
+  context.
+- Also caught by the gate's first run: a test-fixture bug (dense
+  noise made the synthetic graph complete -> zero legal
+  degree-preserving swaps); noise now jitters existing edges only.
+- Tests: 8/8 in-cloud (wedge-parser AC-1 mapping, metric mechanics,
+  mirror-peak semantics, full-pipeline PASS on the synthetic ring +
+  KILL on its rewire through the frozen bars, BLOCKED coverage and
+  degeneracy paths, frozen constants). The script exits 3 BLOCKED
+  in-cloud (runtime absent), as designed.
+- Runbook: docs/arenas/task9_cx_latent/runbook.md. Stage A costs the
+  user seconds-to-minutes locally; no downloads, no new packages.
+
+NEXT: user runs Stage A and reports the JSON; on PASS the Stage-B
+(H-CX-HEADING-LATENT) instrument is built against its already-frozen
+registration; on KILL, Task 9 closes with no dynamics built.
+
+## Task 9 (off-survey): CX latent-state kill tests REGISTERED, both stages jointly frozen -- 2026-10-10
+
+User asked whether the fly connectome could be shown to carry a latent
+representation / world model of the physical environment, and said go.
+Due diligence first (docs/arenas/task9_cx_latent/due_diligence_delta
+.md): the question is PARTIALLY measured and the record is the
+program's richest -- the CX owns the one anatomy-specific dynamical
+separation ever measured here (gain-2.0 persistence: real mass 0.27
+for 120+ darkness steps vs null dead by t=40), steering works at
+whole-network gain 1.5 (opposite signs, circvar 0.52) but cannot be
+transplanted (H-CX-CALIBRATION refuted), position storage FAILED at
+gain 2.0 (two fixed points, H-CX-SCRATCHPAD) and was NEVER measured at
+1.5, and class-2 LIF delocalized at all 155 configs (fc2_eb_ring).
+Scope fixed at registration: the testable claim is a HEADING latent
+(AC-3), never "a world model of the physical environment."
+
+Both stages frozen in ONE commit (so neither can be tuned on the
+other; docs/arenas/task9_cx_latent/killtest_design.md):
+- H-CX-RING-TOPOLOGY (Stage A, structural, instrument builds now):
+  ring bandedness + opposite-signed left/right PEN_a shifter offsets
+  under the cx_ring verbatim wedge mapping (AC-1), vs 200
+  degree-preserving rewires, empirical p < 0.05 both bars. The
+  program's FIRST registration whose priors favor PASS (the measured
+  persistence separation; Hulse 2021 ESTABLISHED structure).
+- H-CX-HEADING-LATENT (Stage B, dynamical, instrument ONLY after a
+  Stage-A PASS): continuum across held-out angles + tracking of
+  integrated PEN commands at the measured gain-1.5/leak-0.3 regime,
+  real vs CX-block rewires x3 (AC-5), calibration-angle persistence
+  precheck as the AC-2 BLOCKED gate. Engineered 2-variable integrator
+  = ceiling context, not a bar.
+
+Neither is score-adjacent (the 0-for-16 counter does not apply and is
+not incremented). Assumption rows AC-1..AC-5 registered. HANDOFF row
+9 added. NEXT: build the Stage-A instrument + synthetic-ring tests
+(in-cloud), runbook; user runs Stage A locally (seconds-to-minutes);
+on PASS, Stage-B instrument builds against the frozen design.
+
+## Pre-release audit COMPLETE: all 68 verified findings applied -- 2026-10-08
+
+Part 2 (this checkpoint) closes the audit: docs/experiment.md,
+controls.md, modeling_assumptions.md and data_provenance.md brought
+from their 2026-09-21-era blanket claims to the measured current state
+(nine scored submissions named with the construction-crash root cause;
+the two bounded fly-positives stated with their encoder/anatomy
+attribution; the real remaining gaps listed -- weight/sign shuffles,
+>=10 seeded nulls, reservoir ARC runs; the completed acquisition
+recorded from the tracked manifest with its expected_sha256-null
+caveat). The docs/social kit is posting-safe: social_announcement.md
+carries a SUPERSEDED banner (its 3,052 / 0.01 / 3050-3212 figures were
+never in the durable record and are flagged non-reusable; the
+unanchorable "163 teams" row was dropped rather than re-written);
+FACTS.md's leaderboard section rebuilt to the nine-submission record
+with a dynamics-off note and a dated re-verification line (other
+sections still carry their 09-22 verification and say so); all drafts
+recast to past tense scoped to the controlled runs; longform's
+unanchored 389,471 deleted (390,272 anchors); the
+no-other-study-ran-controls title option replaced with a self-scoped
+one; README caveat guards {{BEST_SCORE}} insertion.
+
+AUDIT TOTALS: 86 agents (8 sweep groups, per-finding adversarial
+verification), 68 confirmed / 10 rejected as dated-record false
+positives; 7 blockers among the confirmed, all fixed; plus the
+fresh-clone test fix (6 runtime-data tests skip-guarded). One finding
+is a USER step on the release checklist: regenerate LEAGUE.md on the
+machine with the local result bundles (the 10-02 snapshot predates
+five closed hypotheses). Commits: 8958404 (test guards), 8c1be1c
+(part 1), this one (part 2). Suites green in-cloud after every batch.
+
+## Pre-release audit IN PROGRESS: 68 verified findings, part 1 of fixes checkpointed -- 2026-10-08
+
+An 86-agent adversarially-verified audit swept every shipping document
+(8 sweep groups -> per-finding skeptic verification; 68 confirmed, 10
+rejected as dated-record false positives). Also fixed first: six tests
+requiring gitignored runtime data failed on fresh clones -- skip-guarded
+(commit 8958404); full suite 756 passed / 23 skipped / 0 failed
+in-cloud. This checkpoint carries the completed fix groups (blockers
+first: linkedin_post 0-for-12 -> 0-for-16; HANDOFF/PLAN "MIT stays" ->
+MIT-0 per AP-4's reconciled reading; kaggle_submission.md preflight
+edge-count pinned per lineage, 24,994,595 for the deployed v10/v12,
+and the adapter-contract section now names the deployed dynamics-off
+mode; README landing section carried through the arena-program close
+with a SYNTHESIS link; AGENTS.md/PLAN base-rate rules now point at the
+living counter; SYNTHESIS seven-instances-six-registrations correction,
+dead task2_dsec/ path, and IJCNN no-go status; executed-KILL banners on
+all five task runbooks; AP-7 reworded off its unfalsifiable score
+prediction; AV-1 annotated; task4 registration's seeds-line
+discrepancy reconciled in a dated post-verdict note; due-diligence
+absolute paths made repo-relative; three instrument docstrings label
+their operationalizations). Remaining in flight: docs/experiment.md /
+controls.md / modeling_assumptions.md / data_provenance.md and the
+docs/social kit; the closeout entry lands with that final group. The
+LEAGUE.md regeneration (needs local result bundles) is added to the
+release checklist as a user step.
+
+## Task 8: IJCNN 2027 competition proposal -- analyzed, recommendation NO-GO -- 2026-10-07
+
+User asked for the go/no-go. The call was re-verified today (SOURCED:
+4-page PDF due 2026-11-30; notification 12-15; launch 2027-01-01;
+entries close 02-28; competition papers 04-01; conference June 14-18
+2027, Cape Town; organizers may not compete; regular papers due
+2027-01-31). Full analysis:
+docs/arenas/task8_venues/ijcnn2027_go_no_go.md.
+
+RECOMMENDATION: NO-GO on proposing a competition this cycle. The one
+honest candidate ("Beat the Null" on the public MIT-0 harnesses) fits
+the science, but an accepted proposal is a solo Jan-Jun 2027
+operating commitment (hosting multi-GB arrays, live support, paper
+shepherding, Cape Town presence) colliding with the Task 1 calendar,
+with real under-participation risk, and the public release + a paper
+buys most of the value for none of the tail. The better IJCNN
+vehicle is the REGULAR PAPER (6 IEEE pages, due 2027-01-31 -- after
+the Dec 4 ARC results; the synthesis is already paper-shaped); that
+decision can wait until after Dec 4 at no cost. Reconsider the
+competition format for IJCNN 2028 / Telluride 2027 / CVPR 2027
+windows if the release brings co-organizers. A minimum GO path is
+recorded in the doc in case the user overrides.
+
+## Program synthesis written: docs/arenas/SYNTHESIS.md -- 2026-10-07
+
+User chose option 1 after the Task 6 close. The completed sweep now
+has a single tiered synthesis document, every number traced to
+EXPERIMENTS.yaml / WORKLOG / the factsheet (no new measurement):
+
+- The central MEASURED result as a seven-row table: every registered
+  degree-preserving-rewire comparison since 2026-09-29 (MB
+  association, ARC motion, DSEC, DVS, Brain-Score V1, gas drift) with
+  the real-vs-rewire numbers and the per-test context arms.
+- The measured positives collected in one place: the eye-map anatomy
+  separation (2.59x vs 11.59x), dynamics-over-input (0.069 vs 0.033),
+  the working DAN-gated credit mechanism (0.600 vs shuffled 0.400,
+  p=0.019), twin-below-real tau structure, the flybench uniform row,
+  and the far-above-chance codes everywhere.
+- The INFERRED synthesis with its bridge stated: benchmark metrics
+  reward the population transformation, which lives in degree
+  sequences + weight distributions + cell-type parameters -- all
+  rewire-invariant; the surviving wins are an index, a mechanism, a
+  parameter set and a transformation, never the permutation. Claim
+  boundaries carried: model-class-at-fidelity (not the fly); the
+  literature SPLIT (PN->KC null is Caron/LK's own prediction; T4/T5
+  null is NOT Maisak's -- the recorded falsifier is a class-3
+  reversal there); the measured ~4-point encoder-map noise; the
+  alpha~0 AE-3 caveat.
+- Open alternative explanations (fidelity ceiling / readout mismatch
+  / task statistics), with the MB association native-readout evidence
+  already bearing on the second.
+- The method record (0 for 16 score-adjacent; the older broader
+  counter disambiguated; five builds prevented; four pre-data-contact
+  instrument catches; two pre-verdict API fixes) and the ordered list
+  of measurements that would move the synthesis (class-3 on T4/T5
+  first).
+- Record map table: all eight hypothesis IDs -> verdict -> location.
+
+HANDOFF conventions now point at the synthesis as the required read
+before citing the program's arc. Dates cross-checked against the
+registry (adapter supported 2026-10-01 per its updated field).
+
+## Task 6 CLOSED with verdict; DUAL CLOSE executed (Task 4 MB limb ends); base rate 0 for 16 -- 2026-10-07
+
+Cloud-side close of the KILL recorded below, per the runbook's
+division of labor:
+
+- EXPERIMENTS.yaml: H-ALMB-GASDRIFT open -> REFUTED, with the
+  MEASURED evidence bullet (all numbers, the alpha~0 calibration
+  fact, zero exceptions, 76 min at --workers 8). YAML re-validated.
+- THE PRE-STATED DUAL CLOSE EXECUTED: the Task 4 Keyword-FSCIL/MB
+  limb is CLOSED AS NOT PURSUED, exactly as H-ALMB-GASDRIFT's
+  registration bound it (inferred bridge: same AL->KC machinery,
+  native modality, smaller encoder invention -- the audio hypothesis
+  stays unmeasured). Task 4 is now fully closed. HANDOFF rows 4 and 6
+  updated.
+- SCOPE CORRECTION, recorded in the close (the dated run entry below
+  stands as written, annotated here): the run entry's "scrambled-
+  glomeruli control: real WINS" over-scopes. Both encoder maps are
+  seeded arbitrary permutations (the design's own SCRAM framing), so
+  the +4.4-point real-vs-scram gap is MEASURED encoder-invention
+  variance, not a real-wiring-beats-scrambled finding -- no real
+  feature->glomerulus correspondence exists to scramble. What it does
+  establish: the circuit's output depends materially on the invented
+  assignment, and single-map numbers carry ~4 points of map noise
+  (which also bounds how hard any one rewire gap, +0.8 to +6.0, can
+  be read). The decisive real-vs-rewire comparison was map-matched;
+  the KILL is unaffected. AE-1 annotated accordingly; AE-3 -> NOT
+  SUPPORTED as tested (with the alpha~0 caveat: the gain-control
+  bridge was tested with the knob near off); AE-4 -> exercised,
+  usable.
+- Base rate 0 for 15 -> 0 for 16 (the sixteenth is H-ALMB-GASDRIFT,
+  as its registration pre-stated) propagated to HANDOFF conventions,
+  the task1 factsheet row, and the writeup closing sentence (body
+  re-counted: 1,448 words, unchanged).
+
+PROGRAM STATE AFTER THIS CLOSE: Tasks 1-6 are done (1 awaiting the
+user's calendar steps; 2, 3-calibrated, 4-both-limbs, 5, 6 closed
+with verdicts). The runnable arena sweep is complete: six consecutive
+rewire-over-real across visual AND olfactory circuits, with two
+measured positives along the way (Task 5: dynamics beat their own
+input; Task 3: the uniform adapter row). What remains is
+calendar-gated: Task 7 (MLPerf Tiny, ~early 2027, working-group
+membership) and Task 8 (community venues; nearest date IJCNN 2027
+competition proposals due 2026-11-30), plus the user's Task 1 dates
+(release ~Nov 1, Kaggle submit before Nov 8 23:59 UTC).
+
+## Task 6: gas-drift MB kill test RUN -- verdict KILL (real beats scrambled glomeruli, loses to every rewire and to raw features) -- 2026-10-06
+
+The user ran the one registered command (UCI 224 corpus, batch1..10
+under ~/datasets/gasdrift/Dataset; results/arenas/gasdrift_killtest
+.json + console log, gitignored). No instrument fixes were needed --
+the test ran out of the box. Disk for the corpus came from clearing
+this session's own closed Task-5 artifacts (~/venvs/brainscore 1.8 GB,
+~/.brainio 1.2 GB, ~/.result_caching; re-creatable from the Task-5
+entry if Brain-Score work ever reopens).
+
+VALID, not blocked: all 10 batches parsed (per-batch class lines in
+the log), trainable classes [1-6], train 90 / test 305 across batches
+2-10; subcircuit 4,790 nodes (627 PN / 4,064 KC / 2 APL / 97 MBON),
+162 glomerular types, w_scale 0.05762; ALL FIVE calibrations
+hit_target=True (cal_median 0.0866-0.1040 in the band); ZERO
+exceptions in every arm; 4,562.9 s wall at --workers 8 (declared ~1 h,
+observed 76 min), peak RSS 1.22 GB.
+
+MEASURED, mean-over-batches (pooled n=305; chance 1/6):
+- real   0.4257 (129/305)  curve .543 .500 .433 .467 .417 .528 .278 .278 .389
+- scram  0.3817 (115/305)  (scrambled-glomeruli control: real WINS)
+- null0  0.4338 (131/305), null1 0.4854 (146/305), null2 0.4648
+  (140/305) -- every degree-preserving rewire beats real
+- raw    0.5022 (149/305)  (circuit-free comparator: beats everything)
+
+THE FROZEN BARS: above-chance HOLDS (p 5.2e-26); beats-rewire FAILS
+in all three seeds; beats-raw FAILS. VERDICT: KILL, exit 1. SIXTH
+consecutive rewire-beats-real, now on the olfactory side. The new
+decomposition this adds: the real PN->KC map DOES carry structure the
+scrambled-glomerulus control destroys (0.426 vs 0.382) -- the fly's
+glomerular fan-in is not nothing -- but a degree-preserving shuffle
+preserves whatever the metric rewards and adds a little, and the raw
+16x8 sensor features beat every spiking arm. Per the registration the
+cloud side closes H-ALMB-GASDRIFT and executes the pre-stated dual
+close of the Task 4 Keyword-FSCIL/MB limb. Expected-tier base rate:
+0 for 16.
+
+## Task 6: gas-drift MB kill test REGISTERED and BUILT (data-gated) -- 2026-10-06
+
+User chose option 1 (Task 6 as the MB's last stand, one kill test
+settling both open MB premises). Registration FIRST (H-ALMB-GASDRIFT,
+open; docs/arenas/task6_enose/killtest_design.md -- frozen with the
+moved priors AND the literature's own prediction on its face: Caron
+2013 / Litwin-Kumar 2017 say PN->KC is near-random, so a bar-2 KILL is
+the ESTABLISHED expectation, not a surprise; commit 769e0d8 carries
+the due-diligence delta + registration alone), instrument second:
+
+- scripts/arenas/gasdrift_killtest.py: UCI drift corpus, TRAIN batch 1
+  (15/class seeded) / TEST batches 2-10 (6/class/batch), trainable
+  classes derived from batch 1; frozen encoder (AE-1/AE-4: rank-CDF
+  fit on TRAIN only, ENCODER_SEED permutation onto glomerular types,
+  5-100 Hz PN rates, Poisson paired across arms); fc2_kc_sparse
+  machinery verbatim at its passing config (asserted against
+  verdict.pass_configs), theta AND alpha recalibrated per arm by the
+  LK recipe verbatim on a seeded CAL_N=8 TRAIN subset (rewired arms
+  calibrate fresh); run_sample = run_trial with the binary member
+  mask generalized to the affine continuous drive; arms real /
+  rewire x3 / raw-feature probe / scrambled-encoder context;
+  --workers N process pool (decision-neutral: per-sample seeds
+  fixed); BLOCKED on floors, any calibration miss, >5% exceptions.
+- Two review catches BEFORE any data contact: (1) the alpha-balance
+  feedback must read the ARM's own APL->KC block, not the real
+  circuit's (a rewired arm has different APL edges); (2) Subcircuit
+  is a frozen dataclass -- matrix swaps go through
+  dataclasses.replace.
+- tests/test_gasdrift_killtest.py: 9 tests -- the load-bearing one
+  asserts run_sample EXACTLY reproduces fc2_kc_sparse.run_trial
+  (same Poisson stream, same spike counts) at binary levels on a toy
+  spiking network, plus parser dialects, rank-CDF saturation
+  semantics, seeded encoder, split floors/caps, PASS + three KILL
+  verdict paths, frozen constants, cloud BLOCKED listing.
+- MEASURED in-cloud: 9/9 new (41/41 across the four kill-test
+  suites, venv312); the script exits 3 BLOCKED here listing
+  --data-root among the missing prerequisites.
+- Runbook: docs/arenas/task6_enose/runbook.md. No new third-party
+  packages this time. Declared cost ~7-8 h at --workers 1, ~1 h at
+  --workers 8.
+
+NEXT: user runs the one command locally and reports the JSON; cloud
+closes H-ALMB-GASDRIFT either way. On KILL, the pre-stated dual close
+also ends the Task 4 Keyword-FSCIL/MB limb as not pursued. 0 for 16
+would be the base-rate count if the premise fails (pre-stated).
+
+## Task 5 CLOSED with verdict; base rate 0 for 15 propagated -- 2026-10-06
+
+Cloud-side close of the KILL recorded below, per the runbook's
+division of labor:
+
+- EXPERIMENTS.yaml: H-EARLYFILTER-BRAINSCORE-V1 open -> REFUTED, with
+  the MEASURED evidence bullet carrying the per-arm centers/errors,
+  the two-bars-cleared-for-the-first-time note (floor AND
+  passthrough), the all-three-rewires-at-or-above-real failure, the
+  fifth-consecutive count, and the two pre-verdict plumbing fixes
+  (vendored brainio import; 0-d object-array time_bins). YAML
+  re-validated.
+- ASSUMPTIONS.md: AB-2/AB-3 -> MOOT (no submission on a KILL, so the
+  rows never get exercised); AB-4 -> EXERCISED, USABLE (the declared
+  convention produced above-floor predictivity and doubled its own
+  passthrough -- the KILL came from the rewire bar, not a dead
+  frontend; whether another convention reorders real vs rewire stays
+  an open structural assumption). Rows annotated in place, never
+  deleted.
+- HANDOFF.md: Task 5 row -> COMPLETE WITH VERDICT.
+- Expected-tier base rate 0 for 14 -> 0 for 15 (the fifteenth is
+  H-EARLYFILTER-BRAINSCORE-V1, exactly as its registration
+  pre-stated) propagated to the three outward carriers: HANDOFF
+  conventions, task1 factsheet row, task1 writeup closing sentence.
+  Writeup body re-counted: 1,448 words, unchanged. Dated historical
+  "0 for 14" mentions left as written.
+
+Per the frozen rule: no BrainModel submission, no account, no further
+Brain-Score work. The program-level finding sharpens to: five
+consecutive rewire-over-real on fc25-class circuits, with Task 5
+adding the first MEASURED case where the dynamics beat their own
+input -- the transformation is worth something; the specific wiring
+is what keeps failing to be.
+
+NEXT (user decision): Task 6 (e-nose / UCI gas drift) is next in
+program order, but it is MB-dependent and inherits the MB's weak
+priors (association rewire loss; calibrated flybench arm refuted) --
+same priors gate the still-parked Task 4 Keyword-FSCIL/MB limb. The
+options are a Task 6 due-diligence delta, an explicit MB-limb go, or
+a re-rank of what remains (Tasks 6-8).
+
+## Task 5: Brain-Score V1 kill test RUN -- verdict KILL (dynamics beat their input; the wiring still loses to its rewire) -- 2026-10-04
+
+Environment first: brainscore-vision cannot install on Python 3.12 /
+macOS arm64 (every version pins eva-decord, which ships no cp312 arm64
+wheel -- MEASURED against PyPI); installed into ~/venvs/brainscore on
+a uv-managed CPython 3.11.14 instead (torch 2.14.1). Disk for the
+install + the benchmark's 1.33 GB assembly came from the user deleting
+~/datasets/DvsGesture (4.9 GB, their call, re-downloadable per the
+Task-4 entry).
+
+Two plumbing BLOCKEDs before any verdict-relevant quantity, each fixed
+at the API-contact line and recorded (the registered allowance):
+1. brainscore-vision 2.3.22 no longer depends on standalone brainio --
+   the module is vendored at
+   brainscore_core.supported_data_standards.brainio. Import fallback
+   added.
+2. The benchmark hands time_bins as [array((50, 200), dtype=object)]
+   -- a 0-d object ndarray per bin; tuple(b) raised "iteration over a
+   0-d array". start_recording now unwraps 0-d arrays via .item().
+   The declared contract (identical features per requested bin) is
+   unchanged.
+
+THE RUN (FreemanZiemba2013public.V1-pls, their PLS/CV/ceiling code
+verbatim, locally): valid, not blocked -- 135 stimuli (floor 100),
+visual degrees 4.0, lattice 169 columns / 1,046 scored early-filter
+cells of 2,701 / pixels assigned 0.441, ZERO unstable presentations in
+every arm, 75.9 s end to end after the one-time 1.33 GB data fetch,
+peak RSS 2.38 GB.
+
+MEASURED, ceiled centers (error = their reported estimate):
+- real          0.0690 +/- 0.0201
+- twin          0.0697 +/- 0.0209  (context: decides nothing; ~= real)
+- passthrough   0.0330 +/- 0.0193
+- rewire seeds  0.0828 / 0.0756 / 0.0735
+
+THE FROZEN BARS: above-floor HOLDS (0.0690 - 0.0201 > 0); beats-
+passthrough HOLDS -- the program's FIRST arm where the dynamics add
+predictivity over their own input (0.069 vs 0.033, roughly double);
+beats-rewire FAILS in ALL THREE seeds (every shuffle scores at or
+above real). VERDICT: KILL, exit 1. FIFTH consecutive
+rewire-beats-real on fc25-class circuits. The sharpened reading this
+adds: what the metric rewards is the dynamics' temporal/nonlinear
+transformation, which survives degree-preserving shuffling intact --
+the specific early-filter wiring contributes nothing this benchmark
+can see. Per the registration: no BrainModel submission, no account,
+no further Brain-Score work; the hypothesis close in EXPERIMENTS.yaml
+is the cloud side's step. Expected-tier base rate: 0 for 15.
+
+## Task 5: Brain-Score V1 kill test REGISTERED and BUILT (data-gated) -- 2026-10-04
+
+User said go. Registration FIRST (H-EARLYFILTER-BRAINSCORE-V1, open;
+docs/arenas/task5_brainscore/killtest_design.md -- frozen with the
+moved priors stated on its face; commit e89eb70 carries the
+registration alone, before any instrument code), instrument second:
+
+- scripts/arenas/brainscore_killtest.py: ONE public benchmark
+  (FreemanZiemba2013public.V1-pls, their metric/ceiling/CV verbatim,
+  locally); scored population = INPUT_TYPES cells in the central 9x9
+  hex window (T4/T5 excluded -- they have their four results); ONE
+  declared drive convention (AB-4: grayscale -> pure-numpy bilinear
+  128x128 -> DSEC identity-crop column means -> contrast about
+  mid-gray, constant 250 ms + 250 ms tail through L1/L2/L3 at
+  INPUT_DRIVE -1.0, no sweep); fc25 trained_subset passing config
+  verbatim; arms real / twin (context) / rewire per seed (4242
+  convention) / input-passthrough; minimal BrainModel adapter with
+  the two declared plumbing assumptions (visual_degrees = the
+  benchmark's own; identical features per requested time bin) and
+  per-arm identifiers so their regression cache cannot collide
+  across arms; ApiMismatch and package failures exit BLOCKED (3),
+  never a verdict.
+- tests/test_brainscore_killtest.py: 8 tests on the pure plumbing
+  (grayscale variants, deterministic bilinear resize, the declared
+  column-drive convention incl. the empty-column ASSUMPTION branch,
+  hex-window inversion, tolerant Score extractor across the API
+  shapes, PASS + three KILL verdict paths + missing-error and
+  missing-seed handling, frozen constants, cloud BLOCKED listing).
+- MEASURED in-cloud: 8/8 new tests pass (32/32 with the DSEC + DVS
+  suites, venv312); the script exits 3 BLOCKED here listing
+  brainscore_vision among the missing prerequisites.
+- Instrument bug caught by its own unit test BEFORE any data contact:
+  inverting the hex embedding moves a boundary cell at exactly
+  |dh| = 4 to 4 + O(eps), dropping it from the scored window;
+  build_patch selects on raw hex coords and never faces this. Fixed
+  with a 1e-9 tolerance, commented at the site.
+- Runbook: docs/arenas/task5_brainscore/runbook.md. The
+  brainscore-vision install is the user's own call (AF-6 covered
+  flybench only); no dataset download by hand -- the benchmark
+  fetches its own data on first load.
+
+NEXT: user runs the one command locally and reports the JSON; cloud
+closes H-EARLYFILTER-BRAINSCORE-V1 either way. On KILL, Task 5 ends
+with no submission built. 0 for 15 would be the base-rate count if
+the premise fails (pre-stated in the registration).
+
+## Task 5 (Brain-Score): due diligence delta OPEN, kill test sketched, awaiting go -- 2026-10-04
+
+Per program order after the Task 4 close (the Keyword-FSCIL/MB limb
+stays gated), the next ranked arena's premise was re-verified from the
+cloud before anything is built
+(docs/arenas/task5_brainscore/due_diligence_delta.md):
+
+- SOURCED today: submission still open and automated (website zip ->
+  Jenkins PR, or direct GitHub PR; scored on their OpenMind cluster);
+  brainscore-vision 2.3.22 on PyPI (2026-06-09, Python >=3.11, heavy
+  torch-shaped deps); a limited PUBLIC benchmark pool (e.g.
+  MajajHong2015public.IT-pls) is scorable locally without submitting.
+- MEASURED container reachability: brain-score.org 000, readthedocs
+  egress-blocked, pypi.org 200 -- data acquisition presumed local-side
+  again.
+- Moved priors stated on the delta's face: base rate 0 for 14; rewire
+  over real 4 consecutive on T4/T5; the one surviving fly-positive
+  (eye map, 4.5x vs scrambled) won as STATIC ANATOMY, not dynamics --
+  the survey line bundles both, and the kill test must split them.
+  Lamina/medulla early filters have never been tested against their
+  own rewire; that is the open question.
+- New assumption rows AB-4 (static image -> change-native frontend
+  drive convention is an invention; fix one, declare, no sweep) and
+  AB-5 (platform-alive facts, sourced) added to the register.
+- Kill-test sketch (NOT registered yet): early-filter population
+  features vs raw pixels AND vs degree-preserving rewire on one public
+  benchmark, their metric code verbatim, locally, before any
+  BrainModel wrapper or submission plumbing. Registration follows the
+  user's go. AF-6's in-container authorization is NOT assumed to
+  extend to brainscore-vision.
+
+USER DECISION PENDING: go on Task 5 as sketched, or an explicit go on
+the Task 4 MB limb, or a re-rank.
+
+## Task 4 CLOSED (T4/T5 limb) with verdict; base rate 0 for 14 propagated -- 2026-10-04
+
+Cloud-side close of the KILL recorded below, per the runbook's
+division of labor:
+
+- EXPERIMENTS.yaml: H-T4T5-DVS-GESTURE open -> REFUTED, with the
+  MEASURED evidence bullet carrying the per-seed numbers, both failed
+  sign tests, the twin-below-real attribution note, and the
+  pre-verdict instrument fix (efd06a9). YAML re-validated.
+- ASSUMPTIONS.md: AN-2 OPEN -> INVALIDATED, annotated in place (the
+  linear readout works far above chance; it just does not earn the
+  specific wiring its keep -- rewire and event counts both beat it).
+- HANDOFF.md: Task 4 row -> T4/T5 LIMB COMPLETE WITH VERDICT; the
+  Keyword-FSCIL/MB limb stays gated on the user's explicit go.
+- Expected-tier base rate 0 for 13 -> 0 for 14 (the fourteenth is
+  H-T4T5-DVS-GESTURE, exactly as its registration pre-stated)
+  propagated to the three outward carriers: HANDOFF conventions,
+  task1 factsheet row, task1 writeup closing sentence. Writeup body
+  re-counted: 1,448 words, unchanged (the swap is count-neutral).
+  Dated historical "0 for 13" mentions (frozen registration, earlier
+  worklog entries, AN-2's preserved prior text) left as written.
+
+Per the frozen rule, no NeuroBench harness integration is built. Next
+arena decision is the user's: Task 5 (Brain-Score) per program order,
+or an explicit go on the Keyword-FSCIL/MB limb, or a re-rank given
+the fourth consecutive rewire-over-real result.
+
+## Task 4: DVS Gesture kill test RUN -- verdict KILL (real loses to its rewire AND to event counts) -- 2026-10-03
+
+The user ran the one registered command on the fixed instrument
+(results/arenas/dvs_killtest.json + .log, gitignored). Valid, not
+blocked: 1,176 train / 288 test trials parsed (floors 600/150), ZERO
+out-of-frame parser flags over all 122 files, ZERO unstable windows in
+every arm, 453.5 s wall, peak RSS 2.39 GB (the pre-fix projection was
+~21 GB; the estimate of ~2.5 GB held). Drive norm (seed-0 cal subset,
+50 trials): 1.4130. Train union 876 trials; test subjects user24-29.
+
+MEASURED, per seed (pooled test accuracy; chance 1/11):
+- seed 0: real 0.4097, twin 0.3993, null 0.4410, event_count 0.4722
+- seed 1: real 0.3889, twin 0.3750, null 0.4236, event_count 0.4444
+- seed 2: real 0.4271, twin 0.4132, null 0.4653, event_count 0.5035
+
+THE FROZEN BARS: bar 1 HOLDS (real above chance all seeds, worst
+p 2.6e-42); bars 2 and 3 FAIL -- real loses to its own
+degree-preserving rewire in ALL THREE seeds (sign test over 18
+subject x seed cells: real better on 5, p 0.985) and to the
+circuit-free event-count features in all three (better on 4 of 16,
+p 0.989). VERDICT: KILL, exit 1. Attribution context: twin
+(uniform-tau) sits BELOW real in every seed, so the temporal
+heterogeneity is doing something -- just nothing the rewire does not
+do better. This is the FOURTH consecutive result on this circuit
+where the specific T4/T5 wiring is beaten by a degree-preserving
+shuffle of itself (ARC motion, DSEC real, DSEC uniform-tau context,
+now DVS Gesture). Per the registration: Task 4's T4/T5 limb closes
+with no NeuroBench integration built; the Keyword-FSCIL/MB limb needs
+the user's explicit go. Hypothesis close in EXPERIMENTS.yaml is the
+cloud side's step per the runbook; this entry is the measured record.
+
+## Task 4: instrument memory fix BEFORE the first run (measured 21 GB -> ~2.5 GB) -- 2026-10-03
+
+Local preconditions passed as registered (BLOCKED with exactly the one
+--data-root line, exit 3; 9/9 unit tests). Dataset downloaded from
+IBM's official Box folder (DvsGesture.tar.gz, 2,938,955,106 bytes;
+license CC BY 4.0, attribution IBM Research), stream-extracted to
+~/datasets/DvsGesture: 122 .aedat + 122 _labels.csv pairs, both split
+files, 4.9 GB.
+
+MEASURED before launching, per the resource rule: load_split holds
+every file's raw events as int64/float64 (32 B/event; one 42.3 MB file
+parsed to 0.168 GB in 0.4 s), projecting to ~21 GB across the 5.3 GB
+of AEDAT -- unrunnable on the 16 GB host. The sample file showed 0.0%
+out-of-frame events. Patch dims for the arithmetic: 2,701 nodes, 507
+driven, 498 scored, 169 columns.
+
+THE FIX (semantics-preserving memory layout, no decision-rule contact;
+scripts/arenas/dvs_killtest.py): (1) load_split takes a binner and
+stores each trial's (signed, counts) window tensors (~0.4 MB/trial),
+dropping raw events file by file; (2) drives_and_ec returns the
+(k, n_sub, 169) normalized cumulative grids instead of dense
+(k, n_sub, 2701) tensors, which were zero off driven_idx; (3) simulate
+expands one sub-window at a time via the new expand_subwindow_drive
+into a reused (n_nodes, m) buffer. Identical binning calls on identical
+inputs and an elementwise-identical drive expansion, so downstream
+numbers are bit-identical to the registered pipeline -- asserted by two
+new unit tests (dense-layout equivalence; binner receives exactly the
+filtered events the eager path stored). 11/11 tests; the BLOCKED
+precondition line is unchanged. No verdict-relevant quantity was
+computed before this fix (data contact so far: the one-file RAM/parse
+measurement and its out-of-frame fraction).
+
+## Task 4: DVS Gesture kill test REGISTERED and BUILT (data-gated) -- 2026-10-03
+
+User said proceed. Registration FIRST (H-T4T5-DVS-GESTURE, open;
+docs/arenas/task4_neurobench/killtest_design.md -- frozen with the
+moved priors stated on its face), instrument second:
+
+- scripts/arenas/dvs_killtest.py: our own AEDAT 3.1 polarity reader
+  (spec-exact bit layout, validity mask, timestamp overflow, foreign
+  packets skipped; validated on synthetic packed bytes); the dataset's
+  OWN subject split read verbatim; 6x250 ms windows per trial; DSEC
+  binning imported and reused on the identity 128-crop; fixed 10 ms
+  sub-windows (no dt sweep); one drive-norm scalar from a seeded
+  TRAIN calibration subset; fc2 settle-stream-tail batched across all
+  windows; arms real / twin / per-seed rewire / circuit-free
+  event-count features; t4t5-motion-style probe (3-fold CV on TRAIN);
+  the frozen three-bar verdict assembled mechanically
+  (chance-in-all-seeds, beats-rewire, beats-event-count; paired sign
+  tests over subject x seed cells + pooled majority). Data gate
+  verified in-cloud (exit 3 naming the measured missing pieces).
+- 9 unit tests (tests/test_dvs_killtest.py): parser round trip,
+  validity/overflow/foreign-packet handling, truncated-tail safety,
+  window placement incl. short trials, event-count features, exact
+  binomial, PASS + three KILL paths of the verdict, frozen constants.
+- Runbook: docs/arenas/task4_neurobench/runbook.md (download, the one
+  command, 30-90 min local, report-back protocol). The neurobench
+  package is never executed for this decision.
+
+NEXT: the user's local run decides. On KILL, Task 4's T4/T5 limb closes
+with no NeuroBench integration built; the Keyword-FSCIL/MB limb then
+needs an explicit go. On PASS, the harness integration gets its own
+registered design.
+
+## TASK 3 CLOSED; base rate propagated; Task 4 (NeuroBench) OPENS -- 2026-10-03
+
+The local session's verdict run closed H-FLYGI-FLYBENCH-CALIBRATED
+refuted (its two WORKLOG entries below carry the numbers; registry has
+the evidence block). Cloud-side reconciliation on top: HANDOFF Task-3
+row -> COMPLETE WITH VERDICT (the UNIFORM row stands as the measured
+contribution; any flybench PR / verified-badge step is the user's
+decision from that row); the canonical expected-tier base rate moved to
+0 for 13 and is propagated to the three outward-facing carriers --
+HANDOFF's conventions line, the factsheet row (with the thirteenth
+named), and the writeup's closing sentence (word count unchanged at
+1,448; the factsheet is the trace). Per the program order, Task 4
+(NeuroBench) opens with its due-diligence delta next.
+
+## Task 4 (NeuroBench) OPENED: delta measured; priors moved; decision surfaced -- 2026-10-03
+
+Full record: docs/arenas/task4_neurobench/due_diligence_delta.md.
+MEASURED: neurobench 2.3.0 IS on PyPI (torch-shaped deps, gdown);
+neurobench.ai / research.ibm.com / dropbox.com egress-blocked in-cloud
+(drive.google.com already was) -- datasets are local-side; in-cloud
+install/run of the neurobench package is a NEW third-party execution
+awaiting the user's nod (AF-6 covered flybench). THE IMPORTANT DELTA is
+internal: since the 2026-09-30 survey ranked DVS Gesture a "native
+T4/T5 fit", this program refuted T4/T5 on ARC frames AND on
+event-camera input, with the rewire beating real wiring three
+consecutive times (base rate 0 for 13). Gesture classification is a
+different computation (stated in the delta doc -- the kill test is not
+pre-decided), but the expected-tier prior is materially worse than at
+ranking. NEXT: register the DVS kill test (DSEC-pattern arms: real /
+uniform-tau / rewire / event-count features, frozen bars) and build its
+data-gated instrument -- unless the user, reading the moved priors,
+chooses to skip or re-rank Task 4. AN-2 annotated; AN-3/AN-4 added.
+
+## TASK 3 CLOSED WITH VERDICT: calibrated arm KILLED by the frozen bars; H-FLYGI-FLYBENCH-CALIBRATED refuted -- 2026-10-03
+
+The user ran the calibrated MaleCNS arm locally (runbook section 3:
+malecns_minecraft config, 3 seeds, rewired control, --jobs 6, unpinned
+build; results/arenas/malecns_calibrated.json, gitignored like the
+other rows). One instrument bug found and fixed en route (below). The
+registered premise -- biological calibration buys back the activation
+checks -- is REFUTED; the uniform row stands as Task 3's measured
+contribution, per the registration.
+
+MEASURED, the calibrated row: core 1.000 / hard 0.6194 / graded 0.7445
+(CI95 [0.7414, 0.7481]) / specificity vs rewired +0.295 / 10 of 30
+tasks passed (uniform: 1.000 / 0.6044 / 0.7113 / +0.282 / 9). Every
+passing task fails on shuffled wiring. Skips identical to the uniform
+run -- the known four plus gf_free_route_to_ttmn and closed_loop_escape
+(both flygym/torch, also skipped in the uniform run; nothing new).
+Cost: 79.5 min wall at --jobs 6, peak RSS 679 MB.
+
+Calibration sidecar facts (healthy, not blocked): real wiring alpha
+1.826, achieved KC sparseness 0.0750 (band midpoint exactly), tau
+table resolved for 36,822 of 176,422 neurons, 4 graded units (APL/CT1),
+4,064 KCs; rewired control calibrated FRESH on its own wiring (alpha
+1.780, sparseness 0.0750), so the specificity number carries no
+threshold-mismatch artifact. Two calibrations total, as designed. (The
+on-disk sidecar's "applied: false" is a write-order quirk -- the cache
+file is saved before _apply() updates the in-memory dict; the run
+numbers differ from uniform throughout, so application is not in
+doubt. Cosmetic; left unfixed post-measurement deliberately.)
+
+THE VERDICT (mechanical, frozen bars): KILL. Bar 1 FAILS -- mean
+graded over the 58 shared activation checks moved +0.0002 against a
+required +0.02. Bars 2 and 3 HOLD (overall 0.7445 >= 0.701;
+specificity +0.295 >= +0.252). The decomposition is the AF-8 story
+repeated at higher fidelity: the calibration's entire gain landed in
+the suppression/ratio class (mean 0.639 -> 0.685), almost all of it
+mb_sparseness_apl 0.625 -> 1.000 -- the one task the LK calibration
+directly targets -- while the activation subset it was built to buy
+back did not move, and the flagged water-response loss stayed at 0 Hz.
+The instrument did what it was designed to do: it refused to credit a
+win in the class the premise was not about.
+
+INSTRUMENT BUG, found before recording, fixed, regression-tested
+(scripts/arenas/flybench_calibrated_verdict.py): shared checks were
+keyed on the FULL description string, which embeds flybench's volatile
+"[N/3 seeds, sd S]" annotation, so every check the calibration moved
+silently left the shared set -- the first verdict ran on 66 of 149
+checks, i.e. almost only unmoved ones (a near-tautology). Fixed to key
+on the annotation-stripped identity (flybench diff's own convention);
+corrected run shares 149/149 checks. The KILL holds under BOTH keyings
+(delta +0.0005 buggy, +0.0002 corrected), so no conclusion changed --
+but the corrected audit list is the one of record. Test:
+test_moved_checks_stay_shared_despite_annotation_drift.
+
+Registry: H-FLYGI-FLYBENCH-CALIBRATED -> refuted, evidence block
+carries the numbers. Expected-tier base rate is now 0 for 13.
+
+## Task 3: the flagged bootstrap-CI oddity RESOLVED (instrument, not data) -- 2026-10-03
+
+The 2026-10-02 flag ("point estimate -0.070 outside the reported CI
+[-0.062, -0.045]") is resolved. MEASURED, by reading flybench's diff
+command and recomputing from the two stored JSONs:
+
+- The point estimate is real: mean stored-graded difference
+  reference-minus-FlyGI over the 149 shared checks = -0.0696.
+- The CI is also real but covers a DIFFERENT estimator: flybench
+  diff's "seed-bootstrap" re-grades resampled per-seed values through
+  plain graded_from_margin(margin_of(...)), which ignores the
+  saturated/floored flags that zero a check's stored graded score. On
+  9 of the 149 checks (6 reference, 3 FlyGI -- pn_transfer_function,
+  da1_sparseness, steering_dna02_vs_dna01) the stored graded is 0.0
+  (non-diagnostic signal) while the re-grade is nonzero. The
+  re-graded full-sample mean is -0.0546, which sits INSIDE the
+  reproduced CI [-0.062, -0.045] (center -0.0540). So: a consistent
+  CI around an estimator that is not the headline statistic -- a
+  flybench instrument inconsistency, not a transcription error and
+  not a problem with our rows.
+- A CI consistent with the headline statistic, stated with what is
+  resampled: bootstrap over CHECKS (resample the 149 paired
+  per-check differences of stored graded values, 10,000 resamples)
+  gives 95% CI [-0.112, -0.030], containing -0.0696. The
+  seed-resampling CI cannot be computed consistently without
+  reimplementing flybench's saturation/floor logic, so the
+  check-resampling CI is the one to quote.
+- Context number from the same recompute: P(reference better on a
+  random shared check) = 0.446 -- consistent with AF-8's finding that
+  our net win is concentrated, not uniform.
+
+Outward text should quote: mean graded difference reference-minus-ours
+-0.070 over 149 shared checks, 95% CI [-0.112, -0.030] (bootstrap over
+checks), P(reference better) 44.6%.
+
+## Task 3: calibrated adapter BUILT and exercised; one instrument bug caught by its test -- 2026-10-03
+
+H-FLYGI-FLYBENCH-CALIBRATED's instrument is implemented and pushed;
+the MaleCNS measurement is the user's run (runbook section 3).
+
+- scripts/arenas/flygi_flybench_adapter.py gains FlyGICalibratedAdapter
+  (engine UNMODIFIED, all composition): fc2 tau table verbatim (slow
+  150 / Tm9 200, the dossier anchor, ASSUMPTION-labelled), graded
+  APL/CT1 via the benchmark's own selectors with a declared
+  rate-equivalence bridge (5 Hz/mV, ASSUMED), and LK-style per-KC
+  thresholds (mu + alpha*sigma, alpha bisected to the 0.075 literature
+  midpoint) calibrated on seeded random subsets of the KCs' OWN
+  presynaptic partners -- never a benchmark stimulus. File-cached per
+  wiring (shared across --jobs workers). Reuse policy, each branch
+  labelled: identical wiring and jitter-same-pattern reuse; SILENCED
+  variants reuse the intact thresholds (acute shibire -- recalibrating
+  would partially cancel the manipulation under test); genuinely
+  different wirings (the rewired CONTROL above all) calibrate fresh on
+  their own wiring, so specificity carries no threshold-mismatch
+  artifact.
+- BUG CAUGHT BY ITS OWN UNIT TEST before any measurement: the
+  silenced-variant predicate checked zeroed ROWS of the engine's
+  transposed matrix -- i.e. incoming synapses -- while silence_neurons
+  zeroes OUTGOING (columns of the transpose). Fixed to compare in CSC
+  space; the test now also asserts APL-silenced toy variants reuse the
+  intact thresholds.
+- scripts/arenas/flybench_calibrated_verdict.py applies the FROZEN
+  bars mechanically (activation +0.02 / overall >=0.701 / specificity
+  >=+0.252; split = exceed-and-not-ratio, audit list printable;
+  BLOCKED from calibration sidecars scoped by n_neurons).
+- Tests: 9 in tests/test_flybench_calibrated.py (alpha search, reuse
+  predicates, toy-level calibration + determinism + cache round trip +
+  silenced reuse, split classification, all four verdict outcomes,
+  frozen-constant assertions).
+- MEASURED, toy exercise: verify-adapter clean on the calibrated
+  class; full toy suite completes with calibration + graded + silenced
+  paths engaged -- 0.91 / graded 0.93 / 22 of 30 (uniform class: 0.90
+  / 0.92 / 21). Design-doc amendment recorded OPENLY at build time:
+  the toy carries KC/APL/tau-table type names by construction, so the
+  registered byte-identity toy bar applies to the uniform class only;
+  the calibrated class's toy bar is the calibration-exercise check.
+  The three frozen MaleCNS bars are untouched.
+
+## Task 3: calibrated-parameters design REGISTERED (before build) -- 2026-10-02
+
+H-FLYGI-FLYBENCH-CALIBRATED registered, frozen design in
+docs/arenas/task3_flybench/calibrated_design.md. Premise: the class-2
+calibration ingredients (fc2 tau table by literature class, graded
+APL/CT1 internal to the adapter, LK-style KC thresholds calibrated on
+seeded NON-TASK random PN drives) buy back the activation checks
+without surrendering suppression or specificity. Trivial alternative:
+our own measured uniform row. Bars frozen: activation-subset mean
++>=0.02, overall graded >=0.701, specificity >=+0.252; mechanical
+activation/suppression split from task YAML; BLOCKED on near-zero
+type-name coverage. Next cloud-side: implement the calibrated table +
+calibration hook in the adapter (engine unmodified; toy regression =
+byte-identical fallback) with tests; the measurement is the user's
+local run, same pattern as before.
+
+## Task 3: first MaleCNS rows MEASURED (unpinned); engine beats reference on net -- 2026-10-02
+
+The user executed the Task-3 runbook locally. Instrument surprise first,
+measured and banked (AF-7): a fresh anonymous neuPrint fetch reproduces
+the pinned COUNTS exactly (176,422 / 6,287,789) but not the pinned
+FINGERPRINT (annotations + signed weights drift on re-export), so both
+rows ran --allow-unpinned and are marked unpinned; the runbook was
+corrected en route (0323fdb). Toy sanity reproduced the cloud result
+(verify-adapter clean; core 5/5, graded ~0.99).
+
+THE ROWS (malecns_minecraft.yaml config, 3 seeds, rewired control;
+JSONs local at results/arenas/malecns_{reference,flygi}.json):
+- reference LIF g0.65: core 0.5667 / hard 0.5366 / graded 0.639 /
+  specificity vs rewired +0.184. Core matches their recorded row
+  EXACTLY (drift check passes on core); hard differs from their 0.5798
+  -- annotation drift in hard-tier selectors suspected.
+- FlyGI class-2 engine (Shiu constants): core 1.000 / hard 0.6044 /
+  graded 0.711 / specificity +0.282.
+Diff over 149 shared checks: mean graded reference-minus-ours -0.070,
+seed-bootstrap CI [-0.062, -0.045] AS REPORTED (flagged: the point
+estimate sits outside the reported interval -- user to re-check which
+statistic the CI covers before this number goes in any outward text).
+Our engine is reliably better on net AND more wiring-specific (+0.282
+vs +0.184).
+
+HONESTY NOTE, the design input (new AF-8): the win decomposes
+asymmetrically -- our biggest gains are SUPPRESSION checks where the
+reference saturates (292 Hz -> 0), and our one big loss is an
+ACTIVATION check (water response 95.8 -> 0 Hz). A globally quieter
+engine wins suppression cheaply, so activation checks are the
+discriminating set for the calibrated-parameters step. Skips recorded:
+egg_laying_ovidn (flywire-only), halt_walk_off (selector matches no
+MaleCNS neurons -- their README predicted male-name gaps),
+embodied/closed-loop (flygym not installed). AF-4 part-resolved
+structurally: graded units are internal to the adapter; the spike-only
+contract holds unless a readout population is declared graded.
+
+## TASK 2 CLOSED WITH VERDICT: DSEC kill test KILLED -- H-T4T5-DSEC-DIRECTION refuted -- 2026-10-02
+
+The user ran the frozen kill test locally (thun_00_a; one instrument
+fix en route, e6477dd: DSEC events are Blosc-compressed, the harness
+now imports hdf5plugin). Valid, not blocked: 33/33 usable eval windows
+(threshold 30), 0 unstable, 66 s. MEASURED: eval median per-window mean
+angular error -- real 81.36 deg, uniform-tau 78.09, rewired(mean)
+78.85, event-centroid comparator 81.88, GT-median global direction
+65.36. Both frozen bars FAILED (real<comparator p=0.364; real<rewired
+p=0.982). Registry closed refuted, with the honest reading at tier:
+every arm sits near the 90-deg chance line at this binning -- the
+oracle single global direction beats all per-column estimates -- so no
+arm extracts usable per-column direction here, and within that the
+degree-preserving rewire beats the real wiring for the THIRD
+consecutive time across tasks (MB association, ARC motion, DSEC
+direction). Per the registration: recorded class-2.5 limit on
+event-camera input at the declared binning; no dense pipeline, no
+benchmark account (AD-1/AD-2 retired), no entry. Task 2 is COMPLETE
+per operating rule 3 -- a failed kill test is a completed task.
+
+## Task 1: quality pass over the writeup + all visual assets -- 2026-10-02
+
+User-directed review ("make sure they're up to snuff"), every rendered
+asset eyeballed and every figure number re-traced to the factsheet.
+Found and fixed:
+
+- COVER BUG (shipping-blocking): the title wrapped to a second line and
+  COLLIDED with the subtitle -- present in the shipped cover.png since
+  2026-10-01. Fixed (one-line title at 34px, subtitle cleared),
+  re-rendered at 2x, eyeballed clean.
+- fig3 semantic fix: in the trained-head panel the held-out measurement
+  was colored GRAY, which the legend defines as "control" -- it is our
+  component's honest held-out score, not a control. Both trained-head
+  dots are now blue per the legend's own definition. Also trimmed the
+  dead band at the canvas bottom (1600 -> 1380 px tall).
+- fig2's "4,257 neurons" (LC) had no factsheet row -- the number is
+  solid (EXPERIMENTS.yaml, literal_rate_lc_readout config, WORKLOG
+  readout table) and now traces: factsheet row added.
+- writeup.md: two ragged source lines from the edit rounds rewrapped
+  (no word changed; body stays 1,448).
+
+Verified clean, no action: fig1 (ladder vs hidden -- all six numbers,
+submission IDs, legend, scope footer), fig2 (all verdict-matrix numbers
+match writeup + factsheet), card.png (legible at thumbnail scale),
+writeup end-to-end read (no seams, boundaries intact). Palette: the
+figure palette passes the dataviz validator's CVD/normal-vision/contrast
+checks; the gray slot intentionally fails the chroma floor because
+controls are DELIBERATELY recessive gray with every dot direct-labeled
+-- recorded as the accepted deviation.
+
+## Task 1: relicensed to MIT-0 on the user's go -- 2026-10-02
+
+"go MIT-0" (the user, copyright holder). LICENSE is now the MIT No
+Attribution text with the same copyright line; README's license sentence
+and CITATION.cff's license field (SPDX MIT-0) updated;
+THIRD_PARTY_NOTICES deliberately untouched (third-party code keeps its
+own MIT/MIT-0 licenses, clearing arcprize's public-sharing floor for
+3rd-party code). AP-4 closed. The last ARC-side prerequisite that was
+Claude-or-user decision-shaped is done; what remains on Task 1 is pure
+execution (release ~Nov 1, submit by Nov 8 per kaggle_form.md).
+
+## Task 1: arcprize overview checked -- the CC0/MIT-0 requirement is REAL; AP-4 re-reversed -- 2026-10-02
+
+The user pasted the last unchecked source, arcprize.org's general 2026
+overview. It carries the clause the Kaggle Rules do not, verbatim: "all
+code and methods authored by the submitter must be made open source
+under a permissive public domain license (eg. CC0 or MIT-0)", as an
+ELIGIBILITY condition, "before receiving official private evaluation
+scores". Reconciliation of all three sources, now each read in full:
+arcprize's CC0/MIT-0 = eligibility open-sourcing to the world; Kaggle's
+CC-BY 4.0 = the winner's separate grant to the sponsor; the Kaggle tabs
+simply never carry the first clause -- which is exactly how yesterday's
+Rules-only reading went wrong. AP-4: back to CONFIRMED as originally
+sourced; the one-day invalidation is itself invalidated and both moves
+are recorded in the register row (the register's never-delete rule is
+why this whiplash stays visible). Plain MIT has an attribution clause
+and is not "public domain"; the safe reading is it does NOT qualify.
+
+CONSEQUENCE, reopened for the user (copyright holder): relicense
+FlyGI-authored code to MIT-0 (recommended -- minimal diff) or CC0
+BEFORE the repo goes public (~Nov 1). Prepared commit on their go.
+Third-party components are unaffected: arcprize's floor for 3rd-party
+code is "allows public sharing (eg. Apache-2.0, GPLv3)" and every
+notice-listed piece is MIT/MIT-0. Also re-confirmed on the same page:
+papers due Nov 8; no-internet evaluation (our submissions complied).
+Runbook Step 2 and the release checklist flipped back accordingly.
+
+## Task 1: Kaggle OVERVIEW tab measured; eligibility layer corrected -- 2026-10-02
+
+The user pasted the Overview tab (submission requirements + evaluation).
+Register deltas, all banked:
+
+- AP-5 CONFIRMED IN FULL, and my form-only reading corrected: the form's
+  checklist and the ELIGIBILITY requirements differ. The Overview makes
+  the Media Gallery (with a required cover image) and the public code
+  notebook (via Project Links) conditions of eligibility even though the
+  form checklist does not enforce them. The 1,500-word limit + penalty
+  wording is now verbatim-measured (we are at 1,448).
+- AP-4 residual nearly closed: the Overview also contains NO CC0/MIT-0
+  wording. Only arcprize.org's general 2026 overview page remains
+  unchecked; MIT stays.
+- AP-9 fully resolved: "you will be asked to provide your submission ID"
+  (Accuracy criterion note) -- have 56683298 ready.
+- AP-15 updated: Kaggle is internally consistent at 2026-11-09 23:59 UTC
+  (form + Overview agree); arcprize still says Nov 8; plan stays Nov 8.
+- NEW AP-16 (auto-publication): a private Kaggle resource attached to
+  the writeup "will automatically be made public after the deadline."
+  Linking the private submission notebook = consent to publication, so
+  prefer making it public deliberately on release day, and put the
+  MaleCNS CC BY 4.0 citation on the private dataset's description
+  BEFORE submitting (AP-6) in case publication cascades.
+
+kaggle_form.md corrected to carry both layers (gallery/notebook now
+marked required; submission-ID and dataset-citation items added to the
+pre-Submit checklist). No artifact changed: we already satisfied every
+requirement; this pass was about knowing it rather than assuming it.
+
+## Task 1: the LIVE Kaggle writeup form measured; artifacts brought to spec -- 2026-10-02
+
+The user opened the real New Writeup form and pasted it verbatim. Three
+assumptions moved, two artifacts were produced, one was fixed:
+
+- AP-5 part-INVALIDATED: the six REQUIRED checklist items are Title
+  (<=80), Subtitle (<=140), Card/Thumbnail Image (560x280), Track
+  (auto), Project Description, Project Links. The Media gallery and
+  file uploads are OPTIONAL, there is NO notebook-attachment field
+  (notebooks go under Project Links), and no word limit is displayed
+  (keeping <=1,500 anyway; the penalty wording from the extraction is
+  unverified).
+- AP-9 CONFIRMED with mechanics: no code-submission selector exists;
+  linkage = same team (Rules 2.1.b) + the submission IDs named in the
+  body + a Project Link to the submission notebook.
+- NEW AP-15: the form shows Nov 9 2026 3:59 PM PST (= 11-09 23:59 UTC)
+  vs arcprize's Nov 8 -- a confirmed two-source discrepancy; the plan
+  stays 11-08.
+- FIXED: the writeup subtitle was 322 chars against the form's 140 cap.
+  Rewritten to 139, scope words kept ("both circuits tested in full
+  scored below their degree-preserving rewires"); title already fits
+  (78/80). Body untouched (1,448 words).
+- NEW media/card.html + card.png (1120x560 at 2x) + card_560x280.png:
+  the required 2:1 card image, cover-palette hex motif, rendered through
+  the headless Chromium and eyeballed.
+- NEW kaggle_form.md: field-by-field paste guide (slug, card, gallery
+  order, description paste boundary, the three Project Links incl. the
+  currently-private submission notebook megusalexandrus/flygi-arc-agi-3
+  with a recommended-not-required make-public note, DOI opt-in, and the
+  pre-Submit checklist). submission_runbook.md Step 5 now defers to it.
+
+## Public-release hygiene: personal paths + email scrubbed, CITATION.cff set -- 2026-10-02
+
+User direction: apply best practice (remove local /Users/... paths, set
+the citation). Measured sweep: 76 lines in 56 tracked files embedded
+/Users/<username>/...; one tracked doc carried the user's personal
+email. Done, category by category, and verified:
+
+- 47 archived probe/solver scripts in docs/fap_extension_20260928/ now
+  resolve ROOT = Path(__file__).resolve().parents[3] (portable; logic
+  unchanged). Verified: all compile; root resolves to the repo root for
+  every one. Nothing imports them (docstring references only).
+- JSON records (integration_reports.json, completion_reports.json) and
+  results/manifests/{dynamics_regime_20260921,positive_control_regime_
+  20260922}.json now carry repo-relative paths; hashes and values
+  unchanged; nothing in the code reads these files (grepped).
+- LATENT BUG FIXED: tests/test_fap_arch_crosshair_parking.py hardcoded
+  its fixture's absolute path, so off the original machine its
+  frame-bank negative audit silently SKIPPED. Now repo-relative like its
+  siblings. Measured: with a synthetic bank at the repo path the test
+  RUNS and passes; without one it skips cleanly.
+- CLAUDE_CODE_REFACTOR_HANDOFF.md paths made generic; the personal email
+  in docs/arenas/due_diligence_20260930.md replaced (the release
+  checklist's "no emails" sweep predated that file).
+- CITATION.cff: author Mustafa Safdari (alias msafdari -- the name every
+  commit is already authored under; no email), repository link, MaleCNS
+  paper as a reference. cffconvert: valid against schema 1.2.0.
+- Not done, deliberately: history rewrite (AGENTS.md forbids force-push
+  of shared history without an explicit ask; old paths only expose the
+  username, which equals the public author name already on every
+  commit).
+
+ENVIRONMENT NOTE: the cloud container's default python3 is 3.11, but
+the repo requires 3.12 (PEP 695 syntax in src/flygi/controller/scene.py),
+so repo tests must run under 3.12 here (uv venv in the session
+scratchpad). PRE-EXISTING (identical on the untouched tree, verified by
+stash): 4 fap_arch tests (merge_deliver x2, pip_door x2) hard-fail with
+FileNotFoundError when results/diagnostics/recognizer_frames.npz is
+absent -- they lack the skip guard their siblings use. Under 3.12 the
+fap_arch + dsec families: 199 passed, 8 skipped, those 4 failed.
+FIXED same day at the user's direction: those 4 tests now carry the
+siblings' skipif guard (module-level `needs_recognizer_frames`). Measured
+under 3.12: fresh-clone state 199 passed, 12 skipped, 0 failed; with a
+synthetic bank present all 4 RUN (the su15 positive test correctly fails
+on blank frames -- the guard hides nothing when the data exists). On the
+user's machine, where the real bank lives, behavior is unchanged.
+
+## Task 1: Kaggle Rules read; license requirement reversed -- 2026-10-02
+
+The user JOINED the Paper Track on Kaggle (entry deadline 2026-10-26
+retired) and pasted the full Kaggle Rules tab verbatim. Measured against
+the register:
+
+- AP-4 INVALIDATED as sourced. The rules name the winner license as
+  CC-BY 4.0 (§1.6, §2.5), granted "if you are a Competition winner" as a
+  condition of the prize (§2.8). CC0/MIT-0 -- what our 2026-09-30 search
+  extraction reported -- appears nowhere in the rules text. Consequence:
+  no relicense is needed to submit; the repo stays MIT (our reading, not
+  legal advice; MIT also meets §3.6.b's OSI/commercial-use condition).
+  Residual: the CC0/MIT-0 wording may live on the Kaggle Overview tab or
+  arcprize's general 2026 overview page, which were not pasted.
+- AP-3 CONFIRMED: "Team must match the team making a submission to either
+  ARC-AGI-2 or ARC-AGI-3" (§2.1.b).
+- AP-5 still OPEN but located: the rules defer to "the requirements
+  stated on the Competition Website" (Overview tab).
+- NEW, all CONFIRMED from the text: AP-11 one writeup submission per
+  team (§2.2.a) -- SUBMIT is one-shot; AP-12 public code sharing during
+  the competition period must also be posted on the competition's Kaggle
+  forum/notebooks (§3.6.b) -- a forum post with the repo link is now a
+  release-day step; AP-13 winner clocks (respond in 1 week, prize docs
+  in 2 weeks, code + reproduction docs). AP-14 (low risk, OPEN): every
+  third-party component in THIRD_PARTY_NOTICES.md is MIT/MIT-0 except
+  the sponsor's own Kaggle starter, whose pinned commit has no LICENSE
+  file.
+
+Docs brought in line: submission_runbook.md (status block, Step 2 now
+optional, forum-post step, one-shot SUBMIT warning, dates table, and a
+stale instruction removed -- it told the user to trim a section "marked
+OPTIONAL" that the writeup does not have), public_release_checklist.md,
+PLAN.md, HANDOFF.md.
+
+## Task 1: Prior-work section added to the writeup under gates -- 2026-10-02
+
+The user eyeballed arcprize.org/competitions/2026/paper (pasted
+verbatim): AP-1 CONFIRMED (papers due 2026-11-08 -- the plan date is
+now verified), AP-2 CONFIRMED verbatim, AP-9 raised to high confidence
+("linked to", not "new"), and new AP-10 found a real gap -- the
+What-to-Include guidance lists Prior work and the Novelty rubric scores
+against existing public research, while writeup.md named no prior
+approach. Revision applied at the user's direction: a ~100-word Prior
+work section (demo wave; the three published counter-evidence lines;
+CompressARC 2025 3rd at ~20% on ARC-AGI-1; ARC-NCA/VSA placement; no
+pure negative-results paper in the money, 2024-2025 winner lists), with
+offsetting trims (sg-bioeye-t4t5 borderline sentence removed to the
+factsheet only; parentheticals compressed; no number changed). Factsheet
+External-context extended so every new claim traces. TWO GATES run as
+independent agents: compliance regression (1 finding: restore "compiled"
++ "min" in the EB-ring sentence -- applied) and fact/tier (7 findings,
+all qualifier/scope restorations: "most"/none-ran-all-three on the wave,
+"often matching or beating", ARC-AGI-1 + 2025 qualifiers on CompressARC,
+"pure ... in the money (2024-2025 winner lists)" dated, "of this
+non-LLM track" restored, "min" circvar, click-only-games scope -- all
+applied). Body 1,470 -> 1,448 words (target <=1,450; Kaggle cap 1,500).
+Remaining Kaggle-side unknowns for the user's browser check: AP-3,
+AP-4 (license wording + when it binds), AP-5 mechanics, AP-9 linking
+mechanics.
+
+## Task 3: adapter kill test PASSED both bars, zero free parameters -- 2026-10-01
+
+H-FLYGI-FLYBENCH-ADAPTER: open -> supported, measured minutes after
+registration (registry entry has every number; compressed here). Our
+class-2 SpikingNetwork, UNMODIFIED, behind flybench's contract via
+scripts/arenas/flygi_flybench_adapter.py (plumbing only, all declared
+in killtest_design.md): verify-adapter "conforms: no defects", and the
+five canonical core reflexes PASS on the toy at the DERIVED unit
+bridge w_scale = w_syn*gain/tau_m -- no gain sweep, no fitted
+parameter anywhere. Seed guard: --tier core --seeds 3 = 5/5, graded
+0.99 [0.99, 0.99]. Full-suite context: ours 0.90/0.92/21-of-30 vs
+reference 0.93/0.94/24-of-30; the three lost tasks (EPG ring bump
+never ignites, APL sparsification ratio 1.03 vs 1.14, one steering
+rate at 4.07 vs bar 5) are all sustained-activity-flavored, matching
+the declared differences (no delay line, dt 0.5 vs 0.1 ms,
+current-based synapse) -- and the ring loss echoes this repo's own
+two-fidelity-class bump verdict. One check gained (PN transfer stays
+under the 170 Hz bar where the reference saturates to 272). SCOPE:
+contract-level, synthetic toy, no fly claim.
+
+Task 3 remaining, in order: (a) MaleCNS rows -- neuprint fetch is
+local-only (AF-2); the natural next artifact is a Task-3 runbook for
+the user's local fetch + build + our-adapter run with their
+shuffled-wiring controls; (b) the scientific heart, our
+Litwin-Kumar-calibrated MB parameters vs their PN-broadcast finding,
+needs its own registered design first (AF-4 spike-conversion question
+included); (c) any submission (PR, verified badge) is the user's
+outward step. The adapter commit is the checkpoint before (a).
+
 OPERATIONAL NOTE 2026-09-28, widened 2026-09-30: disk-space compaction
 gzips every file over 10MB anywhere under results/ (2.7GB -> ~0.4GB;
 evidence preserved, nothing deleted). Paired-comparison scripts reading
@@ -16,6 +1929,240 @@ Read this file before planning or editing. Reconcile it with `git status`, the
 latest commits, active processes, and immutable result artifacts after every
 handoff or context reset. Update it after each meaningful result, decision,
 blocker, submission, or change in ordered next work. Never record secrets.
+
+## Task 3 (FlyBench) OPENED: due-diligence delta measured; execution is user-side -- 2026-10-01
+
+Opened immediately after Task 2 closed, per the program order. Full
+record: docs/arenas/task3_flybench/due_diligence_delta.md. Measured:
+
+- flybench is NOT on PyPI (404) -- survey corrected; install is
+  `pip install -e .` from the GitHub clone (read-only cloned in-cloud:
+  v0.2.1, commit 3052ce5). The project moved since the survey:
+  terminal-aware LIF is a second verified mechanism row, a flyvis-eye
+  task showed the reference loom escape was hand-fed, and a closed-loop
+  escape task exists that nobody passes. Our MB-calibration angle
+  remains unclaimed.
+- neuprint.janelia.org still HTTP 000 in-cloud (AF-2 stands).
+- NEW measured blocker: this environment's execution policy DENIES
+  installing/running third-party code, so even the no-fetch toy suite
+  cannot be verified here. Reading the clone is permitted and the
+  adapter-relevant interface facts are recorded (Simulator(connectome,
+  params).run -> SPIKE-only SimResult; verify-adapter CLI; open
+  division wants n_free_parameters + fit_data, benchmark-fitted params
+  ineligible). New rows AF-4..AF-6.
+
+DECISION RESOLVED same day: the USER explicitly authorized third-party
+execution in this container ("Do #2. I authorize."). Measured
+immediately after: `pip install -e .` works, `flybench toy` builds the
+3,792-neuron / 45,343-edge synthetic connectome, and `flybench run -c
+toy` completes in ~2 min with the REFERENCE simulator at score 0.93 /
+graded 0.94 / 24 of 30 tasks (6 skipped: toy has no nerve-cord
+readouts; flygym/flyvis extras not installed). AF-6 flipped to
+CONFIRMED-under-authorization. The adapter kill test is registered
+BEFORE any adapter code: docs/arenas/task3_flybench/killtest_design.md
++ EXPERIMENTS.yaml H-FLYGI-FLYBENCH-ADAPTER (open) -- premise: our
+class-2 SpikingNetwork, UNMODIFIED, behind their Simulator contract
+with declared plumbing only (derived unit bridge w_scale =
+w_syn*gain/tau_m, shared Shiu constants, suprathreshold-pulse emulation
+of their forced Poisson stimuli); trivial alternative: their reference
+LIF's measured toy row; PASS = verify-adapter zero defects AND the five
+canonical core reflexes pass at the derived w_scale (fallback: the
+reference's own declared gain-sweep freedom, 1 free parameter).
+neuprint stays blocked (AF-2), so MaleCNS rows remain local-only
+regardless.
+
+## Task 2 (DSEC-Flow): registered, built, data-gated -- COMPLETE cloud-side -- 2026-10-01
+
+Resumed in a new session per the pause entry below; HANDOFF.md's resume
+order followed exactly. All four of its Task-2 next steps are done and
+pushed (branch claude/admiring-goldberg-wtqkbg):
+
+- RECONCILED first, as flagged: the truncated, unreviewed
+  docs/arenas/task2_dsec/KILL_TEST.md draft is superseded by the
+  complete, FROZEN registration docs/arenas/task2_dsec_flow/
+  killtest_design.md (directory settled as task2_dsec_flow/, parallel
+  to task1_arc_paper/; old directory removed). Frozen before any data
+  contact: arms (real / uniform-tau twin / 3x degree-preserving rewire
+  / zero-flow EPE-context / GT-median context / event-centroid-shift
+  KILL COMPARATOR / lattice cross-correlation ceiling), the pass/kill
+  rule (real must beat event-argmax AND the rewire on per-window mean
+  2D angular error, one-sided paired sign tests p<0.05 plus lower
+  medians), the 250-window cap with temporal 20% calibration prefix,
+  the BLOCKED-vs-KILL distinction (<30 evaluable eval windows = not a
+  verdict), and the dt grid {10,20,50,100} ms with per-arm matched
+  calibration freedom. Registered as EXPERIMENTS.yaml
+  H-T4T5-DSEC-DIRECTION (open); ASSUMPTIONS.md gained AD-6 (polarity
+  running-sum as pseudo-luminance), AD-7 (central-crop isotropic
+  binning), AD-8 (fc25-measured subtype preferred directions as the
+  fixed vote basis) and updated AD-3..AD-5.
+- scripts/arenas/dsec_metrics.py -- the connectome-independent half,
+  MEASURED in-cloud on synthetic flow: 6/6 selftest checks, 19 tests.
+  EPE / 2D+3D angular error / 1-2-3PE, the DSEC-KITTI 16-bit flow-PNG
+  codec in pure numpy+zlib (round trip exact to the 1/128 px quantum,
+  all five PNG filters), zero-flow and GT-median baselines. numpy +
+  stdlib only, so the local run needs no imaging dependency.
+- scripts/arenas/dsec_killtest.py -- the data-gated harness against
+  the real fc2/fc25 interfaces (build_patch, GradedFlyvisNetwork,
+  trained_weight_matrix/trained_table, verbatim trained_subset gain,
+  degree_preserving_rewire). MEASURED in-cloud: it exits 3 with a
+  BLOCKED report correctly naming this container's missing
+  prerequisites (compiled runtime, fc25 results file, h5py/pyarrow,
+  data root) -- the egress blocker recorded in the pause entry stands.
+  Its 13 pure-plumbing tests (geometry, binning, comparators, vote DC
+  cancellation, GT gates, exact sign test, frozen-constant assertions)
+  pass; 32 total across both Task-2 suites.
+- docs/arenas/task2_dsec_flow/runbook.md -- the user's local steps:
+  precondition check, ~4 GB single-sequence download (thun_00_a
+  primary), the one command, and the report-back protocol.
+
+Task 2 is COMPLETE by the HANDOFF definition (harness, design, runbook,
+registration committed; blocker surfaced). The MEASUREMENT is the
+user's local run; on report-back the hypothesis closes from the JSON
+(supported / refuted / blocked) and the registry + this file update.
+Expected tier, base rate stated: 0 for 12, and the nearest precedent
+(H-T4T5-CLASS25-MOTION) measured the rewire ABOVE real on ARC frames.
+Next per the program order: Task 3 (FlyBench) opens with its
+due-diligence delta.
+
+## SESSION PAUSED for resume elsewhere -- 2026-10-01
+
+The user paused the arena-program session and will resume in a new one.
+RESUME FROM docs/arenas/HANDOFF.md. It records the exact pause point:
+Task 1 is complete on the Claude side and the user's runbook steps are
+pending. Task 2 (DSEC-Flow) has its due diligence done and its build
+paused.
+
+Task 2 measured blocker (2026-10-01): the cloud container's egress
+returned HTTP 000 for dsec.ifi.uzh.ch, download.ifi.uzh.ch,
+drive.google.com (MVSEC) and neuprint.janelia.org. GitHub raw returned
+200. The container also lacks the compiled runtime and the flyvis
+checkpoints. So the DSEC kill test runs on the local machine, or in the
+cloud after a network-allowlist change. The planned next steps are
+recorded in HANDOFF.md: build and verify the connectome-independent
+metrics/baselines module in the cloud, freeze the kill-test design and
+pass/kill rule, write the data-gated harness against the fc2/fc25
+interfaces, write the runbook, and register the hypothesis.
+
+The full ten-agent due-diligence record is now preserved in the repo as
+docs/arenas/due_diligence_20260930.md. It previously existed only in
+session temp files.
+
+## Task 1 (ARC Paper Track): full package built -- 2026-10-01
+
+The complete submission package is in docs/arenas/task1_arc_paper/,
+produced under adversarial verification at every stage:
+
+- factsheet.md: every number checked against the durable record by a
+  four-agent pass (wf_7e405dd9-8a8); corrections applied (base rate is
+  0-for-12; coordinate-HEAD vs H-COORDINATE-CONVENTION disambiguated;
+  three learning nulls, not four; partial-lead phrasing; NOT-USEFUL
+  fidelity scoping). Record hygiene fixed en route: the registry's
+  duplicate status key on H-MB-CLASS2-ASSOCIATION removed (YAML parses,
+  status=refuted); LEAGUE.md's stale H-EFFERENCE row flagged for local
+  regeneration; AP-6 CONFIRMED (MaleCNS is CC BY 4.0 per README).
+- writeup.md: the judged artifact (title + subtitle + 1,429-word body),
+  built by a 9-agent workflow (three angles, three judge lenses,
+  synthesis, two gates: wf_6cc4b6d7-f47); all four gate findings applied.
+  Headline: "The Grammar Scaffold Transferred Zero. The Fly's Eye Map
+  Survived Its Control."
+- media/: cover + three figures (ladder-vs-hidden, verdict matrix,
+  controls-both-ways), palette-validated, rendered 2x from committed HTML
+  sources; all numbers from the factsheet.
+- public_notebook.ipynb: 9-cell public companion (narrative + RECORD
+  dict + ladder chart + guarded spectral-radius reproduction cell).
+- linkedin_post.md + x_post.md: announcement drafts, posting gated on
+  repo-public.
+- submission_runbook.md + public_release_checklist.md: the user-executed
+  half (this container has no Kaggle credentials and the rules pages are
+  egress-blocked). Step 0 verifies the OPEN register rows (deadline
+  11-08 vs 11-09, CC0/MIT-0 wording, same-account rule). README's stale
+  milestone-era results section replaced with the current verdict matrix
+  and submission record.
+
+Remaining on Task 1, all user-side: runbook steps 0-7 (verify rules,
+join paper-track comp, license decision, repo public, notebook upload,
+writeup submit before 2026-11-08, posts). Claude-side artifacts are
+complete pending one final outward-artifact compliance check in flight.
+
+## ARENA PROGRAM OPENED: plan + assumptions register committed -- 2026-09-30
+
+User directive: execute all eight ranked arenas from
+docs/next_arenas_survey_20260930.md, top rank first, one at a time, with
+due diligence before each, continuous documentation, and tracked
+assumptions. Task 1 (ARC Paper Track) must also yield LinkedIn + X post
+drafts leading to the (to-become-public) GitHub repo.
+
+Due diligence ran first: a ten-agent web-verification workflow
+(wf_77415764-bf9), all ten arenas checked. Plan: docs/arenas/PLAN.md.
+Register: docs/arenas/ASSUMPTIONS.md. The findings that reshape the work:
+
+- Paper Track judged artifact is a <=1,500-word KAGGLE WRITEUP with a
+  required Media Gallery and attached PUBLIC notebook, linked to a real
+  code submission, from the SAME account (megusalexandrus). "The code
+  submission need not achieve a high score" -- our three 0.15s qualify.
+  Deadline 2026-11-09 per Kaggle (one source says 11-08; planning to
+  11-08). Prize eligibility wants CC0/MIT-0 on submitter code -- current
+  LICENSE is plain MIT; relicensing is the user's call. Precedent:
+  CompressARC placed 3rd at ~20% accuracy; no pure negative-results paper
+  has ever placed -- nulls go in as controls, not the headline.
+- DSEC-Flow: open, rolling; floor on the board is MultiCM EPE 3.47; 6-month
+  report-or-deleted rule; institutional-email account requirement.
+- FlyBench: we would be external contributor #1; MaleCNS fetch is
+  anonymous via neuprint; verified-badge requires maintainer-rerunnable
+  stack; substrate differs from ours (176,422/6.29M vs our 166,700/24.99M).
+- NeuroBench: no active challenge; leaderboard is maintainer-gated
+  (relationship, not API). Brain-Score: rolling, pure-NumPy precedent
+  (pixels/gabor/hmax live on the 2026 board), submission = public PR.
+- e-nose: no open competition anywhere; paper route; UCI corpus has a
+  published integrity critique (Dennler 2022); Aug-2026 engineered
+  olfactory-SNN paper is the near-competitor.
+- MLPerf Tiny: v1.4 done July 2026, v1.5 unannounced (~H1 2027 inferred);
+  an individual submitter exists, path is real; join WG 8+ weeks early.
+- NEW hard date the survey missed: IJCNN 2027 competition PROPOSALS due
+  2026-11-30 (Cape Town, Jun 2027; scope includes neuromorphic + embodied).
+
+Container constraints measured: no Kaggle credentials, no compiled MaleCNS
+runtime -- all Kaggle/browser/outward steps are prepared here, executed by
+the user via runbooks. Task 1 is ACTIVE; next entry when its artifacts land.
+
+## Fly-limit question answered; external survey recorded -- 2026-09-30
+
+The user asked whether anything else is extractable from the fly and, if the
+limit is reached, which other challenges/benchmarks the fly could enter. Full
+answer with tiers and links: docs/next_arenas_survey_20260930.md. Compressed:
+
+- ON ARC, THE LIMIT IS MEASURED, NOT ASSUMED. Two earned fly-negatives (MB
+  association, T4/T5 motion decode -- both validated, both lost to their
+  degree-preserving rewires), the rest of the inventory closed by benchmark
+  failure or no-native-mapping, and the score track's non-LLM levers
+  exhausted by preregistered gates. Remaining fly-side levers are science,
+  not score: class-3 ingredients (see FlyBench below) and LC at class 2.
+- SOURCED (two-agent web survey, 2026-09-30): a Sept-2026 viral wave of
+  ~50+ "MaleCNS plays Doom/Mario/Beat Saber" projects commoditized the game
+  demo; NOBODY is on ARC (FlyGI appears unique); nobody anywhere holds a
+  control-backed "untrained innate wiring does useful task work" claim, and
+  three published lines cut against it (digital sphinx, fly-hero's
+  random-network readout, connectome-reservoir nulls). Our audited record --
+  positives AND negatives -- is therefore the asset.
+- FLYBENCH (github.com/brandoncho369/flybench, VERIFIED by local clone):
+  36 pre-registered reflex tasks on FlyWire+MaleCNS with shuffled-wiring
+  controls, same epistemics as this repo, aimed at biology not tasks. Its
+  no-free-parameter mechanisms (terminal-aware synapses: MaleCNS core tier
+  0.57->0.90; spike-frequency adaptation) are exactly "physiological
+  ingredients outside the swept space" -- the registered reopen condition
+  for our ring verdict. Its PN-broadcast finding predicts plain LIF cannot
+  sparse-code the AL; our Litwin-Kumar-calibrated pass is the counterpoint.
+- RANKED NEXT ARENAS (top of eight; details+kill tests in the doc):
+  1) ARC Prize 2026 Paper Track (sourced deadline 2026-11-09, re-verify) --
+  near-zero build, the record is the paper; 2) DSEC-Flow event-camera
+  optical flow (standing; T4/T5's native input; claim must be tiered
+  "connectome-constrained, physiology-fitted", frozen counts are DSI 0.042);
+  3) submit to FlyBench; 4) NeuroBench; 5) Brain-Score oddball; 6) e-nose /
+  gas-sensor drift for AL+MB. Not worth doing: more game demos, robotics
+  stacks, LLM leaderboards.
+
+Arena choice and any LLM-hybrid scope decision remain the user's. No code,
+config, or experiment changed in this checkpoint.
 
 ## Search layer: gated and NOT shipped; queue complete -- 2026-09-30
 

@@ -36,8 +36,13 @@ where `drive` is already projected into graph space. It is held fixed for the
 configured number of internal steps. The literal baseline declares `K=4`,
 `leak=0.3`, `gain=0.9`, scalar `bias=0`, zero initialization, and a frozen
 graph. `K=4` was selected after the full-graph diagnostic found that all 1,314
-descending neurons first receive sensory influence at four internal steps; leak
-and gain have not been searched. State transitions return a new vector and never mutate the caller's
+descending neurons first receive sensory influence at four internal steps.
+Leak and gain were assumed, not searched, when this literal baseline was
+declared. Gain was later swept: the first sweep ran on unrepresentative input
+(uncorrelated random frames) and picked 2.7, recorded as a reversal; the
+re-sweep on correlated frames adopted 2.0, and the later league regime is
+`gain2.0-modulators` (see `LEAGUE.md` and
+`docs/arenas/task1_arc_paper/factsheet.md`). State transitions return a new vector and never mutate the caller's
 state, input, or graph. A deterministic nonzero initialization exists only as
 an explicit seeded diagnostic; it is not the literal-agent initialization.
 
@@ -78,7 +83,13 @@ logits before categorical sampling and uses the same policy-owned, recorded
 NumPy RNG for actions and factorized `ACTION6` coordinates. A score-blind
 three-point calibration froze action temperature 0.15 and coordinate
 temperature 0.20. Changed cells supply a novelty-centroid click; after an
-unchanged click, the policy samples a not-yet-clicked grid cell. These rules are
+unchanged click, the policy samples a not-yet-clicked grid cell. MEASURED
+defect: the deterministic novelty-centroid branch explores 3.29x less than
+uniform random clicking in the six click-only games (72 vs 236 mean unique
+observations); switching the centroid off recovered coverage roughly
+fourteen-fold (r11l 96 -> 1,383 cells), and later arms ran without it (the
+`nocentroid` rows in `LEAGUE.md`; "COORDINATE-HEAD defect" in
+`docs/arenas/task1_arc_paper/factsheet.md`). These rules are
 fixed across the real graph, nulls, and the matched bypass.
 
 Persistent recurrent state is preserved across ordinary actions, levels, and a

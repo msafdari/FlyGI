@@ -2,11 +2,21 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
+import pytest
 
 from flygi.controller.state_tags import RetinoTagRegistry
 
 RUNTIME = "data/processed/male-cns-v1.0/literal-rate-signed-modulators"
+
+# Compiled-runtime data is gitignored (AGENTS.md): on a fresh clone these
+# tests must SKIP, not fail (same guard pattern as needs_recognizer_frames).
+pytestmark = pytest.mark.skipif(
+    not (Path(RUNTIME) / "retinotopy.npz").is_file(),
+    reason="compiled retinotopy absent (gitignored data)",
+)
 
 
 def _grid(seed: int) -> np.ndarray:

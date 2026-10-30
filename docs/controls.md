@@ -1,9 +1,22 @@
 # Experimental controls
 
 Controls are the core scientific test. The directed degree-preserving null and
-the no-recurrent-graph bypass are implemented and have been run; the remaining
-conditions are not. No biological advantage on ARC is claimed anywhere in this
-repository.
+the no-recurrent-graph bypass are implemented and have been run; the generic
+matched reservoir and the positive control ran their ARC arms 2026-10
+(measured FLAT -- see "The positive control" below); the weight and sign
+shuffles are implemented, validated, and were run 2026-10 on the Stage-A
+statistics (H-STAGEA-NULL-DECOMPOSITION, supported). Within the
+class-1 recurrent-dynamics program this document covers, no
+connectome-versus-control advantage was measured: the real graph came out
+null against its degree-preserving rewires and against the interface-matched
+bypass (`LEAGUE.md`). Two bounded fly-positive results are measured: the
+compiled static retinotopic eye map at 2.59x the human action-cost baseline
+versus its scrambled-map twin at 11.59x, and `sg-bioeye-t4t5`, the league's
+only HELPS versus its scrambled control (+0.0717 [+0.005,+0.156], p=0.070,
+recorded as borderline). For the full program record -- six consecutive
+rewire-over-real results, with the surviving positives being an anatomy
+index, a mechanism, a parameter set, and a transformation-over-input -- see
+`docs/arenas/SYNTHESIS.md`.
 
 ## Implementation status
 
@@ -13,10 +26,10 @@ repository.
 | Directed degree-preserving rewires | Implemented in `flygi/connectome/nulls.py`; three seeds built and evaluated |
 | No recurrent graph (bypass) | Implemented; interface-matched and evaluated |
 | Random legal agent | Implemented; Gate 0 chance floor recorded |
-| Generic matched sparse reservoir | Implemented and compiled; ARC run pending |
-| Positive control (edge of chaos) | Implemented, compiled and validated; ARC run pending |
-| Weight shuffle | Not implemented |
-| Sign shuffle within transmitter strata | Not implemented |
+| Generic matched sparse reservoir | Implemented, compiled; ARC arm RUN 2026-10 as the positive control's twin (75 matched rows, score 0.0320, no separation from the positive control) |
+| Positive control (edge of chaos) | Implemented, compiled, validated; ARC arm RUN 2026-10 (75 matched rows, measured FLAT -- H-ARC-HARNESS-SENSITIVITY refuted; see "The positive control" below) |
+| Weight shuffle | Implemented, validated, and RUN 2026-10 (H-STAGEA-NULL-DECOMPOSITION supported: the Stage-A signature separates from both weight families at the floor — it is magnitude-dependent as well as placement-dependent) |
+| Sign shuffle within transmitter strata | Implemented, validated, and RUN 2026-10 (Stage-A signature does NOT separate from Dale-consistent sign flips: p 0.438/0.826); ARC-scope application deferred (recorded, killtest_design.md section 7) |
 
 ## The implemented degree-preserving null
 
@@ -82,6 +95,28 @@ Validated at the deployed operating point:
 | Real signed fly | 0.8289 | 1 action | 0.00019 |
 | Matched random reservoir | 0.1608 | 1 action | 0.00000 |
 | Positive control | 0.9924 | 3 actions | 0.07686 |
+
+**ARC outcome, measured 2026-10 (H-ARC-HARNESS-SENSITIVITY, run record
+in WORKLOG; the registered certification test): FLAT.** On the full
+eff- protocol (25 games x seeds 0-2 x 500 actions, matched pairs,
+clustered bootstrap), the positive control scored 0.0137 vs the real
+graph's 0.0648 (delta -0.0511, CI [-0.153, +0.000]) and vs the
+degree-preserving null's 0.0079 (delta +0.0058, CI [+0.000, +0.017]);
+it did not separate from its own rho-0.16 matched-random twin
+(0.0320; CI [-0.055, +0.000]). Both decision CIs span zero. The tie
+this section describes is therefore resolved in the UNINFORMATIVE
+direction, and the sentence above is hereby weakened to its measured
+form: the class-1 ARC near-zero results read as "under this interface
+and operating point, no tested graph — including a reservoir
+validated into the known-good long-memory regime — moved official
+score; the real wiring also did not." They are statements about this
+interface's tested graphs, never a measured absence of advantage
+attributable to the fly wiring specifically. Certification power
+floor: the comparator CI half-widths (±0.07-0.19 score at 75 rows)
+mean only advantages of roughly >= +0.1 score were detectable. This
+downgrade does NOT touch the arena-program rewire results (each arena
+harness carried its own measured positive control) or the structural
+separations.
 
 ## The full declared control set
 

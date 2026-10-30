@@ -27,6 +27,7 @@ Reading rules, learned the hard way and enforced here:
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import time
 from datetime import UTC, datetime
@@ -41,12 +42,25 @@ RESULTS = ROOT / "results" / "connectome_agent"
 RUNNING_IF_TOUCHED_WITHIN_S = 30 * 60
 
 
+def _read_text(path: Path) -> str:
+    # Result files over 10MB are gzipped in place to save disk (WORKLOG
+    # operational note, 2026-09-28/30); read both forms transparently.
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", encoding="utf-8") as handle:
+            return handle.read()
+    return path.read_text()
+
+
+def _result_paths(pattern: str) -> list[Path]:
+    return sorted([*RESULTS.glob(pattern), *RESULTS.glob(pattern + ".gz")])
+
+
 def _load_bundles() -> dict[str, dict[str, Any]]:
     bundles: dict[str, dict[str, Any]] = {}
-    for path in sorted(RESULTS.glob("*.json")):
+    for path in _result_paths("*.json"):
         try:
-            bundle = json.loads(path.read_text())
-        except (OSError, json.JSONDecodeError):
+            bundle = json.loads(_read_text(path))
+        except (OSError, EOFError, json.JSONDecodeError):
             continue
         condition = bundle.get("condition") or (bundle.get("parameters") or {}).get("condition")
         if not condition or "rows" not in bundle:
@@ -58,17 +72,18 @@ def _load_bundles() -> dict[str, dict[str, Any]]:
 
 def _load_checkpoints() -> dict[str, dict[str, Any]]:
     checkpoints: dict[str, dict[str, Any]] = {}
-    for path in sorted(RESULTS.glob("*.rows.jsonl")):
+    for path in _result_paths("*.rows.jsonl"):
         rows: list[dict[str, Any]] = []
         try:
-            for line in path.read_text().splitlines():
+            for line in _read_text(path).splitlines():
                 if line.strip():
                     rows.append(json.loads(line))
-        except (OSError, json.JSONDecodeError):
+        except (OSError, EOFError, json.JSONDecodeError):
             continue
         if not rows:
             continue
-        condition = str(rows[0].get("condition", path.name.replace(".rows.jsonl", "")))
+        stem = path.name.removesuffix(".gz").removesuffix(".rows.jsonl")
+        condition = str(rows[0].get("condition", stem))
         age = time.time() - path.stat().st_mtime
         checkpoints[condition] = {"path": path, "rows": rows, "age_s": age}
     return checkpoints
@@ -241,6 +256,14 @@ def render_markdown(league: dict[str, Any]) -> str:
         f"Generated {league['generated_at']} by `scripts/league.py`. Do not edit;",
         "edit `EXPERIMENTS.yaml` and regenerate. Verdicts come from clustered",
         "bootstrap CIs on complete matched pairs only; partial runs never get one.",
+        "",
+        "Reading note (measured 2026-10, H-ARC-HARNESS-SENSITIVITY, FLAT): the",
+        "validated long-memory positive-control reservoir also moved no official",
+        "score (both decision CIs span zero; detection power ~ +0.1 score at 75",
+        "rows), so every class-1 real-vs-null/bypass row below reads as \"under",
+        "this interface no tested graph moved score\" -- never as a measured",
+        "absence of advantage attributable to the fly wiring specifically. Full",
+        "record: docs/controls.md (positive-control section).",
         "",
         "| condition | regime | status | rows | score | levels | vs baseline | baseline |",
         "| --- | --- | --- | ---: | ---: | ---: | --- | --- |",

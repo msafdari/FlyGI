@@ -12,7 +12,7 @@ import re, json, sys
 from collections import deque
 from pathlib import Path
 
-SRC = Path('/Users/mustafasafdari/Documents/ChatGPT/FlyGI/environment_files/bp35/0a0ad940/bp35.py').read_text()
+SRC = (Path(__file__).resolve().parents[3] / 'environment_files/bp35/0a0ad940/bp35.py').read_text()
 
 WALL='o'; DOOR='x'; SPIKE='v'; GEM='+'; PLAYER='n'; TSOLID='1'; TOPEN='2'; FLOODM='m'; FLOODW='w'
 NAME2CH = {
