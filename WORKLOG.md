@@ -1,5 +1,38 @@
 # FlyGI durable worklog
 
+## WRITEUP SUBMITTED (AP-11, the submit-once step): "Submitted!" confirmed -- 2026-10-30
+
+Executed per kaggle_form.md field by field, via the user's Chrome
+session. Final URL (slug set per the guide):
+kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit
+
+Pre-submit verifications, all passed: body 1,484 words (< 1,500);
+media present (card.png accepted at 1120x560; gallery = cover + 3
+figures, cover first; empty default video slot deleted); checklist
+6 of 6 PLUS the eligibility layer (cover image in gallery, public
+walkthrough notebook in Project Links); repo and walkthrough notebook
+both open logged out (HTTP 200); preview rendered headers/lists/body
+end-to-end. Project Links as registered: (1) Public walkthrough
+notebook, (2) Source code (GitHub), (3) Submission notebook (produced
+56683298) -- linked PRIVATE under the AP-16 auto-publication consent;
+Kaggle's own dialog confirmed "Submitting this writeup will make the
+notebook public once the competition ends," and a pre-submit attempt
+to flip it public directly was refused by Kaggle's lock-until-close
+("Making this notebook public will be locked until the competition
+ends"), so AP-16 is the operative path, prerequisite (dataset CC BY
+citation) already in place.
+
+CONFIRMATION STATE: banner "Submitted! You can make changes until the
+deadline (Nov 9, 2026 at 3:59 PM PST)". Title, subtitle, and body
+exactly the committed writeup.md; nothing was trimmed (no over-limit
+counter fired). ONE divergence from the guide: the optional DOI
+opt-in checkbox is NOT ticked (the session's action classifier
+blocked the repeated checkbox clicks; one manual click on the edit
+page enables it any time before the deadline). Nothing else remains:
+this closes the release + submission sequence. Record of changes
+stays open until the deadline but none are planned.
+
+
 ## RELEASE COMPLETE: repo public, both forum posts live, dataset attributed, notebook public -- 2026-10-30
 
 Executed after the user's visibility flip, via the user's Chrome

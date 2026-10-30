@@ -107,13 +107,13 @@ CITATION.cff.
 
 ## Before clicking Submit
 
-- [ ] Checklist reads 6 of 6, AND the gallery has the cover image, AND
+- [x] Checklist reads 6 of 6, AND the gallery has the cover image, AND
   a public notebook is in Project Links (eligibility layer).
-- [ ] The MaleCNS CC BY 4.0 citation is on the Kaggle dataset
+- [x] The MaleCNS CC BY 4.0 citation is on the Kaggle dataset
   description (AP-6/AP-16).
-- [ ] Submission ID 56683298 noted, ready for when the organizers ask.
-- [ ] The repo link opens logged out (repo is public).
-- [ ] The walkthrough notebook opens logged out.
-- [ ] Preview renders the body's headers and lists correctly.
-- [ ] Click **Submit**, not save-as-draft. One submission only.
-- [ ] Tell the Claude session the confirmation state.
+- [x] Submission ID 56683298 noted, ready for when the organizers ask.
+- [x] The repo link opens logged out (repo is public).
+- [x] The walkthrough notebook opens logged out.
+- [x] Preview renders the body's headers and lists correctly.
+- [x] Click **Submit**, not save-as-draft. One submission only. (DONE 2026-10-30; "Submitted!" banner.)
+- [x] Tell the Claude session the confirmation state. (Recorded in WORKLOG 2026-10-30; DOI opt-in left unticked -- optional, one click until the deadline.)
