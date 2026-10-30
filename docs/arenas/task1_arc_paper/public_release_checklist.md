@@ -48,7 +48,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   THIRD_PARTY_NOTICES untouched — third-party code keeps its own
   licenses, which clear arcprize's Apache-2.0/GPLv3 floor. The Kaggle
   CC-BY 4.0 winner grant is separate and binds only on winning.
-- [ ] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
+- [x] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
   register AP-12): repo link in the Paper Track and ARC-AGI-3 discussion
   forums. Drafts ready: kaggle_forum_posts.md (fill {{REPO_LINK}}).
 - [x] THIRD_PARTY_NOTICES.md: present; re-read once before release to
@@ -59,7 +59,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   required citation (doi:10.1016/j.cell.2026.08.015) and the
   derivative/non-endorsement disclaimer. The repo tracks NO connectome
   arrays (ignore rules held), only manifests/hashes.
-- [ ] Residual before making the Kaggle dataset
+- [x] Residual before making the Kaggle dataset
   megusalexandrus/flygi-malecns-runtime public: put the same CC BY 4.0
   attribution + citation on the dataset's own description page (it
   auto-publishes with the submission).

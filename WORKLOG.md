@@ -1,5 +1,33 @@
 # FlyGI durable worklog
 
+## RELEASE COMPLETE: repo public, both forum posts live, dataset attributed, notebook public -- 2026-10-30
+
+Executed after the user's visibility flip, via the user's Chrome
+session (Google SSO, no credentials handled):
+- GitHub secret scanning + push protection ENABLED on the public
+  repo; alerts 0 (confirming the clean local gitleaks history scan).
+- Dataset megusalexandrus/flygi-malecns-runtime: description now
+  carries the CC BY 4.0 attribution, the MaleCNS citation
+  (doi:10.1016/j.cell.2026.08.015) and the non-endorsement
+  disclaimer, verbatim from data/README.md. License field was already
+  CC BY 4.0. Stays private until the submission publishes it.
+- Public notebook (runbook step 4): public_notebook.ipynb imported,
+  Quick Save Version 1, visibility Public, renders top to bottom.
+  URL: kaggle.com/code/megusalexandrus/flygi-what-a-fly-connectome-computes-for-free
+  (Kaggle title capped at 50 chars: "FlyGI: what a fly connectome
+  computes for free"; the notebook's own H1 is unchanged.)
+- AP-12 forum posts, verbatim from kaggle_forum_posts.md with
+  REPO_LINK = github.com/msafdari/FlyGI: Paper Track discussion
+  754287; ARC-AGI-3 discussion 754288. Same day as the flip, per
+  Rules 3.6.b.
+- Checklist: all boxes ticked except the optional Issues template
+  (explicitly non-blocking).
+STILL OPEN, deliberately: the Writeup submit-once step (kaggle_form.md
++ runbook steps 5-6) before Nov 8 23:59 UTC (Kaggle shows the
+deadline as Nov 9, 3:59 PM PST). The in-progress draft banner on the
+Paper Track page is the existing draft; nothing was submitted.
+
+
 ## PUBLIC RELEASE EXECUTED through the visibility flip -- repo is live; Kaggle steps await the user's session -- 2026-10-30
 
 The release checklist ran in order on the machine holding
