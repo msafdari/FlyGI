@@ -1,5 +1,25 @@
 # FlyGI durable worklog
 
+## Writeup title/subtitle punched up on the live submission (user's call); still Submitted -- 2026-10-30
+
+At the user's request (max reach for investors/recruiters/
+collaborators, no fibbing), the submitted writeup's title and subtitle
+were replaced via "Update Submission" -- body untouched, slug
+unchanged, banner still "Submitted!":
+- TITLE: "We Wired a Whole Fly Brain into an AI Benchmark. Its Own
+  Shuffle Beat It." (73/80) -- same truth value as the original
+  subtitle's measured claim (both fully-tested circuits scored below
+  their degree-preserving rewires).
+- SUBTITLE: "166,700 neurons, 25M connections, preregistered kill
+  rules, one deployed survivor: the fly's eye map. Every control and
+  every kill public." (138/140). Corrected en route: the draft said
+  "25M synapses"; the 24,994,595 figure counts EDGES (connections),
+  so "connections" it is.
+Four options were offered (including keep-as-was); the user chose the
+declarative-conflict form. The original judge-calibrated pair is
+preserved in kaggle_form.md as the first-submission record.
+
+
 ## Writeup formatting fix: unwrapped the hard-wrapped body (words unchanged); still Submitted -- 2026-10-30
 
 The user spotted forced line breaks on the rendered writeup. CONFIRMED

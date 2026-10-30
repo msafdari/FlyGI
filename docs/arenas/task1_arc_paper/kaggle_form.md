@@ -1,5 +1,18 @@
 # Kaggle Writeup form — field-by-field paste guide
 
+**TITLE/SUBTITLE AMENDED ON THE LIVE WRITEUP 2026-10-30 (user's call,
+reach over gravitas; body unchanged, still Submitted, slug unchanged):**
+Title (73/80): "We Wired a Whole Fly Brain into an AI Benchmark. Its
+Own Shuffle Beat It." Subtitle (138/140): "166,700 neurons, 25M
+connections, preregistered kill rules, one deployed survivor: the
+fly's eye map. Every control and every kill public." Accuracy notes:
+"its own shuffle beat it" carries the same scope as the original
+subtitle's claim (the circuits tested in full scored below their
+degree-preserving rewires); "25M connections" is the 24,994,595-EDGE
+runtime (edges are connections, not synapses — do not write "25M
+synapses"). The original title/subtitle below remain the record of
+what was first submitted.
+
 Mirrors the live form AND the Overview tab, both pasted by the user on
 2026-10-02. Two layers of "required": the form's checklist enforces six
 items before Submit unlocks (Title, Subtitle, Card and Thumbnail Image,
