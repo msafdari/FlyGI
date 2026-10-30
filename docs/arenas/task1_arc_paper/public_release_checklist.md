@@ -50,7 +50,7 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   CC-BY 4.0 winner grant is separate and binds only on winning.
 - [ ] Kaggle forum post on the day the repo goes public (Rules §3.6.b,
   register AP-12): repo link in the Paper Track and ARC-AGI-3 discussion
-  forums.
+  forums. Drafts ready: kaggle_forum_posts.md (fill {{REPO_LINK}}).
 - [ ] THIRD_PARTY_NOTICES.md: present; re-read once before release to
   confirm every vendored/embedded third-party piece is listed with a
   compatible license.
