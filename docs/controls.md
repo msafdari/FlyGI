@@ -2,8 +2,10 @@
 
 Controls are the core scientific test. The directed degree-preserving null and
 the no-recurrent-graph bypass are implemented and have been run; the generic
-matched reservoir and the positive control are implemented and compiled with
-ARC runs pending; weight and sign shuffles are not implemented. Within the
+matched reservoir and the positive control ran their ARC arms 2026-10
+(measured FLAT -- see "The positive control" below); the weight and sign
+shuffles are implemented, validated, and were run 2026-10 on the Stage-A
+statistics (H-STAGEA-NULL-DECOMPOSITION, supported). Within the
 class-1 recurrent-dynamics program this document covers, no
 connectome-versus-control advantage was measured: the real graph came out
 null against its degree-preserving rewires and against the interface-matched
@@ -26,8 +28,8 @@ index, a mechanism, a parameter set, and a transformation-over-input -- see
 | Random legal agent | Implemented; Gate 0 chance floor recorded |
 | Generic matched sparse reservoir | Implemented and compiled; ARC run pending |
 | Positive control (edge of chaos) | Implemented, compiled and validated; ARC run pending |
-| Weight shuffle | Implemented + validated in-cloud 2026-10-23 (flygi.connectome.nulls.weight_shuffle, within-presynaptic PRIMARY + global variant; dissociation gates in tests/test_stagea_nulls2.py). Stage-A application registered (H-STAGEA-NULL-DECOMPOSITION), pending the local run |
-| Sign shuffle within transmitter strata | Implemented + validated in-cloud 2026-10-23 (flygi.connectome.nulls.sign_shuffle, per-presynaptic-neuron, Dale-consistent; mixed-sign columns rejected). Stage-A application registered, pending the local run; ARC-scope application deferred (recorded, killtest_design.md section 7) |
+| Weight shuffle | Implemented, validated, and RUN 2026-10 (H-STAGEA-NULL-DECOMPOSITION supported: the Stage-A signature separates from both weight families at the floor — it is magnitude-dependent as well as placement-dependent) |
+| Sign shuffle within transmitter strata | Implemented, validated, and RUN 2026-10 (Stage-A signature does NOT separate from Dale-consistent sign flips: p 0.438/0.826); ARC-scope application deferred (recorded, killtest_design.md section 7) |
 
 ## The implemented degree-preserving null
 

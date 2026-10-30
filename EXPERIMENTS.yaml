@@ -2719,8 +2719,9 @@ hypotheses:
         Secondary arm: reservoir-matched-random (the control's dumb
         twin). Runs FIRST among Task-10 items, before the release.
       - >
-        2026-10 RUN (local; record WORKLOG c3ec5bd; LEAGUE regenerated
-        at 95914f7): FLAT per the frozen reading -- the certification
+        2026-10 RUN (local; record WORKLOG c3ec5bd, where LEAGUE was
+        regenerated; full-precision CIs banked in the 2026-10-30
+        backfill): FLAT per the frozen reading -- the certification
         claim is KILLED. MEASURED, 75 matched rows per arm, clustered
         bootstrap at 5000: positive control 0.0137 vs real 0.0648
         (delta -0.0511, CI -0.153..+0.000), vs degree-preserving null
@@ -2778,9 +2779,10 @@ hypotheses:
         1.0 Hz, equalized collapse 0.0000; gate B dims exact; sign
         audit 35,041 curated edges, 0 flipped; fc25 reference 0.32157
         in tolerance; AT-2 coverage 132/320 pairs, 0.9786 synapse
-        mass): the calibration swept 18 global gains over 1e-05..3000,
-        all stable, and median evoked T4/T5 rate was 0.000 Hz at EVERY
-        gain -- the compiled patch produces zero evoked spiking at any
+        mass -- run-JSON values banked in the 2026-10-30 WORKLOG
+        backfill): the calibration swept 18 global gains over
+        1e-05..3000, all stable (backfill), and median evoked T4/T5
+        rate was 0.000 Hz at EVERY gain -- the compiled patch produces zero evoked spiking at any
         drive scale under Kakaria/Pisokas-pinned physiology with the
         declared mapping and the fc2-verbatim inhibitory (histaminergic)
         L1/L2/L3 drive. The registered no-stable-gain floor fired: an
@@ -2842,13 +2844,18 @@ hypotheses:
         submatrix; ring-attractor conditions per their Table 1 (p42).
         COMPLETION PATH (the pre-commitment's "recipe applied once to
         our counts" branch): extract the recipe equations and Table-1
-        conditions verbatim from the v2 Methods, re-derive the vectors
-        from OUR compiled counts, gate = their exact-attractor
-        property on the derived system (+ the p7 figure values as a
-        plausibility cross-check). Dated numeric-completion addendum
-        and instrument still pending that extraction. Duan/Dong/Fiete
-        v1 fetched (hemibrain; carries the necessity claims; no code
-        link on the NeurIPS poster page).
+        conditions verbatim from the v2 Methods and re-derive the
+        vectors from OUR compiled counts. GATE NOTE, recorded plainly:
+        the frozen reproduce-theirs-on-theirs gate is UNEXECUTABLE AS
+        FROZEN -- no published numeric realization exists (figure-only;
+        an absence finding) -- so the amended gate is defined in the
+        pending dated numeric-completion addendum, not here; the
+        candidate (their exact-attractor property on the derived
+        system + the p7 figure values as plausibility cross-check) is
+        a proposal until that addendum freezes it. Duan/Dong/Fiete v1
+        PDF fetch completed (11 pp, hemibrain, carries the necessity
+        claims; no code link on the poster page; supersedes the
+        earlier rate-limit note -- backfill 2026-10-30).
     updated: 2026-10-29
 
   H-FB-COLUMNAR-TOPOLOGY:
@@ -2892,7 +2899,10 @@ hypotheses:
         (AC-FB5 confirmed on the compiled runtime). Bar 1 hDelta
         antipodal mass 0.40548 vs null max 0.18682 (p 0.00498, the
         floor); Bar 2 PFN mirror 0.01458 vs null max 0.01286
-        (p 0.00498, the floor); 200 rewires. CONTEXT behaves as the
+        (p 0.00498, the floor); 200 rewires. Run-JSON values beyond
+        the run entry's headline precision (null maxes, NT audit,
+        zero _irreg flags, one-hop masses) are banked in the
+        2026-10-30 WORKLOG backfill. CONTEXT behaves as the
         Hulse motifs predict: vDelta antipodal mass 0.00041 (~0), PFL
         mirror 0.02168. SCOPE (Stage-A rule, carried): structure
         only -- the MaleCNS FB columnar wiring encodes the published
@@ -2931,20 +2941,24 @@ hypotheses:
         90-deg chance floor, else BLOCKED as a convention limit).
         Assumptions ANS-1..5 registered.
       - >
-        2026-10 FIRST RUN: BLOCKED at G0 (exit 3, 20.6 s; record
-        WORKLOG 95914f7) -- the gate did its job BEFORE any decision
+        2026-10 FIRST RUN: BLOCKED at G0 (exit 3; 20.6 s total per the
+        run JSON, 5.8 s of measurement per the run entry; records
+        WORKLOG 95914f7 + the 2026-10-30 backfill) -- the gate did its job BEFORE any decision
         data: the 2x2 never ran, so nothing here is a verdict.
         MEASURED: scramble selftest passed (worst amplitude rel err
         3.5e-16); corpus checksums first-contact-pinned; G0 pooled
         median DSI 0.17634 vs required 0.3216 +/- 0.02, with the
         T4/ON channel reproducing IN BAND (0.31583, 4 distinct
         preferred) and the T5/OFF channel collapsed (0.11562).
-        LOCALIZATION (measured, decisive for the fix): the same fc25
+        LOCALIZATION: MEASURED at close time -- the same fc25
         reference reproduced at 0.32157 through the class-3
-        instrument's native-edge path the same day, so patch, fc25
-        JSON and machine are exonerated -- the defect is
-        OFF-edge-specific inside THIS instrument's new pixel/AB-4
-        stimulus path. Instrument-bug investigation opened cloud-side
+        instrument's native-edge path the same day, exonerating
+        patch, fc25 JSON and machine; the OFF-edge reading of the
+        channel split was then the fix LEAD (per-channel values in
+        the 2026-10-30 backfill), and it was subsequently MEASURED
+        directly by the cloud-side diagnosis (587b40d: composite
+        drive at fc2-native +0.5 exactly; OFF scored windows at
+        positive lamina drive). Instrument-bug investigation opened cloud-side
         2026-10-29; fix lands with a recorded finding + the frozen
         full re-run rule. Hypothesis remains OPEN, untested.
       - >
@@ -2990,18 +3004,25 @@ hypotheses:
       - >
         2026-10 RUN (local; record WORKLOG 8f2149a; 19/19 mechanism
         gates green first): KILL. MEASURED (like-for-like vs the
-        stored uniform baseline, n_neurons 176,422): hard-tier graded
-        0.6078 -> 0.6305 (+0.0226, bar +0.02 MET) and activation held
-        (-0.0008, bar MET) and specificity held (+0.2684 vs floor
-        +0.252, bar MET) -- but core fell 1.000 -> 0.8000 and overall
-        graded fell to 0.6940 vs the 0.701 floor (bar FAILED).
+        stored uniform baseline, n_neurons 176,422; all values from
+        the verdict-script JSON, banked in the 2026-10-30 WORKLOG
+        backfill entry): the verdict script's hard_graded over the
+        149 shared checks 0.6078 -> 0.6305 (+0.0226, bar +0.02 MET)
+        -- a different denominator by construction from the
+        run-headline hard tier (uniform 0.6044; this run 0.6276),
+        both real, the bars run on the verdict script's values --
+        and activation held (-0.0008, bar MET) and specificity held
+        (+0.2684 vs floor +0.252, bar MET) -- but core fell 1.000 ->
+        0.8000 and overall graded fell to 0.6940 vs the 0.701 floor
+        (bar FAILED).
         CLOSE: SFA at the pinned uniform b 2.0 mV / tau_a 200 ms buys
         hard-tier dynamics by breaking a core task and the overall
         floor on our engine -- the mechanism does not transfer
         beneficially as pinned (AF-11's bridge measured FALSE for
         SFA; AF-12's flywire783->MaleCNS transfer assumption did not
         survive contact). Their measured flywire783 gain is not
-        disputed; our registered bars are.
+        disputed; what the KILL states is that our registered bars on
+        our engine refused the trade it carries.
     updated: 2026-10-29
 
   H-FLYGI-FLYBENCH-TERMINAL:
@@ -3032,19 +3053,26 @@ hypotheses:
         2026-10 RUN (local; record WORKLOG 8f2149a; gates green,
         FLYGI_TERMINAL_TABLE = FlyBench's shipped MaleCNS table):
         PASS -- the program's FIRST FUNCTIONAL MECHANISM WIN.
-        MEASURED, every frozen bar: hard-tier graded 0.6078 -> 0.6445
-        (+0.0366 vs bar +0.02); core stayed 1.0000; overall graded
-        0.7622 (floor 0.701); specificity GREW +0.2823 -> +0.3135
-        (floor +0.252); activation also improved (+0.0041). SCOPE,
+        MEASURED, every frozen bar (verdict-script JSON, banked in the
+        2026-10-30 WORKLOG backfill): hard_graded over the 149 shared
+        checks 0.6078 -> 0.6445 (+0.0366 vs bar +0.02; run-headline
+        hard tier 0.6418 -- the two metrics differ by denominator, as
+        recorded); core stayed 1.0000; overall graded 0.7622 (floor
+        0.701); specificity GREW +0.2823 -> +0.3135 (floor +0.252);
+        activation also improved (+0.0041). SCOPE,
         stated in the same sentence as the win: terminal-aware
         synapse placement improves OUR class-2 engine on FlyBench's
         task suite under FlyBench's shipped MaleCNS terminal table
         (AF-13 provenance imported, not re-derived) -- a fidelity
         mechanism carrying measured function on this benchmark
         family; NOTHING about ARC score (base rate 0 for 16
-        untouched), and the specificity bar means the gain rides the
-        real wiring, not the mechanism alone (its rewired control ran
-        terminal=None per FlyBench's own convention, as declared).
+        untouched), and the rewired control (run
+        terminal=None per FlyBench's own convention, as declared)
+        still collapses -- INFERRED, bridge stated: consistent with
+        the gain riding the real wiring, on the untested assumption
+        that terminal-style weighting would not lift a rewired graph
+        (the terminal-preserving rewire remains undone, as the
+        registration deferred it).
         The combined SFA+terminal arm was NOT run (registered rule:
         both singles must pass; SFA failed).
     updated: 2026-10-29
@@ -3083,7 +3111,9 @@ hypotheses:
         3313458): READINGS COMPLETE. MEASURED: the Stage-A signature
         SEPARATES from both weight-shuffle families (within-pre AND
         global: p_banded 0.00498 at the floor, p_mirror 0.00995;
-        fraction of magnitudes changed 0.937/0.960 -- no degeneracy)
+        fraction of magnitudes changed 0.93704/0.96038 per the run
+        JSON, banked in the 2026-10-30 backfill -- the >= 0.5
+        degeneracy floor cleared)
         and DOES NOT separate from Dale-consistent sign flips
         (p_banded 0.43781, p_mirror 0.82587; sign-family nulls even
         reach bandedness 0.642 > real 0.5881). All invariants valid

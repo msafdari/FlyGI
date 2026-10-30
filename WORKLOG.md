@@ -1,5 +1,91 @@
 # FlyGI durable worklog
 
+## Run-record backfill: the pasted Task-10 run JSONs banked into the durable record -- 2026-10-30
+
+PROVENANCE, stated first: every number below was pasted verbatim into
+the session by the user on 2026-10-29 from the gitignored local
+results (results/arenas/*.json and the verdict-script outputs). The
+2026-10-29 registry closes cited several of these values while the
+five WORKLOG run entries carried only headline numbers -- the
+adversarial close review (47 agents, run 2026-10-29) correctly
+flagged every such value as untraceable from the repo alone. This
+entry banks them so the registry is self-tracing. Nothing here is a
+new measurement; it is the hand-off record, recorded. All 37
+confirmed review findings (3 clusters of blockers: untraced numbers,
+the false zero-fixes claim, stale/contradictory release prose incl.
+the social drafts and the non-actionable LEAGUE checklist item) are
+applied in the commit this entry ships in.
+
+- RESERVOIR (H-ARC-HARNESS-SENSITIVITY), full-precision compare
+  outputs: positive-control 0.0137; vs eff-real-signed -0.051064,
+  CI [-0.153193, +0.000000]; vs eff-null-degree-preserving +0.005814,
+  CI [+0.000000, +0.017443]; matched-random twin 0.0320, control vs
+  twin -0.018334, CI [-0.055001, +0.000000]. LEAGUE regenerated in
+  commit c3ec5bd (the 2026-10-29 close bullet's pointer to 95914f7
+  is corrected in the registry today).
+- DECOMPOSITION (H-STAGEA-NULL-DECOMPOSITION) JSON: real bandedness
+  0.5881 / mirror 0.01445; null maxes per family: within-pre
+  0.50366/0.01523, global 0.51038/0.01552, sign 0.64245/0.01914;
+  p 0.00498/0.00995 (both weight families), 0.43781/0.82587 (sign);
+  fraction_magnitudes_changed 0.93704 (within-pre) / 0.96038
+  (global); fraction_signs_changed 0.3899 over 148 sign-bearing
+  columns; all invariants valid; elapsed 22.9 s.
+- FB (H-FB-COLUMNAR-TOPOLOGY) JSON: subcircuit 1,399 nodes / 85,353
+  signed edges; real bar1 antipodal 0.40548, bar2 mirror 0.01458
+  (one-hop masses L 30.075 / R 28.315); null maxes 0.18682 /
+  0.01286; p 0.00498 both; context vDelta antipodal 0.00041, PFL
+  mirror 0.02168; coverage FC 1.0, hDelta 1.0, labelled-PFN 0.98788;
+  column_counts FC 9 / hDelta 12 / vDelta 10 / PFNa 9 / PFNd 8 /
+  PFNm_a 9 / PFNm_b 9 / PFNv 9; irregular_flagged all 0;
+  consensus_nt_audit "all columnar types 100% acetylcholine";
+  163.4 s.
+- NATSTAT (H-T4T5-NATSTAT-DIRECTION) first-run JSON: gates
+  {scramble true, g0 false, g1 false}; G0 band_v2 pooled median DSI
+  0.17634, T4/ON 0.31583 (4 distinct preferred), T5/OFF 0.11562,
+  defined fraction 1.0, T5 distinct 3; scramble worst amplitude rel
+  err 3.5e-16; calibration chosen_gamma 8.0 / p95 0.5; elapsed_s
+  20.6 TOTAL (the run entry's "5.8 s" was the measurement segment --
+  both are true; the registry cites 20.6 s total from this JSON).
+  The OFF-edge localization was the close-time LEAD from this channel
+  split; it has since been MEASURED cloud-side (commit 587b40d: the
+  drive boundary sat at fc2-native +0.5 exactly; OFF scored windows
+  at positive lamina drive).
+- T4T5 CLASS-3 (H-T4T5-CLASS3-DS) JSON/printout: sign audit 35,041
+  curated edges, 0 flipped; gate A per-speed preferred-direction
+  table [2.0, 3.0, 2.0] with preferred == designed 12/12; AT-2
+  coverage 132/320 pairs at 0.9786 synapse mass; calibration 18
+  gains 1e-05..3000, ALL STABLE, median evoked 0.000 Hz at every
+  gain; gate B fc25 reference 0.32157.
+- FLYBENCH MECHANISMS (H-FLYGI-FLYBENCH-SFA / -TERMINAL)
+  verdict-script JSONs, n_shared_checks 149 (58 activation / 91
+  suppression). METRIC NOTE, load-bearing: the verdict script's
+  hard_graded is computed over the 149 SHARED checks and differs by
+  construction from the run-headline "hard" tier (uniform row
+  headline 0.6044; SFA run headline 0.6276; terminal run headline
+  0.6418) -- the registered bars run on the VERDICT SCRIPT's values.
+  SFA: hard_graded uniform 0.6078476716360247 -> 0.6304517572540541
+  (delta +0.0226040856180294); activation_mean 0.7113888474695774 ->
+  0.710560086550812 (-0.000828760918765381); overall graded
+  0.6940025391943447; specificity 0.26838624338624334; core 0.8000;
+  run 7/30. TERMINAL: hard_graded 0.6078476716360247 ->
+  0.6444645432726246 (+0.03661687163659988); activation_mean ->
+  0.7155087815384199 (+0.004119934068842479); suppression_mean
+  0.7013620129934217; overall 0.7621652165934433; specificity
+  0.3135251322751323; core 1.0000; run 11/30.
+- BISWAS fetch details (files at ~/datasets/biswas_papers/):
+  biswas2024_v2.pdf (v2 posted 2026-03-08, 63 pp incl. supplement;
+  the MaleCNS version; recipe in Methods "Constructing
+  connectome-derived ring attractors"; vectors only in the p7
+  figure; no code/data-availability statement; their 1e6-parameter
+  sweeps amplitude-matched to the MaleCNS vectors, p13);
+  biswas_nsf_par.pdf (v1, 47 pp, NO MaleCNS content);
+  biswas2026_followup.pdf (31 pp, hemibrain-only, text-searched);
+  duan_fiete_2025.pdf FETCHED (v1 2025-05-29, 11 pp, hemibrain,
+  carries the necessity claims; NeurIPS poster 115017, OpenReview
+  zn4F6os6cq, no code link) -- the earlier rate-limit note is
+  superseded; the fetch completed.
+
+
 ## Natstat OFF-edge instrument bug: found, measured, fixed; full re-run required -- 2026-10-29
 
 G0 did exactly its job. The defect (dated finding in
@@ -32,7 +118,7 @@ consequence is the re-run's to measure (Expected-tier statements
 inherit the 0-for-16 base rate).
 
 
-## Task 10 CLOSED cloud-side: seven verdicts in the registry; ARC null prose downgraded before release -- 2026-10-29
+## Task 10 CLOSED cloud-side: six verdicts in the registry; ARC null prose downgraded before release -- 2026-10-29 [headline corrected 2026-10-30: six, not seven -- natstat's G0 BLOCK is an instrument statement, never a verdict]
 
 Cloud-side close of the seven local runs (records 3313458..95914f7).
 Registry: H-ARC-HARNESS-SENSITIVITY refuted (FLAT per the frozen

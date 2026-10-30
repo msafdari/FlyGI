@@ -98,7 +98,10 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   consequence): docs/controls.md (positive-control section carries the
   measured ARC outcome and the weakened reading), docs/experiment.md
   (claim-boundary section carries the harness-sensitivity boundary),
-  EXPERIMENTS.yaml eff-row notes (render into LEAGUE.md on regeneration),
+  EXPERIMENTS.yaml eff-row notes (registry readers), LEAGUE.md's generated
+  header reading-note (scripts/league.py now emits it -- verify it appears
+  after the local regeneration, since condition notes themselves do NOT
+  render into LEAGUE.md),
   factsheet.md and writeup.md (the harness-sensitivity bound). The class-1
   ARC null prose must nowhere claim the harness could have registered an
   advantage.

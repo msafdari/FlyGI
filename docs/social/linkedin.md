@@ -56,15 +56,18 @@ you're wrong.
 → a degree-preserving rewiring — same neurons, same degrees, same weights,
 random partners
 → a parameter-matched bypass — same interface, graph deleted entirely
-→ a positive control tuned to succeed, so a row of zeros can't be blamed on my
-harness
+→ a positive control tuned to succeed — a reservoir pushed into the regime
+reservoir computing calls good
 → held-out games, so in-sample gains can't pass as generalisation
 
-**What they said: no advantage.**
+**What they said: no advantage — from any graph I tested.**
 
 Random action selection outscored the connectome, 0.098 to 0.065. The brain-free
 bypass tied it exactly. Real versus rewired: p = 1.00, a confidence interval
 spanning zero, and the entire difference resting on one game out of twenty-five.
+And the kicker: the positive control, tuned to succeed, ALSO scored nothing —
+so the zeros bound my interface, not the fly. Under this harness, no tested
+graph moved the score; what a better harness would say remains open.
 
 **And then the controls turned on me.**
 
@@ -89,7 +92,8 @@ second, visual navigation, odour tracking, associative learning. Nothing selecte
 it for inferring symbolic rules from coloured squares, and a fair test may well
 confirm that.
 
-The wiring is real. The advantage isn't. Both are results — and you only get the
+The wiring is real. The advantage never showed — not from the fly, not from any
+graph my harness tested. Both are results — and you only get the
 second one if you build the thing that could have said no.
 
 Everything is in the repo: the controls, the hashes, the preregistered criteria,
@@ -120,12 +124,16 @@ Those are new networks around the biological one. So which part performed?
 I built the controls: a degree-preserving rewiring, a bypass with the graph
 deleted, held-out games.
 
-Answer: no advantage. Random beat it. The bypass tied it. p = 1.00.
+Answer: no advantage — from anything. Random beat it. The bypass tied it.
+p = 1.00. Even the positive control, a reservoir tuned into the known-good
+long-memory regime, scored zero: under this interface, no tested graph moved
+score.
 
 Then I found my own "smart" clicking was 3.29× worse than clicking at random —
 shipped in two submissions before I compared it to the obvious alternative.
 
-The wiring is real. The advantage isn't. Both are results.
+The wiring is real. The advantage never showed — from the fly or from any graph
+this harness tested. Both are results.
 
 {{REPO_LINK}}
 

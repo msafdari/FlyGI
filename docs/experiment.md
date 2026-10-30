@@ -28,11 +28,12 @@ crash, so zero actions were ever played, then three COMPLETE runs at 0.15
 static retinotopic eye map. See `docs/arenas/task1_arc_paper/factsheet.md`
 and `docs/arenas/SYNTHESIS.md`.
 
-Still not done: weight and sign shuffles (not implemented; see
-`docs/controls.md`); ten or more independently seeded directed
+Still not done: ten or more independently seeded directed
 degree-preserving nulls for the confirmatory analysis (three are built and
-evaluated); and ARC runs of the generic matched sparse reservoir
-(implemented and compiled; ARC run pending).
+evaluated). Done since this list was written: the weight and sign shuffles
+(implemented, validated, run 2026-10 -- H-STAGEA-NULL-DECOMPOSITION,
+`docs/controls.md`) and the reservoir ARC runs (both arms complete 2026-10,
+measured FLAT -- see the harness-sensitivity boundary below).
 
 The existence of configuration sections for encoders, decoders, controls, or
 Kaggle packaging does not mean those milestones have been executed. Run the

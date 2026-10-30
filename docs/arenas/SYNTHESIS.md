@@ -315,9 +315,12 @@ an explicit go.
 ## Addendum 2026-10-29 — Task 10 (the science menu): seven runs, the map redrawn in four places
 
 The exhaustion-audit menu ran in full (registrations frozen jointly
-2026-10-23; run records WORKLOG 3313458..95914f7; closes in
-EXPERIMENTS.yaml). Zero instrument fixes were needed across seven
-local runs. Four results move this synthesis:
+2026-10-23; run records WORKLOG 3313458..95914f7 plus the 2026-10-30 backfill;
+closes in EXPERIMENTS.yaml). No instrument was modified during the
+runs -- every run reached a registered exit as frozen; six of seven
+ran fix-free, and natstat's G0 gate caught a stimulus-path defect
+BEFORE any decision data (fix landed under the recorded-finding rule;
+full re-run pending). Four results move this synthesis:
 
 1. **The class-1 ARC nulls are now interface-bounded, by measurement
    (H-ARC-HARNESS-SENSITIVITY: FLAT, refuted).** The validated
@@ -325,9 +328,10 @@ local runs. Four results move this synthesis:
    official score not at all -- 0.0137 vs real 0.0648 vs null 0.0079,
    both decision CIs spanning zero, and no separation even from its
    rho-0.16 twin. Standing criticism 1 of the exhaustion audit is
-   discharged in the unfavorable direction: section 6's ARC-side
-   zeros read, from now on, as "under this interface no tested graph
-   moved score" (power floor ~ +0.1 at 75 rows). The prose downgrade
+   discharged in the unfavorable direction: the class-1 ARC
+   real-vs-null/bypass zeros (the eff- rows; docs/controls.md,
+   docs/experiment.md, the LEAGUE prose) read, from now on, as
+   "under this interface no tested graph moved score" (power floor ~ +0.1 at 75 rows). The prose downgrade
    executed before the 2026-11-01 release in controls.md,
    experiment.md, the LEAGUE-rendered notes, factsheet and writeup.
    The arena-series rewire instances are untouched -- each of those
@@ -358,9 +362,13 @@ local runs. Four results move this synthesis:
    same physiology fired but lost position. Meanwhile
    terminal-aware synapse placement (H-FLYGI-FLYBENCH-TERMINAL:
    supported) is the program's FIRST functional mechanism win: every
-   frozen bar passed with specificity GROWING (+0.2823 -> +0.3135),
-   so the gain rides the real wiring -- scoped to FlyBench's tasks
-   under FlyBench's shipped terminal table, nothing about ARC. Its
+   frozen bar passed with specificity GROWING (+0.2823 -> +0.3135)
+   over the rewired control (run terminal=None per FlyBench's own
+   convention, as registered) -- consistent with the gain riding the
+   real wiring, on the stated untested bridge that terminal-style
+   weighting would not lift a rewired graph (that rewire is deferred,
+   as registered) -- scoped to FlyBench's tasks under FlyBench's
+   shipped terminal table, nothing about ARC. Its
    sibling SFA (refuted) bought the hard tier by breaking core: the
    mechanisms split, which is itself information -- fidelity additions
    are not generically good; one specific, anatomy-coupled one is.

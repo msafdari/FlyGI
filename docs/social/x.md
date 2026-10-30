@@ -75,7 +75,9 @@ I built the things that could answer it:
 • held-out games
 
 **7/**
-The answer: no advantage.
+The answer: no advantage — from ANY of them.
+Even the positive control, tuned to succeed, scored nothing: the zeros bound
+my interface, not just the fly.
 
 Random action selection outscored it, 0.098 to 0.065.
 The brain-free bypass tied it exactly.
@@ -99,8 +101,9 @@ Score: **{{BEST_SCORE}}**
 A fly brain is extraordinary — at being a fly. Nothing selected it for symbolic
 puzzles on a screen.
 
-The wiring is real. The advantage isn't. Both of those are results, and you only
-get the second one if you build the thing that can say no.
+The wiring is real. The advantage never showed — not from the fly, not from any
+graph this harness tested. Both of those are results, and you only get the
+second one if you build the thing that can say no.
 
 {{REPO_LINK}} 🪰
 
