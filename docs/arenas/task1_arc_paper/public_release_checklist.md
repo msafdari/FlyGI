@@ -105,18 +105,21 @@ Status boxes to be ticked as completed; audit findings recorded inline.
   factsheet.md and writeup.md (the harness-sensitivity bound). The class-1
   ARC null prose must nowhere claim the harness could have registered an
   advantage.
-- [ ] Regenerate LEAGUE.md AGAIN before release (found by the 2026-10-08
-  audit): the 2026-10-02 snapshot shows H-T4T5-DSEC-DIRECTION as "open"
-  (now refuted) and omits the four hypotheses closed after it
-  (H-FLYGI-FLYBENCH-CALIBRATED, H-T4T5-DVS-GESTURE,
-  H-EARLYFILTER-BRAINSCORE-V1, H-ALMB-GASDRIFT, all refuted). Run
+- [ ] Regenerate LEAGUE.md AGAIN before release (updated 2026-10-30; the
+  2026-10-29 regeneration at c3ec5bd predates the Task-10 closes AND the
+  league.py header reading-note). Run
   `uv run python scripts/league.py --write-md LEAGUE.md` ONLY on the
-  machine holding results/connectome_agent (in this container the
-  gitignored bundles are absent and regeneration would wipe all 57
-  condition rows to "missing | 0 | 0.0000" — do not commit a
-  bundle-less regeneration). After regenerating, diff and verify:
-  (1) H-T4T5-DSEC-DIRECTION reads refuted; (2) the four new rows appear,
-  all refuted; (3) no condition row newly reads "missing" with 0 rows.
+  machine holding results/connectome_agent (in a container without the
+  gitignored bundles, regeneration wipes condition rows to
+  "missing | 0 | 0.0000" — do not commit a bundle-less regeneration).
+  After regenerating, diff and verify: (1) the header carries the
+  "Reading note (measured 2026-10, H-ARC-HARNESS-SENSITIVITY, FLAT)"
+  paragraph; (2) the hypothesis table matches the registry —
+  H-ARC-HARNESS-SENSITIVITY refuted, H-STAGEA-NULL-DECOMPOSITION /
+  H-FB-COLUMNAR-TOPOLOGY / H-FLYGI-FLYBENCH-TERMINAL supported,
+  H-FLYGI-FLYBENCH-SFA refuted, H-T4T5-CLASS3-DS "null"; (3) the two
+  reservoir condition rows are present and complete (75 rows each);
+  (4) no condition row newly reads "missing" with 0 rows.
 
 ## Final order of operations
 

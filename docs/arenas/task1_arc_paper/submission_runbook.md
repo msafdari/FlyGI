@@ -117,7 +117,10 @@ confirmation state so WORKLOG records it.
 ## Step 7 — announce
 
 After the repo is public and the writeup submitted: post the LinkedIn
-article (linkedin_post.md) and the X post (x_post.md). Both end at the
+article (linkedin_post.md) and the X post (x_post.md) -- the PAPER-TRACK
+kit. The broader outreach kit lives in docs/social/ (awe-first framing);
+no docs/social draft goes out before its FLAT rework and a FACTS.md number
+check (its README says which is which). Both paper-track posts end at the
 GitHub repo.
 
 ## Dates

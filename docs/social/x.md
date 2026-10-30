@@ -76,8 +76,8 @@ I built the things that could answer it:
 
 **7/**
 The answer: no advantage — from ANY of them.
-Even the positive control, tuned to succeed, scored nothing: the zeros bound
-my interface, not just the fly.
+Even the positive control, tuned to succeed, moved no score (both decision
+CIs span zero): the zeros bound my interface, not just the fly.
 
 Random action selection outscored it, 0.098 to 0.065.
 The brain-free bypass tied it exactly.

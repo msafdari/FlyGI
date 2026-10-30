@@ -1,6 +1,6 @@
 # FlyGI paper fact sheet — VERIFIED 2026-09-30
 
-Every line below survived a four-agent adversarial check against the durable
+Lines dated 2026-10 (the harness-sensitivity bound; the 0-for-16 update) were added 2026-10-29 from the WORKLOG/EXPERIMENTS.yaml record, after the check the next sentence describes. Every other line below survived a four-agent adversarial check against the durable
 record (WORKLOG.md, LEAGUE.md, EXPERIMENTS.yaml, docs/) on 2026-09-30
 (workflow wf_7e405dd9-8a8). Verdicts: all CONFIRMED except the corrections
 applied inline. The writeup may cite ONLY facts from this sheet (or the

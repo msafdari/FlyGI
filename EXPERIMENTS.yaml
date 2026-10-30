@@ -2731,8 +2731,9 @@ hypotheses:
         reservoir did not separate even from its dumb twin. The frozen
         FLAT consequence EXECUTED 2026-10-29, before the 2026-11-01
         release: class-1 ARC null prose downgraded in
-        docs/controls.md, docs/experiment.md, the LEAGUE-rendered
-        eff-row notes, factsheet.md and writeup.md -- the published
+        docs/controls.md, docs/experiment.md, the LEAGUE header
+        reading-note (league.py renders it on regeneration; condition
+        notes themselves never render), factsheet.md and writeup.md -- the published
         reading is now "under this interface no tested graph moved
         official score" with the ~+0.1-score power floor stated.
         Exhaustion-audit standing criticism 1 is discharged in the

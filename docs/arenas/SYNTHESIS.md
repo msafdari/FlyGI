@@ -126,8 +126,12 @@ Three explanations for the regularity remain live, none tested:
    on the killed sensory circuits; first tested at class 3 on the CX
    2026-10-11 (KILL, and the failure mode CHANGED with fidelity —
    second Task-9 addendum below), which sharpens rather than
-   discharges this explanation for the sensory circuits. Still the
-   single most informative next measurement for T4/T5.
+   discharges this explanation for the sensory circuits. The
+   spiking-tier T4/T5 attempt then blocked-closed 2026-10-29 (no
+   operating point under the declared mapping -- Task-10 addendum), so
+   the informative next rung for T4/T5 is a different declared drive
+   convention or the conductance/graded tier, each needing its own
+   registration.
 2. **Readout mismatch** — linear probes on spike counts and evoked
    integrals may not read what the wiring computes. Evidence against,
    for the MB: the association arm used the circuit's NATIVE readout
@@ -177,7 +181,10 @@ Measurements that would move this synthesis, in information order:
 1. Class-3 fidelity on ONE killed circuit (T4/T5 is the one where the
    literature disagrees with our null) — a reversal breaks section 4;
    a confirmation hardens it from "at this fidelity" toward the
-   circuit.
+   circuit. [ATTEMPTED 2026-10-29: blocked-closed, no operating point
+   under the declared template-LIF mapping (zero evoked spikes at
+   every gain); the question remains open for a different declared
+   drive convention or the conductance tier -- Task-10 addendum.]
 2. A native-statistics task for one circuit (naturalistic motion or
    plume statistics) — tests explanation 3 directly.
 3. An active-gain-control MB configuration on the drift corpus —
@@ -207,6 +214,8 @@ Measurements that would move this synthesis, in information order:
 | H-T4T5-CLASS3-DS | null 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-SFA | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-TERMINAL | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-T4T5-NATSTAT-DIRECTION | open (first run BLOCKED at G0; instrument fixed 587b40d; re-run pending) | EXPERIMENTS.yaml; task10_menu/ |
+| H-CX-BISWAS-FITTED | open (fetch complete; numeric completion pending the Methods extraction) | EXPERIMENTS.yaml; task10_menu/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:
@@ -314,7 +323,8 @@ an explicit go.
 
 ## Addendum 2026-10-29 — Task 10 (the science menu): seven runs, the map redrawn in four places
 
-The exhaustion-audit menu ran in full (registrations frozen jointly
+The exhaustion-audit menu executed in full (six of seven items ran;
+Biswas completed its document fetch and awaits its instrument) (registrations frozen jointly
 2026-10-23; run records WORKLOG 3313458..95914f7 plus the 2026-10-30 backfill;
 closes in EXPERIMENTS.yaml). No instrument was modified during the
 runs -- every run reached a registered exit as frozen; six of seven
@@ -374,8 +384,10 @@ full re-run pending). Four results move this synthesis:
    are not generically good; one specific, anatomy-coupled one is.
 
 Still open from the menu: H-T4T5-NATSTAT-DIRECTION (blocked at its own
-G0 gate by an OFF-edge instrument bug, localized and under fix
-cloud-side -- the gate worked; the hypothesis is untested) and
+G0 gate by an OFF-edge instrument bug, localized and FIXED cloud-side
+(587b40d: measured drive-equality, regression tests failing pre-fix;
+full local re-run pending) -- the gate worked; the hypothesis is
+untested) and
 H-CX-BISWAS-FITTED (fetch complete; their MaleCNS realization is a
 published RECIPE, not tables -- numeric completion pending the
 Methods extraction; the follow-up paper is hemibrain-only, correcting

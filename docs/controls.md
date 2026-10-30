@@ -26,8 +26,8 @@ index, a mechanism, a parameter set, and a transformation-over-input -- see
 | Directed degree-preserving rewires | Implemented in `flygi/connectome/nulls.py`; three seeds built and evaluated |
 | No recurrent graph (bypass) | Implemented; interface-matched and evaluated |
 | Random legal agent | Implemented; Gate 0 chance floor recorded |
-| Generic matched sparse reservoir | Implemented and compiled; ARC run pending |
-| Positive control (edge of chaos) | Implemented, compiled and validated; ARC run pending |
+| Generic matched sparse reservoir | Implemented, compiled; ARC arm RUN 2026-10 as the positive control's twin (75 matched rows, score 0.0320, no separation from the positive control) |
+| Positive control (edge of chaos) | Implemented, compiled, validated; ARC arm RUN 2026-10 (75 matched rows, measured FLAT -- H-ARC-HARNESS-SENSITIVITY refuted; see "The positive control" below) |
 | Weight shuffle | Implemented, validated, and RUN 2026-10 (H-STAGEA-NULL-DECOMPOSITION supported: the Stage-A signature separates from both weight families at the floor — it is magnitude-dependent as well as placement-dependent) |
 | Sign shuffle within transmitter strata | Implemented, validated, and RUN 2026-10 (Stage-A signature does NOT separate from Dale-consistent sign flips: p 0.438/0.826); ARC-scope application deferred (recorded, killtest_design.md section 7) |
 

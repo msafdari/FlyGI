@@ -65,8 +65,9 @@ reservoir computing calls good
 Random action selection outscored the connectome, 0.098 to 0.065. The brain-free
 bypass tied it exactly. Real versus rewired: p = 1.00, a confidence interval
 spanning zero, and the entire difference resting on one game out of twenty-five.
-And the kicker: the positive control, tuned to succeed, ALSO scored nothing —
-so the zeros bound my interface, not the fly. Under this harness, no tested
+And the kicker: the positive control, tuned to succeed, ALSO moved no score —
+0.0137, both decision CIs spanning zero — so the zeros bound my interface, not
+the fly. Under this harness, no tested
 graph moved the score; what a better harness would say remains open.
 
 **And then the controls turned on me.**
@@ -126,8 +127,8 @@ deleted, held-out games.
 
 Answer: no advantage — from anything. Random beat it. The bypass tied it.
 p = 1.00. Even the positive control, a reservoir tuned into the known-good
-long-memory regime, scored zero: under this interface, no tested graph moved
-score.
+long-memory regime, moved no score (0.0137; both decision CIs span zero):
+under this interface, no tested graph moved score.
 
 Then I found my own "smart" clicking was 3.29× worse than clicking at random —
 shipped in two submissions before I compared it to the obvious alternative.

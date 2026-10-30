@@ -75,7 +75,9 @@ zero when no level is completed.
 - **Track A — Literal Fly:** fixed mappings and dynamics; no ARC-specific
   training. This is the first full-agent target after ingestion and dynamics.
 - **Track B — Frozen Fly Reservoir:** a frozen recurrent graph with a small,
-  parameter-matched trainable interface. This is later work.
+  parameter-matched trainable interface. Built and run: the 520-parameter
+  trained head (0.886 training games, 0.000 held out; LEAGUE head-trained
+  rows) and the 2026-10 reservoir ARC arms (FLAT).
 - **Track C — Plastic Fly:** constrained local plasticity. It is explicitly out
   of scope until the fixed and frozen controls are understood.
 

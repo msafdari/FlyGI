@@ -1,5 +1,14 @@
 # Task 10 runbook — the science menu (user-executed, local)
 
+> **STATUS 2026-10-30.** Sections 1, 2, 4, 6 and 7 EXECUTED 2026-10-28/29
+> (reservoir FLAT — downgrade executed; decomposition readings complete;
+> FB PASS; t4t5 class-3 BLOCKED-closed "null"; SFA KILL + terminal PASS;
+> records in EXPERIMENTS.yaml + WORKLOG). Section 5 ran once and BLOCKED at
+> its G0 gate; the instrument bug is FIXED (587b40d) and **section 5b is the
+> one command still to run**. Section 3 (Biswas) completed its fetch; the
+> instrument awaits the Methods extraction. Everything below is otherwise a
+> historical record.
+
 Registrations: killtest_design.md (frozen 2026-10-23, one commit,
 before any instrument code). Run order matters only for item 1:
 **run the reservoir control FIRST, before the 2026-11-01 release**,
@@ -13,7 +22,7 @@ JSON (all are gitignored) plus the printed lines and the branch tip.
 ```bash
 cd <FlyGI repo root>
 git pull
-PYTHONPATH=src python -m pytest tests/test_stagea_nulls2.py -q   # 9 passed
+PYTHONPATH=src python -m pytest tests/test_stagea_nulls2.py -q   # 11 passed
 ```
 
 ## 1. H-ARC-HARNESS-SENSITIVITY — reservoir positive control (BEFORE the release)
@@ -51,7 +60,7 @@ on FLAT, the release prose edits listed there happen BEFORE 11-01.
 ## 2. H-STAGEA-NULL-DECOMPOSITION — second null family on Stage A
 
 ```bash
-PYTHONPATH=src python -m pytest tests/test_stagea_nulls2.py -q   # 9 passed
+PYTHONPATH=src python -m pytest tests/test_stagea_nulls2.py -q   # 11 passed
 python scripts/arenas/cx_topology_nulls2.py       # the one command
 ```
 
@@ -122,7 +131,7 @@ It also needs your local results/benchmarks/fc25_visual_ds.json
 (the Task-4-era fc25 run) for the G0 gate and the AD-8 readout.
 
 ```bash
-PYTHONPATH=src python -m pytest tests/test_natstat_killtest.py -q   # 31 passed
+PYTHONPATH=src python -m pytest tests/test_natstat_killtest.py -q   # 32 passed at first run; 36 after the 5b fix
 python scripts/arenas/natstat_killtest.py --image-root <CORPUS>
 ```
 

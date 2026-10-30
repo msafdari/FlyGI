@@ -1,7 +1,10 @@
 # Social and outreach kit
 
 Drafts for publishing FlyGI's results. Nothing here is published automatically;
-these are copy for a human to review, fill in, and post.
+these are copy for a human to review, fill in, and post. This is the broader
+OUTREACH kit; the paper-announcement pair lives in docs/arenas/task1_arc_paper/
+(linkedin_post.md, x_post.md). Post nothing from here without checking every
+number against FACTS.md -- including the 2026-10-30 harness-sensitivity rows.
 
 ## Files
 

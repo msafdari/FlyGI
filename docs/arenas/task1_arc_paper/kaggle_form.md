@@ -8,7 +8,7 @@ makes two more things ELIGIBILITY requirements even though the checklist
 does not enforce them — a Media Gallery with a cover image, and your
 code as a public notebook in Project Links. Satisfy all of it. The word
 limit is verbatim: "Your Writeup should not exceed 1,500 words.
-Submissions over this limit may be subject to penalty." (Body: 1,448.)
+Submissions over this limit may be subject to penalty." (Body: 1,485.)
 
 **Deadline:** Kaggle is internally consistent at 2026-11-09 23:59 UTC
 (form and Overview agree); arcprize.org says Nov 8. **Plan to Nov 8**,

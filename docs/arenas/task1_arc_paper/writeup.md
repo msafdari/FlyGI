@@ -3,7 +3,7 @@
 **Subtitle:** Auditing the 166,700-neuron MaleCNS fly connectome on ARC-AGI-3:
 both circuits tested in full scored below their degree-preserving rewires.
 
-*(Kaggle Writeup body below — target <=1,450 words. Field-by-field paste
+*(Kaggle Writeup body below — 1485 words as of 2026-10-30; hard limit 1,500. Field-by-field paste
 guide for the Kaggle form: kaggle_form.md in this directory. Title 78/80
 chars, subtitle 139/140.)*
 
@@ -34,7 +34,7 @@ engineering did from what the fly's anatomy did.
 In a September-2026 wave of 50+ public connectome game demos (dated
 survey in the repository), most share one shape — a frozen graph plus a
 hand-written readout; none ran validation, input gates and controls
-together — and, as of that survey, none entered any ARC version.
+together, and none had entered any ARC version.
 Published lines cut against innate-wiring usefulness: a worm connectome
 plus trained mapping walks a fly body realistically; fly-hero's trained
 readout hits 100% on a random network; connectome-reservoir benchmarks
@@ -51,7 +51,8 @@ Substrate: MaleCNS v1.0, 166,700 retained neurons; the deployed graph is the
 24,994,595-edge modulator-preserving runtime. Circuits run on a fidelity
 ladder — class 1: full-graph float32 leaky-tanh rate dynamics; class 2:
 per-type LIF/graded dynamics on extracted subcircuits; class 2.5: trained
-flyvis ensemble parameters with verified provenance for T4/T5.
+flyvis ensemble parameters with verified provenance for T4/T5; class 3:
+literature-pinned spiking physiology (CX; T4/T5 attempt blocked).
 
 Every module faces the same three stages, preregistered with bands and kill
 rules (EXPERIMENTS.yaml):
@@ -73,11 +74,10 @@ instrument unchanged; the instrument is what transfers.
 
 Each rung shipped; each scored 0.15, which is what pure abstention earns —
 held three times while the local score grew ~52-fold. The ladder ended
-honestly: an online-search layer failed its preregistered gate, 28.459550
-against the 28.742260 bar, and did not ship — the 28.74 rung is the
-measured local ceiling of this non-LLM track. Before these three: six
-0.00s from a construction crash, diagnosed from the empty scorecard, not
-exit codes.
+honestly: an online-search layer failed its preregistered gate (28.459550
+vs the 28.742260 bar) and did not ship. Before these three: six 0.00s
+from a construction crash, diagnosed from the empty scorecard, not exit
+codes.
 
 ## Result 2 (measured): the fly component is small, real, and bounded
 
@@ -99,20 +99,17 @@ control ever ran on Kaggle.
 
 **Against the fly.** With input gates passed (PN share of KC drive 62–87% vs
 a 5% bar), the class-2 mushroom body scored 0.600 on one-shot held-out visual
-association — while its exact degree-preserving rewire scored 0.800, higher
-than the real wiring (sign test p=0.996); shuffled-credit scored 0.400 (real
-beats it, p=0.019: the depression mechanism genuinely carries credit); a
-matched one-shot perceptron scored 0.917. T4/T5 motion decoding at validated
+association — while its exact rewire scored 0.800 (sign test p=0.996);
+shuffled-credit 0.400 (real beats it, p=0.019 — the depression mechanism
+carries credit); a matched perceptron 0.917. T4/T5 motion decoding at validated
 class-2.5 fidelity (pooled median DSI 0.3216 against a >=0.30 band) scored
-0.3875 on the held-out test (660 verified events, 11 games, 4 held-out x
-3 seeds) — above chance on every
-seed, while the rewire reached 0.4306 (p=0.97) and an engineered
+0.3875 on the held-out test (660 verified events; 4 held-out games x 3 seeds) — above chance on every seed, while the rewire reached 0.4306 (p=0.97) and an engineered
 shift-matcher 1.0000. These circuits' specializations are real, and on these
 ARC tasks, at these fidelities, they point the wrong way. Two more circuits
 died earlier in the pipeline: the compiled ellipsoid-body ring holds
-activity, not position, at both fidelities tested (155/155 alive class-2
-configs delocalized, min circular variance 0.853 vs a 0.6 band; shuffled
-ring comparable), and the LC object-position code was sign-inverted at all 21
+activity, not position, at every fidelity tested through class-3 spiking
+(155/155 class-2 configs delocalized; the validated class-3 bump persists,
+retention 0.94–0.997, but slides to one region from every heading), and the LC object-position code was sign-inverted at all 21
 class-1 grid points (best Spearman -0.203 vs a +0.50 band).
 
 **Against ourselves.** A coordinate head shipped in two early submissions
@@ -123,22 +120,15 @@ exactly 0.0000) yet generalized zero: 0.0000 on all 17 held-out games
 against 0.8858 on its own training games. Connectome-dependent and useless
 are compatible; so are well-tested and worse than random.
 
-**What survives.** The deployed graph is measurably non-random: spectral
-radius 0.8289 vs 0.2219–0.2360 across three exact degree-preserving nulls
-(3.59x), carried with the record's verbatim caveat: "the strongest
-reproducible connectome result. It has not yet produced an ARC outcome
-advantage."
-
-**What bounds the nulls.** The registered harness-sensitivity control ran
-before release (2026-10): a reservoir validated into the long-memory
-regime (rho 0.9924, memory half-life 3 actions vs the real graph's 1)
-also moved official score not at all — both decision CIs span zero, with
-detection power around +0.1 score at 75 matched rows. Our class-1 ARC
-real-vs-null results therefore read as: under this interface, no tested
-graph — engineered or biological — moved score. They bound the
-interface's tested graphs, not what the fly wiring could confer under a
-different harness. (The arena-series rewire results are unaffected: each
-of those harnesses carried its own measured positive control.)
+**What survives, and what bounds it.** The deployed graph is measurably
+non-random — spectral radius 0.8289 vs 0.2219–0.2360 across three exact
+rewires (3.59x) — and still carried no ARC outcome advantage. The
+registered harness-sensitivity control (run 2026-10, before release)
+bounds that reading: a reservoir validated into the long-memory regime
+(rho 0.9924) also moved score not at all, both decision CIs spanning zero
+at a ~+0.1 detection floor. The class-1 zeros bound this interface's
+tested graphs, not the fly; the arena rewires each carried their own
+positive control.
 
 ## Theory: why it fails where it fails
 

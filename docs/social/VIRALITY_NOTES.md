@@ -44,8 +44,8 @@ Every draft in this directory follows this order:
    spectral radius of degree-matched rewirings. This is a real discovery and it
    should not be buried under the negative one.
 3. **Surprise** — and still no advantage appeared, from it or from any tested
-   graph (the tuned positive control also scored zero, which bounds the
-   harness, not just the fly). Surprise is an independent driver of sharing.
+   graph (the tuned positive control also moved no score -- both decision CIs
+   span zero -- which bounds the harness, not just the fly). Surprise is an independent driver of sharing.
 4. **Pratfall** — the specific things I got wrong, now that competence is
    established. This is where trust is built, not where it is spent.
 5. **A portable principle** — "the controls are what make it science." The

@@ -96,3 +96,16 @@ three times as often. **This must never appear in a post.**
 - that any result here is zero-shot generality (training used public games);
 - that other projects have no controls (at least one published a
   parameter-matched control that beat its own connectome condition).
+
+## Harness sensitivity (added 2026-10-30; source: EXPERIMENTS.yaml H-ARC-HARNESS-SENSITIVITY close + the 2026-10-30 WORKLOG backfill)
+
+- Positive-control reservoir (rho 0.9924, memory half-life 3 actions vs the
+  real graph's 1): ARC score 0.0137 over 75 matched rows.
+- vs eff-real-signed 0.0648: delta -0.0511, CI -0.153..+0.000.
+- vs eff-null-degree-preserving 0.0079: delta +0.0058, CI +0.000..+0.017.
+- Its matched-random twin (rho 0.1608): 0.0320; control vs twin -0.0183,
+  CI -0.055..+0.000.
+- Verdict: FLAT -- both decision CIs span zero; detection power ~ +0.1 score
+  at 75 rows. Correct phrasing: "moved no score / did not separate", with CIs.
+  NEVER "scored zero" (the score is 0.0137) and NEVER "~400x more state"
+  (unsourced; the recorded numbers are rho and half-life above).

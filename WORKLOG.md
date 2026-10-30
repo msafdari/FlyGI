@@ -167,7 +167,7 @@ FLAT downgrade (checklist); Kaggle writeup once before Nov 8
 
 ## Task 10 item 5: natstat BLOCKED at G0 -- the new stimulus path does not reproduce fc25's reference (plumbing, not a verdict) -- 2026-10-29
 
-Exit 3 in 5.8 s of measurement; 31/31 unit tests first. The gate
+Exit 3 in 5.8 s of measurement; 31/31 unit tests first [annotation 2026-10-30: the suite collected 32 at that commit; 31 was a transcription slip -- and 20.6 s was the run's total elapsed, 5.8 s the measurement segment, per the backfill]. The gate
 sequence worked exactly as registered: corpus loaded (60 van Hateren
 images, sha256 checksums PINNED AT FIRST CONTACT to
 results/arenas/natstat_corpus_checksums_van_hateren.json -- now the
@@ -235,7 +235,7 @@ overall floor. The frozen bars refuse the trade.
 
 TERMINAL ARM: PASS -- ALL FOUR BARS HOLD. core 1.0000 / hard 0.6418
 (bar delta +0.0366) / graded 0.7622 (uniform 0.7113; floor held with
-+0.051 to spare) / specificity +0.3135 (uniform +0.2823), 11/30 tasks
++0.051 to spare [annotation 2026-10-30: +0.051 is the delta over the uniform row's 0.7113; the margin over the registered 0.701 floor is +0.061]) / specificity +0.3135 (uniform +0.2823), 11/30 tasks
 (uniform 9). Suppression also up (0.639 -> 0.701), activation up
 (+0.004). MEASURED, scope held tight: weighting the compiled MaleCNS
 counts by flybench's shipped per-terminal table improves the

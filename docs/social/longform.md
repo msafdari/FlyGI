@@ -63,18 +63,23 @@ evolved circuit and the two adapters I wrote. Calling the inputs
 - **Parameter-matched bypass.** Identical interface budget, recurrent gain set
   to zero, projection retargeted so its readout is actually driven — matched
   against the real condition's 390,272 projection connections.
-- **Positive control.** A reservoir deliberately placed at the edge of chaos, so
-  that if everything scores zero I can tell "the connectome doesn't help" from
-  "my harness can't express help from any graph." It retains ~400× more state
-  than the real graph.
+- **Positive control.** A reservoir deliberately placed at the edge of chaos
+  (spectral radius 0.9924; memory half-life 3 actions vs the real graph's 1),
+  built so that if everything scores zero I can tell "the connectome doesn't
+  help" from "my harness can't express help from any graph." It ran: measured
+  FLAT — 0.0137 over 75 matched rows, both decision CIs spanning zero, no
+  separation even from its low-memory twin. The zeros below therefore bound
+  the harness, not just the fly.
 - **Held-out games**, and uncertainty clustered on games rather than rows —
   because a deterministic policy produced byte-identical traces across all five
   seeds, and treating those as replicates would claim 5× the evidence it had.
 
 ### What the controls said
 
-**No benchmark advantage.** The structural separation above did not translate
-into a single point of ARC performance.
+**No benchmark advantage — from any tested graph.** The structural separation
+above did not translate into a single point of ARC performance, and neither
+did the control tuned to succeed: under this interface, no tested graph moved
+official score (detection power ~ +0.1 at 75 rows).
 
 - Random legal action selection: 0.097568. The connectome: 0.064751.
 - Interface-matched bypass: tied the connectome exactly, 0.190476 each, solving

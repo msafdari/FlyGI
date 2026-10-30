@@ -69,7 +69,8 @@ equivalents). The per-module verdicts, all measured:
 | Eye map (static retinotopy) | **USEFUL, deployed** — level-1 action cost 2.59x human baseline vs 11.59x for its scrambled twin (4.5x), the one fly component in every scored submission |
 | T4/T5 motion (13,585 neurons) | **NOT USEFUL** for ARC motion decoding at validated class-2.5 fidelity — real 0.3875 vs its own rewire 0.4306; engineered matcher 1.0000 |
 | Mushroom body (4,064 KC) | **NOT USEFUL** for one-shot ARC association at class-2 fidelity — real 0.600 vs its own rewire 0.800; matched perceptron 0.917 |
-| EB ring (compass) | UNVALIDATABLE at classes 1–2 — holds activity, not position (all 155 alive LIF configs delocalized) |
+| EB ring (compass) | **Structure PASS, computation KILL** — the ring-compass topology is in the wiring (first structural PASS of the series: bandedness 0.5881 vs null max 0.3376, p 0.005 vs 200 rewires) but computes no compass at any tested physiology: classes 1–2 delocalized or fixed-point; at class-3 spiking (published-physiology engine, validated on the Pisokas circuit first) the bump persists through darkness yet slides to one region from every heading (H-CX-CLASS3-COMPASS refuted; scoped to the declared unfitted mapping, standalone circuit) |
+| FB columnar system (vector navigation) | **Structure PASS** (2026-10-29) — hDelta antipode 0.4055 vs null max 0.1868 and PFN mirror geometry, both at the empirical floor vs 200 rewires; structure only, computation untested |
 | LC object code | UNVALIDATABLE at class 1 — position code sign-inverted at all 21 operating points |
 
 Kaggle record: six early 0.00s (a construction crash — zero actions played),
@@ -93,8 +94,26 @@ V1 the early-filter dynamics roughly doubled the predictivity of their own
 input (0.0690 vs 0.0330 — the first arm where a simulated circuit beat its
 encoder), and the uniform flybench adapter rows beat the reference
 configuration on all four summary rows. Our expected-tier score predictions
-stand at 0 for 16; the measurements held. The full program synthesis —
-instances, positives, open explanations, falsifiers — is
+stand at 0 for 16; the measurements held.
+
+Two later rounds (2026-10-10..29) extended the record in both directions.
+Structure: the CX ring-compass topology and the fan-shaped-body vector
+geometry each passed against 200 degree-preserving rewires at the empirical
+floor — the program's two structural PASSes — and the one PASS was then
+decomposed (it is carried by edge placement AND magnitude assignment, not
+the sign pattern). Computation: the compass still computes nothing at any
+tested physiology, including a published spiking-tier engine validated on
+the literature circuit first; the spiking T4/T5 attempt could not even be
+posed (zero evoked spikes at every drive scale, an instrument-scoped
+absence). One fidelity mechanism carried measured function: FlyBench's
+terminal-aware synapse placement improved every registered bar with the
+rewired control still collapsing — scoped to that benchmark, nothing about
+ARC. And the registered harness-sensitivity control came back FLAT: a
+reservoir tuned into the known-good long-memory regime also moved no ARC
+score, so the class-1 ARC zeros above read as "under this interface, no
+tested graph moved score" (power floor ~ +0.1), never as a measured absence
+of fly advantage specifically. The full program synthesis — instances,
+positives, open explanations, falsifiers — is
 [docs/arenas/SYNTHESIS.md](docs/arenas/SYNTHESIS.md).
 
 Full narrative: [WORKLOG.md](WORKLOG.md); every arm and verdict:
