@@ -1,63 +1,75 @@
-# X post draft
+# X post draft (v3, de-jargoned 2026-10-31; panel-written, judged, fact-gated)
 
-*(Post AFTER the repo is public. Option A is a single post; Option B is a
-thread. Attach media/cover.png to the lead post; figures 1–3 to thread
-tweets as marked. Character counts exclude the link, which X shortens.)*
+*(Post AFTER pulling this tip. Every number below has a row in
+docs/social/FACTS.md (see "Post numbers", added 2026-10-31). Tweet budget:
+270 chars with URLs counted as 23; all verified below, with slack left for
+tag resolution. Resolve each [TAG: ...] in the composer dropdown to the
+official account; if the dropdown does not surface it, DELETE the slot text,
+never type a guessed handle (real handles are shorter, so counts only
+shrink). Do not change any number. Tweet 7 carries the mandatory scope for
+the compass result: do not reword it beyond the tag rule.)*
 
-## Option A — single post (267 chars as X counts it)
+## Option A, single post (275 as X counts it)
 
-> I audited a whole fly brain (166,700 neurons) on ARC-AGI-3 with
-> kill-rule controls. Its shuffle beat it on every ARC task. Then we
-> fitted real per-type physiology to its compass: it held heading 8/8,
-> 0.0° error; its rewires admit no attractor. github.com/msafdari/FlyGI
+> Scientists mapped every connection in a fly's brain. I put it on an AI
+> benchmark with one rule: beat your scrambled copy. It lost all season. I
+> published every loss. Then we fitted each neuron type's electrical
+> properties and its compass won one back. github.com/msafdari/FlyGI
 
-## Option B — thread
+## Option B, thread (DEFAULT; attach media/cover.png to 1, fig1 to 3, fig3 to 4, fig2 to 8)
 
-**1/** (attach cover.png)
-Dozens of projects wired the newly mapped fly connectomes to Doom this
-September. We put one on ARC-AGI-3 instead, with matched controls
-(degree-preserving rewires, scrambled twins) on every claim. The results cut
-in both directions. 🧵
+**1/** (249)
+Scientists mapped every connection in a fruit fly's brain. I spent weeks
+betting that map could earn its keep on an AI reasoning benchmark. It lost
+all season, and I published every loss. This week it finally won one back.
+Here is the whole story. 🧵
 
-**2/** (attach fig1_ladder_vs_hidden.png)
-Our engineered scaffold (13 hand-built game grammars) grew the local score
-~52x, 0.55 to 28.74 on matched runs. On Kaggle's hidden games: 0.15, 0.15,
-0.15. The abstention floor. Grammar transfer to unseen games measured
-exactly zero, three times.
+**2/** (266)
+The bet: the wiring map of a fly brain from [TAG: HHMI Janelia Research
+Campus]. 166,700 neurons. About 25 million connections. I put it on
+ARC-AGI-3, a benchmark easy for humans and hard for AI, with one rule:
+every fly circuit must beat a scrambled copy of itself.
 
-**3/**
-The one fly component we deployed, the eye's static anatomical map
-straight from the connectome, no dynamics, zero training, ran first levels
-at 2.59x the human action baseline vs 11.59x for a scrambled-map twin. A
-4.5x gap from anatomy alone. Small, real, control-backed.
+**3/** (249)
+The humbling came first. My own hand-built game strategies grew our local
+score about 52x, 0.55 to 28.74. On the hidden games at [TAG: Kaggle] they
+scored 0.15, three times. 0.15 is what an agent earns when nothing it
+knows matches anything it sees.
 
-**4/** (attach fig3_controls_both_ways.png)
-The deep circuits: our class-2 mushroom-body and class-2.5 T4/T5 models
-PASSED their biology benchmarks. Then both lost the ARC task to
-their own shuffled twins (0.600 vs 0.800; 0.3875 vs 0.4306). The wiring is
-real. On pixel grids, at these fidelities, it points the wrong way.
+**4/** (268)
+It got worse. The fly's motion detectors and learning center passed their
+biology checks, then lost the AI tasks to scrambled copies of their own
+wiring, where every neuron keeps its number of connections. Memory: real
+0.600, scrambled 0.800. Motion: 0.3875 vs 0.4306.
 
-**5/**
-Then the twist. The compass failed at every unfitted fidelity. So we
-fitted real per-type physiology (Biswas et al.'s published recipe,
-applied once to our counts). It held heading: 8/8 angles, 0.0° error.
-All 3 rewires: no valid attractor. The fly beat its own shuffle.
+**5/** (254)
+One thing survived all season: the fly's eye map. Pure anatomy read
+straight off the wiring, no training. With it, the agent finished first
+levels using 2.59x the actions a human needs. With the map scrambled:
+11.59x. That gap is anatomy doing real work.
 
-**6/**
-Boundaries, because they matter: that compass win is off-score (zero
-ARC points, our 0-for-16 forecast record stands), and our fitted
-parameters differ from theirs, flagged. Not a reproduction. It is
-wiring-vs-shuffle, measured, with the published recipe applied once.
+**6/** (263)
+Then the comeback attempt: the fly's internal compass. Three earlier
+versions of it failed. The heading signal smeared out, or it slid to the
+same spot no matter where it started. One thing we had never given it:
+electrical properties fitted for each neuron type.
 
-**7/** (attach fig2_verdict_matrix.png)
-Same instrument, pointed at ourselves: our tested, shipped coordinate head
-explored 3.29x LESS than random clicking. A trained head was genuinely
-connectome-dependent, and generalized zero. Well-tested and worse than
-random are compatible.
+**7/** (269; carries the mandatory compass scope, do not reword)
+Only once we fitted each neuron type's electrical properties, via Biswas
+et al.'s published recipe applied once to our wiring counts, did the
+compass (a simplified model) hold direction: 8/8 angles, 0.0° off. None of
+the three scrambled copies formed a working compass.
 
-**8/**
-Why publish a 0.15? Because "brain plays game" demos are everywhere and
-attribution is almost nowhere. Validate the biology, gate the input, test
-vs rewired twins. Everything's open: code, worklog, and our
-ARC Prize 2026 Paper Track writeup:
-github.com/msafdari/FlyGI
+**8/** (259)
+Boundaries, out loud: the compass win sits off the leaderboard, zero ARC
+points. Our fitted numbers differ from Biswas et al.'s published ones, so
+it is not a reproduction, and we flagged it. And all sixteen of our score
+predictions were wrong. Published too.
+
+**9/** (268)
+Why back a fly that keeps losing? Because every biology-helps-AI claim
+should have to beat a scrambled copy of itself. Every loss and the one win
+are public, [TAG: ARC Prize] writeup included.
+https://github.com/msafdari/FlyGI
+https://www.kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit
+#ARCPrize #AI #neuroscience

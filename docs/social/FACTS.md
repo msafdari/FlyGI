@@ -75,6 +75,17 @@ ladder, and H-ONLINE-SEARCH's preregistered bar was met decisively, 11 of 25
 games (sources: `docs/arenas/task1_arc_paper/factsheet.md`; WORKLOG.md
 2026-09-30).
 
+## Post numbers (added 2026-10-31; each verified against factsheet.md lines cited)
+
+| Fact | Value | Source |
+| --- | --- | --- |
+| Local gateway ladder | 0.551859 -> 3.044167 -> 28.742260 (~52x; rounded 0.55 to 28.74 fine in posts) | factsheet.md:44-45 |
+| MB one-shot association, real vs rewire | 0.600 vs 0.800 (rewire exceeds, p=0.0775 band miss on real) | factsheet.md:118 |
+| T4/T5 motion decoding, real vs rewire | 0.3875 vs 0.4306 (rewire exceeds, p=0.97); engineered matcher 1.0000 | factsheet.md:126-128 |
+| Eye map action cost | 2.59x human baseline vs 11.59x scrambled twin; 4.5x separation | factsheet.md:66 |
+| "Abstention floor" plain gloss | 0.15 = what an agent earns when nothing it knows matches anything it sees. NEVER "the score for doing nothing": doing nothing (zero actions, the six crashes) scored 0.00 | factsheet + Leaderboard section above |
+| Plain-English control gloss | degree-preserving rewire = "a scrambled copy of the wiring where every neuron keeps its number of connections"; use "scrambled"/"randomly rewired" in public copy, never bare "shuffle" | user style rule 2026-10-31 |
+
 ## Retracted
 
 An earlier internal claim that the connectome reached level one "in far fewer
