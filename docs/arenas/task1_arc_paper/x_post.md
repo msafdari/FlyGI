@@ -4,12 +4,12 @@
 thread. Attach media/cover.png to the lead post; figures 1–3 to thread
 tweets as marked. Character counts exclude the link, which X shortens.)*
 
-## Option A — single post (270 chars as X counts it)
+## Option A — single post (267 chars as X counts it)
 
-> I audited the MaleCNS fly connectome (166,700 retained neurons) on
-> ARC-AGI-3, with controls. Scored agents used only its static eye map
-> (dynamics off): beat its scrambled twin 4.5x. Engineered scaffold: ~52x
-> locally, ZERO hidden transfer (0.15 x3). github.com/msafdari/FlyGI
+> I audited a whole fly brain (166,700 neurons) on ARC-AGI-3 with
+> kill-rule controls. Its shuffle beat it on every ARC task. Then we
+> fitted real per-type physiology to its compass: it held heading 8/8,
+> 0.0° error; its rewires admit no attractor. github.com/msafdari/FlyGI
 
 ## Option B — thread
 
@@ -26,27 +26,38 @@ Our engineered scaffold (13 hand-built game grammars) grew the local score
 exactly zero, three times.
 
 **3/**
-The one fly component we actually deployed — the eye's static anatomical map,
-straight from the connectome — no dynamics, zero training — completed first levels at
-2.59x the human action baseline vs 11.59x for a scrambled-map twin. A 4.5x
-gap attributable to anatomy alone. Small, real, control-backed.
+The one fly component we deployed — the eye's static anatomical map,
+straight from the connectome, no dynamics, zero training — ran first levels
+at 2.59x the human action baseline vs 11.59x for a scrambled-map twin. A
+4.5x gap from anatomy alone. Small, real, control-backed.
 
 **4/** (attach fig3_controls_both_ways.png)
-The deep circuits are the twist: our class-2 mushroom-body and class-2.5 T4/T5 models PASSED their biology
-benchmarks — then both lost the ARC task to
+The deep circuits: our class-2 mushroom-body and class-2.5 T4/T5 models
+PASSED their biology benchmarks — then both lost the ARC task to
 their own shuffled twins (0.600 vs 0.800; 0.3875 vs 0.4306). The wiring is
 real. On pixel grids, at these fidelities, it points the wrong way.
 
-**5/** (attach fig2_verdict_matrix.png)
+**5/**
+Then the twist. The compass failed at every unfitted fidelity. So we
+fitted real per-type physiology (Biswas et al.'s published recipe,
+applied once to our counts). It held heading: 8/8 angles, 0.0° error.
+All 3 rewires: no valid attractor. The fly beat its own shuffle.
+
+**6/**
+Boundaries, because they matter: that compass win is off-score (zero
+ARC points, our 0-for-16 forecast record stands), and our fitted
+parameters differ from theirs, flagged. Not a reproduction. It is
+wiring-vs-shuffle, measured, with the published recipe applied once.
+
+**7/** (attach fig2_verdict_matrix.png)
 Same instrument, pointed at ourselves: our tested, shipped coordinate head
 explored 3.29x LESS than random clicking. A trained head was genuinely
 connectome-dependent — and generalized zero. Well-tested and worse than
 random are compatible.
 
-**6/**
+**8/**
 Why publish a 0.15? Because "brain plays game" demos are everywhere and
-attribution is almost nowhere — no demo we found runs validation, input
-gates and controls together. Validate the biology → gate the input → test vs
-rewired twins. Everything's open — code, worklog, preregistrations, and our
+attribution is almost nowhere. Validate the biology → gate the input → test
+vs rewired twins. Everything's open: code, worklog, and our
 ARC Prize 2026 Paper Track writeup:
 github.com/msafdari/FlyGI

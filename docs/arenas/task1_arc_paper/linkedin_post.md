@@ -6,8 +6,8 @@ you; edit voice freely — the numbers must not drift from the factsheet.)*
 
 ---
 
-**Title: I wired a complete fly connectome to an AI benchmark. Here's what it
-actually computed — and what it didn't.**
+**Title: I wired a whole fly brain into an AI benchmark. Its shuffle won,
+then it lost.**
 
 This September, hooking a fruit-fly connectome up to video games became a
 genre. Doom, Mario 64, Beat Saber — dozens of projects dropped the newly
@@ -57,6 +57,26 @@ motion decoding, real 0.3875 vs rewired 0.4306. The simulated circuits work at t
 these tasks, points the wrong way — plausibly because evolution tuned it for
 fly inputs, not pixel grids.
 
+**Then, just after we submitted the writeup, the story flipped.** The fly's
+compass circuit had failed at every unfitted fidelity we tested: the bump
+delocalized or froze at the low classes, and at validated spiking it slid to
+one region from every heading. So we gave it the one thing it had never had.
+Biswas et al. published the exact recipe for turning connectome counts into
+a ring attractor, fitted per-type physiology and all. We applied that
+published recipe once to our counts, no tuning. Given fitted per-type
+physiology, the fitted EPG-Delta7 realization held a heading bump dead on
+target: 8 of 8 angles, 0.0 degrees of error, in both valid configurations.
+And all three degree-preserving rewires failed outright, because the
+attractor equations have no solution on shuffled counts. It is the first
+verdict in our whole record where the fly's wiring, given fitted per-type
+physiology, beat its own shuffle (one earlier FlyBench bar beat the same
+null inside a mechanism test). This happened off the leaderboard and earns
+zero ARC points, and our fitted parameters differ from theirs, flagged, so
+it is not a reproduction of their numbers. It is still the measurement I
+care most about in the whole repo: the counts carry the topology, unfitted
+physiology did not compute with it, fitted physiology did, and that
+computation is wiring-specific.
+
 [figure: fig3_controls_both_ways.png]
 
 The controls cut both ways, which is how you know they're honest: the same
@@ -79,6 +99,6 @@ submitted to the ARC Prize 2026 Paper Track.
 
 **Repo: https://github.com/msafdari/FlyGI**
 
-*(add Kaggle writeup link once live)*
+**Kaggle writeup: https://www.kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit**
 
 #neuroscience #connectome #ARCAGI #Drosophila #AI #openscience

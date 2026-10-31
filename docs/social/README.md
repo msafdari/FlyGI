@@ -58,3 +58,13 @@ either way.
    negative is low-arousal, the weakest opening there is, and the Pratfall Effect
    only rewards admitting mistakes once competence is established. Awe first,
    real finding second, failures once they have something to land on.
+
+## STALE WARNING (dated 2026-10-31)
+
+The four channel drafts here (linkedin.md, x.md, longform.md,
+instagram.md) predate the H-CX-BISWAS-FITTED close and the Option-B
+title. Do not post any of them as-is: fold in the Biswas section of
+FACTS.md first (scope words ride every result sentence; any "first"
+claim carries its FlyBench-bar precedent). The two POSTING-READY
+drafts, refreshed 2026-10-31 with the comeback and length-verified,
+are docs/arenas/task1_arc_paper/linkedin_post.md and x_post.md.
