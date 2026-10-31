@@ -303,6 +303,184 @@ reviewed provenance extract of the parameter tables enters the repo)
    NeurIPS 2025 record (poster 115017) for the necessity claim's
    exact statement and any code link.
 
+### Section 3 NUMERIC COMPLETION (dated 2026-10-31, BEFORE instrument code): the fetched recipe, the derived gate, the declared assumptions
+
+Source (provenance): Biswas, Stanoev, Romani & Fitzgerald, "From the
+fly connectome to exact ring attractor dynamics", bioRxiv
+10.1101/2024.11.01.621596 v2 (posted 2026-03-08, CC-BY 4.0), 63 pp,
+uploaded by the user 2026-10-31 and read in-cloud in full (main text
++ Methods, Appendices A–I, Tables 1–2). Equation numbers below are
+theirs. ESTABLISHED below = taken from that paper; ASSUMED = chosen
+by us, labelled AC-B*, mirrored in ASSUMPTIONS.md.
+
+SCOPE INHERITED FROM THEIR PAPER, said plainly: their self-sustaining
+realization is EPG + Delta7 ONLY (E/I; the ER6 variant is a separate
+architecture we do not run). PEN_a/PEN_b/PEG have no role in their
+published realization and stay unused here — the AC-8 composition
+check still runs, but the recipe consumes the EPG x Delta7 blocks.
+Every close sentence scopes to "the Biswas-fitted EPG–Delta7
+realization derived once from our compiled counts".
+
+THEIR MODEL (ESTABLISHED; their A.2/C.64): threshold-linear rate
+network, tau dy/dt = -y + Phi(W^EE y + W^EI z), tau dz/dt = -z +
+Phi(W^IE y + W^II z), Phi(x)=max(0,x), tau=1, self-sustained (zero
+external bias), N=8 computational units per population (EB wedges
+for EPG, glomerulus-groups for Delta7). Steady bump on the active-4
+EPG set: y = sigma(1-mu, r_s - mu r_a, r_s + mu r_a, 1+mu),
+mu in [-1,1], <theta> = mu pi/8 (A.22, A.25), r_s - r_a = 2 (A.24).
+W^XY = gamma^XY C^XY with C = synapse-count matrices and one scale
+factor per block (C.83); effective parameters depend on exactly
+three scale factors: gamma^EE, gamma^II, gamma^EIE = gamma^EI
+gamma^IE (C.87).
+
+THE COARSE-GRAINING RECIPE (ESTABLISHED; their Methods
+"Constructing connectome-derived ring attractors"), applied ONCE to
+our compiled counts, no retuning:
+1. EPG neurons -> 8 wedges; Delta7 neurons -> 8 units, each Delta7
+   assigned by MAXIMAL CUMULATIVE OUTPUT of synapse counts to EPG
+   grouped by wedge (connectivity-derived; replicated verbatim).
+2. Unit count matrix: C^XY_ij = mean over POSTSYNAPTIC neurons of
+   unit i of the SUMMED counts from all presynaptic neurons of unit
+   j (sum over pre, average over post; their "connections to every
+   neuron summed per presynaptic wedge ... postsynaptic connectivity
+   averaged per wedge").
+3. Fully-symmetric realization (A_Delta=8): circular-distance
+   averaging of each 8x8 block to a 5-vector c^XY_d, d = 0 (self),
+   1 (neighbour) ... 4 (opposite). Mirror-symmetric realizations
+   (A_Delta=6, 4): mirror-averaging only (W_ij with W_i*j*, i* the
+   mirror partner, their B.38/E.97).
+4. Effective inhibitory feedback C^EIE = C^EI (I - gamma^II
+   C^II)^-1 C^IE restricted to the ACTIVE z set (their C.65–C.67,
+   C.84); gamma^II = 0 is their published default for A_Delta=8
+   (their measured viable range [-3.08e-4, 0]).
+
+GAMMA FIT, FULLY-SYMMETRIC A_Delta=8 (ESTABLISHED procedure, their
+Methods + C.4): solve Chat gammahat = w(r_a) in least squares, Chat
+the 3x2 matrix of (c^EE_d, c^EIE_d), d=1..3, and w(r_a) =
+(w1, w2, w3) on their viable branch: w1 = (1+r_a)/2 (A.23),
+w2 = 1 - 2 w1^2 (A.17), w3 = w1(4 w1^2 - 3) (A.18); scan r_a in
+[0,1] minimizing ||(Chat Chat^+ - I) w(r_a)||_2 to precision 1e-10;
+then gamma = gammahat / (1 + (c^EE_0, c^EIE_0) . gammahat) (the
+self-loop normalization, their C.76/C.85 algebra) and gamma^EI =
+-gamma^IE = -sqrt(|gamma^EIE|). VALIDITY = their Table 1 + Table 2
+conditions evaluated on the derived effective weights: w1 in [1/2,1)
+(A.26/A.27, subsumes stability A.21); w4 <= -(8w1^4 - 8w1^2 + 1)
+(A.32) AND w4 <= -(4w1^2 - 3) (A.36) (jointly their A.35, inactive
+EPG); active z drives positive (C.82) and inactive z drives negative
+(C.81) at both extreme profiles mu = +/-1 (their stated numerical
+check); gamma^EE > 0; gamma^EIE < 0; normalization denominator > 0.
+
+GAMMA FIT, MIRROR-SYMMETRIC A_Delta in {6,4} (ESTABLISHED
+procedure): the three equalities B.44, B.48, B.54 on the barred
+effective weights (the six active-set parameters w1, w1', w1'', w2',
+w2'', w3 read from the mirror-averaged effective matrix built per
+their Eq (1)/C.85 from (gamma^EE, gamma^EIE, gamma^II)); seed from
+their published residual grid (100^3 over gamma^EE in [0, 0.05],
+gamma^EIE in [-0.001, 0], gamma^II in [-0.05, 0]), refine with
+Levenberg–Marquardt; VALIDITY = |w1 + w3| < 2 (B.50), r_a > 0
+(B.55/B.58), inactive-EPG inequalities (B.63), z-state inequalities
+(C.81/C.82), all at mu = +/-1.
+
+ASSUMPTIONS, declared now and nowhere hidden (AC-B1..5; also added
+to ASSUMPTIONS.md):
+- AC-B1 (wedge assignment): EPG wedge = the class-3 instrument's
+  label convention (instance digit mod 8; L/R merged at the same
+  angle) standing in for their EB-innervation assignment, which
+  needs morphology we do not load. Breaks: wedge-profile distortion.
+  Canary: the published-r_a cross-check below.
+- AC-B2 (ROI): whole-brain pairwise counts stand in for their
+  ROI-restricted counts (EB for E–E, PB for E–I/I–I). Breaks:
+  cross-ROI contamination of the profiles. Same canary.
+- AC-B3 (counts = |W|): our compiled magnitudes read as synapse
+  counts, Dale signs ignored (their recipe reads counts; signs enter
+  through the gammas). The whole fit is invariant under C -> alpha C
+  (gamma -> gamma/alpha), so only RELATIVE distortion matters.
+- AC-B4 (A_Delta active sets): the inactive Delta7 units sit AT the
+  bump, mirror-symmetric about the active-EPG axis (Delta7 activity
+  is anti-phase to the EPG bump): with active EPG {3,4,5,6},
+  A_Delta=6 -> z-inactive {4,5}; A_Delta=4 -> z-inactive {3,4,5,6}.
+  Their paper fixes A_z per active-EPG set (C.1.1) but prints no
+  unit list; this is the one structural choice that is ours. Breaks:
+  the mirror fits land away from their published r_a — flagged by
+  the cross-check, and the A_Delta=8 configuration is unaffected.
+- AC-B5 (tie rule; the argmax-degeneracy class, fourth potential
+  instance PRE-EMPTED this time): Delta7-unit assignment ties break
+  to the lowest wedge index; every Delta7 whose top-two cumulative
+  outputs are within 2% is counted and reported (tie_fraction);
+  tie_fraction > 0.25 on the REAL graph = BLOCKED-degenerate
+  (assignment not meaningful), on a REWIRE it is reported, never a
+  block (destroyed assignment structure is the null doing its job).
+
+AMENDED IN-CLOUD VALIDATION GATE (replacing the unexecutable
+reproduce-theirs-on-theirs gate; the absence finding — figure-only,
+no numeric realization published — is recorded in the registry,
+2026-10-29 bullet). Pisokas-gate pattern, self-consistency +
+can-fail, all BEFORE MaleCNS contact:
+ (i)  SYNTHETIC RECOVERY: counts constructed from a known ground
+      truth (chosen r_a*, gamma*, with nonzero unit self-loops and a
+      diagonal C^EI so C^EIE factors exactly): the fit must recover
+      r_a* and gamma* to 1e-6 and every Table-1/2 check must pass.
+ (ii) The G1 simulation on that synthetic system must pass 8/8.
+ (iii) CAN-FAIL: a structure-free synthetic (uniform counts) must
+      yield NO valid fit.
+ (iv) The analytic identities verified numerically: A.17/A.18/A.23/
+      A.24 on the branch, the mu-tiling A.25, and the mirror
+      equalities reducing to the symmetric ones when primes equal
+      (their B.49 remark).
+DATA-CONTACT CROSS-CHECK (a reading, NEVER a verdict-changer, frozen
+before contact): fitted r_a vs their published MaleCNS values
+r_a = 0.548 (A_Delta=8), 0.437 (A_Delta=6), 0.391 (A_Delta=4);
+|delta r_a| <= 0.1 is reported "consistent with their realization";
+larger is reported as a divergence flag with AC-B1/AC-B2 the named
+suspects. Published values enter NOTHING but this comparison.
+
+G1 OPERATIONALIZATION FOR A RATE MODEL (the frozen bars mapped,
+declared now): 8 seeds = the mu=0 symmetric configurations of the 8
+rotations of the active-4 EPG set — 45 deg apart by A.25. Seed
+y = sigma(1, r_s, r_s, 1) on the active set at sigma=1 with
+r_s = r_a + 2; z = the thresholded fixed-point response to the
+seeded y (100 fixed-point iterations); integrate their ODE (tau=1)
+in darkness to T = 100 tau (solve_ivp RK45, rtol 1e-8, atol 1e-10).
+THE SIMULATION NEVER MASKS UNITS: all 8 z units evolve freely;
+A_Delta enters the fit only. Per-seed pass iff retention =
+sum y(T) / sum y(0) >= 0.05 AND circvar(y(T)) <= 0.6 AND
+|PVA(y(T)) - PVA(y(0))| <= 45 deg (PVA = angle of sum y_i
+exp(i theta_i)); non-finite activity or max y > 1e6 = fail
+(runaway is not an attractor). G1 passes iff >= 6 of 8. These are
+the H-CX-CLASS3-COMPASS bars verbatim with "activity" = the 8-unit
+EPG rate vector.
+
+G2: their model has NO rotation input (E/I only; the velocity drive
+of their Appendix I is never fitted to MaleCNS) — G2 is
+NON-DECISIONAL exactly as the partial freeze declared, and is
+reported as such.
+
+VERDICT + NULL BAR (completing the frozen clause; configurations =
+the three declared A_Delta realizations, nothing else):
+- Real passes a configuration iff a Table-1/2-valid gamma exists
+  there AND G1 passes on the derived system.
+- NULL BAR: 3 degree-preserving rewires (seeds 4242+0..2) of the
+  NEURON-LEVEL EPG+Delta7 subcircuit; the FULL recipe re-runs per
+  rewire (Delta7 unit assignment re-derived from the rewired graph;
+  EPG wedge labels are anatomical and stay fixed). A rewire with no
+  valid fit at a configuration counts as FAILING G1 there — their
+  own inequalities define existence. A rewire whose recipe raises an
+  error is recorded null-error -> BLOCKED, never a verdict.
+- PASS iff real passes >= 1 configuration AND all 3 rewires fail at
+  every real-passing configuration. The close sentence carries
+  "given fitted per-type physiology" (frozen) and the EPG–Delta7
+  scope above.
+- KILL iff real has >= 1 valid-fit configuration and fails G1 at all
+  of them, or any rewire passes at a real-passing configuration.
+- BLOCKED iff: the runtime is absent; composition deviates from
+  AC-8; an EPG wedge is empty; AC-B5's real-graph degeneracy floor;
+  the in-cloud gate fails; a null-error occurs; or NO valid fit
+  exists at ANY configuration on the REAL graph — that last close is
+  recorded as a MEASURED RECIPE-TRANSFER LIMIT (our label-derived
+  wedges + whole-brain counts did not reproduce a realization their
+  ROI-restricted extraction supports; a statement about the
+  transfer, never about the fly), with the r_a residuals reported.
+
 ---
 
 ## 4. H-FB-COLUMNAR-TOPOLOGY — the fan-shaped-body structural probe (Stage-A analog)

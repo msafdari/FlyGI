@@ -1,5 +1,29 @@
 # FlyGI durable worklog
 
+## Biswas numeric completion FROZEN from the uploaded v2 PDF; instrument build follows -- 2026-10-31
+
+The user uploaded the Biswas et al. v2 PDF (bioRxiv
+10.1101/2024.11.01.621596v2, 63 pp) directly into the cloud session,
+resolving the egress block. Read in full in-cloud: main text +
+Methods, Appendices A-I, Tables 1-2 (the tables are reference maps to
+equations: Table 1 = A.10/A.13, B.44/B.48, B.54, A.21/B.50,
+A.26/B.55; Table 2 = A.35/B.63, C.82, C.81). The dated NUMERIC
+COMPLETION is now frozen in killtest_design.md section 3 -- BEFORE
+any instrument code, per the partial-freeze rule: model form,
+coarse-graining recipe, both gamma-fit procedures (fully-symmetric
+r_a scan + mirror-symmetric grid+LM), validity conditions, the
+amended in-cloud gate (synthetic recovery + can-fail control; the
+published r_a values 0.548/0.437/0.391 enter only a data-contact
+consistency reading), the G1 rate-model mapping, the completed null
+bar, BLOCKED floors incl. the recipe-transfer-limit close, and
+assumptions AC-B1..5 (also in ASSUMPTIONS.md). Scope inherited from
+their paper and said plainly: the realization is EPG+Delta7 only;
+PEN/PEG stay unused; close sentences scope to "the Biswas-fitted
+EPG-Delta7 realization derived once from our compiled counts".
+Registry bullet 3 added (H-CX-BISWAS-FITTED stays open until the
+run). NEXT: build scripts/arenas/cx_biswas_killtest.py + tests
+against this frozen text, then the one local run command.
+
 ## Natstat run 3 COMPLETE AND VALID: G0 passes, G1 at chance -- H-T4T5-NATSTAT-DIRECTION closes BLOCKED (AB-4 convention limit, ANS-5 negative) -- 2026-10-31
 
 Third local run (record = the user's pasted gate lines + g1 JSON,

@@ -2857,7 +2857,41 @@ hypotheses:
         PDF fetch completed (11 pp, hemibrain, carries the necessity
         claims; no code link on the poster page; supersedes the
         earlier rate-limit note -- backfill 2026-10-30).
-    updated: 2026-10-29
+      - >
+        2026-10-31 NUMERIC COMPLETION FROZEN (killtest_design.md
+        section 3 addendum, dated, BEFORE instrument code; source =
+        the user-uploaded v2 PDF, 63 pp, read in-cloud in full --
+        Methods, Appendices A-I, Tables 1-2). The completion fixes:
+        their threshold-linear EPG-Delta7 model (tau=1, 8 units per
+        population; PEN/PEG have no role in their realization, said
+        plainly; close sentences scope to the EPG-Delta7 realization);
+        the coarse-graining recipe verbatim (Delta7 units by maximal
+        cumulative output to EPG wedges; sum-over-pre then
+        average-over-post; distance/mirror averaging); the gamma fit
+        (A_Delta=8 via the r_a scan to 1e-10 with the C.76/C.85
+        self-loop normalization; A_Delta=6,4 via their 100^3 grid +
+        Levenberg-Marquardt on B.44/B.48/B.54); validity = their
+        Table 1 + Table 2 conditions (A.26/A.27, A.32+A.36, B.50,
+        B.55, B.63, C.81/C.82 at mu=+/-1). AMENDED GATE (the
+        2026-10-29 absence finding's resolution): in-cloud synthetic
+        recovery to 1e-6 + 8/8 G1 on the synthetic + a can-fail
+        uniform-counts control + the analytic identities; their
+        published MaleCNS r_a values (0.548/0.437/0.391) enter
+        NOTHING but a data-contact consistency reading (band 0.1,
+        never a verdict-changer). G1 bars verbatim, mapped to the
+        8-unit rate vector (retention >= 0.05, circvar <= 0.6, PVA
+        <= 45 deg, >= 6 of 8 seeds at the 8 mu=0 rotations);
+        simulation never masks units. G2 non-decisional as frozen
+        (their model has no rotation input). Null bar completed:
+        neuron-level rewires, full recipe re-run per rewire, no valid
+        fit counts as G1 fail, null-error = BLOCKED. Assumptions
+        AC-B1..5 registered (wedge-label stand-in, whole-brain-count
+        stand-in, counts=|W| with scale invariance, the A_Delta
+        active-set choice, the Delta7 argmax tie rule -- the
+        argmax-degeneracy class pre-empted this time). BLOCKED floors
+        include the no-valid-fit-anywhere close as a measured
+        recipe-transfer limit, never a fly statement.
+    updated: 2026-10-31
 
   H-FB-COLUMNAR-TOPOLOGY:
     statement: >
