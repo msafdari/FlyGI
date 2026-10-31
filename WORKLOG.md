@@ -1,5 +1,37 @@
 # FlyGI durable worklog
 
+## RELEASED AND SUBMITTED (early): repo public, writeup in -- recorded cloud-side 2026-10-31
+
+The local session executed the full release 2026-10-31 (its commits
+956a1af..78ef486 carry the mechanics; this entry banks the hand-off
+facts the registry and HANDOFF cite). Repo PUBLIC at
+github.com/msafdari/FlyGI (MIT-0, main default; GitHub secret
+scanning 0 alerts; local gitleaks history scan clean). FLAT downgrade
+verified in all five named files pre-release; LEAGUE regenerated with
+the reading note, all four checklist verifications passed. Forum
+posts live same day (Rules 3.6.b / AP-12): Paper Track discussion
+754287, ARC-AGI-3 discussion 754288. Dataset flygi-malecns-runtime
+carries the CC BY 4.0 attribution + citation. Walkthrough notebook
+public (kaggle.com/code/megusalexandrus/
+flygi-what-a-fly-connectome-computes-for-free). WRITEUP SUBMITTED
+once (AP-11): kaggle.com/competitions/arc-prize-2026-paper-track/
+writeups/flygi-connectome-attribution-audit, body verbatim 1,484
+words, submission notebook linked private under AP-16
+(auto-publication at deadline is the operative path; Kaggle locks
+visibility flips until close). DOI opt-in ticked; Zenodo repo-DOI
+parked as TODO. Two post-submit amendments recorded in
+kaggle_form.md: the unwrap-before-paste rendering gotcha, and the
+punched-up title/subtitle ("We Wired a Whole Fly Brain into an AI
+Benchmark. Its Own Shuffle Beat It."). TERMINOLOGY RULE from the
+local session, now enforced: 24,994,595 is EDGES -- write
+"connections", never synapses (instagram.md's "24.5 million
+synapses" corrected to "25 million connections" with this entry).
+
+REMAINING: natstat local re-run (fix landed 587b40d; runbook 5b);
+Biswas numeric completion (needs the v2 Methods text -- extraction
+ask sent); Dec 4 results; IJCNN decision after.
+
+
 ## Post-release bookkeeping: DOI opt-in DONE (user); Zenodo repo-DOI parked as TODO -- 2026-10-30
 
 - The writeup's "Opt in to DOI creation" box is ticked (user's click;

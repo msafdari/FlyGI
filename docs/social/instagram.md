@@ -61,7 +61,7 @@ Four icons, four lines.
 
 ## Caption
 
-A complete fruit-fly connectome — 166,700 neurons, 24.5 million synapses —
+A complete fruit-fly connectome — 166,700 neurons, 25 million connections —
 played an AI reasoning benchmark with zero trainable parameters during the
 controlled runs. 🪰
 
