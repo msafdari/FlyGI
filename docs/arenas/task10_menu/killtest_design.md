@@ -777,3 +777,28 @@ convention did not feed the circuit usable input for natural movies,
 BLOCKED as a measured convention limit (ANS-5 resolved in the
 negative), never a statistics verdict. The next run report should
 include the JSON's g1 block either way.
+
+### Section 5 CLOSE (dated 2026-10-31): third run complete and valid; the pre-stated convention-limit close applies
+
+Third run, 211.3 s, exit 3 (record banked in the 2026-10-31 run-3
+WORKLOG entry): G0 PASSED exactly as the amendment predicted (v2
+median DSI 0.3355 in band; tiling tie-aware pass on the same 0.2% T5a
+tie; corpus checksums verified; scramble selftest 3.53e-16), and G1
+failed on the measurement itself: median absolute heading error 90.91
+deg vs the 90.0 deg chance floor over 1,152 evaluable items (exact
+sign test 572/1152 below chance, p 0.605; unstable fraction 0.0). One
+plumbing fix en route under the registered allowance (449a9e4: float
+2.0**n overflowed at n=1,152 AT the G1 call, before any
+verdict-relevant quantity existed; integer 2**n is exact and
+bit-identical at every small n prior harnesses ran; regression test
+added; the identical latent bug fixed in dsec_killtest.py).
+
+The close is the frozen sentence, applied unchanged:
+H-T4T5-NATSTAT-DIRECTION is BLOCKED -- the AB-4-class drive
+convention did not feed the circuit usable input for natural movies
+(ANS-5 resolved in the negative). MEASURED, the pair that defines the
+limit: through the same stimulus path, moving-edge direction decodes
+in band (G0) and natural-movie direction decodes at exactly chance
+(G1). The 2x2 (bars B1/B2) never ran, so nothing here is a statistics
+verdict about natural-scene statistics, T4/T5, or the fly. No fourth
+run.

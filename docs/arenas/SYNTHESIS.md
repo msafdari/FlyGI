@@ -214,7 +214,7 @@ Measurements that would move this synthesis, in information order:
 | H-T4T5-CLASS3-DS | null 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-SFA | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-TERMINAL | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
-| H-T4T5-NATSTAT-DIRECTION | open (first run BLOCKED at G0; instrument fixed 587b40d; re-run pending) | EXPERIMENTS.yaml; task10_menu/ |
+| H-T4T5-NATSTAT-DIRECTION | blocked 10-31 (convention limit: G0 in band, G1 at chance -- 90.91 deg vs the 90 deg floor, p 0.605, n 1152; ANS-5 negative; the 2x2 never ran) | EXPERIMENTS.yaml; task10_menu/ |
 | H-CX-BISWAS-FITTED | open (fetch complete; numeric completion pending the Methods extraction) | EXPERIMENTS.yaml; task10_menu/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
@@ -383,14 +383,17 @@ full re-run pending). Four results move this synthesis:
    mechanisms split, which is itself information -- fidelity additions
    are not generically good; one specific, anatomy-coupled one is.
 
-Still open from the menu: H-T4T5-NATSTAT-DIRECTION (blocked at its own
-G0 gate by an OFF-edge instrument bug, localized and FIXED cloud-side
-(587b40d: measured drive-equality, regression tests failing pre-fix;
-full local re-run pending) -- the gate worked; the hypothesis is
-untested) and
-H-CX-BISWAS-FITTED (fetch complete; their MaleCNS realization is a
-published RECIPE, not tables -- numeric completion pending the
-Methods extraction; the follow-up paper is hemibrain-only, correcting
-the runbook's guess). Score-adjacent base rate: unchanged at 0 for 16
+Still open from the menu: H-CX-BISWAS-FITTED only (fetch complete;
+their MaleCNS realization is a published RECIPE, not tables --
+numeric completion pending the Methods extraction; the follow-up
+paper is hemibrain-only, correcting the runbook's guess).
+H-T4T5-NATSTAT-DIRECTION closed 2026-10-31 after a complete, valid
+third run: BLOCKED as the pre-stated AB-4 convention limit -- through
+the same stimulus path the circuit decodes moving-edge direction in
+band (G0 0.3355) and natural-movie direction at exactly chance (G1
+median 90.91 deg vs the 90 deg floor, p 0.605, n 1152, zero
+unstable); ANS-5 negative; the 2x2 never ran, so the close says where
+the information dies (the convention), not what natural statistics do
+for T4/T5. Score-adjacent base rate: unchanged at 0 for 16
 -- nothing in Task 10 was score-adjacent, and the FLAT result
 retroactively WEAKENS what the ARC zeros ever said about the fly.

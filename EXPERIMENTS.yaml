@@ -2920,7 +2920,7 @@ hypotheses:
       when natural statistics are destroyed by phase-scrambling with
       the power spectrum preserved. First test of SYNTHESIS section 5
       explanation 3.
-    status: open
+    status: blocked
     evidence:
       - >
         PREREGISTERED 2026-10-23 (killtest_design.md section 5). 2x2:
@@ -2994,7 +2994,31 @@ hypotheses:
         RE-RUN required (third). Pre-stated: G0 passing with G1 still
         failing closes BLOCKED as the registered AB-4 convention
         limit (ANS-5 negative), never a statistics verdict.
-    updated: 2026-10-29
+      - >
+        2026-10-31 THIRD RUN, COMPLETE AND VALID (record: the
+        2026-10-31 run-3 WORKLOG entry banking the user's pasted gate
+        lines + g1 JSON; 211.3 s; exit 3). G0 PASSED: v2 median DSI
+        0.3355 (band 0.3216 +/- 0.02), T4/ON 0.3192, T5/OFF 0.3434,
+        tiling tie-aware pass on the same 0.2% T5a tie, exactly as
+        amended; corpus checksums verified; scramble selftest
+        3.53e-16. G1 FAILED ON THE MEASUREMENT: over 1,152 eval items
+        (48 images x 8 directions x 3 speeds, unstable fraction 0.0),
+        median absolute heading error 90.91 deg vs the 90.0 deg
+        chance floor; exact sign test 572/1152 below chance, p 0.605.
+        One plumbing fix en route under the registered allowance
+        (449a9e4, crash AT the G1 call before any verdict-relevant
+        quantity existed): float 2.0**n overflowed at n=1152; integer
+        2**n is exact and bit-identical at every previously run n.
+        CLOSE, pre-stated before the run and applied unchanged:
+        BLOCKED -- the AB-4-class drive convention did not feed the
+        circuit usable input for natural movies (ANS-5 negative).
+        MEASURED pair, scope exact: through the same stimulus path
+        the circuit decodes moving-edge direction in band and
+        natural-movie direction at chance; the convention, not the
+        simulation, is where the information dies. Never a statistics
+        verdict about natural statistics, T4/T5, or the fly: the 2x2
+        (bars B1/B2) never ran. No fourth run.
+    updated: 2026-10-31
 
   H-FLYGI-FLYBENCH-SFA:
     statement: >

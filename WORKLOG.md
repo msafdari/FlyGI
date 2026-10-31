@@ -1,5 +1,46 @@
 # FlyGI durable worklog
 
+## Natstat run 3 COMPLETE AND VALID: G0 passes, G1 at chance -- H-T4T5-NATSTAT-DIRECTION closes BLOCKED (AB-4 convention limit, ANS-5 negative) -- 2026-10-31
+
+Third local run (record = the user's pasted gate lines + g1 JSON,
+banked here; 211.3 s; exit 3). En route, the first attempt crashed AT
+the G1 call with OverflowError: the exact sign test computed 2.0**n
+as a float, which overflows past n~1023, and G1 runs at n=1,152.
+Fixed under the registered plumbing allowance (commit 449a9e4):
+integer 2**n, exact at any magnitude and bit-identical at every small
+n any prior harness ran (DSEC 33, DVS 18, CX 18 cells -- no recorded
+verdict changes); the identical latent bug fixed in dsec_killtest.py;
+regression test at n=1152; 48/48 tests. No verdict-relevant quantity
+existed at the crash.
+
+MEASURED (completed run): corpus van_hateren 60 images, checksums
+verified against the first-contact pin; contrast calibration gamma
+8.0 (p95 |drive| 0.5000); scramble selftest ok (worst amplitude rel
+err 3.53e-16). G0 PASSES: v2 median DSI 0.3355 (band 0.3216 +/-
+0.02), tiling exact False -> tie-aware pass True -- the amendment
+behaved as designed on the same 0.2% T5a tie. 1,152 eval items (48
+images x 8 directions x 3 speeds; 384 items/speed at 442/221/111
+frames; 74.3/46.1/35.5 s), unstable fraction 0.0. G1 FAILS ON THE
+MEASUREMENT: median absolute heading error 90.90846603116665 deg vs
+the 90.0 deg chance floor; exact sign test 572 of 1,152 items below
+chance, p 0.6045519607913874. Verdict line: BLOCKED, floor 3 (G1):
+REAL-natural did not beat the 90-deg chance floor (usable-input
+gate).
+
+CLOSE (the sentence pre-stated in killtest_design.md section 5 BEFORE
+this run, applied unchanged): H-T4T5-NATSTAT-DIRECTION is BLOCKED as
+a measured convention limit -- the AB-4-class drive convention did
+not feed the circuit usable input for natural movies (ANS-5 resolved
+in the negative). MEASURED, the pair that defines the limit: through
+the same stimulus path the same circuit decodes moving-edge direction
+in band (G0 0.3355; T4/ON 0.3192, T5/OFF 0.3434) and natural-movie
+direction at exactly chance (90.91 deg vs the 90 deg floor, p 0.605,
+zero unstable). The convention, not the simulation, is where the
+information dies. That is a statement about the convention -- not
+about natural-scene statistics, not about T4/T5, not about the fly --
+and never a statistics verdict: the 2x2 (bars B1/B2) never ran. No
+fourth run.
+
 ## Natstat run 2: luminance fix CONFIRMED on the verdict machine; residual G0 failure ruled an argmax tie and amended -- 2026-10-31
 
 Second local run (record = the user's pasted gate lines + JSON, banked

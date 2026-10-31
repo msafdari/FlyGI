@@ -238,3 +238,11 @@ python scripts/arenas/natstat_killtest.py --image-root <CORPUS>
 Include the JSON's g1 block in the report either way: if G0 passes
 and G1 still fails, the pre-stated close applies (AB-4 convention
 limit, BLOCKED, ANS-5 negative) and no further natstat run follows.
+
+**CLOSED 2026-10-31 -- the third run completed valid (211.3 s): G0
+passed (0.3355 in band, tie-aware tiling pass), G1 failed on the
+measurement (median 90.91 deg vs the 90 deg chance floor, p 0.605,
+n 1152, zero unstable). The pre-stated close applied: BLOCKED, AB-4
+convention limit, ANS-5 negative. No further natstat run. Record:
+the 2026-10-31 run-3 WORKLOG entry; registry
+H-T4T5-NATSTAT-DIRECTION.**
