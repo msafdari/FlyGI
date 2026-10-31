@@ -1,5 +1,52 @@
 # FlyGI durable worklog
 
+## Writeup amendment v2 (user's direction): hype restored, the first-verdict claim added with its precedent; 1,489 words on every counter -- 2026-10-31
+
+The user overrode two v1 editorial choices, explicitly: the intensity
+adverbs come back and the "first" claim goes INTO the public writeup.
+Both executed within the fact/tier gate:
+
+RESTORED (v1 trims reversed): "answers exactly these"; "worth exactly
+zero"; "genuinely connectome-dependent"; "exactly 0.0000"; "ever ran
+on Kaggle"; "The boundary travels with the win:"; and the
+machine-readable self-report ending (166,700 nodes / 24,994,595 edges
+/ neuronal_dynamics_active=false) -- the closing line is back.
+
+THE NEW PARAGRAPH, rewritten in plain voice (no em-dashes, no
+rhetorical triple, simple sentences) and now carrying the standing
+claim: "...The first verdict in our record where the fly's wiring,
+given fitted per-type physiology, beat its own shuffle (one earlier
+FlyBench bar beat the same null inside a mechanism test)." The
+FACTS.md rule that any "first" phrasing must carry the precedent is
+satisfied in the same parenthesis; both result sentences carry the
+frozen "given fitted per-type physiology" words; "fail outright" is
+backed by the measured no-valid-fit record; "dead on target" is the
+measured 0.0 deg.
+
+COMPENSATING CUTS v2, all low-voltage, every change listed: dropped
+the survey's "(dated, in the repository)" parenthetical (the closing
+line already points at the repo); "trained ... with verified
+provenance" -> "provenance-verified"; "(run 2026-10, before release)"
+-> "(run before release)"; "each behind passed input gates and each
+scoped" -> "both behind passed input gates, scoped"; dropped
+"machine-readable in the preflight" from the Result-2 parenthetical
+(the ending now says it); "mean unique observations" -> "unique
+observations"; "saturate dense at" -> "saturate at"; dropped
+"engineered ceilings," from the attribution-stack list; "along that
+ladder" dropped from the opening; "vs the 28.742260 bar" -> "vs
+28.742260"; "against a >=0.30 band" -> ", band >=0.30"; "notebooks,"
+dropped from the closing enumeration (they are project links); "for
+calibration" dropped; "our fitted r_a" -> "our r_a" in the new
+paragraph; the inner quote marks around NOT USEFUL: NONE removed
+(punctuation hygiene, zero words).
+
+COUNTS: body = 1,489 words on BOTH wc -w and a naive whitespace split
+(all residual spaced em-dashes closed up, including the line-break
+cases the first pass missed); 11 under the 1,500 hard limit on any
+counting method. kaggle_body_unwrapped.md regenerated,
+token-identical, verified. The paste protocol is unchanged
+(kaggle_form.md): full-body replacement via Update Submission.
+
 ## Kaggle writeup amendment prepared (user's call): the Biswas compass PASS added, fact-gated trims compensate -- 2026-10-31
 
 The user asked for the live writeup (submitted 2026-10-31, deadline

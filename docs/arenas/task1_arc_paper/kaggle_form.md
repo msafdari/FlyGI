@@ -96,10 +96,18 @@ markdown (## headers, bold, numbered lists). Spaced em-dashes were
 closed up (word — word -> word—word) so every word counter agrees; this
 is typography only, no word changed.
 
-Expected count: 1,461-1,463 words (wc -w vs naive whitespace split) —
-~37 words under the 1,500 limit on any counter. If Kaggle's counter
+Expected count: 1,489 words exactly, on wc -w AND naive whitespace
+split (they agree; every em-dash is closed up) — 11 under the 1,500
+limit. If Kaggle's counter
 shows more than 1,500, stop and tell the Claude session; trims go
 through the fact/tier gate, never ad hoc.
+
+v2 note (2026-10-31, user's direction): the Biswas paragraph now
+carries the first-verdict claim with its FlyBench-bar precedent in
+the same parenthesis (FACTS.md requires the precedent to accompany
+any "first" phrasing); the intensity adverbs and vivid phrases
+trimmed in v1 are restored; the compensating cuts moved to
+low-voltage spots (list in the v2 WORKLOG entry).
 
 ## Attachments -> Project links
 
