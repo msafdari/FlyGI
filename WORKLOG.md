@@ -1,5 +1,20 @@
 # FlyGI durable worklog
 
+## Post-release bookkeeping: DOI opt-in DONE (user); Zenodo repo-DOI parked as TODO -- 2026-10-30
+
+- The writeup's "Opt in to DOI creation" box is ticked (user's click;
+  the DOI mints after the competition ends).
+- TODO (user, "a bit later", no deadline): mint a repo DOI -- enable
+  FlyGI at zenodo.org -> GitHub, then cut a GitHub release; Zenodo
+  mints the DOI (checklist's optional item, CITATION.cff already
+  carries the citation metadata).
+- OPEN THREADS, all cloud-side next: (1) natstat stimulus-path fix
+  (T5-off lead), then the local re-run here (corpus pinned, one
+  command); (2) Biswas numeric completion (recipe re-derivation; four
+  PDFs local); (3) confirmation that the Task-10 hypothesis closes
+  landed in the registry.
+
+
 ## Writeup title/subtitle punched up on the live submission (user's call); still Submitted -- 2026-10-30
 
 At the user's request (max reach for investors/recruiters/
