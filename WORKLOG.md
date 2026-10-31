@@ -1,5 +1,41 @@
 # FlyGI durable worklog
 
+## natstat run 3 COMPLETE AND VALID: G0 passes, G1 fails on the measurement -- H-T4T5-NATSTAT-DIRECTION closes BLOCKED per the pre-stated contingency -- 2026-10-31
+
+Run 3 took two attempts, both recorded. FIRST ATTEMPT crashed AT the
+G1 call with OverflowError: the exact sign test computed 2.0**n as a
+FLOAT, which overflows past n~1023, and this instrument's G1 runs at
+n=1,152 eval items. No verdict-relevant quantity existed at the crash
+(the G1 statistic itself died), so the registered plumbing-fix
+allowance applied: fixed to integer 2**n (exact int/int division at
+any magnitude; bit-identical at every small n any prior harness ran --
+DSEC 33, DVS 18, CX 18 -- so no recorded verdict changes), the same
+latent bug fixed in dsec_killtest.py's copy, regression test added at
+n=1152 (48/48 pass), committed 449a9e4, and run 3 completed.
+
+THE COMPLETED RUN (211.3 s; corpus checksums verified vs the pin;
+calibration gamma 8.0 p95 0.5000; scramble selftest 3.5e-16):
+- G0 PASS: pooled v2 median DSI 0.3355 (band 0.3216 +/- 0.02), T4-on
+  0.3192 / T5-off 0.3434, tie-aware tiling clause per cb62674.
+- Real/natural arms simulated in full: 1,152 items (48 images x 8
+  directions x 3 speeds), ZERO unstable.
+- G1 FAIL, measured: median angular error 90.91 deg vs the 90.0 deg
+  chance floor; one-sided sign test p 0.605 (572/1152 below chance).
+  The decode sits exactly at chance.
+
+CLOSE, per the contingency pre-stated in the registration BEFORE this
+run: G0-passes-but-G1-fails means the AB-4 drive convention does not
+feed the circuit usable input for NATURAL movies -- a measured
+convention limit (ANS-5 resolved negative), never a statistics
+verdict. H-T4T5-NATSTAT-DIRECTION closes BLOCKED; NO FOURTH RUN. The
+sharp measured pair this leaves: through the SAME stimulus path, the
+same circuit decodes moving-edge direction in band (G0) and natural-
+movie direction at exactly chance (G1) -- the convention, not the
+simulation, is where the information dies. Registry close is the
+cloud side's step. JSON gitignored at
+results/arenas/natstat_killtest.json.
+
+
 ## Natstat run 2: luminance fix CONFIRMED on the verdict machine; residual G0 failure ruled an argmax tie and amended -- 2026-10-31
 
 Second local run (record = the user's pasted gate lines + JSON, banked
