@@ -1,5 +1,16 @@
 # Kaggle Writeup form — field-by-field paste guide
 
+**WORD-COUNT WARNING (2026-10-31, cloud): kaggle_body_unwrapped.md
+currently measures 1,508 words, EIGHT OVER the 1,500 hard limit** (the
+dash/semicolon style re-application added words on top of the v3 body).
+Per the user, the LOCAL session makes the trims before pasting: target
+1,495 or fewer; meaning-preserving only; no number may change; the
+compass scope clauses ("fitted ... Biswas et al.'s published recipe
+applied once to our counts", "fitted ... differ") stay intact; keep the
+dash-free/semicolon-free style; verify with wc -w AND a naive
+whitespace split; bank the trimmed sentences in WORKLOG.
+
+
 **v5 TITLE 2026-10-31 (user's call: I-voice): "I Wired a Whole Fly Brain
 into ARC-AGI-3. Its Scrambled Copy Won, Then Lost." (76/80).
 Supersedes v4 below.**
