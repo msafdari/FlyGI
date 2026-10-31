@@ -1,5 +1,25 @@
 # FlyGI durable worklog
 
+## Writeup v2.2 live: dashes, semicolons and prose colons stripped (user's style call); still Submitted -- 2026-10-31
+
+Two style passes on the live Kaggle body at the user's request, both
+fact-gated (number multiset byte-identical before and after each pass;
+required phrases asserted; no claim or tier wording touched):
+1. Every em and en dash removed. 21 dash constructions rewritten with
+   commas, colons, periods and parentheses, range en dashes became
+   plain hyphens, compound hyphens kept as required English.
+2. Prose semicolons to ZERO and prose colons to three deliberate ones
+   (the list intro, the quoted NOT USEFUL: NONE label, the closing
+   data triplet). Heading colons kept as title convention. Fragment-
+   style rewrites kept the count flat. The subtitle's semicolon also
+   became a period.
+Kaggle's word counter at save: 1,499 of 1,500 -- NOTE: one word of
+headroom. Any future body edit must trim before it adds. Status after
+both saves: Submitted, slug unchanged, title/subtitle Option B (with
+the subtitle period fix). Source of truth updated in
+kaggle_body_unwrapped.md (commits d105e88, 954250f).
+
+
 ## Writeup title/subtitle Option B chosen by the user; accuracy note recorded -- 2026-10-31
 
 The user chose Option B for the live Kaggle writeup (local session

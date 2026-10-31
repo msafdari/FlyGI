@@ -27,6 +27,12 @@ The 10-30 title/subtitle below remain the record of the prior live
 state; the original submission's title/subtitle further below remain
 the record of what was first submitted.
 
+**WORD-COUNT HEADROOM WARNING (2026-10-31): Kaggle's counter reads
+1,499 of 1,500 on the live body. Trim before adding anything.** The
+subtitle now ends "...On ARC the shuffle won. The fly's compass, given
+fitted physiology, won it back." (semicolon removed, user's style call;
+the body is also dash- and semicolon-free per the same call.)
+
 **TITLE/SUBTITLE AMENDED ON THE LIVE WRITEUP 2026-10-30 (user's call,
 reach over gravitas; body unchanged, still Submitted, slug unchanged):**
 Title (73/80): "We Wired a Whole Fly Brain into an AI Benchmark. Its
