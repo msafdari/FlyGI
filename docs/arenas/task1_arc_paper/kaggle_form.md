@@ -1,5 +1,9 @@
 # Kaggle Writeup form — field-by-field paste guide
 
+**v5 TITLE 2026-10-31 (user's call: I-voice): "I Wired a Whole Fly Brain
+into ARC-AGI-3. Its Scrambled Copy Won, Then Lost." (76/80).
+Supersedes v4 below.**
+
 **v4 TITLE 2026-10-31 (user's call: no "shuffle" anywhere public-facing):
 "We Wired a Whole Fly Brain into ARC-AGI-3. Its Scrambled Copy Won, Then
 Lost." (77/80). "Scrambled copy" = the degree-preserving rewire, per the

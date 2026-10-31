@@ -18,9 +18,9 @@ You have seen the videos: a fly's brain map hooked up to Doom. The question thos
 
 I spent a season answering that, in public.
 
-A fruit fly's brain has now been mapped neuron by neuron. In the version I run: 166,700 neurons, 25 million connections, from the MaleCNS dataset by [TAG: HHMI Janelia Research Campus]. I put that map on ARC-AGI-3, the [TAG: ARC Prize] benchmark built to be easy for humans and hard for current AI. Zero trained parameters.
+A fruit fly's brain has now been mapped neuron by neuron. In the version I run: 166,700 neurons, 25 million connections, from the MaleCNS dataset by [TAG: HHMI Janelia Research Campus]. I put that map on ARC-AGI-3, the [TAG: ARC Prize] benchmark of novel hidden games, easy for humans and hard for current AI. Why that arena? It is built to make memorization useless, and the fly brings none: its wiring is a prior shaped by 400 million years of evolution. If innate structure transfers anywhere unpaid, it is here. Zero trained parameters.
 
-One rule separated this from a demo: every component had to beat a scrambled copy of the wiring, where every neuron keeps its number of connections but who talks to whom is destroyed. If the scramble does just as well, the fly gets no credit.
+One rule separated this from a demo: every component had to beat a scrambled copy, where every neuron keeps its number of connections but who talks to whom is destroyed. If the scramble does just as well, the fly gets no credit.
 
 The fly lost. All season.
 
@@ -36,11 +36,11 @@ Its compass, the circuit a fly uses to track which way it is facing, had failed 
 
 [figure: fig3_controls_both_ways.png]
 
-That win sits off the leaderboard and earned zero benchmark points. My fitted numbers differ from the published ones, and I flagged it. It is still the measurement I care most about. The wiring itself carries something the scramble destroys.
+That win earned zero benchmark points. My fitted numbers differ from the published ones, and I flagged it. It is still the measurement I care most about. The wiring itself carries something the scramble destroys.
 
 The instrument cut against me too: it flagged my own shipped component as exploring 3.29x less than random clicking. That is what makes the rest believable.
 
-This is how I think every "biology does AI" claim should be tested: check the biology, feed it input it can actually use, then make it beat its scrambled twin.
+Every "biology does AI" claim should be tested this way: check the biology, feed it real input, make it beat its scrambled twin.
 
 Everything is open, wrong predictions included. Kick the tires, poke holes.
 
