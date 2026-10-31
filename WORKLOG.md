@@ -1,5 +1,32 @@
 # FlyGI durable worklog
 
+## natstat re-run after the luminance fix: BLOCKED again at G0, now by ONE near-tie subtype (T5a argmax, 0.2% margin) -- 2026-10-31
+
+The user re-ran per the cloud instruction (36/36 tests first; corpus
+checksums VERIFIED against the first-contact pin; calibration gamma
+8.0 p95 0.5000; scramble selftest 3.5e-16; 20.0 s to the gate). The
+587b40d luminance fix WORKED for the magnitude: G0 pooled v2 median
+DSI is now 0.3355 -- INSIDE the 0.3216 +/- 0.02 band (was 0.1763) --
+with T4-on 0.3192 and T5-off 0.3434 both healthy and defined fraction
+1.0. G0 still fails, on its OTHER clause: tiling exact = False.
+
+MEASURED, the whole failure is one subtype: T5a reads preferred +y
+where the fc25 reference tiling says -x, and its direction totals are
+a photo finish -- +y 1.3388 vs -x 1.3361, a 0.2% margin (next: +x
+0.8915, -y 0.8844; subtype DSI 0.2044, 61 cells). The other seven
+subtypes match the reference exactly (T4a-d and T5b-d, margins
+comfortable). T4 and T5 each show 4 distinct preferred directions.
+G1 reported failed alongside, as before.
+
+Disposition is the cloud side's call under the frozen registration:
+either a residual small path discrepancy (T5a is the weakest-DSI
+OFF subtype and sits nearest isotropy) or a gate-operationalization
+issue -- "exact tiling" rests on an argmax that a 0.2% tie can flip,
+the same degeneracy class the Stage-A shifter amendment documented.
+No local changes to the instrument; JSON gitignored at
+results/arenas/natstat_killtest.json.
+
+
 ## RELEASED AND SUBMITTED (early): repo public, writeup in -- recorded cloud-side 2026-10-31
 
 The local session executed the full release 2026-10-31 (its commits
