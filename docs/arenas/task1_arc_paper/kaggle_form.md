@@ -1,5 +1,32 @@
 # Kaggle Writeup form — field-by-field paste guide
 
+**TITLE/SUBTITLE AMENDED AGAIN 2026-10-31 (user's call, Option B of the
+cloud session's candidates; slug unchanged, still Submitted):**
+Title (76/80): "We Wired a Whole Fly Brain into an AI Benchmark. Its
+Shuffle Won, Then Lost." Subtitle (136/140): "166,700 neurons, 25M
+connections, every control public. On ARC the shuffle won; the fly's
+compass, given fitted physiology, won it back." ACCURACY NOTES:
+"Its Shuffle Won" carries the same scope as the 10-30 title (every
+score-side comparison isolating the real graph is null or favors the
+rewire; the circuits tested in full scored below their rewires).
+"Then Lost" is the 2026-10-31 compass result, off-score: given fitted
+per-type physiology (Biswas et al.'s published derivation recipe
+applied once to our counts), the fitted EPG-Delta7 realization held
+the heading bump while all three degree-preserving rewires admitted
+no valid realization — the shuffle lost THAT contest; the ARC record
+and the 0-for-16 base rate are unchanged, and it is not a
+reproduction of their parameters. The subtitle's "given fitted
+physiology" is the character-budget shortening of the registered
+"given fitted per-type physiology" (140-char field; the full phrase
+rides both result sentences in the body). "won it back" = the
+contest against its own shuffle, nothing broader; "25M connections"
+remains the 24,994,595-EDGE runtime (never "synapses"). No "first"
+claim appears in title or subtitle, so no precedent accompaniment is
+owed there; the body's first-verdict sentence carries its precedent.
+The 10-30 title/subtitle below remain the record of the prior live
+state; the original submission's title/subtitle further below remain
+the record of what was first submitted.
+
 **TITLE/SUBTITLE AMENDED ON THE LIVE WRITEUP 2026-10-30 (user's call,
 reach over gravitas; body unchanged, still Submitted, slug unchanged):**
 Title (73/80): "We Wired a Whole Fly Brain into an AI Benchmark. Its
