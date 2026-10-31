@@ -1,5 +1,22 @@
 # FlyGI durable worklog
 
+## Writeup title/subtitle Option B chosen by the user; accuracy note recorded -- 2026-10-31
+
+The user chose Option B for the live Kaggle writeup (local session
+executing): title "We Wired a Whole Fly Brain into an AI Benchmark.
+Its Shuffle Won, Then Lost." (76/80) and subtitle "166,700 neurons,
+25M connections, every control public. On ARC the shuffle won; the
+fly's compass, given fitted physiology, won it back." (136/140).
+The dated accuracy note is in kaggle_form.md, same pattern as the
+10-30 amendment: "Then Lost" scopes to the off-score 2026-10-31
+compass result (fitted physiology, rewires admitted no valid
+realization), the ARC record and 0-for-16 unchanged; the subtitle's
+"given fitted physiology" is the 140-char shortening of the
+registered phrase, full phrase in the body; no "first" claim in
+title or subtitle, so the precedent rides only the body sentence
+that makes it. Confirmation of the live save pending from the local
+session.
+
 ## Writeup amendment v2 (user's direction): hype restored, the first-verdict claim added with its precedent; 1,489 words on every counter -- 2026-10-31
 
 The user overrode two v1 editorial choices, explicitly: the intensity
