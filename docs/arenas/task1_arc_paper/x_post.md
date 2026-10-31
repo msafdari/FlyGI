@@ -12,7 +12,7 @@ fig2_verdict_matrix.png to 7. Every number has a row in docs/social/FACTS.md
 compass scope and must not be reworded.)*
 
 **1/** (245)
-Scientists mapped every connection in a fruit fly's brain. I spent weeks betting that map could earn its keep on an AI reasoning benchmark. It lost all season. I published every loss. This week it finally won one back. Here is the whole story. 🧵
+Scientists mapped every connection in a fruit fly's brain. I spent weeks betting that map could earn its keep on an AI reasoning benchmark. It lost all season. I published every loss. Days ago, it finally won one back. Here is the whole story. 🧵
 
 **2/** (263)
 The bet: a fly brain's complete wiring map from [TAG: HHMI Janelia Research Campus]. 166,700 neurons. About 25 million connections. And one rule to keep me honest: every fly circuit must beat a scrambled copy of itself. Same connections per neuron, random wiring.
