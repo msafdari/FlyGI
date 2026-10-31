@@ -40,6 +40,12 @@ forum comments verbatim on 754287 and 754288, bank all URLs. X,
 forum comments and the optional Zenodo release are deliberately NOT
 done today per the amendment.
 
+REMINDER ARMED: a one-time cloud routine (reminder only, it cannot
+post -- that needs the user's local browser sessions) fires at
+2026-11-04T16:15:00Z = Wed Nov 4, 8:15 AM PST (DST ends Nov 1), and
+emits the Phase 2 checklist. Routine id trig_01UXkvJFnkfTwQetbD6MRocM,
+https://claude.ai/code/routines/trig_01UXkvJFnkfTwQetbD6MRocM.
+
 ## Writeup v3 + social v4 (user's calls): benchmark named in the title, chronology scrubbed, I-voice posts, 3-tweet X -- 2026-10-31
 
 Four user directives executed. (1) TITLE v3: "We Wired a Whole Fly
