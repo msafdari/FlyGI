@@ -344,15 +344,25 @@ our compiled counts, no retuning:
    j (sum over pre, average over post; their "connections to every
    neuron summed per presynaptic wedge ... postsynaptic connectivity
    averaged per wedge").
-3. Fully-symmetric realization (A_Delta=8): circular-distance
-   averaging of each 8x8 block to a 5-vector c^XY_d, d = 0 (self),
-   1 (neighbour) ... 4 (opposite). Mirror-symmetric realizations
-   (A_Delta=6, 4): mirror-averaging only (W_ij with W_i*j*, i* the
-   mirror partner, their B.38/E.97).
+3. [AS CORRECTED 2026-10-31, pre-data-contact -- see the
+   adversarial-review correction record at the end of this file; the
+   original freeze wrongly said "mirror-averaging only" for
+   A_Delta=6,4, misreading their B.38/E.97, which define mirror
+   symmetry of the EFFECTIVE weight matrix, not a count-averaging
+   prescription.] ONE circular-distance symmetrization for ALL THREE
+   realizations: each 8x8 block averaged to a 5-vector c^XY_d, d = 0
+   (self), 1 (neighbour) ... 4 (opposite), and redistributed to
+   circulant form (their Methods: "we symmetrized the synapse count
+   matrix... by averaging all elements assumed to be equal"). The
+   A_Delta=6,4 mirror asymmetry of the effective network arises
+   SOLELY from the active-z restriction in step 4.
 4. Effective inhibitory feedback C^EIE = C^EI (I - gamma^II
-   C^II)^-1 C^IE restricted to the ACTIVE z set (their C.65–C.67,
-   C.84); gamma^II = 0 is their published default for A_Delta=8
-   (their measured viable range [-3.08e-4, 0]).
+   C^II)^-1 C^IE computed from the SYMMETRIZED blocks (their "the
+   corresponding count vector c^EIE from the first column"; Supp Fig
+   S1 shows the product of the symmetrized matrices), restricted to
+   the ACTIVE z set (their C.65–C.67, C.84); gamma^II = 0 is their
+   published default for A_Delta=8 (their measured viable range
+   [-3.08e-4, 0]).
 
 GAMMA FIT, FULLY-SYMMETRIC A_Delta=8 (ESTABLISHED procedure, their
 Methods + C.4): solve Chat gammahat = w(r_a) in least squares, Chat
@@ -383,11 +393,15 @@ Levenberg–Marquardt; VALIDITY = |w1 + w3| < 2 (B.50), r_a > 0
 
 ASSUMPTIONS, declared now and nowhere hidden (AC-B1..5; also added
 to ASSUMPTIONS.md):
-- AC-B1 (wedge assignment): EPG wedge = the class-3 instrument's
-  label convention (instance digit mod 8; L/R merged at the same
-  angle) standing in for their EB-innervation assignment, which
-  needs morphology we do not load. Breaks: wedge-profile distortion.
-  Canary: the published-r_a cross-check below.
+- AC-B1 (wedge assignment) [wording corrected 2026-10-31: the
+  convention is OURS -- unit = (instance digit - 1) mod 8, L/R
+  merged -- parsed with the class-3 instrument's WEDGE_RE but NOT
+  its 16-half-wedge angle convention; and after the same day's
+  recipe correction every fitted block is circulant, so a global
+  rotation of unit labels is exactly immaterial, measured]: the
+  label-derived wedge stands in for their EB-innervation assignment,
+  which needs morphology we do not load. Breaks: wedge-profile
+  distortion. Canary: the published-r_a cross-check below.
 - AC-B2 (ROI): whole-brain pairwise counts stand in for their
   ROI-restricted counts (EB for E–E, PB for E–I/I–I). Breaks:
   cross-ROI contamination of the profiles. Same canary.
@@ -398,9 +412,15 @@ to ASSUMPTIONS.md):
 - AC-B4 (A_Delta active sets): the inactive Delta7 units sit AT the
   bump, mirror-symmetric about the active-EPG axis (Delta7 activity
   is anti-phase to the EPG bump): with active EPG {3,4,5,6},
-  A_Delta=6 -> z-inactive {4,5}; A_Delta=4 -> z-inactive {3,4,5,6}.
-  Their paper fixes A_z per active-EPG set (C.1.1) but prints no
-  unit list; this is the one structural choice that is ours. Breaks:
+  A_Delta=6 -> z-inactive {4,5}; A_Delta=4 -> z-inactive {3,4,5,6}
+  (1-based unit numbering, as in their appendix; 0-based as the
+  instrument encodes it: active {2,3,4,5}, z-inactive {3,4} and
+  {2,3,4,5}). Their paper fixes A_z per active-EPG set (C.1.1) but
+  prints no unit list; CORROBORATED 2026-10-31 at figure level by
+  the adversarial review: their Fig 4f/g schematics draw the
+  inactive Delta7 aligned with the active EPG bump, and Fig 4i's
+  fitted predictions show z = 0 exactly at units 4-5 (A_Delta=6)
+  and 3-6 (A_Delta=4), matching this choice. Breaks:
   the mirror fits land away from their published r_a — flagged by
   the cross-check, and the A_Delta=8 configuration is unaffected.
 - AC-B5 (tie rule; the argmax-degeneracy class, fourth potential
@@ -1024,3 +1044,75 @@ below are on synthetic constructions:
   the symmetric branch params to 1e-9 with equation residuals ~1e-16.
   Instrument tests: 32 passed in-cloud (python 3.11; the suite's
   controller-side files need 3.12 and are untouched by this change).
+
+### Section 3 adversarial-review corrections (dated 2026-10-31, PRE-DATA-CONTACT; three-reviewer workflow, PDF re-read at source)
+
+A three-agent adversarial review (equations re-checked against the
+uploaded PDF, code against the frozen registration, record sweep) ran
+BEFORE any MaleCNS contact and found two blockers, two majors and
+five record defects; all confirmed and fixed the same day. The
+measurement never ran on the defective instrument, so these are
+pre-data-contact corrections under the registration's dating rule,
+not post-contact amendments.
+
+- CORRECTION 1 (blocker, recipe step 3/4): the paper symmetrizes the
+  count blocks ONCE, to circulant form, for all three realizations
+  (Methods: "we symmetrized the synapse count matrix... by averaging
+  all elements assumed to be equal"; "the corresponding count vector
+  c^EIE from the first column"; Supp Fig S1 shows the product of the
+  symmetrized matrices; Appendix C.5 builds controls from "the
+  symmetrized fly synapse-count matrices"). The original freeze said
+  "mirror-averaging only" for A_Delta=6,4 (misreading B.38/E.97,
+  which define mirror symmetry of the EFFECTIVE matrix), and the
+  instrument computed C^EIE from the RAW blocks -- so the fit
+  certified a system G1 never simulated (MEASURED on a structured
+  toy: certified rel residual 8e-9 while the simulated system sat
+  8.7e-3 off the branch, ~10,000x the floor). Fixed at the root:
+  run_configuration builds the circulant blocks first, C^EIE and
+  both fits read only those, and the mirror asymmetry of A_Delta=6,4
+  arises solely from the active-z restriction -- the fit and the G1
+  simulation now describe the same realization by construction
+  (regression test: pre-symmetrizing the inputs changes nothing, all
+  three configurations).
+- CORRECTION 2 (major, B-R9): the mirror fit refined only the single
+  global grid minimum; their Methods refine the minimal-residual
+  point of EACH candidate cluster and filter invalid roots
+  afterwards. Now: per-slice local minima of the residual field,
+  clustered across adjacent gamma_II slices, each cluster refined by
+  Levenberg-Marquardt (cap MIRROR_SEED_CAP 10), validity filtered
+  after, multiples flagged (the mirror analog of B-R6). The LM
+  objective's feasibility domain now matches what the six parameters
+  read (rows {2,3,4,5}); full-row denominator positivity stays a
+  validity condition -- MEASURED regression: inflated inactive-row
+  self-loops no longer strand LM on the 1e6 plateau (equations solve
+  to 3.9e-16; validity then correctly fails full-row positivity).
+- CORRECTION 3 (B-R8): the mirror validity set's sign conditions are
+  recorded as build-time operationalizations: gamma^EE > 0 and
+  gamma^EIE < 0 (the simulation's gamma^EI = -gamma^IE =
+  -sqrt|gamma^EIE| factorization needs the latter), and gamma^II <=
+  TOL_DRIVE -- the published default sits exactly at the 0 boundary,
+  so LM drift of +1e-16 must not invalidate a frozen-valid fit;
+  r_s > 0 kept, noting it is redundant given B.54 (r_s = r_a + 2).
+- CORRECTION 4 (AC-B1 wording): the wedge convention is OURS -- unit
+  = (digit - 1) mod 8, L/R merged -- parsed with the class-3
+  instrument's WEDGE_RE but not its 16-half-wedge angles (the
+  original attribution was loose). After CORRECTION 1 every fitted
+  block is circulant, so a global label rotation is exactly
+  immaterial for all three configurations (regression test).
+- CORRECTION 5 (AC-B4 corroborated): no textual unit list exists,
+  but their Fig 4f/g schematics and Fig 4i activity predictions
+  (z = 0 exactly at units 4-5 for A_Delta=6 and 3-6 for A_Delta=4,
+  verified at 400 dpi by the reviewer) match AC-B4's placement --
+  the assumption is figure-corroborated, tier updated in
+  ASSUMPTIONS.md; the published-r_a cross-check stays its canary.
+- RECORD FIXES: runbook top banner (natstat closed; 3b is the one
+  remaining command), HANDOFF row 10 Biswas tail, SYNTHESIS record-
+  map rationale, the LEAGUE.md-regeneration deferral now stated in
+  runbook 5c, and the 1-based/0-based unit-numbering clarifier in
+  AC-B4 here and in ASSUMPTIONS.md.
+- POST-FIX STATE, MEASURED in-cloud: gate still passes (recovery
+  4.8e-9; synthetic G1 8/8; can-fail holds); the synthetic
+  A_Delta=6 mirror root pins at r_a 0.21607 (residual 3.9e-16,
+  1 cluster) and is now asserted UNCONDITIONALLY; the synthetic has
+  no A_Delta=4 realization (10 clusters refined, all filtered) --
+  asserted as the filter working, never a crash. 35 tests.

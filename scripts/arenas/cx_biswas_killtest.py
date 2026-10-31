@@ -15,13 +15,17 @@ BEFORE this file existed; restated, not changed):
     stay unused (the AC-8 composition check still runs). A PASS is
     never reported unfitted: "given fitted per-type physiology" rides
     every close sentence.
-  - RECIPE (ESTABLISHED, their Methods): EPG -> 8 wedges (AC-B1
-    label convention); Delta7 -> 8 units by maximal cumulative output
-    to EPG wedges (AC-B5 tie rule); unit counts = sum over pre,
-    average over post; distance averaging (A_Delta=8) or mirror
-    averaging (A_Delta=6,4); gammas fitted by their own procedures
-    (r_a scan / 100^3 grid + Levenberg-Marquardt); validity = their
-    Table 1 + Table 2 conditions.
+  - RECIPE (ESTABLISHED, their Methods; step 3 as corrected by the
+    dated 2026-10-31 adversarial-review record): EPG -> 8 wedges
+    (AC-B1 label convention); Delta7 -> 8 units by maximal cumulative
+    output to EPG wedges (AC-B5 tie rule); unit counts = sum over
+    pre, average over post; ONE circulant distance-symmetrization of
+    all four blocks for ALL THREE realizations -- the A_Delta=6,4
+    mirror asymmetry arises solely from the active-z restriction
+    inside C^EIE, never from a weaker averaging of the counts;
+    gammas fitted by their own procedures (r_a scan / 100^3 grid +
+    per-cluster Levenberg-Marquardt); validity = their Table 1 +
+    Table 2 conditions.
   - G1 bars verbatim from H-CX-CLASS3-COMPASS, mapped to the 8-unit
     rate vector: 8 seeds 45 deg apart (the mu=0 rotations), per-seed
     retention >= 0.05 AND circvar <= 0.6 AND PVA error <= 45 deg;
@@ -51,12 +55,19 @@ floors FIT_RTOL_SYM 1e-6 (their intersections are exact by
 construction; this tolerates float accumulation) and FIT_ATOL_MIRROR
 1e-8; drive-check tolerance TOL_DRIVE 1e-9 (their A.31 first
 inequality is IDENTICALLY zero on the branch, so strict signs would
-fail exact arithmetic); the mirror fit runs at one canonical
-placement (active EPG units {2,3,4,5} 0-based, axis between 3 and 4;
-the recipe statistics are rotation-invariant); a zero-output Delta7
-counts as a tie; seed amplitude sigma=1 (the attractor family is
-scale-invariant); multiple valid symmetric candidates are all
-reported and the smallest-residual one is used, flagged.
+fail exact arithmetic; the same slack bounds gamma^II above, since
+the published default sits exactly at the 0 boundary -- B-R8); the
+mirror fit runs at one canonical placement (active EPG units
+{2,3,4,5} 0-based, axis between 3 and 4) -- after the 2026-10-31
+adversarial-review correction every fitted block is circulant, so
+placement and label rotation are exactly immaterial; the mirror grid
+refines the minimal-residual point of EACH candidate cluster
+(per-slice local minima clustered across adjacent slices, cap
+MIRROR_SEED_CAP) and filters invalid roots afterwards, per their
+Methods -- B-R9; a zero-output Delta7 counts as a tie; seed
+amplitude sigma=1 (the attractor family is scale-invariant);
+multiple valid candidates are all reported and the smallest-residual
+one is used, flagged.
 
 Exit codes: 0 = PASS, 1 = KILL, 3 = BLOCKED.
 
@@ -167,9 +178,13 @@ def mean_angle_a6(profile: np.ndarray) -> float:
 # ---------------------------------------------------------------------------
 
 def epg_unit_from_instance(name: str) -> int | None:
-    """AC-B1: unit = (PB glomerulus digit - 1) mod 8, L/R merged.
-    A global rotation of unit labels changes nothing downstream (the
-    recipe statistics are rotation-invariant; G1 seeds all rotations)."""
+    """AC-B1 as corrected 2026-10-31: unit = (PB glomerulus digit - 1)
+    mod 8, L/R merged -- OUR convention (parsed with the class-3
+    instrument's WEDGE_RE, not its 16-half-wedge angles). After the
+    adversarial-review correction every fitted/simulated block is
+    circulant, so a global rotation of unit labels is exactly
+    immaterial for all three configurations (measured; G1 also seeds
+    all rotations)."""
     match = WEDGE_RE.search(name)
     if not match:
         return None
@@ -246,11 +261,17 @@ def circulant_from_profile(c: np.ndarray) -> np.ndarray:
 
 def mirror_permutation() -> np.ndarray:
     """Mirror about the canonical axis (between units 3 and 4):
-    i* = 7 - i (their i + i* = N + 1, 1-based)."""
+    i* = 7 - i (their i + i* = N + 1, 1-based). The recipe itself
+    symmetrizes counts to circulant form (2026-10-31 correction);
+    this permutation defines the Z_INACTIVE placement and the
+    mirror_params pair-averaging."""
     return (N_UNITS - 1) - np.arange(N_UNITS)
 
 
 def mirror_average(C: np.ndarray) -> np.ndarray:
+    """Analysis/test utility -- NOT part of the recipe (the 2026-10-31
+    correction: counts are circulant-symmetrized for all three
+    realizations)."""
     p = mirror_permutation()
     return 0.5 * (C + C[np.ix_(p, p)])
 
@@ -370,22 +391,87 @@ def mirror_equations(params: np.ndarray) -> np.ndarray:
 
 
 def mirror_barred(C_EE: np.ndarray, C_EIE: np.ndarray, g_ee: float,
-                  g_eie: float) -> np.ndarray | None:
+                  g_eie: float,
+                  require_rows=None) -> np.ndarray | None:
     """Their Eq (1)/C.85: Wbar_ij = Wtilde_ij / (1 - Wtilde_ii),
-    diagonal zeroed; None where a denominator is nonpositive."""
+    diagonal zeroed; None where a required row's denominator is
+    nonpositive. require_rows=None demands ALL rows positive (the
+    validity check); the LM objective passes CANONICAL_ACTIVE so its
+    feasibility domain matches what mirror_params reads (B-R9) --
+    full-row positivity stays a separate validity condition."""
     Wt = g_ee * C_EE + g_eie * C_EIE
     denom = 1.0 - np.diag(Wt)
-    if (denom <= 0).any():
+    rows = np.arange(N_UNITS) if require_rows is None \
+        else np.asarray(require_rows)
+    if (denom[rows] <= 0).any():
         return None
-    Wb = Wt / denom[:, None]
+    safe = np.where(denom > 0, denom, np.nan)
+    Wb = Wt / safe[:, None]
     np.fill_diagonal(Wb, 0.0)
     return Wb
+
+
+MIRROR_SEED_CAP = 10           # B-R9: at most this many cluster seeds
+
+
+def evaluate_mirror_candidate(x: np.ndarray, C_EE, C_EI, C_IE, C_II,
+                              a_delta: int, active_z: np.ndarray,
+                              equations) -> dict[str, Any]:
+    """Their Table 1 + 2 conditions on one refined mirror root
+    (validity filtered AFTER refinement, per their Methods)."""
+    g_ee, g_eie, g_ii = (float(v) for v in x)
+    f = equations(x)
+    checks: dict[str, bool] = {
+        "equations_solved": bool(np.abs(f).max() <= FIT_ATOL_MIRROR),
+        # sign conditions: gamma^EE > 0 and gamma^EIE < 0 as in the
+        # symmetric list; gamma^II <= 0 with the TOL_DRIVE slack at
+        # the published gamma^II = 0 boundary (B-R8)
+        "gamma_ee_positive": g_ee > 0,
+        "gamma_eie_negative": g_eie < 0,
+        "gamma_ii_nonpositive": g_ii <= TOL_DRIVE,
+    }
+    record: dict[str, Any] = {"gamma_ee": g_ee, "gamma_eie": g_eie,
+                              "gamma_ii": g_ii,
+                              "max_abs_residual":
+                                  float(np.abs(f).max()),
+                              "checks": checks}
+    try:
+        C_EIE = effective_feedback(C_EI, C_II, C_IE, g_ii, active_z)
+    except np.linalg.LinAlgError:
+        checks["barred_denominators_positive"] = False
+        record["valid"] = False
+        return record
+    Wb = mirror_barred(C_EE, C_EIE, g_ee, g_eie)   # ALL rows positive
+    if Wb is None:
+        checks["barred_denominators_positive"] = False
+        record["valid"] = False
+        return record
+    checks["barred_denominators_positive"] = True
+    w1p, w2p, w3, w1pp, w1, w2pp = mirror_params(Wb)
+    checks["stability_b50"] = bool(abs(w1 + w3) < 2)        # B.50
+    r_s = (1 - w3) / (w1p + w2p) if (w1p + w2p) != 0 else np.nan
+    r_a = (1 + w3) / (w1p - w2p) if (w1p - w2p) != 0 else np.nan
+    checks["r_a_positive_b55"] = bool(np.isfinite(r_a) and r_a > 0)
+    checks["r_s_positive_b53"] = bool(np.isfinite(r_s) and r_s > 0)
+    record.update({"r_a": float(r_a), "r_s": float(r_s),
+                   "six_params": [float(v) for v in
+                                  (w1p, w2p, w3, w1pp, w1, w2pp)]})
+    if all(checks.values()):
+        drives = drive_checks(Wb, feedforward_z(C_IE, C_II, g_eie,
+                                                g_ii, active_z),
+                              r_a, Z_INACTIVE[a_delta])
+        checks.update(drives)
+    record["checks"] = checks
+    record["valid"] = all(checks.values())
+    return record
 
 
 def fit_mirror(C_EE: np.ndarray, C_EI: np.ndarray, C_IE: np.ndarray,
                C_II: np.ndarray, a_delta: int) -> dict[str, Any]:
     """Their mirror-symmetric procedure: 100^3 residual grid over the
-    published gamma ranges, then Levenberg-Marquardt on B.44/B.48/B.54."""
+    published gamma ranges, candidate CLUSTERS refined each by
+    Levenberg-Marquardt on B.44/B.48/B.54, invalid roots filtered
+    afterwards (their Methods; multi-seed per B-R9)."""
     from scipy.optimize import least_squares
 
     active_z = np.array([u for u in range(N_UNITS)
@@ -394,23 +480,31 @@ def fit_mirror(C_EE: np.ndarray, C_EI: np.ndarray, C_IE: np.ndarray,
     def equations(x: np.ndarray) -> np.ndarray:
         g_ee, g_eie, g_ii = x
         try:
-            C_EIE = effective_feedback(C_EI, C_II, C_IE, g_ii, active_z)
+            C_EIE = effective_feedback(C_EI, C_II, C_IE, g_ii,
+                                       active_z)
         except np.linalg.LinAlgError:
             return np.full(3, 1e6)
-        Wb = mirror_barred(C_EE, C_EIE, g_ee, g_eie)
+        # feasibility restricted to the rows mirror_params reads, so
+        # the LM domain matches the objective (B-R9); full-row
+        # positivity is a validity condition afterwards
+        Wb = mirror_barred(C_EE, C_EIE, g_ee, g_eie,
+                           require_rows=CANONICAL_ACTIVE)
         if Wb is None:
             return np.full(3, 1e6)
         return mirror_equations(mirror_params(Wb))
 
-    # grid seed: only 6 off-diagonal + 2 diagonal entries matter
+    # grid: only the 6 off-diagonal + 2 diagonal entries that the six
+    # parameters read matter (rows a3, a4 mirror rows a2, a1)
     a1, a2, a3, a4 = CANONICAL_ACTIVE
     pos = [(a1, a2), (a1, a3), (a1, a4), (a2, a1), (a2, a3), (a2, a4)]
     ee = np.linspace(*GRID_GAMMA_EE[:2], GRID_GAMMA_EE[2])[:, None]
     eie = np.linspace(*GRID_GAMMA_EIE[:2], GRID_GAMMA_EIE[2])[None, :]
-    best = (np.inf, None)
-    for g_ii in np.linspace(*GRID_GAMMA_II[:2], GRID_GAMMA_II[2]):
+    slice_minima = []            # per-slice local minima (basins)
+    for slice_index, g_ii in enumerate(
+            np.linspace(*GRID_GAMMA_II[:2], GRID_GAMMA_II[2])):
         try:
-            C_EIE = effective_feedback(C_EI, C_II, C_IE, g_ii, active_z)
+            C_EIE = effective_feedback(C_EI, C_II, C_IE, g_ii,
+                                       active_z)
         except np.linalg.LinAlgError:
             continue
         d_ee = np.diag(C_EE)[[a1, a2]]
@@ -429,54 +523,71 @@ def fit_mirror(C_EE: np.ndarray, C_EI: np.ndarray, C_IE: np.ndarray,
             f3 = w2p ** 2 - w1p ** 2 - w2p - w3 * w1p
             total = f1 ** 2 + f2 ** 2 + f3 ** 2
         total[bad | ~np.isfinite(total)] = np.inf
-        k = int(np.argmin(total))
-        value = float(total.flat[k])
-        if value < best[0]:
-            i, j = np.unravel_index(k, total.shape)
-            best = (value, np.array([float(ee[i, 0]),
-                                     float(eie[0, j]), float(g_ii)]))
-    if best[1] is None:
+        # per-slice LOCAL minima (<= all 8 neighbours), so distinct
+        # basins each contribute a candidate -- a slice argmin would
+        # collapse every smooth landscape into one cluster
+        padded = np.pad(total, 1, constant_values=np.inf)
+        neighbours = np.stack(
+            [padded[1 + di:1 + di + total.shape[0],
+                    1 + dj:1 + dj + total.shape[1]]
+             for di in (-1, 0, 1) for dj in (-1, 0, 1)
+             if (di, dj) != (0, 0)])
+        is_min = np.isfinite(total) & (total <= neighbours.min(axis=0))
+        for i, j in zip(*np.nonzero(is_min)):
+            slice_minima.append((float(total[i, j]), float(ee[i, 0]),
+                                 float(eie[0, j]), float(g_ii),
+                                 int(i), int(j), slice_index))
+    if not slice_minima:
         return {"kind": "mirror", "a_delta": a_delta, "valid": False,
+                "candidates": [],
                 "blocked": "no feasible grid point (denominators)"}
-    sol = least_squares(equations, best[1], method="lm",
-                        xtol=1e-15, ftol=1e-15, gtol=1e-15)
-    g_ee, g_eie, g_ii = (float(v) for v in sol.x)
-    f = equations(sol.x)
-    checks: dict[str, bool] = {
-        "equations_solved": bool(np.abs(f).max() <= FIT_ATOL_MIRROR),
-        "gamma_ee_positive": g_ee > 0,
-        "gamma_eie_negative": g_eie < 0,
-        "gamma_ii_nonpositive": g_ii <= 0,
-    }
-    record: dict[str, Any] = {"kind": "mirror", "a_delta": a_delta,
-                              "gamma_ee": g_ee, "gamma_eie": g_eie,
-                              "gamma_ii": g_ii,
-                              "max_abs_residual": float(np.abs(f).max()),
-                              "grid_seed": best[1].tolist(),
-                              "checks": checks}
-    C_EIE = effective_feedback(C_EI, C_II, C_IE, g_ii, active_z)
-    Wb = mirror_barred(C_EE, C_EIE, g_ee, g_eie)
-    if Wb is None:
-        checks["barred_denominators_positive"] = False
-        record["valid"] = False
-        return record
-    checks["barred_denominators_positive"] = True
-    w1p, w2p, w3, w1pp, w1, w2pp = mirror_params(Wb)
-    checks["stability_b50"] = bool(abs(w1 + w3) < 2)        # B.50
-    r_s = (1 - w3) / (w1p + w2p) if (w1p + w2p) != 0 else np.nan
-    r_a = (1 + w3) / (w1p - w2p) if (w1p - w2p) != 0 else np.nan
-    checks["r_a_positive_b55"] = bool(np.isfinite(r_a) and r_a > 0)
-    checks["r_s_positive_b53"] = bool(np.isfinite(r_s) and r_s > 0)
-    record.update({"r_a": float(r_a), "r_s": float(r_s),
-                   "six_params": [float(v) for v in
-                                  (w1p, w2p, w3, w1pp, w1, w2pp)]})
-    if all(checks.values()):
-        drives = drive_checks(Wb, feedforward_z(C_IE, C_II, g_eie, g_ii,
-                                                active_z),
-                              r_a, Z_INACTIVE[a_delta])
-        checks.update(drives)
-    record["checks"] = checks
-    record["valid"] = all(checks.values())
+    # cluster candidates across adjacent gamma_II slices when their
+    # (i, j) indices sit within 2 grid steps; each cluster's minimal
+    # residual point seeds one LM refinement (their 'minimal residual
+    # point of each such cluster')
+    clusters: list[dict] = []
+    for entry in slice_minima:
+        _v, _ge, _gi, _gii, i, j, s = entry
+        home = None
+        for cluster in clusters:
+            if s - cluster["last_slice"] <= 1 and \
+                    abs(i - cluster["i"]) <= 2 and \
+                    abs(j - cluster["j"]) <= 2:
+                home = cluster
+                break
+        if home is None:
+            clusters.append({"best": entry, "i": i, "j": j,
+                             "last_slice": s})
+        else:
+            home.update({"i": i, "j": j, "last_slice": s})
+            if entry[0] < home["best"][0]:
+                home["best"] = entry
+    seeds = sorted((c["best"] for c in clusters),
+                   key=lambda t: t[0])[:MIRROR_SEED_CAP]
+    candidates = []
+    for value, g_ee0, g_eie0, g_ii0, _i, _j, _s in seeds:
+        sol = least_squares(equations,
+                            np.array([g_ee0, g_eie0, g_ii0]),
+                            method="lm", xtol=1e-15, ftol=1e-15,
+                            gtol=1e-15)
+        rec = evaluate_mirror_candidate(sol.x, C_EE, C_EI, C_IE, C_II,
+                                        a_delta, active_z, equations)
+        rec["grid_seed"] = [g_ee0, g_eie0, g_ii0]
+        candidates.append(rec)
+    valid = sorted((c for c in candidates if c["valid"]),
+                   key=lambda c: c["max_abs_residual"])
+    chosen = valid[0] if valid else \
+        min(candidates, key=lambda c: c["max_abs_residual"])
+    record = {"kind": "mirror", "a_delta": a_delta,
+              "n_seeds": len(seeds), "n_valid": len(valid),
+              "multiple_valid": len(valid) > 1,
+              "candidates": candidates, "valid": bool(valid)}
+    record.update({k: chosen[k] for k in
+                   ("gamma_ee", "gamma_eie", "gamma_ii",
+                    "max_abs_residual", "checks")})
+    for key in ("r_a", "r_s", "six_params"):
+        if key in chosen:
+            record[key] = chosen[key]
     return record
 
 
@@ -604,17 +715,26 @@ def run_configuration(blocks: dict[str, np.ndarray],
     """Fit + G1 for one declared A_Delta realization, given the raw
     8x8 unit-count blocks (C_EE, C_EI, C_IE, C_II; W is [post, pre],
     so C_EI = Delta7 -> EPG counts)."""
-    C_EE, C_EI = blocks["C_EE"], blocks["C_EI"]
-    C_IE, C_II = blocks["C_IE"], blocks["C_II"]
+    # ONE symmetrization for all three realizations (their Methods:
+    # 'we symmetrized the synapse count matrix... by averaging all
+    # elements assumed to be equal'; the mirror asymmetry of the
+    # A_Delta=6,4 effective networks arises SOLELY from the active-z
+    # restriction inside C^EIE, never from a weaker averaging of the
+    # counts -- the 2026-10-31 adversarial-review correction, recorded
+    # in killtest_design.md section 3).
+    circ = {k: circulant_from_profile(distance_average(blocks[k]))
+            for k in ("C_EE", "C_EI", "C_IE", "C_II")}
+    sim_EE, sim_EI = circ["C_EE"], circ["C_EI"]
+    sim_IE, sim_II = circ["C_IE"], circ["C_II"]
     if a_delta == 8:
-        C_EIE = effective_feedback(C_EI, C_II, C_IE, GAMMA_II_DEFAULT,
+        # C^EIE from the SYMMETRIZED blocks (their 'the corresponding
+        # count vector c^EIE from the first column'): the fit then
+        # certifies exactly the system G1 simulates.
+        C_EIE = effective_feedback(circ["C_EI"], circ["C_II"],
+                                   circ["C_IE"], GAMMA_II_DEFAULT,
                                    np.arange(N_UNITS))
-        fit = fit_symmetric(distance_average(C_EE),
+        fit = fit_symmetric(distance_average(circ["C_EE"]),
                             distance_average(C_EIE))
-        sim_EE = circulant_from_profile(distance_average(C_EE))
-        sim_EI = circulant_from_profile(distance_average(C_EI))
-        sim_IE = circulant_from_profile(distance_average(C_IE))
-        sim_II = circulant_from_profile(distance_average(C_II))
         chosen = fit["chosen"]
         if not fit["valid"] or chosen is None:
             return {"a_delta": a_delta, "fit": fit, "valid_fit": False,
@@ -634,14 +754,11 @@ def run_configuration(blocks: dict[str, np.ndarray],
             return {"a_delta": a_delta, "fit": fit, "valid_fit": False,
                     "g1": None, "pass": False}
     else:
-        sym = {k: mirror_average(v) for k, v in blocks.items()}
-        fit = fit_mirror(sym["C_EE"], sym["C_EI"], sym["C_IE"],
-                         sym["C_II"], a_delta)
+        fit = fit_mirror(circ["C_EE"], circ["C_EI"], circ["C_IE"],
+                         circ["C_II"], a_delta)
         if not fit.get("valid"):
             return {"a_delta": a_delta, "fit": fit, "valid_fit": False,
                     "g1": None, "pass": False}
-        sim_EE, sim_EI = sym["C_EE"], sym["C_EI"]
-        sim_IE, sim_II = sym["C_IE"], sym["C_II"]
         g_ee, g_eie = fit["gamma_ee"], fit["gamma_eie"]
         g_ii, r_a = fit["gamma_ii"], fit["r_a"]
     g_ie = float(np.sqrt(abs(g_eie)))

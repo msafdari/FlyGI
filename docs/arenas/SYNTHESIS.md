@@ -215,7 +215,7 @@ Measurements that would move this synthesis, in information order:
 | H-FLYGI-FLYBENCH-SFA | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-TERMINAL | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-T4T5-NATSTAT-DIRECTION | blocked 10-31 (convention limit: G0 in band, G1 at chance -- 90.91 deg vs the 90 deg floor, p 0.605, n 1152; ANS-5 negative; the 2x2 never ran) | EXPERIMENTS.yaml; task10_menu/ |
-| H-CX-BISWAS-FITTED | open (fetch complete; numeric completion pending the Methods extraction) | EXPERIMENTS.yaml; task10_menu/ |
+| H-CX-BISWAS-FITTED | open (completion frozen 2026-10-31; instrument landed, gate-validated, adversarially reviewed; awaiting the local run, runbook 3b) | EXPERIMENTS.yaml; task10_menu/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:

@@ -52,10 +52,23 @@ def test_frozen_constants():
     assert bk.GAMMA_II_DEFAULT == 0.0
     # AC-B4/AC-B5
     assert bk.Z_INACTIVE == {8: (), 6: (3, 4), 4: (2, 3, 4, 5)}
+    assert bk.CANONICAL_ACTIVE == (2, 3, 4, 5)
     assert bk.TIE_MARGIN == 0.98
     assert bk.TIE_BLOCK_FRACTION == 0.25
     assert bk.EXPECTED_COUNTS["EPG"] == 46
     assert bk.EXPECTED_COUNTS["Delta7"] == 42
+    # build-time operationalizations B-R1..9
+    assert bk.FIT_RTOL_SYM == 1e-6
+    assert bk.FIT_ATOL_MIRROR == 1e-8
+    assert bk.TOL_DRIVE == 1e-9
+    assert bk.RA_SCAN_XATOL == 1e-10
+    assert bk.RA_SCAN_POINTS == 2001
+    assert bk.SIGMA_SEED == 1.0
+    assert bk.T_DARK == 100.0
+    assert (bk.ODE_RTOL, bk.ODE_ATOL) == (1e-8, 1e-10)
+    assert bk.RUNAWAY_MAX == 1e6
+    assert bk.Z_FP_ITERS == 100
+    assert bk.MIRROR_SEED_CAP == 10
 
 
 # --- their analytic branch (Appendix A identities) ---------------------------
@@ -256,17 +269,68 @@ def test_mirror_barred_rejects_nonpositive_denominator():
     assert bk.mirror_barred(C, np.zeros((8, 8)), 0.01, -1e-4) is None
 
 
-def test_fit_mirror_runs_and_reports_structure():
+def test_fit_mirror_finds_the_synthetic_a_delta_6_root():
+    # pinned UNCONDITIONALLY (review finding: a conditional here would
+    # hide a regression of the machinery carrying two configurations)
     synth = bk.synthetic_blocks()
-    sym = {k: bk.mirror_average(v) for k, v in synth.items()
-           if k.startswith("C_")}
-    rec = bk.fit_mirror(sym["C_EE"], sym["C_EI"], sym["C_IE"],
-                        sym["C_II"], 6)
+    rec = bk.fit_mirror(synth["C_EE"], synth["C_EI"], synth["C_IE"],
+                        synth["C_II"], 6)
     assert rec["kind"] == "mirror" and rec["a_delta"] == 6
-    assert "checks" in rec and "valid" in rec
-    if rec["valid"]:
-        assert rec["max_abs_residual"] <= bk.FIT_ATOL_MIRROR
-        assert rec["r_a"] > 0
+    assert rec["valid"] is True
+    assert rec["max_abs_residual"] <= bk.FIT_ATOL_MIRROR
+    assert rec["r_a"] == pytest.approx(0.21607, abs=1e-4)
+    assert rec["n_seeds"] >= 1 and rec["n_valid"] == 1
+
+
+def test_fit_mirror_a_delta_4_filters_invalid_roots():
+    # this synthetic has no A_Delta=4 realization: every refined
+    # cluster root must be filtered, never crash, and the record must
+    # carry the candidate list (their 'filter out invalid solutions')
+    synth = bk.synthetic_blocks()
+    rec = bk.fit_mirror(synth["C_EE"], synth["C_EI"], synth["C_IE"],
+                        synth["C_II"], 4)
+    assert rec["valid"] is False and rec["n_valid"] == 0
+    assert rec["n_seeds"] >= 1
+    assert all("checks" in c for c in rec["candidates"])
+
+
+def test_recipe_reads_only_the_symmetrized_system():
+    # the 2026-10-31 adversarial-review blocker: the fit must certify
+    # the circulant system G1 simulates, for ALL configurations --
+    # circulant-symmetrizing the inputs beforehand changes NOTHING
+    rng = np.random.default_rng(3)
+    synth = bk.synthetic_blocks()
+    noisy = {k: v * (1 + 0.2 * (rng.random(v.shape) - 0.5))
+             for k, v in synth.items() if k.startswith("C_")}
+    pre = {k: bk.circulant_from_profile(bk.distance_average(v))
+           for k, v in noisy.items()}
+    for a_delta in bk.A_DELTA_CONFIGS:
+        r1 = bk.run_configuration(noisy, a_delta)
+        r2 = bk.run_configuration(pre, a_delta)
+        assert r1["valid_fit"] == r2["valid_fit"], a_delta
+        if r1["valid_fit"]:
+            assert r1["r_a"] == pytest.approx(r2["r_a"], abs=1e-9)
+            assert r1["pass"] == r2["pass"]
+
+
+def test_recipe_is_invariant_under_unit_label_rotation():
+    # review finding CODE-2's regression: with circulant inputs the
+    # whole recipe is exactly invariant under a global rotation of
+    # the EPG unit labels, mirror configurations included
+    rng = np.random.default_rng(11)
+    n_epg, n_d7 = 16, 16
+    epg_idx = np.arange(n_epg)
+    d7_idx = np.arange(n_epg, n_epg + n_d7)
+    units = np.repeat(np.arange(8), 2)
+    W = rng.random((32, 32)) * 3.0
+    r0 = bk.run_graph(W, epg_idx, units, d7_idx)
+    r1 = bk.run_graph(W, epg_idx, (units + 3) % 8, d7_idx)
+    for a_delta in bk.A_DELTA_CONFIGS:
+        a, b = r0["configs"][a_delta], r1["configs"][a_delta]
+        assert a["valid_fit"] == b["valid_fit"]
+        assert a["pass"] == b["pass"]
+        if a["valid_fit"]:
+            assert a["r_a"] == pytest.approx(b["r_a"], abs=1e-9)
 
 
 def test_drive_checks_tolerate_the_identical_zero():

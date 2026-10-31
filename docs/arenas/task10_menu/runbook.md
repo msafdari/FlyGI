@@ -1,13 +1,15 @@
 # Task 10 runbook — the science menu (user-executed, local)
 
-> **STATUS 2026-10-30.** Sections 1, 2, 4, 6 and 7 EXECUTED 2026-10-28/29
+> **STATUS 2026-10-31.** Sections 1, 2, 4, 6 and 7 EXECUTED 2026-10-28/29
 > (reservoir FLAT — downgrade executed; decomposition readings complete;
 > FB PASS; t4t5 class-3 BLOCKED-closed "null"; SFA KILL + terminal PASS;
-> records in EXPERIMENTS.yaml + WORKLOG). Section 5 ran once and BLOCKED at
-> its G0 gate; the instrument bug is FIXED (587b40d) and **section 5b is the
-> one command still to run**. Section 3 (Biswas) completed its fetch; the
-> instrument awaits the Methods extraction. Everything below is otherwise a
-> historical record.
+> records in EXPERIMENTS.yaml + WORKLOG). Section 5 (natstat) is CLOSED
+> 2026-10-31 after a complete valid third run: BLOCKED, the pre-stated
+> AB-4 convention limit — no further natstat run (see 5c). **Section 3b
+> (Biswas) is the one command still to run**: the numeric completion is
+> frozen, the instrument landed and was adversarially reviewed the same
+> day (two blockers fixed pre-data-contact; correction record in
+> killtest_design.md). Everything below is otherwise a historical record.
 
 Registrations: killtest_design.md (frozen 2026-10-23, one commit,
 before any instrument code). Run order matters only for item 1:
@@ -99,7 +101,7 @@ the instrument is built against it. One command pair:
 
 ```bash
 git pull
-PYTHONPATH=src python -m pytest tests/test_cx_biswas_killtest.py -q  # 32 passed
+PYTHONPATH=src python -m pytest tests/test_cx_biswas_killtest.py -q  # 35 passed
 PYTHONPATH=src python scripts/arenas/cx_biswas_killtest.py
 ```
 
@@ -273,4 +275,9 @@ measurement (median 90.91 deg vs the 90 deg chance floor, p 0.605,
 n 1152, zero unstable). The pre-stated close applied: BLOCKED, AB-4
 convention limit, ANS-5 negative. No further natstat run. Record:
 the 2026-10-31 run-3 WORKLOG entry; registry
-H-T4T5-NATSTAT-DIRECTION.**
+H-T4T5-NATSTAT-DIRECTION. One piece of bookkeeping rides the next
+local visit: LEAGUE.md's natstat row is knowingly stale (still
+"open") -- regenerate it HERE, where the results/ checkpoints live:
+`PYTHONPATH=src python scripts/league.py --write-md LEAGUE.md`,
+then commit. The cloud container cannot (regenerating there drops
+the measured score rows).**

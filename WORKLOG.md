@@ -1,5 +1,57 @@
 # FlyGI durable worklog
 
+## Biswas adversarial review: two pre-data-contact blockers found and fixed; instrument re-validated -- 2026-10-31
+
+Three-reviewer workflow (equations re-read from the uploaded PDF at
+source, code vs the frozen registration, record sweep) ran BEFORE the
+local measurement -- the fourth straight review pass to catch real
+blockers (17, 37, 31, now 9 findings). Confirmed and fixed same day,
+all pre-data-contact (the measurement never ran on the defective
+instrument):
+
+- BLOCKER 1 (fit/sim mismatch): C^EIE was computed from the RAW unit
+  blocks and then distance-averaged; the paper computes it from the
+  circulant-SYMMETRIZED blocks ("the corresponding count vector
+  c^EIE from the first column"; Supp Fig S1). MEASURED consequence on
+  a structured toy: the fit certified rel residual 8e-9 while the
+  simulated system sat 8.7e-3 off the branch (~10,000x FIT_RTOL_SYM)
+  -- a validity certificate for a system G1 never integrated. Fixed
+  at the root; regression test asserts pre-symmetrizing the inputs
+  changes nothing at all three configurations.
+- BLOCKER 2 (recipe misread): the freeze said "mirror-averaging
+  only" for A_Delta=6,4, but B.38/E.97 define mirror symmetry of the
+  EFFECTIVE matrix; the paper symmetrizes the counts ONCE (circulant)
+  for all three realizations, the mirror asymmetry arising solely
+  from the active-z restriction in C^EIE. Corrected in place, dated,
+  in killtest_design.md section 3.
+- MAJORS: fit_mirror now refines the minimal-residual point of EACH
+  candidate cluster (per-slice local minima clustered across
+  adjacent gamma_II slices, cap 10) and filters invalid roots after,
+  per their Methods (B-R9); the LM feasibility domain now matches
+  the rows the six parameters read -- MEASURED regression: inflated
+  inactive-row self-loops no longer strand LM on the 1e6 plateau
+  (equations solve to 3.9e-16, validity then correctly fails
+  full-row positivity). B-R8 records the mirror sign checks, with
+  gamma^II <= TOL_DRIVE at the published 0 boundary.
+- GOOD NEWS FINDING: AC-B4's placement is CORROBORATED at figure
+  level -- their Fig 4f/g schematics and Fig 4i predictions (z = 0
+  exactly at units 4-5 for A_Delta=6, 3-6 for A_Delta=4, verified at
+  400 dpi) match the registered choice. ASSUMPTIONS.md updated.
+- RECORD FIXES: runbook top banner (natstat CLOSED; 3b the one
+  remaining command), HANDOFF row 10 Biswas tail, SYNTHESIS record
+  map, AC-B1 wording (the convention is ours; label rotation now
+  measured exactly immaterial), 1-based/0-based unit numbering
+  clarifier, and the LEAGUE.md regeneration deferral now stated in
+  runbook 5c (regenerate LOCALLY; the cloud container lacks the
+  results/ checkpoints and would drop the measured score rows).
+
+POST-FIX, MEASURED in-cloud: gate passes unchanged (recovery r_a to
+4.8e-9, synthetic G1 8/8, can-fail holds, 34 identities); synthetic
+A_Delta=6 mirror root pinned UNCONDITIONALLY at r_a 0.21607
+(residual 3.9e-16, 1 cluster); the same synthetic has no A_Delta=4
+realization (10 clusters refined, all filtered -- the filter working,
+never a crash); 35 tests pass. The local run command is runbook 3b.
+
 ## Biswas instrument LANDED and gate-validated in-cloud; one local command pair remains -- 2026-10-31
 
 scripts/arenas/cx_biswas_killtest.py + tests/test_cx_biswas_killtest.py

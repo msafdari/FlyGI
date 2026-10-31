@@ -2902,6 +2902,31 @@ hypotheses:
         Exit 0/1/3 = PASS/KILL/BLOCKED; runbook section 3b carries
         the one local command pair. AWAITING THE LOCAL RUN -- the
         hypothesis stays open; no MaleCNS data touched in-cloud.
+      - >
+        2026-10-31 ADVERSARIAL REVIEW (three-reviewer workflow, the
+        PDF re-read at source) BEFORE the local run: two blockers
+        and two majors found, confirmed, fixed PRE-DATA-CONTACT
+        (correction record in killtest_design.md section 3; the
+        measurement never ran on the defective instrument). Blocker
+        1: C^EIE must be computed from the circulant-SYMMETRIZED
+        blocks (their "c^EIE from the first column"), not the raw
+        blocks -- the fit had certified a system G1 never simulated
+        (MEASURED on a structured toy: certified 8e-9 vs the
+        simulated system 8.7e-3 off the branch). Blocker 2: the
+        paper symmetrizes ONCE, circulant, for all three A_Delta
+        realizations; the mirror asymmetry arises solely from the
+        active-z restriction -- the freeze's "mirror-averaging only"
+        misread B.38/E.97 and is corrected in place, dated. Majors:
+        multi-cluster LM refinement per their Methods (B-R9) and the
+        LM feasibility domain matched to the objective; B-R8 records
+        the mirror sign-check operationalizations (gamma^II <=
+        TOL_DRIVE at the published 0 boundary). AC-B4 CORROBORATED
+        at figure level (their Fig 4f/g + Fig 4i: z = 0 exactly at
+        units 4-5 / 3-6). POST-FIX, MEASURED in-cloud: gate passes
+        unchanged; recipe invariant under pre-symmetrized inputs and
+        under unit-label rotation (regression tests, all three
+        configurations); synthetic A_Delta=6 root pinned
+        unconditionally (r_a 0.21607, residual 3.9e-16); 35 tests.
     updated: 2026-10-31
 
   H-FB-COLUMNAR-TOPOLOGY:
