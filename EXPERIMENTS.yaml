@@ -2891,6 +2891,17 @@ hypotheses:
         argmax-degeneracy class pre-empted this time). BLOCKED floors
         include the no-valid-fit-anywhere close as a measured
         recipe-transfer limit, never a fly statement.
+      - >
+        2026-10-31 INSTRUMENT LANDED against the frozen completion:
+        scripts/arenas/cx_biswas_killtest.py + 32 in-cloud tests
+        (both gate directions run here: synthetic recovery r_a to
+        4.8e-9 and gamma to ~1e-9 relative, synthetic G1 8/8,
+        uniform-counts can-fail, 34 analytic identities, mirror
+        algebra at the known solution to 1e-9; build-time
+        operationalizations B-R1..7 dated in killtest_design.md).
+        Exit 0/1/3 = PASS/KILL/BLOCKED; runbook section 3b carries
+        the one local command pair. AWAITING THE LOCAL RUN -- the
+        hypothesis stays open; no MaleCNS data touched in-cloud.
     updated: 2026-10-31
 
   H-FB-COLUMNAR-TOPOLOGY:

@@ -1,5 +1,35 @@
 # FlyGI durable worklog
 
+## Biswas instrument LANDED and gate-validated in-cloud; one local command pair remains -- 2026-10-31
+
+scripts/arenas/cx_biswas_killtest.py + tests/test_cx_biswas_killtest.py
+(32 tests) built against the frozen numeric completion, committed
+AFTER the registration commit. MEASURED in-cloud, all on synthetic
+constructions (no MaleCNS data exists here): the amended gate passes
+-- synthetic recovery r_a 0.5 to 4.8e-9 and gammas to ~1e-9 relative
+(rel residual 1.2e-8 vs the 1e-6 floor), synthetic G1 8/8 (retention
+~1.000, PVA err 0.0; the fixed-active-set Jacobian carries exactly
+the two marginal family modes, all other eigenvalues Re < 0),
+uniform counts yield NO valid fit (the gate can fail), 34 analytic
+identities pass, and the mirror algebra at the known gamma*
+reproduces the symmetric branch parameters to 1e-9 (equation
+residuals ~1e-16); fit_mirror end-to-end 0.3 s on the 100^3 grid.
+Build-time operationalizations B-R1..7 dated in killtest_design.md
+(exactness floors, TOL_DRIVE for the identically-zero A.31 drive,
+canonical mirror placement, the empty-Delta7-unit rule: fit-fail on
+rewires / BLOCKED floor on real, the gamma^EIE quadratic count-scale
+covariance, sigma=1 + candidate multiplicity). Full in-cloud suite:
+666 passed, 17 skipped; the only failures are the pre-existing
+python-3.12-only controller files (PEP 695 syntax in
+src/flygi/controller/scene.py; this container runs 3.11, the verdict
+machine runs 3.12) -- untouched by this change. Registry bullet 4,
+runbook section 3b (the run command pair), SYNTHESIS pointer updated.
+NOTE, branch: this resumed cloud session pushes to
+claude/cool-meitner-x8e79i, which fast-forwards from
+claude/admiring-goldberg-wtqkbg's tip 449a9e4 -- the local session
+must fetch/checkout that branch (exact commands in the hand-off
+message) rather than plain git pull.
+
 ## Biswas numeric completion FROZEN from the uploaded v2 PDF; instrument build follows -- 2026-10-31
 
 The user uploaded the Biswas et al. v2 PDF (bioRxiv

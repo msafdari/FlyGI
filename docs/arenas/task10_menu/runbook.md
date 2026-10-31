@@ -90,6 +90,34 @@ recipe) into the session, or drop the files somewhere local and tell
 me the paths — the numeric completion of the registration lands as a
 dated addendum, and only then does the instrument get built.
 
+## 3b. H-CX-BISWAS-FITTED — THE RUN (instrument landed 2026-10-31)
+
+The fetch completed (the user uploaded the v2 PDF into the cloud
+session); the numeric completion is frozen in killtest_design.md
+section 3 (dated 2026-10-31, committed before the instrument), and
+the instrument is built against it. One command pair:
+
+```bash
+git pull
+PYTHONPATH=src python -m pytest tests/test_cx_biswas_killtest.py -q  # 32 passed
+PYTHONPATH=src python scripts/arenas/cx_biswas_killtest.py
+```
+
+What it does (minutes, not hours): validates its own gate in-cloud
+style first (synthetic recovery + can-fail control; BLOCKS if that
+fails), extracts the EPG+Delta7 subcircuit (AC-8 composition check),
+runs their coarse-graining recipe once on our counts, fits the
+gammas at the three declared A_Delta realizations {8, 6, 4}, runs G1
+(8 seeds, frozen bars) on each valid realization, then re-runs the
+FULL recipe on 3 degree-preserving rewires (seeds 4242+0..2).
+Exit 0 = PASS, 1 = KILL, 3 = BLOCKED.
+
+Paste back: the printed lines (they carry the fitted r_a values vs
+published 0.548/0.437/0.391, the per-config G1 counts, the null
+summaries, the verdict) plus the JSON at
+results/arenas/cx_biswas_killtest.json (gitignored) and the branch
+tip. The r_a cross-check is a reading, never a verdict-changer.
+
 ## 4-7. Remaining instruments
 
 Sections appended when each instrument lands (FB structural probe,

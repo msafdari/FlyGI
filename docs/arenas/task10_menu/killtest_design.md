@@ -980,3 +980,47 @@ in band (G0) and natural-movie direction decodes at exactly chance
 (G1). The 2x2 (bars B1/B2) never ran, so nothing here is a statistics
 verdict about natural-scene statistics, T4/T5, or the fly. No fourth
 run.
+
+### Section 3 build-time operationalization notes (dated 2026-10-31, PRE-DATA-CONTACT; the numeric completion above untouched)
+
+Decided while building cx_biswas_killtest.py against the frozen
+completion, before any MaleCNS contact; all in-cloud measurements
+below are on synthetic constructions:
+
+- B-R1 (exactness floors): the symmetric fit counts as an exact
+  intersection iff the relative residual at the scanned r_a is
+  <= 1e-6 (their intersections are exact by construction -- their
+  own counting argument makes them isolated points -- so this only
+  tolerates float accumulation; MEASURED on the synthetic gate:
+  1.2e-8). The mirror fit counts as solved iff max |f_i| <= 1e-8
+  after Levenberg-Marquardt from the 100^3 grid seed.
+- B-R2 (drive tolerance): the mu=+/-1 drive sign checks use
+  TOL_DRIVE 1e-9, because their A.31 first inequality is IDENTICALLY
+  zero on the branch -- strict signs would fail exact arithmetic.
+- B-R3 (canonical placement): the mirror fit runs at one placement
+  (active EPG units {2,3,4,5} 0-based, axis between 3 and 4,
+  i* = 7 - i); the recipe statistics are rotation-invariant and G1
+  seeds all 8 rotations, so the choice is label-gauge only.
+- B-R4 (empty Delta7 unit): a graph whose re-derived assignment
+  leaves a unit empty has no defined coarse-graining -- on a REWIRE
+  this counts as no-valid-fit everywhere (the frozen existence rule),
+  on the REAL graph it is a BLOCKED floor (same family as the empty
+  EPG wedge). Verified by test: never an exception.
+- B-R5 (count-scale covariance, extends AC-B3): C -> alpha C maps
+  gamma^EE -> gamma^EE/alpha but gamma^EIE -> gamma^EIE/alpha^2
+  (C^EIE is QUADRATIC in counts); r_a and the realized simulation
+  weights are invariant. MEASURED by test at alpha 3.7.
+- B-R6 (seed amplitude and multiplicity): sigma = 1 (the attractor
+  family is scale-invariant); every symmetric r_a candidate is
+  refined and reported, the smallest-residual VALID one is used, and
+  multiple-valid is flagged (their S3: several intersections, one in
+  the allowed region).
+- B-R7 (gate MEASURED in-cloud, 2026-10-31): synthetic recovery
+  r_a 0.5 to 4.8e-9, gamma to ~1e-9 relative; synthetic G1 8/8
+  (retention ~1.000, PVA err 0.0 deg; fixed-active-set Jacobian has
+  exactly the two marginal family modes, all others Re < 0); uniform
+  counts yield NO valid fit (the gate can fail); 34 analytic
+  identities pass; the mirror algebra at the known gamma* reproduces
+  the symmetric branch params to 1e-9 with equation residuals ~1e-16.
+  Instrument tests: 32 passed in-cloud (python 3.11; the suite's
+  controller-side files need 3.12 and are untouched by this change).

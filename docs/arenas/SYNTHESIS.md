@@ -383,10 +383,11 @@ full re-run pending). Four results move this synthesis:
    mechanisms split, which is itself information -- fidelity additions
    are not generically good; one specific, anatomy-coupled one is.
 
-Still open from the menu: H-CX-BISWAS-FITTED only (fetch complete;
-their MaleCNS realization is a published RECIPE, not tables --
-numeric completion pending the Methods extraction; the follow-up
-paper is hemibrain-only, correcting the runbook's guess).
+Still open from the menu: H-CX-BISWAS-FITTED only (fetch complete via
+the user-uploaded v2 PDF; the numeric completion is FROZEN -- dated
+2026-10-31 addendum, killtest_design.md section 3 -- and the
+instrument is built and gate-validated in-cloud; awaiting the local
+run, runbook section 3b).
 H-T4T5-NATSTAT-DIRECTION closed 2026-10-31 after a complete, valid
 third run: BLOCKED as the pre-stated AB-4 convention limit -- through
 the same stimulus path the circuit decodes moving-edge direction in
