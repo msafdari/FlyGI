@@ -1,7 +1,13 @@
 # Kaggle Writeup form — field-by-field paste guide
 
+**v4 TITLE 2026-10-31 (user's call: no "shuffle" anywhere public-facing):
+"We Wired a Whole Fly Brain into ARC-AGI-3. Its Scrambled Copy Won, Then
+Lost." (77/80). "Scrambled copy" = the degree-preserving rewire, per the
+FACTS.md plain-gloss row; accuracy scope otherwise identical to the
+Option-B note below.**
+
 **v3 AMENDMENT 2026-10-31 (user's calls): TITLE names the benchmark and
-the BODY drops the post-submission chronology.** New Title (70/80):
+the BODY drops the post-submission chronology.** v3 title was (70/80):
 "We Wired a Whole Fly Brain into ARC-AGI-3. Its Shuffle Won, Then
 Lost." (accuracy unchanged from the Option-B note below; only "an AI
 Benchmark" -> "ARC-AGI-3"). Subtitle unchanged. Body: the compass
