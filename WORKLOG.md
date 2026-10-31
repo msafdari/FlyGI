@@ -1,5 +1,24 @@
 # FlyGI durable worklog
 
+## Writeup body switched to I-voice on Kaggle (user's call): we/our/us -> I/my/me -- 2026-10-31
+
+The user spotted that the live Kaggle body still used we/our while
+the title and posts were already I-voice. All 10 plural tokens in
+kaggle_body_unwrapped.md swapped (Our ladder/leaderboard/discipline/
+r_a -> My, We own it -> I own it, our plumbing/counts/record/
+coordinate-head/base-rate -> my, Against ourselves -> Against
+myself). Gates held: number multiset byte-identical, word count
+unchanged (Kaggle counter 1,490 of 1,500 before and after), zero
+em/en dashes and semicolons, the compass scope clauses intact in
+I-voice ("applied once to my counts", "My r_a differs, flagged").
+Applied to the live writeup in-page (the 10 swaps run on the editor
+textarea, baseline verified by unique-match counts, result verified
+byte-identical to the repo file by SHA-256
+a752855810b1c11a971d91eb0b1b4b4efa0bd868ccb25f21a6f175435c3c88d2),
+saved via Update Submission, status Submitted, rendered body
+re-read and confirmed plural-free. Subtitle and title v5 needed no
+change (no plural tokens).
+
 ## Writeup v5 live + LinkedIn post SCHEDULED for Wed Nov 4, 8:00 AM PT (Phase 1 of the social hand-off) -- 2026-10-31
 
 KAGGLE (one visit, two edits, per the hand-off): title v5 applied
