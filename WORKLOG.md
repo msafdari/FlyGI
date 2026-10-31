@@ -1,5 +1,31 @@
 # FlyGI durable worklog
 
+## Writeup v3 + social v4 (user's calls): benchmark named in the title, chronology scrubbed, I-voice posts, 3-tweet X -- 2026-10-31
+
+Four user directives executed. (1) TITLE v3: "We Wired a Whole Fly
+Brain into ARC-AGI-3. Its Shuffle Won, Then Lost." (70/80; only "an
+AI Benchmark" -> "ARC-AGI-3"; accuracy note unchanged otherwise,
+recorded in kaggle_form.md). (2) TMI RULE: the writeup presents
+cumulative final results, never its own revision history -- the
+compass paragraph's "This landed after submission and flips the
+compass story" clause removed; body now 1,480 words on every counter
+(20 under the limit); kaggle_body_unwrapped.md regenerated,
+token-identical. The LinkedIn post's "Then, this week," likewise
+dropped. (3) VOICE: posts are I/my throughout, zero we/our/us
+(swept and verified); the writeup keeps its we-voice (the user's
+rule targeted the posts; the parenthetical extended only the
+chronology fix to the writeup). (4) X is now a 3-tweet thread for a
+general audience (verified 249/263/270 with URLs as 23; tweet 3
+shrinks further when the ARC Prize tag resolves), linking the Kaggle
+writeup and the LinkedIn post -- POST ORDER: LinkedIn first, then X
+with the real URL substituted. LEADERBOARD QUESTION answered and
+recorded: the compass result has no measured path to ARC score
+(harness-sensitivity FLAT, +0.1 floor; bridge engineering measured
+zero transfer three times; the fitted model has no steering input;
+Expected-tier base rate 0 for 16) -- no submission follows from it,
+and the posts' "zero benchmark points" line stays.
+
+
 ## Writeup v2.2 live: dashes, semicolons and prose colons stripped (user's style call); still Submitted -- 2026-10-31
 
 Two style passes on the live Kaggle body at the user's request, both

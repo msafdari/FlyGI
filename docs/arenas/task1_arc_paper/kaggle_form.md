@@ -1,5 +1,19 @@
 # Kaggle Writeup form — field-by-field paste guide
 
+**v3 AMENDMENT 2026-10-31 (user's calls): TITLE names the benchmark and
+the BODY drops the post-submission chronology.** New Title (70/80):
+"We Wired a Whole Fly Brain into ARC-AGI-3. Its Shuffle Won, Then
+Lost." (accuracy unchanged from the Option-B note below; only "an AI
+Benchmark" -> "ARC-AGI-3"). Subtitle unchanged. Body: the compass
+paragraph now opens directly on the result ("**For the fly,
+off-score.** Given fitted per-type physiology, ...") -- the writeup
+presents cumulative final results, never its own revision history.
+Body is 1,480 words on every counter (20 under the limit). To apply:
+re-paste the WHOLE body from kaggle_body_unwrapped.md via Update
+Submission AND edit the Title field; subtitle, slug, images, links
+untouched.
+
+
 **TITLE/SUBTITLE AMENDED AGAIN 2026-10-31 (user's call, Option B of the
 cloud session's candidates; slug unchanged, still Submitted):**
 Title (76/80): "We Wired a Whole Fly Brain into an AI Benchmark. Its

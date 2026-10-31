@@ -3,12 +3,12 @@
 **Subtitle:** Auditing the 166,700-neuron MaleCNS fly connectome on ARC-AGI-3:
 both circuits tested in full scored below their degree-preserving rewires.
 
-*(Kaggle Writeup body below — 1,489 words on EVERY counter (wc -w and
-naive whitespace split agree; em-dashes closed up), 11 under the 1,500
-hard limit. 2026-10-31 v2: the Biswas compass PASS added WITH the
-first-verdict claim and its precedent, the user's adverbs and vivid
-phrases restored, trims moved to low-voltage spots. Field-by-field paste
-guide: kaggle_form.md. Title 78/80 chars, subtitle 139/140.)*
+*(Kaggle Writeup body below — 1,480 words on every counter, 20 under the
+1,500 hard limit. v3 2026-10-31: the submitted-then-updated chronology
+removed per the user (the writeup presents cumulative final results; the
+compass paragraph now opens directly on the result). Live title v3 names
+the benchmark: "We Wired a Whole Fly Brain into ARC-AGI-3. Its Shuffle
+Won, Then Lost." (70/80). Paste guide: kaggle_form.md.)*
 
 ---
 
@@ -114,8 +114,7 @@ delocalized; the validated class-3 bump persists but slides to one region
 from every heading), and the LC object-position code was sign-inverted at
 all 21 class-1 grid points (best Spearman -0.203 vs a +0.50 band).
 
-**For the fly, off-score.** This landed after submission and flips the
-compass story. Given fitted per-type physiology, Biswas et al.'s
+**For the fly, off-score.** Given fitted per-type physiology, Biswas et al.'s
 published derivation recipe applied once to our counts, the fitted
 EPG-Delta7 realization holds a heading bump dead on target: 8 of 8
 angles, 0.0° error, both valid configurations. All three
