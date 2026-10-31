@@ -1,5 +1,61 @@
 # FlyGI durable worklog
 
+## Kaggle writeup amendment prepared (user's call): the Biswas compass PASS added, fact-gated trims compensate -- 2026-10-31
+
+The user asked for the live writeup (submitted 2026-10-31, deadline
+Nov 8/9) to carry the Biswas result; the local session executes the
+paste. Repo is the source of truth: writeup.md amended, and the
+ready-to-paste unwrapped body generated at
+docs/arenas/task1_arc_paper/kaggle_body_unwrapped.md
+(token-identical to the wrapped source, verified in-session).
+
+ADDED (one paragraph, in the verdict matrix after "Against the fly",
+all numbers through docs/social/FACTS.md; no superlative, so no
+precedent caveat is owed): "**For the fly, off-score.** The compass
+verdict later moved (2026-10-31; the 0-for-16 base rate stands):
+given fitted per-type physiology -- Biswas et al.'s published
+derivation recipe applied once to our counts -- the fitted EPG-Delta7
+realization holds a position-faithful bump (8/8 angles, 0.0 deg
+error, both valid configurations) while all three degree-preserving
+rewires admit no valid realization: their attractor conditions have
+no solution on shuffled counts. Not a reproduction of their
+parameters -- our r_a differs, flagged."
+
+TRIMS, meaning-preserving, every changed sentence listed: (1) opening
+"scrambled-map twin, identical machinery otherwise: a measured" ->
+"scrambled-map twin -- a measured" (the twin already states identical
+machinery); (2) prior-work sentence 1 compressed ("In a September-2026
+wave of... most share one shape" -> "A September-2026 survey... finds
+one dominant shape"); (3) "answers exactly these" -> "answers these";
+(4) CompressARC sentence compressed ("took third in 2025 at ~20% on
+ARC-AGI-1, and" -> "placed third in 2025 (~20%, ARC-AGI-1);");
+(5) Result-1 "Each rung shipped; each scored 0.15, which is what pure
+abstention earns -- held three times while" -> "Each rung shipped and
+scored 0.15 -- the pure-abstention floor -- while" (three-times
+already in the opening); (6) "league scores" -> "league"; (7) "The
+boundary travels with the win: the same ladder" -> "The same ladder";
+(8) "control ever ran" -> "control ran"; (9) EB sentence compressed:
+"died earlier in the pipeline: the compiled ellipsoid-body ring holds
+... at every fidelity tested through class-3 ... bump persists,
+retention 0.94-0.997, but slides" -> "died earlier: the
+ellipsoid-body ring holds ... at every UNFITTED fidelity through
+class-3 ... bump persists but slides" ("unfitted" ADDED, required by
+the new paragraph; retention values live in the repo); (10) "was
+genuinely connectome-dependent (trace ablation 0.2835 -> exactly
+0.0000)" -> "was connectome-dependent (trace ablation 0.2835 ->
+0.0000)"; (11) "also moved score not at all" -> "also moved no
+score"; (12) "worth exactly zero" -> "worth zero"; (13) final
+sentence drops the machine-readable self-report tail (duplicated
+verbatim-in-substance in Result 2's bold line and The system).
+
+COUNTER SAFETY (the 1,556-word lesson applied): spaced em-dashes in
+the body were closed up (word -- word -> word--word style; typography
+only, zero word changes), so wc -w and a naive whitespace split now
+agree to within 2: body = 1,461-1,463 words on any counter, ~37 under
+the 1,500 hard limit. kaggle_form.md carries the amended paste
+protocol (full-body replacement via Update Submission; title,
+subtitle, slug, images, links unchanged).
+
 ## Run-record backfill: the Biswas run's printed lines + JSON digest, banked verbatim with provenance -- 2026-10-31
 
 PROVENANCE: hand-off paste from the user into the cloud session,

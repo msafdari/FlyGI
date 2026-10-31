@@ -81,12 +81,23 @@ form via "Update Submission" (still Submitted). Any future re-paste
 must unwrap first.
 
 
-Paste everything in `writeup.md` **after** the `---` separator, i.e. the
-body. It starts at "**One measured pair carries the paper.**" and ends
-with "neuronal_dynamics_active=false." The body is markdown (## headers,
-bold, numbered lists).
+**BODY AMENDED 2026-10-31 (user's call; the Biswas compass PASS added,
+compensated by fact-gated trims — every changed sentence listed in the
+2026-10-31 writeup-amendment WORKLOG entry; all numbers pass through
+docs/social/FACTS.md).** The update is a full-body replacement via the
+writeup editor ("Update Submission"; title, subtitle, slug, images,
+links all unchanged). Unwrap before pasting, as below.
 
-Expected count: 1,448 words by whitespace count. If Kaggle's counter
+Paste the READY-MADE UNWRAPPED body: `kaggle_body_unwrapped.md` in this
+directory, verbatim, whole file (generated from writeup.md,
+token-identical, verified). It starts at "**One measured pair carries
+the paper.**" and now ends with "is in the open repository." The body is
+markdown (## headers, bold, numbered lists). Spaced em-dashes were
+closed up (word — word -> word—word) so every word counter agrees; this
+is typography only, no word changed.
+
+Expected count: 1,461-1,463 words (wc -w vs naive whitespace split) —
+~37 words under the 1,500 limit on any counter. If Kaggle's counter
 shows more than 1,500, stop and tell the Claude session; trims go
 through the fact/tier gate, never ad hoc.
 
