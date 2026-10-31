@@ -364,7 +364,10 @@ def paired_sign_test_less(a: np.ndarray, b: np.ndarray) -> dict[str, Any]:
     n = less + greater
     if n == 0:
         return {"n": 0, "less": 0, "p": float("nan")}
-    p = sum(math.comb(n, k) for k in range(less, n + 1)) / 2.0 ** n
+    # Integer 2**n, not float 2.0**n: float pow overflows past n ~ 1023
+    # (bit the natstat instrument at n=1,152 on 2026-10-31; identical
+    # values at the small n this harness and its importers have run).
+    p = sum(math.comb(n, k) for k in range(less, n + 1)) / 2 ** n
     return {"n": n, "less": less, "p": float(min(p, 1.0))}
 
 

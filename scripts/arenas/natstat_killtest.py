@@ -625,7 +625,11 @@ def sign_test_less(a: np.ndarray, b: np.ndarray) -> dict[str, Any]:
     n = less + greater
     if n == 0:
         return {"n": 0, "less": 0, "p": float("nan")}
-    p = sum(math.comb(n, k) for k in range(less, n + 1)) / 2.0 ** n
+    # Integer 2**n, not float 2.0**n: at this instrument's n (1,152 eval
+    # items) the float power overflows (measured 2026-10-31, run-3 crash
+    # at the G1 call). Python's int/int division rounds the exact ratio
+    # correctly at any magnitude, so this is the same statistic, exact.
+    p = sum(math.comb(n, k) for k in range(less, n + 1)) / 2 ** n
     return {"n": n, "less": less, "p": float(min(p, 1.0))}
 
 

@@ -401,6 +401,19 @@ def test_sign_test_exact_values():
     assert nk.sign_test_less(b, a)["p"] == pytest.approx(1.0)
 
 
+def test_sign_test_survives_large_n():
+    # Regression for the 2026-10-31 run-3 crash: float 2.0**n overflows
+    # past n ~ 1023; this instrument's G1 runs at n = 1,152 eval items.
+    n = 1152
+    a = np.concatenate([np.zeros(700), np.full(452, 2.0)])
+    b = np.ones(n)
+    r = nk.sign_test_less(a, b)
+    assert r["n"] == n and r["less"] == 700
+    assert 0.0 <= r["p"] <= 1.0 and math.isfinite(r["p"])
+    # one-sided tail with 700/1152 below: vanishingly small but nonzero
+    assert r["p"] < 1e-12
+
+
 def test_frame_difference_centroid_recovers_direction():
     lat = hex_lattice(radius=4)
     cx, cy = lat["col_x"], lat["col_y"]
