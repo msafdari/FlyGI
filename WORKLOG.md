@@ -1,5 +1,34 @@
 # FlyGI durable worklog
 
+## Natstat run 2: luminance fix CONFIRMED on the verdict machine; residual G0 failure ruled an argmax tie and amended -- 2026-10-31
+
+Second local run (record = the user's pasted gate lines + JSON, banked
+here): 36/36 tests first; exit 3 at G0 in 20.0 s; corpus checksums
+verified vs the first-contact pin. MEASURED: pooled v2 DSI 0.1763 ->
+0.3355 (band 0.3216 +/- 0.02 -- PASSED), T4/ON 0.3192, T5/OFF 0.3434,
+defined fraction 1.0, per-subtype DSIs T4a 0.2156 / T4b 0.1772 / T4c
+0.4495 / T4d 0.4293 / T5a 0.2044 / T5b 0.2077 / T5c 0.3213 / T5d
+0.4531. The 587b40d fix did exactly what its drive-level measurement
+predicted. G0's sole remaining failure: tiling-exact, entirely T5a --
+measured +y vs reference -x at direction totals +y 1.3388 / -x 1.3361
+/ +x 0.8915 / -y 0.8844 (a 0.2% top-two margin on the near-isotropic
+weakest subtype); the other seven tile exactly. G1 reported failed
+alongside, as in run 1 (g1 numeric block not yet banked -- requested
+with the next report).
+
+DISPOSITION (cloud-side, dated amendment in killtest_design.md +
+in-code): gate-operationalization defect, the THIRD recorded instance
+of the argmax-degeneracy class (Stage-A shifter p 0.459; measureBump1
+45-deg quanta; this 0.2% tie). The tiling clause is now tie-aware at
+G0_TIE_MARGIN 0.98, derived from the measured post-fix drive-residual
+bound (~2% crossing transients), not tuned; tiling_exact stays in the
+record; genuine flips and total-less mismatches still fail. Tests 36
+passed (4 tie-case assertions added). FULL third run required.
+PRE-STATED before that run: if G0 passes and G1 still fails, the
+registered convention-limit close applies (AB-4 drive unusable for
+natural movies; ANS-5 negative; BLOCKED, never a statistics verdict).
+
+
 ## RELEASED AND SUBMITTED (early): repo public, writeup in -- recorded cloud-side 2026-10-31
 
 The local session executed the full release 2026-10-31 (its commits

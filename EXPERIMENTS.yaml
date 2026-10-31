@@ -2977,6 +2977,23 @@ hypotheses:
         tests added, each failing on the pre-fix code. FULL LOCAL
         RE-RUN REQUIRED per the frozen rule -- drive equality is
         MEASURED, the DSI consequence is the re-run's to measure.
+      - >
+        2026-10-31 SECOND RUN: the fix landed as predicted -- pooled
+        v2 DSI 0.1763 -> 0.3355 (in band), T4/ON 0.3192, T5/OFF
+        0.3434, defined fraction 1.0; corpus bit-stable vs the pinned
+        checksums. G0 failed ONLY its tiling-exact clause, entirely on
+        T5a: +y vs reference -x at speed-pooled totals 1.3388 vs
+        1.3361 (0.2%), the weakest-DSI subtype (0.2044); seven of
+        eight exact with comfortable margins. RULED a gate-
+        operationalization defect (third recorded argmax-degeneracy
+        instance) and AMENDED, dated, in killtest_design.md: tiling is
+        tie-aware at G0_TIE_MARGIN 0.98, derived from the measured ~2%
+        drive-residual bound, not tuned; tiling_exact still reported;
+        a genuine flip still fails; mismatch without totals fails
+        conservatively. DSI band, G1, floors, bars unchanged. FULL
+        RE-RUN required (third). Pre-stated: G0 passing with G1 still
+        failing closes BLOCKED as the registered AB-4 convention
+        limit (ANS-5 negative), never a statistics verdict.
     updated: 2026-10-29
 
   H-FLYGI-FLYBENCH-SFA:

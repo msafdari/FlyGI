@@ -220,3 +220,21 @@ python scripts/arenas/natstat_killtest.py --image-root <CORPUS>
 
 Everything else (corpus, checksums, flags) is unchanged; the frozen
 full-re-run rule applies, so the whole protocol runs fresh.
+
+## 5c. Natstat THIRD run (after the 2026-10-31 tie-aware G0 amendment)
+
+Second run confirmed the luminance fix (0.1763 -> 0.3355, in band);
+the residual G0 failure was a 0.2% argmax tie on T5a, ruled a gate-
+operationalization defect and amended (tie-aware tiling, margin 0.98
+from the measured residual bound; killtest_design.md). Same single
+command:
+
+```bash
+git pull
+PYTHONPATH=src python -m pytest tests/test_natstat_killtest.py -q   # 36 passed
+python scripts/arenas/natstat_killtest.py --image-root <CORPUS>
+```
+
+Include the JSON's g1 block in the report either way: if G0 passes
+and G1 still fails, the pre-stated close applies (AB-4 convention
+limit, BLOCKED, ANS-5 negative) and no further natstat run follows.

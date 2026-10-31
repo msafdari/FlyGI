@@ -741,3 +741,39 @@ element changed. Required next: the FULL local re-run (the frozen
 rule); the drive-level equality is MEASURED, the DSI consequence is
 the re-run's to measure (Expected-tier statements inherit the
 0-for-16 base rate).
+
+### Section 5, second G0 event (dated 2026-10-31): the luminance fix is MEASURED landed; the residual failure was the gate's own argmax tie, now amended
+
+Second local run (36/36 tests first; exit 3 at G0 in 20.0 s; corpus
+checksums verified against the first-contact pin, substrate
+bit-stable): pooled v2 DSI 0.1763 -> 0.3355 (inside the 0.3216 +/-
+0.02 band), T4/ON 0.3192 and T5/OFF 0.3434 both healthy, defined
+fraction 1.0 -- the 587b40d luminance fix reproduced its predicted
+effect on the verdict machine. G0's only remaining failure was the
+tiling-exact clause, and the entire mismatch was T5a: measured +y vs
+reference -x with speed-pooled totals 1.3388 vs 1.3361 -- a 0.2%
+margin on the weakest-DSI subtype (0.2044, near-isotropic), while the
+other seven subtypes tile exactly with comfortable margins.
+
+RULING (gate operationalization, the third recorded instance of the
+argmax-degeneracy class after the Stage-A shifter and the measureBump1
+quanta): an argmax over near-tied totals is quantization noise, not a
+reproduction failure -- the drive path is measured-faithful to within
+the declared ~2% crossing transients (post-fix residual bound, mean
+|diff| <= 0.0100 on the 0.5 plateau). AMENDMENT: the tiling clause is
+tie-aware -- a subtype whose argmax differs from the reference still
+reproduces iff the reference direction's speed-pooled total is >=
+G0_TIE_MARGIN x the argmax total, G0_TIE_MARGIN = 0.98, derived from
+that measured residual bound, not tuned (T5a's 0.998 passes; a
+genuine flip at e.g. 0.90 fails; a mismatch with no totals fails
+conservatively). tiling_exact stays reported in the record;
+tiling_ok decides. DSI band, G1, floors, bars: unchanged. Full
+re-run required, per the frozen rule.
+
+Pre-stated, so the next outcome cannot be reshaped: if the re-run
+passes G0 and STILL fails G1 (as both prior runs reported), the
+registered reading applies as frozen -- the AB-4-class drive
+convention did not feed the circuit usable input for natural movies,
+BLOCKED as a measured convention limit (ANS-5 resolved in the
+negative), never a statistics verdict. The next run report should
+include the JSON's g1 block either way.

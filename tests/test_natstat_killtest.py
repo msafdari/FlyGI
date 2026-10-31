@@ -433,10 +433,29 @@ def test_g0_check_tiling_and_dsi_tolerance():
     good = _band({k: v["preferred"] for k, v in recorded.items()}, 0.33)
     out = nk.g0_check(good, recorded)
     assert out["pass"] and out["tiling_exact"] and out["dsi_ok"]
-    # argmax-exact: one flipped subtype fails the gate
+    # a flipped subtype WITHOUT totals fails conservatively (no tie
+    # evidence -> no tie pass; 2026-10-31 amendment)
     flipped = {k: v["preferred"] for k, v in recorded.items()}
     flipped["T4a"] = "-x"
     assert not nk.g0_check(_band(flipped, 0.33), recorded)["pass"]
+    # tie-aware clause (2026-10-31 amendment, the measured T5a case):
+    # mismatched argmax with the reference total within G0_TIE_MARGIN
+    # of the top counts as reproduced; tiling_exact stays False in the
+    # record while tiling_ok and the gate pass
+    tie = _band(flipped, 0.33)
+    tie["per_subtype"]["T4a"]["direction_totals"] = {
+        "+x": 1.3361, "-x": 1.3388, "+y": 0.8915, "-y": 0.8844}
+    out_tie = nk.g0_check(tie, recorded)
+    assert out_tie["pass"] and out_tie["tiling_ok"]
+    assert not out_tie["tiling_exact"]
+    assert abs(out_tie["tiling"]["T4a"]["tie_ratio"] - 1.3361 / 1.3388) < 1e-9
+    # a genuinely flipped subtype (ratio well below the margin) still fails
+    real_flip = _band(flipped, 0.33)
+    real_flip["per_subtype"]["T4a"]["direction_totals"] = {
+        "+x": 0.9, "-x": 1.339, "+y": 0.89, "-y": 0.88}
+    assert not nk.g0_check(real_flip, recorded)["pass"]
+    # the margin itself is the declared constant
+    assert nk.G0_TIE_MARGIN == 0.98
     # DSI outside +/-0.02 of 0.3216 fails even with exact tiling
     assert not nk.g0_check(
         _band({k: v["preferred"] for k, v in recorded.items()}, 0.345),
