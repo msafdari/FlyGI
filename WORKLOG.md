@@ -1,5 +1,45 @@
 # FlyGI durable worklog
 
+## H-CX-BISWAS-FITTED: PASS -- the program's first computation-level wiring win, given fitted per-type physiology -- 2026-10-31
+
+The user ran the final menu item on claude/cool-meitner-x8e79i (35/35
+tests first; instrument untouched; 10.7 s, exit 0). The close
+sentence, scope frozen in the registration: GIVEN FITTED PER-TYPE
+PHYSIOLOGY -- Biswas et al.'s exact threshold-linear form with their
+published derivation recipe applied once to our compiled counts --
+the standalone MaleCNS CX sustains a position-faithful heading bump
+that its degree-preserving rewires do not.
+
+MEASURED: in-cloud-pattern gate passed locally (published-realization
+recovery r_a 0.5 exact; synthetic G1 8/8; uniform can-fail control
+true; 34 algebra identities). Composition exact (148 =
+46/20/22/42/18); EPG 46/46 wedge-labelled, wedge sizes
+[4,4,6,6,6,6,6,8]. REAL wiring: A_Delta=8 valid fit (r_a 0.4221,
+unique candidate, all 8 attractor checks true), G1 8/8 with err 0.0
+deg AT EVERY WRITE ANGLE, circvar 0.234, retention 1.0; A_Delta=6
+valid fit (r_a 0.2132), G1 8/8, err 0.0 deg everywhere, circvar
+0.245, retention 0.926; A_Delta=4 no valid fit (reported). NULLS: all
+three rewires (4242-4244) admit NO valid fit at ANY config -- their
+published attractor conditions have no solution on shuffled counts --
+so G1 fails everywhere; the specificity is carried by the fit
+algebra itself. G2 non-decisional as frozen (their model defines no
+rotation input). CONTEXT, reported: fitted r_a on our counts differs
+from their published realization (0.4221 vs 0.548 at A_Delta=8;
+0.2132 vs 0.437 at 6; cross-check "consistent: false") -- expected
+under AF-7's measured export drift (annotations + signed weights
+differ from their snapshot); the verdict does not rest on matching
+their numbers, only on their form + recipe.
+
+The structure/function split now reads, with every tier in place: the
+counts carry the ring topology (Stage A, p 0.005); unfitted
+physiology cannot compute with it (classes 1-3, all measured); FITTED
+per-type physiology can, and the computation is wiring-specific
+(this result) -- Duan/Dong/Fiete's necessity claim, reproduced on
+MaleCNS with Biswas algebra. Registry close is the cloud side's step.
+LEAGUE.md regenerated here with the natstat BLOCKED row (score rows
+intact). JSON gitignored at results/arenas/cx_biswas_killtest.json.
+
+
 ## Biswas adversarial review: two pre-data-contact blockers found and fixed; instrument re-validated -- 2026-10-31
 
 Three-reviewer workflow (equations re-read from the uploaded PDF at
