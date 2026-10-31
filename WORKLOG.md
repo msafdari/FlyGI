@@ -1,5 +1,45 @@
 # FlyGI durable worklog
 
+## Writeup v5 live + LinkedIn post SCHEDULED for Wed Nov 4, 8:00 AM PT (Phase 1 of the social hand-off) -- 2026-10-31
+
+KAGGLE (one visit, two edits, per the hand-off): title v5 applied
+verbatim ("I Wired a Whole Fly Brain into ARC-AGI-3. Its Scrambled
+Copy Won, Then Lost."); body fully replaced with
+kaggle_body_unwrapped.md AFTER re-applying the user's dash/semicolon
+style passes to it (the v5 regeneration had reintroduced 24 em
+dashes and 29 semicolons -- a rebase artifact; same gated transform,
+numbers byte-identical, protected compass clauses verbatim; commit
+7cc688c). Kaggle's counter at save: 1,490 of 1,500. Status after
+Update Submission: Submitted; slug, subtitle, images, links
+untouched. Rendered checks passed: "For the fly, off-score." opens
+directly with "Given fitted per-type physiology", degree sign clean,
+no mid-paragraph breaks, body ends on the machine-readable line.
+Screenshot banked.
+
+LINKEDIN (composed in full, SCHEDULED, not posted, per the Phase 1
+amendment): body of linkedin_post.md verbatim, marker lines deleted,
+both figures attached as the post gallery in order (fig1 then fig3;
+LinkedIn cannot inline images mid-text -- platform limit, noted),
+the auto GitHub link-preview card removed in favor of the images.
+Tags resolved via the composer @ dropdown: ARC Prize Foundation
+(official), Kaggle (official company page), and HHMI -- NOTE: the
+"HHMI Janelia Research Campus" page never surfaced in the typeahead
+(queries tried: full name, Janelia, Janelia Research, HHMI), so per
+the resolve-or-delete rule the verified PARENT page "Howard Hughes
+Medical Institute (HHMI)" was selected instead: an official page,
+not a guessed handle, and the credit sentence stays accurate.
+Scheduled via the composer clock: "Posting Wed, Nov 4, 2026 at
+8:00 AM" (account timezone = Pacific), confirmed under Scheduled (1)
+with screenshot. REMINDER: a scheduled post cannot be edited, only
+deleted and rescheduled.
+
+PHASE 2 (Wednesday Nov 4, 8:15-9:00 AM PT): confirm the post
+published, copy its URL, substitute into tweet 9, post the 9-tweet X
+thread (x_post.md; tweet 7 verbatim; four attachments), then the two
+forum comments verbatim on 754287 and 754288, bank all URLs. X,
+forum comments and the optional Zenodo release are deliberately NOT
+done today per the amendment.
+
 ## Writeup v3 + social v4 (user's calls): benchmark named in the title, chronology scrubbed, I-voice posts, 3-tweet X -- 2026-10-31
 
 Four user directives executed. (1) TITLE v3: "We Wired a Whole Fly
