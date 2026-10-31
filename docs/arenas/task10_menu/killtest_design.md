@@ -1138,8 +1138,12 @@ Biswas et al.'s exact threshold-linear form with their published
 derivation recipe applied once to our compiled counts -- the
 Biswas-fitted EPG-Delta7 realization of the standalone MaleCNS CX
 sustains a position-faithful heading bump that its degree-preserving
-rewires do not. The record's first biological-computation PASS
-against the degree-preserving null.
+rewires do not. Standing, stated precisely: the record's first
+hypothesis whose VERDICT is a biological-computation comparison of
+the real wiring against its degree-preserving null
+(H-FLYGI-FLYBENCH-TERMINAL's bar 4 had already beaten FlyBench's own
+degree-preserving rewired control, specificity +0.2823 -> +0.3135,
+inside a mechanism-transfer verdict).
 
 The cross-check canary FIRED, as a reading (never a verdict-changer,
 as frozen): fitted r_a 0.4221 vs published 0.548 and 0.2132 vs 0.437,

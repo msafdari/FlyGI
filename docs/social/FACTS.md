@@ -86,9 +86,18 @@ three times as often. **This must never appear in a post.**
 ## Claims that are never made
 
 - that a fly understands ARC, or is reasoning;
-- that the real **graph** beat any control: every comparison isolating the
-  real graph (degree-preserving null, rewired, shuffled) is null or favors
-  the rewire (see `docs/arenas/SYNTHESIS.md`). The two bounded fly-positives
+- that the real **graph** beat any control **on ARC or any score** [scope
+  AMENDED 2026-10-31, never deleted: as originally written this bullet said
+  "any control", which was true until that date on the ARC/score record and
+  remains true there — every score-side comparison isolating the real graph
+  (degree-preserving null, rewired, shuffled) is null or favors the rewire
+  (see `docs/arenas/SYNTHESIS.md`). The dated exceptions are off-score:
+  the 2026-10-29 terminal bar-4 specificity (+0.2823 → +0.3135 vs FlyBench's
+  own degree-preserving rewired control, inside a mechanism-transfer
+  verdict) and the 2026-10-31 Biswas compass PASS (section below, which
+  carries its own mandatory "given fitted per-type physiology" scope
+  words). Neither touches ARC; 0-for-16 stands]. The two bounded
+  fly-positives on the ARC side
   are encoder/anatomy-attributed, not graph-attributed: sg-bioeye-t4t5 HELPS
   (+0.0717 [+0.005,+0.156], p=0.070, borderline) vs its scrambled-ENCODER
   control, and the eye map's 2.59x-vs-11.59x action-cost separation vs its
@@ -119,7 +128,7 @@ three times as often. **This must never appear in a post.**
 | Valid realizations on our counts | A_Delta=8 (r_a 0.4221) and A_Delta=6 (r_a 0.2132); A_Delta=4 none (reported) | run record |
 | Bump test | G1 8/8 at both valid configurations; position error 0.0 deg at every write angle; retention 1.0 / 0.926 | run record |
 | Null bar | all 3 degree-preserving rewires admit NO valid realization at any configuration (their attractor conditions have no solution on shuffled counts) | run record |
-| Standing | the record's first biological-computation PASS against the degree-preserving null (the terminal PASS was a FlyBench mechanism-transfer win) | registry close |
+| Standing | the record's first hypothesis whose VERDICT is a biological-computation comparison of real wiring vs its degree-preserving null. Precedent that must accompany any "first" phrasing: H-FLYGI-FLYBENCH-TERMINAL (supported 2026-10-29) already beat FlyBench's own rewired control — itself degree-preserving — on its bar 4 (specificity +0.2823 → +0.3135), but as one bar inside a mechanism-transfer verdict | registry close |
 | r_a cross-check | fitted 0.4221 / 0.2132 vs their published 0.548 / 0.437 — both OUTSIDE the 0.1 band; a flagged reading, never a verdict input | run record |
 
 Never say: "we reproduced Biswas et al.'s realization" (the canary

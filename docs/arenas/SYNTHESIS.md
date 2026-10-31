@@ -324,13 +324,19 @@ an explicit go.
 ## Addendum 2026-10-29 — Task 10 (the science menu): seven runs, the map redrawn in four places
 
 The exhaustion-audit menu executed in full (six of seven items ran;
-Biswas completed its document fetch and awaits its instrument) (registrations frozen jointly
+Biswas completed its document fetch and awaits its instrument)
+[SUPERSEDED 2026-10-31: the seventh item ran and PASSED -- closed
+supported at the frozen "given fitted per-type physiology" scope --
+and natstat's third run closed BLOCKED as the pre-stated convention
+limit; see the record map and the MENU IS COMPLETE paragraph below]
+(registrations frozen jointly
 2026-10-23; run records WORKLOG 3313458..95914f7 plus the 2026-10-30 backfill;
 closes in EXPERIMENTS.yaml). No instrument was modified during the
 runs -- every run reached a registered exit as frozen; six of seven
 ran fix-free, and natstat's G0 gate caught a stimulus-path defect
 BEFORE any decision data (fix landed under the recorded-finding rule;
-full re-run pending). Four results move this synthesis:
+full re-run pending [done: runs 2-3 followed, closed 2026-10-31]).
+Four results move this synthesis:
 
 1. **The class-1 ARC nulls are now interface-bounded, by measurement
    (H-ARC-HARNESS-SENSITIVITY: FLAT, refuted).** The validated
@@ -384,8 +390,11 @@ full re-run pending). Four results move this synthesis:
    are not generically good; one specific, anatomy-coupled one is.
 
 THE MENU IS COMPLETE (2026-10-31): H-CX-BISWAS-FITTED, the last open
-item, closed SUPPORTED -- the record's first biological-computation
-PASS against the degree-preserving null. MEASURED: given fitted
+item, closed SUPPORTED -- given fitted per-type physiology, the
+record's first hypothesis whose verdict is a biological-computation
+comparison of the real wiring against its degree-preserving null
+(terminal's bar 4 beat the same null class earlier, inside a
+mechanism-transfer verdict -- see the registry close). MEASURED: given fitted
 per-type physiology (their exact threshold-linear form, their
 derivation recipe applied once to our compiled counts), the
 Biswas-fitted EPG-Delta7 realization holds a position-faithful bump

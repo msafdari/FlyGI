@@ -2929,9 +2929,11 @@ hypotheses:
         unconditionally (r_a 0.21607, residual 3.9e-16); 35 tests.
       - >
         2026-10-31 RUN, PASS (local; exit 0, 10.7 s; 35/35 tests
-        first; instrument untouched; record = the 2026-10-31
-        H-CX-BISWAS-FITTED WORKLOG entry banking the printed lines
-        and JSON digest, commit 0e80c2f; full JSON gitignored at
+        first; instrument untouched; record = the 0e80c2f run-record
+        WORKLOG entry PLUS the dated 2026-10-31 run-record backfill
+        entry banking the pasted printed lines and JSON digest --
+        the gammas, residual and tie fractions live in the backfill;
+        full JSON gitignored at
         results/arenas/cx_biswas_killtest.json). MEASURED: the gate
         passed on the verdict machine (recovery exact, synthetic G1
         8/8, can-fail true, 34 identities); composition exact
@@ -2969,17 +2971,25 @@ hypotheses:
         recipe applied once to our compiled counts -- the
         Biswas-fitted EPG-Delta7 realization of the standalone
         MaleCNS CX sustains a position-faithful heading bump that
-        its degree-preserving rewires do not. This is the record's
-        first biological-computation PASS against the
-        degree-preserving null (the terminal PASS was a
-        mechanism-transfer win on FlyBench's benchmark, with
-        FlyBench's own rewired-control metric). Contrast on the
-        same subcircuit, both measured under their own protocols:
-        the unfitted class-3 spiking engine held a bump but slid
-        toward one region from every heading (position errors
-        155-177 deg); the fitted rate realization holds position at
-        0.0 deg. Not score-adjacent; the 0-for-16 base rate is
-        untouched.
+        its degree-preserving rewires do not. Standing, stated
+        precisely: the record's FIRST HYPOTHESIS WHOSE VERDICT IS a
+        biological-computation comparison of the real wiring
+        against its degree-preserving null.
+        (H-FLYGI-FLYBENCH-TERMINAL, supported 2026-10-29, had
+        already beaten FlyBench's own rewired control -- which is
+        itself degree-preserving -- on its bar 4, specificity
+        +0.2823 -> +0.3135, but as one bar inside a
+        mechanism-transfer verdict, not as the verdict; H-APL had
+        no rewire bar; Stage-A/FB are structural.) Contrast,
+        cross-instrument, derived from the same compiled CX counts
+        but not the same simulated system (class-3: the full
+        standalone AC-8 five-type circuit at neuron level; fitted:
+        its EPG-Delta7 blocks coarse-grained to 8+8 units), each
+        under its own protocol: the unfitted class-3 spiking engine
+        held a bump but slid toward one region from every heading
+        (position errors 155-177 deg); the fitted rate realization
+        holds position at 0.0 deg. Not score-adjacent; the 0-for-16
+        base rate is untouched.
     updated: 2026-10-31
 
   H-FB-COLUMNAR-TOPOLOGY:

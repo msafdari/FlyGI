@@ -6,10 +6,11 @@
 > FB PASS; t4t5 class-3 BLOCKED-closed "null"; SFA KILL + terminal PASS).
 > Section 5 (natstat) closed BLOCKED 2026-10-31 (the pre-stated AB-4
 > convention limit; see 5c). Section 3b (Biswas) ran 2026-10-31 and
-> **PASSED** — the record's first biological-computation PASS against the
-> degree-preserving null, closed supported at the frozen "given fitted
-> per-type physiology" scope (registry H-CX-BISWAS-FITTED; close record
-> in killtest_design.md section 3). Nothing below remains to run; the one
+> **PASSED** — closed supported at the frozen "given fitted per-type
+> physiology" scope: the record's first verdict carried by a
+> biological-computation comparison against the degree-preserving null
+> (registry H-CX-BISWAS-FITTED; close record and the terminal bar-4
+> precedent in killtest_design.md section 3). Nothing below remains to run; the one
 > bit of bookkeeping is the LEAGUE.md regeneration (see 5c/3b).
 > Everything below is a historical record.
 
@@ -125,7 +126,8 @@ tip. The r_a cross-check is a reading, never a verdict-changer.
 **CLOSED 2026-10-31 -- RAN AND PASSED (exit 0, 10.7 s): valid fits at
 A_Delta=8 (r_a 0.4221) and 6 (0.2132), G1 8/8 at both, err 0.0 deg at
 every angle; A_Delta=4 no valid fit (reported); all 3 rewires admit
-no valid fit anywhere. Closed supported at the frozen scope; records
+no valid fit anywhere. Closed supported, given fitted per-type
+physiology (the frozen scope, which rides every close sentence); records
 in the registry + the 2026-10-31 WORKLOG entries; close note in
 killtest_design.md section 3. LEAGUE.md's Biswas row is now knowingly
 stale ("open" -- it was regenerated before this close): on the next

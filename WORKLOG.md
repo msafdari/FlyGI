@@ -1,9 +1,53 @@
 # FlyGI durable worklog
 
+## Run-record backfill: the Biswas run's printed lines + JSON digest, banked verbatim with provenance -- 2026-10-31
+
+PROVENANCE: hand-off paste from the user into the cloud session,
+2026-10-31, from the verdict machine (run on branch
+claude/cool-meitner-x8e79i, tip after their pushes 0e80c2f; 35/35
+tests first; instrument untouched; wall 10.7 s reported, "10.90 s
+real"; exit 0). Banked because the registry cites values that the
+0e80c2f prose entry does not carry (the gammas, the rel residual,
+the tie fractions) -- the same blocker class the 2026-10-30 backfill
+remedied, caught again by the close review. The full-precision JSON
+stays gitignored on the verdict machine at
+results/arenas/cx_biswas_killtest.json.
+
+Printed lines, verbatim from the paste:
+
+    in-cloud gate: pass=True (recovery True, synthetic G1 8/8, can-fail True, identities True)
+    subcircuit: 148 nodes, composition {'EPG': 46, 'PEN_a(PEN1)': 20, 'PEN_b(PEN2)': 22, 'Delta7': 42, 'PEG': 18}
+    EPG labelled 46/46, Delta7 42
+    EPG wedge sizes: [4, 4, 6, 6, 6, 6, 6, 8]
+    real A_Delta=8: valid_fit=True r_a=0.4221 (published 0.548, delta -0.1259) G1 8/8
+    real A_Delta=6: valid_fit=True r_a=0.2132 (published 0.437, delta -0.2238) G1 8/8
+    real A_Delta=4: valid_fit=False
+    null seed 4242: tie_fraction 0.048 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+    null seed 4243: tie_fraction 0.048 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+    null seed 4244: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+    VERDICT: PASS (elapsed_s 10.7; exit 0)
+
+JSON digest, from the same paste (the user's abridgement of the 68 KB
+file; "full precision on disk" there): real tie_fraction 0.02381;
+A_Delta=8 chosen candidate r_a 0.42211, rel_residual 0.0 (as printed
+in the digest; the instrument's floor is relative 1e-6), gamma_ee
+0.00942, gamma_eie -3e-05, n_valid 1, multiple_valid false, all
+Table-1/2 checks true; G1 rows uniform across the 8 angles -- err_deg
+0.0 every angle, circvar 0.234, retention 1.0 (A_Delta=8) and err 0.0,
+circvar 0.245, retention 0.926 (A_Delta=6, r_a 0.21316); A_Delta=4
+valid_fit false; all three nulls valid_fit false and g1_pass false at
+every configuration; ra_cross_check consistent false at both valid
+configurations (deltas -0.12589, -0.22384); g2 non-decisional; gate
+block as printed above.
+
 ## H-CX-BISWAS-FITTED registry close executed: supported -- and the Task-10 menu is COMPLETE -- 2026-10-31
 
 Cloud-side close of the run recorded in the entry below (local run
-0e80c2f; every number cited in the registry traces there). Registry
+0e80c2f) together with the dated run-record backfill entry above,
+which banks the pasted printed lines + JSON digest the 0e80c2f prose
+does not carry; every number cited in the registry traces to the two
+entries jointly (the close review caught the gap, same class and
+same remedy as 2026-10-30). Registry
 status open -> supported, bullet 6 carries the full measured record
 and the close at the frozen scope: GIVEN FITTED PER-TYPE PHYSIOLOGY
 -- their exact threshold-linear form, their derivation recipe applied
@@ -11,30 +55,46 @@ once to our compiled counts -- the Biswas-fitted EPG-Delta7
 realization of the standalone MaleCNS CX sustains a position-faithful
 heading bump that its degree-preserving rewires do not.
 
-Superlative, checked against the whole registry before writing: this
-is the record's FIRST BIOLOGICAL-COMPUTATION PASS AGAINST THE
-DEGREE-PRESERVING NULL. (H-FLYGI-FLYBENCH-TERMINAL was a functional
-win but a mechanism transfer on FlyBench's benchmark with FlyBench's
-own rewired-control metric; H-APL restored sparsity with no rewire
-bar; Stage-A/FB are structural.) Not score-adjacent; 0-for-16
+Superlative, checked against the whole registry and then TIGHTENED by
+the close review: this is the record's first hypothesis whose VERDICT
+is a biological-computation comparison of the real wiring against its
+degree-preserving null. The precedent the first phrasing hid:
+H-FLYGI-FLYBENCH-TERMINAL (supported 2026-10-29) had already beaten
+FlyBench's own rewired control -- which IS degree-preserving
+(flygi_flybench_adapter.py's documented control) -- on its bar 4,
+specificity +0.2823 -> +0.3135, but as one bar inside a
+mechanism-transfer verdict, not as the verdict itself. H-APL had no
+rewire bar; Stage-A/FB are structural. Not score-adjacent; 0-for-16
 untouched.
 
-Two attribution clarifications on the entry below, dated here rather
-than edited there: (1) the frozen registration names AC-B1
-(label-derived wedges) and AC-B2 (whole-brain vs ROI-restricted
-counts) as the r_a-divergence suspects; the entry's "expected under
-AF-7's measured export drift" is a further INFERRED candidate whose
-bridge is untested -- the registry carries the frozen attribution.
+Four clarifications on the entry below, dated here rather than edited
+there: (1) the frozen registration names AC-B1 (label-derived wedges)
+and AC-B2 (whole-brain vs ROI-restricted counts) as the
+r_a-divergence suspects; the entry's "expected under AF-7's measured
+export drift" is a further INFERRED candidate whose bridge is
+untested -- the registry carries the frozen attribution.
 (2) "Duan/Dong/Fiete's necessity claim, reproduced" overstates: their
 claim is hemibrain, different protocol; ours is CONSISTENT WITH it
 (inferred across datasets), recorded at that tier in SYNTHESIS.
+(3) The entry's close sentence scopes to "the standalone MaleCNS CX";
+the frozen per-sentence scope is narrower -- "the Biswas-fitted
+EPG-Delta7 realization of the standalone MaleCNS CX" (PEN/PEG have no
+role in their realization) -- and the registry close's wording
+supersedes it. (4) The entry's "published-realization recovery r_a
+0.5 exact" mislabels the gate: r_a 0.5 is SYNTH_RA, the instrument's
+own synthetic ground truth (the amended gate); no published numeric
+realization exists to reproduce -- that absence finding is why the
+gate was amended.
 
 One mechanistic note for readers: G1's identical per-angle rows (err
 0.0 deg at every write angle) are the expected signature of the
 recipe's exact circulant symmetrization -- the simulated realization
-is 8-fold symmetric by construction -- not a metric defect; the
-class-3 contrast (155-177 deg errors) came from an unfitted,
-unsymmetrized spiking system on the same subcircuit.
+is 8-fold symmetric by construction -- not a metric defect. The
+class-3 contrast (155-177 deg errors) is a cross-instrument contrast
+derived from the same compiled CX counts, not the same simulated
+system: class-3 ran the full standalone AC-8 five-type circuit at
+neuron level; the fitted realization consumes its EPG-Delta7 blocks
+coarse-grained to 8+8 units -- each under its own protocol.
 
 Record propagation: killtest_design section-3 close note; runbook
 banner (MENU COMPLETE) + 3b closed; SYNTHESIS record map + closing
