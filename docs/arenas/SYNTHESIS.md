@@ -215,7 +215,7 @@ Measurements that would move this synthesis, in information order:
 | H-FLYGI-FLYBENCH-SFA | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-TERMINAL | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-T4T5-NATSTAT-DIRECTION | blocked 10-31 (convention limit: G0 in band, G1 at chance -- 90.91 deg vs the 90 deg floor, p 0.605, n 1152; ANS-5 negative; the 2x2 never ran) | EXPERIMENTS.yaml; task10_menu/ |
-| H-CX-BISWAS-FITTED | open (completion frozen 2026-10-31; instrument landed, gate-validated, adversarially reviewed; awaiting the local run, runbook 3b) | EXPERIMENTS.yaml; task10_menu/ |
+| H-CX-BISWAS-FITTED | supported 10-31 (PASS at the frozen "given fitted per-type physiology" scope: valid fits at A_Delta=8/6, G1 8/8 both, all 3 rewires admit no valid fit anywhere; r_a cross-check canary fired, reading only) | EXPERIMENTS.yaml; task10_menu/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:
@@ -383,11 +383,31 @@ full re-run pending). Four results move this synthesis:
    mechanisms split, which is itself information -- fidelity additions
    are not generically good; one specific, anatomy-coupled one is.
 
-Still open from the menu: H-CX-BISWAS-FITTED only (fetch complete via
-the user-uploaded v2 PDF; the numeric completion is FROZEN -- dated
-2026-10-31 addendum, killtest_design.md section 3 -- and the
-instrument is built and gate-validated in-cloud; awaiting the local
-run, runbook section 3b).
+THE MENU IS COMPLETE (2026-10-31): H-CX-BISWAS-FITTED, the last open
+item, closed SUPPORTED -- the record's first biological-computation
+PASS against the degree-preserving null. MEASURED: given fitted
+per-type physiology (their exact threshold-linear form, their
+derivation recipe applied once to our compiled counts), the
+Biswas-fitted EPG-Delta7 realization holds a position-faithful bump
+G1 8/8 at both valid configurations (A_Delta=8, r_a 0.4221;
+A_Delta=6, 0.2132; err 0.0 deg at every write angle), and all three
+degree-preserving rewires admit NO valid fit at any configuration --
+their attractor conditions have no solution on shuffled counts. The
+r_a cross-check canary fired as a reading (0.4221 vs their 0.548;
+0.2132 vs 0.437): our counts fit a different member of their
+realization family, AC-B1/AC-B2 the registered suspects; the PASS is
+never a reproduction of their numbers.
+
+The structure/function ladder this completes, each rung at its own
+tier and protocol: MEASURED, the counts carry the ring and vector
+topology (Stage-A and FB structural PASSes, p 0.005, and the
+decomposition: placement + magnitudes, not signs); MEASURED, unfitted
+physiology did not compute with it under any tested mapping (classes
+1-3 on the compass, each scoped to its declared convention); MEASURED,
+literature-fitted physiology does, and the computation is
+wiring-specific (this close). INFERRED, bridge stated: this pattern is
+consistent with Duan/Dong/Fiete's necessity claim (hemibrain,
+different protocol -- consistency, not reproduction).
 H-T4T5-NATSTAT-DIRECTION closed 2026-10-31 after a complete, valid
 third run: BLOCKED as the pre-stated AB-4 convention limit -- through
 the same stimulus path the circuit decodes moving-edge direction in

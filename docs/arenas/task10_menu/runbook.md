@@ -1,15 +1,17 @@
 # Task 10 runbook — the science menu (user-executed, local)
 
-> **STATUS 2026-10-31.** Sections 1, 2, 4, 6 and 7 EXECUTED 2026-10-28/29
+> **STATUS 2026-10-31: THE MENU IS COMPLETE.** All seven items are
+> executed and closed. Sections 1, 2, 4, 6, 7 ran 2026-10-28/29
 > (reservoir FLAT — downgrade executed; decomposition readings complete;
-> FB PASS; t4t5 class-3 BLOCKED-closed "null"; SFA KILL + terminal PASS;
-> records in EXPERIMENTS.yaml + WORKLOG). Section 5 (natstat) is CLOSED
-> 2026-10-31 after a complete valid third run: BLOCKED, the pre-stated
-> AB-4 convention limit — no further natstat run (see 5c). **Section 3b
-> (Biswas) is the one command still to run**: the numeric completion is
-> frozen, the instrument landed and was adversarially reviewed the same
-> day (two blockers fixed pre-data-contact; correction record in
-> killtest_design.md). Everything below is otherwise a historical record.
+> FB PASS; t4t5 class-3 BLOCKED-closed "null"; SFA KILL + terminal PASS).
+> Section 5 (natstat) closed BLOCKED 2026-10-31 (the pre-stated AB-4
+> convention limit; see 5c). Section 3b (Biswas) ran 2026-10-31 and
+> **PASSED** — the record's first biological-computation PASS against the
+> degree-preserving null, closed supported at the frozen "given fitted
+> per-type physiology" scope (registry H-CX-BISWAS-FITTED; close record
+> in killtest_design.md section 3). Nothing below remains to run; the one
+> bit of bookkeeping is the LEAGUE.md regeneration (see 5c/3b).
+> Everything below is a historical record.
 
 Registrations: killtest_design.md (frozen 2026-10-23, one commit,
 before any instrument code). Run order matters only for item 1:
@@ -119,6 +121,16 @@ published 0.548/0.437/0.391, the per-config G1 counts, the null
 summaries, the verdict) plus the JSON at
 results/arenas/cx_biswas_killtest.json (gitignored) and the branch
 tip. The r_a cross-check is a reading, never a verdict-changer.
+
+**CLOSED 2026-10-31 -- RAN AND PASSED (exit 0, 10.7 s): valid fits at
+A_Delta=8 (r_a 0.4221) and 6 (0.2132), G1 8/8 at both, err 0.0 deg at
+every angle; A_Delta=4 no valid fit (reported); all 3 rewires admit
+no valid fit anywhere. Closed supported at the frozen scope; records
+in the registry + the 2026-10-31 WORKLOG entries; close note in
+killtest_design.md section 3. LEAGUE.md's Biswas row is now knowingly
+stale ("open" -- it was regenerated before this close): on the next
+local visit run `PYTHONPATH=src python scripts/league.py --write-md
+LEAGUE.md` and commit, same as the 5c note.**
 
 ## 4-7. Remaining instruments
 

@@ -2806,7 +2806,7 @@ hypotheses:
       to our counts), the standalone compiled MaleCNS CX (AC-8)
       sustains a position-faithful heading bump that its
       degree-preserving rewires do not.
-    status: open
+    status: supported
     evidence:
       - >
         PARTIAL FREEZE 2026-10-23 (killtest_design.md section 3),
@@ -2927,6 +2927,59 @@ hypotheses:
         under unit-label rotation (regression tests, all three
         configurations); synthetic A_Delta=6 root pinned
         unconditionally (r_a 0.21607, residual 3.9e-16); 35 tests.
+      - >
+        2026-10-31 RUN, PASS (local; exit 0, 10.7 s; 35/35 tests
+        first; instrument untouched; record = the 2026-10-31
+        H-CX-BISWAS-FITTED WORKLOG entry banking the printed lines
+        and JSON digest, commit 0e80c2f; full JSON gitignored at
+        results/arenas/cx_biswas_killtest.json). MEASURED: the gate
+        passed on the verdict machine (recovery exact, synthetic G1
+        8/8, can-fail true, 34 identities); composition exact
+        (AC-8); EPG 46/46 labelled, wedge sizes 4/4/6/6/6/6/6/8;
+        real Delta7-assignment tie fraction 0.0238. REAL GRAPH:
+        A_Delta=8 valid fit -- unique candidate, rel residual ~0,
+        gamma_ee 0.00942, gamma_eie -3e-05, every Table-1/2 check
+        true -- r_a 0.4221, G1 8/8 (err 0.0 deg at every write
+        angle, circvar 0.234, retention 1.0); A_Delta=6 valid fit,
+        r_a 0.2132, G1 8/8 (err 0.0 deg everywhere, circvar 0.245,
+        retention 0.926); A_Delta=4 no valid fit on our counts
+        (reported; the verdict needs one passing configuration and
+        got two). Identical per-angle rows are the expected
+        signature of the recipe's exact circulant symmetrization,
+        not a metric defect. NULLS: all three rewires (seeds
+        4242-4244; tie fractions 0.048/0.048/0.071) admit NO valid
+        fit at ANY configuration -- their attractor conditions have
+        no solution on shuffled counts -- which counts as failing G1
+        per the frozen existence rule: the separation is carried at
+        the existence stage, by the fit algebra, before any
+        dynamics ran. G2 non-decisional as frozen.
+        CROSS-CHECK READING (flagged, never a verdict-changer, as
+        frozen): fitted r_a 0.4221 vs their published 0.548
+        (A_Delta=8) and 0.2132 vs 0.437 (A_Delta=6), both outside
+        the 0.1 band -- our counts fit a DIFFERENT member of their
+        realization family. The registered suspects are AC-B1
+        (label-derived wedges) and AC-B2 (whole-brain vs
+        ROI-restricted counts); count-export differences are a
+        further unverified candidate (INFERRED, no bridge tested).
+        A PASS here is never a reproduction of their numeric
+        realization.
+        CLOSE (scope frozen in the registration): GIVEN FITTED
+        PER-TYPE PHYSIOLOGY -- Biswas et al.'s exact
+        threshold-linear form with their published derivation
+        recipe applied once to our compiled counts -- the
+        Biswas-fitted EPG-Delta7 realization of the standalone
+        MaleCNS CX sustains a position-faithful heading bump that
+        its degree-preserving rewires do not. This is the record's
+        first biological-computation PASS against the
+        degree-preserving null (the terminal PASS was a
+        mechanism-transfer win on FlyBench's benchmark, with
+        FlyBench's own rewired-control metric). Contrast on the
+        same subcircuit, both measured under their own protocols:
+        the unfitted class-3 spiking engine held a bump but slid
+        toward one region from every heading (position errors
+        155-177 deg); the fitted rate realization holds position at
+        0.0 deg. Not score-adjacent; the 0-for-16 base rate is
+        untouched.
     updated: 2026-10-31
 
   H-FB-COLUMNAR-TOPOLOGY:

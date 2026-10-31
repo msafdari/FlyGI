@@ -1116,3 +1116,34 @@ not post-contact amendments.
   1 cluster) and is now asserted UNCONDITIONALLY; the synthetic has
   no A_Delta=4 realization (10 clusters refined, all filtered) --
   asserted as the filter working, never a crash. 35 tests.
+
+### Section 3 CLOSE (dated 2026-10-31): PASS -- the close at the frozen scope
+
+The local run (exit 0, 10.7 s; 35/35 tests first; instrument
+untouched; record banked in the 2026-10-31 WORKLOG entries, commit
+0e80c2f) satisfied the frozen verdict clause exactly: the gate passed
+on the verdict machine; the REAL graph yielded Table-1/2-valid
+realizations at A_Delta=8 (r_a 0.4221, unique candidate, rel residual
+~0) and A_Delta=6 (r_a 0.2132), each holding the bump G1 8/8 with
+err 0.0 deg at every write angle (the expected signature of the
+recipe's exact circulant symmetrization); A_Delta=4 admitted no valid
+fit on our counts (reported); and ALL THREE degree-preserving rewires
+admitted no valid fit at any configuration -- the frozen existence
+rule: their attractor conditions have no solution on shuffled counts,
+so the separation is carried at the fit-algebra stage, before any
+dynamics ran. G2 non-decisional as frozen.
+
+CLOSE, the frozen sentence: given fitted per-type physiology --
+Biswas et al.'s exact threshold-linear form with their published
+derivation recipe applied once to our compiled counts -- the
+Biswas-fitted EPG-Delta7 realization of the standalone MaleCNS CX
+sustains a position-faithful heading bump that its degree-preserving
+rewires do not. The record's first biological-computation PASS
+against the degree-preserving null.
+
+The cross-check canary FIRED, as a reading (never a verdict-changer,
+as frozen): fitted r_a 0.4221 vs published 0.548 and 0.2132 vs 0.437,
+both outside the 0.1 band -- our counts fit a DIFFERENT member of
+their realization family, with AC-B1/AC-B2 the registered suspects
+(count-export differences a further unverified candidate). A PASS is
+never reported as a reproduction of their numeric realization.

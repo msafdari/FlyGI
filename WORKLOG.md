@@ -1,5 +1,52 @@
 # FlyGI durable worklog
 
+## H-CX-BISWAS-FITTED registry close executed: supported -- and the Task-10 menu is COMPLETE -- 2026-10-31
+
+Cloud-side close of the run recorded in the entry below (local run
+0e80c2f; every number cited in the registry traces there). Registry
+status open -> supported, bullet 6 carries the full measured record
+and the close at the frozen scope: GIVEN FITTED PER-TYPE PHYSIOLOGY
+-- their exact threshold-linear form, their derivation recipe applied
+once to our compiled counts -- the Biswas-fitted EPG-Delta7
+realization of the standalone MaleCNS CX sustains a position-faithful
+heading bump that its degree-preserving rewires do not.
+
+Superlative, checked against the whole registry before writing: this
+is the record's FIRST BIOLOGICAL-COMPUTATION PASS AGAINST THE
+DEGREE-PRESERVING NULL. (H-FLYGI-FLYBENCH-TERMINAL was a functional
+win but a mechanism transfer on FlyBench's benchmark with FlyBench's
+own rewired-control metric; H-APL restored sparsity with no rewire
+bar; Stage-A/FB are structural.) Not score-adjacent; 0-for-16
+untouched.
+
+Two attribution clarifications on the entry below, dated here rather
+than edited there: (1) the frozen registration names AC-B1
+(label-derived wedges) and AC-B2 (whole-brain vs ROI-restricted
+counts) as the r_a-divergence suspects; the entry's "expected under
+AF-7's measured export drift" is a further INFERRED candidate whose
+bridge is untested -- the registry carries the frozen attribution.
+(2) "Duan/Dong/Fiete's necessity claim, reproduced" overstates: their
+claim is hemibrain, different protocol; ours is CONSISTENT WITH it
+(inferred across datasets), recorded at that tier in SYNTHESIS.
+
+One mechanistic note for readers: G1's identical per-angle rows (err
+0.0 deg at every write angle) are the expected signature of the
+recipe's exact circulant symmetrization -- the simulated realization
+is 8-fold symmetric by construction -- not a metric defect; the
+class-3 contrast (155-177 deg errors) came from an unfitted,
+unsymmetrized spiking system on the same subcircuit.
+
+Record propagation: killtest_design section-3 close note; runbook
+banner (MENU COMPLETE) + 3b closed; SYNTHESIS record map + closing
+paragraph (the structure/function ladder, each rung at its tier);
+HANDOFF row 10; ASSUMPTIONS AC-B1..B5 annotated with run outcomes
+(the AC-B1/AC-B2 canary FIRED and is recorded as such); README EB
+ring row updated from "Structure PASS, computation KILL" to the
+two-sided result; docs/social/FACTS.md gains the Biswas section with
+never-say rules. LEAGUE.md's Biswas row is now knowingly stale
+("open"; regenerated locally before this close) -- same deferral as
+natstat, one local command, noted in runbook 5c/3b.
+
 ## H-CX-BISWAS-FITTED: PASS -- the program's first computation-level wiring win, given fitted per-type physiology -- 2026-10-31
 
 The user ran the final menu item on claude/cool-meitner-x8e79i (35/35

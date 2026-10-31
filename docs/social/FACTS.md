@@ -109,3 +109,25 @@ three times as often. **This must never appear in a post.**
   at 75 rows. Correct phrasing: "moved no score / did not separate", with CIs.
   NEVER "scored zero" (the score is 0.0137) and NEVER "~400x more state"
   (unsourced; the recorded numbers are rho and half-life above).
+
+## The Biswas-fitted compass PASS (added 2026-10-31; source: EXPERIMENTS.yaml H-CX-BISWAS-FITTED close, bullet 6, + the 2026-10-31 WORKLOG entries, run record 0e80c2f)
+
+| Fact | Value | Source |
+| --- | --- | --- |
+| Verdict | PASS (closed supported), exit 0, 10.7 s | run record |
+| Scope words that MUST ride every sentence | "given fitted per-type physiology"; "the Biswas-fitted EPG–Delta7 realization"; "their published derivation recipe applied once to our counts" | frozen registration |
+| Valid realizations on our counts | A_Delta=8 (r_a 0.4221) and A_Delta=6 (r_a 0.2132); A_Delta=4 none (reported) | run record |
+| Bump test | G1 8/8 at both valid configurations; position error 0.0 deg at every write angle; retention 1.0 / 0.926 | run record |
+| Null bar | all 3 degree-preserving rewires admit NO valid realization at any configuration (their attractor conditions have no solution on shuffled counts) | run record |
+| Standing | the record's first biological-computation PASS against the degree-preserving null (the terminal PASS was a FlyBench mechanism-transfer win) | registry close |
+| r_a cross-check | fitted 0.4221 / 0.2132 vs their published 0.548 / 0.437 — both OUTSIDE the 0.1 band; a flagged reading, never a verdict input | run record |
+
+Never say: "we reproduced Biswas et al.'s realization" (the canary
+fired: our counts fit a DIFFERENT member of their family); "the fly
+can navigate / the connectome navigates" (one subcircuit held a bump
+in darkness under their rate model — no velocity input was even
+defined, G2 was non-decisional); "the connectome computes" without
+the fitted-physiology qualifier (unfitted physiology measurably did
+NOT, three model classes); "proves Duan/Fiete" (consistent with,
+different dataset and protocol); any ARC implication (this result is
+not score-adjacent; the 0-for-16 base rate is untouched).
