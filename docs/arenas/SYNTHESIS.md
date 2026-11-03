@@ -8,6 +8,11 @@ MEASURED (this number, this protocol), ESTABLISHED (literature or the
 connectome's own annotations, with source), INFERRED (measurement plus
 a stated untested bridge), EXPECTED (prediction; base rate 0 for 16).
 
+> **November 3 release note.** Read the dated entries below as the original experimental record.
+> The [release fact sheet](task1_arc_paper/factsheet.md) supersedes the pooled eye-map efficiency
+> claim in section 3 and the compass impossibility wording in the October 31 addendum.
+> It gives the matched game/seed action counts and the outcome of the finite compass fit search.
+
 ## 1. The program and its instrument
 
 Six arenas from the 2026-09-30 survey were run in rank order, each

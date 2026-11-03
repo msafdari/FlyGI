@@ -1,10 +1,12 @@
 # Social and outreach kit
 
-Drafts for publishing FlyGI's results. Nothing here is published automatically;
-these are copy for a human to review, fill in, and post. This is the broader
-OUTREACH kit; the paper-announcement pair lives in docs/arenas/task1_arc_paper/
-(linkedin_post.md, x_post.md). Post nothing from here without checking every
-number against FACTS.md -- including the 2026-10-30 harness-sensitivity rows.
+For the November paper announcement, use the reviewed [LinkedIn post](../arenas/task1_arc_paper/linkedin_post.md)
+and [X thread](../arenas/task1_arc_paper/x_post.md). The [Kaggle form guide](../arenas/task1_arc_paper/kaggle_form.md)
+identifies the paper body and media to upload. Check the top of [WORKLOG](../../WORKLOG.md)
+for which versions have actually reached each platform.
+
+This directory holds older outreach drafts and the [claim ledger](FACTS.md).
+The September and October channel drafts below are historical.
 
 ## Files
 
@@ -59,12 +61,5 @@ either way.
    only rewards admitting mistakes once competence is established. Awe first,
    real finding second, failures once they have something to land on.
 
-## STALE WARNING (dated 2026-10-31)
-
-The four channel drafts here (linkedin.md, x.md, longform.md,
-instagram.md) predate the H-CX-BISWAS-FITTED close and the Option-B
-title. Do not post any of them as-is: fold in the Biswas section of
-FACTS.md first (scope words ride every result sentence; any "first"
-claim carries its FlyBench-bar precedent). The two POSTING-READY
-drafts, refreshed 2026-10-31 with the comeback and length-verified,
-are docs/arenas/task1_arc_paper/linkedin_post.md and x_post.md.
+The older four channel drafts predate the fitted compass result and the November audit of
+the eye-map action counts. The publication-ready files are linked at the top.

@@ -1,51 +1,28 @@
-# LinkedIn post draft (v3, de-jargoned 2026-10-31; panel-written, judged, fact-gated)
+# LinkedIn release copy
 
-*(Post as a regular LinkedIn POST, not an article. 2,864 chars once the
-[figure: ...] marker lines are removed; LinkedIn's cap is 3,000. The hook
-must land before the ~200-char "see more" fold, and it does. Resolve each
-[TAG: ...] via the composer @ dropdown to the official page (ARC Prize,
-Kaggle, HHMI Janelia Research Campus); if a page does not surface, delete
-the slot text, never guess. Attach the two figures at the marked points and
-delete the marker lines. Every number has a row in docs/social/FACTS.md
-("Post numbers" section). Voice edits allowed EXCEPT: no number changes, and
-the compass paragraph keeps "fitted by Biswas et al.'s published recipe,
-applied once to our wiring counts" and "our fitted numbers differ from the
-published ones" intact; those clauses outrank style.)*
+Paste the text below the rule. Attach the current `media/fig1_ladder_vs_hidden.png` and `media/fig2_verdict_matrix.png`, in that order. The first graphic covers Kaggle. The second includes the fitted compass result. Where the composer offers the verified pages, tag ARC Prize Foundation, Kaggle and Howard Hughes Medical Institute in place. The post also works as plain text.
 
 ---
 
-You have seen the videos: a fly's brain map hooked up to Doom. The question those clips leave open: is the wiring doing the work, or would a scrambled copy run just as well?
+I tested a fruit fly's wiring on ARC-AGI-3. On my memory test and my motion test, the scrambled circuits scored higher. The real wiring pulled ahead in the dark.
 
-I spent a season answering that, in public.
+I started with a map of 166,700 neurons and nearly 25 million connections from the MaleCNS project at HHMI Janelia and its partners. A wiring diagram tells you which cells talk to which, and how many synaptic contacts they make. It doesn't tell you how hard one cell drives the next.
 
-A fruit fly's brain has now been mapped neuron by neuron. In the version I run: 166,700 neurons, 25 million connections, from the MaleCNS dataset by [TAG: HHMI Janelia Research Campus]. I put that map on ARC-AGI-3, the [TAG: ARC Prize] benchmark of novel hidden games, easy for humans and hard for current AI. Why that arena? It is built to make memorization useless, and the fly brings none: its wiring is a prior shaped by 400 million years of evolution. If innate structure transfers anywhere unpaid, it is here. Zero trained parameters.
+I wanted to know what that map could buy an agent faced with a game it had never seen. So I gave my simulated circuits opponents. Each scrambled copy kept the number of connections going into and out of each cell in the rewired pathways. I changed who talked to whom.
 
-One rule separated this from a demo: every component had to beat a scrambled copy, where every neuron keeps its number of connections but who talks to whom is destroyed. If the scramble does just as well, the fly gets no credit.
+On held-out ARC games, I showed the learning circuit one rewarded frame and one punished frame. It picked the rewarded frame's lookalike 60% of the time. Its scrambled copy got 80%. The fly's motion circuit read the direction of a moving pattern with 38.75% accuracy. Scrambled, it got 43.06%.
 
-The fly lost. All season.
+Then my own code took its turn. I wrote thirteen strategies for the public games. The local score jumped 52-fold. Four complete wins. On Kaggle the baseline and both upgrades scored 0.15, 0.15, 0.15. Those agents used a static map of the fly's eye and an online click predictor. The simulated neurons were switched off. My log of predictions tied to score stands at 0 for 16.
 
-The scrambled copies kept winning or tying. The fly's motion and memory circuits passed their biology checks, then lost the AI tasks to their own scrambled twins (memory 0.600 vs 0.800, motion 0.3875 vs 0.4306). My own engineering fared no better. A 52x local score gain transferred exactly zero to the hidden games: 0.15, three times. Every failure went public, pass bars written down in advance. All sixteen of my score predictions were wrong. Published too.
+I tested the eye map locally with the same learning rule and neural tie-breaker in both agents. On one public game, the controller cleared level one in 6 actions. Scramble the map and it took 199. The next seed was 15 versus 255. Across all 14 runs where both versions finished level one, the median cost ratio was only 1.06. I would have told a very different story if I'd stopped at that game.
 
-[figure: fig1_ladder_vs_hidden.png]
+The fly's compass gave me a way to test memory directly. I used Biswas and colleagues' recipe to turn the wiring counts of 88 compass neurons into a symmetric model with 16 units and fitted connection strengths. I set a peak of activity at a known heading and watched where it went in darkness.
 
-One thing survived: the eye's anatomical map, no dynamics, no training. First levels at 2.59x the human action baseline, 11.59x with the map scrambled. A measured 4.5x gap from anatomy alone.
+Two settings held all eight starting headings. The drift rounded to 0.0 degrees. I ran the same search on three scrambled copies. It found no fit on any of them. My fitted values differ from the paper's. What I could measure was a model built from the real counts remembering where I put the peak.
 
-Then the fly won one back.
+If you're building a world model, try this on your favorite result. Scramble the part you think is doing the remembering. Give its twin the same fitting budget. See which memory survives.
 
-Its compass, the circuit a fly uses to track which way it is facing, had failed in all three earlier versions. So I gave each neuron type electrical properties fitted by Biswas et al.'s published recipe, applied once to the wiring counts. With those fitted properties, the simplified compass held its heading where it was put: 8 of 8 angles, 0.0 degrees of error. None of the three scrambled copies could form a working compass at all.
+Paper on Kaggle: https://www.kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit
+Code and experiment log: https://github.com/msafdari/FlyGI
 
-[figure: fig3_controls_both_ways.png]
-
-That win earned zero benchmark points. My fitted numbers differ from the published ones, and I flagged it. It is still the measurement I care most about. The wiring itself carries something the scramble destroys.
-
-The instrument cut against me too: it flagged my own shipped component as exploring 3.29x less than random clicking. That is what makes the rest believable.
-
-Every "biology does AI" claim should be tested this way: check the biology, feed it real input, make it beat its scrambled twin.
-
-Everything is open, wrong predictions included. Kick the tires, poke holes.
-
-Code and full log: https://github.com/msafdari/FlyGI
-Writeup on [TAG: Kaggle]: https://www.kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit
-Brain map: MaleCNS, male-cns.janelia.org
-
-#ARCPrize #neuroscience #openscience #AI
+#ARCPrize #WorldModels #Neuroscience

@@ -17,19 +17,18 @@
 </style>
 <body>
 <div class="wrap">
-  <h1>Controls firing in both directions</h1>
-  <p class="sub">The same instrument that produced the two earned fly-negative verdicts also indicted our own
-     tested, shipped engineering. Dots are held-out measurements; the real/our component is blue, controls are
-     gray, engineered references are orange.</p>
+  <h1>The fly faced controls. So did my code.</h1>
+  <p class="sub">Two rewired circuits scored higher on held-out ARC probes. Uniform random clicks saw more distinct
+     observations than my shipped clicker, and a trained action head scored zero on every held-out game.</p>
   <div class="legend">
-    <span><span class="key" style="background:#2a78d6"></span>real wiring / our component</span>
+    <span><span class="key" style="background:#2a78d6"></span>real wiring / my component</span>
     <span><span class="key" style="background:#898781"></span>control (rewire, shuffle, random, ablation)</span>
     <span><span class="key" style="background:#eb6834"></span>engineered reference</span>
   </div>
   <div class="grid">
 
     <div class="panel">
-      <h2>Against the fly: MB one-shot association</h2>
+      <h2>Mushroom body &middot; one-shot association</h2>
       <p class="pcap">held-out accuracy, class-2 fidelity, input gates passed</p>
       <svg width="545" height="150" viewBox="0 0 545 150">
         <g font-size="13" fill="#52514e" text-anchor="end">
@@ -58,14 +57,14 @@
     </div>
 
     <div class="panel">
-      <h2>Against the fly: T4/T5 motion decode</h2>
+      <h2>T4/T5 &middot; motion direction</h2>
       <p class="pcap">held-out accuracy, validated class-2.5 fidelity (DSI 0.3216)</p>
       <svg width="545" height="150" viewBox="0 0 545 150">
         <g font-size="13" fill="#52514e" text-anchor="end">
           <text x="235" y="29">real wiring</text>
           <text x="235" y="59">uniform-tau</text>
           <text x="235" y="89">degree-preserving rewire</text>
-          <text x="235" y="119">engineered shift-matcher</text>
+          <text x="235" y="119">label-generating matcher</text>
         </g>
         <g stroke="#e1e0d9" stroke-width="1">
           <line x1="245" x2="535" y1="25" y2="25"/><line x1="245" x2="535" y1="55" y2="55"/>
@@ -87,11 +86,11 @@
     </div>
 
     <div class="panel">
-      <h2>Against ourselves: the coordinate head</h2>
-      <p class="pcap">mean unique observations, six click-only games (shipped in two early submissions, six passing tests)</p>
+      <h2>My shipped clicker &middot; exploration</h2>
+      <p class="pcap">mean distinct observations across six click-only games</p>
       <svg width="545" height="120" viewBox="0 0 545 120">
         <g font-size="13" fill="#52514e" text-anchor="end">
-          <text x="235" y="29">our coordinate head</text>
+          <text x="235" y="29">my coordinate head</text>
           <text x="235" y="59">uniform random clicking</text>
         </g>
         <g stroke="#e1e0d9" stroke-width="1">
@@ -109,8 +108,8 @@
     </div>
 
     <div class="panel">
-      <h2>Against ourselves: the trained head</h2>
-      <p class="pcap">mean score, 520 trained parameters (connectome-dependent: trace ablation &rarr; exactly 0)</p>
+      <h2>My trained action head &middot; generalization</h2>
+      <p class="pcap">mean score with the same 520 fitted readout parameters</p>
       <svg width="545" height="120" viewBox="0 0 545 120">
         <g font-size="13" fill="#52514e" text-anchor="end">
           <text x="235" y="29">its own training games</text>
@@ -131,9 +130,7 @@
     </div>
 
   </div>
-  <p class="foot">Top row: both circuits that reached a full ARC test sit below their own degree-preserving
-     rewires (MB: sign test p=0.996; T4/T5: p=0.97) while engineered references dominate &mdash; the two earned
-     NOT-USEFUL verdicts, each scoped to its task and fidelity class. Bottom row: the same discipline applied to
-     our own components. Connectome-dependent and useless are compatible; so are well-tested and worse than random.</p>
+  <p class="foot">The upper panels score individual decisions in local probes. The shift-matcher also defines the motion labels,
+     so 1.0000 is a consistency check. The lower panels measure distinct observations (left) and game score (right).</p>
 </div>
 </body>

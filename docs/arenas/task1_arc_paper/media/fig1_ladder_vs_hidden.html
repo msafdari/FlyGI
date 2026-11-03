@@ -14,10 +14,9 @@
 </style>
 <body>
 <div class="wrap">
-  <h1>Local ladder up, hidden set flat</h1>
-  <p class="sub">Matched 35-minute competition-mode gateway scores for the three shipped agents
-     (measured locally) against each agent&rsquo;s Kaggle hidden-set score. The engineered grammar
-     ladder grew ~52-fold locally; every submission scored the 0.15 abstention floor.</p>
+  <h1>Fifty-two times the local score. The same 0.15 on Kaggle.</h1>
+  <p class="sub">I added hand-built strategies for public games. On the local benchmark, the strongest
+     agent cleared 73 levels and won four games in 35 minutes. Kaggle displayed 0.15 for each submission.</p>
   <div class="legend">
     <span><span class="key" style="background:#2a78d6"></span>Local gateway (measured, 35-min window)</span>
     <span><span class="key" style="background:#eb6834"></span>Kaggle hidden set (official score)</span>
@@ -68,10 +67,7 @@
       <text x="905" y="406" fill="#898781" font-size="12.5">submission 56683298</text>
     </g>
   </svg>
-  <p class="foot">Local bars: official competition-mode gateway, matched 35-minute windows
-     (thirteen-grammar rung: 73 levels, four full game wins). Hidden bars: official Kaggle scores.
-     0.15 is the abstention floor &mdash; what an agent earns with no hidden-game match. Grammar
-     transfer to the hidden set measured zero, three times. Fly content of all three agents:
-     the static compiled eye map; neuronal dynamics OFF.</p>
+  <p class="foot">Blue bars show matched local gateway runs. Orange bars show the reported leaderboard scores.
+     Each submission used the static anatomical eye map with neuronal dynamics off. The public scores do not identify which strategies ran on hidden games.</p>
 </div>
 </body>

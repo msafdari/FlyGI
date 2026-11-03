@@ -3,7 +3,7 @@
 **Subtitle:** Auditing the 166,700-neuron MaleCNS fly connectome on ARC-AGI-3:
 both circuits tested in full scored below their degree-preserving rewires.
 
-*(SUPERSEDED paste source: the live body is kaggle_body_unwrapped.md (v5, I-voice). This wrapped copy is kept as the v3 record only.)*
+**Historical v3, superseded.** The [current release body](kaggle_body_unwrapped.md) and [form fields](kaggle_form.md) replace the claims and numbers below. This file records the older submission text.
 
 *(Kaggle Writeup body below — 1,480 words on every counter, 20 under the
 1,500 hard limit. v3 2026-10-31: the submitted-then-updated chronology
