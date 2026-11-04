@@ -1,5 +1,59 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 3:24 PM Pacific | Six-click Reel and Instagram upload in progress
+
+**Authorization.** The user requested the Reel with natural, high-quality
+narration and explicitly authorized publishing this kit to Instagram through
+the separate signed-in Chrome browser, publicly. Confirmed the signed-in
+account is `safdari.mustafa`. Account privacy shows Private account OFF;
+no account-wide visibility change was necessary.
+
+**Measured replay.** Added `docs/social/instagram_20261104/reel/replay.py`
+and ran it with `.venv/bin/python`. All twelve before/after hashes match
+the archived seed-1 r11l prefix. Six executed ACTION6 coordinates in
+screen x/y order: (25,59), (40,18), (9,35), (51,5), (30,33), (35,25).
+Native frame counts are 1 initial, then 1/3/1/1/3/23. Preserved every native
+animation frame with the official palette. Action six clears level one;
+the last frame is already level two. Action four changes only the budget
+indicator, so the narration does not describe each click as useful progress.
+Display pacing is editorial, not measured agent latency.
+
+**Narration.** Generated one 39.75-second take with OpenAI
+`gpt-realtime-2.1`, Cedar, using an expressive conversational delivery prompt.
+Exact script, generation source and model/cost provenance are under the
+Reel directory; audio and alignment outputs remain ignored under results.
+Measured peak -1.8 dBFS, no clipping. Whisper word timings identify all six
+counts. Model-returned transcript matches the script, while two independent
+recognizers differ on the opening of "Rearrange the map" ("We arranged" /
+"We rearranged"); the 199-action comparison is preserved. This small
+transcription ambiguity is recorded, not treated as proof of verbatim audio.
+Generation estimate $0.057728 plus about $0.004 in transcription. No secrets
+were printed or recorded. Caption discloses generated narration/artwork.
+
+**Rendered and checked.** Final Reel is 41.75 seconds, 1080 x 1920, 30 fps,
+H.264/yuv420p with AAC narration and fast start, 2,089,739 bytes. All 33
+native frames appear in order, with the shortest display interval 0.117
+seconds; six markers match the executed coordinates. Inspected the ten-frame
+contact sheet, validated streams with ffprobe and fully decoded with FFmpeg
+without errors. Caption is 1,075 characters. Final MP4 hash is
+`827980cbe448823622844f63d8c289949f34ddda38837157e736ebfcc7fc7ea3`.
+The source README and small provenance files are tracked; rendered video,
+audio and intermediate frames remain under ignored results.
+
+**Upload blocker.** Chrome's direct file chooser
+upload failed because its ChatGPT extension lacks "Allow access to file
+URLs". Tried the native macOS picker; it did not reliably complete folder
+selection. Requested permission to enable extension file access temporarily.
+Then a read-only attempt to open `chrome://extensions/` was rejected by the
+browser URL security policy, which explicitly prohibits workarounds. Therefore
+the user must enable that setting manually and can disable it after the
+uploads. Sent a revised input request explaining this. No Instagram post has
+been published yet. Next, after the user enables file access: upload the
+six-card carousel and Reel, attempt the Story through the available UI,
+record live links and screenshots, remind the user to restore the temporary
+permission, and checkpoint publication status. Existing Instagram tab ID
+588275009 in Chrome profile Mustafa is still the intended destination.
+
 ## November 4, 2026, 3:18 PM Pacific | Lay-audience Instagram kit ready
 
 **Request and editorial decision.** The user confirmed publication was done

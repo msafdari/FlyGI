@@ -1,0 +1,23 @@
+{
+  "video": "results/social/instagram_20261104/reel/flygi-six-clicks-reel.mp4",
+  "sha256": "827980cbe448823622844f63d8c289949f34ddda38837157e736ebfcc7fc7ea3",
+  "duration_seconds": 41.75,
+  "dimensions": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "codec": "H264/AAC",
+  "native_frames_preserved": 33,
+  "count_alignment_seconds": [
+    17.360000610351562,
+    18.940000534057617,
+    20.139999389648438,
+    21.520000457763672,
+    22.299999237060547,
+    23.399999618530273
+  ],
+  "end_of_level_one_seconds": 26.16,
+  "narration": "voiceover.wav",
+  "editorial_timing": "Returned native frames paced for viewing; click markers match recorded payload x=column,y=row."
+}

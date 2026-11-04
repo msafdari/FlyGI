@@ -2,6 +2,11 @@
 
 Six finished Instagram cards for a general audience, plus a Story teaser.
 
+The [six-click Reel](reel/README.md) adds a 42-second narrated video using
+the actual recorded game actions. Its caption, source and provenance are in
+the Reel directory; the final MP4 and cover are under ignored
+`results/social/instagram_20261104/reel/`.
+
 Upload `exports/01-flygi.jpg` through `06-flygi.jpg`, in that order, with
 [caption.txt](caption.txt). Each card is 1080 × 1350. Keep the portrait crop.
 Add the alt text below through the post's accessibility controls.

@@ -1,0 +1,65 @@
+{
+  "schema": "flygi.publicity-voice.v1",
+  "created": "2026-11-04",
+  "model": "gpt-realtime-2.1",
+  "voice": "cedar",
+  "script_file": "voice_script.txt",
+  "delivery_instructions": "You are recording a short science-story voiceover. Read the supplied script exactly, with no added words, introduction, signoff or stage directions. Use an adult, warm, natural, conversational English voice: curious and lightly excited, like sharing a surprising experiment with a friend. Varied, expressive phrasing and a relaxed smile in the voice. No robotic cadence, advertising announcer delivery, exaggerated hype, or imitation of any real person. Aim for about 45 to 50 seconds overall. The six counted numbers One, Two, Three, Four, Five, Six must each stand alone, with a clear 0.7 to 1 second pause before the next number, so six game clicks can be shown in sync. Give 'level one cleared' a small, delighted lift. Emphasize the contrast with 'a hundred and ninety-nine'. End with inviting curiosity.",
+  "source_script": "generate_voice.py",
+  "audio_file": "results/social/instagram_20261104/reel/voiceover.wav",
+  "audio_sha256": "d659fb9888f6b041a26e2e043527755cd4e582a8a38e45b4bbaccf50b149deed",
+  "duration_seconds": 39.75,
+  "format": {
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bits": 16
+  },
+  "generation_usage": {
+    "input_token_details": {
+      "audio_tokens": 0,
+      "cached_tokens": 0,
+      "cached_tokens_details": {
+        "audio_tokens": 0,
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "image_tokens": 0,
+      "text_tokens": 302
+    },
+    "input_tokens": 302,
+    "output_token_details": {
+      "audio_tokens": 795,
+      "text_tokens": 235,
+      "reasoning_tokens": 74
+    },
+    "output_tokens": 1030,
+    "total_tokens": 1332
+  },
+  "generation_estimated_usd": 0.057728,
+  "estimated_cost_basis": "Official pricing on 2026-11-04: $4/M input text, $24/M output text, $64/M output audio. Excludes alignment transcription.",
+  "takes": 1,
+  "qa": {
+    "model_returned_transcript_matches_script": true,
+    "word_alignment_model": "whisper-1",
+    "all_six_counted_words_found": true,
+    "count_timestamps_file": "results/social/instagram_20261104/reel/count_alignment.json",
+    "peak_dbfs": -1.8,
+    "mean_dbfs": -22.9,
+    "comparison_clause_asr_ambiguity": "Whisper: We arranged the map. gpt-4o-transcribe: We rearranged the map. Model transcript: Rearrange the map. Both recognizers preserve same-program 199-actions comparison. Human listening remains needed to distinguish exact initial syllables; do not assert the waveform was proven verbatim by model transcript.",
+    "comparison_clause_second_asr": {
+      "model": "gpt-4o-transcribe",
+      "source": "qa_comparison_clause.wav",
+      "source_start": 26.8,
+      "duration": 5.1,
+      "transcript": "We rearranged the map and the same program took 199 actions."
+    },
+    "no_clipping_detected": true
+  },
+  "disclosure": "AI-generated narration. No real person impersonated.",
+  "sources": [
+    "https://developers.openai.com/api/docs/guides/realtime-conversations",
+    "https://developers.openai.com/api/docs/models/gpt-realtime-2.1",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://developers.openai.com/api/docs/guides/text-to-speech"
+  ]
+}

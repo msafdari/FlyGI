@@ -1,0 +1,17 @@
+Six clicks. A tiny idea borrowed from a fly. 🪰
+
+Scientists mapped the arrangement of a fruit fly’s visual cells. I used that layout to organize what my puzzle-playing program sees. This Reel shows the six actual clicks that cleared level one of an ARC-AGI-3 game in one local run.
+
+With the same map rearranged, the same program needed 199 actions. Another run was 15 versus 255. In the third, the fly-map version cleared in 57; the other did not clear within 600.
+
+Across 25 public games, the overall results were close: 17 versus 16 first-level completions out of 75 runs each. This one puzzle was the standout.
+
+The borrowed ingredient was a visual layout. My program still learned which clicks changed the screen. I’m building FlyGI to explore what else we can borrow from nature.
+
+What would you try next?
+
+Code and writeup: github.com/msafdari/FlyGI
+
+Actual saved game replay, paced for viewing. AI-generated narration and fly illustrations. Brain-map credit: MaleCNS team. Game: ARC Prize Foundation.
+
+#ArtificialIntelligence #Neuroscience #FlyGI #ARCAGI #WorldModels

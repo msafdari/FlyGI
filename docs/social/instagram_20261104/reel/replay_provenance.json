@@ -1,0 +1,234 @@
+{
+  "schema": "flygi.reel-replay.v1",
+  "source_archive": "results/connectome_agent/sg-clickhead-retinotopic.rows.jsonl.gz",
+  "source_archive_sha256": "e1e652d6f167f6460e889cbcf2455f1246043c16ef9b6a48d13effeae4ed0238",
+  "game_manifest": {
+    "game_id": "r11l-495a7899",
+    "base_game_id": "r11l",
+    "title": "R11L",
+    "metadata_path": "environment_files/r11l/495a7899/metadata.json",
+    "metadata_sha256": "95fcdc6f266e9ebcf7e9313403771e9140a59ba82a2bf83126b9d5810b8c3d1c",
+    "source_sha256": "956586829aef41079831eacb37cc507f84cae3832c64c98124404a89f2e32de1",
+    "baseline_actions": [
+      22,
+      33,
+      51,
+      26,
+      52,
+      49
+    ]
+  },
+  "policy_seed_label": 1,
+  "environment_seed": 9022410545534907887,
+  "coordinate_semantics": "Executed payload x is screen column, y is screen row, zero-based. Do not transpose because the historical predictor had a legacy internal coordinate convention.",
+  "frame_semantics": "All native response frames are preserved in their returned order; endpoints are the last grid. Action-six endpoint shows level two, not the solved previous board. Display timing is editorial, not a wall-clock benchmark.",
+  "palette_source": "arc_agi.rendering.COLOR_MAP",
+  "palette_rgba": {
+    "0": "#FFFFFFFF",
+    "1": "#CCCCCCFF",
+    "2": "#999999FF",
+    "3": "#666666FF",
+    "4": "#333333FF",
+    "5": "#000000FF",
+    "6": "#E53AA3FF",
+    "7": "#FF7BCCFF",
+    "8": "#F93C31FF",
+    "9": "#1E93FFFF",
+    "10": "#88D8F1FF",
+    "11": "#FFDC00FF",
+    "12": "#FF851BFF",
+    "13": "#921231FF",
+    "14": "#4FCC30FF",
+    "15": "#A356D6FF"
+  },
+  "runtime_versions": {
+    "arc-agi": "0.9.9",
+    "arcengine": "0.9.3"
+  },
+  "game_credit": "ARC Prize Foundation, R11L, MIT License, copyright 2026.",
+  "snapshots": [
+    {
+      "actions_completed": 0,
+      "levels_completed": 0,
+      "observation_sha256": "30ea81ed86378b35f49026847a06e282f8a73340558770e97c900355c9da0b01",
+      "native_frame_count": 1,
+      "native_frames": [
+        "action-00-frame-000.png"
+      ],
+      "endpoint": "endpoint-00.png",
+      "endpoint_sha256": "0f0b5ec115364f5a46e8541c11d0b7a1f1c450cd8ac562a9a53863593846529e"
+    },
+    {
+      "actions_completed": 1,
+      "levels_completed": 0,
+      "observation_sha256": "b8cf1a26cceacbba423ee969774e8270b1b9849e0049591c2d2e6a2c53eb46e0",
+      "native_frame_count": 1,
+      "native_frames": [
+        "action-01-frame-000.png"
+      ],
+      "endpoint": "endpoint-01.png",
+      "endpoint_sha256": "8154022fda475bf1ee6017570d124e79918e0396dfa5b325b74ce39071cd435d"
+    },
+    {
+      "actions_completed": 2,
+      "levels_completed": 0,
+      "observation_sha256": "89a570cb1793e4d5c36e3d46af3f0fcaf7c9b9c95bda72f42ac350eb96aeeb63",
+      "native_frame_count": 3,
+      "native_frames": [
+        "action-02-frame-000.png",
+        "action-02-frame-001.png",
+        "action-02-frame-002.png"
+      ],
+      "endpoint": "endpoint-02.png",
+      "endpoint_sha256": "955e3cf9753b2765fd830dfefc77b97676b3e1417c95b291a97b8d3316897d19"
+    },
+    {
+      "actions_completed": 3,
+      "levels_completed": 0,
+      "observation_sha256": "f1ac1a1095b39cfcf0cd23cb7c46b686e93b894f362fe3ea3290379b49448235",
+      "native_frame_count": 1,
+      "native_frames": [
+        "action-03-frame-000.png"
+      ],
+      "endpoint": "endpoint-03.png",
+      "endpoint_sha256": "08f01e3cc64a8f4d1b697d15fdd77a48a8a2c6b8ca17c5b4dbe5949c90b03b77"
+    },
+    {
+      "actions_completed": 4,
+      "levels_completed": 0,
+      "observation_sha256": "ebc49b17cc609eb86bcb4ed92e71ad6f96d86d2581ba05ac552f0085fbc85aff",
+      "native_frame_count": 1,
+      "native_frames": [
+        "action-04-frame-000.png"
+      ],
+      "endpoint": "endpoint-04.png",
+      "endpoint_sha256": "7499f4cb8eef85b2116e204ac60739c9959d3554ab44e598a8ce97c7243c3bec"
+    },
+    {
+      "actions_completed": 5,
+      "levels_completed": 0,
+      "observation_sha256": "bb9c02dfaa0e0f9024abca02d93c71200b63d289984dd74dfb1ece10ef6ba7ca",
+      "native_frame_count": 3,
+      "native_frames": [
+        "action-05-frame-000.png",
+        "action-05-frame-001.png",
+        "action-05-frame-002.png"
+      ],
+      "endpoint": "endpoint-05.png",
+      "endpoint_sha256": "b6a9b7243505ba1cc3f6aafcdbe78006ecc6019c548a7bbf62593809c03bd37f"
+    },
+    {
+      "actions_completed": 6,
+      "levels_completed": 1,
+      "observation_sha256": "bd37a7384932de790e0c31d274ab8231465ec7450bc33a92c10e3cf956881fc4",
+      "native_frame_count": 23,
+      "native_frames": [
+        "action-06-frame-000.png",
+        "action-06-frame-001.png",
+        "action-06-frame-002.png",
+        "action-06-frame-003.png",
+        "action-06-frame-004.png",
+        "action-06-frame-005.png",
+        "action-06-frame-006.png",
+        "action-06-frame-007.png",
+        "action-06-frame-008.png",
+        "action-06-frame-009.png",
+        "action-06-frame-010.png",
+        "action-06-frame-011.png",
+        "action-06-frame-012.png",
+        "action-06-frame-013.png",
+        "action-06-frame-014.png",
+        "action-06-frame-015.png",
+        "action-06-frame-016.png",
+        "action-06-frame-017.png",
+        "action-06-frame-018.png",
+        "action-06-frame-019.png",
+        "action-06-frame-020.png",
+        "action-06-frame-021.png",
+        "action-06-frame-022.png"
+      ],
+      "endpoint": "endpoint-06.png",
+      "endpoint_sha256": "ea91c015131d13b8c819070ce64a67f44b9f512f9d407b129e07083ef8b4c58e"
+    }
+  ],
+  "actions": [
+    {
+      "number": 1,
+      "action_id": 6,
+      "payload": {
+        "game_id": "",
+        "x": 25,
+        "y": 59
+      },
+      "before_sha256": "30ea81ed86378b35f49026847a06e282f8a73340558770e97c900355c9da0b01",
+      "after_sha256": "b8cf1a26cceacbba423ee969774e8270b1b9849e0049591c2d2e6a2c53eb46e0",
+      "levels_completed_before": 0,
+      "levels_completed_after": 0
+    },
+    {
+      "number": 2,
+      "action_id": 6,
+      "payload": {
+        "game_id": "",
+        "x": 40,
+        "y": 18
+      },
+      "before_sha256": "b8cf1a26cceacbba423ee969774e8270b1b9849e0049591c2d2e6a2c53eb46e0",
+      "after_sha256": "89a570cb1793e4d5c36e3d46af3f0fcaf7c9b9c95bda72f42ac350eb96aeeb63",
+      "levels_completed_before": 0,
+      "levels_completed_after": 0
+    },
+    {
+      "number": 3,
+      "action_id": 6,
+      "payload": {
+        "game_id": "",
+        "x": 9,
+        "y": 35
+      },
+      "before_sha256": "89a570cb1793e4d5c36e3d46af3f0fcaf7c9b9c95bda72f42ac350eb96aeeb63",
+      "after_sha256": "f1ac1a1095b39cfcf0cd23cb7c46b686e93b894f362fe3ea3290379b49448235",
+      "levels_completed_before": 0,
+      "levels_completed_after": 0
+    },
+    {
+      "number": 4,
+      "action_id": 6,
+      "payload": {
+        "game_id": "",
+        "x": 51,
+        "y": 5
+      },
+      "before_sha256": "f1ac1a1095b39cfcf0cd23cb7c46b686e93b894f362fe3ea3290379b49448235",
+      "after_sha256": "ebc49b17cc609eb86bcb4ed92e71ad6f96d86d2581ba05ac552f0085fbc85aff",
+      "levels_completed_before": 0,
+      "levels_completed_after": 0
+    },
+    {
+      "number": 5,
+      "action_id": 6,
+      "payload": {
+        "game_id": "",
+        "x": 30,
+        "y": 33
+      },
+      "before_sha256": "ebc49b17cc609eb86bcb4ed92e71ad6f96d86d2581ba05ac552f0085fbc85aff",
+      "after_sha256": "bb9c02dfaa0e0f9024abca02d93c71200b63d289984dd74dfb1ece10ef6ba7ca",
+      "levels_completed_before": 0,
+      "levels_completed_after": 0
+    },
+    {
+      "number": 6,
+      "action_id": 6,
+      "payload": {
+        "game_id": "",
+        "x": 35,
+        "y": 25
+      },
+      "before_sha256": "bb9c02dfaa0e0f9024abca02d93c71200b63d289984dd74dfb1ece10ef6ba7ca",
+      "after_sha256": "bd37a7384932de790e0c31d274ab8231465ec7450bc33a92c10e3cf956881fc4",
+      "levels_completed_before": 0,
+      "levels_completed_after": 1
+    }
+  ]
+}
