@@ -1,5 +1,73 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 3:05 PM Pacific | Corrected package applied on every platform (local session)
+
+Reviewed Codex's November 3 revision (e40df9d, on main and the release
+branch) before publishing anything, and reproduced its numbers from
+primary data rather than from its ledgers. Measured: both sg-clickhead
+archives match their recorded SHA-256 digests; 17/75 vs 16/75 first-level
+completions; ordinary normalized medians 2.59091 vs 10.31818; 14 paired
+completions with median scrambled/anatomical ratio 1.05924 (9 cheaper
+with anatomy, 1 tie, 4 costlier); r11l rows 57/6/15 vs timeout/199/255.
+Compass JSON: real a_delta 8 and 6 valid and passing (8/8 rows, max
+error 1.1e-7 and 5.7e-14 degrees), a_delta 4 no valid fit; all nine
+rewired-graph fits fail the validity checks (sign constraints), so "zero
+qualifying fits" holds even though numerical candidates exist; 46 EPG +
+42 Delta7 from the kill-test log, N_UNITS 8 per population (16-unit
+state vector), T_DARK 100 tau. Motion arm: the three seeds hold out
+different four-game sets (overlapping), so "three splits" is right.
+Reservoir half-life 1 vs 3 actions per FACTS.md. Links: the doomFly
+docs state PPO on the readout only with a frozen connectome; the Nature
+and male-cns URLs return 200; the Biswas bioRxiv DOI resolves through
+Crossref (bioRxiv rate-limited the direct fetch). Copy gates: paper
+1,329 whitespace words (Kaggle's counter says 1,323), LinkedIn 2,790
+chars, nine posts of 201 to 267 weighted chars, zero dashes, semicolons
+or plural pronouns. Codex's copy needed no change.
+
+Platform state at the end of this session (each item observed in the
+browser after the action):
+
+- KAGGLE WRITEUP: title "I Tested a Fly Connectome on ARC-AGI-3. Two
+  Scrambled Circuits Scored Higher." (77/80), the new subtitle (127/140),
+  body replaced in-page from the repo at e40df9d and verified
+  byte-identical by SHA-256 (a9135eff76bae3bf...). Gallery: the four
+  October images deleted through the Project Media panel (Add more, then
+  each image's menu, Delete) and the four revised PNGs uploaded in order
+  cover, fig1, fig2, fig3; card replaced with the revised card.png.
+  Update Submission clicked: status Submitted, editable until Nov 9,
+  3:59 PM PST. The live page re-read shows the new title, subtitle and
+  body; the 11.59x sentence is gone.
+- LINKEDIN: the 8:00 AM post (urn:li:activity:7523777525907357697, 38
+  impressions at 2:10 PM) was edited in place to the November 3 text
+  (hash-verified against the repo file) and now shows "Edited".
+  LIMITATION: LinkedIn does not allow changing media on a published
+  post, so the two attached images remain the October fig1 and fig3
+  exports. Neither carries the withdrawn 4.5x or 11.59x numbers (old
+  fig3 shows only the MB, T4/T5, clicker and trained-head figures, all
+  unchanged), but old fig1's caption says "Grammar transfer to the
+  hidden set measured zero, three times", wording the revision
+  deliberately softened. The three @-mentions were lost in the text
+  replacement; the hashtags stayed. Deleting and reposting would restore
+  the intended fig1+fig2 pair at the cost of the URL and timestamp; not
+  done without the user's call.
+- X: nine-post thread published from @mustafa_safdari, first post
+  https://x.com/mustafa_safdari/status/2118109370148106552; cover on 1,
+  fig1 on 3, fig3 on 6, fig2 on 8; post 9 carries the writeup, repo and
+  LinkedIn URLs. x_post.md now holds the real LinkedIn URL (post 9 = 246
+  weighted chars).
+- KAGGLE DISCUSSIONS 754287 and 754288: both release-day posts still
+  carried the 2.59x vs 11.59x claim. Each was edited in place to
+  I-voice copy with the paired statistic and a dated "Edited Nov 4" note
+  naming what was withdrawn, and each received a short update comment
+  (Kaggle rejected an identical second comment as "too similar", so the
+  754288 comment is reworded).
+- WALKTHROUGH NOTEBOOK: Version 2 imported from
+  docs/arenas/task1_arc_paper/public_notebook.ipynb (File, Import
+  Notebook) and saved with Save & Run All; Kaggle reports "Version #2
+  Successful".
+
+The October 31 Phase 2 reminder routine is superseded by this entry.
+
 ## November 3, 2026, 11:23 AM Pacific | Paper and social release audit
 
 **Current handoff.** Use the November 3 [Kaggle fields and gallery](docs/arenas/task1_arc_paper/kaggle_form.md), [LinkedIn text](docs/arenas/task1_arc_paper/linkedin_post.md) and [nine X posts](docs/arenas/task1_arc_paper/x_post.md). These supersede the October 31 copy, including the wording once marked mandatory in tweet 7. The Git checkpoint is intended for the release branch and the public default branch linked from all three platforms. Check the newest worklog entry before applying the older Phase 2 reminder.

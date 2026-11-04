@@ -40,4 +40,4 @@ My record on predictions tied to score was 0 for 16. Next time a model seems to 
 
 Paper and figures: https://www.kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit
 Code: https://github.com/msafdari/FlyGI
-LinkedIn: [LINKEDIN POST URL]
+LinkedIn: https://www.linkedin.com/feed/update/urn:li:activity:7523777525907357697/
