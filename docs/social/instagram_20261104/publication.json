@@ -1,0 +1,67 @@
+{
+  "schema": "flygi.instagram-publication.v1",
+  "verified_at_utc": "2026-11-04T23:33:20Z",
+  "account": "safdari.mustafa",
+  "visibility": "public",
+  "visibility_evidence": [
+    "Private account switch observed OFF",
+    "Reel notice explicitly states account is public and anyone can discover the video"
+  ],
+  "carousel": {
+    "url": "https://www.instagram.com/p/DfVo8V4j7wD/",
+    "status": "published",
+    "images": 6,
+    "crop": "4:5",
+    "caption": {
+      "source": "docs/social/instagram_20261104/caption.txt",
+      "sha256_utf8_without_final_newline": "4dedcbfc5205154d9bb55b1257bf0c4d72677251d58c9fc60f84ac13e23988f7"
+    },
+    "custom_alt_texts": 6,
+    "ai_label": true,
+    "confirmation": "Your post has been shared."
+  },
+  "reel": {
+    "url": "https://www.instagram.com/safdari.mustafa/reel/DfVpJsYBfqZ/",
+    "post_url": "https://www.instagram.com/p/DfVpJsYBfqZ/",
+    "status": "published",
+    "crop": "9:16",
+    "sound_on": true,
+    "custom_cover": "results/social/instagram_20261104/reel/cover.jpg",
+    "ai_label": true,
+    "caption": {
+      "source": "docs/social/instagram_20261104/reel/caption.txt",
+      "sha256_utf8_without_final_newline": "d6641ae96cc26b9805d7a8ef9510a2f050796e5ef0d0a834217a7af3e3d6e79a"
+    },
+    "confirmation": "Your reel has been shared.",
+    "uploaded_video_sha256": "827980cbe448823622844f63d8c289949f34ddda38837157e736ebfcc7fc7ea3",
+    "observed_playback": {
+      "duration_seconds": 41.6,
+      "width": 720,
+      "height": 1280,
+      "paused": false,
+      "ready_state": 4,
+      "error": null
+    }
+  },
+  "facebook_cross_posted": false,
+  "story": {
+    "status": "not_published",
+    "reason": "No Story publishing control in the observed Chrome Create, Home or Reel sharing UI. Prepared teaser remains available for phone app.",
+    "asset": "docs/social/instagram_20261104/exports/story-teaser.jpg"
+  },
+  "browser_file_access": {
+    "user_confirmed_enabled": true,
+    "disable_requested_after_uploads": true,
+    "restoration_confirmed": false,
+    "user_response": "I'll turn it off afterward",
+    "note": "Browser URL security policy blocks agent navigation to chrome://extensions; user must restore manually."
+  },
+  "proof_directory": "results/social/instagram_20261104/published/",
+  "proof_files": [
+    "carousel-shared.jpg",
+    "carousel-live.jpg",
+    "public-account-confirmation.jpg",
+    "reel-shared.jpg",
+    "reel-live.jpg"
+  ]
+}

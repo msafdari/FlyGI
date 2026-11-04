@@ -2,6 +2,12 @@
 
 Six finished Instagram cards for a general audience, plus a Story teaser.
 
+Published November 4, 2026 on the public `safdari.mustafa` account:
+[carousel](https://www.instagram.com/p/DfVo8V4j7wD/) and
+[narrated Reel](https://www.instagram.com/safdari.mustafa/reel/DfVpJsYBfqZ/).
+The Story teaser is not published; its creation control was unavailable in
+the Chrome session. [Publication record](publication.json).
+
 The [six-click Reel](reel/README.md) adds a 42-second narrated video using
 the actual recorded game actions. Its caption, source and provenance are in
 the Reel directory; the final MP4 and cover are under ignored

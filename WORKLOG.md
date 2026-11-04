@@ -1,5 +1,46 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 3:33 PM Pacific | Instagram carousel and Reel published publicly
+
+The user confirmed they enabled Chrome extension file access. Reconnected
+the same Chrome profile after the extension restarted. Published the six
+cards to `safdari.mustafa` with 4:5 portrait framing, the reviewed caption,
+six custom alt texts and the AI artwork label. Instagram showed "Your post
+has been shared"; opened the live post and verified its caption and image.
+Carousel: https://www.instagram.com/p/DfVo8V4j7wD/.
+
+Uploaded the 41.75-second Reel, selected 9:16, applied `reel/cover.jpg`,
+kept Sound on and the full 0-to-42-second trim, added the reviewed caption
+and AI label. Built-in auto-captions remain off because the video already
+contains timed captions. Instagram explicitly confirmed the account is
+public and anyone can discover the Reel. Facebook cross-post switches were
+left off. Instagram then showed "Your reel has been shared." Opened its
+live post and verified the caption, AI-content label, Original audio link
+and playing video with no playback error. Instagram serves a 720 x 1280,
+41.6-second rendition of the uploaded 1080 x 1920, 41.75-second source.
+Reel: https://www.instagram.com/safdari.mustafa/reel/DfVpJsYBfqZ/.
+Both published posts are on the already-public account. No privacy setting
+was changed. Do not repost these on resume.
+
+Screenshots of both confirmations/live posts and Instagram's public-account
+notice are saved under ignored `results/social/instagram_20261104/published/`.
+Small publication records and links are in the source documentation.
+
+**Remaining manual steps.** Story publishing was not available in this
+Chrome session: Create opened the photo/video post composer, Home showed
+existing Stories without an Add Story control, and the live Reel's share
+dialog offered message recipients without Add to Story. No messages sent.
+The separate Story teaser remains ready for the phone app. Do not claim
+that Stories are universally unsupported on desktop; this is the observed
+session limitation. Official Help could not be fetched (429).
+
+The user was asked to turn "Allow access to file URLs" off again now that
+uploads are complete and replied "I'll turn it off afterward." Restoration
+is not yet confirmed. Browser security
+policy still prevents this agent opening that extension-settings page.
+The live Reel remains open in Chrome. Next: the user can publish the optional
+Story with a link to either live post and restore the temporary file setting.
+
 ## November 4, 2026, 3:24 PM Pacific | Six-click Reel and Instagram upload in progress
 
 **Authorization.** The user requested the Reel with natural, high-quality

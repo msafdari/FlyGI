@@ -1,5 +1,8 @@
 # Six clicks, a map from a fly's eye
 
+[Published Reel](https://www.instagram.com/safdari.mustafa/reel/DfVpJsYBfqZ/),
+November 4, 2026, on the public `safdari.mustafa` Instagram account.
+
 A portrait Instagram Reel showing the six actual actions of the historical
 local r11l seed-1 run. Narration uses OpenAI `gpt-realtime-2.1`, voice `cedar`.
 The existing fly illustrations introduce the story; the game sequence is
