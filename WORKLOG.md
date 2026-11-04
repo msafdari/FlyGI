@@ -49,7 +49,9 @@ browser after the action):
   deliberately softened. The three @-mentions were lost in the text
   replacement; the hashtags stayed. Deleting and reposting would restore
   the intended fig1+fig2 pair at the cost of the URL and timestamp; not
-  done without the user's call.
+  done without the user's call. USER'S CALL (Nov 4, 3:20 PM PT): keep
+  the post and its pictures as they are. Codex informed. Zenodo DOI
+  stays parked, no deadline.
 - X: nine-post thread published from @mustafa_safdari, first post
   https://x.com/mustafa_safdari/status/2118109370148106552; cover on 1,
   fig1 on 3, fig3 on 6, fig2 on 8; post 9 carries the writeup, repo and
