@@ -1,0 +1,17 @@
+{
+  "mode": "built-in image_gen.imagegen",
+  "created": "2026-11-04",
+  "intended_use": "Illustration assets for a lay-audience Instagram carousel. Numerical claims, the actual game screenshot, and text are composed separately.",
+  "assets": [
+    {
+      "file": "assets/fly-puzzle.png",
+      "source": "exec-06d09c49-daa3-435c-8131-d147be07c7c2.png",
+      "prompt": "Create a premium editorial illustration asset for an Instagram carousel about a real AI research project called FlyGI. Portrait 4:5 aspect ratio, ideally 1080x1350. A single beautifully detailed fruit fly with translucent veined wings and natural ruby compound eyes, depicted with warm friendly 3D clay / translucent glass science-museum artistry, occupies the lower-middle 60% of a deep midnight-teal background. Beside its eye a small sweep of luminous mint, amber, coral and lavender square pixels flows into a floating abstract puzzle board. Art metaphor for using an insect visual layout in a computer game. Rich atmospheric lighting, subtle film grain, tactile materials, beautifully composed and visually arresting, sophisticated science magazine rather than children's cartoon. Top 30% and bottom 10% remain dark uncluttered negative space for typography that I will add separately. No text, no labels, no logos, no numbers. No human brain, no electrodes, no cybernetic implants. The image is illustrative, not a claimed anatomical reconstruction. No additional insects. Crisp enough for a professional social post."
+    },
+    {
+      "file": "assets/eye-map.png",
+      "source": "exec-5ca42882-6e97-4e7b-80e4-fb4989ff7d8e.png",
+      "prompt": "Create a beautiful landscape editorial illustration asset for a layperson Instagram carousel about using a fruit fly's visual layout in a puzzle-playing computer program. Aspect ratio 3:2. Deep midnight teal background, luminous mint and warm amber accents, natural ruby red. Show an extreme macro artistic view of the faceted compound eye of a fruit fly on the left, a small delicate transparent wing edge, and on the right an orderly spatial array of jewel-like softly lit colored glass squares. Between them a graceful few luminous threads suggest borrowing a spatial arrangement. This is an abstract explanatory metaphor, not microscopy or a literal reconstruction of neurons. Premium tactile translucent 3D science-magazine artwork, beautiful clean material detail and warm cinematic light. The visual arrangement must feel elegant, with one clear subject. No screens or game UI. No text, no letters, no numbers, no logos. Leave the uppermost and bottommost 15 percent uncluttered. Complement a midnight-teal social poster with cream typography added later."
+    }
+  ]
+}

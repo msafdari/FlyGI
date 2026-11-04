@@ -5,8 +5,9 @@ and [X thread](../arenas/task1_arc_paper/x_post.md). The [Kaggle form guide](../
 identifies the paper body and media to upload. Check the top of [WORKLOG](../../WORKLOG.md)
 for which versions have actually reached each platform.
 
-This directory holds older outreach drafts and the [claim ledger](FACTS.md).
-The September and October channel drafts below are historical.
+This directory holds the current Instagram kit, older outreach drafts and
+the [claim ledger](FACTS.md). The September and October channel drafts below
+are historical.
 
 ## Files
 
@@ -16,7 +17,7 @@ The September and October channel drafts below are historical.
 | [VIRALITY_NOTES.md](VIRALITY_NOTES.md) | **Read second.** Why every draft opens with awe rather than the negative result, with citations. |
 | [linkedin.md](linkedin.md) | Long form, professional |
 | [x.md](x.md) | Single post and a 9-post thread |
-| [instagram.md](instagram.md) | 8-slide carousel plus caption |
+| [instagram.md](instagram.md) | Six illustrated general-audience cards, caption and Story teaser (November 4) |
 | [longform.md](longform.md) | Hacker News, Reddit, blog |
 
 An earlier draft set is at [../social_announcement.md](../social_announcement.md);
@@ -61,5 +62,13 @@ either way.
    only rewards admitting mistakes once competence is established. Awe first,
    real finding second, failures once they have something to land on.
 
-The older four channel drafts predate the fitted compass result and the November audit of
-the eye-map action counts. The publication-ready files are linked at the top.
+The older LinkedIn, X and long-form drafts predate the fitted compass result
+and the November audit of the eye-map action counts. Use the paper announcement
+files linked at the top and the Instagram kit below for current copy.
+
+## Instagram release kit, November 4
+
+[Six finished cards and Story teaser](instagram_20261104/README.md) tell the
+local ARC eye-map story in ordinary language. This kit supersedes the older
+Instagram draft. Its game screen was replayed and hash-verified against the
+historical run. The compass remains a separate follow-up topic.

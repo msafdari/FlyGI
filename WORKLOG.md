@@ -1,5 +1,62 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 3:18 PM Pacific | Lay-audience Instagram kit ready
+
+**Request and editorial decision.** The user confirmed publication was done
+and asked for a visual Instagram story that a general reader could understand.
+Read the current worklog, recent commits and corrected release copy before
+building it. Chose one concrete ARC story: borrowing the fly's visual map.
+The compass belongs in a separate follow-up because it was not tested on ARC.
+The hook is "I gave an AI a map from a fly's eye." This is a communication
+artifact about an existing experiment, not a new agent capability or a claim
+that the whole fly brain solved the puzzle. ASSUMPTION: one visible game and
+a simple map comparison are easier for a lay reader to follow than a summary
+of all subsystems. No engagement or virality has been measured.
+
+**Delivered.** `docs/social/instagram_20261104/` contains six 1080 x 1350
+cards, a 1080 x 1920 Story teaser, caption, alt text, editable HTML, renderer,
+exact illustration prompts and screenshot provenance. Replaced the obsolete
+`docs/social/instagram.md` draft with a pointer and updated the outreach index.
+Two original fly illustrations came from the built-in image tool; numerical
+claims, text and the actual game frame were composed separately in HTML.
+The small reviewed publication images belong to this documentation kit; raw
+replay grids, extraction helper and posting ZIP stay under ignored
+`results/social/instagram_20261104/`.
+
+**Measured evidence and scope.** The cards report first-level action counts
+from the historical local r11l comparison: 6 versus 199, 15 versus 255, and
+57 versus no completion within 600. Resets count as actions. The next card
+shows the wider result, 17/75 versus 16/75 first-level completions across
+25 public games and three runs per arm. Both arms used a learned click head
+and the same active neural tie-breaker; the changed ingredient was the static
+map. This is distinct from the later 0.15 leaderboard agents with dynamics
+off. No claim of general ARC superiority or innate puzzle-solving follows.
+
+**Screenshot validation.** Replayed the six-action prefix of r11l seed 1
+from the hash-verified `sg-clickhead-retinotopic.rows.jsonl.gz` archive using
+the repository replay helpers. All six before-frame and six after-frame
+hashes matched. Slide 2 uses the initial frame and the official ARC palette.
+The frame after action six already shows level two; its provenance labels it
+accordingly. Saved hashes, environment seed, source hashes and runtime versions
+in `game_provenance.json`. No fresh scientific trial was run.
+
+**Visual and copy validation.** Ran
+`python3 docs/social/instagram_20261104/render.py`; all seven cards exported
+with local assets and network requests blocked. Checked dimensions, loaded
+images, text bounds, the six-card preview and the Story teaser. Independent
+review checked the numbers, scope and lay readability. Improved contrast on
+the cover and replaced "finished" with "cleared level one" before final
+export. Caption remains under 2,200 characters. No agent code changed.
+
+**Current handoff and next steps.** Ready-to-post local archive:
+`results/social/instagram_20261104/flygi-instagram.zip`. Upload the six
+numbered images in order with `caption.txt`, then use the Story teaser with
+a link sticker to the published carousel or project. Nothing was posted to
+Instagram in this session, and the existing Kaggle, X and LinkedIn posts
+were left as published. A possible next artifact is a short Reel showing
+the six verified actions; a separate compass post can follow with its own
+scope. Unrelated `.fly-or-fake-work/` remains untouched.
+
 ## November 4, 2026, 3:05 PM Pacific | Corrected package applied on every platform (local session)
 
 Reviewed Codex's November 3 revision (e40df9d, on main and the release

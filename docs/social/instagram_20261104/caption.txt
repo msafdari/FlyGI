@@ -1,0 +1,21 @@
+I gave my AI a map from a fly’s eye. 🪰
+
+Scientists mapped a fruit fly’s nervous system, including the layout of cells that process vision. I borrowed that layout to organize the pictures my program sees while playing ARC-AGI-3, a collection of games where an AI has to discover what its actions do.
+
+On one puzzle, the program cleared the first level in 6 actions. Rearrange that visual map, and the same program took 199.
+
+Another run was 15 versus 255. On the remaining run, only the version with the fly’s map cleared level one.
+
+Across the wider test, the results were close. The two versions cleared a first level in 17 and 16 out of 75 runs. These were local experiments on public games.
+
+What caught my attention was the ingredient. The borrowed map helped organize what the program saw, and on that particular puzzle it changed the result dramatically. The program still had to learn which clicks changed the screen.
+
+I’m building FlyGI to explore what we can borrow from a tiny nervous system. The code, games and results are public.
+
+What would you want to try next?
+
+Project and paper → github.com/msafdari/FlyGI
+
+Fly artwork is illustrative. Slide 2 shows the actual game, replayed from the saved experiment. Brain-map credit goes to the MaleCNS team. Game credit goes to ARC Prize Foundation.
+
+#ArtificialIntelligence #Neuroscience #FlyGI #ARCAGI #WorldModels
