@@ -5,8 +5,10 @@ Six finished Instagram cards for a general audience, plus a Story teaser.
 Published November 4, 2026 on the public `safdari.mustafa` account:
 [carousel](https://www.instagram.com/p/DfVo8V4j7wD/) and
 [narrated Reel](https://www.instagram.com/safdari.mustafa/reel/DfVpJsYBfqZ/).
-The Story teaser is not published; its creation control was unavailable in
-the Chrome session. [Publication record](publication.json).
+The [Story teaser](https://www.instagram.com/stories/safdari.mustafa/) was
+also published using Chrome's iPhone 16 device-emulation preset and a reload.
+Resizing the viewport alone did not expose the upload control.
+[Publication record](publication.json).
 
 The [six-click Reel](reel/README.md) adds a 42-second narrated video using
 the actual recorded game actions. Its caption, source and provenance are in
@@ -17,11 +19,11 @@ Upload `exports/01-flygi.jpg` through `06-flygi.jpg`, in that order, with
 [caption.txt](caption.txt). Each card is 1080 × 1350. Keep the portrait crop.
 Add the alt text below through the post's accessibility controls.
 
-The 1080 × 1920 [Story teaser](exports/story-teaser.jpg) leaves space for a
-link sticker beneath the arrow. Link the published carousel or the
-[project](https://github.com/msafdari/FlyGI). The post works without account
-tags. Add verified MaleCNS/HHMI and ARC Prize tags if those accounts are
-available in the composer. A URL in the caption is a human-readable pointer.
+The 1080 × 1920 [Story teaser](exports/story-teaser.jpg) directs viewers to
+the Reel on the profile. Its text margins were checked against the taller
+phone preview and the published Story. The post works without account tags.
+Add verified MaleCNS/HHMI and ARC Prize tags if those accounts are available
+in a future composer. A URL in the caption is a human-readable pointer.
 
 [Preview of all six](exports/preview.jpg) · [Editable layout](carousel.html)
 

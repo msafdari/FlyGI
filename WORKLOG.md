@@ -1,5 +1,40 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 3:49 PM Pacific | Story published through Chrome phone emulation
+
+**Correction and result.** The user challenged the app-only handoff and was
+right. A 390 x 844 viewport resize alone still lacked Story creation, but
+Chrome DevTools Device Mode with the actual **iPhone 16** preset, followed
+by reload, exposed **Your story**. Uploaded and published the teaser without
+the phone app. Instagram showed "Your story was added to Instagram" and the
+new story ring. Opened the live Story and verified its art, complete text,
+profile call to action and AI-content label. Live account Story URL:
+https://www.instagram.com/stories/safdari.mustafa/.
+This supersedes the earlier remaining-manual-Story step. All three requested
+publication artifacts are now live on the already-public account.
+
+**What changed.** The mobile Story composer cropped the old teaser's left
+edge. Increased horizontal text insets from 66 to 148 pixels, reduced its
+headline to 88px, and replaced the blank sticker space with "Watch the Reel
+on my profile." ASSUMPTION: these insets protect this artwork in the taller
+phone viewport; checked the actual iPhone composer and published desktop
+Story before accepting it. The assumption also appears beside the CSS.
+Reran `python3 docs/social/instagram_20261104/render.py`; only the Story
+JPEG changed, with all six carousel exports unchanged. No experiment rerun.
+
+**UI procedure and restoration.** Used Chrome's native Window menu to select
+the Instagram window, then View > Developer > Developer Tools and Device
+toolbar. Dismissed login-save and home-screen-install offers. Keyboard Enter
+on Your story opened the ordinary file chooser; native accessibility Share
+story completed publishing when emulated mouse input stalled. Used supported
+UI controls only. Turned Device Mode off, closed DevTools, reset the viewport
+override and verified the Story again in normal desktop Chrome. Saved Story
+confirmation, preview and live screenshots under the ignored published-proof
+directory. The live Story is left open and paused for the user.
+
+Extension file-access restoration remains the user's deferred step, per their
+"I'll turn it off afterward" reply. No additional upload is pending.
+
 ## November 4, 2026, 3:33 PM Pacific | Instagram carousel and Reel published publicly
 
 The user confirmed they enabled Chrome extension file access. Reconnected

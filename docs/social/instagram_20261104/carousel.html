@@ -58,9 +58,14 @@ h2 { font-size:81px; line-height:1.03; letter-spacing:-3px; font-weight:800; }
 #story { height:1920px; }
 #story .hero { object-fit:cover; object-position:53% center; }
 #story .hero-shade { background:linear-gradient(#002424df,transparent 60%,#002424ee); }
-#story .title { top:230px; }
-#story .story-cta { position:absolute; top:1440px; left:66px; right:66px; font-size:44px; line-height:1.3; }
-#story .sticker-space { position:absolute; top:1610px; left:165px; right:165px; height:110px; border:1px dashed #97f3d355; border-radius:30px; }
+/* ASSUMPTION: a 148px horizontal inset protects this 9:16 artwork when
+   Instagram fills a taller phone viewport. Verified in the iPhone 16 preview;
+   recheck the live composer if the layout or target device changes. */
+#story .top { left:148px; right:148px; }
+#story .title { top:230px; left:148px; right:148px; }
+#story .title h1 { font-size:88px; }
+#story .story-cta { position:absolute; top:1440px; left:148px; right:148px; font-size:44px; line-height:1.3; }
+#story .profile-cta { position:absolute; top:1620px; left:148px; right:148px; padding:25px 20px; border:1px solid #97f3d380; border-radius:30px; color:var(--mint); background:#032c2ce8; text-align:center; font-size:36px; font-weight:bold; }
 @media print { body {padding:0;} .slide {margin:0;break-after:page;} }
 </style>
 </head>
@@ -120,8 +125,8 @@ h2 { font-size:81px; line-height:1.03; letter-spacing:-3px; font-weight:800; }
 <img class="hero" src="assets/fly-puzzle.png" alt="Illustrated fly and glowing puzzle"><div class="hero-shade"></div>
 <div class="top" style="top:160px"><span class="brand">FLYGI</span><span>BY MUSTAFA SAFDARI</span></div>
 <div class="title"><h1>I gave an AI<br>a map from<br><span class="accent">a fly’s eye.</span></h1></div>
-<div class="story-cta">One puzzle gave me a surprise.<br>See the experiment ↓</div>
-<div class="sticker-space" aria-hidden="true"></div>
+<div class="story-cta">One puzzle gave me a surprise.</div>
+<div class="profile-cta">Watch the Reel on my profile</div>
 </section>
 <script>
 for (const grid of document.querySelectorAll('.dots')) {

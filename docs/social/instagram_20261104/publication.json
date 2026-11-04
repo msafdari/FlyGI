@@ -45,9 +45,17 @@
   },
   "facebook_cross_posted": false,
   "story": {
-    "status": "not_published",
-    "reason": "No Story publishing control in the observed Chrome Create, Home or Reel sharing UI. Prepared teaser remains available for phone app.",
-    "asset": "docs/social/instagram_20261104/exports/story-teaser.jpg"
+    "status": "published",
+    "url": "https://www.instagram.com/stories/safdari.mustafa/",
+    "verified_at_utc": "2026-11-04T23:49:00Z",
+    "method": "Chrome DevTools Device Mode, iPhone 16 preset, reload, Your story file chooser",
+    "confirmation": "Your story was added to Instagram",
+    "ai_label": true,
+    "call_to_action": "Watch the Reel on my profile",
+    "asset": "docs/social/instagram_20261104/exports/story-teaser.jpg",
+    "asset_sha256": "6a186bb6c3bf3a9be522c610b7e4cf293f807e82df1c401751656f481f352b0b",
+    "previous_desktop_ui_limitation_superseded": true,
+    "device_mode_and_viewport_restored": true
   },
   "browser_file_access": {
     "user_confirmed_enabled": true,
@@ -62,6 +70,9 @@
     "carousel-live.jpg",
     "public-account-confirmation.jpg",
     "reel-shared.jpg",
-    "reel-live.jpg"
+    "reel-live.jpg",
+    "story-preview.jpg",
+    "story-shared.jpg",
+    "story-live.jpg"
   ]
 }
