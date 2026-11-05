@@ -4,11 +4,15 @@ Use the existing [FlyGI Paper Track entry](https://www.kaggle.com/competitions/a
 
 **Title**
 
-I Tested a Fly Connectome on ARC-AGI-3. Two Scrambled Circuits Scored Higher.
+I Wired a Whole Fly Brain into ARC-AGI-3. Its Scrambled Copy Won, Then Lost.
+
+(76/80. Restored November 4 at the user's request; the November 3 title "I Tested a Fly Connectome on ARC-AGI-3. Two Scrambled Circuits Scored Higher." is superseded. Accuracy: "Won" is the two held-out probes where the rewires scored higher; "Then Lost" is the off-score fitted compass result; neither depends on the withdrawn eye-map comparison.)
 
 **Subtitle**
 
-52x the local score. Three 0.15s on Kaggle. Off the leaderboard, a fitted compass held eight headings using real wiring counts.
+166,700 neurons, 25M connections, every control public. On ARC the shuffle won. The fly's compass, given fitted physiology, won it back.
+
+(136/140, restored with the title. "25M connections" is the 24,994,595-edge runtime, never "synapses".)
 
 **Body**
 

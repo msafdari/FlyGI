@@ -1,5 +1,49 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 7:15 PM Pacific | User's call: Kaggle heading and LinkedIn voice restored (local session)
+
+The user judged the November 3 Kaggle heading flat ("literally says
+nothing I did mattered") and asked for the October 31 heading back, and
+asked whether Codex had defanged the LinkedIn post. Review of the two
+LinkedIn versions: Codex kept every number but removed the Doom hook,
+"I spent a season answering that, in public", the 400-million-year
+prior, "The fly lost. All season.", "Then the fly won one back.", the
+self-indicting 3.29x random-clicking control, the "Published too"
+beat, the "every biology-does-AI claim" rule and "Kick the tires, poke
+holes." Verdict: defanged. Restored with the one paragraph that had
+to change.
+
+- KAGGLE WRITEUP (observed live after Update Submission, status
+  Submitted): title back to "I Wired a Whole Fly Brain into ARC-AGI-3.
+  Its Scrambled Copy Won, Then Lost." (76/80) and subtitle back to
+  "166,700 neurons, 25M connections, every control public. On ARC the
+  shuffle won. The fly's compass, given fitted physiology, won it
+  back." (136/140). Body, gallery and card stay the November 3
+  corrected set (body 8,785 chars, Kaggle counter 1,323 words).
+  Accuracy of the restored heading under the corrected body: "Won" is
+  the two held-out probes where the rewires scored higher, "Then Lost"
+  is the fitted compass result; neither leans on the withdrawn eye-map
+  comparison. kaggle_form.md updated.
+- LINKEDIN (observed live, post urn:li:activity:7523777525907357697,
+  "Edited", two images intact): text replaced with the October 31
+  voice and structure, 2,975 chars, verified in the editor by
+  whitespace-free SHA-256 (a61021b275f08451). Three content edits
+  from the October text: the eye-map paragraph now reads "One thing
+  looked like a survivor ... 6 actions to clear level one, 199 with
+  the map scrambled, then 15 against 255. Across all 14 runs where
+  both finished, the median cost ratio was 1.06. One game, not a
+  trend."; "Zero trained parameters." became "Zero trained parameters
+  in the wiring."; "transferred exactly zero to the hidden games"
+  became "bought nothing on the hidden games". The 2.59x, 11.59x and
+  4.5x figures do not appear. Trims to fit the 3,000 cap: the
+  "Brain map: MaleCNS" credit line (credit stays in the body) and two
+  compass clauses. No @-mentions (plain names). linkedin_post.md now
+  holds this text as v4. INCIDENT, no harm: the first edit attempt
+  fired before the page settled and the text landed in the post's
+  comment box; it was cleared before anything was posted and the
+  comment count is unchanged.
+- The X thread, forum posts and notebook keep the November 3 copy.
+
 ## November 4, 2026, 3:49 PM Pacific | Story published through Chrome phone emulation
 
 **Correction and result.** The user challenged the app-only handoff and was
