@@ -1,5 +1,34 @@
 # FlyGI durable worklog
 
+## November 4, 2026, 7:20 PM Pacific | X thread replaced with the restored voice (user's call)
+
+The user judged the November 3 X thread a mess and asked for it fixed.
+X allows no edits here (Premium-only, and only within an hour), so the
+fix was delete and repost. Cost at deletion time, observed: 21 views on
+post 1, no likes, reposts or outside replies; nothing linked to the
+thread. The nine November 3 posts (2118109370148106552 through
+2118109384954003737) were deleted one by one from the last post back to
+the first, and each ID now returns no post.
+
+Reposted, observed live: first post
+https://x.com/mustafa_safdari/status/2118179820265984077 (7:13 PM PST),
+nine posts, cover on 1, fig1 on 3, fig3 on 4, fig2 on 7. Text is the
+October 31 thread with post 5 rewritten to the paired eye-map result
+("One thing looked like a survivor ... 6 actions ... 199 ... 15 vs 255
+... median cost ratio was 1.06. One game, not a trend.") and post 3's
+"My cleverness transferred zero" softened to "bought nothing there";
+the LinkedIn URL filled in post 9. Tags resolved from the composer
+dropdown to the official accounts: HHMI | Janelia (@HHMIJanelia) on
+post 2, Kaggle (@kaggle, verified) on post 3, ARC Prize (@arcprize,
+verified) on post 9. Lengths with handles 245/240/267/270/270/236/259/
+215/241 weighted. The 2.59x, 11.59x and 4.5x figures appear nowhere.
+x_post.md now holds this text as v6.
+
+All five outlets now carry the restored voice over the corrected
+numbers: Kaggle heading, LinkedIn text, X thread; the Kaggle body,
+gallery, card, forum posts and notebook keep the November 3 corrected
+set.
+
 ## November 4, 2026, 7:15 PM Pacific | User's call: Kaggle heading and LinkedIn voice restored (local session)
 
 The user judged the November 3 Kaggle heading flat ("literally says
