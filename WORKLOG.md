@@ -1,5 +1,32 @@
 # FlyGI durable worklog
 
+## November 6, 2026, 11:15 PM Pacific | Hacker News submission (user's call)
+
+Submitted from the user's HN account (MegusAlexandrus) at the user's
+request: https://news.ycombinator.com/item?id=50402379, link to the
+Kaggle writeup under its own title "I Wired a Whole Fly Brain into
+ARC-AGI-3. Its Scrambled Copy Won, Then Lost" (75 chars). An Algolia
+search beforehand found no earlier submission. Observed after posting:
+#1 on /newest, not dead or flagged.
+
+Author comment https://news.ycombinator.com/item?id=50402381 (1,661
+chars, SHA-256 prefix 630665949f0362f8): the controls rule, both
+probe results, the 52-fold local gain with three 0.15 submissions, the
+fitted compass result with its scope and the parameter difference,
+and the eye-map correction stated outright. Its new claim, "r11l
+accounts for the two largest gaps", was checked against the two
+hash-verified trial archives before posting: the paired ratios are
+33.17 and 17.0 (both r11l), then 4.78 (vc33), median 1.05924 over 14
+pairs. Repo link in the comment.
+
+TIMING NOTE: posted Friday 11:14 PM PT (Saturday 07:14 UTC, European
+morning, US overnight), outside the weekday-morning-Eastern slot
+recommended earlier. If it gets no traction, HN's FAQ allows a small
+number of reposts of a story that got no significant attention, and
+hn@ycombinator.com accepts second-chance-pool requests. HN rule for
+the user: never ask anyone to upvote or comment (vote-ring detection
+penalizes the post), unlike the LinkedIn advice.
+
 ## November 4, 2026, 7:20 PM Pacific | X thread replaced with the restored voice (user's call)
 
 The user judged the November 3 X thread a mess and asked for it fixed.
