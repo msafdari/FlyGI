@@ -1,5 +1,23 @@
 # FlyGI durable worklog
 
+## November 6, 2026, 11:30 PM Pacific | Title changed on Kaggle and HN to the fly-side wording (user's call)
+
+The user asked for the title to tell the story from the fly's side,
+matching the LinkedIn and X posts. New title, observed live on both:
+"I Wired a Whole Fly Brain into ARC-AGI-3. It Lost All Season, Then
+Won One Back" (Kaggle 80/80 with a final period, Update Submission,
+status Submitted, subtitle and body unchanged; HN 79 chars via the
+submitter edit form on item 50402379, Kaggle changed first so HN
+matches the source title). "Won one back" rather than "won again":
+the compass was the first time the real wiring beat its scramble.
+
+HN STATE: the story is live, #5 on /newest at 11:30 PM PT, not dead.
+The author comment (item 50402381) shows [flagged] about five minutes
+after posting, so it is hidden from most readers. Most likely the
+anti-spam response to a 1-karma account posting a long linked comment
+on its own submission. Remedy left to the user: email
+hn@ycombinator.com to ask for review. Do not repost the comment.
+
 ## November 6, 2026, 11:15 PM Pacific | Hacker News submission (user's call)
 
 Submitted from the user's HN account (MegusAlexandrus) at the user's

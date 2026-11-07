@@ -4,9 +4,9 @@ Use the existing [FlyGI Paper Track entry](https://www.kaggle.com/competitions/a
 
 **Title**
 
-I Wired a Whole Fly Brain into ARC-AGI-3. Its Scrambled Copy Won, Then Lost.
+I Wired a Whole Fly Brain into ARC-AGI-3. It Lost All Season, Then Won One Back.
 
-(76/80. Restored November 4 at the user's request; the November 3 title "I Tested a Fly Connectome on ARC-AGI-3. Two Scrambled Circuits Scored Higher." is superseded. Accuracy: "Won" is the two held-out probes where the rewires scored higher; "Then Lost" is the off-score fitted compass result; neither depends on the withdrawn eye-map comparison.)
+(80/80, live since November 6 at the user's request. The HN submission carries the same title without the final period. Earlier titles, in order: "Its Scrambled Copy Won, Then Lost" (October 31 and again November 4) and "I Tested a Fly Connectome on ARC-AGI-3. Two Scrambled Circuits Scored Higher." (November 3). Accuracy: "lost all season" is the ARC record, where the rewired circuits scored higher on both held-out probes and the leaderboard stayed at 0.15. "Won one back" is the off-score fitted compass result, scoped in the subtitle and body.)
 
 **Subtitle**
 
