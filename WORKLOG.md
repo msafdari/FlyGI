@@ -72,8 +72,9 @@ at the writeup without that check.
 
 **Sweep result.** Each lane's claims were re-fetched by a second,
 skeptical agent: 11 of 11 confirmed on the open web, 19 of 22 on the
-ecosystem lane (the communities lane's check was still running when
-this was written), and the three it could not confirm (field size, the
+ecosystem lane and 13 of 14 on the communities lane (the one failure
+was a Reddit post offered as a traction benchmark, which is not used
+anywhere here), and the three the ecosystem check could not confirm (field size, the
 Kaggle deadline, the visibility rule) were then settled first-hand in
 Chrome as recorded above. MEASURED: zero independent mentions of the work
 anywhere searched, across 92 searches and fetches: open web, news,
@@ -82,9 +83,12 @@ code search, arXiv, Europe PMC, Semantic Scholar, OpenAlex and
 Crossref. Not checkable: Google and Bing indexes, Reddit's own search,
 private Discord or Slack, email newsletters. MEASURED on arcprize.org:
 "Results will be announced December 4, 2026"; rubric scores are not
-shared with authors. Two curated lists of fly-connectome projects do
-not include FlyGI: townie/awesome-fruit-fly (21 stars, takes pull
-requests) and flybrain.info/projects.
+shared with authors. Three curated lists of fly-connectome projects do
+not include FlyGI: cobanov/awesome-fly (755 stars, pushed 2026-11-14,
+has a "Games and control experiments" section, invites pull requests
+and already lists other MaleCNS-versus-rewired projects; checked
+first-hand), townie/awesome-fruit-fly (21 stars, takes pull requests)
+and flybrain.info/projects.
 
 **Not posted anywhere yet.** Reddit, Bluesky, Mastodon, Lobsters, a
 long-form blog post, arXiv. Zenodo stays parked. The new DOI is not yet
