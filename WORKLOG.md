@@ -14,6 +14,10 @@ request, which the user asked for.
   `preferred-citation` block (type report, doi
   10.34740/kaggle/w/116268). MEASURED: the file validates against the
   CFF 1.2.0 JSON schema (jsonschema, run in the project venv).
+  MEASURED after the push, fetched logged-out from GitHub's citation
+  hovercard: "Cite this repository" renders the paper in APA and as a
+  BibTeX techreport with the DOI. The title's final period was dropped
+  from the CFF block in a follow-up commit because APA doubled it.
 - PRE-EXISTING ERROR FIXED: README, data/README.md and CITATION.cff
   cited the MaleCNS paper under its bioRxiv preprint title while giving
   the Cell DOI. ESTABLISHED (Crossref record for
