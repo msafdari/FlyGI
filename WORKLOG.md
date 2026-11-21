@@ -1,5 +1,100 @@
 # FlyGI durable worklog
 
+## November 20, 2026, 11:30 PM Pacific | Two-week engagement snapshot; the paper link was dead during launch week
+
+The user asked what is left to publish, whether anyone has engaged, and
+for the socials to be tracked. Everything below was read on the evening
+of November 20 Pacific (about 07:00 UTC November 21) from the platforms
+themselves, the user's Chrome session for logged-in views, and a
+three-lane read-only search sweep (workflow wf_eb88ff6d-af1).
+
+**Finding that outranks the numbers.** MEASURED: the Wayback Machine
+holds exactly one capture of the writeup URL, taken 2026-11-07 07:16:47
+UTC, 38 seconds after the Hacker News submission, and it is Kaggle's
+generic HTTP 404 page. MEASURED: an HN reader (philipswood) replied
+"Broken link?" at 07:30:58 UTC. MEASURED: today the same URL returns
+HTTP 200 to a logged-out browser with the full article body, and to
+archive, Google, X and LinkedIn crawler user-agents; a made-up slug
+returns 404. MEASURED: the writeup's DOI was registered at
+2026-11-10T00:03:53Z, four minutes after the deadline. MEASURED (sweep):
+two other entrants' writeups show the same pattern, 404 in pre-deadline
+captures and 200 today, while the host's sample writeup was 200
+throughout. ESTABLISHED, Kaggle's documentation
+(kaggle.com/docs/competitions, read first-hand in the user's Chrome): "Submissions are made private until
+the end of a Hackathon, at which point all submissions are made public
+for review by the Judges and Kaggle community." INFERRED from that rule
+plus the single measured 404, bridge stated: the writeup was closed to
+everyone but its author from submission on October 30 until the
+2026-11-09 23:59 UTC deadline, assuming Kaggle applied its documented
+rule on every one of those days and not only at the captured instant.
+So the writeup link in the LinkedIn post (Nov 4), the X thread (Nov 4),
+both forum comments (Nov 4) and the HN submission (Nov 6) led outside
+readers to a 404 for the whole launch window, and has worked since
+about 00:00 UTC on November 10.
+PROCESS GAP, mine: the October 30 logged-out check covered the repo and
+the walkthrough notebook, never the writeup, and every post was pointed
+at the writeup without that check.
+
+**Measured engagement.**
+- LinkedIn post: 2,198 impressions (80 at eleven hours), 1 reaction, 1
+  comment, 0 reposts, 9 profile viewers from the post. The comment is a
+  job pitch for an unrelated opening, hidden by LinkedIn under "Most
+  relevant". Link visits: GitHub 1, Kaggle 0.
+- X thread (2118179820265984077): about 30 views on post 1 and 1 to 21
+  on the others, 2 likes in total (posts 3 and 5), 0 reposts. One reply
+  on post 9, "ok" with two emoji, hidden by X as probable spam. Mentions
+  tab empty. X search finds no other account naming the project.
+- Instagram, published by Codex on November 4 (entries below): carousel
+  1 like, 0 comments; Reel 154 views, 2 likes, 0 comments; account 83
+  followers. The insights page is not available on desktop web.
+- Hacker News 50402379: 1 point, 1 visible comment ("Broken link?").
+  The author comment 50402381 is still dead and flagged. The account
+  has karma 1 and an earlier story (49850020, 2026-09-25) that is also
+  dead. The thread closed to new comments at fourteen days.
+- Kaggle writeup: 0 votes, 0 comments, banner "Judging in progress.
+  Winners will be announced soon.", no longer editable. DOI minted:
+  https://doi.org/10.34740/kaggle/w/116268 (resolves; DataCite lists
+  the creator as the Kaggle display name "Megus Alexandrus", not the
+  author's real name). The submission notebook is now Public, so AP-16
+  auto-publication happened. Walkthrough notebook: 54 views, 0 votes.
+- Kaggle discussions: 754287 has 2 votes and only the author's own
+  comment; 754288 has 7 votes and one outside comment (Chan Kha Vu,
+  "lmao you did the meme, respect!", unanswered).
+- Field context: the competition header shows 9,462 entrants, 763
+  participants, 679 teams and 709 submissions (2025 had 90 papers).
+  Five other writeups sampled from the first page of the list each
+  show 0 votes and 0 comments.
+- GitHub: 0 stars, 0 forks, 0 watchers, 0 issues. Traffic for Nov 7 to
+  20 (the API keeps fourteen days, so launch days are gone): 10 views
+  from 7 visitors, 37 clones from 24 cloners (automated clones and our
+  own sessions included), one referrer, linkedin.com, with one view.
+  The repo has no topics and no homepage link.
+
+**Sweep result.** Each lane's claims were re-fetched by a second,
+skeptical agent: 11 of 11 confirmed on the open web, 19 of 22 on the
+ecosystem lane (the communities lane's check was still running when
+this was written), and the three it could not confirm (field size, the
+Kaggle deadline, the visibility rule) were then settled first-hand in
+Chrome as recorded above. MEASURED: zero independent mentions of the work
+anywhere searched, across 92 searches and fetches: open web, news,
+newsletters, Bluesky full text, a Reddit archive, Mastodon tags, GitHub
+code search, arXiv, Europe PMC, Semantic Scholar, OpenAlex and
+Crossref. Not checkable: Google and Bing indexes, Reddit's own search,
+private Discord or Slack, email newsletters. MEASURED on arcprize.org:
+"Results will be announced December 4, 2026"; rubric scores are not
+shared with authors. Two curated lists of fly-connectome projects do
+not include FlyGI: townie/awesome-fruit-fly (21 stars, takes pull
+requests) and flybrain.info/projects.
+
+**Not posted anywhere yet.** Reddit, Bluesky, Mastodon, Lobsters, a
+long-form blog post, arXiv. Zenodo stays parked. The new DOI is not yet
+in README or CITATION.cff. The lab emails and the note to the HN
+moderators were the user's to send; status unknown.
+
+**Carried forward from Codex's November 4 entry.** The user enabled
+"Allow access to file URLs" for a Chrome extension so Codex could
+upload to Instagram; turning it back off was never confirmed.
+
 ## November 6, 2026, 11:30 PM Pacific | Title changed on Kaggle and HN to the fly-side wording (user's call)
 
 The user asked for the title to tell the story from the fly's side,
