@@ -20,7 +20,7 @@ The Male CNS dataset is made available under the [Creative Commons Attribution
 is a collaboration among FlyEM at HHMI Janelia, the University of Cambridge
 Department of Zoology, the MRC Laboratory of Molecular Biology, and Google
 Research. Cite the associated paper, *Sexual dimorphism in the complete
-connectome of the Drosophila male central nervous system*,
+Drosophila male central nervous system connectome*,
 [doi:10.1016/j.cell.2026.08.015](https://doi.org/10.1016/j.cell.2026.08.015),
 when publishing work based on these data.
 

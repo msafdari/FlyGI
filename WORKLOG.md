@@ -1,5 +1,244 @@
 # FlyGI durable worklog
 
+## November 21, 2026, 1:00 AM Pacific | DOI and citation in the repo, awesome-fly pull request, outreach drafts fact-checked; the compass r_a divergence traced to our left-right wedge grouping (unregistered check)
+
+The user asked for items 1 and 2 of the November 20 next-steps list and
+a reminder for December 4. No instrument, registration or claim
+document was changed. Nothing was sent to anyone except one pull
+request, which the user asked for.
+
+**Done in the repository (item 1).**
+- README: the paper's DOI now sits beside the writeup link, and a new
+  "Citing" section gives the reference and notes that the DOI record
+  lists the author under the Kaggle display name. CITATION.cff gained a
+  `preferred-citation` block (type report, doi
+  10.34740/kaggle/w/116268). MEASURED: the file validates against the
+  CFF 1.2.0 JSON schema (jsonschema, run in the project venv).
+- PRE-EXISTING ERROR FIXED: README, data/README.md and CITATION.cff
+  cited the MaleCNS paper under its bioRxiv preprint title while giving
+  the Cell DOI. ESTABLISHED (Crossref record for
+  10.1016/j.cell.2026.08.015): the published title is "Sexual
+  dimorphism in the complete Drosophila male central nervous system
+  connectome", Cell 189(18):5504-5526.e15. All three files now use it.
+- GitHub About box: website set to the DOI
+  (`gh repo edit msafdari/FlyGI --homepage https://doi.org/10.34740/kaggle/w/116268`,
+  MEASURED afterwards with `gh repo view`). Description and topics
+  untouched.
+- CORRECTION to what I told the user on November 20: the README already
+  linked the writeup. Only the DOI and the About link were missing.
+- Pull request https://github.com/cobanov/awesome-fly/pull/30 (opened
+  2026-11-21T08:34:39Z from fork msafdari/awesome-fly, branch
+  add-flygi) adds one entry under "Games and control experiments".
+  MEASURED at 08:40 UTC: open, mergeable, no reviews or comments, list
+  at 755 stars. The entry follows the list's own template, states the
+  mostly negative outcome and both losing probes with their chance
+  levels, and says it was submitted by the project's author. The
+  21-star list was not used.
+
+**Outreach drafts (item 2). Nothing sent.** Six drafts live in
+results/social/outreach_20261120/outreach_drafts.md (git-ignored, local
+only). A three-lane read-only fact-check (workflow wf_130d9f6a-481, all
+three lanes returned) raised 50 issues: 7 errors, 21 warnings, 22 nits.
+The ones acted on were checked first-hand and are listed below. Status
+after the rewrite:
+- READY: a reply to Chan Kha Vu on Kaggle discussion 754288, and an
+  email to the flyvis authors (route taken from the Correspondence
+  section of their readme).
+- THE USER'S OWN WORDS REQUIRED: the note to the Hacker News moderators
+  (finding 1). The file holds the facts and a starting point.
+- ON HOLD: emails to James Fitzgerald (compass recipe), the MaleCNS
+  corresponding authors, and Yeyuan Liu (arXiv 2611.14508), because
+  each rests on compass numbers that finding 4 puts in question.
+
+**Findings from the fact-check that reach beyond the drafts.**
+
+1. Hacker News forbids generated text. ESTABLISHED
+   (news.ycombinator.com/newsguidelines.html, read first-hand): "Don't
+   post generated text or AI-edited text." MEASURED: the author comment
+   50402381 was written and posted by me on November 6 and was flagged
+   dead within minutes. INFERRED, bridge stated: that the comment's
+   origin is why it was flagged, assuming readers or software
+   recognised it. HN gave no reason. PROCESS GAP, mine: I did not read
+   the guidelines before posting. Consequence: any HN submission,
+   comment or moderator note is the user's to write and post.
+
+2. The locked paper says "moving bars". MEASURED by reading
+   scripts/benchmarks/fc2_visual_ds.py: the direction-selectivity
+   stimulus is a moving ON or OFF edge, not a bar.
+   docs/arenas/task1_arc_paper/kaggle_body_unwrapped.md line 29 carries
+   the same wording. The Kaggle writeup cannot be edited during
+   judging. Not changed here.
+
+3. The factsheet credits the DSI pass to the trained strengths alone.
+   docs/arenas/task1_arc_paper/factsheet.md lines 163-165 read "trained
+   per-pair strengths carry the pass". MEASURED from
+   results/benchmarks/fc25_visual_ds.json: the uniform-tau control
+   (0.3365) kept the trained strengths AND the trained resting
+   potentials, so the record separates the time constants from the
+   rest, not strengths from resting potentials. AGENT-REPORTED, not
+   re-run by me: in-memory ablations gave DSI 0.078 with trained
+   strengths and untrained resting potentials, and 0.082 with
+   flyvis-initialisation strengths and trained resting potentials,
+   which would mean both are needed. Not changed here. A claim-document
+   edit needs its own check.
+
+4. THE COMPASS FIT'S r_a DIVERGENCE CAME FROM OUR WEDGE GROUPING. This
+   is an UNREGISTERED CHECK. It carries no verdict and changes no claim
+   until a dated amendment and a registered re-run exist.
+
+   What was assumed. AC-B1 (docs/arenas/ASSUMPTIONS.md, encoded in
+   `epg_unit_from_instance` in scripts/arenas/cx_biswas_killtest.py)
+   groups the 46 EPG neurons into eight ring units by glomerulus digit
+   with left and right merged, so L_k shares a unit with R_k. The
+   October 31 run's canary fired (fitted r_a 0.4221 and 0.2132 against
+   the published 0.548 and 0.437) and the registry named AC-B1 and
+   AC-B2 as the suspects without resolving which.
+
+   What the counts say. MEASURED, commands below: in the raw EPG-to-EPG
+   counts of the registered 88-neuron subcircuit, left glomerulus k
+   sends its synapses to right glomeruli 9-k and 10-k (taken mod 8) and
+   not to right glomerulus k, except where those coincide (k = 1 and
+   5). Presynaptic L8 gives 219 synapses to R1, 177 to R2 and 4 to R8.
+   L7 gives 174 to R2, 227 to R3 and 0 to R7. L3 gives 181 to R6, 136
+   to R7 and 1 to R3. ESTABLISHED from the connectome's own
+   annotations: 35 of the 42 Delta7 neurons carry instance names of the
+   form L_k R_(9-k) (L8R1R9, L7R2, L6R3, L5R4, L4R5, L3R6, L2R7,
+   L1L9R8) and the other 7 the form L_k R_(10-k) (L7R3, L6R4, L4R6,
+   L3R7).
+
+   What the fit does under each grouping. MEASURED: the instrument's
+   own functions called in memory with only the EPG unit map changed,
+   on the real graph and the registered rewire seeds 4242 to 4244.
+
+   | EPG grouping | unit sizes | C_EE by ring distance 0..4 | non-circulant residual of C_EE | r_a at A_Delta 8 / 6 / 4 | rewires with a valid fit |
+   |---|---|---|---|---|---|
+   | registered, L_k with R_k | 4,4,6,6,6,6,6,8 | 108.97, 25.74, 20.18, 16.93, 17.65 | 0.569 | 0.4221 / 0.2132 / none | 0 of 3 |
+   | L_k with R_(9-k) | 6,5,6,6,6,6,5,6 | 159.64, 40.23, 2.80, 0.60, 2.33 | 0.136 | 0.5480 / 0.4373 / none | 0 of 3 |
+   | L_k with R_(10-k) | 4,6,6,6,6,6,6,6 | 159.11, 41.08, 2.98, 0.58, 2.48 | 0.126 | 0.5510 / 0.4836 / 0.3970 | 0 of 3 |
+   | published, Biswas et al. v2 | | | | 0.548 / 0.437 / 0.391 | |
+
+   The first row reproduces the October 31 run exactly. Under L_k with
+   R_(9-k) the fit returns the published r_a to the printed precision
+   at both valid configurations, holds the bump 8 of 8 with retention
+   1.0 at both (the registered grouping gave 0.9255 at A_Delta=6), 11
+   of the 12 Delta7 label families land in a single unit (3 of 12 under
+   the registered grouping), and the Delta7 tie fraction falls from
+   0.024 to 0.000.
+
+   Specificity under L_k with R_(9-k). MEASURED: no valid fit at any
+   configuration on rewires 4242 to 4244, with the mirror seed cap at
+   its registered 10 and with the cap lifted in memory (up to 92 seeds
+   refined), and none on 20 further seeds 4245 to 4264. That is 0 of 23
+   rewires. MEASURED under the REGISTERED grouping on the same 20
+   further seeds: one rewire (4257) admits a valid fit at A_Delta=8
+   (r_a 0.4169) and then fails the hold test 0 of 8. The registered
+   three-rewire statement stands as written. At 23 seeds it would not
+   have read "no rewire admits a valid fit".
+
+   A_Delta=4. MEASURED under L_k with R_(9-k): the solver finds one
+   root (gammas 0.004700, -0.0001398, -0.005129, residual 9e-16) and
+   the instrument rejects it on `barred_denominators_positive`, because
+   1 - W~_ii is -0.031 on two units outside the active rows. Requiring
+   the denominators positive on the active rows only gives r_a 0.3909
+   against the published 0.391. So "no valid fit at A_Delta=4" is a
+   property of that validity condition. Whether the condition should
+   cover all rows is a question for the registration.
+
+   Tiers. MEASURED: the table and the three paragraphs above.
+   INFERRED, bridge stated: that L_k with R_(9-k) is the grouping the
+   authors used, assuming a match of r_a to the printed precision at
+   two configurations, plus a rejected root matching at the third, is
+   not a coincidence. AGENT-REPORTED, not re-read by me: the unit sizes
+   6,5,6,6,6,6,5,6 match the paper's Fig. 1g. CONTRADICTED: the
+   October 31 PASS entry's "expected under AF-7's measured export
+   drift", which the registry-close entry had already demoted to an
+   untested inference, and the first Fitzgerald draft's guess at a data
+   difference. AC-B2 (whole-brain against ROI-restricted counts) is not
+   needed to explain the divergence.
+
+   What else shares the assumption. MEASURED by reading the code: the
+   sixteen-position angle map `index = (wedge-1)*2 + (0 if L else 1)`
+   in scripts/benchmarks/cx_ring.py line 224, in `wedge_index` of
+   scripts/arenas/cx_topology_killtest.py and in
+   scripts/arenas/cx_class3_killtest.py lines 542-543 places L_k next
+   to R_k. In the counts L_k neighbours R_(9-k) and R_(10-k), so on the
+   real ring the left glomeruli run in the opposite numerical direction
+   to the right ones, and the map mirrors one half-ring relative to the
+   other. HYPOTHESIS, untested: the class-1, class-2 and class-3
+   compass tests and the Stage A bandedness were computed on a ring
+   with one half mirrored, the same kind of fault as the 2026-09-23
+   "spatially scrambled input" record in AGENTS.md. What it
+   would take to check: re-run each with the corrected map under a
+   dated amendment. What breaks if it is right: those compass nulls say
+   nothing about the compass, and the structural PASS understates its
+   own statistic. AGENT-REPORTED, not re-run by me: bandedness about
+   0.85 in the corrected order against the registered 0.5881, still
+   above every one of 200 rewires.
+
+   Statements this touches, none edited: README line 74 (bandedness
+   0.5881), docs/social/FACTS.md lines 147 and 151,
+   docs/arenas/task1_arc_paper/factsheet.md lines 212-213,
+   docs/arenas/SYNTHESIS.md lines 239 and 406-411, EXPERIMENTS.yaml
+   near lines 2424 and 2944-2960, and the locked Kaggle writeup
+   (kaggle_body_unwrapped.md lines 35 and 39).
+
+   Commands. Six read-only scripts and their output are kept locally in
+   results/arenas/unregistered_checks/epg_lr_pairing_20261121/
+   (git-ignored). Each imports cx_biswas_killtest (sha256 9c13c97f...,
+   last changed in ae203f6) and writes nothing. Run from the repo root:
+   `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B <script> "$PWD"` with
+   epg_lr_check.py (raw counts, 18 s), epg_pairing_fit.py (the table,
+   29 s), epg_pairing_detail.py (Delta7 labels), alt9_cap_check.py (23
+   rewires, 80 s) and a4_check.py. Peak memory 1.2 GB. The whole change
+   is one line, `unit = (k-1) % 8 if side == "R" else (8-k) % 8`, built
+   from the `_([LR])(\d)$` suffix of each EPG instance name and passed
+   to `bk.run_graph(abs(matrix), epg_idx, epg_units, d7_idx)`.
+   MEASURED: `git status --short` identical before and after the runs.
+
+**December 4 checklist (results day).** A one-time cloud reminder is
+scheduled for 2026-12-04T17:00:00Z (Friday, 9:00 AM Pacific), routine
+trig_01UbmVLLDq4SYpAPNrgLxexJ. It reads this entry and anything newer
+and prints the list. Its prompt tells it to fetch nothing, post nothing
+and use no connector.
+1. See whether results are out: arcprize.org, the writeup banner, Kaggle
+   email, the ARC Prize account on X. No time of day was published. The
+   2025 announcement came on December 5.
+2. Relaunch whatever the outcome, with the DOI link, because the
+   launch-week link was private. The local session drafts LinkedIn and
+   X posts and the user approves before anything goes out.
+3. Open every link logged-out before posting.
+4. Hacker News is the user's alone to write and submit.
+5. If the paper placed: a README line, forum posts 754287 and 754288,
+   notes to the researchers.
+6. Loose ends: pull request 30, the Kaggle reply, the flyvis email, the
+   HN moderators' answer, and the compass re-run with its three held
+   emails. Until the re-run is registered, new copy does not quote r_a
+   0.4221 and 0.2132 or bandedness 0.5881.
+7. Record the outcome here, commit, push.
+
+**Ordered next steps.**
+1. Compass amendment, on the user's go and through the cloud design
+   session as usual: a dated amendment to AC-B1 naming the L_k with
+   R_(9-k) grouping and the sixteen-position order it implies, a
+   decision on the A_Delta=4 validity condition and on the rewire
+   count, then registered re-runs of cx_biswas_killtest, the Stage A
+   topology test and the class-1 to class-3 compass tests, then the
+   claim documents and a public correction note for the locked paper.
+2. The user sends or declines the Kaggle reply and the flyvis email,
+   and writes the HN note himself.
+3. The December 4 checklist above.
+
+**Limits of this entry.** The fit check is unregistered. Its grouping
+hypothesis was chosen after seeing the data, and 20 of its 23 rewire
+seeds are unregistered. Fig. 1g, the corrected bandedness and the
+flyvis ablations are agent-reported and were not re-run by me. The
+address of the compass paper's second corresponding author was not
+confirmed first-hand.
+
+**Carried forward.** Chrome "Allow access to file URLs" (Codex,
+November 4): turning it off is still unconfirmed. Free disk space was
+2.1 GiB at 08:40 UTC.
+
 ## November 20, 2026, 11:30 PM Pacific | Two-week engagement snapshot; the paper link was dead during launch week
 
 The user asked what is left to publish, whether anyone has engaged, and

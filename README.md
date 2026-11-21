@@ -10,6 +10,7 @@ compass experiment, a model built from real connection counts held an
 initialized heading. The same fitting procedure found no valid model on
 three rewires. The leaderboard agents used
 the fly's static eye map with neuronal dynamics off. [Read the paper](https://www.kaggle.com/competitions/arc-prize-2026-paper-track/writeups/flygi-connectome-attribution-audit)
+([doi:10.34740/kaggle/w/116268](https://doi.org/10.34740/kaggle/w/116268))
 or [inspect the release evidence](docs/arenas/task1_arc_paper/factsheet.md).
 
 ## Everything goes through the fly, or nothing goes at all
@@ -176,8 +177,8 @@ MaleCNS v1.0 was released on 2026-06-08; its Cell paper was published on
 the University of Cambridge Department of Zoology, the MRC Laboratory of
 Molecular Biology, and Google Research, and is licensed under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Publications should
-cite *Sexual dimorphism in the complete connectome of the Drosophila male central
-nervous system*, [doi:10.1016/j.cell.2026.08.015](https://doi.org/10.1016/j.cell.2026.08.015).
+cite *Sexual dimorphism in the complete Drosophila male central nervous system
+connectome*, [doi:10.1016/j.cell.2026.08.015](https://doi.org/10.1016/j.cell.2026.08.015).
 FlyGI runtime assets are modified derivatives and are neither an official release
 nor endorsed by the data creators.
 
@@ -190,6 +191,17 @@ without degree-preserving and parameter-matched controls.
 - ARC-AGI-3 Kaggle starter: <https://github.com/arcprize/ARC-AGI-3-Kaggle-Starter>
 - Experiment details: [docs/experiment.md](docs/experiment.md)
 - Modeling limits: [docs/modeling_assumptions.md](docs/modeling_assumptions.md)
+
+## Citing
+
+To cite the paper: Mustafa Safdari (2026). *I Wired a Whole Fly Brain into
+ARC-AGI-3. It Lost All Season, Then Won One Back.* Kaggle Writeup, ARC Prize
+2026 Paper Track.
+[doi:10.34740/kaggle/w/116268](https://doi.org/10.34740/kaggle/w/116268).
+The DOI record lists the author under the Kaggle display name Megus
+Alexandrus. [CITATION.cff](CITATION.cff) carries the same reference in
+machine-readable form. Work that uses the connectome should also cite the
+MaleCNS paper named under [Data and claims](#data-and-claims).
 
 ## License
 
