@@ -35,8 +35,21 @@ Exit codes (section-7 override of the shared convention, stated in
 the registration): 0 = readings completed, 3 = BLOCKED. There is no
 KILL exit -- a refinement has readings, not verdicts.
 
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER data contact; the
+frozen text above is untouched; families, seeds, floors and the
+reading rule are unchanged). This instrument has no label map of its
+own: it inherits Stage A's through run_pipeline, and Stage A's AC-1
+map reflected the left half-ring. It now passes --ring-map through to
+run_pipeline: "amended" (default) or "registered" (reproduces the
+2026-10-28 readings). The "run_pipeline VERBATIM" clause still holds:
+it is the same Stage-A function. Full record:
+docs/arenas/compass_map_amendment_20261121.md.
+
 Run:    python scripts/arenas/cx_topology_nulls2.py
-Output: results/arenas/cx_topology_nulls2.json (+ .log)
+Output: results/arenas/cx_topology_nulls2.amended_map.json (+ .log);
+        with --ring-map registered, ...registered_map.json. The file
+        cx_topology_nulls2.json is the 2026-10-28 registered run and
+        is no longer written by default.
 """
 
 from __future__ import annotations
@@ -136,11 +149,16 @@ def reading(p: float) -> str:
 
 
 def run_decomposition(matrix, types, instances, n_nulls: int, log,
-                      families=FAMILIES) -> dict[str, Any]:
+                      families=FAMILIES, *, ring_map: str) -> dict[str, Any]:
     """Pure given its inputs: per family, degeneracy floors then the
     Stage-A pipeline with the family's generator injected. Readings
-    only; the Stage-A 'verdict' key is discarded by design."""
+    only; the Stage-A 'verdict' key is discarded by design. `ring_map`
+    (amendment 2026-11-21) is handed to the Stage-A pipeline; it is
+    REQUIRED (keyword-only, no default)."""
     record: dict[str, Any] = {"hypothesis": "H-STAGEA-NULL-DECOMPOSITION",
+                              "ring_map": ring_map,
+                              "ring_map_description":
+                                  cx.RING_MAP_DESCRIPTION[ring_map],
                               "n_nulls": n_nulls, "families": {}}
     for family in families:
         log(f"--- family {family} ---")
@@ -163,7 +181,8 @@ def run_decomposition(matrix, types, instances, n_nulls: int, log,
             record["families"][family] = entry
             continue
         result = cx.run_pipeline(matrix, types, instances, n_nulls, log,
-                                 rewire_fn=family_fn(family))
+                                 rewire_fn=family_fn(family),
+                                 ring_map=ring_map)
         if "blocked" in result:
             entry["blocked"] = result["blocked"]
             record["families"][family] = entry
@@ -193,8 +212,15 @@ def check_prerequisites() -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="H-STAGEA-NULL-DECOMPOSITION readings (data-gated)")
-    parser.add_argument("--output", type=Path, default=OUT_JSON)
+    parser.add_argument("--ring-map", choices=cx.RING_MAPS,
+                        default=cx.DEFAULT_RING_MAP,
+                        help="EPG label -> ring index map (amendment "
+                             "2026-11-21); 'registered' reproduces the "
+                             "2026-10-28 readings")
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        args.output = cx.default_output(OUT_JSON, args.ring_map)
 
     missing = check_prerequisites()
     if missing:
@@ -214,6 +240,8 @@ def main() -> int:
         handle.flush()
 
     started = time.time()
+    log(f"ring map: {args.ring_map} -- "
+        f"{cx.RING_MAP_DESCRIPTION[args.ring_map]}")
     from flygi.connectome.subcircuit import extract_subcircuit, select_nodes
     indices = select_nodes(RUNTIME_DIR, type_patterns=TYPE_PATTERNS)
     sub = extract_subcircuit(RUNTIME_DIR, indices)
@@ -224,7 +252,7 @@ def main() -> int:
         return 3
 
     record = run_decomposition(sub.matrix, sub.types, sub.instances,
-                               N_NULLS, log)
+                               N_NULLS, log, ring_map=args.ring_map)
     record["elapsed_s"] = round(time.time() - started, 1)
     args.output.write_text(json.dumps(record, indent=2, default=float))
     log(json.dumps(record, indent=2, default=float))

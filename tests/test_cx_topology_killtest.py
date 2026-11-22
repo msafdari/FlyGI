@@ -25,26 +25,70 @@ cx = importlib.util.module_from_spec(_spec)
 sys.modules["cx_topology_killtest"] = cx
 _spec.loader.exec_module(cx)
 
+# The map every fixture and pipeline call below names explicitly (the
+# instruments accept no silent default; see the amendment of 2026-11-21).
+MAP = cx.DEFAULT_RING_MAP
 
-def test_wedge_index_verbatim_mapping():
-    assert cx.wedge_index("EPG_L1") == 0
-    assert cx.wedge_index("EPG_R1") == 1
-    assert cx.wedge_index("EPG_L8") == 14
-    assert cx.wedge_index("EPG_R8") == 15
-    assert cx.wedge_index("PEN_a(PEN1)_L4_x") == 6
-    assert cx.wedge_index("no label here") is None
-    assert cx.wedge_index("EPG_L9") is None     # out of 1..8
+
+def test_wedge_index_registered_map_is_the_frozen_expression():
+    # AC-1 as frozen 2026-10-10 (INVALIDATED 2026-11-21; kept so the
+    # registered run reproduces): L_k beside R_k.
+    reg = "registered"
+    assert cx.wedge_index("EPG_L1", reg) == 0
+    assert cx.wedge_index("EPG_R1", reg) == 1
+    assert cx.wedge_index("EPG_L8", reg) == 14
+    assert cx.wedge_index("EPG_R8", reg) == 15
+    assert cx.wedge_index("PEN_a(PEN1)_L4_x", reg) == 6
+    assert cx.wedge_index("no label here", reg) is None
+    assert cx.wedge_index("EPG_L9", reg) is None     # out of 1..8
+
+
+def test_wedge_index_amended_map_is_the_default():
+    # AC-1 as amended 2026-11-21: right half unchanged, left reflected;
+    # ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8.
+    assert cx.DEFAULT_RING_MAP == "amended"      # the command-line default
+    order = ["L1", "R1", "L8", "R2", "L7", "R3", "L6", "R4",
+             "L5", "R5", "L4", "R6", "L3", "R7", "L2", "R8"]
+    for index, label in enumerate(order):
+        assert cx.wedge_index(f"EPG(PB08)_{label}", "amended") == index
+    for k in range(1, 9):                       # right half as registered
+        assert (cx.wedge_index(f"EPG_R{k}", "amended")
+                == cx.wedge_index(f"EPG_R{k}", "registered"))
+    assert cx.wedge_index("no label here", "amended") is None
+    assert cx.wedge_index("EPG_L9", "amended") is None   # range check unchanged
+    with pytest.raises(ValueError):
+        cx.wedge_index("EPG_L1", "some other map")
+
+
+def test_the_map_is_a_required_argument_at_every_level():
+    """No silent default: a call that forgets the map must raise, so a
+    --ring-map registered run can never quietly use the amended map (or
+    the reverse). The only default is the command-line flag."""
+    with pytest.raises(TypeError):
+        cx.wedge_index("EPG_L1")
+    W, types, instances = _ring()
+    with pytest.raises(TypeError):
+        cx.run_pipeline(W, types, instances, 2, lambda m: None)
+    with pytest.raises(TypeError):                # keyword-only
+        cx.run_pipeline(W, types, instances, 2, lambda m: None, None,
+                        "amended")
 
 
 def _ring(n_per_wedge=3, pen_per_side=1, offset_l=1, offset_r=-1,
-          noise=0.0, seed=0):
+          noise=0.0, seed=0, ring_map=None):
     """Synthetic compass: EPG tiled over 16 wedges; PEN_a L/R shifted
     by the given offsets; PEN_b mirrored; Delta7 global inhibition.
-    Returns (csr W[post,pre], types, instances)."""
+    Returns (csr W[post,pre], types, instances). EPG labels are written
+    with the INVERSE of the named ring map (default: the instrument's
+    default), so the fixture follows the parser. That makes this gate
+    blind to which map is right -- the 2026-11-21 finding -- and is why
+    test_registered_map_misreads_an_anatomically_labelled_ring exists."""
+    from flygi.compass_map import ring_label
+    ring_map = ring_map or MAP
     rng = np.random.default_rng(seed)
     types, instances = [], []
     epg, pen = [], {"PEN_a_L": [], "PEN_a_R": [], "PEN_b_L": [], "PEN_b_R": []}
-    wedge_name = lambda w: f"_{'L' if w % 2 == 0 else 'R'}{w // 2 + 1}"
+    wedge_name = lambda w: "_%s%d" % ring_label(w, ring_map)
     for w in range(16):
         for k in range(n_per_wedge):
             epg.append((len(types), w))
@@ -89,7 +133,7 @@ def _ring(n_per_wedge=3, pen_per_side=1, offset_l=1, offset_r=-1,
 def test_metrics_on_synthetic_ring():
     W, types, instances = _ring()
     epg_idx = np.flatnonzero(types == "EPG")
-    wedges = np.array([cx.wedge_index(s) for s in instances[epg_idx]])
+    wedges = np.array([cx.wedge_index(s, MAP) for s in instances[epg_idx]])
     pen_a = np.flatnonzero(types == "PEN_a(PEN1)")
     pen_l = np.array([i for i in pen_a if "_L" in instances[i]])
     pen_r = np.array([i for i in pen_a if "_R" in instances[i]])
@@ -101,6 +145,54 @@ def test_metrics_on_synthetic_ring():
     M = cx.wedge_aggregate(cx.two_hop(W, epg_idx, both), wedges)
     assert cx.bandedness(M) == 1.0             # all mass within +/-1
     assert cx.spectral_context(M)["residual_deg"] < 15.0
+
+
+def _ring_stats(parse_map, label_map):
+    W, types, instances = _ring(ring_map=label_map)
+    epg_idx = np.flatnonzero(types == "EPG")
+    wedges = np.array([cx.wedge_index(s, parse_map)
+                       for s in instances[epg_idx]])
+    pen_a = np.flatnonzero(types == "PEN_a(PEN1)")
+    pen_l = np.array([i for i in pen_a if "_L" in instances[i]])
+    pen_r = np.array([i for i in pen_a if "_R" in instances[i]])
+    M = cx.wedge_aggregate(
+        cx.two_hop(W, epg_idx, np.concatenate([pen_l, pen_r])), wedges)
+    M_l = cx.wedge_aggregate(cx.two_hop(W, epg_idx, pen_l), wedges)
+    M_r = cx.wedge_aggregate(cx.two_hop(W, epg_idx, pen_r), wedges)
+    return (cx.bandedness(M), cx.mirror_peak(M_l, M_r),
+            cx.spectral_context(M)["residual_deg"])
+
+
+def test_registered_map_misreads_an_anatomically_labelled_ring():
+    """THE REGRESSION TEST for the 2026-11-21 instrument-bug finding.
+
+    A perfect ring whose cells carry anatomical labels (the amended
+    order) is read correctly by the amended map and misread by the
+    registered one: the registered map reflects the left half-ring, so
+    most neighbour coupling lands outside the +/-2 band, the opposite
+    left/right PEN offsets blur, and the blind ordering check sits
+    45 to 51 deg off -- the 2026-10-10 run recorded 46.6 deg and it
+    was read as inconclusive. Fails on the pre-amendment code, where
+    only the registered map existed.
+
+    The two spectral bounds are the ATTAINABLE ranges, not one build's
+    value: on a perfect ring the two Laplacian eigenvalues the check
+    uses are exactly equal, so the eigensolver may return any basis of
+    that plane, and the check tries rotations in 22.5 deg steps. A
+    correctly read ring therefore lands anywhere in 0..11.25 deg and
+    the misread one anywhere in 45.0..50.6 deg (49.2 with numpy on
+    Apple Accelerate). Bandedness and the mirror-peak are exact."""
+    banded, mirror, resid = _ring_stats("amended", "amended")
+    assert banded == 1.0 and mirror == pytest.approx(1.0)
+    assert resid < 11.3
+    banded_reg, mirror_reg, resid_reg = _ring_stats("registered", "amended")
+    assert banded_reg == pytest.approx(0.25)    # 8 of 32 neighbour pairs
+    assert mirror_reg == pytest.approx(0.0625)
+    assert 44.0 < resid_reg < 51.0              # a reflected half-ring
+    # and the converse: the fault is symmetric in which map is "true",
+    # which is why a self-labelled fixture could never have caught it
+    assert _ring_stats("registered", "registered")[0] == 1.0
+    assert _ring_stats("amended", "registered")[0] == pytest.approx(0.25)
 
 
 def _shift_matrix(d):
@@ -142,7 +234,8 @@ def test_bandedness_and_empirical_p():
 def test_full_pipeline_pass_on_ring_and_kill_on_destroyed():
     W, types, instances = _ring(noise=0.01)
     logs = []
-    record = cx.run_pipeline(W, types, instances, 60, logs.append)
+    record = cx.run_pipeline(W, types, instances, 60, logs.append,
+                             ring_map=MAP)
     assert "blocked" not in record, record
     assert record["bars"] == {"banded": True, "shifter": True}
     assert record["verdict"] == "PASS"
@@ -151,7 +244,8 @@ def test_full_pipeline_pass_on_ring_and_kill_on_destroyed():
     # kill at least one bar through the same frozen pipeline
     from flygi.connectome.nulls import degree_preserving_rewire
     broken, _ = degree_preserving_rewire(W, seed=7)
-    record2 = cx.run_pipeline(broken, types, instances, 60, logs.append)
+    record2 = cx.run_pipeline(broken, types, instances, 60, logs.append,
+                              ring_map=MAP)
     assert "blocked" not in record2
     assert record2["verdict"] == "KILL"
 
@@ -163,11 +257,13 @@ def test_pipeline_blocked_paths():
     epg_pos = np.flatnonzero(types == "EPG")
     for i in epg_pos[: int(0.5 * epg_pos.size)]:
         stripped[i] = "EPG unlabelled"
-    record = cx.run_pipeline(W, types, stripped, 5, lambda m: None)
+    record = cx.run_pipeline(W, types, stripped, 5, lambda m: None,
+                             ring_map=MAP)
     assert "blocked" in record and "coverage" in record["blocked"]
     # zero out the excitatory loops -> degenerate two-hop BLOCKED
     Wz = sparse.csr_matrix(np.minimum(W.todense(), 0.0))
-    record2 = cx.run_pipeline(Wz, types, instances, 5, lambda m: None)
+    record2 = cx.run_pipeline(Wz, types, instances, 5, lambda m: None,
+                              ring_map=MAP)
     assert "blocked" in record2 and "degenerate" in record2["blocked"]
 
 

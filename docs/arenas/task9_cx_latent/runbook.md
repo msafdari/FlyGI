@@ -149,3 +149,84 @@ first computation-level wiring win at published-physiology fidelity;
 a KILL at the model class where idealized fly topology is published
 to work is the strongest statement yet that the compiled counts do
 not carry the compass.
+
+## RE-RUN under the amended label map (2026-11-21)
+
+> The banner at the top of this file is the 2026-10-11 state. Every
+> outcome it lists was measured with the AC-1 label map, which
+> reflected the left half-ring (instrument-bug finding of 2026-11-21,
+> `docs/arenas/compass_map_amendment_20261121.md`). Stage A is re-run
+> once, in full, with only the label map changed. Stage B, the probe
+> and class 3 are re-run the same way ONLY if Stage A is PASS under
+> the amended map. The registered-map outcomes stay in the record as
+> history.
+
+Unit tests first, then the instruments in the registered order, each
+through the once-only wrapper. The default map is the amended one.
+Each run writes `results/arenas/<name>.amended_map.json` and its log,
+plus a console record under `results/arenas/amended_runs_20261121/`,
+and leaves the 2026-10-10 and 2026-10-11 result files alone.
+
+```bash
+PYTHONPATH=src python -m pytest tests/test_compass_map.py \
+    tests/test_cx_topology_killtest.py tests/test_cx_heading_killtest.py \
+    tests/test_cx_seeding_killtest.py tests/test_cx_class3_killtest.py \
+    tests/test_run_amended_once.py -q
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_topology_killtest.py
+# the next three ONLY on a Stage-A PASS (the wrapper refuses them otherwise)
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_heading_killtest.py
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_seeding_killtest.py
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_class3_killtest.py
+```
+
+Launch each run detached, in a session of its own, for example as
+
+```bash
+nohup perl -MPOSIX -e 'fork and exit; POSIX::setsid() > 0 or die "setsid: $!"; exec @ARGV or die "exec: $!"' \
+    <command> >/dev/null 2>&1 &
+```
+
+and check `results/arenas/amended_runs_20261121/launch.log` for its start:
+a refusal is written there with its reason. Start the next only after
+this one's record ends in its `# CLASSIFICATION` line or, if its wrapper
+died, after its instrument has exited and the record has been classified
+by decision 7's ordered tests (then remove the stale lock by hand). The
+wrapper holds a lock for the whole run. Stopping a run before the
+instrument finishes, by TERM to the wrapper or to the instrument, by INT
+to the wrapper or by HUP (INT and HUP only where the launch does not
+ignore them), is recorded as abandoned; a SIGKILL or any other signal
+that kills the instrument is recorded as a failure to finish. The
+instrument itself ignores INT and QUIT, and HUP under this launch. The probe takes about 7.5 minutes and
+class 3 about 16.5 on this machine (the registered-path reproductions
+of amendment section 11).
+
+To reproduce a registered run instead, call the script directly with
+`--ring-map registered` (writes `<name>.registered_map.json`). All
+four were run that way before the freeze of 2026-11-21 and compared
+with their registered records (amendment section 11).
+
+Between runs: hash the run's console record, JSON and log (each where it
+exists) into WORKLOG.md with the printed result lines, and commit that
+file alone (`[skip ci]`) before the next run. The wrapper refuses to start
+if any other tracked file differs from the tag
+`compass-map-freeze-20261121`. It accepts only the amendment's eleven
+commands, with no other argument, and names each record after its
+instrument. A failure to finish (a crash, a watchdog kill or a resource
+stop) earns one re-run of the same command, with `--rerun` before the
+script, as the next launch: the wrapper refuses any other first attempt
+until it is made, and a failure that is not re-run is read as two.
+Stopping a run before the instrument finishes, as above, is recorded as
+abandoned, with no re-run (a SIGKILL of the instrument is a failure to
+finish); anything more is refused. It also refuses to start unless
+the compiled runtime, the raw MaleCNS pair table and the capture file
+match the SHA-256 values pinned in
+`scripts/arenas/run_amended_once.inputs.sha256` (amendment section 7,
+decision 7).
+
+Read the printed VERDICT or BLOCKED line and the JSON where one is
+written, not the exit status alone: an uncaught exception also exits 1.
+The pre-stated reading of every outcome is in section 10 of the
+amendment. If Stage B passes its
+precheck it builds three rewired full networks: `cx_block_rewire` was
+measured on the real graph on 2026-11-21 at 3.9 s and 2.38 GB peak per
+call.

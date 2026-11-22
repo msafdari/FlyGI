@@ -251,3 +251,110 @@ WORKLOG eeb75b5; closes: EXPERIMENTS.yaml).
   opposite-signed); rewires never ran. The preregistered KILL reading
   applies, scoped as registered (standalone circuit, AC-6 mapping,
   declared grid).
+
+---
+
+## Instrument-bug finding and amendment (dated 2026-11-21; AFTER data contact; frozen text above untouched)
+
+Filed under this registration's own rule ("Changes after first data
+contact require a recorded instrument-bug finding and a full re-run").
+The full record is `docs/arenas/compass_map_amendment_20261121.md`.
+This section is the pointer and the part that concerns the seeding
+probe and the class-3 test. Its decisions were made by the local
+session that wrote it, under the owner's one-line go.
+
+FINDING. Both instruments placed EPG cells on the ring with the AC-1
+map (index = (wedge-1)*2 + (0 if L else 1)), which reflects the left
+half-ring relative to the right one (measured, see the full record).
+The probe inherited it through "cx_heading_killtest.py's
+loading/drive/read verbatim", although its map loop was a second typed
+copy. The class-3 registration above never states the map at all: the
+instrument carried it unlabelled. In both, the map decides which cells
+a write angle drives (for the probe's P4, also which cells are zeroed)
+and how the population vector is decoded, so it reaches the cell rule,
+G1's position clause and G2's steering rate.
+
+THE GATE COULD NOT SEE IT. The class-3 validation gate reproduces the
+published Pisokas circuit with that fixture's own geometry. It
+validates the engine and the protocol. It does not touch the MaleCNS
+label map and could not have caught the fault.
+
+AMENDMENT. Only the EPG label to angle map changes (right half as
+registered, left half reflected, in agreement with the four wedge angles
+printed in Hulse et al. 2021 Fig. 16B and with the order of all sixteen
+read from that figure). It lives in `src/flygi/compass_map.py`, the probe
+now takes it from Stage B by import, and both instruments take
+`--ring-map` (`amended` by default, `registered` to reproduce the
+2026-10-11 runs). Operating points, protocols, the grid, physiology,
+weights, angles, seeds, rules, bars and BLOCKED floors stand as
+frozen. The write angles keep their numbers and their centre cells.
+Before the freeze both instruments were run in full with `--ring-map
+registered` and compared with their 2026-10-11 records (results in the
+full record, section 11).
+
+RE-RUN, full, once each, in the registered order (probe, then class
+3), and ONLY if Stage A is PASS under the amended map. The Task 9
+registration says a Stage-A KILL "closes Task 9 with no dynamics
+built", and these two instruments exist only because Stage A passed.
+If the gate closes, neither is re-run and each status becomes
+`invalidated`: the only verdict on record was measured on a
+mislabelled ring.
+
+PRE-STATED, so the next outcome cannot be reshaped. Probe KILL:
+refuted stands and so does "no class-1 Stage-B re-registration is
+licensed". Probe PASS: supported, and by the frozen rule above a Stage-B
+re-registration with the passing protocol is licensed. It is NOT made
+by this amendment and needs the owner's go and its own registration.
+If Stage B itself returned a verdict on the amended map, that verdict
+stands for H-CX-HEADING-LATENT and the probe's rule only says whether a
+second Stage B may be registered. Class-3 KILL: refuted stands, now on
+the amended map. Class-3 PASS: supported, scoped as registered
+(standalone circuit, AC-6 mapping, declared grid). BLOCKED for either:
+no verdict, status `invalidated`, because the only verdict on record was
+then measured on a mislabelled ring. The gate closed: the same, and the
+change rule above ("a full re-run") is then also not met. For class 3 the
+held close sentence (EXPERIMENTS.yaml, 2026-10-11) is re-instated on a
+KILL, dated, as exactly "the compiled MaleCNS CX synapse counts do not
+carry the compass in the STANDALONE 148-neuron circuit, on the amended
+map, scoped as registered (standalone circuit, AC-6 mapping, the declared
+grid)", and is withdrawn on a PASS and on every no-verdict outcome. The
+close note above describes the registered-map run, and its description
+of that run is not re-instated (full record, section 10, item 6). What counts as finished, failed or abandoned is the full
+record's section 7, decision 7, by its ordered tests: a crash, a watchdog kill or a resource stop earns one fresh re-run,
+unchanged, made as the next launch, and a second failure, or a failure
+not re-run, is "no verdict"; stopping a run before the instrument
+finishes, by TERM to the wrapper or to the instrument, by INT to the wrapper or
+by HUP (INT and HUP only where the launch does not ignore them), is
+recorded as abandoned, with no re-run (a SIGKILL or any other signal that
+kills the instrument is a failure to finish; the instrument itself ignores
+INT and QUIT, and HUP under the prescribed launch). After two failures to finish or an
+abandoned attempt, the printed output is quoted beside the status as
+section 10 of the full record defines; a BLOCKED outcome or a closed gate is
+recorded with its BLOCKED line or the gate's reason.
+
+POSITION CLAUSES AND FIXED POINTS (wording only; the bars are
+unchanged). The probe's cell rule and class-3 G1 accept a settled angle
+within 45 degrees of the write angle. Under the amended map a remnant
+confined to one label decodes exactly on a label angle, and two such
+remnants 180 degrees apart could meet G1 at 6 of 8. So a PASS of either
+is called position-following, and the statements keep
+"position-faithful" and "8-angle position continuum", only if every
+write of the stated sets follows. The sets: for the probe, in each
+decisive cell, every held-out write of the real arm that passes the
+cell's per-angle rule; for class 3, at each decisive grid point, every
+write of the real arm that passes the per-angle rule, its 22.5 write
+included when it passes. A write follows
+when its settled angle is within 22.5 degrees (one ring position) of its
+own write angle, 22.5 included, and no other write of the real arm at
+the same cell or grid point whose bump survived, whether or not it is in
+the set (the probe's 22.5 calibration row included), settled within
+11.25 degrees of its settled angle, 11.25 included, each distance
+rounded to 0.01 degrees, so one remnant cannot serve two writes.
+Otherwise the PASS sentence and the statement say "meets the registered
+position clause" and quote the final angles (amendment section 8, C7). The registered-map outcomes stay in the record as history.
+
+RECORD GAPS found while mapping, not changed by this amendment: the
+registered G2 text says "from two settled states" and the code applies
+the PEN drive straight after the write; the close note's "never
+opposite-signed" is contradicted at three grid points of the log,
+where the signs oppose below the 9 deg/s threshold.

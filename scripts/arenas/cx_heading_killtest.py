@@ -48,8 +48,34 @@ Data gate: runs where the compiled runtime lives. Pure parts
 (sequences, integration, circular stats, block rewire, verdict) are
 unit-tested in-cloud.
 
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER data contact; the
+frozen text above is untouched, and every regime, angle, protocol,
+seed, bar and BLOCKED floor is unchanged). The EPG label -> angle map
+this instrument carried (AC-1: index = (wedge-1)*2 + (0 if L else 1))
+ran both bridge halves round the ring in the same direction, which
+reflects the left half-ring: it put L_k beside R_k, and in the fly L_k
+lies between R_(9-k) and R_(10-k). The map decides which cells a
+nominal angle writes and how the population vector is decoded, so the
+fault reached both. It now lives in ONE place,
+flygi.compass_map, and this instrument takes --ring-map:
+  amended     (default) right half as registered (R_k at 22.5 +
+              45(k-1) deg), left half reflected (L_k at 360 - 45(k-1)
+              deg); the wedge angles printed in Hulse et al. 2021
+              Fig. 16B. The nominal angles keep their registered
+              numbers and their registered centre cells (22.5 = R1,
+              112.5 = R3, 202.5 = R5, 292.5 = R7); the left-half
+              cells inside each wedge change.
+  registered  the frozen expression, kept so the registered run
+              reproduces.
+PEN cells are still split by side letter alone. Full record, evidence
+and the pre-stated reading of each outcome:
+docs/arenas/compass_map_amendment_20261121.md.
+
 Run:    python scripts/arenas/cx_heading_killtest.py
-Output: results/arenas/cx_heading_killtest.json (+ .log)
+Output: results/arenas/cx_heading_killtest.amended_map.json (+ .log);
+        with --ring-map registered, ...registered_map.json. The file
+        cx_heading_killtest.log is the 2026-10-10 registered run and
+        is no longer written by default.
 """
 
 from __future__ import annotations
@@ -69,6 +95,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "src"
 if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
+
+from flygi.compass_map import (  # noqa: E402
+    DEFAULT_RING_MAP, RING_MAP_DESCRIPTION, RING_MAPS, default_output,
+    ring_angle_deg)
 
 # --- frozen constants (killtest_design.md + cx_ring conventions) ------------
 GAIN = 1.5
@@ -216,8 +246,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="H-CX-HEADING-LATENT kill test (data-gated)")
     parser.add_argument("--config", default=CONFIG)
-    parser.add_argument("--output", type=Path, default=OUT_JSON)
+    parser.add_argument("--ring-map", choices=RING_MAPS,
+                        default=DEFAULT_RING_MAP,
+                        help="EPG label -> ring angle map (amendment "
+                             "2026-11-21); 'registered' reproduces the "
+                             "2026-10-10 run")
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        args.output = default_output(OUT_JSON, args.ring_map)
 
     missing = check_prerequisites()
     if missing:
@@ -237,6 +274,8 @@ def main() -> int:
         handle.flush()
 
     started = time.time()
+    log(f"ring map: {args.ring_map} -- "
+        f"{RING_MAP_DESCRIPTION[args.ring_map]}")
     from flygi.arc.factory import build_connectome_policy
     from flygi.config import load_config
     from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
@@ -268,14 +307,21 @@ def main() -> int:
         log(f"BLOCKED: composition deviates from {EXPECTED_COUNTS}")
         return 3
 
-    # EPG wedge angles + PEN_a hemispheres (cx_ring verbatim).
+    # EPG wedge angles + PEN_a hemispheres (cx_ring machinery).
+    # ASSUMPTION AC-1, amended 2026-11-21 (instrument-bug finding): the
+    # label -> angle map is flygi.compass_map; "registered"
+    # is the frozen cx_ring expression (it reflects the left half-ring),
+    # "amended" keeps the right half and reflects the left one. What
+    # breaks if the amended map is wrong: which cells each nominal
+    # angle writes, and every decoded angle, circular variance and
+    # rotation rate below.
     epg = np.flatnonzero(types == "EPG")
     angles = np.full(epg.size, np.nan)
     for i, name in enumerate(instances[epg]):
         match = WEDGE_RE.search(name)
         if match:
             side, wedge = match.group(1), int(match.group(2))
-            angles[i] = ((wedge - 1) * 2 + (0 if side == "L" else 1)) * 22.5
+            angles[i] = ring_angle_deg(side, wedge, args.ring_map)
     keep = ~np.isnan(angles)
     epg, angles = epg[keep], angles[keep]
     radians = np.deg2rad(angles)
@@ -421,6 +467,8 @@ def main() -> int:
     out = assemble_verdict(continuum, tracking)
     record = {
         "hypothesis": "H-CX-HEADING-LATENT",
+        "ring_map": args.ring_map,
+        "ring_map_description": RING_MAP_DESCRIPTION[args.ring_map],
         "gain": GAIN, "leak": LEAK,
         "precheck": {"retention": retention, "circvar": final_cv},
         "calibrated_rates": {"left": rate_left, "right": rate_right},

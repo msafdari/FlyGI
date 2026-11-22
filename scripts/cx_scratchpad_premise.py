@@ -32,6 +32,30 @@ at N=50 <= 0.6 (chance 0.5) closes the scratchpad: the one circuit whose
 wiring measurably matters holds state only in a silence the agent never
 gets. EXPECTED tier note: the score-conversion base rate of this
 repository's expected-tier predictions is 0 for 11.
+
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER the 2026-09-27
+runs; the registration above is untouched and the design, the kill
+condition and every constant are unchanged). This script is where the
+EPG label -> angle map used by every later compass instrument was
+first typed, with the caveat "wrong only up to a fixed rotation". It
+is wrong by more than that: it ran both bridge halves round the ring
+in the same direction, which reflects the left half-ring (L_k beside
+R_k; in the fly L_k lies between R_(9-k) and R_(10-k)). The map now
+lives in ONE place, flygi.compass_map, and this script
+takes --ring-map: "amended" (default; right half as registered, left
+half reflected, the wedge angles printed in Hulse et al. 2021
+Fig. 16B) or "registered" (the frozen expression, kept so the
+2026-09-27 runs reproduce). Default output is now
+results/cx_scratchpad_premise.amended_map.json for the main mode and
+results/cx_scratchpad_settle_map.amended_map.json for --settle-map
+(the two modes used to share one default path); the file
+results/cx_scratchpad_premise.json holds the 2026-09-27 run and is no
+longer written by default. NOTE: the settle map's eight write angles
+(0, 45, ..., 315) are LEFT-centred, so six of them write a different
+centre cell under the amended map (only 0 and 180, L1 and L5, are
+like-for-like); the main mode's two targets (22.5, 202.5) are
+right-centred and keep theirs. Full record:
+docs/arenas/compass_map_amendment_20261121.md.
 """
 
 from __future__ import annotations
@@ -47,6 +71,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "src"
 if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
+
+from flygi.compass_map import (  # noqa: E402
+    DEFAULT_RING_MAP, RING_MAP_DESCRIPTION, RING_MAPS, default_output,
+    ring_angle_deg)
 
 WRITE_STEPS = 20
 WRITE_SCALE = 1.0  # defaults; overridable while validating the write against the measured darkness baseline
@@ -67,9 +95,20 @@ def main() -> int:
         default=ROOT / "results" / "diagnostics" / "recognizer_frames.npz",
     )
     parser.add_argument(
-        "--output", type=Path, default=ROOT / "results" / "cx_scratchpad_premise.json"
+        "--ring-map", choices=RING_MAPS, default=DEFAULT_RING_MAP,
+        help="EPG label -> ring angle map (amendment 2026-11-21); "
+             "'registered' reproduces the 2026-09-27 runs",
     )
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        # The two modes used to share one default path, so a settle-map
+        # run overwrote a main-run file. Each has its own default now.
+        stem = ("cx_scratchpad_settle_map.json" if args.settle_map
+                else "cx_scratchpad_premise.json")
+        args.output = default_output(ROOT / "results" / stem, args.ring_map)
+    print(f"ring map: {args.ring_map} -- "
+          f"{RING_MAP_DESCRIPTION[args.ring_map]}", flush=True)
 
     import numpy as np
 
@@ -106,13 +145,19 @@ def main() -> int:
     # standard mapping of 16 wedges onto 360 degrees (22.5 deg each, L and R
     # interleaved); wrong only up to a fixed rotation, which cancels in an
     # A-vs-B readback.
+    # [AMENDED 2026-11-21, instrument-bug finding: the sentence above is the
+    # registered wording and it is WRONG. The interleaved mapping reflects
+    # the left half-ring, which is not a fixed rotation. ASSUMPTION AC-1 as
+    # amended: the map is flygi.compass_map; "registered" is the
+    # frozen expression, "amended" keeps the right half and reflects the
+    # left one. It decides which cells a write angle drives and every
+    # decoded angle below.]
     angles = np.full(epg.size, np.nan)
     for i, name in enumerate(instances[epg]):
         match = re.search(r"_([LR])(\d)", name)
         if match:
             side, wedge = match.group(1), int(match.group(2))
-            index = (wedge - 1) * 2 + (0 if side == "L" else 1)
-            angles[i] = index * (360.0 / 16.0)
+            angles[i] = ring_angle_deg(side, wedge, args.ring_map)
     keep = ~np.isnan(angles)
     epg, angles = epg[keep], angles[keep]
     radians = np.deg2rad(angles)
@@ -176,12 +221,15 @@ def main() -> int:
                 rows[str(write_deg)] = {"settled": settled, "mass": mass}
                 print(f"{style} write {write_deg:5.1f} -> settled {settled:7.2f} mass {mass:.4f}", flush=True)
             table[style] = rows
-        args.output.write_text(json.dumps({"settle_map": table}, indent=2))
+        args.output.write_text(json.dumps(
+            {"ring_map": args.ring_map, "settle_map": table}, indent=2))
         return 0
 
     holds = [int(v) for v in args.holds.split(",")]
     rng = np.random.default_rng(20260927)
     results: dict[str, Any] = {
+        "ring_map": args.ring_map,
+        "ring_map_description": RING_MAP_DESCRIPTION[args.ring_map],
         "write_steps": args.write_steps,
         "write_scale": args.write_scale,
         "conditions": {},

@@ -142,7 +142,8 @@ def test_gate_a_magnitude_tuned_separates_under_weight_family():
     matrix, types, instances = _magnitude_tuned()
     record = nl2.cx.run_pipeline(
         matrix, types, instances, 100, lambda *_: None,
-        rewire_fn=nl2.family_fn("weight_within_pre"))
+        rewire_fn=nl2.family_fn("weight_within_pre"),
+        ring_map=ring_mod.MAP)
     assert "blocked" not in record
     # the empirical floor at 100 nulls is (1+0)/101 = 0.009901
     assert record["p_banded"] <= 1.0 / 101 + 1e-12
@@ -161,12 +162,14 @@ def test_gate_b_topology_banded_inert_under_weight_family_but_not_rewire():
 
     shuffled = nl2.cx.run_pipeline(
         matrix, types, instances, 50, lambda *_: None,
-        rewire_fn=nl2.family_fn("weight_within_pre"))
+        rewire_fn=nl2.family_fn("weight_within_pre"),
+        ring_map=ring_mod.MAP)
     assert "blocked" not in shuffled
     assert shuffled["p_banded"] >= 0.2
 
     rewired = nl2.cx.run_pipeline(
-        matrix, types, instances, 25, lambda *_: None)   # default rewire
+        matrix, types, instances, 25, lambda *_: None,   # default rewire
+        ring_map=ring_mod.MAP)
     assert "blocked" not in rewired
     assert rewired["p_banded"] < 0.05
 
@@ -177,7 +180,11 @@ def test_run_decomposition_yields_readings_never_verdicts():
     W, types, instances = ring_mod._ring(noise=0.3, seed=9)
     record = nl2.run_decomposition(sparse.csr_matrix(W), np.asarray(types),
                                    np.asarray(instances), 10,
-                                   lambda *_: None)
+                                   lambda *_: None, ring_map=ring_mod.MAP)
+    assert record["ring_map"] == ring_mod.MAP
+    with pytest.raises(TypeError):               # the map is required
+        nl2.run_decomposition(sparse.csr_matrix(W), np.asarray(types),
+                              np.asarray(instances), 2, lambda *_: None)
     assert set(record["families"]) == set(nl2.FAMILIES)
     flat = str(record)
     assert "'verdict'" not in flat           # readings only, by design

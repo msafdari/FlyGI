@@ -49,8 +49,37 @@ Data gate: runs where the compiled runtime lives. Pure parts
 (protocol table, injection, cell rule, verdict) are unit-tested
 in-cloud with a stub network.
 
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER data contact; the
+frozen text above is untouched, and every regime, angle, protocol,
+seed, bar and BLOCKED floor is unchanged). The EPG label -> angle map
+this instrument carried (AC-1: index = (wedge-1)*2 + (0 if L else 1))
+ran both bridge halves round the ring in the same direction, which
+reflects the left half-ring: it put L_k beside R_k, and in the fly L_k
+lies between R_(9-k) and R_(10-k). The map decides which cells a
+nominal angle writes and how the population vector is decoded, so the
+fault reached both. It now lives in ONE place,
+flygi.compass_map, and this instrument takes --ring-map:
+  amended     (default) right half as registered (R_k at 22.5 +
+              45(k-1) deg), left half reflected (L_k at 360 - 45(k-1)
+              deg); the wedge angles printed in Hulse et al. 2021
+              Fig. 16B. The nominal angles keep their registered
+              numbers and their registered centre cells (22.5 = R1,
+              112.5 = R3, 202.5 = R5, 292.5 = R7); the left-half
+              cells inside each wedge change.
+  registered  the frozen expression, kept so the registered run
+              reproduces.
+PEN cells are still split by side letter alone. Full record, evidence
+and the pre-stated reading of each outcome:
+docs/arenas/compass_map_amendment_20261121.md.
+The Stage-B map is now reused BY IMPORT (hk.ring_angle_deg), which
+makes the registration's "machinery verbatim" clause true for the map
+as well; until this amendment the map loop was a second typed copy.
+
 Run:    python scripts/arenas/cx_seeding_killtest.py
-Output: results/arenas/cx_seeding_killtest.json (+ .log)
+Output: results/arenas/cx_seeding_killtest.amended_map.json (+ .log);
+        with --ring-map registered, ...registered_map.json. The file
+        cx_seeding_killtest.json is the 2026-10-11 registered run and
+        is no longer written by default.
 """
 
 from __future__ import annotations
@@ -106,6 +135,12 @@ EXPECTED_COUNTS = hk.EXPECTED_COUNTS
 CONFIG = hk.CONFIG
 RUNTIME_DIR = hk.RUNTIME_DIR
 WEDGE_RE = hk.WEDGE_RE
+# The EPG label -> angle map (AC-1 as amended 2026-11-21), by import.
+ring_angle_deg = hk.ring_angle_deg
+DEFAULT_RING_MAP = hk.DEFAULT_RING_MAP
+RING_MAPS = hk.RING_MAPS
+RING_MAP_DESCRIPTION = hk.RING_MAP_DESCRIPTION
+default_output = hk.default_output
 
 # --- probe-specific frozen design (killtest_design_reopening.md) -------------
 OPERATING_POINTS = ((1.5, 0.3), (2.0, 0.3))
@@ -224,8 +259,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="H-CX-SEEDING-PROTOCOL probe (data-gated)")
     parser.add_argument("--config", default=CONFIG)
-    parser.add_argument("--output", type=Path, default=OUT_JSON)
+    parser.add_argument("--ring-map", choices=RING_MAPS,
+                        default=DEFAULT_RING_MAP,
+                        help="EPG label -> ring angle map (amendment "
+                             "2026-11-21); 'registered' reproduces the "
+                             "2026-10-11 run")
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        args.output = default_output(OUT_JSON, args.ring_map)
 
     missing = check_prerequisites()
     if missing:
@@ -245,6 +287,8 @@ def main() -> int:
         handle.flush()
 
     started = time.time()
+    log(f"ring map: {args.ring_map} -- "
+        f"{RING_MAP_DESCRIPTION[args.ring_map]}")
     from flygi.arc.factory import build_connectome_policy
     from flygi.config import load_config
     from flygi.dynamics.rate import RateParameters, ScipyRateNetwork
@@ -275,13 +319,18 @@ def main() -> int:
         log(f"BLOCKED: composition deviates from {EXPECTED_COUNTS}")
         return 3
 
+    # ASSUMPTION AC-1, amended 2026-11-21 (instrument-bug finding): the
+    # label -> angle map, reused from Stage B by import. "registered"
+    # reflects the left half-ring; "amended" is the corrected map. It
+    # decides the written cells for all four protocols (P4's injection
+    # included) and every decoded angle below.
     epg = np.flatnonzero(types == "EPG")
     angles = np.full(epg.size, np.nan)
     for i, name in enumerate(instances[epg]):
         match = WEDGE_RE.search(name)
         if match:
             side, wedge = match.group(1), int(match.group(2))
-            angles[i] = ((wedge - 1) * 2 + (0 if side == "L" else 1)) * 22.5
+            angles[i] = ring_angle_deg(side, wedge, args.ring_map)
     keep = ~np.isnan(angles)
     epg, angles = epg[keep], angles[keep]
     radians = np.deg2rad(angles)
@@ -434,6 +483,8 @@ def main() -> int:
     verdict = assemble_verdict(cells)
     record = {
         "hypothesis": "H-CX-SEEDING-PROTOCOL",
+        "ring_map": args.ring_map,
+        "ring_map_description": RING_MAP_DESCRIPTION[args.ring_map],
         "operating_points": [list(p) for p in OPERATING_POINTS],
         "protocols": {k: dict(v) for k, v in PROTOCOLS.items()},
         "cells": cells,

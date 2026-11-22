@@ -192,3 +192,115 @@ numerically" caveat, recorded in the WORKLOG close. Reopening paths
 (each needs an explicit go and its own registration): class-3 CX
 fidelity, or a registered visual-arc-seeding reconciliation at 1.5
 with pre-stated pass rules.
+
+---
+
+## Instrument-bug finding and amendment (dated 2026-11-21; AFTER data contact; frozen text above untouched)
+
+Filed under this registration's own rule ("Changes after first data
+contact require a recorded instrument-bug finding and a full re-run").
+The full record is `docs/arenas/compass_map_amendment_20261121.md`.
+This section is the pointer and the part that concerns Stage A and
+Stage B. Its decisions were made by the local session that wrote it,
+under the owner's one-line go.
+
+FINDING. The shared wedge coordinates above (AC-1: index =
+(wedge-1)*2 + (0 if L else 1)) ran both bridge halves round the ring in
+the same direction. In the fly they run in opposite directions, so the
+registered map reflected the left half-ring relative to the right one
+(L_k was placed beside R_k and lies between R_(9-k) and R_(10-k)). The
+frozen sentence "correct up to a fixed rotation (which no metric below
+depends on)" does not cover a reflected half-ring: bandedness, the
+mirror-peak, and in Stage B the written cells and every decoded angle
+all depend on it. MEASURED 2026-11-21
+(`scripts/arenas/compass_map_check.py`): 18.7% of the direct EPG to EPG
+synapse count between different ring positions joins ring neighbours
+under the registered map (10,000 random maps: mean 13.3%, p 0.197)
+against 81.7% under the amended map (p 0.0001, the floor).
+
+THE CONTEXT CHECK HAD SEEN IT. Bar 3 above, the blind spectral
+ordering, recorded 46.6 degrees on 2026-10-10 and was closed as
+"neither confirmed nor refuted". A perfect synthetic ring read through
+the registered map gives 45.0 to 50.6 degrees on that check, depending
+on the eigensolver (49.2 with numpy on this machine), and 0 to 11.25
+through the right map (now a unit test). The check had no threshold.
+It still has none: its value under a corrected order had already been
+agent-reported (6.6 degrees) before this section was written, so a
+band set now would not be a test. It is reported as it comes.
+
+AMENDMENT. Only the EPG label to position map changes: right half as
+registered (R_k at 22.5 + 45(k-1) degrees), left half reflected (L_k
+at 360 - 45(k-1) degrees), which agrees with the four wedge angles
+printed in Hulse et al. 2021 Fig. 16B (L1 0, L7 90, L5 180, L3 270) and
+with the order of all sixteen read from that figure (amendment section
+3). It lives in `src/flygi/compass_map.py` and
+both instruments take `--ring-map` (`amended` by default, `registered`
+to reproduce the 2026-10-10 runs). Every metric, null, seed, bar,
+protocol, angle and BLOCKED floor of both stages stands as frozen. The
+nominal seed angles keep their numbers and their centre cells.
+
+DISCLOSED. Stage A's bar 1 under a corrected order is effectively
+known: a fact-check subagent reported bandedness 0.8505 against a maximum
+of 0.334 over the 200 registered rewires, and a blind residual of 6.6
+degrees, before this section was written (not reproduced by me). The amended Stage A run is therefore CONFIRMATORY
+for bar 1. Bar 2, the mirror-peak, has not been computed by anyone
+under the amended map. Before the freeze both instruments were run
+with `--ring-map registered` and reproduced their 2026-10-10 records.
+
+RE-RUN, full, once each. Stage A first. Stage B only on a Stage-A PASS
+under the amended map, which is the gate this registration already
+states. Stage B is re-run as THIS registration under the rule quoted
+above. It is not one of the reopening paths named in the close note,
+which each need a new registration. The frozen text says a Stage-A
+KILL "closes Task 9 with no dynamics built". That is honoured for
+every Task 9 dynamics instrument: the reopening probe and the class-3
+test are also re-run only on a Stage-A PASS.
+
+PRE-STATED, so the next outcome cannot be reshaped. Stage A PASS:
+H-CX-RING-TOPOLOGY stays supported with the amended numbers, and its
+statement is narrowed to what the bars measure, with k the number of
+rewires at or above the real mirror-peak and both p values as printed:
+"the PEN-mediated EPG to EPG coupling is banded on the ring (p = ...
+against 200 degree-preserving rewires), and the left and right PEN_a
+halves put more joint mass on a mirrored pair of offsets than at least
+191 of those 200 rewires (k of 200 at or above it; p = ...)". Bar 2
+passes at p < 0.05, which allows up to 9 rewires at or above the real
+value. Exactly one of the three clauses of amendment section 8, C6
+follows, chosen by the signs of the PEN_a_L and PEN_a_R mean offsets and
+quoting both: "and the two halves lean in opposite directions", with
+C6's caveat that the amended tile geometry alone could produce that
+(inferred), only if the signs are opposite. Apart from that caveat it
+never says "shifter" and never claims a PEN shift: bar 2 is large for
+symmetric profiles too (a property of the 2026-10-10 statistic, not of
+this amendment), and under the amended coordinates an offset of one
+position can arise from tile geometry alone (inferred; amendment section
+8, C6). MEASURED on the 2026-10-10
+record: bar 2 passed with both PEN_a mean offsets of the same sign.
+Stage A KILL on either bar: refuted, the 2026-10-10 PASS is recorded as
+measured on a mislabelled ring, Task 9 closes, and H-CX-HEADING-LATENT
+is recorded not-pursued. Stage A BLOCKED: no verdict, status
+`invalidated`, the gate stays closed. Stage B BLOCKED at the precheck or
+the rate guard: status stays null as recorded on 2026-10-10, now on the
+amended map, and AC-2's invalidation stands there too. Stage B PASS:
+supported, and its "heading CONTINUUM" wording is kept only if all three
+held-out writes of the real arm follow (amendment section 8, C7: each
+settles within 22.5 degrees of its own seed angle, 22.5 included, and no
+other surviving write of the real arm settles within 11.25 degrees of its
+settled angle, 11.25 included, the 22.5 precheck write included at the
+angle printed on its precheck line; each distance rounded to 0.01
+degrees); otherwise the statement is
+narrowed to "meets the registered position clause" with the final angles
+quoted. Stage B KILL: refuted. What counts as finished, failed or
+abandoned is amendment section 7, decision 7, by its ordered tests: a crash, a watchdog kill or a resource stop earns one fresh re-run,
+unchanged, made as the next launch, and a second failure, or a failure
+not re-run, is "no verdict"; stopping a run before the instrument
+finishes, by TERM to the wrapper or to the instrument, by INT to the wrapper or
+by HUP (INT and HUP only where the launch does not ignore them), is
+recorded as abandoned, with no re-run (a SIGKILL or any other signal that
+kills the instrument is a failure to finish; the instrument itself ignores
+INT and QUIT, and HUP under the prescribed launch). After two failures to finish or an
+abandoned attempt, the printed output is quoted beside the status as
+section 10 of the amendment defines; a BLOCKED outcome or a closed gate is
+recorded with its BLOCKED line or the gate's reason. The
+registered-map outcomes stay in the record as history. No benchmark
+score is predicted and the 0-for-16 counter is not touched.

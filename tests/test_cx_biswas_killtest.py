@@ -106,13 +106,60 @@ def test_mirror_equations_reduce_to_symmetric():
 
 # --- coarse-graining mechanics ----------------------------------------------
 
-def test_epg_unit_from_instance_convention():
-    # AC-B1: (digit - 1) mod 8, L/R merged, digit 9 wraps onto digit 1
-    assert bk.epg_unit_from_instance("EPG(PB08)_L3_C1") == 2
-    assert bk.epg_unit_from_instance("EPG(PB08)_R3_C2") == 2
-    assert bk.epg_unit_from_instance("EPG_L1") == 0
-    assert bk.epg_unit_from_instance("EPG_R9") == 0
-    assert bk.epg_unit_from_instance("EPG_unlabelled") is None
+def test_epg_unit_from_instance_registered_map():
+    # AC-B1 as frozen 2026-10-31 (INVALIDATED 2026-11-21, kept so the
+    # registered run reproduces): (digit - 1) mod 8, L/R merged, digit
+    # 9 wraps onto digit 1
+    reg = "registered"
+    assert bk.epg_unit_from_instance("EPG(PB08)_L3_C1", reg) == 2
+    assert bk.epg_unit_from_instance("EPG(PB08)_R3_C2", reg) == 2
+    assert bk.epg_unit_from_instance("EPG_L1", reg) == 0
+    assert bk.epg_unit_from_instance("EPG_R9", reg) == 0
+    assert bk.epg_unit_from_instance("EPG_unlabelled", reg) is None
+
+
+# MaleCNS EPG cells per glomerulus 1..8, per bridge half (label inventory)
+_EPG_PER_GLOMERULUS = (2, 2, 3, 3, 3, 3, 3, 4)
+
+
+def _unit_sizes(ring_map):
+    sizes = [0] * 8
+    for side in "LR":
+        for k, n in enumerate(_EPG_PER_GLOMERULUS, start=1):
+            sizes[bk.epg_unit_from_instance(f"EPG(PB08)_{side}{k}",
+                                            ring_map)] += n
+    return sizes
+
+
+def test_epg_unit_from_instance_amended_map_is_the_default():
+    # AC-B1 as amended 2026-11-21: L_k shares a unit with R_(9-k)
+    assert bk.DEFAULT_RING_MAP == "amended"      # the command-line default
+    am = "amended"
+    for k in range(1, 9):
+        r = bk.epg_unit_from_instance(f"EPG(PB08)_R{k}", am)
+        assert r == k - 1                       # right half as registered
+        assert bk.epg_unit_from_instance(f"EPG(PB08)_L{9 - k}", am) == r
+    assert bk.epg_unit_from_instance("EPG_R9", am) == 0   # 9 = 1, same half
+    assert bk.epg_unit_from_instance("EPG_L9", am) == 7
+    assert bk.epg_unit_from_instance("EPG_unlabelled", am) is None
+    with pytest.raises(ValueError):
+        bk.epg_unit_from_instance("EPG_L1", "some other map")
+    with pytest.raises(TypeError):               # the map is required
+        bk.epg_unit_from_instance("EPG_L1")
+
+
+def test_amended_grouping_reproduces_the_source_figure_unit_sizes():
+    """A comparison that separates the two maps without any fitted
+    value: Biswas et al. Fig. 1g shows EPG units of 6,5,6,6,6,6,5,6
+    neurons (read from the figure, 2026-11-21). With the MaleCNS
+    per-glomerulus counts the amended grouping gives that and the
+    registered one does not. (Sizes alone do not identify a grouping:
+    240 of the 40,320 arbitrary left-right matchings share them. The
+    cell-by-cell figure comparison in the amendment record does.)
+    Fails on the pre-amendment code, where only the registered
+    grouping existed."""
+    assert _unit_sizes("amended") == [6, 5, 6, 6, 6, 6, 5, 6]
+    assert _unit_sizes("registered") == [4, 4, 6, 6, 6, 6, 6, 8]
 
 
 def test_unit_count_matrix_sums_pre_averages_post():

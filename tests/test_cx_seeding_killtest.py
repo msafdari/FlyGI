@@ -54,6 +54,10 @@ def test_stage_b_machinery_is_reused_verbatim():
     assert sk.cx_block_rewire is hk.cx_block_rewire
     assert sk.make_sequences is hk.make_sequences
     assert sk.integrate_commands is hk.integrate_commands
+    # the EPG label -> angle map is reused by import too (amendment
+    # 2026-11-21; before it the map loop was a second typed copy)
+    assert sk.ring_angle_deg is hk.ring_angle_deg
+    assert sk.DEFAULT_RING_MAP == hk.DEFAULT_RING_MAP == "amended"
     # and the shared constants carry the Stage-B frozen values
     assert sk.INTERNAL_STEPS == 4
     assert sk.CAL_ANGLE == 22.5

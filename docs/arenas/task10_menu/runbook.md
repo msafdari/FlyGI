@@ -295,3 +295,63 @@ local visit: LEAGUE.md's natstat row is knowingly stale (still
 `PYTHONPATH=src python scripts/league.py --write-md LEAGUE.md`,
 then commit. The cloud container cannot (regenerating there drops
 the measured score rows).**
+
+## 2b and 3c. RE-RUNS under the amended label map (2026-11-21)
+
+> The status banner at the top of this file is the 2026-10-31 state.
+> The Biswas PASS (3b) and the decomposition readings (2) were both
+> measured with label maps that an instrument-bug finding of
+> 2026-11-21 invalidated (`docs/arenas/compass_map_amendment_20261121.md`):
+> AC-B1 pooled L_k with R_k, and the decomposition inherited Stage A's
+> reflected left half-ring. Both are re-run once, in full, with only
+> the map changed. The registered-map outcomes stay in the record as
+> history.
+
+```bash
+PYTHONPATH=src python -m pytest tests/test_compass_map.py \
+    tests/test_cx_biswas_killtest.py tests/test_cx_biswas_context_nulls.py \
+    tests/test_stagea_nulls2.py tests/test_run_amended_once.py -q
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_biswas_killtest.py        # 3c, confirmatory
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_biswas_context_nulls.py   # non-decisional, 200 more rewires
+scripts/arenas/run_amended_once.sh scripts/arenas/cx_topology_nulls2.py        # 2b, after Stage A's amended run
+```
+
+Launch each run detached, in a session of its own, for example as
+
+```bash
+nohup perl -MPOSIX -e 'fork and exit; POSIX::setsid() > 0 or die "setsid: $!"; exec @ARGV or die "exec: $!"' \
+    <command> >/dev/null 2>&1 &
+```
+
+and check `results/arenas/amended_runs_20261121/launch.log` for its start:
+a refusal is written there with its reason. Start the next only after
+this one's record ends in its `# CLASSIFICATION` line or, if its wrapper
+died, after its instrument has exited and the record has been classified
+by decision 7's ordered tests (then remove the stale lock by hand). The
+wrapper holds a lock for the whole run. Stopping a run before the
+instrument finishes, by TERM to the wrapper or to the instrument, by INT
+to the wrapper or by HUP (INT and HUP only where the launch does not
+ignore them), is recorded as abandoned; a SIGKILL or any other signal
+that kills the instrument is recorded as a failure to finish. The
+instrument itself ignores INT and QUIT, and HUP under this launch.
+
+The wrapper accepts only the amendment's eleven commands, runs one at a
+time, refuses inputs that differ from their pinned SHA-256 (the compiled
+runtime, the raw MaleCNS pair table and the capture file), names each
+record after its instrument, and allows one re-run (`--rerun` before the
+script) only after a failure to finish, as the next launch: it refuses
+any other first attempt until the re-run is made, and a failure that is
+not re-run is read as two (amendment section 7, decision 7).
+
+Both instruments were run with `--ring-map registered` before the
+freeze and reproduced their 2026-10-31 and 2026-10-28 records field
+for field (amendment section 11). Between runs, hash each run's outputs
+into WORKLOG.md and commit that file alone (`[skip ci]`): the wrapper
+refuses to start if any other tracked file differs from the tag
+`compass-map-freeze-20261121`. Outputs go to
+`results/arenas/<name>.amended_map.json`; the registered result files
+are not written by default any more. The amended Biswas run is
+CONFIRMATORY: an unregistered check of 2026-11-21 had already seen its
+outcome, and on it the published-value cross-check is not an
+independent canary. Section 4 (the fan-shaped body) is NOT re-run: its
+instrument does not use the amended map.

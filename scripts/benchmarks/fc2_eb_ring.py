@@ -180,8 +180,40 @@ rheobase}. Selection rule, held-out scoring, and every band threshold
 are byte-identical to stages 1-2.
 ======================================================================
 
-Writes results/benchmarks/fc2_eb_ring.json, saving partial results after
-every calibration config and every scored angle. Creates nothing else.
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER the 2026-09-29
+run; the preregistration above is untouched and the band, the model,
+all three calibration grids, the selection rule, the seeds and the
+trivial alternative are unchanged). The "EPG ring angles" bullet above
+says the mapping is "wrong only up to a fixed rotation/reflection,
+which cancels in every within-run comparison". It is wrong by more
+than that: it ran both bridge halves round the ring in the same
+direction, which reflects the LEFT half-ring relative to the right one
+(L_k beside R_k; in the fly L_k lies between R_(9-k) and R_(10-k)).
+That is neither a rotation nor a reflection of the whole ring and it
+does not cancel: it decides which cells a seed angle drives and it
+folds the population-vector decode that every criterion reads. The map
+now lives in ONE place, flygi.compass_map, and this script
+takes --ring-map:
+  amended     (default) right half as registered (R_k at 22.5 +
+              45(k-1) deg), left half reflected (L_k at 360 - 45(k-1)
+              deg); the wedge angles printed in Hulse et al. 2021
+              Fig. 16B. Seed angles keep their numbers and their
+              centre cells.
+  registered  the frozen expression, kept so the 2026-09-29 run
+              reproduces.
+Consequences accepted openly: calibration is map-dependent, so an
+amended run may select a different configuration or stage; the wedge
+sizes change, so the noise streams are not paired with the registered
+run; the "class1_reference" sentence written into the JSON is the
+2026-09-29 class-1 wording and is historical. Full record, evidence
+and the pre-stated reading of each outcome:
+docs/arenas/compass_map_amendment_20261121.md.
+
+Writes results/benchmarks/fc2_eb_ring.amended_map.json (with
+--ring-map registered: fc2_eb_ring.registered_map.json), saving
+partial results after every calibration config and every scored angle.
+results/benchmarks/fc2_eb_ring.json is the 2026-09-29 registered run
+and is no longer written by default. Creates nothing else.
 """
 
 from __future__ import annotations
@@ -199,6 +231,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "src"
 if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
+
+from flygi.compass_map import (  # noqa: E402
+    DEFAULT_RING_MAP, RING_MAP_DESCRIPTION, RING_MAPS, default_output,
+    ring_angle_deg)
 
 RUNTIME_DIR = "data/processed/male-cns-v1.0/literal-rate-signed-modulators"
 TYPE_PATTERNS = ("EPG", "PEN_a*", "PEN_b*", "Delta7", "PEG")  # corrected; see header
@@ -557,12 +593,18 @@ def calibrate(sim_factory, net_id, grid, epg_angles, epg_idx, save, log):
 def main() -> int:
     parser = argparse.ArgumentParser(description="fc2 EB ring benchmark")
     parser.add_argument(
-        "--output",
-        type=Path,
-        default=ROOT / "results" / "benchmarks" / "fc2_eb_ring.json",
+        "--ring-map", choices=RING_MAPS, default=DEFAULT_RING_MAP,
+        help="EPG label -> ring angle map (amendment 2026-11-21); "
+             "'registered' reproduces the 2026-09-29 run",
     )
+    parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--smoke", action="store_true", help="2 configs, real net only")
     args = parser.parse_args()
+    if args.output is None:
+        args.output = default_output(
+            ROOT / "results" / "benchmarks" / "fc2_eb_ring.json", args.ring_map)
+    print(f"ring map: {args.ring_map} -- "
+          f"{RING_MAP_DESCRIPTION[args.ring_map]}", flush=True)
 
     import numpy as np
     from scipy import sparse
@@ -581,6 +623,12 @@ def main() -> int:
     instances = sub.instances.astype("U")
 
     # EPG ring angles (class-1 mapping; header).
+    # ASSUMPTION AC-1, amended 2026-11-21 (instrument-bug finding; header
+    # AMENDMENT): the label -> angle map is flygi.compass_map.
+    # "registered" is the frozen expression (it reflects the left
+    # half-ring); "amended" keeps the right half and reflects the left
+    # one. It decides which cells a seed angle drives and every decoded
+    # angle, circular variance and rotation rate below.
     epg_all = sub.indices_where("EPG")
     epg_idx, epg_angles = [], []
     for i in epg_all:
@@ -588,7 +636,7 @@ def main() -> int:
         if m:
             side, wedge = m.group(1), int(m.group(2))
             epg_idx.append(int(i))
-            epg_angles.append(((wedge - 1) * 2 + (0 if side == "L" else 1)) * 22.5)
+            epg_angles.append(ring_angle_deg(side, wedge, args.ring_map))
     epg_idx = np.asarray(epg_idx, dtype=np.int64)
     epg_angles = np.asarray(epg_angles)
     epg_radians = np.deg2rad(epg_angles)
@@ -622,6 +670,8 @@ def main() -> int:
     med_pos = float(np.median(base_real.data[base_real.data > 0]))
     results: dict[str, Any] = {
         "benchmark": "fc2_eb_ring (fidelity class 2: EB ring movable persistent bump)",
+        "ring_map": args.ring_map,
+        "ring_map_description": RING_MAP_DESCRIPTION[args.ring_map],
         "band_verbatim": BAND_VERBATIM,
         "class1_reference": {
             "script": "scripts/benchmarks/cx_ring.py",

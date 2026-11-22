@@ -33,13 +33,35 @@ frozen BEFORE this file existed; restated, not changed):
     < 90% of EPG or of PEN_a; degenerate (zero) all-PEN two-hop;
     compiled runtime absent.
 
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER data contact; the
+frozen text above is untouched, and every metric, null, seed, bar and
+BLOCKED floor is unchanged). The AC-1 wedge mapping above ran both
+bridge halves round the ring in the same direction, which reflects the
+left half-ring: it put L_k beside R_k, and in the fly L_k lies between
+R_(9-k) and R_(10-k). A reflected half-ring is not a fixed rotation,
+so the sentence "no metric depends on the fixed rotation" did not
+cover it. The map now lives in ONE place,
+flygi.compass_map, and this instrument takes --ring-map:
+  amended     (default) right half as registered, left half reflected;
+              ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2
+              R8, the wedge angles printed in Hulse et al. 2021
+              Fig. 16B.
+  registered  the frozen expression, kept so the 2026-10-10 run
+              reproduces to the last digit.
+Only the EPG label -> index map changes. PEN cells are still split by
+side letter alone. Full record, evidence and the pre-stated reading of
+each outcome: docs/arenas/compass_map_amendment_20261121.md.
+
 Data gate: runs where the compiled runtime lives (the cloud container
 lacks it). The PIPELINE itself is pure and is validated in-cloud on
 synthetic ring graphs, including against the real rewire machinery,
 before any data contact.
 
 Run:    python scripts/arenas/cx_topology_killtest.py
-Output: results/arenas/cx_topology_killtest.json (+ .log)
+Output: results/arenas/cx_topology_killtest.amended_map.json (+ .log);
+        with --ring-map registered, ...registered_map.json. The file
+        cx_topology_killtest.json is the 2026-10-10 registered run and
+        is no longer written by default.
 """
 
 from __future__ import annotations
@@ -59,6 +81,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "src"
 if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
+
+from flygi.compass_map import (  # noqa: E402
+    DEFAULT_RING_MAP, RING_MAP_DESCRIPTION, RING_MAPS, default_output,
+    ring_index)
 
 # --- frozen constants (killtest_design.md; do not tune) ---------------------
 N_WEDGES = 16
@@ -81,15 +107,23 @@ WEDGE_RE = re.compile(r"_([LR])(\d)")
 # Pure plumbing (unit-tested in-cloud on synthetic rings)
 # ---------------------------------------------------------------------------
 
-def wedge_index(instance: str):
-    """AC-1, cx_ring verbatim: _L1.._L8/_R1.._R8 -> 0..15, else None."""
+def wedge_index(instance: str, ring_map: str):
+    """_L1.._L8/_R1.._R8 -> 0..15, else None.
+
+    ASSUMPTION AC-1, amended 2026-11-21 (instrument-bug finding): the
+    label -> index map is flygi.compass_map.ring_index.
+    ring_map="registered" is the frozen cx_ring expression verbatim
+    (L_k beside R_k, INVALIDATED: it reflects the left half-ring);
+    ring_map="amended" keeps the right half and reflects the left one.
+    What breaks if the amended map is wrong: bandedness, the
+    mirror-peak and both p-values, for the real graph and every null."""
     match = WEDGE_RE.search(instance)
     if not match:
         return None
     side, wedge = match.group(1), int(match.group(2))
     if not 1 <= wedge <= 8:
         return None
-    return (wedge - 1) * 2 + (0 if side == "L" else 1)
+    return ring_index(side, wedge, ring_map)
 
 
 def relu_dense(block) -> np.ndarray:
@@ -269,15 +303,18 @@ def analyze(matrix, epg_idx, epg_wedges, pen_groups) -> dict[str, Any]:
 
 
 def run_pipeline(matrix, types, instances, n_nulls: int, log,
-                 rewire_fn=None) -> dict[str, Any]:
+                 rewire_fn=None, *, ring_map: str) -> dict[str, Any]:
     """The whole frozen decision pipeline, pure given its inputs:
     wedge parsing, real metrics, null distribution, bars. Returns the
-    record dict with 'verdict' of PASS / KILL, or 'blocked' set."""
+    record dict with 'verdict' of PASS / KILL, or 'blocked' set.
+    `ring_map` (amendment 2026-11-21) selects the EPG label -> index
+    map and nothing else. It is REQUIRED (keyword-only, no default):
+    a caller that forgets it must fail, not run the other map."""
     types = np.asarray(types)
     instances = np.asarray(instances)
     epg_all = np.flatnonzero(types == "EPG")
     epg_wedge_raw = np.array([
-        w if (w := wedge_index(instances[i])) is not None else -1
+        w if (w := wedge_index(instances[i], ring_map)) is not None else -1
         for i in epg_all])
     epg_cov = float((epg_wedge_raw >= 0).mean()) if epg_all.size else 0.0
     keep = epg_wedge_raw >= 0
@@ -300,6 +337,8 @@ def run_pipeline(matrix, types, instances, n_nulls: int, log,
 
     record: dict[str, Any] = {
         "hypothesis": "H-CX-RING-TOPOLOGY",
+        "ring_map": ring_map,
+        "ring_map_description": RING_MAP_DESCRIPTION[ring_map],
         "epg_wedge_coverage": epg_cov,
         "pen_coverage": pen_cov,
         "group_sizes": {k: int(v.size) for k, v in pen_groups.items()},
@@ -376,8 +415,15 @@ def check_prerequisites() -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="H-CX-RING-TOPOLOGY kill test (data-gated)")
-    parser.add_argument("--output", type=Path, default=OUT_JSON)
+    parser.add_argument("--ring-map", choices=RING_MAPS,
+                        default=DEFAULT_RING_MAP,
+                        help="EPG label -> ring index map (amendment "
+                             "2026-11-21); 'registered' reproduces the "
+                             "2026-10-10 run")
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        args.output = default_output(OUT_JSON, args.ring_map)
 
     missing = check_prerequisites()
     if missing:
@@ -397,6 +443,8 @@ def main() -> int:
         handle.flush()
 
     started = time.time()
+    log(f"ring map: {args.ring_map} -- "
+        f"{RING_MAP_DESCRIPTION[args.ring_map]}")
     from flygi.connectome.subcircuit import extract_subcircuit, select_nodes
     indices = select_nodes(RUNTIME_DIR, type_patterns=TYPE_PATTERNS)
     sub = extract_subcircuit(RUNTIME_DIR, indices)
@@ -407,7 +455,8 @@ def main() -> int:
             f"{EXPECTED_COUNTS}")
         return 3
 
-    record = run_pipeline(sub.matrix, sub.types, sub.instances, N_NULLS, log)
+    record = run_pipeline(sub.matrix, sub.types, sub.instances, N_NULLS, log,
+                          ring_map=args.ring_map)
     record["elapsed_s"] = round(time.time() - started, 1)
     args.output.write_text(json.dumps(record, indent=2, default=float))
     log(json.dumps(record, indent=2, default=float))

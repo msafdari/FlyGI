@@ -1,5 +1,491 @@
 # FlyGI durable worklog
 
+## November 21, 2026, 4:45 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
+
+The user's go, verbatim: "Yes, prepare the compass amendment and re-run."
+This entry is the freeze, at the git tag `compass-map-freeze-20261121`. No
+compass instrument has been run under the amended map. What had been seen
+under a corrected ordering before the freeze is listed below and in section
+9 of the single record, `docs/arenas/compass_map_amendment_20261121.md`.
+Every specific decision in that file was made by this local session under
+the user's one line. The user has not reviewed them one by one. It was
+frozen here and not in the cloud design session that froze the earlier
+registrations, because the go arrived here.
+
+**USER-REPORTED, not verified by me.** The user says they have done the
+first three items of the outreach drafts (the Kaggle reply, the note to
+the Hacker News moderators, the flyvis email) and have held the three
+emails that wait on the compass re-run.
+
+**The finding.** Nine compass scripts placed each EPG cell on the ring from
+its bridge label with AC-1, index = (glomerulus-1)*2 + (0 if L else 1),
+which puts L_k beside R_k. In the fly the two bridge halves run round the
+ring in opposite directions and L_k lies between R_(9-k) and R_(10-k). So
+the registered map reflected the left half-ring relative to the right one.
+Glomeruli 1 and 5 are the fixed points of that reflection. This is not the
+"fixed rotation" that each registration stating a limit said the map was
+correct up to. The eight-unit version, AC-B1, pooled L_k with R_k for the
+same reason.
+
+- MEASURED, `PYTHONPATH=src python scripts/arenas/compass_map_check.py`
+  (new, read-only; direct EPG to EPG synapse counts between different ring
+  positions, 6,956 synapses; 10,000 random label placements, seed 20261121;
+  on its frozen revision 13.7 s, 1.25 GB peak): the share of that count
+  between ring neighbours is 0.1872 under the registered map (random maps:
+  mean 0.1329, 95th percentile 0.2550, p 0.197) and 0.8170 under the
+  amended map (p 0.0001, the floor). Within two positions: 0.3029 (p
+  0.324) and 0.9327 (p 0.0001). Cross-side count alone, 5,765 synapses,
+  which is the only count that can tell the maps apart and is
+  ellipsoid-body coupling: 0.2258 and 0.9858. For all eight left
+  glomeruli the two right glomeruli that receive the most synapses are
+  the two the amended map puts beside it. The registered map gets that
+  right for k = 1 and 5.
+- ESTABLISHED, each read at source: Hulse et al. 2021 (eLife 10:e66039;
+  the wedges alternate between the bridge halves, a bump centred on L5
+  sits between R5 and R4, and Fig. 16B prints the wedge angles L1 0, L7
+  90, L5 180, L3 270; the full sixteen-wedge order of that figure is my
+  reading of the image); Wolff, Iyer and Rubin 2015 (the left bridge half
+  wraps the ellipsoid body clockwise and the right half counterclockwise;
+  tile and wedge regions coincide for glomeruli 1 to 8); Wolff and Rubin
+  2018 (the eight tile pairs of the P-EG tile cell); Turner-Evans et al.
+  2020 (Delta7 names list the glomeruli that receive the neuron's axons).
+- ESTABLISHED, connectome annotation: 35 of 42 MaleCNS Delta7 instance
+  names join L_k with R_(9-k) and the other 7 join L_k with R_(10-k).
+- MEASURED, `PYTHONPATH=src python scripts/arenas/biswas_fig1g_check.py
+  --image results/arenas/compass_amendment_20261121/biswas_v2_fig1g_crop.png`
+  (new, read-only; on its frozen revision 10.5 s, 1.32 GB peak; the crop is
+  page 2 of the source paper's version 2 PDF rendered 7,200 pixels wide,
+  SHA-256 1a988e38...01f97, local and not in the repository). Unit sizes in
+  the paper's Fig. 1g: EPG 6, 5, 6, 6, 6, 6, 5, 6 and Delta7 5, 6, 4, 6, 6,
+  6, 4, 5. Then block by block: of a declared family of 960 orderings of
+  the 46 EPG cells (one right and one left glomerulus per unit, labels
+  contiguous, matching those sizes), exactly one reproduces the figure's
+  256 EPG label-pair block means from OUR counts, at 0.23 grey levels of
+  error against 9.16 for the runner-up. It is the amended ring order cut
+  into L_k with R_(9-k) units. No value fitted by the recipe enters this;
+  the comparison fits one grey-per-count scale per hypothesis.
+  AGENT-REPORTED by a reviewer: fixing that scale from the colour bar
+  gives the same winner, and a wider search outside the family (hill
+  climbing over all contiguous label orders, all single-cell swaps) found
+  nothing else. This replaces the AGENT-REPORTED figure reading in the
+  entry below, and it is the evidence the grouping is adopted on. Sizes
+  alone would not do: 240 of the 40,320 possible left-right matchings
+  share them (MEASURED by enumeration).
+- THE REGISTERED CANARIES, at their tiers. The Biswas cross-check FIRED
+  on 2026-10-31 (both fitted r_a outside its 0.1 band), with AC-B1 named
+  first ("unresolved which"), and was not followed up for three weeks.
+  Stage A's blind ordering check had no threshold, so it could not fire:
+  it recorded 46.6 degrees on 2026-10-10 ("neither confirmed nor
+  refuted"), and a perfect synthetic ring read through the registered map
+  gives 45.0 to 50.6 degrees depending on the eigensolver (now a unit
+  test). INFERRED, bridge: that the real graph behaves like the synthetic
+  ring. Both were read as inconclusive.
+
+**The amendment.** Only the label map changes.
+- ASSUMPTION AC-1a (replaces AC-1): R_k at 22.5 + 45(k-1) degrees, as
+  registered, and L_k at 360 - 45(k-1) degrees, the left half reflected.
+  Ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8. They agree
+  with the four wedge angles Hulse et al. print in Fig. 16B and with the
+  order read from that figure, so the map has no free parameter. Still
+  assumed: that MaleCNS numbers the glomeruli as the literature does, and
+  which half it calls L. What would check the first: morphology, which we
+  do not load; the measured adjacency and the figure match are what it
+  predicts. What breaks if it is wrong: every position bar, decoded angle
+  and ring statistic of the eight instruments that use it. No registered
+  bar depends on a rotation sense.
+- ASSUMPTION AC-B1a (replaces AC-B1): L_k shares a Biswas unit with
+  R_(9-k). The paper never states its grouping in words. Its figure is
+  drawn that way (measured above). What breaks if it is wrong: the four
+  count blocks, every fitted value and the Delta7 assignment.
+- One helper, `src/flygi/compass_map.py`, standard library only. The map
+  is a required argument at every level, so a forgotten argument raises.
+  Each of the nine scripts takes `--ring-map` (`amended` by default,
+  `registered` reproduces the registered run), records the map, and writes
+  to `<name>.amended_map.json`. The registered result files are no longer
+  written by default.
+- Unchanged in every instrument: every bar, kill rule, BLOCKED floor,
+  null, seed, regime, grid, protocol and angle. Right-centred nominal
+  angles keep their numbers and centre cells (22.5 is R1). The scratchpad
+  settle map's eight write angles are left-centred and six of them change
+  centre cell.
+- DECISIONS. The A_Delta = 4 validity condition stays as registered
+  (B-R9, all eight rows). The null bar stays at three rewires. One
+  eight-unit grouping, no sweep. Stage B is re-run as the same
+  registration under its own change rule. The Stage A gate covers all of
+  Task 9's dynamics: Stage B, the seeding probe and class 3 are re-run
+  only if Stage A is PASS under the amended map, as the frozen text ("KILL
+  closes Task 9 with no dynamics built") requires. Each amended
+  instrument runs once, through `scripts/arenas/run_amended_once.sh`
+  (rules below). The scratchpad's qualitative structural rule is replaced
+  for status purposes by its darkness arm, D (decision 11, named as a
+  change). Statements that claim more than their bars measure are
+  narrowed on a PASS (decision 12): Stage A's "the shifter", the
+  "continuum" or "position-faithful" of Stage B, the probe and class 3,
+  and the Biswas statement's "applied once".
+- PRE-STATED readings for every outcome of every instrument are in
+  section 10 of the record: PASS, KILL, BLOCKED, a failure to finish
+  (whose one re-run is the next launch), an abandoned run, the gate
+  closed and an instrument not run to an outcome by the close, each with
+  its status word. No verdict (BLOCKED, two failures to finish or one not re-run, an
+  abandoned run, the gate closed, or not run to an outcome by the close) sets a status
+  to `invalidated`. After two failures to finish or an abandoned attempt
+  the printed output is quoted beside it as section 10 defines; a BLOCKED
+  outcome or a closed gate is recorded with its BLOCKED line or the
+  gate's reason. The exceptions: Stage B (stays `null`) and the two ring
+  benchmarks (each one's own EB ring entries of the module-verdict
+  program are marked invalidated; that hypothesis's status does not
+  change).
+- Context and wording rules, none decisional: Stage A's blind ordering
+  residual is reported with no reading (its value had been seen, below);
+  `scripts/arenas/cx_biswas_context_nulls.py` reads the fitted-compass
+  recipe on 200 unseen rewires, seeds 4265 to 4464; a Stage A PASS is
+  worded literally ("banded, and the left and right PEN_a halves put more
+  joint mass on a mirrored pair of offsets than at least 191 of those 200
+  rewires (k of 200 at or above it; p = ...)", because bar 2 passes with
+  up to 9 rewires at or above the real value), with "the two halves lean
+  in opposite directions" only if the two PEN_a mean offsets have
+  opposite signs, and then with the caveat that the amended tile geometry
+  alone could produce opposite offsets (INFERRED from the map), and apart
+  from that caveat never "shifter" or a claimed PEN shift (C6); a PASS of
+  Biswas, Stage B, the probe or class 3 is called position-following, and
+  keeps "position-faithful" or "continuum", only if every write of a
+  stated set follows: it settles within one ring position (22.5 degrees)
+  of its own write angle, and no other surviving write of the same arm
+  and cell, grid point or configuration, in the set or not, settles
+  within half a position of its settled angle, both boundaries included
+  and each distance rounded to 0.01 degrees (C7). In Stage B that
+  includes the 22.5 precheck write, read from its precheck line. Rule P
+  on the settle map uses the same test within each write style (the
+  other style's writes, its write at the same angle included, do not
+  count); on the 2026-09-27 record it gives 0 of 8 under either
+  reading.
+
+**Two frozen clauses were departed from, and both are named.** "Published
+values enter NOTHING but this comparison" was breached in discovery. The
+amended grouping was FOUND early on 2026-11-21 by a fact-check subagent of
+this session, checking a draft email to the paper's authors, whose
+unregistered scripts fitted three groupings and compared each with the
+published r_a. A second subagent found the same independently, and I
+re-ran five of the first one's six scripts (all but `null_cap_check.py`).
+It is ADOPTED on evidence that no value
+fitted by the recipe enters. "Applied ONCE to our compiled counts, no
+retuning" no longer holds: the recipe has been looked at under three
+groupings. The replacement close sentence is written in the record.
+
+**DISCLOSED: what had been seen before the freeze.**
+- AGENT-REPORTED, 00:02 to 00:30, two fact-check subagents (in memory, with
+  the instruments' own functions). The first wrote and ran the six
+  unregistered scripts kept under
+  `results/arenas/unregistered_checks/epg_lr_pairing_20261121/`: the
+  Biswas recipe under three groupings, 20 extra rewires, the cluster cap
+  lifted, the A_Delta = 4 root, the Fig. 1g unit sizes and the Fig. 5d
+  profile. Its `null_cap_check.py` output was not kept. The second fitted
+  the recipe under L_k with R_(9-k) (r_a 0.548034 and 0.437279, no fit at
+  A_Delta = 4 or on the three rewires) and reported Stage A under an
+  order with L_k next to R_(9-k): bandedness 0.8505, blind residual 6.6
+  degrees, maximum over the 200 registered rewires 0.334. So Stage A's
+  bar 1 is effectively known and that run is CONFIRMATORY for bar 1. My
+  summary of these reports in the entry below dropped the residual and
+  presented the scripts as my own check. Reviewers found both.
+- MEASURED by me, 00:41 to 00:45: a re-run of five of the first
+  subagent's six scripts, all but `null_cap_check.py` (the entry below).
+  The amended Biswas outcome had therefore been computed three times (by
+  the two subagents and by me), and the amended Biswas run is
+  CONFIRMATORY. The other neighbour pairing
+  also passes the verdict rule there, so across the three groupings tried
+  the verdict is the same; the print-precision r_a agreement is not.
+- MEASURED before the freeze: the two checks above (re-run once on their
+  final revisions at 10:37, results identical), and every instrument
+  under `--ring-map registered` (below).
+- PLUMBING ONLY, no result computed: the null-arm code of Stage B, the
+  probe and class 3 has never run on real data. A rewired full graph with
+  a non-registered seed builds (3.9 s, 2.38 GB) and steps at both gains;
+  the class-3 engine steps on a rewired subcircuit; and the three rewired
+  full graphs Stage B and the probe use, seeds 4242 to 4244, each build
+  and take a rate network (17 to 21 s each, 2.07 GB peak). No step was
+  taken on those three. A second-round reviewer also ran those paths on
+  synthetic graphs, to the end of each main(), with no exception.
+- NOT SEEN by anyone: any dynamics instrument under the amended map,
+  Stage A's amended mirror-peak, the amended null-decomposition readings.
+
+**Registered-path reproduction, MEASURED before the freeze** (each
+instrument with `--ring-map registered`, on its frozen file, compared with
+its registered record):
+- Ten runs between 04:02 and 04:45 Pacific, after the last change to any
+  of the nine registered instrument files or the helper (03:54); the
+  non-decisional C2 script and the two check scripts were last edited at
+  03:57 and 04:02, and no instrument imports them: cx_biswas_killtest (10 s, 1.25 GB
+  peak), cx_topology_killtest (27 s, 1.28 GB), cx_topology_nulls2 (13 s,
+  1.28 GB), cx_seeding_killtest (446 s, 0.50 GB), cx_class3_killtest
+  (989 s, 1.11 GB) and fc2_eb_ring in full (503 s, 1.11 GB): each JSON
+  IDENTICAL to its registered JSON in every field once run-time fields and
+  the new map keys are set aside. cx_heading_killtest (13 s, 0.50 GB): log
+  lines identical (retention 0.0000, circvar 0.661, angle 352.1, BLOCKED).
+  cx_ring.py at grid point 2.0/0.3 (31 s, 0.57 GB): identical to that row
+  of the tracked 2026-09-29 manifest. cx_scratchpad_premise.py main mode
+  (501 s, 0.48 GB): identical accuracies and kill condition. Its settle map
+  (52 s, 0.48 GB): identical to the tracked 2026-09-27 manifest.
+- So the registered path is MEASURED to reproduce the registered record
+  for all nine instruments. The limit: one of 21 grid points for the
+  class-1 benchmark. Class 3 uses seeded noise and still reproduces to the
+  last digit.
+- Console records are kept locally under
+  `results/arenas/compass_amendment_20261121/acceptance/`.
+
+**Recorded where it lives.** The amendment file; dated pointer sections
+appended to `task9_cx_latent/killtest_design.md`,
+`task9_cx_latent/killtest_design_reopening.md` and
+`task10_menu/killtest_design.md` (frozen text untouched); dated AMENDMENT
+blocks in the nine script headers and an ASSUMPTION comment at each call
+site; ASSUMPTIONS.md (AC-1 and AC-B1 INVALIDATED in place, new rows AC-1a
+and AC-B1a, a note on AC-FB2); EXPERIMENTS.yaml (a dated bullet on eleven
+records, statuses unchanged until the re-runs); both runbooks; the
+once-only wrapper `scripts/arenas/run_amended_once.sh`, its pinned-input
+list `scripts/arenas/run_amended_once.inputs.sha256` and its test
+`tests/test_run_amended_once.py`.
+
+**Checks run before the freeze.**
+- MEASURED: the comparison tests fail on the pre-amendment code. A perfect
+  ring with anatomical labels reads as bandedness 1.0 under the amended
+  map and 0.25 under the registered one; only one of the sixteen regular
+  pairings gives the source figure's unit sizes; a forgotten map argument
+  raises; a hard-coded map in a flag-driven script and a verbatim copy of
+  the frozen expression each fail a guard (a re-spelling would not).
+- MEASURED: the full suite on the final code, tests and registry (16:36 to 16:40 Pacific): 1041 passed, 15 skipped, 1 failed. The failure is `tests/test_league.py`, which rejects the pre-existing status `blocked` of H-T4T5-NATSTAT-DIRECTION (record, section 14, item 10).
+- MEASURED: the once-only wrapper, rewritten after the third review and
+  extended after each of the fourth to seventh reviews, in throwaway git
+  repositories with stub instruments: 204 scripted checks kept
+  outside the repository (16:30 to 16:34 Pacific), all passed; a subset
+  is in the suite as the 37 tests of `tests/test_run_amended_once.py`
+  (37 passed, 16:34 to 16:36). It accepts only the eleven
+  commands of the record's section 11 (refusing, for example, `--smoke`,
+  `--points`, `--trials`, `--config`, `--capture-file`, `--ring-map`,
+  and `--settle-map` on any other script); refuses inputs that differ
+  from the SHA-256 values pinned for the compiled runtime, the raw MaleCNS
+  pair table and the capture file; holds a lock so only one run goes at a time (two launches 0.3 s
+  apart: one refused); runs the instrument under `env -i` with PATH,
+  HOME, `PYTHONPATH=src` and `PYTHONDONTWRITEBYTECODE=1`; names each
+  record after its instrument; refuses a second first attempt and an
+  existing amended output; enforces the Stage A gate; checks
+  prerequisites (the compiled runtime; numpy, scipy, pandas, pyarrow and
+  yaml importing under the run's own environment, their versions written
+  into the record) and resources before it creates a record; refuses the
+  run if git cannot compare the tree with the freeze; writes every
+  refusal, start and end to `launch.log`; classifies by five ordered
+  tests on the record's lines (section 7, decision 7 of the record): a
+  verdict followed by a teardown traceback as finished, and a no-verdict
+  instrument as finished only when its record has "# JSON written:" and
+  "# exit status: 0", written in that order; a Python traceback, a native
+  crash (exit 139), a SIGKILL of the instrument (137), a watchdog kill and
+  a resource stop as failures to finish; a prerequisite exit as not
+  counted (its record set aside, by the next launch if its wrapper died
+  first); and an interrupt of the wrapper that finds the instrument still
+  alive at its next check (within about 2 s), an instrument stopped by
+  TERM (143), or a killed wrapper whose instrument then prints no verdict
+  line, as abandoned, while a signal it acts on after the instrument has
+  exited changes nothing and is noted in `launch.log`. It allows exactly one re-run, only after a
+  failure to finish, only of the same command, and as the next launch: it
+  refuses every other first attempt until that re-run is made. Launched as
+  section 11 prescribes, in a session of its own, it finished after the
+  shell that started it had exited.
+- MEASURED at 14:22, with
+  `env | grep -E '^(PYTHON|NPY_|OMP_|OPENBLAS_|MKL_|VECLIB_|FLYGI_|KAGGLE_|LANG=|LC_|LD_|DYLD_|VIRTUAL_ENV|CONDA)'`
+  in this session's tool shell: only `PYTHONDONTWRITEBYTECODE=1` is set.
+  That the registered-path reproductions' shell was the same at 04:02 is
+  assumed.
+- MEASURED at 14:29: the raw MaleCNS pair table
+  `data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather` hashes
+  to e35da783...afc1 (`shasum -a 256`, 5.4 s), which equals the source
+  hash the compiled runtime's manifest records for its weights. It had
+  not been pinned, though six of the eleven commands take every weight
+  from it; it is now the thirteenth pinned file, and `shasum -a 256 -c`
+  passed for all thirteen.
+- ASSUMPTION (decision 7 of the record): the machine is not restarted,
+  shut down or crashed during a run, any of which would leave an abandoned
+  attempt with no re-run. Automatic installation of macOS updates is on
+  (MEASURED 14:25 with `defaults read
+  /Library/Preferences/com.apple.SoftwareUpdate
+  AutomaticallyInstallMacOSUpdates`, which prints 1); the machine had been
+  up since 2026-09-06. What would check it: the boot time
+  (`sysctl kern.boottime`) against each record's start, read after the
+  runs.
+- The registered result files were copied read-only to
+  `results/arenas/registered_runs_preserved_20261121/` with a SHA256SUMS
+  file. The hashes are in section 12 of the record, with the hashes of the
+  local evidence behind sections 1, 3 and 11.
+
+**Review before the freeze.**
+- ROUND 1, three subagents in parallel (registration integrity, code
+  correctness, anatomy and evidence), read-only, forbidden to run any
+  instrument: 5 blockers, 8 majors, 15 minors, and no code bug. The
+  blockers were all in the text: the agent-reported 6.6 degree residual
+  had been left out of the disclosure while a 22.5 degree reading band was
+  being set for it; the registered-map acceptance runs had been made
+  before the freeze and described as after it; the file said the grouping
+  was "not chosen by the published r_a" when it had been found through
+  it; no rule turned the scratchpad re-run into a status; and "write
+  angles keep their centre cells" was false for the settle map. A
+  reviewer's cell-by-cell reading of the source figure, which I then
+  reproduced as `scripts/arenas/biswas_fig1g_check.py`, moved the
+  grouping from "the unit sizes fit" to "exactly one of 960 orderings
+  fits".
+- ROUND 2 was cut off by a monthly spend limit after about 19 minutes.
+  All three subagents failed together and returned nothing (0 result
+  lines, about 1.2 million tokens). Recovered from their transcripts: the
+  section 1 numbers, the section 4 tables, the figure comparison and the
+  spectral ranges, each recomputed independently and matching. None had
+  raised a finding.
+- ROUND 2 RETRIED at the user's word ("Try again"), with a probe first and
+  findings written to disk as found: 0 blockers, 7 majors, 17 minors. The
+  majors: the scratchpad position rule P could be met by two fixed points
+  (now the fc2 "follows" clause); the scratchpad rule silently replaced
+  the registered structural rule (now decision 11, named, with the rule
+  quoted); the disclosure understated the two subagents' authorship and
+  number of looks (now listed); some ring-benchmark outcomes had no
+  reading or a wrong one (now stated, with class 2 read by its own
+  registered flags); the wrapper did not check the freeze and could not
+  coexist with WORKLOG updates between runs (now a freeze tag with
+  WORKLOG-only commits allowed, tested); and the Stage A PASS sentence
+  still claimed opposite lateralisation (now literal, conditioned on the
+  mean offsets). While fixing these I found that four registry
+  statements claim more than their bars measure, and added decision 12
+  and C7. The second-round reviewers did not see decision 12, C7 or
+  decision 11's final wording.
+- ROUND 3, one subagent on everything changed after round 2, read-only:
+  5 blockers, 8 majors, 12 minors. The blockers: the wrapper's once-only
+  rule was keyed on a free label, so a finished instrument could run
+  again under a throwaway label; it passed every flag but two, so a
+  smoke or subset run would have used up the slot; it disagreed with
+  section 10 about what an outcome is (a native crash was refused its
+  re-run, a verdict followed by a teardown traceback was treated as a
+  crash, and the prerequisite exit had no consistent reading); the
+  pre-stated Stage A sentence said "than any of 200 rewires" where bar 2
+  allows up to 9 at or above the real value; and C7 did not say which
+  writes it covers and had no tie tolerance, so float rounding could
+  decide it. All fixed: the wrapper was rewritten and retested (above);
+  C6 now says "at least 191 of those 200 rewires (k of 200 at or above
+  it; p = ...)" with three literal sign clauses; C7 defines "follows"
+  once (within one ring position, no remnant shared within half a
+  position) and fixes the sets of writes. The majors: an operator
+  interrupt counted as "not an outcome", so two interrupts after a
+  visible KILL would have given `invalidated` (now "abandoned", with no
+  re-run and the printed lines quoted); rule P scored a consistent
+  half-step settle as 0 of 8 (fixed by C7's new rule); class 1's
+  "(fixed point, not a bump)" would have been withdrawn on any C1 pass
+  (now only with two following seeds); decision 12 left "applied once" in
+  the Biswas statement (now narrowed on a PASS); the Task 10 pointer
+  quoted a different close sentence (now verbatim); the Task 9 pointer
+  kept "continuum" in its fallback (now "meets the registered position
+  clause"); three places said the verdict "does not depend on the
+  grouping" (now "across the three groupings tried"); and the disclosure
+  said I re-ran six scripts where I re-ran five. The minors were fixed in
+  wording.
+- ROUND 4, one subagent on everything changed after round 3, read-only:
+  0 blockers, 2 majors, 11 minors. The majors: a direct kill of the
+  instrument (not the wrapper) earned a re-run (now an instrument exit of
+  129, 130, 131 or 143 with no marker is abandoned; SIGKILL stays a
+  failure, being indistinguishable from the system's memory kill); and
+  C7's rule (b) looked only inside the set of writes (now every surviving
+  write of the arm and cell counts). The minors brought the lock, the
+  launch log, the pinned inputs, the explicit environment, named fields
+  for three readings, and wording fixes. While fixing them I found the
+  `PYTHONHASHSEED` leak below.
+- ROUND 5, three subagents in parallel (the run procedure; whether every
+  pre-stated reading is mechanical; consistency, tiers and pronouns), seven
+  of the eleven blockers and majors then checked by a separate subagent
+  told to refute it: 2 blockers, 9 majors, 40 minors as raised (the
+  verifiers kept one blocker, made the other a major and one major a
+  minor; of the four left unchecked, three repeated or overlapped other
+  findings, and I checked the fourth, the Biswas one below). The blocker: the
+  re-run a failure to finish earns was optional and untimed, so it could
+  be declined after seeing the partial output, leaving the old status
+  standing; it is now the next launch, enforced by the wrapper (exit 90),
+  and a failure not re-run reads as two. The majors: a finished no-verdict
+  run could read as a failure if the wrapper died mid-trailer (the JSON
+  line now comes before the exit status); the raw pair table that six
+  commands take every weight from was not pinned (now it is); C7 left
+  open whether Stage B's calibration write and the settle map's other
+  write style count, and did not cover the Biswas G1 clause, which is the
+  class-3 clause verbatim (now all three are decided, and the Biswas
+  close sentence and statement keep "position-faithful" only under C7);
+  and the class-2 non-PASS reading carried the 2026-09-29 run's counts
+  and had two branches that could both apply (now ordered, with named
+  fields). Also fixed: decision 9's PASS sentence pre-wrote numbers from
+  the unregistered check (now filled from the run's JSON), and decision 7
+  never said in what order its classes are tested (now it lists the
+  wrapper's five tests). Among the other minors: a TERM after the instrument had
+  exited turned a crash into "abandoned"; the freeze check passed when git
+  failed; a dead wrapper's record could be read while its orphan still
+  wrote to it; the prescribed launch stayed in the shell's process group;
+  "abandoned by the operator" is now "abandoned after partial output",
+  because a shutdown or a machine crash leaves the same record; and
+  quotation, tier and pronoun fixes, including "himself" in the 1:00 AM
+  entry below, which is now "in their own words".
+- ROUND 6, three subagents in parallel on the round-5 changes only, with
+  a checklist of all 51 round-5 findings, then a verifier told to refute
+  each blocker or major: 0 blockers, 4 majors and 15 minors as raised; one
+  major confirmed, three made minor. The major: a class-1 no verdict left
+  two readings for the class-2 sentence "position-independence now
+  measured at TWO fidelity classes" and left class 1's visual-drive entry
+  un-invalidated (both now stated). Among the minors: a prerequisite exit
+  left in place by a wrapper that died blocked its slot for good (the next
+  launch now sets it aside, under the lock, and logs it); the class-3
+  sentence re-instated on a KILL had no fixed text (now quoted exactly);
+  "taking the re-run is not a choice" was false after the last command of
+  the order (now stated as it is); the instrument ignores INT and QUIT,
+  and HUP under the prescribed launch, so naming them as ways to stop it
+  was wrong; the launch command's `setsid() or die` could never fire (now
+  `> 0 or die`); a signal that finds the instrument already exited now
+  leaves a line in `launch.log`; and copy, count and quotation fixes.
+- ROUND 7, two subagents on the round-6 changes only (code and tests;
+  text across every file restating a changed rule), with a verifier for
+  any blocker or major: 0 blockers, 0 majors, 14 minors (several raised by
+  both). All fixed: the class-3 KILL sentence keeps the registered scope;
+  the signal sentence names INT to the wrapper and HUP where the launch
+  does not ignore them; the late-signal log line no longer claims when the
+  signal arrived, and the text no longer claims a signal arriving during
+  the trailer is logged; the set-aside is done by the next launch that
+  takes the lock, and the once-only sentences name that exception; the
+  sweep's two refusals are now tested; and copy fixes.
+
+**Found while mapping or reviewing, NOT acted on** (record, section 14):
+B-R9's all-rows positivity may be stricter than the source paper applied
+(INFERRED); a HYPOTHESIS that the fan-shaped-body bar 2 frame runs against
+the PFN column labels (unmeasured); the mirror-peak statistic and its
+docstring; the 2026-10-10 Stage A close supported a statement broader than
+its bar (both PEN_a mean offsets had the same sign); the registered
+position clauses can be met by a few fixed points; the rate engine raises
+on a non-finite state, so the instability floor cannot be counted; record
+gaps in the class-1 and class-3 registry text; the `test_league.py` status
+list; and a 64-bit `PYTHONHASHSEED` that `scripts/evaluate_random_baseline.py`
+leaves in the test process (MEASURED: after `tests/test_random_baseline.py`
+no new Python interpreter starts from that process; it failed 12 wrapper
+tests in one full run until they were given an explicit environment; it
+cannot reach the amended runs). Also: the untracked directory `.fly-or-fake-work/` holds its own git
+repository and is not in .gitignore, so files in this repository are
+staged by name, never with `git add -A`.
+
+**Ordered next steps.**
+1. Commit and push this freeze, tag it `compass-map-freeze-20261121` and
+   push the tag. Measure free memory and disk, then the amended runs in the
+      order of section 11 of the record, each through the wrapper, each once,
+   each launched detached in a session of its own.
+   After each run, hash its outputs into this file and commit it alone
+   before the next.
+2. Record every outcome at its tier, whichever way it falls: registry
+   statuses, ASSUMPTIONS, SYNTHESIS, HANDOFF, FACTS, the README table, and
+   a dated public correction for the locked paper.
+3. Finish the three held emails with the registered numbers, as drafts.
+   Nothing is sent by this session.
+4. The December 4 checklist of the entry below stands.
+
+**Limits of this entry.** Nothing here says what the compass does under the
+amended map. The amendment was written after data contact, by the same
+session that found the fault, and its reviewers were subagents of that
+session. Two of the re-runs are confirmatory. Rounds 1 to 6 each found a blocker or a major
+(the sixth, one major); round 7, on the round-6 changes only, found
+neither. A wider review could still find more.
+
 ## November 21, 2026, 1:00 AM Pacific | DOI and citation in the repo, awesome-fly pull request, outreach drafts fact-checked; the compass r_a divergence traced to our left-right wedge grouping (unregistered check)
 
 The user asked for items 1 and 2 of the November 20 next-steps list and
@@ -229,7 +715,7 @@ and use no connector.
    topology test and the class-1 to class-3 compass tests, then the
    claim documents and a public correction note for the locked paper.
 2. The user sends or declines the Kaggle reply and the flyvis email,
-   and writes the HN note himself.
+   and writes the HN note in their own words.
 3. The December 4 checklist above.
 
 **Limits of this entry.** The fit check is unregistered. Its grouping

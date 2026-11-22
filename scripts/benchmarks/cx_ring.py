@@ -108,8 +108,34 @@ cx_scratchpad_premise.py): the standard 16-wedge mapping onto 360 deg,
 rotation, which cancels in every within-run comparison used here.
 ======================================================================
 
-Writes results/benchmarks/cx_ring.json, saving partial results after
-every grid point.
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER the 2026-09-29
+sweep; the preregistration above is untouched and the C1 / C2 / AUX
+bands, the grid, the seed angles and every plumbing constant are
+unchanged). The ASSUMPTION just above is wrong in a way its own
+caveat does not cover. The interleaved mapping ran both bridge halves
+round the ring in the same direction, which reflects the left
+half-ring: it put L_k beside R_k, and in the fly L_k lies between
+R_(9-k) and R_(10-k). That is not a fixed rotation and it does not
+cancel: it decides which cells a seed angle writes (the 112.5 and
+292.5 wedges were two separate groups of cells about 135 deg apart on
+the real ring) and it folds the population-vector decode. The map now
+lives in ONE place, flygi.compass_map, and this script
+takes --ring-map:
+  amended     (default) right half as registered (R_k at 22.5 +
+              45(k-1) deg), left half reflected (L_k at 360 - 45(k-1)
+              deg); the wedge angles printed in Hulse et al. 2021
+              Fig. 16B. Seed angles keep their numbers and their
+              centre cells (22.5 = R1, 112.5 = R3, 202.5 = R5,
+              292.5 = R7).
+  registered  the frozen expression, kept so the 2026-09-29 sweep
+              reproduces.
+Full record, evidence and the pre-stated reading of each outcome:
+docs/arenas/compass_map_amendment_20261121.md.
+
+Writes results/benchmarks/cx_ring.amended_map.json (with --ring-map
+registered: cx_ring.registered_map.json), saving partial results after
+every grid point. results/benchmarks/cx_ring.json is the 2026-09-29
+registered sweep and is no longer written by default.
 """
 
 from __future__ import annotations
@@ -126,6 +152,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "src"
 if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
+
+from flygi.compass_map import (  # noqa: E402
+    DEFAULT_RING_MAP, RING_MAP_DESCRIPTION, RING_MAPS, default_output,
+    ring_angle_deg)
 
 GAINS = (0.8, 1.0, 1.2, 1.5, 1.8, 2.0, 2.5)
 LEAKS = (0.1, 0.3, 0.6)
@@ -166,8 +196,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="CX ring benchmark sweep")
     parser.add_argument("--config", default="configs/literal_rate_bioeye_lc.yaml")
     parser.add_argument(
-        "--output", type=Path, default=ROOT / "results" / "benchmarks" / "cx_ring.json"
+        "--ring-map", choices=RING_MAPS, default=DEFAULT_RING_MAP,
+        help="EPG label -> ring angle map (amendment 2026-11-21); "
+             "'registered' reproduces the 2026-09-29 sweep",
     )
+    parser.add_argument("--output", type=Path, default=None)
     parser.add_argument(
         "--points",
         default="",
@@ -179,6 +212,11 @@ def main() -> int:
         default=ROOT / "results" / "diagnostics" / "recognizer_frames.npz",
     )
     args = parser.parse_args()
+    if args.output is None:
+        args.output = default_output(
+            ROOT / "results" / "benchmarks" / "cx_ring.json", args.ring_map)
+    print(f"ring map: {args.ring_map} -- "
+          f"{RING_MAP_DESCRIPTION[args.ring_map]}", flush=True)
 
     import numpy as np
 
@@ -215,14 +253,19 @@ def main() -> int:
         instances = archive["instance"].astype("U")
 
     # EPG ring with wedge angles (machinery reused from cx_scratchpad_premise.py).
+    # ASSUMPTION AC-1, amended 2026-11-21 (instrument-bug finding; header
+    # AMENDMENT): the label -> angle map is flygi.compass_map.
+    # "registered" is the frozen expression (it reflects the left
+    # half-ring); "amended" keeps the right half and reflects the left
+    # one. It decides which cells a seed angle writes and every decoded
+    # angle, circular variance and rotation rate below.
     epg = np.flatnonzero(types == "EPG")
     angles = np.full(epg.size, np.nan)
     for i, name in enumerate(instances[epg]):
         match = re.search(r"_([LR])(\d)", name)
         if match:
             side, wedge = match.group(1), int(match.group(2))
-            index = (wedge - 1) * 2 + (0 if side == "L" else 1)
-            angles[i] = index * (360.0 / 16.0)
+            angles[i] = ring_angle_deg(side, wedge, args.ring_map)
     keep = ~np.isnan(angles)
     epg, angles = epg[keep], angles[keep]
     radians = np.deg2rad(angles)
@@ -302,6 +345,8 @@ def main() -> int:
 
     results: dict[str, Any] = {
         "group": "central_complex",
+        "ring_map": args.ring_map,
+        "ring_map_description": RING_MAP_DESCRIPTION[args.ring_map],
         "config": args.config,
         "internal_steps": INTERNAL_STEPS,
         "preregistration": {

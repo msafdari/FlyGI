@@ -71,8 +71,38 @@ one is used, flagged.
 
 Exit codes: 0 = PASS, 1 = KILL, 3 = BLOCKED.
 
+AMENDMENT 2026-11-21 (INSTRUMENT-BUG FINDING, AFTER data contact; the
+frozen text above is untouched, and the recipe, fits, validity
+conditions, G1 bars, null bar, seeds, cluster cap and BLOCKED floors
+are all unchanged). The AC-B1 label convention above -- unit =
+(glomerulus digit - 1) mod 8 with L and R merged -- pooled L_k with
+R_k. Those two half-wedges are neighbours on the ring only for k = 1
+and 5; in the fly L_k lies between R_(9-k) and R_(10-k). The
+registered canary (the published-r_a cross-check, AC-B1 its first
+named suspect) fired on the 2026-10-31 run. The unit map now lives in
+flygi.compass_map and this instrument takes --ring-map:
+  amended     (default) L_k shares a unit with R_(9-k): R_k -> k-1,
+              L_k -> 8-k. It reproduces the unit sizes of the source
+              paper's own Fig. 1g (EPG 6,5,6,6,6,6,5,6, read from the
+              figure; membership is inferred from the sizes) and is
+              the pairing 35 of 42 Delta7 instance names carry.
+  registered  the frozen expression, kept so the 2026-10-31 run
+              reproduces to the last digit.
+Only epg_unit_from_instance changes. DISCLOSED: the amended grouping
+was FOUND on 2026-11-21 in an unregistered check that fitted three
+groupings and compared each with the published r_a, so the frozen
+clause "published values enter NOTHING but this comparison" was
+breached in discovery, and the recipe has by now been applied under
+three groupings, not once. The grouping is ADOPTED on evidence that
+uses no fitted value. On an amended run the r_a cross-check is not an
+independent canary. Full record, evidence and the pre-stated reading of each
+outcome: docs/arenas/compass_map_amendment_20261121.md.
+
 Run:    python scripts/arenas/cx_biswas_killtest.py
-Output: results/arenas/cx_biswas_killtest.json (+ .log)
+Output: results/arenas/cx_biswas_killtest.amended_map.json (+ .log);
+        with --ring-map registered, ...registered_map.json. The file
+        cx_biswas_killtest.json is the 2026-10-31 registered run and
+        is no longer written by default.
 """
 
 from __future__ import annotations
@@ -92,6 +122,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "src"
 if str(SOURCE) not in sys.path:
     sys.path.insert(0, str(SOURCE))
+
+from flygi.compass_map import (  # noqa: E402
+    DEFAULT_RING_MAP, RING_MAP_DESCRIPTION, RING_MAPS, default_output,
+    ring_unit)
 
 # --- frozen constants (registration + G1 bars verbatim) ----------------------
 N_UNITS = 8
@@ -177,18 +211,36 @@ def mean_angle_a6(profile: np.ndarray) -> float:
 # Coarse-graining (their Methods, replicated verbatim)
 # ---------------------------------------------------------------------------
 
-def epg_unit_from_instance(name: str) -> int | None:
-    """AC-B1 as corrected 2026-10-31: unit = (PB glomerulus digit - 1)
-    mod 8, L/R merged -- OUR convention (parsed with the class-3
-    instrument's WEDGE_RE, not its 16-half-wedge angles). After the
-    adversarial-review correction every fitted/simulated block is
-    circulant, so a global rotation of unit labels is exactly
-    immaterial for all three configurations (measured; G1 also seeds
-    all rotations)."""
+def epg_unit_from_instance(name: str, ring_map: str) -> int | None:
+    """EPG instance label -> ring unit 0..7 (assumption AC-B1).
+    `ring_map` is REQUIRED: a caller that forgets it must fail.
+
+    ring_map="registered" -- AC-B1 as corrected 2026-10-31: unit = (PB
+    glomerulus digit - 1) mod 8, L/R merged -- OUR convention (parsed
+    with the class-3 instrument's WEDGE_RE, not its 16-half-wedge
+    angles). INVALIDATED 2026-11-21: it pools L_k with R_k, which are
+    ring neighbours only for k = 1 and 5.
+
+    ring_map="amended" -- ASSUMPTION AC-B1 as amended 2026-11-21
+    (instrument-bug finding): L_k shares a unit with R_(9-k), i.e.
+    R_k -> k-1 and L_k -> 8-k, each unit two adjacent half-wedges
+    (flygi.compass_map.ring_unit). What it would take to check it:
+    the source paper's unit table, which is not published. Its Fig. 1g
+    unit SIZES are what this grouping reproduces; membership is
+    inferred from them (bridge and the full evidence in the amendment
+    record). What breaks if it is wrong: the four count blocks, every
+    fitted gamma and r_a, and the Delta7 assignment derived from the
+    EPG units.
+
+    After the 2026-10-31 adversarial-review correction every
+    fitted/simulated block is circulant, so a global rotation of unit
+    labels is exactly immaterial for all three configurations
+    (measured; G1 also seeds all rotations). Regrouping which
+    half-wedges share a unit is NOT a rotation."""
     match = WEDGE_RE.search(name)
     if not match:
         return None
-    return (int(match.group(2)) - 1) % N_UNITS
+    return ring_unit(match.group(1), int(match.group(2)), ring_map)
 
 
 def assign_delta7_units(matrix_abs, epg_idx: np.ndarray,
@@ -952,8 +1004,15 @@ def check_prerequisites() -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="H-CX-BISWAS-FITTED kill test (data-gated)")
-    parser.add_argument("--output", type=Path, default=OUT_JSON)
+    parser.add_argument("--ring-map", choices=RING_MAPS,
+                        default=DEFAULT_RING_MAP,
+                        help="EPG label -> ring unit map (AC-B1, "
+                             "amendment 2026-11-21); 'registered' "
+                             "reproduces the 2026-10-31 run")
+    parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        args.output = default_output(OUT_JSON, args.ring_map)
 
     missing = check_prerequisites()
     if missing:
@@ -973,6 +1032,8 @@ def main() -> int:
         handle.flush()
 
     started = time.time()
+    log(f"ring map: {args.ring_map} -- "
+        f"{RING_MAP_DESCRIPTION[args.ring_map]}")
     gate = validate_gate()
     log(f"in-cloud gate: pass={gate['pass']} "
         f"(recovery {gate['recovery']['pass']}, synthetic G1 "
@@ -1007,7 +1068,7 @@ def main() -> int:
 
     units, labelled = [], []
     for i in epg_idx:
-        unit = epg_unit_from_instance(instances[i])
+        unit = epg_unit_from_instance(instances[i], args.ring_map)
         if unit is not None:
             units.append(unit)
             labelled.append(i)
@@ -1075,6 +1136,9 @@ def main() -> int:
 
     verdict = assemble_verdict(real, nulls)
     record = {"hypothesis": "H-CX-BISWAS-FITTED",
+              "ring_map": args.ring_map,
+              "ring_map_description": RING_MAP_DESCRIPTION[args.ring_map],
+              "epg_unit_sizes": wedge_sizes,
               "gate": gate, "real": real, "nulls": nulls,
               "ra_cross_check": cross,
               "g2": {"decisional": False,

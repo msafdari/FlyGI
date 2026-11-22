@@ -1,0 +1,13 @@
+f5553b59d4efaab36600cee5c319d524e3023b27906642720c634f3a000babb9  data/processed/male-cns-v1.0/literal-rate-signed-modulators/graph.npz
+09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d  data/processed/male-cns-v1.0/literal-rate-signed-modulators/groups.npz
+0286615f7cac594afea986742ed0113112e2d7322c853d4352e26eb8c16671e1  data/processed/male-cns-v1.0/literal-rate-signed-modulators/manifest.json
+2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c  data/processed/male-cns-v1.0/literal-rate-signed-modulators/node_metadata.npz
+b832cbbcc31d55b5d91ed14f6c32713d1fd69ae8b7c47a053af79fd28850a39b  data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921/graph.npz
+09736379ce989268080f57b64f357e800cf446972007c1af2287a86b9985a89d  data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921/groups.npz
+5ac5e0dd233fa828260842fffa8e27286493fde0bff399b20e0d039c4355e082  data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921/manifest.json
+2a84309be4f1ea860032476390de1ffa3b8ce635710898a13466a29e4d00eb0c  data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921/node_metadata.npz
+407ff14441c830d22b059459bc3de5c4e14a18eee882e82ec4a1fe55dad4001e  data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921/provenance.json
+ebc2b699e541330097a257003c2346f367d4beda1f04e88b2aaa1e1542db1a8d  data/processed/male-cns-v1.0/literal-rate-signed-modulators/nulls/degree_preserving/seed-20260921/retinotopy.npz
+ebc2b699e541330097a257003c2346f367d4beda1f04e88b2aaa1e1542db1a8d  data/processed/male-cns-v1.0/literal-rate-signed-modulators/retinotopy.npz
+e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1  data/raw/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+50e926f0476666bd7b9df836f3d820b4fe8d9315e85d32aa5353e9b46aa07b40  results/diagnostics/recognizer_frames.npz

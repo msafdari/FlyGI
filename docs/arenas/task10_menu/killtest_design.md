@@ -1151,3 +1151,156 @@ both outside the 0.1 band -- our counts fit a DIFFERENT member of
 their realization family, with AC-B1/AC-B2 the registered suspects
 (count-export differences a further unverified candidate). A PASS is
 never reported as a reproduction of their numeric realization.
+
+### Sections 3 and 7 instrument-bug finding and amendment (dated 2026-11-21; AFTER data contact; frozen text above untouched)
+
+Filed under the rule at the top of this file ("Changes after first
+data contact require a recorded instrument-bug finding and a full
+re-run"). The full record is
+`docs/arenas/compass_map_amendment_20261121.md`. This section is the
+pointer and the part that concerns H-CX-BISWAS-FITTED (section 3) and
+H-STAGEA-NULL-DECOMPOSITION (section 7). Its decisions were made by
+the local session that wrote it, under the owner's one-line go.
+
+FINDING, section 3. AC-B1 as frozen pooled L_k with R_k (unit =
+(instance digit - 1) mod 8, L/R merged). Those two ring positions are
+neighbours only for k = 1 and 5: in the fly L_k lies between R_(9-k)
+and R_(10-k). The registered canary fired on 2026-10-31 with AC-B1 its
+first named suspect, the close recorded "unresolved which", and it was
+not followed up for three weeks.
+
+HOW THE AMENDED GROUPING WAS FOUND. Early on 2026-11-21 a fact-check
+subagent of the local session, checking a draft email to the paper's
+authors, wrote and ran UNREGISTERED scripts that fitted the recipe under
+three groupings and compared each fit with the published r_a. L_k with
+R_(9-k) matched to print precision (0.5480 and 0.4373 against 0.548 and
+0.437). A second subagent found the same independently, and the session
+re-ran five of the first one's six scripts (all but `null_cap_check.py`).
+So two frozen clauses were departed
+from, and both are named here. "Published values enter NOTHING but this
+comparison" was BREACHED in discovery. "Applied ONCE to our compiled
+counts, no retuning" no longer holds: regrouping changes no fitted
+quantity and no recipe step, but the output was compared with the
+published values under three groupings before one was adopted.
+
+WHAT IT IS ADOPTED ON, none of it a value fitted by the recipe.
+MEASURED (`scripts/arenas/biswas_fig1g_check.py`): the source paper's
+Fig. 1g shows EPG units of 6, 5, 6, 6, 6, 6, 5, 6 neurons, and compared
+cell block by cell block with our own MaleCNS counts, of a declared
+family of 960 orderings of the 46 EPG cells (one right and one left
+glomerulus per unit, labels contiguous, matching those sizes) exactly
+one fits (0.23 grey levels of error, the runner-up 9.16): the amended
+ring order, cut into L_k with R_(9-k) units. A wider search by a
+reviewer found nothing else (agent-reported). ESTABLISHED: 35 of the 42
+MaleCNS Delta7 instance names join L_k with R_(9-k). Anatomy alone
+excludes the registered pooling and does not choose between the two
+neighbour pairings. The figure does.
+
+AMENDMENT, section 3. AC-B1 as amended: L_k shares a unit with
+R_(9-k), i.e. R_k to unit k-1 and L_k to unit 8-k. Nothing else
+changes. Recipe, fits, validity conditions (B-R9 included: denominator
+positivity on all eight rows), the cluster cap, the tie rule, G1, the
+three declared A_Delta configurations, the null bar of three rewires
+(seeds 4242+0..2), the cross-check band and every BLOCKED floor stand
+as frozen. The instrument takes `--ring-map` (`amended` by default,
+`registered` to reproduce the 2026-10-31 run, which it did before the
+freeze, field for field).
+
+THE AMENDED RUN IS CONFIRMATORY. The unregistered check had already
+seen its outcome (G1 8 of 8 at A_Delta 8 and 6; no valid fit at
+A_Delta = 4; no valid fit on 23 rewires). On it the cross-check is not
+an independent canary. The other neighbour pairing, L_k with R_(10-k),
+also passes the verdict rule in that check, so across the three
+groupings tried the verdict is the same; the r_a agreement is not. A
+PASS is still never
+reported as a reproduction of their numeric realization.
+
+REPLACEMENT CLOSE SENTENCE for a PASS, copied verbatim from amendment
+section 7, decision 9, with its conditions: "Given fitted per-type
+physiology, the Biswas recipe applied to our MaleCNS counts under the
+amended EPG grouping gives an EPG-Delta7 realization that holds a
+position-faithful bump at [the configurations that pass], and none of
+the three registered degree-preserving rewires passes where it does."
+"Position-faithful" is kept only if every write of the Biswas set
+follows (amendment section 8, C7). Otherwise "holds a position-faithful bump"
+becomes "holds a bump that meets the registered G1 position clause",
+and the final angles are quoted. If the run shows no valid fit on any
+rewire at any configuration, the last clause becomes "and none of the
+three registered degree-preserving rewires admits a valid fit at any
+configuration". The sentence goes on, each bracket filled from the
+run's JSON: "The recipe has been looked at under three EPG groupings in
+all. The instrument returned PASS under the registered grouping on
+2026-10-31. Applied by hand to the per-configuration results of an
+unregistered in-memory check, the verdict rule gives PASS under the
+other two as well. So across the three groupings tried the verdict is
+the same. The r_a values are not. Under the amended grouping this run
+gives r_a [`ra_cross_check.8.fitted_ra`] at A_Delta 8 and
+[`ra_cross_check.6.fitted_ra`] at A_Delta 6 (published 0.548 and
+0.437), and at A_Delta 4 [no valid fit, or a valid fit with r_a
+`ra_cross_check.4.fitted_ra` (published 0.391), as
+`real.configs.4.valid_fit` says]. The unregistered check gave 0.5480,
+0.4373 and no valid fit at A_Delta 4 under the amended grouping, and
+0.5510, 0.4836 and 0.3970 under the other neighbour pairing, within the
+registered 0.1 band at all three. The amended grouping was first
+noticed through its agreement with the published values at A_Delta 8
+and 6 in that check." A configuration with no valid fit in the run is
+named as such in its bracket. If C2 finds m above 0, the first sentence
+ends, after "passes where it does" (or "at any configuration"), with
+"; m of n further rewires (seeds 4265 to 4464) pass G1 at some
+configuration" (amendment section 8, C2).
+
+CONTEXT, non-decisional and declared now:
+`scripts/arenas/cx_biswas_context_nulls.py` reads the same recipe on
+200 further rewires, seeds 4265 to 4464, none looked at before.
+
+FINDING AND AMENDMENT, section 7. The decomposition has no map of its
+own. It calls Stage A's run_pipeline, whose AC-1 map reflected the
+left half-ring (Task 9 registration, same date). It now passes
+`--ring-map` through. The premise above quotes the registered-map
+Stage-A numbers (0.5881, 0.3376, 0.01445, 0.00792): those are
+historical. Families, seeds, floors and the reading rule stand as
+frozen, and "run_pipeline VERBATIM" still holds. Before the freeze it
+reproduced its 2026-10-28 readings under `--ring-map registered`.
+
+RE-RUN, full, once each. PRE-STATED: section 3 PASS keeps the status
+supported with the amended numbers and the close sentence above, and
+the statement's "applied once to our counts" becomes "applied to our
+counts (looked at under three EPG groupings; amendment section 7,
+decision 9)" and, unless every write of the Biswas set follows
+(amendment section 8, C7), its "sustains a position-faithful heading
+bump" becomes "sustains a heading bump that meets the registered G1
+position clause"; KILL is refuted; whatever the outcome, the 2026-10-31
+sentences "our counts fit a DIFFERENT member of their realization
+family" and "count-export differences are a further unverified
+candidate" are withdrawn and the amended cross-check is quoted in their
+place; BLOCKED, including the registered "no valid fit at any
+configuration" floor, is no verdict and the status becomes
+`invalidated`. Section 7 runs whatever Stage A returns and stays a
+refinement with readings and no verdict; its readings are replaced by
+the amended ones and the decomposition sentence is rewritten from them
+by the template of amendment section 10, item 3 (the within-pre weight
+family primary, AC-N1), or is "not applicable" for a statistic on which
+Stage A does not separate from its rewires, and for every statistic if
+Stage A has no verdict. A family that is blocked or not applicable is
+reported as such; the status stays supported; if every family is
+blocked (exit 3), no verdict: status `invalidated`. What counts as finished, failed or
+abandoned is amendment section 7, decision 7, by its ordered tests: a
+crash, a watchdog kill or a resource stop earns one fresh re-run,
+unchanged, made as the next launch, and a second failure, or a failure
+not re-run, is "no verdict"; stopping a run before the instrument
+finishes, by TERM to the wrapper or to the instrument, by INT to the wrapper or
+by HUP (INT and HUP only where the launch does not ignore them), is
+recorded as abandoned, with no re-run (a SIGKILL or any other signal that
+kills the instrument is a failure to finish; the instrument itself ignores
+INT and QUIT, and HUP under the prescribed launch). After two failures to finish or an
+abandoned attempt, the printed output is quoted beside the status as
+section 10 of the amendment defines; a BLOCKED outcome or a closed gate
+is recorded with its BLOCKED line or the gate's reason.
+
+SECTION 4 (H-FB-COLUMNAR-TOPOLOGY) IS NOT AMENDED. Its instrument does
+not use the AC-1 map. It has its own glomerulus frame in which the two
+bridge halves already run in opposite directions, and its bar 1 uses
+no left or right label. AC-FB2's phrase "Stage-A's PB frame" was never
+true of the code: Stage A's registered frame interleaved, the FB
+instrument mirrors. That wording is corrected here by this note and
+the frozen text is left as written.
