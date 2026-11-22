@@ -142,6 +142,28 @@ to 4:41 PM here (the tagged copy keeps the original).
   `visual N=120: {'accuracy': 0.5, 'mean_epg_mass': 0.10606265906626504}`
   JSON: kill_condition_met true. By section 10 item 9 of the record: K (visual accuracy at N = 50 at or below 0.6) is met at 0.5, so H-CX-SCRATCHPAD is `refuted`, as registered; D is met as well (darkness 0.5).
   SHA-256: record `11be98d285328fcb2ff68888b703cc30f8b999de7e548c98610b12f34c626ca3`; JSON `58366ce8dc79a97e9c298ed86abd76a744f4a5c545309eb48a5fc25d5e69c16c`.
+- **cx_scratchpad_settle_map** (first). Started 2026-11-22T01:41:43Z, finished 2026-11-22T01:42:36Z; exit status 0; peak sampled resident memory 464496 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3382348 KB; system memory free 55%.
+  Printed result lines (the settle-map table):
+  `drive write   0.0 -> settled     nan mass 0.0000`
+  `drive write  45.0 -> settled  270.00 mass 0.0004`
+  `drive write  90.0 -> settled  270.00 mass 0.0004`
+  `drive write 135.0 -> settled  270.00 mass 0.0000`
+  `drive write 180.0 -> settled  191.57 mass 0.2081`
+  `drive write 225.0 -> settled  191.55 mass 0.2085`
+  `drive write 270.0 -> settled  162.57 mass 0.1993`
+  `drive write 315.0 -> settled     nan mass 0.0000`
+  `inject write   0.0 -> settled     nan mass 0.0000`
+  `inject write  45.0 -> settled  270.00 mass 0.0003`
+  `inject write  90.0 -> settled  270.00 mass 0.0003`
+  `inject write 135.0 -> settled     nan mass 0.0000`
+  `inject write 180.0 -> settled  191.71 mass 0.2055`
+  `inject write 225.0 -> settled  191.76 mass 0.2051`
+  `inject write 270.0 -> settled  191.47 mass 0.2080`
+  `inject write 315.0 -> settled     nan mass 0.0000`
+  By section 10 item 9 of the record (applied at the close): P is not met, 0 of 8 writes follow in either style (6 and 5 writes alive), so the 2026-09-27 reinterpretation on H-CX-RING-ATTRACTOR stands on the amended map, with this table quoted in place of "near 222" and "near 90".
+  SHA-256: record `068cc66b636726e4a877668438a64017a3f9ac17e24b53cdf812fbf70643ae80`; JSON `511aba240eaac114d3189a19fcaf609058335c6fdf2c187a5b34212920ca34f4`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
