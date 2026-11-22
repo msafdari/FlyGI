@@ -36,6 +36,17 @@ to 4:41 PM here (the tagged copy keeps the original).
   `CONTEXT READING COMPLETE (non-decisional)`
   By C2 and decision 9 of the record, m = 2 of n = 200 is reported as a limit on the wiring-specificity sentence, in the fixed form: "; 2 of 200 further rewires (seeds 4265 to 4464) pass G1 at some configuration". No status changes on it.
   SHA-256: record `035cac85d74599804f77f5f2101f9dcde8c58777a6e8bb5a0262672112b6ceed`; JSON `0012a3510b544533c0398bbf788f798339b2d0b71bd9b1a0095f1fb46010b41d`; log `a3321aba18cf02b1ad36c70e95d5fc3f740fbfa214902c6ad0cd03e8de7ae886`.
+- **cx_topology_killtest** (first). Started 2026-11-22T00:46:50Z, finished 2026-11-22T00:47:18Z; exit status 0; peak sampled resident memory 1148000 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3194920 KB; system memory free 55%.
+  Printed result lines:
+  `real: bandedness 0.8505, offsets PEN_a_L=0! PEN_a_R=0! PEN_b_L=0! PEN_b_R=0!, mirror-peak a=0.0347 b=0.0486, spectral residual 6.6 deg`
+  `"null_bandedness_max": 0.3341518585863944, "null_mirror_peak_max": 0.007983389733539483, "p_banded": 0.004975124378109453, "p_mirror_peak": 0.004975124378109453`
+  `real.offsets: PEN_a_L mean_offset 0.25440957427445937, PEN_a_R mean_offset -0.2581756819368851`
+  `"bars": {"banded": true, "shifter": true}`
+  `VERDICT: PASS`
+  So the Stage A gate is open (Stage B, the probe and class 3 run next). By C6, k = 201 x p_mirror_peak - 1 = 0, and the PEN_a mean offsets have opposite signs, so the PASS sentence takes C6's second clause.
+  SHA-256: record `7ed48e0f6b5700db80c80857c2041007212aad879a5ab095032cf4da06f5c541`; JSON `56402d1a1f5279a551b0d178be52401032716c8138a9e3d57e47e416ea57c3a8`; log `67734b1c2d54b062278328aef9bda65ce67dd8b70e0ef242a9116577d4e8ec05`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
