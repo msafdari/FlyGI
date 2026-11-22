@@ -1,6 +1,33 @@
 # FlyGI durable worklog
 
-## November 21, 2026, 4:45 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
+## November 21, 2026, 4:42 PM Pacific | Compass amended runs, one at a time against the freeze
+
+Each run below went through `scripts/arenas/run_amended_once.sh`, launched
+detached in its own session, on the files frozen at the tag
+`compass-map-freeze-20261121`. For each: the record's classification, the
+printed result lines, and the SHA-256 of the console record, the JSON and
+the log (each where it exists). This file is committed alone after each
+run, before the next. Statuses do not move here; they move at the close,
+by section 10 of `docs/arenas/compass_map_amendment_20261121.md`. The
+freeze commit b68a584 was made at 16:41:26 Pacific; the freeze entry below
+said 4:45 PM, written just before the commit, and its header is corrected
+to 4:41 PM here (the tagged copy keeps the original).
+
+- **cx_biswas_killtest** (first). Started 2026-11-22T00:42:02Z, finished 2026-11-22T00:42:13Z; exit status 0; peak sampled resident memory 1059680 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3390492 KB; system memory free 55%.
+  Printed result lines:
+  `EPG wedge sizes: [6, 5, 6, 6, 6, 6, 5, 6]`
+  `real A_Delta=8: valid_fit=True r_a=0.5480 (published 0.548, delta +0.0000) G1 8/8`
+  `real A_Delta=6: valid_fit=True r_a=0.4373 (published 0.437, delta +0.0003) G1 8/8`
+  `real A_Delta=4: valid_fit=False`
+  `null seed 4242: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}`
+  `null seed 4243: tie_fraction 0.000 configs {8: (False, False), 6: (False, False), 4: (False, False)}`
+  `null seed 4244: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}`
+  `VERDICT: PASS`
+  SHA-256: record `f448521435a6afdc5d2b896568c9864664867b5e02add082f6034f631a8588d6`; JSON `5dea16a9b6fccf7b352d809aba2491fba3ceb833d9711ded4c1a67dbb7f66261`; log `24ab854e559a305d1abe85c28543d8c41cb4017d7ffbaca5d29c089fb0f90b13`.
+
+## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
 The user's go, verbatim: "Yes, prepare the compass amendment and re-run."
 This entry is the freeze, at the git tag `compass-map-freeze-20261121`. No
