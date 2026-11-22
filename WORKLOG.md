@@ -56,6 +56,14 @@ to 4:41 PM here (the tagged copy keeps the original).
   `[sign] bandedness: does not separate (p 0.44776); mirror-peak: does not separate (p 0.48756)`
   Null maxima: within-pre bandedness 0.6526, mirror-peak 0.01914; global 0.6561, 0.01874 (real 0.8505, 0.03474). Every family's invariants valid.
   SHA-256: record `565a79d40f287de2060209056a431fc01b7db0f8fd38cbdb0647b777d369a5bc`; JSON `4528e7ddaaaa66329b391996e6d9ea81963395c907764753be601bcbeb86ebb0`; log `86dbcd83d7fdcdf0020e6165afd51477289fb0bd182519aa730b688772e6eee5`.
+- **cx_heading_killtest** (first). Started 2026-11-22T00:48:48Z, finished 2026-11-22T00:49:02Z; exit status 3; peak sampled resident memory 485408 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3389772 KB; system memory free 56%.
+  Printed result lines:
+  `precheck (cal 22.5): retention 0.0000, circvar 0.176, angle 294.1`
+  `BLOCKED: calibration-angle persistence precheck failed (AC-2: the measured gain-1.5 regime did not reproduce)`
+  A block at the precheck writes no JSON (the log is hashed). By section 10 item 4 of the record, H-CX-HEADING-LATENT stays `null` as recorded on 2026-10-10, now on the amended map.
+  SHA-256: record `3ddf5de7375dbd9982a1d83e9c89e41c4b0fbac7d8d7fc74c8b4596bd1cd0591`; log `2d63338ed927144cba5ddccfb413522e9b3a098a5d4a01a4168f4a93c863bea5`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
