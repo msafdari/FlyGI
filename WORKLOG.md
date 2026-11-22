@@ -130,6 +130,18 @@ to 4:41 PM here (the tagged copy keeps the original).
   `scored: C1 heldout-persist False follows False n_pos 1 -> C1 False | C2 heldout False | PASS False`
   Read from the JSON (amendment section 10, item 8, applied at the close): verdict block passed false, attribution_holds false; the real network's calibration ran 35, 105 and 70 rows with 0 calibration passes in each; 157 rows alive, none at or below circular variance 0.6 (smallest 0.8337); scored settled angles 22.5: 169.43, 112.5: 135.47, 202.5: 179.71, 292.5: 182.27. The script writes no separate log; the console record is its log.
   SHA-256: record `e3a756d057fa26cbabf17932954068766bbcea22ff4a08938cfd72d973a6a2ce`; JSON `f9b812d1299053c1530d67ca449ea30eaef167ab0595ef060664bf470cd3ca37`.
+- **cx_scratchpad_premise** (first). Started 2026-11-22T01:32:43Z, finished 2026-11-22T01:41:04Z; exit status 0; peak sampled resident memory 463200 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3388644 KB; system memory free 54%.
+  Printed result lines:
+  `darkness N=10: {'accuracy': 0.5, 'mean_epg_mass': 0.0967678502202034}`
+  `darkness N=50: {'accuracy': 0.5, 'mean_epg_mass': 0.10413004457950592}`
+  `darkness N=120: {'accuracy': 0.5, 'mean_epg_mass': 0.10482150316238403}`
+  `visual N=10: {'accuracy': 0.5, 'mean_epg_mass': 0.09800035208463669}`
+  `visual N=50: {'accuracy': 0.5, 'mean_epg_mass': 0.10480296934606485}`
+  `visual N=120: {'accuracy': 0.5, 'mean_epg_mass': 0.10606265906626504}`
+  JSON: kill_condition_met true. By section 10 item 9 of the record: K (visual accuracy at N = 50 at or below 0.6) is met at 0.5, so H-CX-SCRATCHPAD is `refuted`, as registered; D is met as well (darkness 0.5).
+  SHA-256: record `11be98d285328fcb2ff68888b703cc30f8b999de7e548c98610b12f34c626ca3`; JSON `58366ce8dc79a97e9c298ed86abd76a744f4a5c545309eb48a5fc25d5e69c16c`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
