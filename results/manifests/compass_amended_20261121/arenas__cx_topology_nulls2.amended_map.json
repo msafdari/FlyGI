@@ -1,0 +1,95 @@
+{
+  "hypothesis": "H-STAGEA-NULL-DECOMPOSITION",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "n_nulls": 200,
+  "families": {
+    "weight_within_pre": {
+      "generator_stats": {
+        "kind": "weight_shuffle",
+        "variant": "within_presynaptic",
+        "seed": 4242,
+        "nodes": 148,
+        "edges": 8910,
+        "fraction_magnitudes_changed": 0.937037037037037,
+        "normalization_applied": false
+      },
+      "invariants": {
+        "family": "weight",
+        "edges": 8910,
+        "edge_set_identical": true,
+        "sign_pattern_identical": true,
+        "per_presynaptic_magnitude_multisets_identical": true,
+        "failures": [],
+        "valid": true
+      },
+      "real_bandedness": 0.8505249119755758,
+      "real_mirror_peak_pen_a": 0.0347359556205671,
+      "null_bandedness_max": 0.6525917497257859,
+      "null_mirror_peak_max": 0.019144806958114817,
+      "p_banded": 0.004975124378109453,
+      "p_mirror_peak": 0.004975124378109453,
+      "reading_banded": "separates",
+      "reading_mirror_peak": "separates"
+    },
+    "weight_global": {
+      "generator_stats": {
+        "kind": "weight_shuffle",
+        "variant": "global",
+        "seed": 4242,
+        "nodes": 148,
+        "edges": 8910,
+        "fraction_magnitudes_changed": 0.960381593714927,
+        "normalization_applied": false
+      },
+      "invariants": {
+        "family": "weight",
+        "edges": 8910,
+        "edge_set_identical": true,
+        "sign_pattern_identical": true,
+        "magnitude_multiset_identical": true,
+        "failures": [],
+        "valid": true
+      },
+      "real_bandedness": 0.8505249119755758,
+      "real_mirror_peak_pen_a": 0.0347359556205671,
+      "null_bandedness_max": 0.6561021674604369,
+      "null_mirror_peak_max": 0.018738753158926934,
+      "p_banded": 0.004975124378109453,
+      "p_mirror_peak": 0.004975124378109453,
+      "reading_banded": "separates",
+      "reading_mirror_peak": "separates"
+    },
+    "sign": {
+      "generator_stats": {
+        "kind": "sign_shuffle",
+        "seed": 4242,
+        "nodes": 148,
+        "edges": 8910,
+        "sign_bearing_columns": 148,
+        "constant_sign_multiset": false,
+        "fraction_signs_changed": 0.3898989898989899,
+        "normalization_applied": false
+      },
+      "invariants": {
+        "family": "sign",
+        "edges": 8910,
+        "edge_set_identical": true,
+        "magnitudes_identical_per_edge": true,
+        "column_sign_constancy_preserved": true,
+        "column_sign_multiset_identical": true,
+        "failures": [],
+        "valid": true
+      },
+      "real_bandedness": 0.8505249119755758,
+      "real_mirror_peak_pen_a": 0.0347359556205671,
+      "null_bandedness_max": 0.8764981773765318,
+      "null_mirror_peak_max": 0.038869024824626605,
+      "p_banded": 0.44776119402985076,
+      "p_mirror_peak": 0.48756218905472637,
+      "reading_banded": "does not separate",
+      "reading_mirror_peak": "does not separate"
+    }
+  },
+  "elapsed_s": 12.4
+}

@@ -1,0 +1,23 @@
+# instrument: cx_heading_killtest
+# attempt: first
+# started: 2026-11-22T00:48:48Z
+# freeze: compass-map-freeze-20261121 = b68a584833ca2569796b7a1aac3d3ca6c0c0785f
+# git HEAD: ed0562180235beb5e4d3932d417754c9580f5d78 (tracked files other than WORKLOG.md identical to the freeze)
+# command: PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_heading_killtest.py
+# environment: env -i, then PATH, HOME, PYTHONPATH=src and PYTHONDONTWRITEBYTECODE=1 only
+# interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment)
+# inputs: the 13 files of scripts/arenas/run_amended_once.inputs.sha256 match their pinned SHA-256
+# resources at start: free disk 3389772 KB; system memory free 56%
+# ---- output ----
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+graph loaded: 166700 nodes in 1.4s
+CX block: 148 nodes, composition {'EPG': 46, 'PEN_a(PEN1)': 20, 'PEN_b(PEN2)': 22, 'Delta7': 42, 'PEG': 18}
+sequences (seed 20261010): [['L', 'off', 'L', 'L', 'L', 'L'], ['R', 'L', 'R', 'off', 'off', 'L'], ['R', 'R', 'L', 'L', 'L', 'R']]
+precheck (cal 22.5): retention 0.0000, circvar 0.176, angle 294.1
+BLOCKED: calibration-angle persistence precheck failed (AC-2: the measured gain-1.5 regime did not reproduce)
+# ---- end of output ----
+# exit status: 3
+# peak sampled resident memory: 485408 KB
+# output: results/arenas/cx_heading_killtest.amended_map.log sha256 2d63338ed927144cba5ddccfb413522e9b3a098a5d4a01a4168f4a93c863bea5
+# finished: 2026-11-22T00:49:02Z
+# CLASSIFICATION: finished -- an outcome (amendment section 10)

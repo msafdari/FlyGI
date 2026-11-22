@@ -3,6 +3,10 @@
 **Subtitle:** Auditing the 166,700-neuron MaleCNS fly connectome on ARC-AGI-3:
 both circuits tested in full scored below their degree-preserving rewires.
 
+> 2026-11-21: the compass numbers in every version of this writeup were
+> measured on a label map that reflected the left half of the ring; see the
+> [compass correction](../compass_correction_20261121.md).
+
 **Historical v3, superseded.** The [current release body](kaggle_body_unwrapped.md) and [form fields](kaggle_form.md) replace the claims and numbers below. This file records the older submission text.
 
 *(Kaggle Writeup body below — 1,480 words on every counter, 20 under the

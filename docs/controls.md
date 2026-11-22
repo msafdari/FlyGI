@@ -28,8 +28,8 @@ index, a mechanism, a parameter set, and a transformation-over-input -- see
 | Random legal agent | Implemented; Gate 0 chance floor recorded |
 | Generic matched sparse reservoir | Implemented, compiled; ARC arm RUN 2026-10 as the positive control's twin (75 matched rows, score 0.0320, no separation from the positive control) |
 | Positive control (edge of chaos) | Implemented, compiled, validated; ARC arm RUN 2026-10 (75 matched rows, measured FLAT -- H-ARC-HARNESS-SENSITIVITY refuted; see "The positive control" below) |
-| Weight shuffle | Implemented, validated, and RUN 2026-10 (H-STAGEA-NULL-DECOMPOSITION supported: the Stage-A signature separates from both weight families at the floor — it is magnitude-dependent as well as placement-dependent) |
-| Sign shuffle within transmitter strata | Implemented, validated, and RUN 2026-10 (Stage-A signature does NOT separate from Dale-consistent sign flips: p 0.438/0.826); ARC-scope application deferred (recorded, killtest_design.md section 7) |
+| Weight shuffle | Implemented, validated, and RUN 2026-10 (H-STAGEA-NULL-DECOMPOSITION supported: the Stage-A signature separates from both weight families at the floor — it is magnitude-dependent as well as placement-dependent) [2026-11-21, corrected EPG map: the same readings; both weight families separate on both statistics, p 0.004975 each (the 2026-10-28 mirror-peak p was 0.00995).] |
+| Sign shuffle within transmitter strata | Implemented, validated, and RUN 2026-10 (Stage-A signature does NOT separate from Dale-consistent sign flips: p 0.438/0.826); ARC-scope application deferred (recorded, killtest_design.md section 7) [2026-11-21, corrected EPG map: still does not separate, p 0.448/0.488.] |
 
 ## The implemented degree-preserving null
 

@@ -1,5 +1,10 @@
 # X release thread (v6, restored voice, November 4)
 
+> 2026-11-21: the live post's "My fitted numbers differ from the published ones" is
+> withdrawn, and "applied once" no longer holds (the recipe was looked at under
+> three EPG groupings); see the [compass correction](../compass_correction_20261121.md).
+> The live X text is not edited here; whether to reply or edit is the owner's decision.
+
 *(The live thread is this text, reposted on November 4 after the November 3
 flat version was taken down at the user's request. Order: post 1 first, each
 later post as a reply in the same thread. Attach media/cover.png to 1,

@@ -1,0 +1,4873 @@
+{
+  "hypothesis": "H-CX-BISWAS-FITTED",
+  "reading": "NON-DECISIONAL context (amendment 2026-11-21); the verdict is the instrument's",
+  "ring_map": "amended",
+  "epg_unit_sizes": [
+    6,
+    5,
+    6,
+    6,
+    6,
+    6,
+    5,
+    6
+  ],
+  "seed_first": 4265,
+  "count": 200,
+  "summary": {
+    "n_rewires": 200,
+    "n_errors": 0,
+    "n_evaluated": 200,
+    "error_seeds": [],
+    "n_valid_fit_any_config": 25,
+    "valid_fit_seeds": [
+      4270,
+      4273,
+      4282,
+      4284,
+      4293,
+      4295,
+      4296,
+      4328,
+      4332,
+      4340,
+      4355,
+      4361,
+      4363,
+      4371,
+      4373,
+      4376,
+      4377,
+      4383,
+      4388,
+      4391,
+      4403,
+      4407,
+      4424,
+      4436,
+      4448
+    ],
+    "n_pass_g1_any_config": 2,
+    "pass_g1_seeds": [
+      4340,
+      4388
+    ],
+    "per_config": {
+      "8": {
+        "valid_fit": 18,
+        "pass": 0
+      },
+      "6": {
+        "valid_fit": 8,
+        "pass": 2
+      },
+      "4": {
+        "valid_fit": 3,
+        "pass": 0
+      }
+    }
+  },
+  "rewires": [
+    {
+      "seed": 4265,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4266,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4267,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4268,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4269,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4270,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.014243498948070353,
+          "g1_n_pass": 0
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4271,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4272,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4273,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.3076569975690866,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4274,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4275,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4276,
+      "tie_fraction": 0.16666666666666666,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4277,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4278,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4279,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4280,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4281,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4282,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.20067101012105984,
+          "g1_n_pass": 0
+        }
+      }
+    },
+    {
+      "seed": 4283,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4284,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.2640717535041498,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4285,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4286,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4287,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4288,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4289,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4290,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4291,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4292,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4293,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.814511601717059,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4294,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4295,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.04254108463884845,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4296,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.8796537118834226,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4297,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4298,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4299,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4300,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4301,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4302,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4303,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4304,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4305,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4306,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4307,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4308,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4309,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4310,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4311,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4312,
+      "tie_fraction": 0.11904761904761904,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4313,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4314,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4315,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4316,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4317,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4318,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4319,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4320,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4321,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4322,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4323,
+      "tie_fraction": 0.11904761904761904,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4324,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4325,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4326,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4327,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4328,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.019780378851253024,
+          "g1_n_pass": 0
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4329,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4330,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4331,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4332,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.40653543382331714,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.423273436357411,
+          "g1_n_pass": 0
+        }
+      }
+    },
+    {
+      "seed": 4333,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4334,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4335,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4336,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4337,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4338,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4339,
+      "tie_fraction": 0.11904761904761904,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4340,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.48918331953087035,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": true,
+          "r_a": 0.13649496587796,
+          "g1_n_pass": 8
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4341,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4342,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4343,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4344,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4345,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4346,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4347,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4348,
+      "tie_fraction": 0.19047619047619047,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4349,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4350,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4351,
+      "tie_fraction": 0.11904761904761904,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4352,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4353,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4354,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4355,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.6020125989519837,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4356,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4357,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4358,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4359,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4360,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4361,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.4751118245477515,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4362,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4363,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.5886774146741037,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4364,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4365,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4366,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4367,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4368,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4369,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4370,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4371,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.3170358260836993,
+          "g1_n_pass": 0
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4372,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4373,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.1918779082878359,
+          "g1_n_pass": 0
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4374,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4375,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4376,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.6025260339571474,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.6410301156234627,
+          "g1_n_pass": 0
+        }
+      }
+    },
+    {
+      "seed": 4377,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.35434488102036915,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4378,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4379,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4380,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4381,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4382,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4383,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.19106663945685814,
+          "g1_n_pass": 0
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4384,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4385,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4386,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4387,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4388,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.7151185258979106,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": true,
+          "r_a": 0.35426725024595096,
+          "g1_n_pass": 8
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4389,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4390,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4391,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.3062329566533023,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4392,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4393,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4394,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4395,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4396,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4397,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4398,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4399,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4400,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4401,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4402,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4403,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.4977221939703957,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4404,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4405,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4406,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4407,
+      "tie_fraction": 0.11904761904761904,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.45404999969554655,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4408,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4409,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4410,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4411,
+      "tie_fraction": 0.14285714285714285,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4412,
+      "tie_fraction": 0.14285714285714285,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4413,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4414,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4415,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4416,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4417,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4418,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4419,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4420,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4421,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4422,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4423,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4424,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.1548234933296345,
+          "g1_n_pass": 0
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4425,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4426,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4427,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4428,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4429,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4430,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4431,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4432,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4433,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4434,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4435,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4436,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.7956730873373443,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4437,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4438,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4439,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4440,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4441,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4442,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4443,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4444,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4445,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4446,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4447,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4448,
+      "tie_fraction": 0.14285714285714285,
+      "configs": {
+        "8": {
+          "valid_fit": true,
+          "pass": false,
+          "r_a": 0.1476089971056894,
+          "g1_n_pass": 0
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4449,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4450,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4451,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4452,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4453,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4454,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4455,
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4456,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4457,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4458,
+      "tie_fraction": 0.09523809523809523,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4459,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4460,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4461,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4462,
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4463,
+      "tie_fraction": 0.047619047619047616,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    },
+    {
+      "seed": 4464,
+      "tie_fraction": 0.023809523809523808,
+      "configs": {
+        "8": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "6": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        },
+        "4": {
+          "valid_fit": false,
+          "pass": false,
+          "r_a": null,
+          "g1_n_pass": null
+        }
+      }
+    }
+  ],
+  "elapsed_s": 174.9
+}

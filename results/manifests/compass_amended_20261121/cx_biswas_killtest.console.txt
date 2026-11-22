@@ -1,0 +1,49 @@
+# instrument: cx_biswas_killtest
+# attempt: first
+# started: 2026-11-22T00:42:02Z
+# freeze: compass-map-freeze-20261121 = b68a584833ca2569796b7a1aac3d3ca6c0c0785f
+# git HEAD: b68a584833ca2569796b7a1aac3d3ca6c0c0785f (tracked files other than WORKLOG.md identical to the freeze)
+# command: PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_biswas_killtest.py
+# environment: env -i, then PATH, HOME, PYTHONPATH=src and PYTHONDONTWRITEBYTECODE=1 only
+# interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment)
+# inputs: the 13 files of scripts/arenas/run_amended_once.inputs.sha256 match their pinned SHA-256
+# resources at start: free disk 3390492 KB; system memory free 55%
+# ---- output ----
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+in-cloud gate: pass=True (recovery True, synthetic G1 8/8, can-fail True, identities True)
+subcircuit: 148 nodes, composition {'EPG': 46, 'PEN_a(PEN1)': 20, 'PEN_b(PEN2)': 22, 'Delta7': 42, 'PEG': 18}
+EPG labelled 46/46, Delta7 42
+EPG wedge sizes: [6, 5, 6, 6, 6, 6, 5, 6]
+real A_Delta=8: valid_fit=True r_a=0.5480 (published 0.548, delta +0.0000) G1 8/8
+real A_Delta=6: valid_fit=True r_a=0.4373 (published 0.437, delta +0.0003) G1 8/8
+real A_Delta=4: valid_fit=False
+null seed 4242: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+null seed 4243: tie_fraction 0.000 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+null seed 4244: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+{
+  "ra_cross_check": {
+    "8": {
+      "fitted_ra": 0.5480343395196243,
+      "published_ra": 0.548,
+      "delta": 3.433951962428239e-05,
+      "consistent": true
+    },
+    "6": {
+      "fitted_ra": 0.4372793723756266,
+      "published_ra": 0.437,
+      "delta": 0.00027937237562658535,
+      "consistent": true
+    }
+  },
+  "verdict": "PASS",
+  "elapsed_s": 8.4
+}
+VERDICT: PASS
+# ---- end of output ----
+# JSON written: results/arenas/cx_biswas_killtest.amended_map.json
+# exit status: 0
+# peak sampled resident memory: 1059680 KB
+# output: results/arenas/cx_biswas_killtest.amended_map.log sha256 24ab854e559a305d1abe85c28543d8c41cb4017d7ffbaca5d29c089fb0f90b13
+# output: results/arenas/cx_biswas_killtest.amended_map.json sha256 5dea16a9b6fccf7b352d809aba2491fba3ceb833d9711ded4c1a67dbb7f66261
+# finished: 2026-11-22T00:42:13Z
+# CLASSIFICATION: finished -- an outcome (amendment section 10)

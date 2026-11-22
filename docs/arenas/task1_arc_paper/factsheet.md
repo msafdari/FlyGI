@@ -6,6 +6,14 @@ and implementation. Entries carried from the September and October
 experiment logs retain their original protocols. W = WORKLOG.md,
 L = LEAGUE.md, R = EXPERIMENTS.yaml.
 
+> **2026-11-21 compass correction.** Every compass instrument used an EPG
+> label map that reflected the left half of the ring. A dated amendment,
+> frozen before any re-run, corrected it and every compass instrument was
+> re-run once ([amendment](../compass_map_amendment_20261121.md),
+> [correction](../compass_correction_20261121.md)). The two compass
+> bullets below now give the corrected values, with the original ones
+> marked as such. The ARC results are unaffected.
+
 ## The system
 
 - MaleCNS v1.0: 166,700 retained neurons. THREE edge counts, do not mix:
@@ -192,15 +200,25 @@ L = LEAGUE.md, R = EXPERIMENTS.yaml.
   Four games were held out per seed and the splits overlap. The full
   set of 660 events includes training and test examples.
   [`results/manifests/verdict_program_20260930/t4t5_motion_arm.json`]
-- EB RING at two fidelities: class 1 — fixed-point attractor near 222 deg
-  everywhere alive (settle map: robust point ~222 deg EPG mass ~0.21,
-  vestigial ~90 deg mass 4e-4; writes on half the ring die; darkness
-  A-vs-B decode exactly 0.5). Class 2 — 210 Shiu-canonical LIF configs,
-  155 alive, EVERY one delocalized (min circvar 0.853 vs 0.6 band), all
-  four seed angles settling at one fixed point (~192 deg); shuffled ring
-  comparable. These tests cover the declared class-1 and class-2 models.
-  The class-3 spiking test sustained a bump but drifted to one region
-  from different headings. [W]
+- EB RING at two fidelities, re-run 2026-11-21 under the corrected map:
+  class 1 — no localized persistent bump at any of 21 grid points (C1
+  0/21; on the settle map the live writes settle at 270.0 deg (masses
+  2.8e-5 to 3.5e-4), at about 191.6 deg (masses about 0.2) and, for the
+  drive-style 270 write, at 162.6 deg, with 0 of 8 writes keeping their
+  own position in either write style; visual and darkness A-vs-B decode both 0.5).
+  Class 2 — 210 Shiu-canonical LIF configs, no calibration pass, 157
+  alive and none localized (smallest circvar 0.834 vs the 0.6 band); the
+  selected configuration's four seed angles settled at 169, 135, 180 and
+  182 deg. [The original run on the reflected ring read: class 1 a fixed
+  point near 222 deg (vestigial near 90); class 2 155 alive, all four seed
+  angles near 192 deg. Those angles were decode values of the wrong map.]
+  On the corrected map the shuffled ring also selected a best-approach
+  configuration with no calibration pass, and its scored C1 failed. These tests cover the declared class-1 and class-2 models.
+  The class-3 spiking test, re-run under the corrected map, met its 45-degree
+  position clause for at best 5 of 8 writes (the bar is 6), none of which
+  kept its own position, and never steered with opposite signs;
+  the original run had held at best 2 of 8, drifting to one region from
+  different headings. [W; R H-CX-CLASS3-COMPASS, 2026-11-21 bullet]
 - **Fitted compass, separate from ARC.** Following the Biswas et al.
   derivation, 46 EPG and 42 Delta7 neurons contribute anatomical contact
   counts to 16 rate units. The model averages equivalent locations around
@@ -209,12 +227,20 @@ L = LEAGUE.md, R = EXPERIMENTS.yaml.
   darkness for 100 time constants at eight symmetry-related positions
   (error 0.0 degrees to the reported precision). The same search found
   no valid fit for three degree-preserving rewires. There was no
-  velocity input or sensory write. The fitted shape coefficients 0.4221
-  and 0.2132 differ from the paper's 0.548 and 0.437. The first verdict
+  velocity input or sensory write. With the original grouping (left k
+  pooled with right k) the fitted shape coefficients were 0.4221 and
+  0.2132, against the paper's 0.548 and 0.437. Re-run on 2026-11-21 with
+  the corrected grouping (left k with right 9 minus k, as in the paper's
+  Fig. 1g) they are 0.5480 and 0.4373, the verdict is the same, and the
+  three registered rewires again admit no valid fit; of 200 further
+  rewires, 25 admit a valid fit and 2 also hold the heading (a
+  non-decisional reading). The agreement is not independent evidence: the
+  grouping was found through it. The first verdict
   in this project decided by this biological-computation comparison is
   distinct from the earlier FlyBench terminal result, whose specificity
   bar also used a degree-preserving rewire. [H-CX-BISWAS-FITTED,
-  `scripts/arenas/cx_biswas_killtest.py`, WORKLOG.md run record 0e80c2f]
+  `scripts/arenas/cx_biswas_killtest.py`, WORKLOG.md run record 0e80c2f; R
+  H-CX-BISWAS-FITTED, 2026-11-21 bullet]
 - LC: class-1 object-position code SIGN-INVERTED at all 21 grid points
   (Spearman rho -0.203 best to -0.314, band >= +0.50; valid-pair fraction
   1.00 everywhere — not degeneracy; best single type LC11 0.243).

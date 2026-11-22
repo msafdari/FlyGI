@@ -1,0 +1,1969 @@
+{
+  "group": "central_complex",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "config": "configs/literal_rate_bioeye_lc.yaml",
+  "internal_steps": 4,
+  "preregistration": {
+    "C1": "pass iff >=1 of 4 seed angles has retention >= 0.05 and circvar <= 0.6 after 50 darkness steps (Seelig & Jayaraman 2015)",
+    "C2": "pass iff sign(rot_left) != sign(rot_right) and both |rot| >= 0.05 deg/step, raw rates over 30 steps (Turner-Evans 2017; Green 2017)",
+    "visual_aux": "map only: survived iff both game runs retain >= 0.05 with circvar <= 0.6 after 50 visual steps",
+    "amendment": "C2/visual seed = highest-retention C1 angle (fixed rule), registered after the 2.0/0.3 smoke point measured the 22.5-deg seed dead (settled mass 0.0) and before the grid sweep; bands unchanged; original 22.5-deg arm recorded as c2_original_seed at every point"
+  },
+  "grid": [
+    {
+      "gain": 0.8,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.75666332244873,
+            "release_angle": 19.35214926740422,
+            "final_mass": 2.2216394057750222e-08,
+            "final_angle": 15.657667957434468,
+            "final_circvar": 0.12340598843568085,
+            "retention": 2.0653611061141505e-09,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.769187927246094,
+            "release_angle": 115.89647490948853,
+            "final_mass": 3.309288842956448e-08,
+            "final_angle": 118.2757955396504,
+            "final_circvar": 0.15047861298762932,
+            "retention": 3.072923293114732e-09,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.539780616760254,
+            "release_angle": 202.46475119408802,
+            "final_mass": 6.760590309795589e-08,
+            "final_angle": 198.5639150232783,
+            "final_circvar": 0.20652997209812696,
+            "retention": 5.858508523096687e-09,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.5345458984375,
+            "release_angle": 293.9785493483941,
+            "final_mass": 5.0477524382586125e-08,
+            "final_angle": 290.5803860606448,
+            "final_circvar": 0.22074131729008128,
+            "retention": 4.376203868539285e-09,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 5.858508523096687e-09,
+        "best_circvar": 0.20652997209812696,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.18339616060256958,
+        "settled_angle": 202.1835928366081,
+        "settled_circvar": 0.14446106656299984,
+        "drift_degstep": -0.07534091386807612,
+        "rot_left_degstep": 1.3000601813090782,
+        "rot_right_degstep": -1.4457699950071212,
+        "rot_left_drift_corrected": 1.3754010951771543,
+        "rot_right_drift_corrected": -1.3704290811390452,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.16560111939907074,
+        "settled_angle": 19.453805260258186,
+        "settled_circvar": 0.15505056629550196,
+        "drift_degstep": -0.015324384839283311,
+        "rot_left_degstep": -4.608821740967738,
+        "rot_right_degstep": 4.645113965839588,
+        "rot_left_drift_corrected": -4.593497356128454,
+        "rot_right_drift_corrected": 4.660438350678872,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 28.5
+    },
+    {
+      "gain": 0.8,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.759145736694336,
+            "release_angle": 19.35209746939564,
+            "final_mass": 1.0385228809160652e-18,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 9.652465970176023e-20,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.771747589111328,
+            "release_angle": 115.89647374935376,
+            "final_mass": 1.6199672620312536e-18,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 1.503903845341498e-19,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.542576789855957,
+            "release_angle": 202.4646657066961,
+            "final_mass": 2.4493337407119833e-17,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 2.121999086776315e-18,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.537260055541992,
+            "release_angle": 293.9786073036088,
+            "final_mass": 1.969079625380841e-17,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 1.7067133928692034e-18,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 2.121999086776315e-18,
+        "best_circvar": 1.0,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 2.2106180040282197e-05,
+        "settled_angle": 200.12053970495174,
+        "settled_circvar": 0.1613252161750912,
+        "drift_degstep": NaN,
+        "rot_left_degstep": 1.3689207490126212,
+        "rot_right_degstep": -1.3771305409318748,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 1.6195352145587094e-05,
+        "settled_angle": 19.733332075876312,
+        "settled_circvar": 0.16400717249274965,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -4.618172330018198,
+        "rot_right_degstep": 4.635776380037305,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 28.7
+    },
+    {
+      "gain": 0.8,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.759147644042969,
+            "release_angle": 19.35209785251265,
+            "final_mass": 2.1085413254066865e-28,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 1.959766140558658e-29,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.771749496459961,
+            "release_angle": 115.89647361995458,
+            "final_mass": 7.982727443032999e-29,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 7.410799374471576e-30,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.542577743530273,
+            "release_angle": 202.46466595414498,
+            "final_mass": 5.874024339510984e-29,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 5.0890056537010824e-30,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.537261962890625,
+            "release_angle": 293.97860663646054,
+            "final_mass": 3.4884932417194736e-28,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 3.023675160484475e-29,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "292.5",
+        "best_retention": 3.023675160484475e-29,
+        "best_circvar": 1.0,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 292.5,
+        "settled_mass": 5.114885182067042e-10,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": 0.061246182542460254,
+        "rot_right_degstep": -0.07902990511114918,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": 0.061246182542460254,
+        "rot_right_degstep": -0.07902995305385499,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 28.7
+    },
+    {
+      "gain": 1.0,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.768911361694336,
+            "release_angle": 19.35175257584773,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.786300659179688,
+            "release_angle": 115.90081478019627,
+            "final_mass": 3.3534246490773967e-09,
+            "final_angle": 150.24093384124748,
+            "final_circvar": 0.03315949094194337,
+            "retention": 3.108966414934357e-10,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.559408187866211,
+            "release_angle": 202.4594103581833,
+            "final_mass": 5.944675081082096e-07,
+            "final_angle": 192.62052600748538,
+            "final_circvar": 0.5844845159506055,
+            "retention": 5.142715772700335e-08,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.551390647888184,
+            "release_angle": 293.980681042039,
+            "final_mass": 4.105921505015431e-07,
+            "final_angle": 266.2969149372399,
+            "final_circvar": 0.6959006208835063,
+            "retention": 3.5544824256861856e-08,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 5.142715772700335e-08,
+        "best_circvar": 0.5844845159506055,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.19015949964523315,
+        "settled_angle": 202.0612620405729,
+        "settled_circvar": 0.14317178735385427,
+        "drift_degstep": -0.11394726720342874,
+        "rot_left_degstep": 1.3371914105521738,
+        "rot_right_degstep": -1.486043382568703,
+        "rot_left_drift_corrected": 1.4511386777556026,
+        "rot_right_drift_corrected": -1.3720961153652742,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.16909167170524597,
+        "settled_angle": 19.499341918332348,
+        "settled_circvar": 0.15394976520315318,
+        "drift_degstep": -0.16421291813381628,
+        "rot_left_degstep": -4.5771950950450355,
+        "rot_right_degstep": 4.599176728960833,
+        "rot_left_drift_corrected": -4.412982176911219,
+        "rot_right_drift_corrected": 4.763389647094649,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.769887919975309e-07,
+            "final_circvar": 0.0,
+            "final_angle": 180.0,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 1.104137890897918e-06,
+            "final_circvar": 0.0,
+            "final_angle": 292.5,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 28.8
+    },
+    {
+      "gain": 1.0,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.771624565124512,
+            "release_angle": 19.351837584077508,
+            "final_mass": 4.942561659428135e-13,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 4.5885016039555987e-14,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.789106369018555,
+            "release_angle": 115.90085497936958,
+            "final_mass": 3.2662869804689354e-13,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 3.027393436261077e-14,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.562531471252441,
+            "release_angle": 202.45914661736393,
+            "final_mass": 5.170894094852496e-13,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 4.4721124502093057e-14,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.55434799194336,
+            "release_angle": 293.9807691653364,
+            "final_mass": 6.112815874141642e-13,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 5.2904896740205494e-14,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "292.5",
+        "best_retention": 5.2904896740205494e-14,
+        "best_circvar": 1.0,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 292.5,
+        "settled_mass": 3.47768836945761e-05,
+        "settled_angle": 292.6972055539576,
+        "settled_circvar": 0.19073314336375946,
+        "drift_degstep": -4.863959105572742,
+        "rot_left_degstep": -1.6839053355645148,
+        "rot_right_degstep": -4.50741908560232,
+        "rot_left_drift_corrected": 3.180053770008227,
+        "rot_right_drift_corrected": 0.3565400199704216,
+        "opposite_signed": false,
+        "pass": false
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 2.446794132993091e-05,
+        "settled_angle": 17.736017754936597,
+        "settled_circvar": 0.15240530261216867,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -4.518532431337736,
+        "rot_right_degstep": 4.657953858949723,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.1
+    },
+    {
+      "gain": 1.0,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.771626472473145,
+            "release_angle": 19.351836396254384,
+            "final_mass": 6.165202512074636e-18,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 5.723557651975577e-19,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.789106369018555,
+            "release_angle": 115.90085474827079,
+            "final_mass": 2.1487772101915038e-18,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 1.9916174117643536e-19,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.562535285949707,
+            "release_angle": 202.45914735984306,
+            "final_mass": 1.4583571600464355e-18,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 1.2612780190332202e-19,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.554349899291992,
+            "release_angle": 293.98076840407106,
+            "final_mass": 1.1843214668509627e-17,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 1.0250005211660878e-18,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "292.5",
+        "best_retention": 1.0250005211660878e-18,
+        "best_circvar": 1.0,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 292.5,
+        "settled_mass": 4.7509146838820016e-08,
+        "settled_angle": 182.9692923328595,
+        "settled_circvar": 0.8624960363326788,
+        "drift_degstep": NaN,
+        "rot_left_degstep": 1.9736913090822525,
+        "rot_right_degstep": -0.8498217754634197,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": 0.07655480274427054,
+        "rot_right_degstep": -0.10285089296300498,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.0,
+            "final_circvar": 1.0,
+            "final_angle": NaN,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.6
+    },
+    {
+      "gain": 1.2,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.780417442321777,
+            "release_angle": 19.353930168039728,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.80294418334961,
+            "release_angle": 115.90473363473798,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.580145835876465,
+            "release_angle": 202.44770517753813,
+            "final_mass": 1.2185235391370952e-05,
+            "final_angle": 183.93883461531456,
+            "final_circvar": 0.8300024135691353,
+            "retention": 1.052252326013016e-06,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.567248344421387,
+            "release_angle": 293.98362058786523,
+            "final_mass": 8.68429742695298e-06,
+            "final_angle": 194.90182494161317,
+            "final_circvar": 0.8618067438266142,
+            "retention": 7.507660567468679e-07,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 1.052252326013016e-06,
+        "best_circvar": 0.8300024135691353,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.20068353414535522,
+        "settled_angle": 201.89315893381996,
+        "settled_circvar": 0.14204108294018614,
+        "drift_degstep": -0.28323462881275246,
+        "rot_left_degstep": 1.374603648631059,
+        "rot_right_degstep": -1.5255560007415965,
+        "rot_left_drift_corrected": 1.6578382774438116,
+        "rot_right_drift_corrected": -1.242321371928844,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.17543433606624603,
+        "settled_angle": 19.54565971545997,
+        "settled_circvar": 0.15322737689427957,
+        "drift_degstep": 0.10090994346150138,
+        "rot_left_degstep": -4.546572269578991,
+        "rot_right_degstep": 4.552314741725618,
+        "rot_left_drift_corrected": -4.647482213040493,
+        "rot_right_drift_corrected": 4.451404798264116,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 3.570359560473322e-06,
+            "final_circvar": 0.23672449517356398,
+            "final_angle": 157.11791297778072,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 5.6594971454129244e-05,
+            "final_circvar": 0.34656631533404125,
+            "final_angle": 233.02490907196233,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    },
+    {
+      "gain": 1.2,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.78347110748291,
+            "release_angle": 19.35400946363037,
+            "final_mass": 6.235384120145682e-08,
+            "final_angle": 279.42009870004847,
+            "final_circvar": 0.7238676864390787,
+            "retention": 5.782353435174318e-09,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.80615234375,
+            "release_angle": 115.90487507992447,
+            "final_mass": 3.05780574194614e-08,
+            "final_angle": 275.7087745541105,
+            "final_circvar": 0.7119437383506972,
+            "retention": 2.8296896477817066e-09,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.58381462097168,
+            "release_angle": 202.4472850958695,
+            "final_mass": 2.829206557919406e-08,
+            "final_angle": 282.7616966155678,
+            "final_circvar": 0.5887986049139889,
+            "retention": 2.442379000780388e-09,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.570639610290527,
+            "release_angle": 293.98373181423403,
+            "final_mass": 6.384483697274845e-08,
+            "final_angle": 274.3124857953949,
+            "final_circvar": 0.2786174476400948,
+            "retention": 5.517831262842813e-09,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "22.5",
+        "best_retention": 5.782353435174318e-09,
+        "best_circvar": 0.7238676864390787,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 22.5,
+        "settled_mass": 1.462214277125895e-05,
+        "settled_angle": 12.314912395723093,
+        "settled_circvar": 0.0679952069279659,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -4.306158071729358,
+        "rot_right_degstep": 4.793549662089907,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 1.462214277125895e-05,
+        "settled_angle": 12.314912395723093,
+        "settled_circvar": 0.0679952069279659,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -4.306158071729358,
+        "rot_right_degstep": 4.793549662089907,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.009206764443856449,
+            "final_circvar": 0.2962219943752369,
+            "final_angle": 184.84342220402357,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.37009815629770726,
+            "final_circvar": 0.3509386220841437,
+            "final_angle": 247.21010962513483,
+            "run_pass": true
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 28.8
+    },
+    {
+      "gain": 1.2,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.783469200134277,
+            "release_angle": 19.354007911073758,
+            "final_mass": 5.6835514072872684e-08,
+            "final_angle": 270.5865243025305,
+            "final_circvar": 0.8276258470329074,
+            "retention": 5.2706149586966835e-09,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.80615234375,
+            "release_angle": 115.90487679651388,
+            "final_mass": 1.7983300182322637e-08,
+            "final_angle": 270.876678466352,
+            "final_circvar": 0.8068271545587314,
+            "retention": 1.6641723723915215e-09,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.583817481994629,
+            "release_angle": 202.44728517773527,
+            "final_mass": 1.1817125056268196e-08,
+            "final_angle": 278.3258023430314,
+            "final_circvar": 0.25498222230133116,
+            "retention": 1.0201408192624073e-09,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.570642471313477,
+            "release_angle": 293.98373212833786,
+            "final_mass": 1.2966982865236787e-07,
+            "final_angle": 266.78085256221266,
+            "final_circvar": 0.3925275525567362,
+            "retention": 1.1206795903844742e-08,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "292.5",
+        "best_retention": 1.1206795903844742e-08,
+        "best_circvar": 0.3925275525567362,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 292.5,
+        "settled_mass": 3.5292180200485745e-06,
+        "settled_angle": 196.2304746370583,
+        "settled_circvar": 0.8705109313646674,
+        "drift_degstep": 2.3985384220165753,
+        "rot_left_degstep": 1.563322060814382,
+        "rot_right_degstep": -1.3369637826055016,
+        "rot_left_drift_corrected": -0.8352163612021932,
+        "rot_right_drift_corrected": -3.735502204622077,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": -0.675474074280452,
+        "rot_left_degstep": 0.08986898248429631,
+        "rot_right_degstep": -0.12691986777150924,
+        "rot_left_drift_corrected": 0.7653430567647483,
+        "rot_right_drift_corrected": 0.5485542065089428,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.15036508647751384,
+            "final_circvar": 0.5750067834194339,
+            "final_angle": 273.37358769972985,
+            "run_pass": true
+          },
+          "bp35": {
+            "retention_vs_settled": 1.678091751110464,
+            "final_circvar": 0.33431311894293403,
+            "final_angle": 249.1890660247535,
+            "run_pass": true
+          }
+        },
+        "survived_visual": true
+      },
+      "elapsed_s": 28.8
+    },
+    {
+      "gain": 1.5,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.799764633178711,
+            "release_angle": 19.35378242419502,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.832403182983398,
+            "release_angle": 115.9173816852603,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.615056991577148,
+            "release_angle": 202.42745239297523,
+            "final_mass": 0.0013138421345502138,
+            "final_angle": 181.7093027829146,
+            "final_circvar": 0.8676250497116347,
+            "retention": 0.00011311542728571787,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.595115661621094,
+            "release_angle": 293.98450890109734,
+            "final_mass": 0.0009455500403419137,
+            "final_angle": 185.6295218005061,
+            "final_circvar": 0.8661387097163376,
+            "retention": 8.15472711041261e-05,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.00011311542728571787,
+        "best_circvar": 0.8676250497116347,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.22658835351467133,
+        "settled_angle": 201.56241629597088,
+        "settled_circvar": 0.14110571726219723,
+        "drift_degstep": -0.6168731626306955,
+        "rot_left_degstep": 1.4251710356677108,
+        "rot_right_degstep": -1.5803585686468722,
+        "rot_left_drift_corrected": 2.0420441982984063,
+        "rot_right_drift_corrected": -0.9634854060161767,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.19230477511882782,
+        "settled_angle": 19.59028786283736,
+        "settled_circvar": 0.15310732850971642,
+        "drift_degstep": -0.6083463766065856,
+        "rot_left_degstep": -4.4985536295692246,
+        "rot_right_degstep": 4.480714850612336,
+        "rot_left_drift_corrected": -3.890207252962639,
+        "rot_right_drift_corrected": 5.089061227218922,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.005465236347457436,
+            "final_circvar": 0.8708120787341814,
+            "final_angle": 189.93972765953467,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.006433657640686917,
+            "final_circvar": 0.7984105402973414,
+            "final_angle": 199.0856876288101,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    },
+    {
+      "gain": 1.5,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.802849769592285,
+            "release_angle": 19.35263730740603,
+            "final_mass": 0.002836628118529916,
+            "final_angle": 291.85807007246746,
+            "final_circvar": 0.2203992489526656,
+            "retention": 0.0002625814649866203,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.83625316619873,
+            "release_angle": 115.91786280104077,
+            "final_mass": 0.003539071884006262,
+            "final_angle": 288.7626685571135,
+            "final_circvar": 0.2801500475512546,
+            "retention": 0.00032659553350466243,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.620615005493164,
+            "release_angle": 202.42668779738506,
+            "final_mass": 0.005129827652126551,
+            "final_angle": 283.87418457557135,
+            "final_circvar": 0.4194603983843793,
+            "retention": 0.0004414420105735916,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.599745750427246,
+            "release_angle": 293.98445549284145,
+            "final_mass": 0.005481875967234373,
+            "final_angle": 282.92449166918163,
+            "final_circvar": 0.44931342144280273,
+            "retention": 0.00047258587258539373,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "292.5",
+        "best_retention": 0.00047258587258539373,
+        "best_circvar": 0.44931342144280273,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 292.5,
+        "settled_mass": 0.002830780576914549,
+        "settled_angle": 220.86881334401338,
+        "settled_circvar": 0.8620166551016308,
+        "drift_degstep": 1.994828455020493,
+        "rot_left_degstep": 0.8251658469223069,
+        "rot_right_degstep": -2.173828449399146,
+        "rot_left_drift_corrected": -1.1696626080981862,
+        "rot_right_drift_corrected": -4.168656904419639,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": 0.22854080845987504,
+        "rot_left_degstep": 0.19199244249263897,
+        "rot_right_degstep": -0.19695299411238396,
+        "rot_left_drift_corrected": -0.03654836596723607,
+        "rot_right_drift_corrected": -0.425493802572259,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.731033853123553,
+            "final_circvar": 0.3997754757587728,
+            "final_angle": 284.5870842293078,
+            "run_pass": true
+          },
+          "bp35": {
+            "retention_vs_settled": 1.8080125940627285,
+            "final_circvar": 0.4178961352103574,
+            "final_angle": 283.51492762849364,
+            "run_pass": true
+          }
+        },
+        "survived_visual": true
+      },
+      "elapsed_s": 28.9
+    },
+    {
+      "gain": 1.5,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.801774978637695,
+            "release_angle": 19.3498230570539,
+            "final_mass": 0.0021857256069779396,
+            "final_angle": 294.35591598417335,
+            "final_circvar": 0.16685665460498056,
+            "retention": 0.00020234874465544552,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.835796356201172,
+            "release_angle": 115.91759099523246,
+            "final_mass": 0.002499982714653015,
+            "final_angle": 293.2921733886344,
+            "final_circvar": 0.19159590956084704,
+            "retention": 0.0002307151807280238,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.621358871459961,
+            "release_angle": 202.4273685823724,
+            "final_mass": 0.003272842615842819,
+            "final_angle": 289.9810405716902,
+            "final_circvar": 0.2586866499630963,
+            "retention": 0.00028162305734145705,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.600374221801758,
+            "release_angle": 293.98378883306316,
+            "final_mass": 0.0032595540396869183,
+            "final_angle": 290.04051042317775,
+            "final_circvar": 0.25744713048889,
+            "retention": 0.0002809869731237556,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.00028162305734145705,
+        "best_circvar": 0.2586866499630963,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.007614171598106623,
+        "settled_angle": 278.01240353574684,
+        "settled_circvar": 0.5894541914793385,
+        "drift_degstep": 0.3248024339464791,
+        "rot_left_degstep": -1.079325326016299,
+        "rot_right_degstep": -4.079117063193211,
+        "rot_left_drift_corrected": -1.404127759962778,
+        "rot_right_drift_corrected": -4.4039194971396896,
+        "opposite_signed": false,
+        "pass": false
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.001850108616054058,
+        "settled_angle": 294.1531331057964,
+        "settled_circvar": 0.14160478613086946,
+        "drift_degstep": 0.006526471422516048,
+        "rot_left_degstep": -1.5981187371431778,
+        "rot_right_degstep": -4.624776402445992,
+        "rot_left_drift_corrected": -1.6046452085656937,
+        "rot_right_drift_corrected": -4.631302873868508,
+        "opposite_signed": false,
+        "pass": false
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.39178065193434974,
+            "final_circvar": 0.22952392242317354,
+            "final_angle": 291.3412038395488,
+            "run_pass": true
+          },
+          "bp35": {
+            "retention_vs_settled": 0.4149105432476385,
+            "final_circvar": 0.24641931375017812,
+            "final_angle": 290.15423430124883,
+            "run_pass": true
+          }
+        },
+        "survived_visual": true
+      },
+      "elapsed_s": 28.9
+    },
+    {
+      "gain": 1.8,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.827247619628906,
+            "release_angle": 19.3539187942698,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.869193077087402,
+            "release_angle": 115.9250753335531,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.659106254577637,
+            "release_angle": 202.40357548674345,
+            "final_mass": 0.09673352539539337,
+            "final_angle": 184.6189194802712,
+            "final_circvar": 0.8743380026747123,
+            "retention": 0.008296821667390975,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.631072998046875,
+            "release_angle": 293.98989621898716,
+            "final_mass": 0.08222615718841553,
+            "final_angle": 197.37179819346474,
+            "final_circvar": 0.8747557888982704,
+            "retention": 0.00706952464336035,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.008296821667390975,
+        "best_circvar": 0.8743380026747123,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.27282461524009705,
+        "settled_angle": 201.2732984139973,
+        "settled_circvar": 0.14521889981811997,
+        "drift_degstep": -0.6480754369300286,
+        "rot_left_degstep": 1.3546561440315457,
+        "rot_right_degstep": -1.5855401421646529,
+        "rot_left_drift_corrected": 2.002731580961574,
+        "rot_right_drift_corrected": -0.9374647052346243,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.21906054019927979,
+        "settled_angle": 19.516749685676128,
+        "settled_circvar": 0.15330804194054626,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -4.260467530034203,
+        "rot_right_degstep": 4.334236589165866,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.439640503688087,
+            "final_circvar": 0.875633554855355,
+            "final_angle": 192.86111945380367,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.44564158512639995,
+            "final_circvar": 0.8749394085265499,
+            "final_angle": 193.64612318094862,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 28.9
+    },
+    {
+      "gain": 1.8,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.817980766296387,
+            "release_angle": 19.342933907928927,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.865425109863281,
+            "release_angle": 115.92034040275989,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.680322647094727,
+            "release_angle": 202.403869275579,
+            "final_mass": 0.13785657286643982,
+            "final_angle": 197.28459575841325,
+            "final_circvar": 0.8748456261486295,
+            "retention": 0.011802462742818941,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.644637107849121,
+            "release_angle": 293.9838257459422,
+            "final_mass": 0.13702727854251862,
+            "final_angle": 197.4949688625057,
+            "final_circvar": 0.8742211539366354,
+            "retention": 0.01176741510048044,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.011802462742818941,
+        "best_circvar": 0.8748456261486295,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.13175617158412933,
+        "settled_angle": 196.1884700861319,
+        "settled_circvar": 0.8689158684472296,
+        "drift_degstep": 0.03635539906319328,
+        "rot_left_degstep": 1.462312181837864,
+        "rot_right_degstep": -1.317249728810531,
+        "rot_left_drift_corrected": 1.4259567827746706,
+        "rot_right_drift_corrected": -1.3536051278737242,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -0.5760011621611684,
+        "rot_right_degstep": -0.22952132375046463,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": false,
+        "pass": false
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.046184084676703,
+            "final_circvar": 0.874780788210809,
+            "final_angle": 197.4417058028799,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 1.0517713908165873,
+            "final_circvar": 0.8736050331820346,
+            "final_angle": 197.4884856211622,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    },
+    {
+      "gain": 1.8,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.813483238220215,
+            "release_angle": 19.331072619471826,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.850531578063965,
+            "release_angle": 115.91167977332641,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.694573402404785,
+            "release_angle": 202.41436828554544,
+            "final_mass": 0.1367521733045578,
+            "final_angle": 197.44621741222497,
+            "final_circvar": 0.874167391185333,
+            "retention": 0.011693643589977988,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.659433364868164,
+            "release_angle": 293.96373240911464,
+            "final_mass": 0.1362505406141281,
+            "final_angle": 197.57110924350584,
+            "final_circvar": 0.8737511593214021,
+            "retention": 0.011685862970380184,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.011693643589977988,
+        "best_circvar": 0.874167391185333,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.13808870315551758,
+        "settled_angle": 197.2671277578722,
+        "settled_circvar": 0.8749865450070466,
+        "drift_degstep": 0.0031101317445404674,
+        "rot_left_degstep": 1.4270746803965504,
+        "rot_right_degstep": -1.3533216792444545,
+        "rot_left_drift_corrected": 1.4239645486520098,
+        "rot_right_drift_corrected": -1.356431810988995,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": 0.009806680445249499,
+        "rot_right_degstep": -0.21079147694432118,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": false
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.9890169133922436,
+            "final_circvar": 0.8738774619243824,
+            "final_angle": 197.6558468343157,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.994510183257192,
+            "final_circvar": 0.8727220479817593,
+            "final_angle": 197.6972114292781,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.850449562072754,
+            "release_angle": 19.35567460446934,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.898896217346191,
+            "release_angle": 115.93171339622972,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.696101188659668,
+            "release_angle": 202.385417968388,
+            "final_mass": 0.1912606805562973,
+            "final_angle": 192.13696595586495,
+            "final_circvar": 0.8618432448723548,
+            "retention": 0.016352515891512657,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.66051197052002,
+            "release_angle": 293.99424866481684,
+            "final_mass": 0.19046612083911896,
+            "final_angle": 193.68488384703855,
+            "final_circvar": 0.8631243726890279,
+            "retention": 0.016334284576925383,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.016352515891512657,
+        "best_circvar": 0.8618432448723548,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.32349053025245667,
+        "settled_angle": 200.93683800611606,
+        "settled_circvar": 0.1517053589548285,
+        "drift_degstep": -0.5161901227065642,
+        "rot_left_degstep": 1.2275625308137752,
+        "rot_right_degstep": -1.521351406174593,
+        "rot_left_drift_corrected": 1.7437526535203394,
+        "rot_right_drift_corrected": -1.0051612834680288,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.23888851702213287,
+        "settled_angle": 19.262752296673575,
+        "settled_circvar": 0.1515373826025519,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -3.985120829399667,
+        "rot_right_degstep": 4.228397575547538,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.5954030667902033,
+            "final_circvar": 0.8612423953389495,
+            "final_angle": 193.7547154416662,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.60346858517555,
+            "final_circvar": 0.8614571496354408,
+            "final_angle": 193.75365968805454,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.3
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.831286430358887,
+            "release_angle": 19.327869217958483,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.873461723327637,
+            "release_angle": 115.91337428898079,
+            "final_mass": 0.0003544241772033274,
+            "final_angle": 270.0,
+            "final_circvar": 0.0,
+            "retention": 3.259533957276505e-05,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.742130279541016,
+            "release_angle": 202.39119137404757,
+            "final_mass": 0.20826008915901184,
+            "final_angle": 191.55901333507774,
+            "final_circvar": 0.8699568240882489,
+            "retention": 0.017736141926637902,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.694527626037598,
+            "release_angle": 293.9671855912162,
+            "final_mass": 0.19914552569389343,
+            "final_angle": 192.27393978227946,
+            "final_circvar": 0.8656515022382348,
+            "retention": 0.017028949955233803,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.017736141926637902,
+        "best_circvar": 0.8699568240882489,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.1935357004404068,
+        "settled_angle": 193.71540066095042,
+        "settled_circvar": 0.8556784769777873,
+        "drift_degstep": -0.07137525838476791,
+        "rot_left_degstep": 1.4788935922909843,
+        "rot_right_degstep": -1.242844095762779,
+        "rot_left_drift_corrected": 1.5502688506757523,
+        "rot_right_drift_corrected": -1.171468837378011,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -0.8271419981221212,
+        "rot_right_degstep": 0.051359476608131796,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.0785890872323993,
+            "final_circvar": 0.8699156738702487,
+            "final_angle": 191.7387942700506,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 1.0895225201245984,
+            "final_circvar": 0.8694244251093437,
+            "final_angle": 191.80053190747472,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.9
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.83243179321289,
+            "release_angle": 19.32425039172105,
+            "final_mass": 0.0,
+            "final_angle": NaN,
+            "final_circvar": 1.0,
+            "retention": 0.0,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.874468803405762,
+            "release_angle": 115.91642363560014,
+            "final_mass": 0.0003517436853144318,
+            "final_angle": 270.0,
+            "final_circvar": 0.0,
+            "retention": 3.234582687885128e-05,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.745367050170898,
+            "release_angle": 202.39777265477332,
+            "final_mass": 0.2095966339111328,
+            "final_angle": 191.53197162154677,
+            "final_circvar": 0.8705646679729169,
+            "retention": 0.01784504758479073,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.698808670043945,
+            "release_angle": 293.9505044993881,
+            "final_mass": 0.1995033621788025,
+            "final_angle": 192.30288071103655,
+            "final_circvar": 0.865883672231621,
+            "retention": 0.017053305836999648,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.01784504758479073,
+        "best_circvar": 0.8705646679729169,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.2078164964914322,
+        "settled_angle": 191.53660144896838,
+        "settled_circvar": 0.8698433520693102,
+        "drift_degstep": -0.0002624183767845049,
+        "rot_left_degstep": 1.5505466269925998,
+        "rot_right_degstep": -1.169861460041514,
+        "rot_left_drift_corrected": 1.5508090453693844,
+        "rot_right_drift_corrected": -1.1695990416647295,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0,
+        "settled_angle": NaN,
+        "settled_circvar": 1.0,
+        "drift_degstep": NaN,
+        "rot_left_degstep": -0.028547488413856816,
+        "rot_right_degstep": -0.21407848672327512,
+        "rot_left_drift_corrected": NaN,
+        "rot_right_drift_corrected": NaN,
+        "opposite_signed": false,
+        "pass": false
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.009515980872099,
+            "final_circvar": 0.8704947016378811,
+            "final_angle": 191.70564632390256,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 1.0205630456588253,
+            "final_circvar": 0.8701556680457143,
+            "final_angle": 191.76925403586893,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.3
+    },
+    {
+      "gain": 2.5,
+      "leak": 0.1,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.926935195922852,
+            "release_angle": 19.355395405549945,
+            "final_mass": 0.005107193719595671,
+            "final_angle": 338.8231763166276,
+            "final_circvar": 0.24986522181166027,
+            "retention": 0.0004673948941786814,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.996207237243652,
+            "release_angle": 115.95751082127346,
+            "final_mass": 0.006882765796035528,
+            "final_angle": 333.39932787349113,
+            "final_circvar": 0.30279326255436556,
+            "retention": 0.0006259217971742034,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.828540802001953,
+            "release_angle": 202.33152967224032,
+            "final_mass": 0.3545732796192169,
+            "final_angle": 185.12830003114595,
+            "final_circvar": 0.8358290967736675,
+            "retention": 0.029976079514322358,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.762718200683594,
+            "release_angle": 294.00673602982306,
+            "final_mass": 0.3427618145942688,
+            "final_angle": 184.87029208431707,
+            "final_circvar": 0.8333517127589047,
+            "retention": 0.029139677474748063,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.029976079514322358,
+        "best_circvar": 0.8358290967736675,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.5972812175750732,
+        "settled_angle": 199.70111485482767,
+        "settled_circvar": 0.18297545207706556,
+        "drift_degstep": -0.4502509536048791,
+        "rot_left_degstep": 1.1398371212678569,
+        "rot_right_degstep": -1.457256773001301,
+        "rot_left_drift_corrected": 1.590088074872736,
+        "rot_right_drift_corrected": -1.007005819396422,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.2942187786102295,
+        "settled_angle": 17.963496157943037,
+        "settled_circvar": 0.13880394559187825,
+        "drift_degstep": -1.4243176287571988,
+        "rot_left_degstep": -3.7013659944239654,
+        "rot_right_degstep": 4.074526142448516,
+        "rot_left_drift_corrected": -2.277048365666767,
+        "rot_right_drift_corrected": 5.498843771205714,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 0.6106338109971383,
+            "final_circvar": 0.8381904208734859,
+            "final_angle": 185.2095417861358,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 0.627191659757646,
+            "final_circvar": 0.8409748572803202,
+            "final_angle": 184.98598543403477,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    },
+    {
+      "gain": 2.5,
+      "leak": 0.3,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.907530784606934,
+            "release_angle": 19.306021463575462,
+            "final_mass": 0.006947676185518503,
+            "final_angle": 341.78107120984447,
+            "final_circvar": 0.2982385818333274,
+            "retention": 0.0006369614097558443,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.9585542678833,
+            "release_angle": 115.93565047213829,
+            "final_mass": 0.008446082472801208,
+            "final_angle": 333.81845954152527,
+            "final_circvar": 0.3612273507385333,
+            "retention": 0.000770729629687969,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.895376205444336,
+            "release_angle": 202.34926093654028,
+            "final_mass": 0.37147578597068787,
+            "final_angle": 184.7689543044797,
+            "final_circvar": 0.8404864739828227,
+            "retention": 0.031228586599948722,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.819873809814453,
+            "release_angle": 293.9294628589432,
+            "final_mass": 0.36879047751426697,
+            "final_angle": 184.8221305895062,
+            "final_circvar": 0.8395246572733708,
+            "retention": 0.031200881113303203,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "202.5",
+        "best_retention": 0.031228586599948722,
+        "best_circvar": 0.8404864739828227,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 202.5,
+        "settled_mass": 0.3678700029850006,
+        "settled_angle": 185.70160270036476,
+        "settled_circvar": 0.8264898250594138,
+        "drift_degstep": -0.030545248072706956,
+        "rot_left_degstep": 1.5861268470011367,
+        "rot_right_degstep": -0.992625127253631,
+        "rot_left_drift_corrected": 1.6166720950738436,
+        "rot_right_drift_corrected": -0.962079879180924,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.0069432333111763,
+        "settled_angle": 344.4190820257445,
+        "settled_circvar": 0.23515905353728916,
+        "drift_degstep": -0.08949804353636068,
+        "rot_left_degstep": -2.588606452960812,
+        "rot_right_degstep": 5.197370887044175,
+        "rot_left_drift_corrected": -2.4991084094244513,
+        "rot_right_drift_corrected": 5.286868930580536,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.0100760154861572,
+            "final_circvar": 0.8398737450400072,
+            "final_angle": 185.0407411920853,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 1.0390008027596982,
+            "final_circvar": 0.8424730664584845,
+            "final_angle": 185.00299232523756,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    },
+    {
+      "gain": 2.5,
+      "leak": 0.6,
+      "c1": {
+        "per_angle": {
+          "22.5": {
+            "release_mass": 10.915365219116211,
+            "release_angle": 19.308144702796916,
+            "final_mass": 0.006959126330912113,
+            "final_angle": 341.73891272662013,
+            "final_circvar": 0.299142762358362,
+            "retention": 0.0006375532280609824,
+            "angle_pass": false
+          },
+          "112.5": {
+            "release_mass": 10.966365814208984,
+            "release_angle": 115.93797178434663,
+            "final_mass": 0.00844851229339838,
+            "final_angle": 333.81426067812424,
+            "final_circvar": 0.36250643585171294,
+            "retention": 0.0007704021949050566,
+            "angle_pass": false
+          },
+          "202.5": {
+            "release_mass": 11.904500961303711,
+            "release_angle": 202.34576902346578,
+            "final_mass": 0.36472389101982117,
+            "final_angle": 184.5564167871491,
+            "final_circvar": 0.8397401434349064,
+            "retention": 0.030637478396228275,
+            "angle_pass": false
+          },
+          "292.5": {
+            "release_mass": 11.821783065795898,
+            "release_angle": 293.899848713338,
+            "final_mass": 0.36831414699554443,
+            "final_angle": 184.89204969059725,
+            "final_circvar": 0.8392009170953035,
+            "retention": 0.03115554945862541,
+            "angle_pass": false
+          }
+        },
+        "n_angles_pass": 0,
+        "best_angle": "292.5",
+        "best_retention": 0.03115554945862541,
+        "best_circvar": 0.8392009170953035,
+        "pass": false
+      },
+      "c2": {
+        "seed_angle": 292.5,
+        "settled_mass": 0.36827901005744934,
+        "settled_angle": 184.90087337731097,
+        "settled_circvar": 0.839162759520071,
+        "drift_degstep": -8.173950698354323e-05,
+        "rot_left_degstep": 1.6139940661065812,
+        "rot_right_degstep": -0.9653525347887562,
+        "rot_left_drift_corrected": 1.614075805613565,
+        "rot_right_drift_corrected": -0.9652707952817726,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "c2_original_seed": {
+        "seed_angle": 22.5,
+        "settled_mass": 0.006948364898562431,
+        "settled_angle": 341.721047817294,
+        "settled_circvar": 0.2980171055745854,
+        "drift_degstep": 0.0005190303930741417,
+        "rot_left_degstep": -2.4988988793554654,
+        "rot_right_degstep": 5.287351099413922,
+        "rot_left_drift_corrected": -2.4994179097485394,
+        "rot_right_drift_corrected": 5.286832069020847,
+        "opposite_signed": true,
+        "pass": true
+      },
+      "visual_aux": {
+        "per_game": {
+          "ar25": {
+            "retention_vs_settled": 1.0014132430683398,
+            "final_circvar": 0.8386225770271801,
+            "final_angle": 185.2040238361364,
+            "run_pass": false
+          },
+          "bp35": {
+            "retention_vs_settled": 1.028839416210199,
+            "final_circvar": 0.8410533017658258,
+            "final_angle": 185.09456300270062,
+            "run_pass": false
+          }
+        },
+        "survived_visual": false
+      },
+      "elapsed_s": 29.0
+    }
+  ],
+  "total_elapsed_s": 610.5
+}

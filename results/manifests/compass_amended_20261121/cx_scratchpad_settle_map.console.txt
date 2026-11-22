@@ -1,0 +1,37 @@
+# instrument: cx_scratchpad_settle_map
+# attempt: first
+# started: 2026-11-22T01:41:43Z
+# freeze: compass-map-freeze-20261121 = b68a584833ca2569796b7a1aac3d3ca6c0c0785f
+# git HEAD: 0afaa8aef3cf99f44feeb393ee2c3a134a8783db (tracked files other than WORKLOG.md identical to the freeze)
+# command: PYTHONPATH=src .venv/bin/python -B scripts/cx_scratchpad_premise.py --settle-map
+# environment: env -i, then PATH, HOME, PYTHONPATH=src and PYTHONDONTWRITEBYTECODE=1 only
+# interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment)
+# inputs: the 13 files of scripts/arenas/run_amended_once.inputs.sha256 match their pinned SHA-256
+# input: results/diagnostics/recognizer_frames.npz sha256 50e926f0476666bd7b9df836f3d820b4fe8d9315e85d32aa5353e9b46aa07b40
+# resources at start: free disk 3382348 KB; system memory free 55%
+# ---- output ----
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+EPG with wedge labels: 46
+drive write   0.0 -> settled     nan mass 0.0000
+drive write  45.0 -> settled  270.00 mass 0.0004
+drive write  90.0 -> settled  270.00 mass 0.0004
+drive write 135.0 -> settled  270.00 mass 0.0000
+drive write 180.0 -> settled  191.57 mass 0.2081
+drive write 225.0 -> settled  191.55 mass 0.2085
+drive write 270.0 -> settled  162.57 mass 0.1993
+drive write 315.0 -> settled     nan mass 0.0000
+inject write   0.0 -> settled     nan mass 0.0000
+inject write  45.0 -> settled  270.00 mass 0.0003
+inject write  90.0 -> settled  270.00 mass 0.0003
+inject write 135.0 -> settled     nan mass 0.0000
+inject write 180.0 -> settled  191.71 mass 0.2055
+inject write 225.0 -> settled  191.76 mass 0.2051
+inject write 270.0 -> settled  191.47 mass 0.2080
+inject write 315.0 -> settled     nan mass 0.0000
+# ---- end of output ----
+# JSON written: results/cx_scratchpad_settle_map.amended_map.json
+# exit status: 0
+# peak sampled resident memory: 464496 KB
+# output: results/cx_scratchpad_settle_map.amended_map.json sha256 511aba240eaac114d3189a19fcaf609058335c6fdf2c187a5b34212920ca34f4
+# finished: 2026-11-22T01:42:36Z
+# CLASSIFICATION: finished -- an outcome (amendment section 10)

@@ -1,0 +1,333 @@
+{
+  "hypothesis": "H-CX-SEEDING-PROTOCOL",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "operating_points": [
+    [
+      1.5,
+      0.3
+    ],
+    [
+      2.0,
+      0.3
+    ]
+  ],
+  "protocols": {
+    "P1": {
+      "kind": "wedge",
+      "steps": 20,
+      "scale": 1.0
+    },
+    "P2": {
+      "kind": "wedge",
+      "steps": 100,
+      "scale": 1.0
+    },
+    "P3": {
+      "kind": "wedge",
+      "steps": 20,
+      "scale": 3.0
+    },
+    "P4": {
+      "kind": "inject"
+    }
+  },
+  "cells": [
+    {
+      "gain": 1.5,
+      "leak": 0.3,
+      "protocol": "P1",
+      "real_rows": {
+        "22.5": {
+          "retention": 0.0,
+          "circvar": 0.17580404409836514,
+          "final_angle": 294.09186367355665,
+          "err_deg": 88.40813632644335,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 0.0,
+          "circvar": 0.17941698713679122,
+          "final_angle": 293.90154180152325,
+          "err_deg": 178.59845819847675,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 0.6178774966579125,
+          "circvar": 0.1856323118466321,
+          "final_angle": 293.56903245568645,
+          "err_deg": 91.06903245568645,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 0.8681044997947872,
+          "circvar": 0.18744228219939651,
+          "final_angle": 293.4827505446192,
+          "err_deg": 0.9827505446191935,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 1.5,
+      "leak": 0.3,
+      "protocol": "P2",
+      "real_rows": {
+        "22.5": {
+          "retention": 2.6813275656322495,
+          "circvar": 0.1697106939682671,
+          "final_angle": 294.35626657862946,
+          "err_deg": 88.14373342137054,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 1.327476289016411,
+          "circvar": 0.17142249799582987,
+          "final_angle": 294.3173583561594,
+          "err_deg": 178.1826416438406,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 0.29185702358551463,
+          "circvar": 0.18403731352849462,
+          "final_angle": 293.65254944992864,
+          "err_deg": 91.15254944992864,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 0.354059323618075,
+          "circvar": 0.18182266822886417,
+          "final_angle": 293.7699475287377,
+          "err_deg": 1.2699475287377027,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 1.5,
+      "leak": 0.3,
+      "protocol": "P3",
+      "real_rows": {
+        "22.5": {
+          "retention": 0.0,
+          "circvar": 0.1745374770397513,
+          "final_angle": 294.1580279748172,
+          "err_deg": 88.34197202518283,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 0.0,
+          "circvar": 0.17871869863372558,
+          "final_angle": 293.9384630942671,
+          "err_deg": 178.5615369057329,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 0.4769470575663614,
+          "circvar": 0.18696833152844827,
+          "final_angle": 293.50689414919134,
+          "err_deg": 91.00689414919134,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 0.6651881817942921,
+          "circvar": 0.1880559031512392,
+          "final_angle": 293.454072300935,
+          "err_deg": 0.9540723009350245,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 1.5,
+      "leak": 0.3,
+      "protocol": "P4",
+      "real_rows": {
+        "22.5": {
+          "retention": 102.94209426806086,
+          "circvar": 0.18548315065125187,
+          "final_angle": 293.57804992334553,
+          "err_deg": 88.92195007665447,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 33.306741733144676,
+          "circvar": 0.1869282276625993,
+          "final_angle": 293.50946289810526,
+          "err_deg": 178.99053710189474,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 7.083164341494137,
+          "circvar": 0.18879566149171012,
+          "final_angle": 293.4221748724948,
+          "err_deg": 90.9221748724948,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 91.14245146414838,
+          "circvar": 0.7169763422747483,
+          "final_angle": 250.5335096186672,
+          "err_deg": 41.96649038133279,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.3,
+      "protocol": "P1",
+      "real_rows": {
+        "22.5": {
+          "retention": 0.0,
+          "circvar": 1.0,
+          "final_angle": NaN,
+          "err_deg": NaN,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 0.0,
+          "circvar": 0.0,
+          "final_angle": 270.0,
+          "err_deg": 157.5,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 1.0831520821474594,
+          "circvar": 0.8705925460575938,
+          "final_angle": 191.52829649694485,
+          "err_deg": 10.971703503055153,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 1.0342355050263388,
+          "circvar": 0.8657113143291688,
+          "final_angle": 192.30958890533648,
+          "err_deg": 100.19041109466352,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.3,
+      "protocol": "P2",
+      "real_rows": {
+        "22.5": {
+          "retention": 0.0,
+          "circvar": 1.0,
+          "final_angle": NaN,
+          "err_deg": NaN,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 1.0996061946991336,
+          "circvar": 0.0,
+          "final_angle": 270.0,
+          "err_deg": 157.5,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 0.9977734690596105,
+          "circvar": 0.8705905959769801,
+          "final_angle": 191.52819119822334,
+          "err_deg": 10.97180880177666,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 0.9975259432136395,
+          "circvar": 0.8657093458125834,
+          "final_angle": 192.30946170842046,
+          "err_deg": 100.19053829157954,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.3,
+      "protocol": "P3",
+      "real_rows": {
+        "22.5": {
+          "retention": 0.0,
+          "circvar": 1.0,
+          "final_angle": NaN,
+          "err_deg": NaN,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 0.0,
+          "circvar": 0.0,
+          "final_angle": 270.0,
+          "err_deg": 157.5,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 1.0811279769774262,
+          "circvar": 0.8705643420814678,
+          "final_angle": 191.53001011628461,
+          "err_deg": 10.969989883715385,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 1.0334196035327299,
+          "circvar": 0.8658883365462601,
+          "final_angle": 192.30043263301158,
+          "err_deg": 100.19956736698842,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    },
+    {
+      "gain": 2.0,
+      "leak": 0.3,
+      "protocol": "P4",
+      "real_rows": {
+        "22.5": {
+          "retention": 0.0,
+          "circvar": 1.0,
+          "final_angle": NaN,
+          "err_deg": NaN,
+          "held_out": false
+        },
+        "112.5": {
+          "retention": 0.0,
+          "circvar": 0.0,
+          "final_angle": 270.0,
+          "err_deg": 157.5,
+          "held_out": true
+        },
+        "202.5": {
+          "retention": 17.5033932005929,
+          "circvar": 0.8695781845181867,
+          "final_angle": 191.66691991201745,
+          "err_deg": 10.833080087982552,
+          "held_out": true
+        },
+        "292.5": {
+          "retention": 22.81982260955843,
+          "circvar": 0.8657357775303656,
+          "final_angle": 192.30976896674647,
+          "err_deg": 100.19023103325353,
+          "held_out": true
+        }
+      },
+      "real_pass": false
+    }
+  ],
+  "unstable": {
+    "real": 0.0,
+    "rw0": 0.0,
+    "rw1": 0.0,
+    "rw2": 0.0
+  },
+  "verdict": "KILL",
+  "elapsed_s": 389.4
+}

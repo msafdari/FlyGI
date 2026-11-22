@@ -1,5 +1,113 @@
 # FlyGI durable worklog
 
+## November 21, 2026, 6:10 PM Pacific | Compass amended runs CLOSED: every outcome read by the pre-stated rules, no status word changed, the public claims corrected
+
+The eleven amended runs of the entry below are all first attempts, all
+classified finished by the wrapper (launch.log: eleven STARTED and eleven
+ENDED lines, no refusal, no re-run, no failure, no abandonment). MEASURED:
+`sysctl kern.boottime` still reads 2026-09-06 after the last run, so the
+no-restart ASSUMPTION of decision 7 held. The records and outputs were
+copied to `results/manifests/compass_amended_20261121/` (30 files with a
+SHA256SUMS list); every one of the 28 hashes written into this file between
+runs matches a copy.
+
+**How the readings were made.** By section 10 of the amendment, mechanically.
+Three subagents, one group of instruments each, derived the readings from
+the frozen text and the raw outputs (workflow wf_582d89fc-83f, notes under
+the session scratchpad), and a reader script I wrote outside the package
+applied the same rules to all eleven: for every instrument the two
+derivations agreed on every status, sentence and figure. Besides formatting
+choices (decimal places, "3" or "3/21") and registered-map history the
+rules do not replace (it stays as history), the subagents flagged gaps the
+rules leave open: the ordinal sentences ("first PASS") that section 10 says
+are rewritten at the close (now marked in SYNTHESIS, HANDOFF and the Task 9
+runbook), the fact that both C2 rewires that pass do so at A_Delta 6 where
+the real graph passes (stated in the Biswas bullet), the AC-2 row's
+registered-map figures (an amended note added), and the literal reading of
+item 8's "if class 1 has no verdict" (read as section 10's no-verdict
+outcome; class 1 finished). None changes a status. A second check of the
+close edits (workflow wf_910de8a9-3b8: registry fidelity, public claims at
+tier, completeness) found no blocker and 16 majors and 35 minors, all in
+wording, tier or completeness; they were fixed before this commit.
+
+**Outcomes and readings (MEASURED; EXPERIMENTS.yaml, the 2026-11-21 AMENDED
+RUN bullets).**
+
+| Instrument | Outcome | Reading by section 10 | Status |
+|---|---|---|---|
+| Biswas (H-CX-BISWAS-FITTED) | PASS: r_a 0.5480 / 0.4373 (published 0.548 / 0.437), G1 8/8 at A_Delta 8 and 6, A_Delta 4 no valid fit, no valid fit on the 3 registered rewires | close sentence of decision 9, filled, with C2's limit; "position-faithful" kept (16 of 16 follow); "applied once" narrowed; the 2026-10-31 "different member" sentences withdrawn | supported (unchanged) |
+| C2 context nulls (non-decisional) | 25 of 200 further rewires fit; 2 pass G1 (4340, 4388, both at A_Delta 6) | carried as "; 2 of 200 further rewires (seeds 4265 to 4464) pass G1 at some configuration" | none |
+| Stage A (H-CX-RING-TOPOLOGY) | PASS: bandedness 0.8505 vs 0.3342; PEN_a mirror-peak 0.0347 vs 0.0080; p 1/201 each; PEN_a mean offsets +0.254 / -0.258 | statement narrowed to the C6 words with the opposite-sign clause; gate open | supported (unchanged) |
+| Null decomposition | weight families separate on both statistics; sign family on neither | template sentence: magnitude-assignment dependent, not carried by the sign pattern | supported (unchanged) |
+| Stage B (H-CX-HEADING-LATENT) | BLOCKED at the precheck (retention 0.0000, circvar 0.176) | null stays, now on the amended map | null (unchanged) |
+| Seeding probe | KILL, 0 of 8 real cells | refuted stands; no Stage-B re-registration licensed | refuted (unchanged) |
+| Class 3 | KILL: G1 best 5/8, G2 false everywhere, no rewire ran | refuted stands; held sentence re-instated in its fixed, scoped form | refuted (unchanged) |
+| Class-1 ring benchmark | C1 0/21; C2 19/21 (masses quoted); no point with both; visual 3/21 | requirement 1 not met; "(fixed point, not a bump)" stays; the C1 table replaces the 222 decode | H-MODULE-VERDICT unchanged |
+| Class-2 ring benchmark | best-approach selected; 0 calibration passes in 210 rows; 157 alive, none at or below 0.6 | reading (a), FAILS at C1-formation; values replace the 2026-09-29 sentence | H-MODULE-VERDICT unchanged |
+| Scratchpad main mode | visual and darkness accuracy 0.5 at every N | K met: refuted, as registered | refuted (unchanged) |
+| Scratchpad settle map | P 0 of 8 in each style | the 2026-09-27 reinterpretation stands; the amended table replaces its decode values | H-CX-RING-ATTRACTOR unchanged |
+
+**Recorded where it lives.** EXPERIMENTS.yaml: a dated AMENDED RUN bullet on
+nine records, and two statements narrowed in place with a dated bracket
+(H-CX-RING-TOPOLOGY to the C6 words; H-CX-BISWAS-FITTED's "applied once"),
+the original wording quoted in each bullet; every status word unchanged.
+docs/arenas/ASSUMPTIONS.md: AC-1a and AC-B1a moved from OPEN to EXERCISED,
+stated as consistent with the outcomes and not independently tested by
+them; AC-2's invalidation noted on the amended map. The public claims:
+README.md (the compass sentence and the two compass rows), docs/social/FACTS.md
+(a 2026-11-21 section, the 2026-10-31 table marked as history),
+docs/arenas/task1_arc_paper/factsheet.md (a dated note and the two compass
+bullets), docs/arenas/SYNTHESIS.md (a note, the status table, an addendum),
+docs/arenas/HANDOFF.md (rows 9 and 10), docs/controls.md (the two null
+rows), the Task 9 runbook's banner, dated notes on the repository copies of
+the release text (kaggle_form.md, writeup.md, x_post.md, linkedin_post.md;
+the live posts and the locked writeup are not edited), LEAGUE.md
+regenerated from the registry, and a new correction draft,
+docs/arenas/compass_correction_20261121.md. ASSUMPTIONS.md also gained dated
+notes on AC-B2 (the "different member" reading withdrawn), AC-6 and AC-B5. Each marks the registered-map statements it replaces, and gives the old
+numbers beside the new where a number changed.
+
+**What changed for the public story, at tier.** MEASURED: the verdicts are
+the same under the corrected map: the ring structure passes, the three
+earlier model classes fail, the fitted compass passes. MEASURED: the
+sentence the locked paper carried, that the fitted parameters differed from
+the authors' values, is false under the corrected grouping (0.5480 and
+0.4373 against 0.548 and 0.437); the correction withdraws it. That
+agreement is CONFIRMATORY, not independent evidence, because the grouping
+was found through it. MEASURED, non-decisional: of 200 further rewires, 25
+admit a valid fit and 2 also pass the fitted test, so "no valid fit on the
+rewires" holds for the three registered rewires only. MEASURED: the scratchpad's registered kill
+condition now fires (0.5, it was 0.85). The score-adjacent base rate is
+unchanged at 0 for 16.
+
+**Not done, and why.** The correction is a draft in the repository; posting
+it on Kaggle or anywhere else is the user's decision, as is sending any
+email. The locked Kaggle writeup is not edited.
+
+**Ordered next steps.**
+1. The user reads docs/arenas/compass_correction_20261121.md and decides
+   where it goes (the Kaggle discussion of the writeup is the obvious
+   place; the writeup itself is locked).
+2. The three held emails (to James Fitzgerald, the MaleCNS team and
+   Yeyuan Liu) are rewritten with the amended-run numbers in the local,
+   git-ignored drafts file; nothing is sent by this session.
+3. The open items of the amendment's section 14 stay open for the owner
+   (B-R9 against the source paper, the fan-shaped-body frame hypothesis,
+   the mirror-peak docstring, the `test_league.py` status list, the
+   `PYTHONHASHSEED` leak).
+4. The live X and LinkedIn posts still say the fitted numbers differ from
+   the published ones and that the recipe was applied once; whether to
+   reply or edit is the user's decision (the repository copies carry dated
+   notes).
+5. The December 4 checklist of the 1:00 AM entry stands.
+
+**Limits of this entry.** The readings are mechanical, but the amendment
+that fixed them was written after data contact by the session that found
+the fault, and every review of it was by subagents of that session. Two of
+the re-runs were confirmatory. Nothing here is a navigation or behaviour
+result: every compass test is a model of the circuit under declared
+physiology.
+
 ## November 21, 2026, 4:42 PM Pacific | Compass amended runs, one at a time against the freeze
 
 Each run below went through `scripts/arenas/run_amended_once.sh`, launched

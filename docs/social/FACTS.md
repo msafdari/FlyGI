@@ -140,6 +140,11 @@ three times as often. **This must never appear in a post.**
 
 ## The Biswas-fitted compass PASS (added 2026-10-31; source: EXPERIMENTS.yaml H-CX-BISWAS-FITTED close, bullet 6, + the 2026-10-31 WORKLOG entries, run record 0e80c2f)
 
+> 2026-11-21: this table records the run made with the original EPG
+> grouping (left k pooled with right k), which was wrong. The corrected
+> re-run is in the next section; where the two differ, quote the next
+> section and keep this one as history.
+
 | Fact | Value | Source |
 | --- | --- | --- |
 | Verdict | PASS (closed supported), exit 0, 10.7 s | run record |
@@ -150,9 +155,34 @@ three times as often. **This must never appear in a post.**
 | Standing | the record's first hypothesis whose VERDICT is a biological-computation comparison of real wiring vs its degree-preserving null. Precedent that must accompany any "first" phrasing: H-FLYGI-FLYBENCH-TERMINAL (supported 2026-10-29) already beat FlyBench's own rewired control — itself degree-preserving — on its bar 4 (specificity +0.2823 → +0.3135), but as one bar inside a mechanism-transfer verdict | registry close |
 | r_a cross-check | fitted 0.4221 / 0.2132 vs their published 0.548 / 0.437 — both OUTSIDE the 0.1 band; a flagged reading, never a verdict input | run record |
 
+## The amended compass runs (added 2026-11-21; source: EXPERIMENTS.yaml, the 2026-11-21 AMENDED RUN bullets; WORKLOG.md, entry "Compass amended runs, one at a time against the freeze"; records copied, hash-checked, to results/manifests/compass_amended_20261121/)
+
+| Fact | Value | Source |
+| --- | --- | --- |
+| Why | The EPG label-to-ring map reflected the left half of the ring, and the fitted compass pooled left k with right k. Corrected by a dated amendment frozen before any re-run; each instrument run once | docs/arenas/compass_map_amendment_20261121.md |
+| Fitted compass verdict | PASS again, at A_Delta 8 and 6 (G1 8/8 at both, retention 1.0); A_Delta 4 no valid fit; no valid fit on the three registered rewires | H-CX-BISWAS-FITTED, 2026-11-21 bullet |
+| Shape coefficients | r_a 0.5480 and 0.4373 against the published 0.548 and 0.437, within the 0.1 band at both. Confirmatory: the grouping was found through this agreement, so it is not independent evidence, and the PASS is not a reproduction of their numeric realization | same |
+| Wider rewire reading | Non-decisional: of 200 further rewires, 25 admit a valid fit and 2 also pass the retention test (both at A_Delta 6) | same |
+| Ring structure | PASS again: bandedness 0.8505 against a 200-rewire maximum of 0.3342; PEN_a mirror-peak 0.0347 against 0.0080 (0 of 200 at or above). Bar 1 had been computed before the freeze; the mirror-peak bar had not. The PEN_a halves lean in opposite directions, which the corrected geometry alone could produce (inferred); do not call it a shifter | H-CX-RING-TOPOLOGY, 2026-11-21 bullet |
+| Earlier model classes | Fail again: class 1 no localized bump at any of 21 grid points; class 2 no calibration pass in 210 configurations; class 3 G1 at best 5 of 8 (bar 6; none of those writes kept its own position), steering never opposite-signed; the heading-latent test blocked at its precheck | H-MODULE-VERDICT, H-CX-CLASS3-COMPASS, H-CX-HEADING-LATENT, 2026-11-21 bullets |
+
+What may be said: the fitted compass passed in both instrument runs, and
+under the corrected grouping its shape coefficients at A_Delta 8 and 6 agree
+with the published values to their printed precision (0.5480 and 0.4373
+against 0.548 and 0.437); always add that this agreement is confirmatory,
+not independent evidence. What may
+not be said: that the fitted parameters differ from the authors' values
+(withdrawn, see docs/arenas/compass_correction_20261121.md); that the
+agreement independently confirms the grouping, or that the model reproduces
+the authors' realization; that the recipe was applied once (it was looked at
+under three EPG groupings; amendment decision 9); that the rewires in
+general cannot be fitted (25 of 200 further rewires admit a valid fit, and 2
+also pass the retention test); or that the wiring shows a PEN shifter.
+
 The measured endpoint is retention in this reduced, fitted model. Navigation,
 updating heading during turns, the living circuit's physiology and
 training a random network are different questions. Describe the earlier
-three model classes by their specific initialization failures or drift.
+three model classes by their specific failures, as measured on the corrected
+map (above); do not reuse the original run's class-3 drift description.
 The compass comparison took place outside ARC. The score-adjacent
 prediction record remains 0 for 16.

@@ -1,0 +1,22 @@
+2026-11-22T00:42:02Z STARTED cx_biswas_killtest (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_biswas_killtest.py
+2026-11-22T00:42:13Z ENDED cx_biswas_killtest (first): exit 0, finished
+2026-11-22T00:43:08Z STARTED cx_biswas_context_nulls (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_biswas_context_nulls.py
+2026-11-22T00:46:04Z ENDED cx_biswas_context_nulls (first): exit 0, finished
+2026-11-22T00:46:50Z STARTED cx_topology_killtest (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_topology_killtest.py
+2026-11-22T00:47:18Z ENDED cx_topology_killtest (first): exit 0, finished
+2026-11-22T00:47:58Z STARTED cx_topology_nulls2 (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_topology_nulls2.py
+2026-11-22T00:48:12Z ENDED cx_topology_nulls2 (first): exit 0, finished
+2026-11-22T00:48:48Z STARTED cx_heading_killtest (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_heading_killtest.py
+2026-11-22T00:49:02Z ENDED cx_heading_killtest (first): exit 3, finished
+2026-11-22T00:49:36Z STARTED cx_seeding_killtest (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_seeding_killtest.py
+2026-11-22T00:56:07Z ENDED cx_seeding_killtest (first): exit 1, finished
+2026-11-22T00:56:43Z STARTED cx_class3_killtest (first): PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_class3_killtest.py
+2026-11-22T01:12:17Z ENDED cx_class3_killtest (first): exit 1, finished
+2026-11-22T01:13:11Z STARTED cx_ring (first): PYTHONPATH=src .venv/bin/python -B scripts/benchmarks/cx_ring.py
+2026-11-22T01:23:23Z ENDED cx_ring (first): exit 0, finished
+2026-11-22T01:24:02Z STARTED fc2_eb_ring (first): PYTHONPATH=src .venv/bin/python -B scripts/benchmarks/fc2_eb_ring.py
+2026-11-22T01:31:47Z ENDED fc2_eb_ring (first): exit 0, finished
+2026-11-22T01:32:43Z STARTED cx_scratchpad_premise (first): PYTHONPATH=src .venv/bin/python -B scripts/cx_scratchpad_premise.py
+2026-11-22T01:41:04Z ENDED cx_scratchpad_premise (first): exit 0, finished
+2026-11-22T01:41:43Z STARTED cx_scratchpad_settle_map (first): PYTHONPATH=src .venv/bin/python -B scripts/cx_scratchpad_premise.py --settle-map
+2026-11-22T01:42:36Z ENDED cx_scratchpad_settle_map (first): exit 0, finished

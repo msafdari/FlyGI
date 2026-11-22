@@ -1,5 +1,10 @@
 # LinkedIn release copy (v4, restored voice, November 4)
 
+> 2026-11-21: the live post's "My fitted numbers differ from the published ones" is
+> withdrawn, and "applied once" no longer holds (the recipe was looked at under
+> three EPG groupings); see the [compass correction](../compass_correction_20261121.md).
+> The live LinkedIn text is not edited here; whether to reply or edit is the owner's decision.
+
 The live post (urn:li:activity:7523777525907357697) carries the text below the
 rule: the October 31 voice and structure, with the eye-map paragraph rewritten
 to the paired result and two precision edits ("Zero trained parameters in the

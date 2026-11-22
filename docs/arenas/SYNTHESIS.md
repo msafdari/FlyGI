@@ -13,6 +13,15 @@ a stated untested bridge), EXPECTED (prediction; base rate 0 for 16).
 > claim in section 3 and the compass impossibility wording in the October 31 addendum.
 > It gives the matched game/seed action counts and the outcome of the finite compass fit search.
 
+> **November 21 compass note.** Every compass result before the November 21 addendum at the end
+> was produced with an EPG label map that reflected the left half of the ring. A dated amendment,
+> frozen before any re-run, corrected it; the ten registered compass runs were made again once
+> each, and one new non-decisional reading was added. No status word changed; the scratchpad's
+> registered kill condition, not met before (0.85), is now met (0.5). The fitted compass's shape
+> coefficients now agree with the published ones (confirmatory, not independent evidence), and
+> the wider rewire reading limits its wiring-specificity sentence. See the addendum at the end and
+> [the correction](compass_correction_20261121.md).
+
 ## 1. The program and its instrument
 
 Six arenas from the 2026-09-30 survey were run in rank order, each
@@ -209,18 +218,18 @@ Measurements that would move this synthesis, in information order:
 | H-T4T5-DVS-GESTURE | refuted 10-03 | EXPERIMENTS.yaml; task4_neurobench/ |
 | H-EARLYFILTER-BRAINSCORE-V1 | refuted 10-04 | EXPERIMENTS.yaml; task5_brainscore/ |
 | H-ALMB-GASDRIFT | refuted 10-06 | EXPERIMENTS.yaml; task6_enose/ |
-| H-CX-RING-TOPOLOGY | supported 10-10 | EXPERIMENTS.yaml; task9_cx_latent/ |
-| H-CX-HEADING-LATENT | null 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
-| H-CX-SEEDING-PROTOCOL | refuted 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
-| H-CX-CLASS3-COMPASS | refuted 10-11 | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-RING-TOPOLOGY | supported 10-10; re-run 11-21 on the corrected map, PASS again (statement narrowed to the bars) | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-HEADING-LATENT | null 10-11; BLOCKED again at the precheck 11-21 (corrected map) | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-SEEDING-PROTOCOL | refuted 10-11; KILL again 11-21 (corrected map) | EXPERIMENTS.yaml; task9_cx_latent/ |
+| H-CX-CLASS3-COMPASS | refuted 10-11; KILL again 11-21 (corrected map) | EXPERIMENTS.yaml; task9_cx_latent/ |
 | H-ARC-HARNESS-SENSITIVITY | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
-| H-STAGEA-NULL-DECOMPOSITION | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
+| H-STAGEA-NULL-DECOMPOSITION | supported 10-29; same readings 11-21 on the corrected map | EXPERIMENTS.yaml; task10_menu/ |
 | H-FB-COLUMNAR-TOPOLOGY | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-T4T5-CLASS3-DS | null 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-SFA | refuted 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-FLYGI-FLYBENCH-TERMINAL | supported 10-29 | EXPERIMENTS.yaml; task10_menu/ |
 | H-T4T5-NATSTAT-DIRECTION | blocked 10-31 (convention limit: G0 in band, G1 at chance -- 90.91 deg vs the 90 deg floor, p 0.605, n 1152; ANS-5 negative; the 2x2 never ran) | EXPERIMENTS.yaml; task10_menu/ |
-| H-CX-BISWAS-FITTED | supported 10-31 (PASS at the frozen "given fitted per-type physiology" scope: valid fits at A_Delta=8/6, G1 8/8 both, all 3 rewires admit no valid fit anywhere; r_a cross-check canary fired, reading only) | EXPERIMENTS.yaml; task10_menu/ |
+| H-CX-BISWAS-FITTED | supported 10-31 (PASS at the frozen "given fitted per-type physiology" scope: valid fits at A_Delta=8/6, G1 8/8 both, all 3 rewires admit no valid fit anywhere; r_a cross-check canary fired, reading only); re-run 11-21 under the corrected grouping: PASS again, r_a 0.5480/0.4373 within the band (confirmatory); of 200 further rewires 2 also pass G1 (non-decisional) | EXPERIMENTS.yaml; task10_menu/ |
 
 Assumption register: docs/arenas/ASSUMPTIONS.md (AP/AD/AF/AN/AB/AE
 rows, annotated in place, never deleted). Durable narrative:
@@ -235,7 +244,10 @@ both halves measured, full record in EXPERIMENTS.yaml and
 docs/arenas/task9_cx_latent/:
 
 - **Stage A (H-CX-RING-TOPOLOGY): SUPPORTED — the series' first
-  PASS.** The real CX wiring carries ring-compass topology its
+  PASS.** [2026-11-21: measured on a label map that reflected the left
+  half-ring; the ordinal is the history of the series. Under the corrected
+  map Stage A passed again on 2026-11-21 (bandedness 0.8505 vs 0.3342),
+  after other PASSes of 2026-10-29; see the November 21 addendum.] The real CX wiring carries ring-compass topology its
   degree-preserving rewires cannot produce: bandedness 0.5881 vs null
   max 0.3376, PEN_a mirror-peak 0.01445 vs 0.00792, each at the
   empirical floor over 200 rewires. The first measured property of
@@ -432,3 +444,51 @@ the information dies (the convention), not what natural statistics do
 for T4/T5. Score-adjacent base rate: unchanged at 0 for 16
 -- nothing in Task 10 was score-adjacent, and the FLAT result
 retroactively WEAKENS what the ARC zeros ever said about the fly.
+
+## Addendum 2026-11-21 — the compass label map, corrected and re-run
+
+Every compass instrument placed EPG cells on the ring with a map that put
+left glomerulus k beside right glomerulus k. In the fly left k lies between
+right 9 minus k and right 10 minus k (ESTABLISHED, Hulse et al. 2021), so
+the map reflected the left half-ring, and the fitted compass's eight units
+were mis-grouped the same way. MEASURED: 18.7% of the direct EPG-to-EPG
+count between ring positions joins neighbours under the old map (random
+maps 13.3%) and 81.7% under the corrected one. A dated amendment
+(docs/arenas/compass_map_amendment_20261121.md) changed the map and,
+besides it, one status rule (the scratchpad's), set the narrowing of
+statements to what their bars measure, pre-stated the reading of every outcome, was reviewed in seven rounds by
+subagents of the session that wrote it, and was frozen at the tag
+compass-map-freeze-20261121 before any re-run. All eleven runs were then made
+once each through a wrapper that refused any change to the frozen files.
+MEASURED outcomes (EXPERIMENTS.yaml, the 2026-11-21 AMENDED RUN bullets):
+
+- Stage A PASS again: bandedness 0.8505 against a 200-rewire maximum of
+  0.3342 (confirmatory: a subagent had reported it before the freeze), and
+  PEN_a mirror-peak 0.0347 against 0.0080 (unseen before that run).
+  The statement is narrowed to what the bars measure: no shifter claim.
+- Stage B BLOCKED again at its precheck (retention 0.0000), so
+  H-CX-HEADING-LATENT stays null; the probe and class 3 KILL again (class 3
+  G1 at best 5 of 8, the bar being 6, and steering never opposite-signed); both ring
+  benchmarks fail again; the scratchpad is now refuted by its registered
+  kill condition (visual readback 0.5).
+- The fitted compass PASSES again, and under the corrected grouping its
+  shape coefficients are 0.5480 and 0.4373 against the published 0.548 and
+  0.437. The Task 10 close's reading that "our counts fit a different
+  member of their realization family" (the r_a canary of 2026-10-31,
+  0.4221 and 0.2132) is withdrawn: it described the mis-grouped fit. The agreement is confirmatory, not independent evidence, because the
+  grouping was found through it. The October 31 addendum's "applied once
+  to our compiled counts" no longer holds either: the recipe was compared
+  with the published values under three groupings before one was adopted
+  (amendment decision 9).
+- The wiring-specificity sentence of the Task 10 close ("the computation
+  is wiring-specific") holds for the three registered rewires. A
+  non-decisional reading of 200 further rewires found 25 with a valid fit
+  and 2 that also pass G1, so it is a finite-search result with a measured
+  limit, not a property of rewires in general.
+- The null decomposition gives the same readings on the corrected map:
+  both statistics depend on the assignment of weight magnitudes within
+  presynaptic columns and are not carried by the sign pattern.
+
+No status word changed. The score-adjacent base rate is unchanged at 0 for
+16: nothing here was score-adjacent. The public correction is
+docs/arenas/compass_correction_20261121.md.

@@ -16,6 +16,15 @@ I Wired a Whole Fly Brain into ARC-AGI-3. It Lost All Season, Then Won One Back.
 
 **Body**
 
+> 2026-11-21: two statements in the body are superseded by the
+> [compass correction](../compass_correction_20261121.md): "Its measured
+> bandedness was **0.5881**, above all 200 degree-preserving rewires
+> (maximum **0.3376**)" (corrected map: 0.8505 against 0.3342), and "My
+> fitted shape parameters differed from the authors' values" (withdrawn).
+> The circuit figure's "All 155 active class-2 configurations spread out"
+> and its class-3 drift sentence describe the original-map runs. Read the
+> correction before any future paste; the locked writeup is not edited.
+
 Paste [kaggle_body_unwrapped.md](kaggle_body_unwrapped.md) as one replacement. Paragraphs are already unwrapped for Kaggle. Preview paragraphs, citations and headings and check the platform's 1,500-word limit before updating the submission. The technical audit and matched game observations are in [factsheet.md](factsheet.md). The historical wrapped writeup and October gallery exports in Git history predate the corrections.
 
 **Media**

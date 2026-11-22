@@ -1,0 +1,30 @@
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+in-cloud gate: pass=True (recovery True, synthetic G1 8/8, can-fail True, identities True)
+subcircuit: 148 nodes, composition {'EPG': 46, 'PEN_a(PEN1)': 20, 'PEN_b(PEN2)': 22, 'Delta7': 42, 'PEG': 18}
+EPG labelled 46/46, Delta7 42
+EPG wedge sizes: [6, 5, 6, 6, 6, 6, 5, 6]
+real A_Delta=8: valid_fit=True r_a=0.5480 (published 0.548, delta +0.0000) G1 8/8
+real A_Delta=6: valid_fit=True r_a=0.4373 (published 0.437, delta +0.0003) G1 8/8
+real A_Delta=4: valid_fit=False
+null seed 4242: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+null seed 4243: tie_fraction 0.000 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+null seed 4244: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}
+{
+  "ra_cross_check": {
+    "8": {
+      "fitted_ra": 0.5480343395196243,
+      "published_ra": 0.548,
+      "delta": 3.433951962428239e-05,
+      "consistent": true
+    },
+    "6": {
+      "fitted_ra": 0.4372793723756266,
+      "published_ra": 0.437,
+      "delta": 0.00027937237562658535,
+      "consistent": true
+    }
+  },
+  "verdict": "PASS",
+  "elapsed_s": 8.4
+}
+VERDICT: PASS

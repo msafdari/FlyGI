@@ -1,0 +1,116 @@
+# instrument: cx_biswas_context_nulls
+# attempt: first
+# started: 2026-11-22T00:43:08Z
+# freeze: compass-map-freeze-20261121 = b68a584833ca2569796b7a1aac3d3ca6c0c0785f
+# git HEAD: 0bfef9ee62f40f7b04217447cbd64de61d411760 (tracked files other than WORKLOG.md identical to the freeze)
+# command: PYTHONPATH=src .venv/bin/python -B scripts/arenas/cx_biswas_context_nulls.py
+# environment: env -i, then PATH, HOME, PYTHONPATH=src and PYTHONDONTWRITEBYTECODE=1 only
+# interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment)
+# inputs: the 13 files of scripts/arenas/run_amended_once.inputs.sha256 match their pinned SHA-256
+# resources at start: free disk 3195992 KB; system memory free 55%
+# ---- output ----
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+NON-DECISIONAL context reading: seeds 4265..4464 (200 rewires)
+EPG labelled 46/46, unit sizes [6, 5, 6, 6, 6, 6, 5, 6]
+seed 4270: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': True, 'pass': False, 'r_a': 0.014243498948070353, 'g1_n_pass': 0}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4273: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.3076569975690866, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4282: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': True, 'pass': False, 'r_a': 0.20067101012105984, 'g1_n_pass': 0}}
+seed 4284: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.2640717535041498, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  25/200 rewires (24s)
+seed 4293: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.814511601717059, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4295: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.04254108463884845, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4296: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.8796537118834226, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  50/200 rewires (48s)
+seed 4328: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': True, 'pass': False, 'r_a': 0.019780378851253024, 'g1_n_pass': 0}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4332: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.40653543382331714, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': True, 'pass': False, 'r_a': 0.423273436357411, 'g1_n_pass': 0}}
+  75/200 rewires (65s)
+seed 4340: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.48918331953087035, 'g1_n_pass': 0}, '6': {'valid_fit': True, 'pass': True, 'r_a': 0.13649496587796, 'g1_n_pass': 8}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4355: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.6020125989519837, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4361: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.4751118245477515, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4363: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.5886774146741037, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  100/200 rewires (89s)
+seed 4371: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': True, 'pass': False, 'r_a': 0.3170358260836993, 'g1_n_pass': 0}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4373: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': True, 'pass': False, 'r_a': 0.1918779082878359, 'g1_n_pass': 0}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4376: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.6025260339571474, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': True, 'pass': False, 'r_a': 0.6410301156234627, 'g1_n_pass': 0}}
+seed 4377: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.35434488102036915, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4383: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': True, 'pass': False, 'r_a': 0.19106663945685814, 'g1_n_pass': 0}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4388: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.7151185258979106, 'g1_n_pass': 0}, '6': {'valid_fit': True, 'pass': True, 'r_a': 0.35426725024595096, 'g1_n_pass': 8}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  125/200 rewires (118s)
+seed 4391: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.3062329566533023, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4403: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.4977221939703957, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4407: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.45404999969554655, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  150/200 rewires (139s)
+/Users/mustafasafdari/Documents/ChatGPT/FlyGI/scripts/arenas/cx_biswas_killtest.py:717: RuntimeWarning: invalid value encountered in add
+  dy = -y + np.maximum(0.0, W_EE @ y + W_EI @ z)
+/Users/mustafasafdari/Documents/ChatGPT/FlyGI/scripts/arenas/cx_biswas_killtest.py:718: RuntimeWarning: invalid value encountered in add
+  dz = -z + np.maximum(0.0, W_IE @ y + W_II @ z)
+seed 4424: VALID FIT {'8': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '6': {'valid_fit': True, 'pass': False, 'r_a': 0.1548234933296345, 'g1_n_pass': 0}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+seed 4436: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.7956730873373443, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  175/200 rewires (159s)
+seed 4448: VALID FIT {'8': {'valid_fit': True, 'pass': False, 'r_a': 0.1476089971056894, 'g1_n_pass': 0}, '6': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}, '4': {'valid_fit': False, 'pass': False, 'r_a': None, 'g1_n_pass': None}}
+  200/200 rewires (175s)
+{
+  "summary": {
+    "n_rewires": 200,
+    "n_errors": 0,
+    "n_evaluated": 200,
+    "error_seeds": [],
+    "n_valid_fit_any_config": 25,
+    "valid_fit_seeds": [
+      4270,
+      4273,
+      4282,
+      4284,
+      4293,
+      4295,
+      4296,
+      4328,
+      4332,
+      4340,
+      4355,
+      4361,
+      4363,
+      4371,
+      4373,
+      4376,
+      4377,
+      4383,
+      4388,
+      4391,
+      4403,
+      4407,
+      4424,
+      4436,
+      4448
+    ],
+    "n_pass_g1_any_config": 2,
+    "pass_g1_seeds": [
+      4340,
+      4388
+    ],
+    "per_config": {
+      "8": {
+        "valid_fit": 18,
+        "pass": 0
+      },
+      "6": {
+        "valid_fit": 8,
+        "pass": 2
+      },
+      "4": {
+        "valid_fit": 3,
+        "pass": 0
+      }
+    }
+  },
+  "elapsed_s": 174.9
+}
+CONTEXT READING COMPLETE (non-decisional)
+# ---- end of output ----
+# JSON written: results/arenas/cx_biswas_context_nulls.amended_map.json
+# exit status: 0
+# peak sampled resident memory: 1098256 KB
+# output: results/arenas/cx_biswas_context_nulls.amended_map.json sha256 0012a3510b544533c0398bbf788f798339b2d0b71bd9b1a0095f1fb46010b41d
+# output: results/arenas/cx_biswas_context_nulls.amended_map.log sha256 a3321aba18cf02b1ad36c70e95d5fc3f740fbfa214902c6ad0cd03e8de7ae886
+# finished: 2026-11-22T00:46:04Z
+# CLASSIFICATION: finished -- an outcome (amendment section 10)

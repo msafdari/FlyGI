@@ -1,0 +1,524 @@
+{
+  "hypothesis": "H-CX-CLASS3-COMPASS",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "validation_gate": {
+    "trials": [
+      {
+        "seed": 7,
+        "retention": 0.9824561403508771,
+        "err_deg": 14.645656304302548,
+        "circvar": 0.383854382271658,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          0.0,
+          26.0,
+          31.0,
+          28.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 8,
+        "retention": 0.9819168173598554,
+        "err_deg": 16.712572226332043,
+        "circvar": 0.5492439092107051,
+        "width_deg": 135.0,
+        "width_verbatim_deg": 135.0,
+        "pen_left_counts": [
+          0.0,
+          19.0,
+          28.0,
+          28.0,
+          18.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 9,
+        "retention": 0.9676767676767677,
+        "err_deg": 41.19259147988572,
+        "circvar": 0.4331197486923929,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          25.0,
+          30.0,
+          26.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 10,
+        "retention": 0.9867549668874173,
+        "err_deg": 14.853224485288422,
+        "circvar": 0.38248576362644715,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          0.0,
+          27.0,
+          31.0,
+          28.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 11,
+        "retention": 0.9796334012219959,
+        "err_deg": 41.3579108384659,
+        "circvar": 0.43303146911257995,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          26.0,
+          29.0,
+          25.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "mean_width_deg": 99.0,
+    "unstable": false,
+    "pass": true
+  },
+  "grid": [
+    {
+      "global_scale": 0.5,
+      "inhib_scale": 1.0,
+      "g1_rows": [
+        {
+          "retention": 0.9495268138801262,
+          "final_angle": 125.69121803128739,
+          "final_circvar": 0.4163917654332905,
+          "err_deg": 103.1912180312874,
+          "release_angle": 100.75390405260282
+        },
+        {
+          "retention": 0.9404388714733543,
+          "final_angle": 123.79635567054575,
+          "final_circvar": 0.41524209137255663,
+          "err_deg": 56.29635567054575,
+          "release_angle": 108.89694248207049
+        },
+        {
+          "retention": 0.9291217257318952,
+          "final_angle": 125.00867074102096,
+          "final_circvar": 0.41708953351316147,
+          "err_deg": 12.508670741020978,
+          "release_angle": 121.01843941445863
+        },
+        {
+          "retention": 0.9322033898305084,
+          "final_angle": 127.10498231531534,
+          "final_circvar": 0.41534810045324844,
+          "err_deg": 30.39501768468466,
+          "release_angle": 133.56277087296132
+        },
+        {
+          "retention": 0.9110105580693816,
+          "final_angle": 126.17942575365839,
+          "final_circvar": 0.41399051415705657,
+          "err_deg": 76.32057424634161,
+          "release_angle": 166.86945753191023
+        },
+        {
+          "retention": 0.9002976190476191,
+          "final_angle": 126.07451895934956,
+          "final_circvar": 0.4158694616430446,
+          "err_deg": 121.42548104065044,
+          "release_angle": 182.0418215438444
+        },
+        {
+          "retention": 0.8854625550660793,
+          "final_angle": 127.10073174211374,
+          "final_circvar": 0.42133663750236006,
+          "err_deg": 165.39926825788626,
+          "release_angle": 183.58132937628227
+        },
+        {
+          "retention": 0.8991097922848664,
+          "final_angle": 125.90678622355433,
+          "final_circvar": 0.4210568096081614,
+          "err_deg": 148.40678622355432,
+          "release_angle": 80.97575993257975
+        }
+      ],
+      "steer": {
+        "rate_left": 13.139199101974782,
+        "rate_right": 16.29364258216837
+      },
+      "g1_n_pass": 2,
+      "g1": false,
+      "g2": false
+    },
+    {
+      "global_scale": 0.5,
+      "inhib_scale": 2.0,
+      "g1_rows": [
+        {
+          "retention": 0.9271402550091075,
+          "final_angle": 149.05038628042874,
+          "final_circvar": 0.30220055297705684,
+          "err_deg": 126.55038628042871,
+          "release_angle": 101.70634879458363
+        },
+        {
+          "retention": 0.9039145907473309,
+          "final_angle": 148.41651714719103,
+          "final_circvar": 0.3030782027639053,
+          "err_deg": 80.91651714719103,
+          "release_angle": 107.09992143040631
+        },
+        {
+          "retention": 0.8926056338028169,
+          "final_angle": 147.93357264566137,
+          "final_circvar": 0.30551483297345994,
+          "err_deg": 35.43357264566137,
+          "release_angle": 136.4453690827724
+        },
+        {
+          "retention": 0.9168173598553345,
+          "final_angle": 148.0200464063879,
+          "final_circvar": 0.3027461481069852,
+          "err_deg": 9.479953593612095,
+          "release_angle": 150.51501744980033
+        },
+        {
+          "retention": 0.8754325259515571,
+          "final_angle": 149.1429160895692,
+          "final_circvar": 0.2987416054969452,
+          "err_deg": 53.35708391043079,
+          "release_angle": 177.67741835227392
+        },
+        {
+          "retention": 0.8782608695652174,
+          "final_angle": 148.29014109760894,
+          "final_circvar": 0.3017807868117608,
+          "err_deg": 99.20985890239106,
+          "release_angle": 186.22215709774542
+        },
+        {
+          "retention": 1.2100238663484486,
+          "final_angle": 148.79315250105523,
+          "final_circvar": 0.30513023822520724,
+          "err_deg": 143.70684749894477,
+          "release_angle": 275.81847347151484
+        },
+        {
+          "retention": 0.9566854990583804,
+          "final_angle": 148.5014677942148,
+          "final_circvar": 0.30232818932426864,
+          "err_deg": 171.00146779421482,
+          "release_angle": 107.41815529989792
+        }
+      ],
+      "steer": {
+        "rate_left": 35.515733579603534,
+        "rate_right": 35.882323350182865
+      },
+      "g1_n_pass": 2,
+      "g1": false,
+      "g2": false
+    },
+    {
+      "global_scale": 1.0,
+      "inhib_scale": 1.0,
+      "g1_rows": [
+        {
+          "retention": 1.031907179115301,
+          "final_angle": 122.23783365447137,
+          "final_circvar": 0.49497923032908264,
+          "err_deg": 99.73783365447139,
+          "release_angle": 112.56623258568892
+        },
+        {
+          "retention": 0.9860821155184412,
+          "final_angle": 122.28550153877545,
+          "final_circvar": 0.4947294611444961,
+          "err_deg": 54.78550153877546,
+          "release_angle": 120.39783570851658
+        },
+        {
+          "retention": 0.9895615866388309,
+          "final_angle": 122.298353445419,
+          "final_circvar": 0.49492367572403884,
+          "err_deg": 9.798353445418996,
+          "release_angle": 121.77830698245405
+        },
+        {
+          "retention": 1.0073382254836558,
+          "final_angle": 133.9721411208382,
+          "final_circvar": 0.5756478409817936,
+          "err_deg": 23.527858879161812,
+          "release_angle": 138.41072472673596
+        },
+        {
+          "retention": 0.9993373094764745,
+          "final_angle": 133.51732643800278,
+          "final_circvar": 0.5718586715787994,
+          "err_deg": 68.98267356199722,
+          "release_angle": 141.8121789396515
+        },
+        {
+          "retention": 0.9688644688644689,
+          "final_angle": 138.93154788550635,
+          "final_circvar": 0.6354084659631696,
+          "err_deg": 108.56845211449365,
+          "release_angle": 144.68280233394339
+        },
+        {
+          "retention": 0.9852191641182467,
+          "final_angle": 141.72944107457982,
+          "final_circvar": 0.8827035343168179,
+          "err_deg": 150.77055892542018,
+          "release_angle": 145.17769888841522
+        },
+        {
+          "retention": 0.9842078451349975,
+          "final_angle": 141.75804296356475,
+          "final_circvar": 0.8825461493429784,
+          "err_deg": 164.25804296356478,
+          "release_angle": 139.7907048637005
+        }
+      ],
+      "steer": {
+        "rate_left": 6.052113333955655,
+        "rate_right": 5.914942014290887
+      },
+      "g1_n_pass": 2,
+      "g1": false,
+      "g2": false
+    },
+    {
+      "global_scale": 1.0,
+      "inhib_scale": 2.0,
+      "g1_rows": [
+        {
+          "retention": 0.9915540540540541,
+          "final_angle": 108.28780811765895,
+          "final_circvar": 0.3545197936642934,
+          "err_deg": 85.78780811765898,
+          "release_angle": 106.15262788706409
+        },
+        {
+          "retention": 0.988255033557047,
+          "final_angle": 108.12725269813451,
+          "final_circvar": 0.3548059730282962,
+          "err_deg": 40.6272526981345,
+          "release_angle": 106.6245808124596
+        },
+        {
+          "retention": 0.995766299745978,
+          "final_angle": 170.4172708856431,
+          "final_circvar": 0.3339176989260546,
+          "err_deg": 57.91727088564309,
+          "release_angle": 150.34473422603565
+        },
+        {
+          "retention": 0.9959514170040485,
+          "final_angle": 176.11896707540114,
+          "final_circvar": 0.3694632870449105,
+          "err_deg": 18.618967075401144,
+          "release_angle": 174.93983654219198
+        },
+        {
+          "retention": 0.9790619765494137,
+          "final_angle": 170.16300424378375,
+          "final_circvar": 0.3335305979337231,
+          "err_deg": 32.336995756216254,
+          "release_angle": 172.20415311870727
+        },
+        {
+          "retention": 0.9777424483306836,
+          "final_angle": 176.5311319604159,
+          "final_circvar": 0.37092217345773226,
+          "err_deg": 70.9688680395841,
+          "release_angle": 179.32691191972617
+        },
+        {
+          "retention": 1.161320754716981,
+          "final_angle": 176.2002667851751,
+          "final_circvar": 0.3698747657344189,
+          "err_deg": 116.2997332148249,
+          "release_angle": 258.94751028652365
+        },
+        {
+          "retention": 0.9923857868020305,
+          "final_angle": 108.27068920827084,
+          "final_circvar": 0.3543528336118862,
+          "err_deg": 130.77068920827082,
+          "release_angle": 106.9731916058624
+        }
+      ],
+      "steer": {
+        "rate_left": 1.0550746982719754,
+        "rate_right": 1.555115203328872
+      },
+      "g1_n_pass": 3,
+      "g1": false,
+      "g2": false
+    },
+    {
+      "global_scale": 2.0,
+      "inhib_scale": 1.0,
+      "g1_rows": [
+        {
+          "retention": 0.9976950938426078,
+          "final_angle": 148.06359326339623,
+          "final_circvar": 0.9359972516737207,
+          "err_deg": 125.56359326339623,
+          "release_angle": 146.60386974452757
+        },
+        {
+          "retention": 0.9976830398517146,
+          "final_angle": 119.97638542939552,
+          "final_circvar": 0.5406000989075179,
+          "err_deg": 52.47638542939552,
+          "release_angle": 119.45105877900798
+        },
+        {
+          "retention": 0.9962945808244558,
+          "final_angle": 119.67098252162995,
+          "final_circvar": 0.5408191787437351,
+          "err_deg": 7.170982521629952,
+          "release_angle": 119.98587676502227
+        },
+        {
+          "retention": 0.9970384995064165,
+          "final_angle": 147.75263733580667,
+          "final_circvar": 0.9367409843984086,
+          "err_deg": 9.747362664193332,
+          "release_angle": 149.04218173865289
+        },
+        {
+          "retention": 0.9944152431011827,
+          "final_angle": 148.50281717234637,
+          "final_circvar": 0.936898035901965,
+          "err_deg": 53.99718282765363,
+          "release_angle": 150.94727918734165
+        },
+        {
+          "retention": 0.9973640856672158,
+          "final_angle": 146.72838015003418,
+          "final_circvar": 0.9354294145726246,
+          "err_deg": 100.77161984996582,
+          "release_angle": 150.19225146229837
+        },
+        {
+          "retention": 0.9970384995064165,
+          "final_angle": 148.19941593061142,
+          "final_circvar": 0.936957643036248,
+          "err_deg": 144.30058406938858,
+          "release_angle": 149.81275774394425
+        },
+        {
+          "retention": 0.9970433639947438,
+          "final_angle": 147.79624770308556,
+          "final_circvar": 0.9358160390296622,
+          "err_deg": 170.29624770308556,
+          "release_angle": 147.85958487819013
+        }
+      ],
+      "steer": {
+        "rate_left": 0.20094207768462033,
+        "rate_right": 0.125328753236469
+      },
+      "g1_n_pass": 1,
+      "g1": false,
+      "g2": false
+    },
+    {
+      "global_scale": 2.0,
+      "inhib_scale": 2.0,
+      "g1_rows": [
+        {
+          "retention": 1.001156069364162,
+          "final_angle": 104.3065093859843,
+          "final_circvar": 0.3618478055930534,
+          "err_deg": 81.80650938598433,
+          "release_angle": 103.95216479433745
+        },
+        {
+          "retention": 0.9994232987312572,
+          "final_angle": 104.21066989239759,
+          "final_circvar": 0.36234742919923735,
+          "err_deg": 36.71066989239759,
+          "release_angle": 104.15116271635104
+        },
+        {
+          "retention": 0.9982415005861665,
+          "final_angle": 151.53154782134874,
+          "final_circvar": 0.34456010113386504,
+          "err_deg": 39.03154782134874,
+          "release_angle": 150.68495933126763
+        },
+        {
+          "retention": 0.9983669025585193,
+          "final_angle": 179.84064763465094,
+          "final_circvar": 0.3859833527654931,
+          "err_deg": 22.340647634650935,
+          "release_angle": 179.64300428816713
+        },
+        {
+          "retention": 1.0038398244651674,
+          "final_angle": 179.53581706404543,
+          "final_circvar": 0.3861282711612033,
+          "err_deg": 22.964182935954568,
+          "release_angle": 181.930799921353
+        },
+        {
+          "retention": 0.9972082635399219,
+          "final_angle": 184.87165216956274,
+          "final_circvar": 0.36904567978815417,
+          "err_deg": 62.628347830437264,
+          "release_angle": 185.11618258080992
+        },
+        {
+          "retention": 0.9901960784313726,
+          "final_angle": 261.75238338751683,
+          "final_circvar": 0.35362153176647315,
+          "err_deg": 30.74761661248317,
+          "release_angle": 262.49992880705275
+        },
+        {
+          "retention": 0.9959654178674352,
+          "final_angle": 104.34401313969677,
+          "final_circvar": 0.3626504724796277,
+          "err_deg": 126.84401313969676,
+          "release_angle": 104.14913207127098
+        }
+      ],
+      "steer": {
+        "rate_left": -0.07056032304482567,
+        "rate_right": -0.11376420764372597
+      },
+      "g1_n_pass": 5,
+      "g1": false,
+      "g2": false
+    }
+  ],
+  "verdict": "KILL",
+  "unstable": {
+    "real": 0.0,
+    "null": 0.0
+  },
+  "elapsed_s": 933.7
+}

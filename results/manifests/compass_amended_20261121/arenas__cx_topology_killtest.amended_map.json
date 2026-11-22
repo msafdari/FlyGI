@@ -1,0 +1,57 @@
+{
+  "hypothesis": "H-CX-RING-TOPOLOGY",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "epg_wedge_coverage": 1.0,
+  "pen_coverage": {
+    "PEN_a": 1.0,
+    "PEN_b": 1.0
+  },
+  "group_sizes": {
+    "PEN_a_L": 10,
+    "PEN_a_R": 10,
+    "PEN_b_L": 11,
+    "PEN_b_R": 11
+  },
+  "real": {
+    "bandedness": 0.8505249119755758,
+    "offsets": {
+      "PEN_a_L": {
+        "offset": 0,
+        "valid": false,
+        "mean_offset": 0.25440957427445937
+      },
+      "PEN_a_R": {
+        "offset": 0,
+        "valid": false,
+        "mean_offset": -0.2581756819368851
+      },
+      "PEN_b_L": {
+        "offset": 0,
+        "valid": false,
+        "mean_offset": 0.3324391067263857
+      },
+      "PEN_b_R": {
+        "offset": 0,
+        "valid": false,
+        "mean_offset": -0.2685046548139826
+      }
+    },
+    "mirror_peak_pen_a": 0.0347359556205671,
+    "mirror_peak_pen_b": 0.04858643094826273,
+    "spectral_context": {
+      "residual_deg": 6.571025609581057
+    }
+  },
+  "null_bandedness_max": 0.3341518585863944,
+  "null_mirror_peak_max": 0.007983389733539483,
+  "p_banded": 0.004975124378109453,
+  "p_mirror_peak": 0.004975124378109453,
+  "n_nulls": 200,
+  "bars": {
+    "banded": true,
+    "shifter": true
+  },
+  "verdict": "PASS",
+  "elapsed_s": 26.2
+}

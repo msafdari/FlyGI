@@ -1,0 +1,123 @@
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+validation gate (published Pisokas fly circuit): pass=True mean_width=99.0
+  seed 7: retention 0.982 err 14.6 circvar 0.384 width 90.0
+  seed 8: retention 0.982 err 16.7 circvar 0.549 width 135.0
+  seed 9: retention 0.968 err 41.2 circvar 0.433 width 90.0
+  seed 10: retention 0.987 err 14.9 circvar 0.382 width 90.0
+  seed 11: retention 0.980 err 41.4 circvar 0.433 width 90.0
+subcircuit: 148 nodes, composition {'EPG': 46, 'PEN_a(PEN1)': 20, 'PEN_b(PEN2)': 22, 'Delta7': 42, 'PEG': 18}
+[grid 0.5x/1.0x] g1 2/8 g2=False steer L 13.139199101974782 R 16.29364258216837
+[grid 0.5x/2.0x] g1 2/8 g2=False steer L 35.515733579603534 R 35.882323350182865
+[grid 1.0x/1.0x] g1 2/8 g2=False steer L 6.052113333955655 R 5.914942014290887
+[grid 1.0x/2.0x] g1 3/8 g2=False steer L 1.0550746982719754 R 1.555115203328872
+[grid 2.0x/1.0x] g1 1/8 g2=False steer L 0.20094207768462033 R 0.125328753236469
+[grid 2.0x/2.0x] g1 5/8 g2=False steer L -0.07056032304482567 R -0.11376420764372597
+{
+  "hypothesis": "H-CX-CLASS3-COMPASS",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "validation_gate": {
+    "trials": [
+      {
+        "seed": 7,
+        "retention": 0.9824561403508771,
+        "err_deg": 14.645656304302548,
+        "circvar": 0.383854382271658,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          0.0,
+          26.0,
+          31.0,
+          28.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 8,
+        "retention": 0.9819168173598554,
+        "err_deg": 16.712572226332043,
+        "circvar": 0.5492439092107051,
+        "width_deg": 135.0,
+        "width_verbatim_deg": 135.0,
+        "pen_left_counts": [
+          0.0,
+          19.0,
+          28.0,
+          28.0,
+          18.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 9,
+        "retention": 0.9676767676767677,
+        "err_deg": 41.19259147988572,
+        "circvar": 0.4331197486923929,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          25.0,
+          30.0,
+          26.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 10,
+        "retention": 0.9867549668874173,
+        "err_deg": 14.853224485288422,
+        "circvar": 0.38248576362644715,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          0.0,
+          27.0,
+          31.0,
+          28.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "seed": 11,
+        "retention": 0.9796334012219959,
+        "err_deg": 41.3579108384659,
+        "circvar": 0.43303146911257995,
+        "width_deg": 90.0,
+        "width_verbatim_deg": 90.0,
+        "pen_left_counts": [
+          0.0,
+          26.0,
+          29.0,
+          25.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "mean_width_deg": 99.0,
+    "unstable": false,
+    "pass": true
+  },
+  "verdict": "KILL",
+  "unstable": {
+    "real": 0.0,
+    "null": 0.0
+  },
+  "elapsed_s": 933.7
+}
+VERDICT: KILL

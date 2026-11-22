@@ -1,0 +1,2675 @@
+{
+  "hypothesis": "H-CX-BISWAS-FITTED",
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "epg_unit_sizes": [
+    6,
+    5,
+    6,
+    6,
+    6,
+    6,
+    5,
+    6
+  ],
+  "gate": {
+    "recovery": {
+      "valid_fit": true,
+      "r_a": 0.4999999952226809,
+      "gamma_ee": 0.01000000001203884,
+      "gamma_eie": -0.00020000000097170664,
+      "pass": true
+    },
+    "g1_synthetic": {
+      "n_pass": 8,
+      "pass": true
+    },
+    "can_fail": {
+      "uniform_valid_fit": false,
+      "pass": true
+    },
+    "identities": {
+      "pass": true,
+      "n": 34
+    },
+    "pass": true
+  },
+  "real": {
+    "tie_fraction": 0.0,
+    "configs": {
+      "8": {
+        "a_delta": 8,
+        "fit": {
+          "kind": "symmetric",
+          "candidates": [
+            {
+              "r_a": 0.5480343395196243,
+              "rel_residual": 5.830724558999794e-09,
+              "gammahat": [
+                0.021257613326060135,
+                -5.077091904619662e-05
+              ],
+              "gamma_ee": 0.004902740413326826,
+              "gamma_eie": -1.1709528854981142e-05,
+              "gamma_ii": 0.0,
+              "wbar4": -0.5120775114575643,
+              "checks": {
+                "exact_intersection": true,
+                "normalization_denominator_positive": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "w1_in_profile_range": true,
+                "w4_bound_a32": true,
+                "w4_bound_a36": true,
+                "active_z_drives_nonnegative": true
+              },
+              "valid": true
+            }
+          ],
+          "n_valid": 1,
+          "multiple_valid": false,
+          "chosen": {
+            "r_a": 0.5480343395196243,
+            "rel_residual": 5.830724558999794e-09,
+            "gammahat": [
+              0.021257613326060135,
+              -5.077091904619662e-05
+            ],
+            "gamma_ee": 0.004902740413326826,
+            "gamma_eie": -1.1709528854981142e-05,
+            "gamma_ii": 0.0,
+            "wbar4": -0.5120775114575643,
+            "checks": {
+              "exact_intersection": true,
+              "normalization_denominator_positive": true,
+              "gamma_ee_positive": true,
+              "gamma_eie_negative": true,
+              "w1_in_profile_range": true,
+              "w4_bound_a32": true,
+              "w4_bound_a36": true,
+              "active_z_drives_nonnegative": true
+            },
+            "valid": true
+          },
+          "valid": true
+        },
+        "valid_fit": true,
+        "r_a": 0.5480343395196243,
+        "g1": {
+          "rows": [
+            {
+              "seed_pva_deg": 67.5,
+              "finite": true,
+              "retention": 1.000000063464681,
+              "circvar": 0.22865453289454252,
+              "final_pva_deg": 67.49999990965321,
+              "err_deg": 9.034678782882111e-08,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 112.5,
+              "finite": true,
+              "retention": 1.0000000634646802,
+              "circvar": 0.2286545328945424,
+              "final_pva_deg": 112.49999990870562,
+              "err_deg": 9.129438183208549e-08,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 157.5,
+              "finite": true,
+              "retention": 1.00000006346468,
+              "circvar": 0.2286545328945424,
+              "final_pva_deg": 157.49999991203188,
+              "err_deg": 8.796811812317173e-08,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 202.5,
+              "finite": true,
+              "retention": 1.0000000634638877,
+              "circvar": 0.22865453289529236,
+              "final_pva_deg": 202.49999996052222,
+              "err_deg": 3.94777828205406e-08,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 247.5,
+              "finite": true,
+              "retention": 1.0000000634824606,
+              "circvar": 0.22865453287769877,
+              "final_pva_deg": 247.50000000015,
+              "err_deg": 1.5000978237367235e-10,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 292.5,
+              "finite": true,
+              "retention": 1.0000000634811792,
+              "circvar": 0.2286545328789108,
+              "final_pva_deg": 292.49999999630165,
+              "err_deg": 3.698346517921891e-09,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 337.5,
+              "finite": true,
+              "retention": 1.000000063482415,
+              "circvar": 0.22865453287774007,
+              "final_pva_deg": 337.49999999927684,
+              "err_deg": 7.231619747471996e-10,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 22.5,
+              "finite": true,
+              "retention": 1.0000000634811639,
+              "circvar": 0.228654532878927,
+              "final_pva_deg": 22.499999996279385,
+              "err_deg": 3.7206149272606126e-09,
+              "pass": true
+            }
+          ],
+          "n_pass": 8,
+          "pass": true
+        },
+        "pass": true
+      },
+      "6": {
+        "a_delta": 6,
+        "fit": {
+          "kind": "mirror",
+          "a_delta": 6,
+          "n_seeds": 3,
+          "n_valid": 1,
+          "multiple_valid": false,
+          "candidates": [
+            {
+              "gamma_ee": 0.009884646047964402,
+              "gamma_eie": -0.0007551076773908646,
+              "gamma_ii": -0.013513734972499946,
+              "max_abs_residual": 4.122169026098302e-15,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": true,
+                "stability_b50": false,
+                "r_a_positive_b55": false,
+                "r_s_positive_b53": false
+              },
+              "r_a": -2.265914021317435,
+              "r_s": -0.26591402656223945,
+              "six_params": [
+                -0.4413229672280611,
+                0.44132306785658276,
+                1.0000000267585354,
+                -2.26591463131681,
+                1.000000630481487,
+                2.265914839934902
+              ],
+              "valid": false,
+              "grid_seed": [
+                0.0101010101010101,
+                -0.001,
+                -0.013636363636363641
+              ]
+            },
+            {
+              "gamma_ee": 0.00466309674341734,
+              "gamma_eie": -1.7913636125196683e-05,
+              "gamma_ii": -0.000824558552524836,
+              "max_abs_residual": 9.992007221626409e-16,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": true,
+                "stability_b50": true,
+                "r_a_positive_b55": true,
+                "r_s_positive_b53": true,
+                "inactive_epg_drives_nonpositive": true,
+                "active_z_drives_nonnegative": true,
+                "inactive_z_drives_nonpositive": true
+              },
+              "r_a": 0.4372793723756266,
+              "r_s": 2.437279372375626,
+              "six_params": [
+                0.826577128763279,
+                -0.18802225684893303,
+                -0.5563366174467956,
+                0.7334026984653708,
+                0.7038766739102569,
+                -0.011667424107577111
+              ],
+              "valid": true,
+              "grid_seed": [
+                0.004545454545454545,
+                -2.020202020202016e-05,
+                -0.001515151515151518
+              ]
+            },
+            {
+              "gamma_ee": 0.009884646049082142,
+              "gamma_eie": -0.0007551076718983057,
+              "gamma_ii": -0.013513734983077714,
+              "max_abs_residual": 4.221047878155849e-15,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": true,
+                "stability_b50": false,
+                "r_a_positive_b55": false,
+                "r_s_positive_b53": false
+              },
+              "r_a": -2.265914021372427,
+              "r_s": -0.2659140239794001,
+              "six_params": [
+                -0.441322966687879,
+                0.4413230685161375,
+                1.000000027077562,
+                -2.2659146386444835,
+                1.000000637998366,
+                2.265914849749814
+              ],
+              "valid": false,
+              "grid_seed": [
+                0.0,
+                -0.001,
+                -0.01666666666666667
+              ]
+            }
+          ],
+          "valid": true,
+          "gamma_ee": 0.00466309674341734,
+          "gamma_eie": -1.7913636125196683e-05,
+          "gamma_ii": -0.000824558552524836,
+          "max_abs_residual": 9.992007221626409e-16,
+          "checks": {
+            "equations_solved": true,
+            "gamma_ee_positive": true,
+            "gamma_eie_negative": true,
+            "gamma_ii_nonpositive": true,
+            "barred_denominators_positive": true,
+            "stability_b50": true,
+            "r_a_positive_b55": true,
+            "r_s_positive_b53": true,
+            "inactive_epg_drives_nonpositive": true,
+            "active_z_drives_nonnegative": true,
+            "inactive_z_drives_nonpositive": true
+          },
+          "r_a": 0.4372793723756266,
+          "r_s": 2.437279372375626,
+          "six_params": [
+            0.826577128763279,
+            -0.18802225684893303,
+            -0.5563366174467956,
+            0.7334026984653708,
+            0.7038766739102569,
+            -0.011667424107577111
+          ]
+        },
+        "valid_fit": true,
+        "r_a": 0.4372793723756266,
+        "g1": {
+          "rows": [
+            {
+              "seed_pva_deg": 67.5,
+              "finite": true,
+              "retention": 0.9999999999454333,
+              "circvar": 0.23356943844406142,
+              "final_pva_deg": 67.49999999980291,
+              "err_deg": 1.970903440451366e-10,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 112.5,
+              "finite": true,
+              "retention": 0.9999999996703259,
+              "circvar": 0.23356943832546162,
+              "final_pva_deg": 112.49999999983963,
+              "err_deg": 1.603694954610546e-10,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 157.5,
+              "finite": true,
+              "retention": 0.9999999988473446,
+              "circvar": 0.23356943796302942,
+              "final_pva_deg": 157.49999999973855,
+              "err_deg": 2.6145130505028646e-10,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 202.5,
+              "finite": true,
+              "retention": 0.9999999997183303,
+              "circvar": 0.23356943834603539,
+              "final_pva_deg": 202.49999999992193,
+              "err_deg": 7.807443580531981e-11,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 247.5,
+              "finite": true,
+              "retention": 1.000000000289004,
+              "circvar": 0.23356943859001011,
+              "final_pva_deg": 247.49999999981384,
+              "err_deg": 1.8616219676914625e-10,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 292.5,
+              "finite": true,
+              "retention": 0.9999999999350607,
+              "circvar": 0.23356943843960987,
+              "final_pva_deg": 292.500000000044,
+              "err_deg": 4.3996806198265404e-11,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 337.5,
+              "finite": true,
+              "retention": 0.99999999993506,
+              "circvar": 0.2335694384396103,
+              "final_pva_deg": 337.500000000044,
+              "err_deg": 4.3996806198265404e-11,
+              "pass": true
+            },
+            {
+              "seed_pva_deg": 22.5,
+              "finite": true,
+              "retention": 1.0,
+              "circvar": 0.233569438467222,
+              "final_pva_deg": 22.5,
+              "err_deg": 0.0,
+              "pass": true
+            }
+          ],
+          "n_pass": 8,
+          "pass": true
+        },
+        "pass": true
+      },
+      "4": {
+        "a_delta": 4,
+        "fit": {
+          "kind": "mirror",
+          "a_delta": 4,
+          "n_seeds": 5,
+          "n_valid": 0,
+          "multiple_valid": false,
+          "candidates": [
+            {
+              "gamma_ee": 0.004700454214520814,
+              "gamma_eie": -0.00013982604909193393,
+              "gamma_ii": -0.005128551349260026,
+              "max_abs_residual": 9.43689570931383e-16,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": false
+              },
+              "valid": false,
+              "grid_seed": [
+                0.004545454545454545,
+                -0.00015151515151515152,
+                -0.008080808080808084
+              ]
+            },
+            {
+              "gamma_ee": 0.004700454214520813,
+              "gamma_eie": -0.00013982604909193398,
+              "gamma_ii": -0.005128551349260028,
+              "max_abs_residual": 2.7755575615628914e-16,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": false
+              },
+              "valid": false,
+              "grid_seed": [
+                0.00404040404040404,
+                -3.0303030303030238e-05,
+                -0.045959595959595964
+              ]
+            },
+            {
+              "gamma_ee": 0.004700454214520813,
+              "gamma_eie": -0.000139826049091934,
+              "gamma_ii": -0.005128551349260031,
+              "max_abs_residual": 1.6653345369377348e-16,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": false
+              },
+              "valid": false,
+              "grid_seed": [
+                0.00404040404040404,
+                -0.00018181818181818186,
+                -0.01464646464646465
+              ]
+            },
+            {
+              "gamma_ee": 0.004700454214520813,
+              "gamma_eie": -0.00013982604909193398,
+              "gamma_ii": -0.005128551349260028,
+              "max_abs_residual": 2.7755575615628914e-16,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": false
+              },
+              "valid": false,
+              "grid_seed": [
+                0.004545454545454545,
+                -8.080808080808085e-05,
+                -0.02676767676767677
+              ]
+            },
+            {
+              "gamma_ee": 0.004700454214520813,
+              "gamma_eie": -0.00013982604909193398,
+              "gamma_ii": -0.005128551349260029,
+              "max_abs_residual": 2.7755575615628914e-16,
+              "checks": {
+                "equations_solved": true,
+                "gamma_ee_positive": true,
+                "gamma_eie_negative": true,
+                "gamma_ii_nonpositive": true,
+                "barred_denominators_positive": false
+              },
+              "valid": false,
+              "grid_seed": [
+                0.004545454545454545,
+                -7.070707070707066e-05,
+                -0.029797979797979803
+              ]
+            }
+          ],
+          "valid": false,
+          "gamma_ee": 0.004700454214520813,
+          "gamma_eie": -0.000139826049091934,
+          "gamma_ii": -0.005128551349260031,
+          "max_abs_residual": 1.6653345369377348e-16,
+          "checks": {
+            "equations_solved": true,
+            "gamma_ee_positive": true,
+            "gamma_eie_negative": true,
+            "gamma_ii_nonpositive": true,
+            "barred_denominators_positive": false
+          }
+        },
+        "valid_fit": false,
+        "g1": null,
+        "pass": false
+      }
+    }
+  },
+  "nulls": [
+    {
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "a_delta": 8,
+          "fit": {
+            "kind": "symmetric",
+            "candidates": [
+              {
+                "r_a": 0.036948417157675266,
+                "rel_residual": 2.3296785733797785e-10,
+                "gammahat": [
+                  -0.3490577771678385,
+                  0.0007530099084995473
+                ],
+                "gamma_ee": -0.0834665327038703,
+                "gamma_eie": 0.00018005937774563595,
+                "gamma_ii": 0.0,
+                "wbar4": 1.202712570063583,
+                "checks": {
+                  "exact_intersection": true,
+                  "normalization_denominator_positive": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": false,
+                  "w1_in_profile_range": true,
+                  "w4_bound_a32": false,
+                  "w4_bound_a36": true
+                },
+                "valid": false
+              }
+            ],
+            "n_valid": 0,
+            "multiple_valid": false,
+            "chosen": {
+              "r_a": 0.036948417157675266,
+              "rel_residual": 2.3296785733797785e-10,
+              "gammahat": [
+                -0.3490577771678385,
+                0.0007530099084995473
+              ],
+              "gamma_ee": -0.0834665327038703,
+              "gamma_eie": 0.00018005937774563595,
+              "gamma_ii": 0.0,
+              "wbar4": 1.202712570063583,
+              "checks": {
+                "exact_intersection": true,
+                "normalization_denominator_positive": true,
+                "gamma_ee_positive": false,
+                "gamma_eie_negative": false,
+                "w1_in_profile_range": true,
+                "w4_bound_a32": false,
+                "w4_bound_a36": true
+              },
+              "valid": false
+            },
+            "valid": false
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        },
+        "6": {
+          "a_delta": 6,
+          "fit": {
+            "kind": "mirror",
+            "a_delta": 6,
+            "n_seeds": 10,
+            "n_valid": 0,
+            "multiple_valid": false,
+            "candidates": [
+              {
+                "gamma_ee": 4.653186098204553,
+                "gamma_eie": -0.15869834429133498,
+                "gamma_ii": 0.002549093118245765,
+                "max_abs_residual": 3.5499334138933136e-08,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.9085593265550118,
+                "r_s": -0.9914988955577114,
+                "six_params": [
+                  -1.0085739778201377,
+                  -1.0085739453182763,
+                  -0.9999999379682692,
+                  -0.9914988713272523,
+                  -0.9999999531619678,
+                  -0.9914988729420975
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  -0.001,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": -0.05474128610453596,
+                "gamma_eie": -0.0022873493933245033,
+                "gamma_ii": 0.002549096332684894,
+                "max_abs_residual": 5.12051756551557e-09,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -0.9388540418254535,
+                "r_s": -0.9914989178109067,
+                "six_params": [
+                  -1.008573970280238,
+                  -1.00857396780685,
+                  -0.9999999976778495,
+                  -0.9914989153684683,
+                  -0.999999996909716,
+                  -0.9914989152239644
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.006060606060606061,
+                  -6.0606060606060584e-05,
+                  -0.004040404040404046
+                ]
+              },
+              {
+                "gamma_ee": -0.08307344083784993,
+                "gamma_eie": -0.00142061428823479,
+                "gamma_ii": 0.0025490904971374882,
+                "max_abs_residual": 1.7577747501995589e-07,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -0.34312613411373283,
+                "r_s": -0.9914989211275891,
+                "six_params": [
+                  -1.0085739883576337,
+                  -1.0085739225499877,
+                  -0.9999999774196768,
+                  -0.9914988527646513,
+                  -0.9999999289023012,
+                  -0.9914988449115628
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.004545454545454545,
+                  -5.0505050505050505e-05,
+                  -0.004545454545454547
+                ]
+              },
+              {
+                "gamma_ee": -0.057424512557283244,
+                "gamma_eie": -0.0029188788387230417,
+                "gamma_ii": 0.00254909539385774,
+                "max_abs_residual": 2.703833890116414e-08,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -0.7636994350118607,
+                "r_s": -0.9914989138995195,
+                "six_params": [
+                  -1.0085739755756988,
+                  -1.0085739635420827,
+                  -0.9999999908099342,
+                  -0.9914989073405995,
+                  -0.9999999884640193,
+                  -0.991498906733488
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.00909090909090909,
+                  -7.070707070707066e-05,
+                  -0.0025252525252525276
+                ]
+              },
+              {
+                "gamma_ee": 0.007417404453777107,
+                "gamma_eie": 1.7189792499311427e-06,
+                "gamma_ii": -0.07879298651111283,
+                "max_abs_residual": 0.9082888024827054,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": false,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": true
+                },
+                "r_a": 0.1544651730406493,
+                "r_s": 1.772274883984575,
+                "six_params": [
+                  1.530062670728133,
+                  -0.5859978655324993,
+                  -0.6731423431020123,
+                  0.20798724888435272,
+                  0.21814268838684242,
+                  0.21557453378194452
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  0.0,
+                  -0.02878787878787879
+                ]
+              },
+              {
+                "gamma_ee": 7.234937812041229e-13,
+                "gamma_eie": 1.1537207963958375e-12,
+                "gamma_ii": -0.004040404040404046,
+                "max_abs_residual": 1.000000007422825,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": false,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": true
+                },
+                "r_a": 3442746000.289014,
+                "r_s": 114243949.6976051,
+                "six_params": [
+                  4.521832272278736e-09,
+                  4.231366462736039e-09,
+                  4.023831346345554e-09,
+                  3.3740092886604107e-09,
+                  3.3989936795972113e-09,
+                  3.370929731448199e-09
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  0.0,
+                  -0.004040404040404046
+                ]
+              },
+              {
+                "gamma_ee": -0.09328418304640955,
+                "gamma_eie": -0.0011354099835721647,
+                "gamma_ii": 0.00254908789677507,
+                "max_abs_residual": 2.988151384109017e-07,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 0.05341545645803659,
+                "r_s": -0.9914989367837038,
+                "six_params": [
+                  -1.0085740021867982,
+                  -1.0085739048852478,
+                  -1.0000000051974067,
+                  -0.9914988363411419,
+                  -0.9999999079120645,
+                  -0.9914988210088602
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.004545454545454545,
+                  -4.0404040404040426e-05,
+                  -0.0035353535353535373
+                ]
+              },
+              {
+                "gamma_ee": -0.1167440031464062,
+                "gamma_eie": -0.0005054659079701074,
+                "gamma_ii": -0.07880882323420707,
+                "max_abs_residual": 0.028500860770225067,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": true,
+                  "stability_b50": false,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.1485846121993433,
+                "r_s": -0.9868255741821073,
+                "six_params": [
+                  -0.8719019793318903,
+                  0.8539345529108187,
+                  0.9822692841054512,
+                  123.18209321837804,
+                  -1536.3672906177198,
+                  -1640.3171335138527
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.002525252525252525,
+                  -2.020202020202016e-05,
+                  -0.003030303030303036
+                ]
+              },
+              {
+                "gamma_ee": 1.5669846704097492,
+                "gamma_eie": -0.05121008413292422,
+                "gamma_ii": 0.0025490956751968888,
+                "max_abs_residual": 8.098912429588268e-09,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.039102724967595,
+                "r_s": -0.9914989127526035,
+                "six_params": [
+                  -1.008573970905723,
+                  -1.0085739624742918,
+                  -0.9999999828074454,
+                  -0.9914989049954664,
+                  -0.9999999867120136,
+                  -0.9914989054383191
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.00505050505050505,
+                  -4.0404040404040426e-05,
+                  -0.003030303030303036
+                ]
+              },
+              {
+                "gamma_ee": -0.04437433300943747,
+                "gamma_eie": -0.0022749066657830343,
+                "gamma_ii": 0.002549096573425876,
+                "max_abs_residual": 2.156941292241754e-12,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.1698854704693464,
+                "r_s": -0.9914989183292519,
+                "six_params": [
+                  -1.0085739696872134,
+                  -1.0085739696862246,
+                  -0.9999999999988433,
+                  -0.9914989183280272,
+                  -0.9999999999985586,
+                  -0.9914989183279778
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.005555555555555556,
+                  -4.0404040404040426e-05,
+                  -0.0025252525252525276
+                ]
+              }
+            ],
+            "valid": false,
+            "gamma_ee": -0.04437433300943747,
+            "gamma_eie": -0.0022749066657830343,
+            "gamma_ii": 0.002549096573425876,
+            "max_abs_residual": 2.156941292241754e-12,
+            "checks": {
+              "equations_solved": true,
+              "gamma_ee_positive": false,
+              "gamma_eie_negative": true,
+              "gamma_ii_nonpositive": false,
+              "barred_denominators_positive": true,
+              "stability_b50": true,
+              "r_a_positive_b55": false,
+              "r_s_positive_b53": false
+            },
+            "r_a": -1.1698854704693464,
+            "r_s": -0.9914989183292519,
+            "six_params": [
+              -1.0085739696872134,
+              -1.0085739696862246,
+              -0.9999999999988433,
+              -0.9914989183280272,
+              -0.9999999999985586,
+              -0.9914989183279778
+            ]
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        },
+        "4": {
+          "a_delta": 4,
+          "fit": {
+            "kind": "mirror",
+            "a_delta": 4,
+            "n_seeds": 10,
+            "n_valid": 0,
+            "multiple_valid": false,
+            "candidates": [
+              {
+                "gamma_ee": -0.025821117151879732,
+                "gamma_eie": -0.0016732615453511613,
+                "gamma_ii": 0.0038879717064687204,
+                "max_abs_residual": 6.623363106861291e-07,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 43.43179462199868,
+                "r_s": -1.0569632262917164,
+                "six_params": [
+                  -0.9461066445149624,
+                  -0.9461066475987723,
+                  -0.9999998660646029,
+                  -1.0569629651800296,
+                  -0.9999998336322669,
+                  -1.0569629615262417
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  -0.001,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.06382850948589414,
+                "gamma_eie": -0.0019292474784822038,
+                "gamma_ii": 0.0038879755736071385,
+                "max_abs_residual": 3.8117405898319134e-07,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 32.10337891233911,
+                "r_s": -1.0569631956019125,
+                "six_params": [
+                  -0.9461066802536988,
+                  -0.9461066838639591,
+                  -0.9999998840984452,
+                  -1.056963036092002,
+                  -0.9999998897951397,
+                  -1.0569630371858545
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.026767676767676767,
+                  -0.001,
+                  -0.01717171717171717
+                ]
+              },
+              {
+                "gamma_ee": 0.05828338692193832,
+                "gamma_eie": -0.0001514159234492292,
+                "gamma_ii": 0.0038879640598820315,
+                "max_abs_residual": 2.6116101405904146e-05,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 67.71326415975454,
+                "r_s": -1.0569666364152512,
+                "six_params": [
+                  -0.9460999023997949,
+                  -0.9461000178115841,
+                  -0.9999921850910283,
+                  -1.0569557962592298,
+                  -0.9999926483670404,
+                  -1.056955904162651
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.011616161616161616,
+                  -7.070707070707066e-05,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.05011782198600893,
+                "gamma_eie": -0.00014285591875171972,
+                "gamma_ii": 0.003887975802526335,
+                "max_abs_residual": 4.393259492641022e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 73.56712945679,
+                "r_s": -1.0569637291840237,
+                "six_params": [
+                  -0.946105641309301,
+                  -0.9461056588146307,
+                  -0.9999987121831407,
+                  -1.056961912340028,
+                  -0.9999987740702593,
+                  -1.0569619285052856
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0101010101010101,
+                  -6.0606060606060584e-05,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.042024643485812745,
+                "gamma_eie": -0.0001305744435264261,
+                "gamma_ii": 0.003887970216662566,
+                "max_abs_residual": 1.5752359388443438e-05,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 81.70440371265153,
+                "r_s": -1.0569652303226302,
+                "six_params": [
+                  -0.9461027523090837,
+                  -0.9461028075642537,
+                  -0.9999954854092835,
+                  -1.056958741615348,
+                  -0.9999956458772025,
+                  -1.0569587920066308
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.008585858585858586,
+                  -5.0505050505050505e-05,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.040039713472418546,
+                "gamma_eie": -0.00016147697474564574,
+                "gamma_ii": 0.0038879657859912102,
+                "max_abs_residual": 1.96819505067225e-05,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 81.70635844293555,
+                "r_s": -1.056965747208889,
+                "six_params": [
+                  -0.9461017656804652,
+                  -0.9461018343171935,
+                  -0.9999943919428751,
+                  -1.056957647077609,
+                  -0.9999945705065779,
+                  -1.0569577069486689
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.00808080808080808,
+                  -6.0606060606060584e-05,
+                  -0.0010101010101010097
+                ]
+              },
+              {
+                "gamma_ee": 0.03857377568184693,
+                "gamma_eie": -0.00019416086900406586,
+                "gamma_ii": 0.0038879691164685104,
+                "max_abs_residual": 1.1861662595702427e-05,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 81.00960762017544,
+                "r_s": -1.0569647115058172,
+                "six_params": [
+                  -0.9461037673713659,
+                  -0.946103808909978,
+                  -0.9999966349733322,
+                  -1.056959832941629,
+                  -0.9999967322738419,
+                  -1.0569598675088305
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.007575757575757576,
+                  -7.070707070707066e-05,
+                  -0.0020202020202020263
+                ]
+              },
+              {
+                "gamma_ee": 0.0783234589294794,
+                "gamma_eie": -0.001991861328477966,
+                "gamma_ii": 0.0038879683605322155,
+                "max_abs_residual": 1.5063274187987474e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 31.45042153244598,
+                "r_s": -1.0569633477992175,
+                "six_params": [
+                  -0.9461063698775032,
+                  -0.9461063848845614,
+                  -0.9999995280216917,
+                  -1.056962714086735,
+                  -0.9999995591957421,
+                  -1.0569627195311322
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.005555555555555556,
+                  -0.0003838383838383839,
+                  -0.03888888888888889
+                ]
+              },
+              {
+                "gamma_ee": 0.07749029860120993,
+                "gamma_eie": -0.0018862783142042589,
+                "gamma_ii": 0.0038879674806938827,
+                "max_abs_residual": 1.7278634913964197e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 32.320682083754114,
+                "r_s": -1.0569633776155667,
+                "six_params": [
+                  -0.9461063099463248,
+                  -0.9461063266674403,
+                  -0.9999994595621421,
+                  -1.0569626511386616,
+                  -0.9999994952627975,
+                  -1.0569626574592705
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.005555555555555556,
+                  -0.0003737373737373737,
+                  -0.03787878787878788
+                ]
+              },
+              {
+                "gamma_ee": 0.08143538392378816,
+                "gamma_eie": -0.0018311017551751335,
+                "gamma_ii": 0.003887966342210391,
+                "max_abs_residual": 2.0031146568122438e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 32.73414512493964,
+                "r_s": -1.0569634152403453,
+                "six_params": [
+                  -0.9461062320708106,
+                  -0.9461062513522296,
+                  -0.9999993688392317,
+                  -1.0569625720826497,
+                  -0.9999994135218409,
+                  -1.0569625799022946
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.005555555555555556,
+                  -0.0003636363636363636,
+                  -0.03686868686868687
+                ]
+              }
+            ],
+            "valid": false,
+            "gamma_ee": 0.06382850948589414,
+            "gamma_eie": -0.0019292474784822038,
+            "gamma_ii": 0.0038879755736071385,
+            "max_abs_residual": 3.8117405898319134e-07,
+            "checks": {
+              "equations_solved": false,
+              "gamma_ee_positive": true,
+              "gamma_eie_negative": true,
+              "gamma_ii_nonpositive": false,
+              "barred_denominators_positive": true,
+              "stability_b50": true,
+              "r_a_positive_b55": true,
+              "r_s_positive_b53": false
+            },
+            "r_a": 32.10337891233911,
+            "r_s": -1.0569631956019125,
+            "six_params": [
+              -0.9461066802536988,
+              -0.9461066838639591,
+              -0.9999998840984452,
+              -1.056963036092002,
+              -0.9999998897951397,
+              -1.0569630371858545
+            ]
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        }
+      },
+      "seed": 4242
+    },
+    {
+      "tie_fraction": 0.0,
+      "configs": {
+        "8": {
+          "a_delta": 8,
+          "fit": {
+            "kind": "symmetric",
+            "candidates": [
+              {
+                "r_a": 0.6028768736653349,
+                "rel_residual": 3.1711708902593885e-09,
+                "gammahat": [
+                  -0.20508326126556412,
+                  0.00036570139120171784
+                ],
+                "gamma_ee": -0.3345416959673217,
+                "gamma_eie": 0.0005965497275363174,
+                "gamma_ii": 0.0,
+                "wbar4": -0.05481353580998771,
+                "checks": {
+                  "exact_intersection": true,
+                  "normalization_denominator_positive": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": false,
+                  "w1_in_profile_range": true,
+                  "w4_bound_a32": true,
+                  "w4_bound_a36": true
+                },
+                "valid": false
+              }
+            ],
+            "n_valid": 0,
+            "multiple_valid": false,
+            "chosen": {
+              "r_a": 0.6028768736653349,
+              "rel_residual": 3.1711708902593885e-09,
+              "gammahat": [
+                -0.20508326126556412,
+                0.00036570139120171784
+              ],
+              "gamma_ee": -0.3345416959673217,
+              "gamma_eie": 0.0005965497275363174,
+              "gamma_ii": 0.0,
+              "wbar4": -0.05481353580998771,
+              "checks": {
+                "exact_intersection": true,
+                "normalization_denominator_positive": true,
+                "gamma_ee_positive": false,
+                "gamma_eie_negative": false,
+                "w1_in_profile_range": true,
+                "w4_bound_a32": true,
+                "w4_bound_a36": true
+              },
+              "valid": false
+            },
+            "valid": false
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        },
+        "6": {
+          "a_delta": 6,
+          "fit": {
+            "kind": "mirror",
+            "a_delta": 6,
+            "n_seeds": 10,
+            "n_valid": 0,
+            "multiple_valid": false,
+            "candidates": [
+              {
+                "gamma_ee": 0.2624002852639986,
+                "gamma_eie": -0.005330512453800515,
+                "gamma_ii": 0.0025209110177263753,
+                "max_abs_residual": 6.039613253960852e-14,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.981056436021229,
+                "r_s": -0.9810584208695384,
+                "six_params": [
+                  -1.0193072736983821,
+                  -1.0193072580137357,
+                  -0.9999999532431837,
+                  -0.9810584832091616,
+                  -1.0000000281583157,
+                  -0.9810583861548976
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.001,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.26240021267022845,
+                "gamma_eie": -0.005330511673367803,
+                "gamma_ii": 0.0025209136674908994,
+                "max_abs_residual": 3.1086244689504383e-15,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.981058345689614,
+                "r_s": -0.9810584347844556,
+                "six_params": [
+                  -1.019307264884273,
+                  -1.019307254736062,
+                  -0.9999999697475911,
+                  -0.9810584751191629,
+                  -1.0000000182188633,
+                  -0.9810584123235195
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.046464646464646465,
+                  -0.001,
+                  -0.0010101010101010097
+                ]
+              },
+              {
+                "gamma_ee": 0.1385592236432487,
+                "gamma_eie": -0.0024231711971847646,
+                "gamma_ii": 0.002520917792234232,
+                "max_abs_residual": 2.5930808611462908e-08,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -3.864990144399457,
+                "r_s": -0.9810584588474386,
+                "six_params": [
+                  -1.0193072460899681,
+                  -1.0193072432750963,
+                  -0.9999999891205479,
+                  -0.9810584562976589,
+                  -0.9999999965002873,
+                  -0.9810584452439758
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0202020202020202,
+                  -0.001,
+                  -0.001515151515151518
+                ]
+              },
+              {
+                "gamma_ee": 0.26240177267260656,
+                "gamma_eie": -0.00533056948794117,
+                "gamma_ii": 0.0025209157483464437,
+                "max_abs_residual": 6.887823644774471e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.981097227786858,
+                "r_s": -0.9810584457117819,
+                "six_params": [
+                  -1.0193072579626445,
+                  -1.0193072521623274,
+                  -0.9999999827086907,
+                  -0.9810584687662132,
+                  -1.0000000104135323,
+                  -0.9810584328739723
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  -0.001,
+                  -0.0020202020202020263
+                ]
+              },
+              {
+                "gamma_ee": 0.10552553789422968,
+                "gamma_eie": -0.00023673830546143393,
+                "gamma_ii": 0.0025209108059620804,
+                "max_abs_residual": 4.062832799078819e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.7773900113470833,
+                "r_s": -0.981058632619471,
+                "six_params": [
+                  -1.0193067891331204,
+                  -1.0193060978798942,
+                  -0.9999987713734204,
+                  -0.9810578028791267,
+                  -0.999999388484498,
+                  -0.9810568694874335
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00013131313131313136,
+                  -0.0005050505050505083
+                ]
+              },
+              {
+                "gamma_ee": 0.09873754804964664,
+                "gamma_eie": -0.00015406500940601313,
+                "gamma_ii": 0.0025209184624367617,
+                "max_abs_residual": 5.17295042357091e-08,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.8496167739357425,
+                "r_s": -0.9810584628467665,
+                "six_params": [
+                  -1.0193072424301357,
+                  -1.0193072342029055,
+                  -0.999999984782777,
+                  -0.9810584514991598,
+                  -0.9999999917223117,
+                  -0.9810584406986427
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.046464646464646465,
+                  -0.00010101010101010101,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.09317896013835952,
+                "gamma_eie": -0.00014040791541754168,
+                "gamma_ii": 0.002520903963150827,
+                "max_abs_residual": 1.3584194268112526e-05,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.9580256017655624,
+                "r_s": -0.9810591934933058,
+                "six_params": [
+                  -1.0193054891494215,
+                  -1.0193034852079133,
+                  -0.9999960762312223,
+                  -0.9810560512653638,
+                  -0.9999977106154014,
+                  -0.9810534262370307
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.04191919191919192,
+                  -9.090909090909093e-05,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": -1.3343360409785536,
+                "gamma_eie": 0.035518267726736726,
+                "gamma_ii": 0.002520918524481264,
+                "max_abs_residual": 8.881784197001252e-16,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": false,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": false,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": NaN,
+                "r_s": -0.9810584602903253,
+                "six_params": [
+                  -1.0193072487281434,
+                  -1.0193072487281434,
+                  -1.0,
+                  -0.9810584602903255,
+                  -1.0,
+                  -0.9810584602903255
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00020202020202020202,
+                  -0.0020202020202020263
+                ]
+              },
+              {
+                "gamma_ee": 0.08153326505875384,
+                "gamma_eie": -0.0001463897126579899,
+                "gamma_ii": 0.002520908737301886,
+                "max_abs_residual": 9.086144378667171e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.2700394725641857,
+                "r_s": -0.9810590277370267,
+                "six_params": [
+                  -1.01930592561343,
+                  -1.0193048089927688,
+                  -0.999997465227023,
+                  -0.9810567097750457,
+                  -0.9999983090604223,
+                  -0.9810552297598361
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.03838383838383838,
+                  -0.00010101010101010101,
+                  -0.0005050505050505083
+                ]
+              },
+              {
+                "gamma_ee": 0.07808243670780986,
+                "gamma_eie": -0.00011927604542180926,
+                "gamma_ii": 0.0025209107183558743,
+                "max_abs_residual": 9.011067755970714e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.3461053144309756,
+                "r_s": -0.9810590484321888,
+                "six_params": [
+                  -1.0193059010528063,
+                  -1.0193048422581894,
+                  -0.9999975159563225,
+                  -0.9810566906628659,
+                  -0.9999982840464897,
+                  -0.9810553025495246
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.03686868686868687,
+                  -8.080808080808085e-05,
+                  0.0
+                ]
+              }
+            ],
+            "valid": false,
+            "gamma_ee": -1.3343360409785536,
+            "gamma_eie": 0.035518267726736726,
+            "gamma_ii": 0.002520918524481264,
+            "max_abs_residual": 8.881784197001252e-16,
+            "checks": {
+              "equations_solved": true,
+              "gamma_ee_positive": false,
+              "gamma_eie_negative": false,
+              "gamma_ii_nonpositive": false,
+              "barred_denominators_positive": true,
+              "stability_b50": false,
+              "r_a_positive_b55": false,
+              "r_s_positive_b53": false
+            },
+            "r_a": NaN,
+            "r_s": -0.9810584602903253,
+            "six_params": [
+              -1.0193072487281434,
+              -1.0193072487281434,
+              -1.0,
+              -0.9810584602903255,
+              -1.0,
+              -0.9810584602903255
+            ]
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        },
+        "4": {
+          "a_delta": 4,
+          "fit": {
+            "kind": "mirror",
+            "a_delta": 4,
+            "n_seeds": 10,
+            "n_valid": 0,
+            "multiple_valid": false,
+            "candidates": [
+              {
+                "gamma_ee": 0.4132238696289657,
+                "gamma_eie": -0.10867194195342864,
+                "gamma_ii": 0.0038558291592287325,
+                "max_abs_residual": 4.884981308350689e-15,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.9986637376591116,
+                "r_s": -0.9986648541740132,
+                "six_params": [
+                  -1.0013369269601748,
+                  -1.0013369231019102,
+                  -0.9999999884303619,
+                  -0.9986648565276888,
+                  -0.9999999998461856,
+                  -0.9986648516667261
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0065656565656565654,
+                  -0.001,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.4132239955123019,
+                "gamma_eie": -0.10867198902171168,
+                "gamma_ii": 0.0038558274456100936,
+                "max_abs_residual": 1.9984014443252818e-15,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.9986643789540195,
+                "r_s": -0.9986648536848947,
+                "six_params": [
+                  -1.0013369267562289,
+                  -1.0013369222045192,
+                  -0.9999999863509503,
+                  -0.9986648564615976,
+                  -0.999999999818541,
+                  -0.9986648507269746
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  -0.001,
+                  -0.0005050505050505083
+                ]
+              },
+              {
+                "gamma_ee": 0.10527832459032095,
+                "gamma_eie": -0.00030311193937147693,
+                "gamma_ii": 0.0038558243752306897,
+                "max_abs_residual": 6.1013165519874235e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.6491897174006798,
+                "r_s": -0.9986652913880241,
+                "six_params": [
+                  -1.0013360650603205,
+                  -1.0013347528599463,
+                  -0.9999978359326358,
+                  -0.9986639910512686,
+                  -0.9999991391071571,
+                  -0.9986626853911452
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00018181818181818186,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.10635213510570274,
+                "gamma_eie": -0.00038645424665469677,
+                "gamma_ii": 0.0038558386936223443,
+                "max_abs_residual": 1.9673151996357774e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -1.6476683937823835,
+                "r_s": -0.9986648568954294,
+                "six_params": [
+                  -1.0013369280948838,
+                  -1.001336928094841,
+                  -0.9999999999999294,
+                  -0.9986648568953879,
+                  -0.9999999999999725,
+                  -0.9986648568953449
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00023232323232323237,
+                  -0.0010101010101010097
+                ]
+              },
+              {
+                "gamma_ee": 0.4132173217994933,
+                "gamma_eie": -0.10866945111742453,
+                "gamma_ii": 0.003855835496248186,
+                "max_abs_residual": 7.949196856316121e-14,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.9986339923119165,
+                "r_s": -0.998664855982793,
+                "six_params": [
+                  -1.001336927714368,
+                  -1.0013369264204697,
+                  -0.9999999961200725,
+                  -0.9986648567720899,
+                  -0.9999999999484103,
+                  -0.9986648551419351
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00030303030303030303,
+                  -0.0025252525252525276
+                ]
+              },
+              {
+                "gamma_ee": 0.4132213533922709,
+                "gamma_eie": -0.10867112377468953,
+                "gamma_ii": 0.003855830244261766,
+                "max_abs_residual": 8.881784197001252e-14,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.9986610882736855,
+                "r_s": -0.9986648544837218,
+                "six_params": [
+                  -1.0013369270892953,
+                  -1.001336923670097,
+                  -0.9999999897469832,
+                  -0.998664856569522,
+                  -0.9999999998636754,
+                  -0.9986648522617345
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00035353535353535354,
+                  -0.0035353535353535373
+                ]
+              },
+              {
+                "gamma_ee": 0.4132216561900767,
+                "gamma_eie": -0.10867094636190673,
+                "gamma_ii": 0.0038558274010464877,
+                "max_abs_residual": 9.459100169806334e-14,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.9986448576674176,
+                "r_s": -0.9986648536721753,
+                "six_params": [
+                  -1.0013369267509244,
+                  -1.0013369221811366,
+                  -0.9999999862968291,
+                  -0.9986648564598777,
+                  -0.9999999998178212,
+                  -0.9986648507024902
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.00040404040404040404,
+                  -0.004545454545454547
+                ]
+              },
+              {
+                "gamma_ee": 0.4132230526805985,
+                "gamma_eie": -0.10867158737315252,
+                "gamma_ii": 0.0038558264846712442,
+                "max_abs_residual": 4.1744385725905886e-14,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.998657666451495,
+                "r_s": -0.9986648534106145,
+                "six_params": [
+                  -1.001336926641861,
+                  -1.0013369217012729,
+                  -0.9999999851848674,
+                  -0.998664856424534,
+                  -0.9999999998030368,
+                  -0.9986648501999741
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.0004747474747474747,
+                  -0.006060606060606065
+                ]
+              },
+              {
+                "gamma_ee": 0.41322386553048135,
+                "gamma_eie": -0.10867194485562878,
+                "gamma_ii": 0.0038558253408402716,
+                "max_abs_residual": 7.105427357601002e-15,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.998664307699717,
+                "r_s": -0.9986648530841306,
+                "six_params": [
+                  -1.0013369265057284,
+                  -1.001336921102285,
+                  -0.9999999837968869,
+                  -0.9986648563804188,
+                  -0.9999999997845845,
+                  -0.9986648495727108
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.0005252525252525252,
+                  -0.007070707070707075
+                ]
+              },
+              {
+                "gamma_ee": 0.4132241572598976,
+                "gamma_eie": -0.10867203695160604,
+                "gamma_ii": 0.003855826278358685,
+                "max_abs_residual": 7.549516567451064e-15,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": -2.9986645655761017,
+                "r_s": -0.9986648533517251,
+                "six_params": [
+                  -1.0013369266173098,
+                  -1.001336921593252,
+                  -0.9999999849345358,
+                  -0.9986648564165801,
+                  -0.9999999997997117,
+                  -0.998664850086853
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.05,
+                  -0.0005757575757575758,
+                  -0.008080808080808084
+                ]
+              }
+            ],
+            "valid": false,
+            "gamma_ee": 0.4132239955123019,
+            "gamma_eie": -0.10867198902171168,
+            "gamma_ii": 0.0038558274456100936,
+            "max_abs_residual": 1.9984014443252818e-15,
+            "checks": {
+              "equations_solved": true,
+              "gamma_ee_positive": true,
+              "gamma_eie_negative": true,
+              "gamma_ii_nonpositive": false,
+              "barred_denominators_positive": true,
+              "stability_b50": true,
+              "r_a_positive_b55": false,
+              "r_s_positive_b53": false
+            },
+            "r_a": -2.9986643789540195,
+            "r_s": -0.9986648536848947,
+            "six_params": [
+              -1.0013369267562289,
+              -1.0013369222045192,
+              -0.9999999863509503,
+              -0.9986648564615976,
+              -0.999999999818541,
+              -0.9986648507269746
+            ]
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        }
+      },
+      "seed": 4243
+    },
+    {
+      "tie_fraction": 0.07142857142857142,
+      "configs": {
+        "8": {
+          "a_delta": 8,
+          "fit": {
+            "kind": "symmetric",
+            "candidates": [
+              {
+                "r_a": 6.344214761312789e-11,
+                "rel_residual": 0.14449004851173916,
+                "gammahat": [
+                  -0.3259664743748801,
+                  0.000664429497394352
+                ],
+                "gamma_ee": -0.10982014262406828,
+                "gamma_eie": 0.00022385045059440274,
+                "gamma_ii": 0.0,
+                "wbar4": -1.8367090475029002,
+                "checks": {
+                  "exact_intersection": false,
+                  "normalization_denominator_positive": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": false,
+                  "w1_in_profile_range": true,
+                  "w4_bound_a32": true,
+                  "w4_bound_a36": true
+                },
+                "valid": false
+              }
+            ],
+            "n_valid": 0,
+            "multiple_valid": false,
+            "chosen": {
+              "r_a": 6.344214761312789e-11,
+              "rel_residual": 0.14449004851173916,
+              "gammahat": [
+                -0.3259664743748801,
+                0.000664429497394352
+              ],
+              "gamma_ee": -0.10982014262406828,
+              "gamma_eie": 0.00022385045059440274,
+              "gamma_ii": 0.0,
+              "wbar4": -1.8367090475029002,
+              "checks": {
+                "exact_intersection": false,
+                "normalization_denominator_positive": true,
+                "gamma_ee_positive": false,
+                "gamma_eie_negative": false,
+                "w1_in_profile_range": true,
+                "w4_bound_a32": true,
+                "w4_bound_a36": true
+              },
+              "valid": false
+            },
+            "valid": false
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        },
+        "6": {
+          "a_delta": 6,
+          "fit": {
+            "kind": "mirror",
+            "a_delta": 6,
+            "n_seeds": 10,
+            "n_valid": 0,
+            "multiple_valid": false,
+            "candidates": [
+              {
+                "gamma_ee": 0.02926962582180437,
+                "gamma_eie": -0.001018293310614527,
+                "gamma_ii": -0.04904547686275459,
+                "max_abs_residual": 7.234685461236858e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.02878787878787879,
+                  -0.001,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.029269625671633673,
+                "gamma_eie": -0.0010182933072328678,
+                "gamma_ii": -0.049045476472614716,
+                "max_abs_residual": 3.809593006421415e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.028282828282828285,
+                  -0.0009696969696969697,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.02926962588646897,
+                "gamma_eie": -0.0010182933094297515,
+                "gamma_ii": -0.04904547706605274,
+                "max_abs_residual": 9.451069134820654e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.027777777777777776,
+                  -0.0009393939393939394,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.02926962588022829,
+                "gamma_eie": -0.0010182933092601518,
+                "gamma_ii": -0.04904547698123945,
+                "max_abs_residual": 8.490473556413851e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.02727272727272727,
+                  -0.0009090909090909091,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.029269625786327587,
+                "gamma_eie": -0.001018293310040055,
+                "gamma_ii": -0.0490454769922449,
+                "max_abs_residual": 8.612215064563425e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.026767676767676767,
+                  -0.0008787878787878789,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.02926962578694104,
+                "gamma_eie": -0.001018293308261398,
+                "gamma_ii": -0.049045476742521514,
+                "max_abs_residual": 6.0630484024519e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.026262626262626262,
+                  -0.0008484848484848485,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.02926962578500476,
+                "gamma_eie": -0.0010182933093533298,
+                "gamma_ii": -0.04904547715636431,
+                "max_abs_residual": 1.0530518072920198e-12,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.025757575757575757,
+                  -0.0008181818181818182,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.029269625730780787,
+                "gamma_eie": -0.0010182933095121659,
+                "gamma_ii": -0.04904547715307833,
+                "max_abs_residual": 1.0490219256931434e-12,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.025252525252525252,
+                  -0.0007878787878787879,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.029269625853446484,
+                "gamma_eie": -0.0010182933082448675,
+                "gamma_ii": -0.0490454769586312,
+                "max_abs_residual": 8.243100584734646e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.024747474747474747,
+                  -0.0007575757575757576,
+                  -0.049494949494949494
+                ]
+              },
+              {
+                "gamma_ee": 0.029269625758112663,
+                "gamma_eie": -0.0010182933099087369,
+                "gamma_ii": -0.04904547722677098,
+                "max_abs_residual": 1.1412534470307602e-12,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.024242424242424242,
+                  -0.0007272727272727272,
+                  -0.049494949494949494
+                ]
+              }
+            ],
+            "valid": false,
+            "gamma_ee": 0.029269625671633673,
+            "gamma_eie": -0.0010182933072328678,
+            "gamma_ii": -0.049045476472614716,
+            "max_abs_residual": 3.809593006421415e-13,
+            "checks": {
+              "equations_solved": true,
+              "gamma_ee_positive": true,
+              "gamma_eie_negative": true,
+              "gamma_ii_nonpositive": true,
+              "barred_denominators_positive": false
+            }
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        },
+        "4": {
+          "a_delta": 4,
+          "fit": {
+            "kind": "mirror",
+            "a_delta": 4,
+            "n_seeds": 10,
+            "n_valid": 0,
+            "multiple_valid": false,
+            "candidates": [
+              {
+                "gamma_ee": 0.011323707507502783,
+                "gamma_eie": -2.7738848625451277e-05,
+                "gamma_ii": -0.03967238277907086,
+                "max_abs_residual": 0.06323627500288176,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.014646464646464647,
+                  -0.00019191919191919194,
+                  -0.039898989898989906
+                ]
+              },
+              {
+                "gamma_ee": 0.011226045703128065,
+                "gamma_eie": -2.2852800819378574e-05,
+                "gamma_ii": -0.03966553036218255,
+                "max_abs_residual": 0.06316874304892664,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.022222222222222223,
+                  -0.0005858585858585859,
+                  -0.04040404040404041
+                ]
+              },
+              {
+                "gamma_ee": 0.011341593015389399,
+                "gamma_eie": -2.863386773071146e-05,
+                "gamma_ii": -0.03967363692753143,
+                "max_abs_residual": 0.06324868215848725,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.030303030303030304,
+                  -0.001,
+                  -0.04090909090909091
+                ]
+              },
+              {
+                "gamma_ee": -0.06742766193242658,
+                "gamma_eie": -0.001505161773913341,
+                "gamma_ii": 0.003967451781564073,
+                "max_abs_residual": 1.1401980932745914e-06,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 15.203908986390621,
+                "r_s": -1.0182719689533575,
+                "six_params": [
+                  -0.9820558242827528,
+                  -0.9820558344152361,
+                  -0.9999998459466461,
+                  -1.018271547862614,
+                  -0.9999997489970869,
+                  -1.0182715539389469
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.0,
+                  -0.001,
+                  0.0
+                ]
+              },
+              {
+                "gamma_ee": 0.011255250245194588,
+                "gamma_eie": -2.4313774053258785e-05,
+                "gamma_ii": -0.039667580316222195,
+                "max_abs_residual": 0.06318910012689696,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.028282828282828285,
+                  -0.001,
+                  -0.04141414141414142
+                ]
+              },
+              {
+                "gamma_ee": 0.011257482221086884,
+                "gamma_eie": -2.442538657662689e-05,
+                "gamma_ii": -0.03966773689953259,
+                "max_abs_residual": 0.06319049903601054,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.026262626262626262,
+                  -0.001,
+                  -0.041919191919191925
+                ]
+              },
+              {
+                "gamma_ee": 0.01116826526758825,
+                "gamma_eie": -1.996275225007781e-05,
+                "gamma_ii": -0.03966147260085842,
+                "max_abs_residual": 0.06312900815955426,
+                "checks": {
+                  "equations_solved": false,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": false
+                },
+                "valid": false,
+                "grid_seed": [
+                  0.024747474747474747,
+                  -0.001,
+                  -0.04242424242424243
+                ]
+              },
+              {
+                "gamma_ee": -2.271765231816917,
+                "gamma_eie": 0.14292567243615095,
+                "gamma_ii": 0.003967462394916012,
+                "max_abs_residual": 2.6645352591003757e-15,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": false,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": false,
+                  "r_a_positive_b55": false,
+                  "r_s_positive_b53": false
+                },
+                "r_a": NaN,
+                "r_s": -1.0182718112793936,
+                "six_params": [
+                  -0.9820560570596212,
+                  -0.9820560570596212,
+                  -1.0000000000000002,
+                  -1.0182718112793943,
+                  -1.0000000000000002,
+                  -1.0182718112793943
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.023232323232323233,
+                  -0.001,
+                  -0.04292929292929293
+                ]
+              },
+              {
+                "gamma_ee": -0.057896525481692246,
+                "gamma_eie": 0.003352525224749037,
+                "gamma_ii": -0.03963334989022143,
+                "max_abs_residual": 1.4033219031261979e-13,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": false,
+                  "gamma_eie_negative": false,
+                  "gamma_ii_nonpositive": true,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": true
+                },
+                "r_a": 0.3771731716935133,
+                "r_s": 3.640625,
+                "six_params": [
+                  2.6513020412081847,
+                  -2.6513020412081705,
+                  0.9999999999999483,
+                  0.3771731716935004,
+                  0.9999999999999813,
+                  -0.3771731716934927
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.021717171717171718,
+                  -0.001,
+                  -0.0393939393939394
+                ]
+              },
+              {
+                "gamma_ee": 0.05407859952915737,
+                "gamma_eie": -0.009474145919147173,
+                "gamma_ii": 0.003967462394914307,
+                "max_abs_residual": 3.952393967665557e-14,
+                "checks": {
+                  "equations_solved": true,
+                  "gamma_ee_positive": true,
+                  "gamma_eie_negative": true,
+                  "gamma_ii_nonpositive": false,
+                  "barred_denominators_positive": true,
+                  "stability_b50": true,
+                  "r_a_positive_b55": true,
+                  "r_s_positive_b53": false
+                },
+                "r_a": 5.7727272727272725,
+                "r_s": -1.018271811279399,
+                "six_params": [
+                  -0.9820560570596079,
+                  -0.9820560570596103,
+                  -0.9999999999999859,
+                  -1.0182718112793812,
+                  -0.9999999999999867,
+                  -1.018271811279383
+                ],
+                "valid": false,
+                "grid_seed": [
+                  0.00505050505050505,
+                  -0.000898989898989899,
+                  -0.03737373737373738
+                ]
+              }
+            ],
+            "valid": false,
+            "gamma_ee": -2.271765231816917,
+            "gamma_eie": 0.14292567243615095,
+            "gamma_ii": 0.003967462394916012,
+            "max_abs_residual": 2.6645352591003757e-15,
+            "checks": {
+              "equations_solved": true,
+              "gamma_ee_positive": false,
+              "gamma_eie_negative": false,
+              "gamma_ii_nonpositive": false,
+              "barred_denominators_positive": true,
+              "stability_b50": false,
+              "r_a_positive_b55": false,
+              "r_s_positive_b53": false
+            },
+            "r_a": NaN,
+            "r_s": -1.0182718112793936,
+            "six_params": [
+              -0.9820560570596212,
+              -0.9820560570596212,
+              -1.0000000000000002,
+              -1.0182718112793943,
+              -1.0000000000000002,
+              -1.0182718112793943
+            ]
+          },
+          "valid_fit": false,
+          "g1": null,
+          "pass": false
+        }
+      },
+      "seed": 4244
+    }
+  ],
+  "ra_cross_check": {
+    "8": {
+      "fitted_ra": 0.5480343395196243,
+      "published_ra": 0.548,
+      "delta": 3.433951962428239e-05,
+      "consistent": true
+    },
+    "6": {
+      "fitted_ra": 0.4372793723756266,
+      "published_ra": 0.437,
+      "delta": 0.00027937237562658535,
+      "consistent": true
+    }
+  },
+  "g2": {
+    "decisional": false,
+    "reason": "their model has no rotation input (frozen non-decisional)"
+  },
+  "verdict": "PASS",
+  "elapsed_s": 8.4
+}

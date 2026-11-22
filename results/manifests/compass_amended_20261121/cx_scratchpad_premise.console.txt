@@ -1,0 +1,64 @@
+# instrument: cx_scratchpad_premise
+# attempt: first
+# started: 2026-11-22T01:32:43Z
+# freeze: compass-map-freeze-20261121 = b68a584833ca2569796b7a1aac3d3ca6c0c0785f
+# git HEAD: 875b9c76a04f0410156f58922a8d5a47f7201a2b (tracked files other than WORKLOG.md identical to the freeze)
+# command: PYTHONPATH=src .venv/bin/python -B scripts/cx_scratchpad_premise.py
+# environment: env -i, then PATH, HOME, PYTHONPATH=src and PYTHONDONTWRITEBYTECODE=1 only
+# interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment)
+# inputs: the 13 files of scripts/arenas/run_amended_once.inputs.sha256 match their pinned SHA-256
+# input: results/diagnostics/recognizer_frames.npz sha256 50e926f0476666bd7b9df836f3d820b4fe8d9315e85d32aa5353e9b46aa07b40
+# resources at start: free disk 3388644 KB; system memory free 54%
+# ---- output ----
+ring map: amended -- AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.
+EPG with wedge labels: 46
+darkness N=10: {'accuracy': 0.5, 'mean_epg_mass': 0.0967678502202034}
+darkness N=50: {'accuracy': 0.5, 'mean_epg_mass': 0.10413004457950592}
+darkness N=120: {'accuracy': 0.5, 'mean_epg_mass': 0.10482150316238403}
+visual N=10: {'accuracy': 0.5, 'mean_epg_mass': 0.09800035208463669}
+visual N=50: {'accuracy': 0.5, 'mean_epg_mass': 0.10480296934606485}
+visual N=120: {'accuracy': 0.5, 'mean_epg_mass': 0.10606265906626504}
+{
+  "ring_map": "amended",
+  "ring_map_description": "AC-1 / AC-B1 as amended 2026-11-21: R_k at 22.5 + 45(k-1) deg (unchanged), L_k at 360 - 45(k-1) deg (reflected); ring order L1 R1 L8 R2 L7 R3 L6 R4 L5 R5 L4 R6 L3 R7 L2 R8; eight units pair L_k with R_(9-k). Angles as printed in Hulse et al. 2021 Fig. 16B.",
+  "write_steps": 20,
+  "write_scale": 1.0,
+  "conditions": {
+    "darkness": {
+      "10": {
+        "accuracy": 0.5,
+        "mean_epg_mass": 0.0967678502202034
+      },
+      "50": {
+        "accuracy": 0.5,
+        "mean_epg_mass": 0.10413004457950592
+      },
+      "120": {
+        "accuracy": 0.5,
+        "mean_epg_mass": 0.10482150316238403
+      }
+    },
+    "visual": {
+      "10": {
+        "accuracy": 0.5,
+        "mean_epg_mass": 0.09800035208463669
+      },
+      "50": {
+        "accuracy": 0.5,
+        "mean_epg_mass": 0.10480296934606485
+      },
+      "120": {
+        "accuracy": 0.5,
+        "mean_epg_mass": 0.10606265906626504
+      }
+    }
+  },
+  "kill_condition_met": true
+}
+# ---- end of output ----
+# JSON written: results/cx_scratchpad_premise.amended_map.json
+# exit status: 0
+# peak sampled resident memory: 463200 KB
+# output: results/cx_scratchpad_premise.amended_map.json sha256 58366ce8dc79a97e9c298ed86abd76a744f4a5c545309eb48a5fc25d5e69c16c
+# finished: 2026-11-22T01:41:04Z
+# CLASSIFICATION: finished -- an outcome (amendment section 10)

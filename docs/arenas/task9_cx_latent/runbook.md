@@ -10,6 +10,13 @@
 > Records: EXPERIMENTS.yaml, WORKLOG eeb75b5 + the close entry,
 > SYNTHESIS second Task-9 addendum, HANDOFF row 9. This file is a
 > historical record; nothing in it is awaiting a run.
+>
+> 2026-11-21: every outcome above was measured on a label map that
+> reflected the left half-ring, so "the series' first PASS" is the
+> history of the series. Under the corrected map Stage A passed again on
+> 2026-11-21 (bandedness 0.8505 vs a null maximum of 0.3342), Stage B
+> was BLOCKED again, and the probe and class 3 were KILLED again (see the
+> RE-RUN section at the end and the amendment).
 
 Stage A is ready to run; Stage B's instrument builds only after a
 Stage-A PASS (both registrations are already frozen in
