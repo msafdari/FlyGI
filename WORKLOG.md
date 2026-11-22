@@ -79,6 +79,20 @@ to 4:41 PM here (the tagged copy keeps the original).
   `VERDICT: KILL`
   0 of 8 real cells pass the cell rule (at least 2 of the 3 held-out writes with retention >= 0.05, circular variance <= 0.6, settled within 45 degrees), so no rewire ran. By section 10 item 5 of the record, `refuted` stands, and so does "no class-1 Stage-B re-registration is licensed".
   SHA-256: record `1035e6feea989af04a0ce28854a6892216ee127e3146556c41580dfdbf9e5839`; JSON `b9e9bdbb6f82dca7cb2d2400d2d9b28cd3ef6e7361ef6f13df33b6042f0f4207`; log `0da1cb6220534787c4d5995dcb3473d82b2c1624f7897d986eba0fe72c909993`.
+- **cx_class3_killtest** (first). Started 2026-11-22T00:56:43Z, finished 2026-11-22T01:12:17Z; exit status 1; peak sampled resident memory 1073088 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3383608 KB; system memory free 56%.
+  Printed result lines:
+  `validation gate (published Pisokas fly circuit): pass=True mean_width=99.0`
+  `[grid 0.5x/1.0x] g1 2/8 g2=False steer L 13.139199101974782 R 16.29364258216837`
+  `[grid 0.5x/2.0x] g1 2/8 g2=False steer L 35.515733579603534 R 35.882323350182865`
+  `[grid 1.0x/1.0x] g1 2/8 g2=False steer L 6.052113333955655 R 5.914942014290887`
+  `[grid 1.0x/2.0x] g1 3/8 g2=False steer L 1.0550746982719754 R 1.555115203328872`
+  `[grid 2.0x/1.0x] g1 1/8 g2=False steer L 0.20094207768462033 R 0.125328753236469`
+  `[grid 2.0x/2.0x] g1 5/8 g2=False steer L -0.07056032304482567 R -0.11376420764372597`
+  `VERDICT: KILL`
+  G1 at most 5 of 8 (bar 6 of 8) and G2 false at every grid point, so no point passed and no rewire ran. By section 10 item 6 of the record, `refuted` stands on the amended map and the held close sentence is re-instated in its fixed form.
+  SHA-256: record `5cfb5055ddcf79113502d767b3293ba7ccd2f205b38426a2fb394939fd8f1332`; JSON `ded091f3d8026838ed14694002187da7dcb7e21cc16a81ebbc4f8e2c448fab17`; log `fb348aaf8eb8a289871557f0cd0bc10ce5bd40bc8ad3812fb299980376ee5438`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
