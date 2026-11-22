@@ -64,6 +64,21 @@ to 4:41 PM here (the tagged copy keeps the original).
   `BLOCKED: calibration-angle persistence precheck failed (AC-2: the measured gain-1.5 regime did not reproduce)`
   A block at the precheck writes no JSON (the log is hashed). By section 10 item 4 of the record, H-CX-HEADING-LATENT stays `null` as recorded on 2026-10-10, now on the amended map.
   SHA-256: record `3ddf5de7375dbd9982a1d83e9c89e41c4b0fbac7d8d7fc74c8b4596bd1cd0591`; log `2d63338ed927144cba5ddccfb413522e9b3a098a5d4a01a4168f4a93c863bea5`.
+- **cx_seeding_killtest** (first). Started 2026-11-22T00:49:36Z, finished 2026-11-22T00:56:07Z; exit status 1; peak sampled resident memory 489344 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3389408 KB; system memory free 56%.
+  Printed result lines:
+  `[real 1.5/0.3 P1] pass=False 112.5: ret 0.0000 cv 0.179 err 178.6 202.5: ret 0.6179 cv 0.186 err 91.1 292.5: ret 0.8681 cv 0.187 err 1.0`
+  `[real 1.5/0.3 P2] pass=False 112.5: ret 1.3275 cv 0.171 err 178.2 202.5: ret 0.2919 cv 0.184 err 91.2 292.5: ret 0.3541 cv 0.182 err 1.3`
+  `[real 1.5/0.3 P3] pass=False 112.5: ret 0.0000 cv 0.179 err 178.6 202.5: ret 0.4769 cv 0.187 err 91.0 292.5: ret 0.6652 cv 0.188 err 1.0`
+  `[real 1.5/0.3 P4] pass=False 112.5: ret 33.3067 cv 0.187 err 179.0 202.5: ret 7.0832 cv 0.189 err 90.9 292.5: ret 91.1425 cv 0.717 err 42.0`
+  `[real 2.0/0.3 P1] pass=False 112.5: ret 0.0000 cv 0.000 err 157.5 202.5: ret 1.0832 cv 0.871 err 11.0 292.5: ret 1.0342 cv 0.866 err 100.2`
+  `[real 2.0/0.3 P2] pass=False 112.5: ret 1.0996 cv 0.000 err 157.5 202.5: ret 0.9978 cv 0.871 err 11.0 292.5: ret 0.9975 cv 0.866 err 100.2`
+  `[real 2.0/0.3 P3] pass=False 112.5: ret 0.0000 cv 0.000 err 157.5 202.5: ret 1.0811 cv 0.871 err 11.0 292.5: ret 1.0334 cv 0.866 err 100.2`
+  `[real 2.0/0.3 P4] pass=False 112.5: ret 0.0000 cv 0.000 err 157.5 202.5: ret 17.5034 cv 0.870 err 10.8 292.5: ret 22.8198 cv 0.866 err 100.2`
+  `VERDICT: KILL`
+  0 of 8 real cells pass the cell rule (at least 2 of the 3 held-out writes with retention >= 0.05, circular variance <= 0.6, settled within 45 degrees), so no rewire ran. By section 10 item 5 of the record, `refuted` stands, and so does "no class-1 Stage-B re-registration is licensed".
+  SHA-256: record `1035e6feea989af04a0ce28854a6892216ee127e3146556c41580dfdbf9e5839`; JSON `b9e9bdbb6f82dca7cb2d2400d2d9b28cd3ef6e7361ef6f13df33b6042f0f4207`; log `0da1cb6220534787c4d5995dcb3473d82b2c1624f7897d986eba0fe72c909993`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
