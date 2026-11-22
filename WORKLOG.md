@@ -120,6 +120,16 @@ to 4:41 PM here (the tagged copy keeps the original).
   `gain 2.5 leak 0.6: C1 miss (best ret 0.031 cv 0.839, 0/4 angles) | C2 PASS (seed 292.5 mass 0.368 L +1.614 R -0.965 drift -0.000) | visual died [29.0s]`
   Read from the JSON (amendment section 10, item 7, applied after the close): C1 passes at 0 of 21 grid points; C2 at 19 of 21; no grid point has both, so requirement 1 is not met; visual_aux.survived_visual is true at 3 of 21 (gain/leak 1.2/0.6, 1.5/0.3, 1.5/0.6).
   SHA-256: record `7947993756966887824d33dfb9c7d727d30d5700f6bf3ac2bd043ccf44fe4edb`; JSON `8eb431686283d8472bd3398fe82b3664dd321665a7e8ca60f3037c53fb55ee95`.
+- **fc2_eb_ring** (first). Started 2026-11-22T01:24:02Z, finished 2026-11-22T01:31:47Z; exit status 0; peak sampled resident memory 1134160 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3379560 KB; system memory free 56%.
+  Printed result lines (one selected and one scored line per network):
+  `== network: real ==` ... `selected (best-approach (NO cal pass)): e=0.0055 r=12.0 tonic=0.1750`
+  `scored: C1 heldout-persist False follows False n_pos 1 -> C1 False | C2 heldout False | PASS False`
+  `== network: shuffled_degree_preserving ==` ... `selected (best-approach (NO cal pass)): e=0.16 r=2.0 tonic=0.2625`
+  `scored: C1 heldout-persist False follows False n_pos 1 -> C1 False | C2 heldout False | PASS False`
+  Read from the JSON (amendment section 10, item 8, applied at the close): verdict block passed false, attribution_holds false; the real network's calibration ran 35, 105 and 70 rows with 0 calibration passes in each; 157 rows alive, none at or below circular variance 0.6 (smallest 0.8337); scored settled angles 22.5: 169.43, 112.5: 135.47, 202.5: 179.71, 292.5: 182.27. The script writes no separate log; the console record is its log.
+  SHA-256: record `e3a756d057fa26cbabf17932954068766bbcea22ff4a08938cfd72d973a6a2ce`; JSON `f9b812d1299053c1530d67ca449ea30eaef167ab0595ef060664bf470cd3ca37`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
