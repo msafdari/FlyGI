@@ -26,6 +26,16 @@ to 4:41 PM here (the tagged copy keeps the original).
   `null seed 4244: tie_fraction 0.071 configs {8: (False, False), 6: (False, False), 4: (False, False)}`
   `VERDICT: PASS`
   SHA-256: record `f448521435a6afdc5d2b896568c9864664867b5e02add082f6034f631a8588d6`; JSON `5dea16a9b6fccf7b352d809aba2491fba3ceb833d9711ded4c1a67dbb7f66261`; log `24ab854e559a305d1abe85c28543d8c41cb4017d7ffbaca5d29c089fb0f90b13`.
+- **cx_biswas_context_nulls** (first). Started 2026-11-22T00:43:08Z, finished 2026-11-22T00:46:04Z; exit status 0; peak sampled resident memory 1098256 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3195992 KB; system memory free 55%.
+  Printed result lines (from the summary the script prints, non-decisional):
+  `n_rewires 200, n_errors 0, n_evaluated 200`
+  `n_valid_fit_any_config 25 (per configuration: A_Delta 8: 18, 6: 8, 4: 3)`
+  `n_pass_g1_any_config 2, pass_g1_seeds [4340, 4388] (both at A_Delta 6, G1 8/8)`
+  `CONTEXT READING COMPLETE (non-decisional)`
+  By C2 and decision 9 of the record, m = 2 of n = 200 is reported as a limit on the wiring-specificity sentence, in the fixed form: "; 2 of 200 further rewires (seeds 4265 to 4464) pass G1 at some configuration". No status changes on it.
+  SHA-256: record `035cac85d74599804f77f5f2101f9dcde8c58777a6e8bb5a0262672112b6ceed`; JSON `0012a3510b544533c0398bbf788f798339b2d0b71bd9b1a0095f1fb46010b41d`; log `a3321aba18cf02b1ad36c70e95d5fc3f740fbfa214902c6ad0cd03e8de7ae886`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
