@@ -93,6 +93,33 @@ to 4:41 PM here (the tagged copy keeps the original).
   `VERDICT: KILL`
   G1 at most 5 of 8 (bar 6 of 8) and G2 false at every grid point, so no point passed and no rewire ran. By section 10 item 6 of the record, `refuted` stands on the amended map and the held close sentence is re-instated in its fixed form.
   SHA-256: record `5cfb5055ddcf79113502d767b3293ba7ccd2f205b38426a2fb394939fd8f1332`; JSON `ded091f3d8026838ed14694002187da7dcb7e21cc16a81ebbc4f8e2c448fab17`; log `fb348aaf8eb8a289871557f0cd0bc10ce5bd40bc8ad3812fb299980376ee5438`.
+- **cx_ring** (first). Started 2026-11-22T01:13:11Z, finished 2026-11-22T01:23:23Z; exit status 0; peak sampled resident memory 560528 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3380544 KB; system memory free 55%.
+  Printed result lines (one per grid point):
+  `gain 0.8 leak 0.1: C1 miss (best ret 0.000 cv 0.207, 0/4 angles) | C2 PASS (seed 202.5 mass 0.183 L +1.300 R -1.446 drift -0.075) | visual died [28.5s]`
+  `gain 0.8 leak 0.3: C1 miss (best ret 0.000 cv 1.000, 0/4 angles) | C2 PASS (seed 202.5 mass 0.000 L +1.369 R -1.377 drift +nan) | visual died [28.7s]`
+  `gain 0.8 leak 0.6: C1 miss (best ret 0.000 cv 1.000, 0/4 angles) | C2 PASS (seed 292.5 mass 0.000 L +0.061 R -0.079 drift +nan) | visual died [28.7s]`
+  `gain 1.0 leak 0.1: C1 miss (best ret 0.000 cv 0.584, 0/4 angles) | C2 PASS (seed 202.5 mass 0.190 L +1.337 R -1.486 drift -0.114) | visual died [28.8s]`
+  `gain 1.0 leak 0.3: C1 miss (best ret 0.000 cv 1.000, 0/4 angles) | C2 miss (seed 292.5 mass 0.000 L -1.684 R -4.507 drift -4.864) | visual died [29.1s]`
+  `gain 1.0 leak 0.6: C1 miss (best ret 0.000 cv 1.000, 0/4 angles) | C2 PASS (seed 292.5 mass 0.000 L +1.974 R -0.850 drift +nan) | visual died [29.6s]`
+  `gain 1.2 leak 0.1: C1 miss (best ret 0.000 cv 0.830, 0/4 angles) | C2 PASS (seed 202.5 mass 0.201 L +1.375 R -1.526 drift -0.283) | visual died [29.0s]`
+  `gain 1.2 leak 0.3: C1 miss (best ret 0.000 cv 0.724, 0/4 angles) | C2 PASS (seed 22.5 mass 0.000 L -4.306 R +4.794 drift +nan) | visual died [28.8s]`
+  `gain 1.2 leak 0.6: C1 miss (best ret 0.000 cv 0.393, 0/4 angles) | C2 PASS (seed 292.5 mass 0.000 L +1.563 R -1.337 drift +2.399) | visual survived [28.8s]`
+  `gain 1.5 leak 0.1: C1 miss (best ret 0.000 cv 0.868, 0/4 angles) | C2 PASS (seed 202.5 mass 0.227 L +1.425 R -1.580 drift -0.617) | visual died [29.0s]`
+  `gain 1.5 leak 0.3: C1 miss (best ret 0.000 cv 0.449, 0/4 angles) | C2 PASS (seed 292.5 mass 0.003 L +0.825 R -2.174 drift +1.995) | visual survived [28.9s]`
+  `gain 1.5 leak 0.6: C1 miss (best ret 0.000 cv 0.259, 0/4 angles) | C2 miss (seed 202.5 mass 0.008 L -1.079 R -4.079 drift +0.325) | visual survived [28.9s]`
+  `gain 1.8 leak 0.1: C1 miss (best ret 0.008 cv 0.874, 0/4 angles) | C2 PASS (seed 202.5 mass 0.273 L +1.355 R -1.586 drift -0.648) | visual died [28.9s]`
+  `gain 1.8 leak 0.3: C1 miss (best ret 0.012 cv 0.875, 0/4 angles) | C2 PASS (seed 202.5 mass 0.132 L +1.462 R -1.317 drift +0.036) | visual died [29.0s]`
+  `gain 1.8 leak 0.6: C1 miss (best ret 0.012 cv 0.874, 0/4 angles) | C2 PASS (seed 202.5 mass 0.138 L +1.427 R -1.353 drift +0.003) | visual died [29.0s]`
+  `gain 2.0 leak 0.1: C1 miss (best ret 0.016 cv 0.862, 0/4 angles) | C2 PASS (seed 202.5 mass 0.323 L +1.228 R -1.521 drift -0.516) | visual died [29.3s]`
+  `gain 2.0 leak 0.3: C1 miss (best ret 0.018 cv 0.870, 0/4 angles) | C2 PASS (seed 202.5 mass 0.194 L +1.479 R -1.243 drift -0.071) | visual died [29.9s]`
+  `gain 2.0 leak 0.6: C1 miss (best ret 0.018 cv 0.871, 0/4 angles) | C2 PASS (seed 202.5 mass 0.208 L +1.551 R -1.170 drift -0.000) | visual died [29.3s]`
+  `gain 2.5 leak 0.1: C1 miss (best ret 0.030 cv 0.836, 0/4 angles) | C2 PASS (seed 202.5 mass 0.597 L +1.140 R -1.457 drift -0.450) | visual died [29.0s]`
+  `gain 2.5 leak 0.3: C1 miss (best ret 0.031 cv 0.840, 0/4 angles) | C2 PASS (seed 202.5 mass 0.368 L +1.586 R -0.993 drift -0.031) | visual died [29.0s]`
+  `gain 2.5 leak 0.6: C1 miss (best ret 0.031 cv 0.839, 0/4 angles) | C2 PASS (seed 292.5 mass 0.368 L +1.614 R -0.965 drift -0.000) | visual died [29.0s]`
+  Read from the JSON (amendment section 10, item 7, applied after the close): C1 passes at 0 of 21 grid points; C2 at 19 of 21; no grid point has both, so requirement 1 is not met; visual_aux.survived_visual is true at 3 of 21 (gain/leak 1.2/0.6, 1.5/0.3, 1.5/0.6).
+  SHA-256: record `7947993756966887824d33dfb9c7d727d30d5700f6bf3ac2bd043ccf44fe4edb`; JSON `8eb431686283d8472bd3398fe82b3664dd321665a7e8ca60f3037c53fb55ee95`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
