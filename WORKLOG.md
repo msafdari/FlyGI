@@ -47,6 +47,15 @@ to 4:41 PM here (the tagged copy keeps the original).
   `VERDICT: PASS`
   So the Stage A gate is open (Stage B, the probe and class 3 run next). By C6, k = 201 x p_mirror_peak - 1 = 0, and the PEN_a mean offsets have opposite signs, so the PASS sentence takes C6's second clause.
   SHA-256: record `7ed48e0f6b5700db80c80857c2041007212aad879a5ab095032cf4da06f5c541`; JSON `56402d1a1f5279a551b0d178be52401032716c8138a9e3d57e47e416ea57c3a8`; log `67734b1c2d54b062278328aef9bda65ce67dd8b70e0ef242a9116577d4e8ec05`.
+- **cx_topology_nulls2** (first). Started 2026-11-22T00:47:58Z, finished 2026-11-22T00:48:12Z; exit status 0; peak sampled resident memory 1145232 KB.
+  Classification: finished -- an outcome (amendment section 10).
+  Interpreter: Python 3.12.12 numpy 2.5.3 scipy 1.18.1 pandas 2.3.3 pyarrow 23.0.1 PyYAML 6.0.3 (imported under that environment); resources at start: free disk 3389168 KB; system memory free 54%.
+  Printed result lines:
+  `[weight_within_pre] bandedness: separates (p 0.00498); mirror-peak: separates (p 0.00498)`
+  `[weight_global] bandedness: separates (p 0.00498); mirror-peak: separates (p 0.00498)`
+  `[sign] bandedness: does not separate (p 0.44776); mirror-peak: does not separate (p 0.48756)`
+  Null maxima: within-pre bandedness 0.6526, mirror-peak 0.01914; global 0.6561, 0.01874 (real 0.8505, 0.03474). Every family's invariants valid.
+  SHA-256: record `565a79d40f287de2060209056a431fc01b7db0f8fd38cbdb0647b777d369a5bc`; JSON `4528e7ddaaaa66329b391996e6d9ea81963395c907764753be601bcbeb86ebb0`; log `86dbcd83d7fdcdf0020e6165afd51477289fb0bd182519aa730b688772e6eee5`.
 
 ## November 21, 2026, 4:41 PM Pacific | Compass label map: instrument-bug finding and amendment, FROZEN before the re-runs
 
